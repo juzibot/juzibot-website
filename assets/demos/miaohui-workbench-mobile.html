@@ -1,0 +1,1751 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<title>Agent 协作工作台 · 移动端</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    safelist: [
+      'from-violet-400','from-indigo-400','from-blue-400','from-teal-400','from-amber-400',
+      'to-violet-600','to-indigo-600','to-blue-600','to-teal-600','to-amber-600',
+      'from-violet-50','from-indigo-50','from-blue-50','from-teal-50','from-amber-50',
+      'bg-violet-100','text-violet-700','bg-emerald-100','text-emerald-700'
+    ]
+  }
+</script>
+<style>
+  html, body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    color: #1F2433;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  /* iPhone 14 外壳 */
+  .phone-frame {
+    width: 390px;
+    height: 844px;
+    background: #000;
+    border-radius: 54px;
+    padding: 14px;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.6), 0 0 0 1.5px rgba(255,255,255,0.12);
+    position: relative;
+    flex-shrink: 0;
+  }
+  .phone-screen {
+    width: 100%;
+    height: 100%;
+    background: #F5F6FA;
+    border-radius: 40px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  .dynamic-island {
+    position: absolute;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 124px;
+    height: 34px;
+    background: #000;
+    border-radius: 20px;
+    z-index: 200;
+  }
+  .status-bar {
+    height: 54px;
+    flex-shrink: 0;
+    padding: 18px 28px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1F2433;
+    background: transparent;
+    position: relative;
+    z-index: 10;
+  }
+  .page {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-bottom: 104px;
+    background: #F5F6FA;
+  }
+  .page.hidden { display: none; }
+  /* Tab bar */
+  .tab-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 8px 12px 30px;
+    background: rgba(255,255,255,0.82);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-top: 0.5px solid rgba(0,0,0,0.08);
+    display: flex;
+    z-index: 50;
+  }
+  .tab-btn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    color: #9ca3af;
+    font-size: 10px;
+    padding: 6px 0;
+    cursor: pointer;
+    position: relative;
+  }
+  .tab-btn.active { color: #4C5BF0; }
+  .tab-badge {
+    position: absolute;
+    top: 2px;
+    right: calc(50% - 18px);
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    background: #EF4444;
+    color: white;
+    border-radius: 8px;
+    font-size: 10px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  /* Sub page (slides from right) */
+  .sub-page {
+    position: absolute;
+    inset: 0;
+    background: #F5F6FA;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transform: translateX(100%);
+    transition: transform .3s cubic-bezier(.2,.8,.2,1);
+  }
+  .sub-page.open { transform: translateX(0); }
+  .sub-nav {
+    height: 88px;
+    padding: 44px 16px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(20px);
+    border-bottom: 0.5px solid rgba(0,0,0,0.08);
+    flex-shrink: 0;
+  }
+  .sub-body { flex:1; overflow-y:auto; overflow-x:hidden; padding-bottom: 20px; }
+  /* 消息气泡 */
+  .bubble-customer { background:#F1F3F6; color:#1F2433; border-radius: 4px 16px 16px 16px; }
+  .bubble-agent { background: linear-gradient(180deg,#EEF0FF 0%,#E6E9FF 100%); color:#1F2433; border: 1px solid #D4D8FF; border-radius: 16px 4px 16px 16px; }
+  .bubble-human { background:#DCE7FF; color:#0E2558; border-radius: 16px 4px 16px 16px; }
+  /* 列表项按压效果 */
+  .tap { transition: transform 0.1s ease, background 0.15s ease; cursor: pointer; }
+  .tap:active { transform: scale(0.98); background: rgba(0,0,0,0.03); }
+  /* 置信度条 */
+  .conf-bar { height:3px; background:#E3E6F0; border-radius:2px; overflow:hidden; }
+  .conf-bar > div { height:100%; border-radius:2px; }
+  /* 脉冲 */
+  .pulse { position:relative; width:7px; height:7px; border-radius:50%; }
+  .pulse::after { content:""; position:absolute; inset:-3px; border-radius:50%; border:2px solid currentColor; opacity:.35; animation: pulse 1.6s ease-out infinite; }
+  @keyframes pulse { 0% { transform: scale(0.6); opacity:.6 } 100% { transform: scale(1.6); opacity:0 } }
+  /* Toast */
+  .toast {
+    position: absolute;
+    bottom: 110px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: rgba(31,36,51,0.94);
+    backdrop-filter: blur(10px);
+    color: white;
+    padding: 10px 18px;
+    border-radius: 14px;
+    font-size: 13px;
+    max-width: 320px;
+    text-align: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.25s;
+    z-index: 1000;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .toast.success { background: rgba(5,150,105,0.95); }
+  .toast.train { background: rgba(124,58,237,0.95); }
+  /* 滚动条隐藏 */
+  ::-webkit-scrollbar { display: none; }
+  /* Sheet（底部抽屉） */
+  .sheet-mask {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s;
+    z-index: 150;
+  }
+  .sheet-mask.open { opacity: 1; pointer-events: auto; }
+  .sheet {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    background: white;
+    border-radius: 24px 24px 0 0;
+    transform: translateY(100%);
+    transition: transform 0.3s cubic-bezier(.2,.8,.2,1);
+    z-index: 160;
+    max-height: 75%;
+    overflow-y: auto;
+    padding-bottom: 34px;
+  }
+  .sheet.open { transform: translateY(0); }
+  .sheet-handle { width: 40px; height: 4px; background: #D4D8E0; border-radius: 2px; margin: 10px auto 6px; }
+  /* 模式按钮 */
+  .mode-btn { padding: 7px 10px; border-radius: 10px; font-size: 11px; display: flex; align-items: center; gap: 4px; font-weight: 500; }
+  .mode-btn.plan { background: #D1FAE5; color: #065F46; }
+  .mode-btn.manual { background: #E5E7EB; color: #374151; }
+  .mode-btn.cowrite { background: #DBEAFE; color: #1E40AF; }
+  .mode-btn.teach { background: #EDE9FE; color: #5B21B6; }
+  /* 桌面端提示 */
+  .desktop-hint { color: rgba(255,255,255,0.6); font-size: 13px; margin-top: 14px; text-align: center; max-width: 390px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<div class="phone-frame">
+  <div class="phone-screen">
+    <div class="dynamic-island"></div>
+    <div class="status-bar">
+      <span>9:41</span>
+      <span class="flex items-center gap-1">
+        <svg width="16" height="10" viewBox="0 0 16 10" fill="currentColor"><rect x="0" y="6" width="3" height="4" rx="1"/><rect x="4" y="4" width="3" height="6" rx="1"/><rect x="8" y="2" width="3" height="8" rx="1"/><rect x="12" y="0" width="3" height="10" rx="1"/></svg>
+        <svg width="14" height="10" viewBox="0 0 14 10" fill="none" stroke="currentColor" stroke-width="1"><path d="M7 7.5a1.5 1.5 0 100 3 1.5 1.5 0 000-3zM3.5 4a6 6 0 017 0M.5 1a10 10 0 0113 0"/></svg>
+        <div class="relative w-6 h-3 border border-black/60 rounded-[3px]">
+          <div class="absolute inset-0.5 bg-black rounded-sm" style="width:calc(100% - 4px)"></div>
+        </div>
+      </span>
+    </div>
+
+    <!-- ============ 首页 ============ -->
+    <div id="page-home" class="page">
+      <!-- 头部 -->
+      <div class="px-5 pt-2 pb-1 flex items-center justify-between">
+        <div>
+          <div class="text-xs text-gray-500">下午好</div>
+          <div class="text-2xl font-bold">苏菲 👋</div>
+        </div>
+        <button class="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm tap relative" onclick="toast('3 条未读通知')">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+          <span class="absolute top-1.5 right-2 w-2 h-2 rounded-full bg-red-500"></span>
+        </button>
+      </div>
+
+      <!-- Hero 战报 -->
+      <div class="mx-4 mt-3 rounded-3xl bg-gradient-to-br from-[#4C5BF0] via-[#6D5CE5] to-[#8B79F0] text-white p-5 shadow-xl tap" onclick="openSub('report')">
+        <div class="flex items-center justify-between mb-2">
+          <div class="flex items-center gap-2">
+            <span class="pulse bg-emerald-300 text-emerald-300"></span>
+            <span class="text-xs opacity-80">Agent 集群 · 实时</span>
+          </div>
+          <svg class="w-4 h-4 opacity-70" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        </div>
+        <div class="text-sm opacity-80 mb-3">今天 Agent 帮你处理了</div>
+        <div class="flex items-baseline gap-1.5 mb-3">
+          <span class="text-5xl font-bold tracking-tight">247</span>
+          <span class="text-sm opacity-70">个客户跟进</span>
+        </div>
+        <div class="grid grid-cols-3 gap-2">
+          <div class="bg-white/15 rounded-xl px-2 py-2 backdrop-blur">
+            <div class="text-[10px] opacity-80">自动完成</div>
+            <div class="text-lg font-bold">89%</div>
+          </div>
+          <div class="bg-white/15 rounded-xl px-2 py-2 backdrop-blur">
+            <div class="text-[10px] opacity-80">成交</div>
+            <div class="text-lg font-bold">6 单</div>
+          </div>
+          <div class="bg-white/15 rounded-xl px-2 py-2 backdrop-blur">
+            <div class="text-[10px] opacity-80">新 ARR</div>
+            <div class="text-lg font-bold">¥42.8k</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 急需接管 -->
+      <div class="mx-4 mt-5">
+        <div class="flex items-center justify-between mb-2 px-1">
+          <div class="flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+            <span class="text-sm font-bold">急需你接管</span>
+            <span class="text-[10px] px-1.5 py-0.5 rounded-full bg-red-100 text-red-600 font-semibold">3</span>
+          </div>
+          <button class="text-xs text-[#4C5BF0]" onclick="go('tasks')">全部 →</button>
+        </div>
+        <div class="space-y-2">
+          <div class="bg-white rounded-2xl p-3 flex gap-3 tap shadow-sm" onclick="openChat('李可')">
+            <img class="w-11 h-11 rounded-full flex-shrink-0" src="https://api.dicebear.com/9.x/notionists/svg?seed=liKe&backgroundColor=ffd1dc" alt="">
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-1.5 mb-0.5">
+                <span class="font-semibold text-sm">李可</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-700">高价值</span>
+              </div>
+              <div class="text-xs text-gray-600 truncate">能不能便宜点，有折扣吗</div>
+              <div class="flex items-center gap-2 mt-1">
+                <span class="text-[10px] text-red-500 font-medium">Agent 置信度 58%</span>
+                <span class="text-[10px] text-gray-400">· 刚升级</span>
+              </div>
+            </div>
+            <svg class="w-4 h-4 text-gray-300 self-center" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+          </div>
+
+          <div class="bg-white rounded-2xl p-3 flex gap-3 tap shadow-sm" onclick="openChat('王总')">
+            <img class="w-11 h-11 rounded-full flex-shrink-0" src="https://api.dicebear.com/9.x/notionists/svg?seed=wangZ&backgroundColor=c0aede" alt="">
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-1.5 mb-0.5">
+                <span class="font-semibold text-sm">王总</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-700">预算 10w+</span>
+              </div>
+              <div class="text-xs text-gray-600 truncate">想和创始人聊聊合作</div>
+              <div class="flex items-center gap-2 mt-1">
+                <span class="text-[10px] text-red-500 font-medium">需要人工</span>
+                <span class="text-[10px] text-gray-400">· 4 分钟前</span>
+              </div>
+            </div>
+            <svg class="w-4 h-4 text-gray-300 self-center" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+          </div>
+
+          <div class="bg-white rounded-2xl p-3 flex gap-3 tap shadow-sm" onclick="openChat('张小姐')">
+            <img class="w-11 h-11 rounded-full flex-shrink-0" src="https://api.dicebear.com/9.x/notionists/svg?seed=zhangXJ&backgroundColor=b6e3f4" alt="">
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-1.5 mb-0.5">
+                <span class="font-semibold text-sm">张小姐</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded bg-red-100 text-red-700">投诉</span>
+              </div>
+              <div class="text-xs text-gray-600 truncate">"第三次问了都没人管"</div>
+              <div class="flex items-center gap-2 mt-1">
+                <span class="text-[10px] text-red-500 font-medium">负面情绪</span>
+                <span class="text-[10px] text-gray-400">· 11 分钟前</span>
+              </div>
+            </div>
+            <svg class="w-4 h-4 text-gray-300 self-center" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- 待审核 -->
+      <div class="mx-4 mt-5">
+        <div class="flex items-center justify-between mb-2 px-1">
+          <div class="flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+            <span class="text-sm font-bold">等你审核</span>
+            <span class="text-[10px] px-1.5 py-0.5 rounded-full bg-amber-100 text-amber-700 font-semibold">5 · +8 其他组</span>
+          </div>
+        </div>
+        <div class="bg-white rounded-2xl p-4 tap shadow-sm" onclick="openSub('review')">
+          <div class="flex items-center gap-3">
+            <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white flex-shrink-0">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><path d="M21 12c0 4.418-3.582 8-8 8a9.97 9.97 0 01-5-1.32L3 20l1.32-5A9.97 9.97 0 013 12c0-4.418 3.582-8 8-8s10 3.582 10 8z"/></svg>
+            </div>
+            <div class="flex-1">
+              <div class="text-sm font-semibold">跨组批量审核</div>
+              <div class="text-xs text-gray-500 mt-0.5">3 个组 · 13 条 Agent 草稿 · 约 3 分钟</div>
+            </div>
+            <svg class="w-4 h-4 text-gray-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- 训练机会 -->
+      <div class="mx-4 mt-5">
+        <div class="flex items-center justify-between mb-2 px-1">
+          <div class="flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-violet-500"></span>
+            <span class="text-sm font-bold">训练机会</span>
+            <span class="text-[10px] px-1.5 py-0.5 rounded-full bg-violet-100 text-violet-700 font-semibold">4</span>
+          </div>
+          <button class="text-xs text-[#4C5BF0]" onclick="go('train')">全部 →</button>
+        </div>
+        <div class="bg-gradient-to-br from-violet-50 to-indigo-50 border border-violet-100 rounded-2xl p-4 tap" onclick="openTrain('三线城市有老师吗')">
+          <div class="flex items-start gap-2 mb-2">
+            <svg class="w-4 h-4 text-violet-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            <div class="flex-1">
+              <div class="text-sm font-semibold text-violet-900">"三线城市有老师吗"</div>
+              <div class="text-xs text-violet-700 mt-0.5">被问 7 次，Agent 流失率 60%</div>
+            </div>
+          </div>
+          <div class="text-xs text-gray-600 leading-relaxed mb-3">
+            写一次话术，5 个 Agent 当天生效。预计每天覆盖 7 次类似问题。
+          </div>
+          <button class="w-full h-9 rounded-lg bg-violet-600 text-white text-sm font-medium">写一条话术 →</button>
+        </div>
+      </div>
+
+      <!-- 集群快览 -->
+      <div class="mx-4 mt-5 mb-4">
+        <div class="flex items-center justify-between mb-2 px-1">
+          <span class="text-sm font-bold">Agent 集群</span>
+          <button class="text-xs text-[#4C5BF0]" onclick="openSub('battle')">作战室 →</button>
+        </div>
+        <div class="bg-white rounded-2xl p-3 shadow-sm">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex -space-x-2">
+              <div class="w-8 h-8 rounded-full bg-gradient-to-br from-violet-400 to-violet-600 flex items-center justify-center text-white text-[10px] font-bold border-2 border-white">A1</div>
+              <div class="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-400 to-indigo-600 flex items-center justify-center text-white text-[10px] font-bold border-2 border-white">A2</div>
+              <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white text-[10px] font-bold border-2 border-white">A3</div>
+              <div class="w-8 h-8 rounded-full bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center text-white text-[10px] font-bold border-2 border-white">A4</div>
+              <div class="w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-white text-[10px] font-bold border-2 border-white">A5</div>
+            </div>
+            <div class="text-right">
+              <div class="text-xs text-gray-500">均响应</div>
+              <div class="text-sm font-bold text-emerald-600">1.4s</div>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 text-xs pt-2 border-t border-gray-100">
+            <span class="text-gray-500">4 健康</span>
+            <span class="text-gray-300">·</span>
+            <span class="text-amber-600">1 需关注 (A4)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ 任务队列 ============ -->
+    <div id="page-tasks" class="page hidden">
+      <div class="px-5 pt-2 pb-3">
+        <div class="text-2xl font-bold mb-3">任务队列</div>
+        <div class="flex bg-gray-200/60 rounded-xl p-1 text-xs">
+          <button class="flex-1 py-1.5 rounded-lg bg-white font-medium shadow-sm" onclick="filterTask(this, 'all')">全部 12</button>
+          <button class="flex-1 py-1.5 rounded-lg text-gray-600" onclick="filterTask(this, 'urgent')">急 3</button>
+          <button class="flex-1 py-1.5 rounded-lg text-gray-600" onclick="filterTask(this, 'review')">审 5</button>
+          <button class="flex-1 py-1.5 rounded-lg text-gray-600" onclick="filterTask(this, 'train')">训练 4</button>
+        </div>
+      </div>
+
+      <div class="mx-4 space-y-4">
+        <!-- 急需接管 -->
+        <div data-group="urgent">
+          <div class="text-xs font-semibold text-gray-500 mb-2 px-1">急需你接管</div>
+          <div class="bg-white rounded-2xl divide-y divide-gray-100">
+            <div class="p-3 flex gap-3 tap" onclick="openChat('李可')">
+              <img class="w-10 h-10 rounded-full" src="https://api.dicebear.com/9.x/notionists/svg?seed=liKe&backgroundColor=ffd1dc" alt="">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-1.5"><span class="font-medium text-sm">李可</span><span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-700">高价值</span></div>
+                <div class="text-xs text-gray-500 truncate">能不能便宜点 · Agent 58%</div>
+              </div>
+              <span class="text-[10px] text-red-500 self-center">刚升级</span>
+            </div>
+            <div class="p-3 flex gap-3 tap" onclick="openChat('王总')">
+              <img class="w-10 h-10 rounded-full" src="https://api.dicebear.com/9.x/notionists/svg?seed=wangZ&backgroundColor=c0aede" alt="">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-1.5"><span class="font-medium text-sm">王总</span><span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-700">预算 10w+</span></div>
+                <div class="text-xs text-gray-500 truncate">想和创始人聊聊 · 需要人工</div>
+              </div>
+              <span class="text-[10px] text-gray-400 self-center">4m</span>
+            </div>
+            <div class="p-3 flex gap-3 tap" onclick="openChat('张小姐')">
+              <img class="w-10 h-10 rounded-full" src="https://api.dicebear.com/9.x/notionists/svg?seed=zhangXJ&backgroundColor=b6e3f4" alt="">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-1.5"><span class="font-medium text-sm">张小姐</span><span class="text-[10px] px-1.5 py-0.5 rounded bg-red-100 text-red-700">投诉</span></div>
+                <div class="text-xs text-gray-500 truncate">负面情绪 · "没人管"</div>
+              </div>
+              <span class="text-[10px] text-gray-400 self-center">11m</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 待审核 -->
+        <div data-group="review">
+          <div class="text-xs font-semibold text-gray-500 mb-2 px-1 flex items-center justify-between">
+            <span>待你审核 · Agent 已写好</span>
+            <button class="text-[10px] text-[#4C5BF0]" onclick="openSub('review')">批量 →</button>
+          </div>
+          <div class="bg-white rounded-2xl divide-y divide-gray-100">
+            <div class="p-3 flex gap-3 tap" onclick="openChat('小飞')">
+              <img class="w-10 h-10 rounded-full" src="https://api.dicebear.com/9.x/notionists/svg?seed=xiaoFei" alt="">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-1.5"><span class="font-medium text-sm">小飞</span><span class="text-[10px] px-1.5 py-0.5 rounded bg-violet-100 text-violet-700">定金确认</span></div>
+                <div class="text-xs text-gray-500 truncate">Agent：「今日生效，19:00 前...」</div>
+              </div>
+              <button class="text-[10px] px-2 py-1 rounded bg-[#4C5BF0] text-white self-center" onclick="event.stopPropagation(); toast('已确认发送给小飞','success')">发送</button>
+            </div>
+            <div class="p-3 flex gap-3 tap" onclick="openChat('大白')">
+              <img class="w-10 h-10 rounded-full" src="https://api.dicebear.com/9.x/notionists/svg?seed=dabai" alt="">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-1.5"><span class="font-medium text-sm">大白</span><span class="text-[10px] px-1.5 py-0.5 rounded bg-violet-100 text-violet-700">退费</span></div>
+                <div class="text-xs text-gray-500 truncate">Agent：「按协议可以申请...」</div>
+              </div>
+              <button class="text-[10px] px-2 py-1 rounded bg-[#4C5BF0] text-white self-center" onclick="event.stopPropagation(); toast('已确认发送给大白','success')">发送</button>
+            </div>
+            <div class="p-3 flex gap-3 tap" onclick="openChat('李子萌')">
+              <img class="w-10 h-10 rounded-full" src="https://api.dicebear.com/9.x/notionists/svg?seed=liZiMeng" alt="">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-1.5"><span class="font-medium text-sm">李子萌</span><span class="text-[10px] px-1.5 py-0.5 rounded bg-gray-100 text-gray-600">合作咨询</span></div>
+                <div class="text-xs text-gray-500 truncate">Agent：「您的预算和规模...」</div>
+              </div>
+              <button class="text-[10px] px-2 py-1 rounded bg-[#4C5BF0] text-white self-center" onclick="event.stopPropagation(); toast('已确认发送给李子萌','success')">发送</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 训练机会 -->
+        <div data-group="train">
+          <div class="text-xs font-semibold text-gray-500 mb-2 px-1">训练机会</div>
+          <div class="space-y-2">
+            <div class="bg-gradient-to-br from-violet-50 to-indigo-50 border border-violet-100 rounded-2xl p-3 tap" onclick="openTrain('课程和理财顾问有什么区别')">
+              <div class="text-sm font-medium text-violet-900 mb-1">"课程和理财顾问有什么区别"</div>
+              <div class="text-xs text-gray-600">被问 11 次 · Agent 置信度 54%</div>
+            </div>
+            <div class="bg-gradient-to-br from-violet-50 to-indigo-50 border border-violet-100 rounded-2xl p-3 tap" onclick="openTrain('三线城市有老师吗')">
+              <div class="text-sm font-medium text-violet-900 mb-1">"三线城市有老师吗"</div>
+              <div class="text-xs text-gray-600">被问 7 次 · 流失率 60%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ Agent ============ -->
+    <div id="page-agents" class="page hidden">
+      <div class="px-5 pt-2 pb-3 flex items-center justify-between">
+        <div>
+          <div class="text-2xl font-bold">Agent 团队</div>
+          <div class="text-xs text-gray-500 mt-0.5">医助 1 组 · 5 Agent · 247 并行</div>
+        </div>
+        <button class="px-3 h-9 rounded-lg bg-[#4C5BF0] text-white text-xs font-medium tap" onclick="openSub('battle')">作战室 →</button>
+      </div>
+
+      <div class="mx-4 space-y-2.5">
+        <!-- 5 agents -->
+        <div class="bg-white rounded-2xl p-3 tap shadow-sm" onclick="openAgent('A1')">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-violet-400 to-violet-600 flex items-center justify-center text-white font-bold">A1</div>
+            <div class="flex-1">
+              <div class="text-sm font-semibold">销售助理型</div>
+              <div class="text-xs text-gray-500">进阶转化 / 价格异议</div>
+            </div>
+            <div class="text-right">
+              <div class="text-[10px] text-gray-500">置信度</div>
+              <div class="text-lg font-bold text-emerald-600">83%</div>
+            </div>
+          </div>
+          <div class="grid grid-cols-3 gap-2 text-center">
+            <div><div class="text-[10px] text-gray-500">并行</div><div class="text-sm font-semibold">47</div></div>
+            <div><div class="text-[10px] text-gray-500">今日成交</div><div class="text-sm font-semibold text-emerald-600">3</div></div>
+            <div><div class="text-[10px] text-gray-500">上抛</div><div class="text-sm font-semibold text-amber-600">2</div></div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-3 tap shadow-sm" onclick="openAgent('A5')">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-white font-bold">A5</div>
+            <div class="flex-1">
+              <div class="text-sm font-semibold">服务支持型</div>
+              <div class="text-xs text-gray-500">退费 / 售后 / 咨询</div>
+            </div>
+            <div class="text-right">
+              <div class="text-[10px] text-gray-500">置信度</div>
+              <div class="text-lg font-bold text-emerald-600">85%</div>
+            </div>
+          </div>
+          <div class="grid grid-cols-3 gap-2 text-center">
+            <div><div class="text-[10px] text-gray-500">并行</div><div class="text-sm font-semibold">58</div></div>
+            <div><div class="text-[10px] text-gray-500">已解决</div><div class="text-sm font-semibold text-emerald-600">60</div></div>
+            <div><div class="text-[10px] text-gray-500">上抛</div><div class="text-sm font-semibold">0</div></div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-3 tap shadow-sm" onclick="openAgent('A2')">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-indigo-400 to-indigo-600 flex items-center justify-center text-white font-bold">A2</div>
+            <div class="flex-1">
+              <div class="text-sm font-semibold">新客接待型</div>
+              <div class="text-xs text-gray-500">首次破冰 / 需求挖掘</div>
+            </div>
+            <div class="text-right">
+              <div class="text-[10px] text-gray-500">置信度</div>
+              <div class="text-lg font-bold text-emerald-600">81%</div>
+            </div>
+          </div>
+          <div class="grid grid-cols-3 gap-2 text-center">
+            <div><div class="text-[10px] text-gray-500">并行</div><div class="text-sm font-semibold">62</div></div>
+            <div><div class="text-[10px] text-gray-500">转意向</div><div class="text-sm font-semibold">14</div></div>
+            <div><div class="text-[10px] text-gray-500">上抛</div><div class="text-sm font-semibold">1</div></div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-3 tap shadow-sm" onclick="openAgent('A3')">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-bold">A3</div>
+            <div class="flex-1">
+              <div class="text-sm font-semibold">新客接待型</div>
+              <div class="text-xs text-gray-500">首次破冰 / 需求挖掘</div>
+            </div>
+            <div class="text-right">
+              <div class="text-[10px] text-gray-500">置信度</div>
+              <div class="text-lg font-bold text-amber-600">78%</div>
+            </div>
+          </div>
+          <div class="grid grid-cols-3 gap-2 text-center">
+            <div><div class="text-[10px] text-gray-500">并行</div><div class="text-sm font-semibold">58</div></div>
+            <div><div class="text-[10px] text-gray-500">转意向</div><div class="text-sm font-semibold">11</div></div>
+            <div><div class="text-[10px] text-gray-500">上抛</div><div class="text-sm font-semibold">2</div></div>
+          </div>
+        </div>
+
+        <!-- 需关注 -->
+        <div class="bg-white rounded-2xl p-3 tap shadow-sm border-2 border-amber-300" onclick="openAgent('A4')">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center text-white font-bold">A4</div>
+            <div class="flex-1">
+              <div class="flex items-center gap-1.5">
+                <span class="text-sm font-semibold">合作咨询型</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-700">需关注</span>
+              </div>
+              <div class="text-xs text-gray-500">渠道对接 / B 端</div>
+            </div>
+            <div class="text-right">
+              <div class="text-[10px] text-gray-500">置信度</div>
+              <div class="text-lg font-bold text-red-600">68%</div>
+            </div>
+          </div>
+          <div class="bg-amber-50 border border-amber-100 rounded-lg p-2 mb-2">
+            <div class="text-[11px] text-amber-700">合作咨询场景训练数据不足，建议补话术</div>
+          </div>
+          <div class="grid grid-cols-3 gap-2 text-center">
+            <div><div class="text-[10px] text-gray-500">并行</div><div class="text-sm font-semibold">22</div></div>
+            <div><div class="text-[10px] text-gray-500">意向</div><div class="text-sm font-semibold">2</div></div>
+            <div><div class="text-[10px] text-gray-500">上抛</div><div class="text-sm font-semibold text-red-600">4</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ 训练 ============ -->
+    <div id="page-train" class="page hidden">
+      <div class="px-5 pt-2 pb-3">
+        <div class="text-2xl font-bold">训练 Agent</div>
+        <div class="text-xs text-gray-500 mt-0.5">写一次话术，全集群 5 个 Agent 当天生效</div>
+      </div>
+
+      <div class="px-5 pb-3">
+        <div class="flex bg-gray-200/60 rounded-xl p-1 text-xs">
+          <button class="flex-1 py-1.5 rounded-lg bg-white font-medium shadow-sm" onclick="switchTrainTab(this, 'opps')">训练机会 4</button>
+          <button class="flex-1 py-1.5 rounded-lg text-gray-600" onclick="switchTrainTab(this, 'exp')">A/B 实验 2</button>
+        </div>
+      </div>
+
+      <!-- 机会 -->
+      <div id="trainPane-opps" class="mx-4 space-y-2.5">
+        <div class="bg-gradient-to-br from-violet-50 to-indigo-50 border border-violet-100 rounded-2xl p-4 tap" onclick="openTrain('课程和理财顾问有什么区别')">
+          <div class="flex items-start gap-2 mb-2">
+            <span class="text-lg">⚡</span>
+            <div class="flex-1">
+              <div class="text-sm font-semibold text-violet-900">"课程和理财顾问有什么区别"</div>
+              <div class="text-xs text-gray-600 mt-0.5">过去 24h 被问 11 次</div>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 mb-3">
+            <div class="flex-1 conf-bar"><div style="width:54%;background:#F59E0B"></div></div>
+            <span class="text-xs text-amber-600 font-semibold">Agent 54%</span>
+          </div>
+          <button class="w-full h-10 rounded-xl bg-violet-600 text-white text-sm font-medium">写一条话术 →</button>
+        </div>
+
+        <div class="bg-gradient-to-br from-violet-50 to-indigo-50 border border-violet-100 rounded-2xl p-4 tap" onclick="openTrain('三线城市有老师吗')">
+          <div class="flex items-start gap-2 mb-2">
+            <span class="text-lg">⚡</span>
+            <div class="flex-1">
+              <div class="text-sm font-semibold text-violet-900">"三线城市有老师吗"</div>
+              <div class="text-xs text-gray-600 mt-0.5">过去 24h 被问 7 次 · 流失率 60%</div>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 mb-3">
+            <div class="flex-1 conf-bar"><div style="width:48%;background:#EF4444"></div></div>
+            <span class="text-xs text-red-600 font-semibold">Agent 48%</span>
+          </div>
+          <button class="w-full h-10 rounded-xl bg-violet-600 text-white text-sm font-medium">写一条话术 →</button>
+        </div>
+
+        <div class="bg-gradient-to-br from-violet-50 to-indigo-50 border border-violet-100 rounded-2xl p-4 tap" onclick="openTrain('能不能分期付款')">
+          <div class="flex items-start gap-2 mb-2">
+            <span class="text-lg">⚡</span>
+            <div class="flex-1">
+              <div class="text-sm font-semibold text-violet-900">"能不能分期付款"</div>
+              <div class="text-xs text-gray-600 mt-0.5">过去 24h 被问 5 次</div>
+            </div>
+          </div>
+          <button class="w-full h-10 rounded-xl border border-violet-300 text-violet-700 text-sm font-medium">写一条话术 →</button>
+        </div>
+      </div>
+
+      <!-- A/B 实验 -->
+      <div id="trainPane-exp" class="mx-4 space-y-3 hidden">
+        <div class="bg-white rounded-2xl p-4 shadow-sm">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 font-semibold">已显著</span>
+            <span class="text-[10px] text-gray-500">168 样本 · 2 天</span>
+          </div>
+          <div class="text-sm font-semibold mb-3">价格异议话术 · 让步 vs 共情</div>
+          <div class="grid grid-cols-2 gap-2 mb-3">
+            <div class="p-3 rounded-xl bg-gray-50">
+              <div class="text-[10px] text-gray-500 mb-1">A · 发券策略</div>
+              <div class="text-2xl font-bold">35<span class="text-xs">%</span></div>
+              <div class="text-[10px] text-gray-500">成交率</div>
+            </div>
+            <div class="p-3 rounded-xl bg-emerald-50 border border-emerald-200">
+              <div class="text-[10px] text-emerald-700 mb-1">B · 案例共鸣 <span class="text-[10px] bg-emerald-500 text-white px-1 rounded ml-1">胜</span></div>
+              <div class="text-2xl font-bold text-emerald-600">42<span class="text-xs">%</span></div>
+              <div class="text-[10px] text-gray-500">成交率</div>
+            </div>
+          </div>
+          <div class="text-xs text-emerald-700 mb-3">+7% · 置信度 98%</div>
+          <button class="w-full h-10 rounded-xl bg-emerald-600 text-white text-sm font-medium" onclick="toast('B 版本已全量发布','train')">采纳 B · 全量发布</button>
+        </div>
+
+        <div class="bg-white rounded-2xl p-4 shadow-sm">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="text-[10px] px-2 py-0.5 rounded bg-amber-100 text-amber-700 font-semibold">观察中</span>
+            <span class="text-[10px] text-gray-500">42 样本 · 5 小时</span>
+          </div>
+          <div class="text-sm font-semibold mb-3">三线城市咨询 · 原版 vs 新版</div>
+          <div class="grid grid-cols-2 gap-2 mb-3">
+            <div class="p-3 rounded-xl bg-gray-50">
+              <div class="text-[10px] text-gray-500 mb-1">A · 原版</div>
+              <div class="text-2xl font-bold">8<span class="text-xs">%</span></div>
+              <div class="text-[10px] text-gray-500">成交率</div>
+            </div>
+            <div class="p-3 rounded-xl bg-gray-50">
+              <div class="text-[10px] text-gray-500 mb-1">B · 新版</div>
+              <div class="text-2xl font-bold">18<span class="text-xs">%</span></div>
+              <div class="text-[10px] text-gray-500">成交率</div>
+            </div>
+          </div>
+          <div class="text-xs text-amber-700">样本不足，预计明天达显著性</div>
+        </div>
+
+        <button class="w-full h-12 rounded-2xl border-2 border-dashed border-gray-300 text-gray-500 text-sm font-medium tap" onclick="toast('进入新建 A/B 测试流程','info')">
+          ＋ 新建 A/B 测试
+        </button>
+      </div>
+    </div>
+
+    <!-- ============ 我的 ============ -->
+    <div id="page-me" class="page hidden">
+      <div class="px-5 pt-2 pb-3">
+        <div class="text-2xl font-bold">我的</div>
+      </div>
+
+      <div class="mx-4">
+        <!-- 个人 -->
+        <div class="bg-white rounded-2xl p-4 flex items-center gap-3 shadow-sm">
+          <div class="w-14 h-14 rounded-full bg-gradient-to-br from-pink-300 to-pink-400 flex items-center justify-center text-white text-xl font-bold">菲</div>
+          <div class="flex-1">
+            <div class="font-bold">苏菲</div>
+            <div class="text-xs text-gray-500">主管 · 同时管 3 个组</div>
+          </div>
+          <button class="p-2 rounded-lg hover:bg-gray-50" onclick="toast('编辑资料','info')">
+            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+          </button>
+        </div>
+
+        <!-- 今日 -->
+        <div class="mt-3 bg-gradient-to-br from-indigo-500 to-violet-500 rounded-2xl p-4 text-white">
+          <div class="text-xs opacity-80 mb-2">今日我的操作</div>
+          <div class="grid grid-cols-3 gap-2 text-center">
+            <div>
+              <div class="text-2xl font-bold">12</div>
+              <div class="text-[10px] opacity-80">审核草稿</div>
+            </div>
+            <div>
+              <div class="text-2xl font-bold">3</div>
+              <div class="text-[10px] opacity-80">接管对话</div>
+            </div>
+            <div>
+              <div class="text-2xl font-bold">1</div>
+              <div class="text-[10px] opacity-80">训练话术</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 我管的组 -->
+        <div class="mt-4">
+          <div class="text-xs font-semibold text-gray-500 mb-2 px-1">我管的组</div>
+          <div class="bg-white rounded-2xl divide-y divide-gray-100">
+            <div class="p-3 flex items-center tap" onclick="toast('切换到 医助 1 组','info')">
+              <div class="w-9 h-9 rounded-lg bg-violet-100 flex items-center justify-center text-violet-700 font-bold text-xs mr-3">医1</div>
+              <div class="flex-1">
+                <div class="text-sm font-medium">医助 1 组 <span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700 ml-1">当前</span></div>
+                <div class="text-xs text-gray-500">5 Agent · 247 并行 · 待审 5</div>
+              </div>
+            </div>
+            <div class="p-3 flex items-center tap" onclick="toast('切换到 医助 2 组','info')">
+              <div class="w-9 h-9 rounded-lg bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold text-xs mr-3">医2</div>
+              <div class="flex-1">
+                <div class="text-sm font-medium">医助 2 组</div>
+                <div class="text-xs text-gray-500">3 Agent · 118 并行 · 待审 5</div>
+              </div>
+            </div>
+            <div class="p-3 flex items-center tap" onclick="toast('切换到 VIP 销售组','info')">
+              <div class="w-9 h-9 rounded-lg bg-amber-100 flex items-center justify-center text-amber-700 font-bold text-xs mr-3">VIP</div>
+              <div class="flex-1">
+                <div class="text-sm font-medium">VIP 销售组</div>
+                <div class="text-xs text-gray-500">4 Agent · 52 并行 · 待审 3</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 工具 -->
+        <div class="mt-4">
+          <div class="text-xs font-semibold text-gray-500 mb-2 px-1">快捷工具</div>
+          <div class="bg-white rounded-2xl divide-y divide-gray-100">
+            <div class="p-3 flex items-center tap" onclick="openSub('review')">
+              <div class="w-9 h-9 rounded-lg bg-amber-50 flex items-center justify-center mr-3">📥</div>
+              <div class="flex-1">
+                <div class="text-sm font-medium">跨组批量审核</div>
+                <div class="text-xs text-gray-500">13 条待审跨 3 个组</div>
+              </div>
+              <svg class="w-4 h-4 text-gray-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+            </div>
+            <div class="p-3 flex items-center tap" onclick="toast('打开话术库','info')">
+              <div class="w-9 h-9 rounded-lg bg-violet-50 flex items-center justify-center mr-3">📚</div>
+              <div class="flex-1">
+                <div class="text-sm font-medium">话术库</div>
+                <div class="text-xs text-gray-500">3 个话术 · 本周更新 5 次</div>
+              </div>
+              <svg class="w-4 h-4 text-gray-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+            </div>
+            <div class="p-3 flex items-center tap" onclick="toast('打开升级规则配置','info')">
+              <div class="w-9 h-9 rounded-lg bg-red-50 flex items-center justify-center mr-3">⚙️</div>
+              <div class="flex-1">
+                <div class="text-sm font-medium">升级规则</div>
+                <div class="text-xs text-gray-500">7 条规则 · R-032 今日触发 12 次</div>
+              </div>
+              <svg class="w-4 h-4 text-gray-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- 设置 -->
+        <div class="mt-4">
+          <div class="text-xs font-semibold text-gray-500 mb-2 px-1">设置</div>
+          <div class="bg-white rounded-2xl divide-y divide-gray-100">
+            <div class="p-3 flex items-center justify-between tap" onclick="toast('通知设置','info')">
+              <div class="text-sm">通知与提醒</div>
+              <span class="text-xs text-gray-400">高价值上抛时 →</span>
+            </div>
+            <div class="p-3 flex items-center justify-between tap" onclick="toast('免打扰时段','info')">
+              <div class="text-sm">免打扰时段</div>
+              <span class="text-xs text-gray-400">23:00-07:00 →</span>
+            </div>
+            <div class="p-3 flex items-center justify-between tap" onclick="toast('外观','info')">
+              <div class="text-sm">外观</div>
+              <span class="text-xs text-gray-400">跟随系统 →</span>
+            </div>
+            <div class="p-3 flex items-center justify-between tap" onclick="toast('退出登录','warn')">
+              <div class="text-sm text-red-600">退出登录</div>
+            </div>
+          </div>
+        </div>
+        <div class="text-center text-[10px] text-gray-400 mt-4 mb-6">句子互动 · v2.3.1</div>
+      </div>
+    </div>
+
+    <!-- ============ 会话详情（子页） ============ -->
+    <div id="sub-chat" class="sub-page">
+      <div class="sub-nav">
+        <button class="w-9 h-9 rounded-full flex items-center justify-center bg-gray-100 tap" onclick="closeSub('chat')">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
+        </button>
+        <div class="flex-1 flex items-center gap-2">
+          <img class="w-8 h-8 rounded-full" id="chatAvatar" src="https://api.dicebear.com/9.x/notionists/svg?seed=liKe&backgroundColor=ffd1dc" alt="">
+          <div>
+            <div class="text-sm font-semibold" id="chatName">李可</div>
+            <div class="text-[10px] text-gray-500">高价值 · 人机协作中</div>
+          </div>
+        </div>
+        <button class="w-9 h-9 rounded-full flex items-center justify-center bg-gray-100 tap" onclick="openSheet('moreSheet')">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v.01M12 12v.01M12 19v.01"/></svg>
+        </button>
+      </div>
+
+      <!-- 升级原因条 -->
+      <div class="px-4 py-2.5 bg-gradient-to-r from-red-50 to-amber-50 border-b border-red-100 flex items-center gap-2.5">
+        <div class="w-6 h-6 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0">
+          <svg class="w-3.5 h-3.5 text-red-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="text-xs font-semibold text-red-700">Agent A1 已升级 · R-032</div>
+          <div class="text-[10px] text-gray-600 truncate">价格异议 ×3 + 高价值 · 置信度 58%</div>
+        </div>
+        <button class="text-[10px] text-red-600 font-medium" onclick="openSheet('ruleSheet')">为什么？</button>
+      </div>
+
+      <div class="sub-body px-4 py-4 space-y-4">
+        <div class="text-center text-[10px] text-gray-400">今天 14:02</div>
+
+        <!-- Agent -->
+        <div class="flex justify-end">
+          <div class="max-w-[80%]">
+            <div class="flex items-center justify-end gap-1.5 mb-1">
+              <span class="text-[10px] px-1.5 py-0.5 rounded bg-violet-100 text-violet-700 font-medium">Agent A1</span>
+              <span class="text-[10px] text-gray-500">14:02</span>
+            </div>
+            <div class="bubble-agent px-3.5 py-2.5 text-sm leading-relaxed">
+              同学～看你学完基础理财课程啦，作业正确率还没到 60%。我们有「实操特训营」，带着模拟炒股实操，要试试吗？
+            </div>
+            <div class="flex items-center justify-end gap-1.5 mt-1 text-[10px] text-gray-400">
+              <span>#A-127</span><span>·</span><span class="text-emerald-600 font-medium">92%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 客户 -->
+        <div class="flex">
+          <div class="max-w-[80%]">
+            <div class="text-[10px] text-gray-500 mb-1">李可 · 14:05</div>
+            <div class="bubble-customer px-3.5 py-2.5 text-sm">对呀，一到自己规划存款、买基金就愁人！</div>
+          </div>
+        </div>
+
+        <div class="flex">
+          <div class="max-w-[80%]">
+            <div class="bubble-customer px-3.5 py-2.5 text-sm">你们进阶课感觉有点贵，能不能便宜点</div>
+          </div>
+        </div>
+
+        <!-- Agent -->
+        <div class="flex justify-end">
+          <div class="max-w-[80%]">
+            <div class="flex items-center justify-end gap-1.5 mb-1">
+              <span class="text-[10px] px-1.5 py-0.5 rounded bg-violet-100 text-violet-700 font-medium">Agent A1</span>
+              <span class="text-[10px] text-gray-500">14:07</span>
+            </div>
+            <div class="bubble-agent px-3.5 py-2.5 text-sm leading-relaxed">
+              理解您的顾虑～性价比其实不错，每天不到 2 元。之前学员跟课 1 个月月入多了 500-1000 元～
+            </div>
+            <div class="flex items-center justify-end gap-1.5 mt-1 text-[10px] text-gray-400">
+              <span>#A-089</span><span>·</span><span class="text-amber-600 font-medium">74%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex">
+          <div class="max-w-[80%]">
+            <div class="text-[10px] text-gray-500 mb-1">李可 · 14:09 <span class="text-[10px] px-1 rounded bg-red-100 text-red-600">×3</span></div>
+            <div class="bubble-customer px-3.5 py-2.5 text-sm">2 元每天也 700 多了。双十一有活动吗，能给个折扣吗</div>
+          </div>
+        </div>
+
+        <!-- 升级提示 -->
+        <div class="flex justify-center">
+          <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-red-50 border border-red-200 text-[11px] text-red-700">
+            <span class="pulse text-red-500 bg-red-500"></span>
+            置信度 58%，转你处理
+          </div>
+        </div>
+
+        <!-- Agent 草稿 -->
+        <div class="flex justify-end" id="m-draft">
+          <div class="max-w-[85%]">
+            <div class="flex items-center justify-end gap-1.5 mb-1">
+              <span class="text-[10px] px-1.5 py-0.5 rounded bg-gray-100 text-gray-600 font-medium">Agent 草稿 · 未发送</span>
+            </div>
+            <div class="px-3.5 py-2.5 text-sm leading-relaxed rounded-2xl border-2 border-dashed border-violet-300 bg-violet-50/50">
+              亲～现在确实没有优惠活动呢。不过高价值学员有专属福利，我帮您申请一张 <b>100 元抵扣券</b>，您看可以吗？
+            </div>
+            <div class="flex justify-end gap-1.5 mt-2">
+              <button class="text-xs px-3 py-1.5 rounded-lg border border-gray-300 bg-white tap" onclick="editDraft()">修改</button>
+              <button class="text-xs px-3 py-1.5 rounded-lg bg-[#4C5BF0] text-white tap" onclick="sendDraft()">发送</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 底部输入区（移动端 4 模式横向按钮组） -->
+      <div class="border-t border-gray-200 bg-white/95 backdrop-blur px-3 pt-2.5 pb-5 flex-shrink-0">
+        <div class="flex items-center gap-1.5 overflow-x-auto mb-2 pb-1">
+          <button class="mode-btn plan tap flex-shrink-0" onclick="openSheet('planSheet')">
+            <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M9.243 3.03a1 1 0 01.727 1.213L9.53 6h2.94l.56-2.243a1 1 0 111.94.486L14.53 6H17a1 1 0 110 2h-2.97l-1 4H15a1 1 0 110 2h-2.47l-.56 2.242a1 1 0 11-1.94-.485L10.47 14H7.53l-.56 2.243a1 1 0 11-1.94-.486L5.47 14H3a1 1 0 110-2h2.97l1-4H5a1 1 0 110-2h2.47l.56-2.243a1 1 0 011.213-.727zM9.03 8l-1 4h2.938l1-4H9.031z" clip-rule="evenodd"/></svg>
+            Plan
+          </button>
+          <button class="mode-btn manual tap flex-shrink-0" onclick="openSheet('manualSheet')">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+            Manual
+          </button>
+          <button class="mode-btn cowrite tap flex-shrink-0" onclick="openSheet('cowriteSheet')">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            Co-write
+          </button>
+          <button class="mode-btn teach tap flex-shrink-0" onclick="openSheet('teachSheet')">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+            Teach
+          </button>
+        </div>
+        <div class="flex items-center gap-2">
+          <div class="flex-1 h-10 rounded-full bg-gray-100 px-4 flex items-center text-sm text-gray-400 tap" onclick="openSheet('manualSheet')">
+            点此输入...
+          </div>
+          <button class="w-10 h-10 rounded-full bg-[#4C5BF0] flex items-center justify-center text-white tap" onclick="toast('请先写内容','warn')">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ 批量审核（子页） ============ -->
+    <div id="sub-review" class="sub-page">
+      <div class="sub-nav">
+        <button class="w-9 h-9 rounded-full flex items-center justify-center bg-gray-100 tap" onclick="closeSub('review')">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
+        </button>
+        <div class="flex-1">
+          <div class="text-sm font-semibold">跨组批量审核</div>
+          <div class="text-[10px] text-gray-500">3 个组 · 13 条 · 已选 <span id="batchCount" class="font-bold text-[#4C5BF0]">0</span></div>
+        </div>
+        <button class="px-2.5 h-8 rounded-lg text-xs border border-gray-200 tap" onclick="batchAll(true)">全选</button>
+      </div>
+
+      <div class="sub-body px-3 py-3 space-y-3">
+        <!-- 医助 1 组 -->
+        <div>
+          <div class="px-2 mb-2 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="text-sm font-semibold">医助 1 组</span>
+              <span class="text-[10px] text-gray-500">5 条</span>
+            </div>
+            <label class="text-[10px] text-[#4C5BF0]"><input type="checkbox" class="mr-1 align-middle accent-[#4C5BF0]" onchange="batchGroup(this, 'g1')">本组全选</label>
+          </div>
+          <div class="bg-white rounded-2xl divide-y divide-gray-100" id="g1">
+            <label class="p-3 flex gap-2.5 tap items-start">
+              <input type="checkbox" class="mt-1.5 accent-[#4C5BF0] task-c" onchange="batchCount()">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-1.5 mb-0.5"><span class="text-sm font-medium">小飞</span><span class="text-[10px] px-1 rounded bg-violet-100 text-violet-700">定金</span><span class="text-[10px] text-emerald-600 ml-auto">82%</span></div>
+                <div class="text-xs text-gray-600 leading-relaxed">亲～您的定金已收到，19:00 前完成尾款支付哦...</div>
+              </div>
+            </label>
+            <label class="p-3 flex gap-2.5 tap items-start">
+              <input type="checkbox" class="mt-1.5 accent-[#4C5BF0] task-c" onchange="batchCount()">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-1.5 mb-0.5"><span class="text-sm font-medium">大白</span><span class="text-[10px] px-1 rounded bg-violet-100 text-violet-700">退费</span><span class="text-[10px] text-amber-600 ml-auto">78%</span></div>
+                <div class="text-xs text-gray-600 leading-relaxed">按照购课协议，开课 7 日内可申请全额退费...</div>
+              </div>
+            </label>
+            <label class="p-3 flex gap-2.5 tap items-start">
+              <input type="checkbox" class="mt-1.5 accent-[#4C5BF0] task-c" onchange="batchCount()">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-1.5 mb-0.5"><span class="text-sm font-medium">李子萌</span><span class="text-[10px] px-1 rounded bg-gray-100 text-gray-600">合作</span><span class="text-[10px] text-amber-600 ml-auto">74%</span></div>
+                <div class="text-xs text-gray-600 leading-relaxed">方便介绍下贵司规模和期望覆盖的用户体量吗？</div>
+              </div>
+            </label>
+            <label class="p-3 flex gap-2.5 tap items-start">
+              <input type="checkbox" class="mt-1.5 accent-[#4C5BF0] task-c" onchange="batchCount()">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-1.5 mb-0.5"><span class="text-sm font-medium">丫丫</span><span class="text-[10px] px-1 rounded bg-violet-100 text-violet-700">课表</span><span class="text-[10px] text-emerald-600 ml-auto">85%</span></div>
+                <div class="text-xs text-gray-600 leading-relaxed">课表已发到您邮箱啦～有不清楚的随时问我～</div>
+              </div>
+            </label>
+            <label class="p-3 flex gap-2.5 tap items-start">
+              <input type="checkbox" class="mt-1.5 accent-[#4C5BF0] task-c" onchange="batchCount()">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-1.5 mb-0.5"><span class="text-sm font-medium">花花</span><span class="text-[10px] px-1 rounded bg-violet-100 text-violet-700">感谢</span><span class="text-[10px] text-emerald-600 ml-auto">88%</span></div>
+                <div class="text-xs text-gray-600 leading-relaxed">不客气呀～有问题随时找我哈～</div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div>
+          <div class="px-2 mb-2 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="text-sm font-semibold">医助 2 组</span>
+              <span class="text-[10px] text-gray-500">5 条</span>
+            </div>
+            <label class="text-[10px] text-[#4C5BF0]"><input type="checkbox" class="mr-1 align-middle accent-[#4C5BF0]" onchange="batchGroup(this, 'g2')">本组全选</label>
+          </div>
+          <div class="bg-white rounded-2xl divide-y divide-gray-100" id="g2">
+            <label class="p-3 flex gap-2.5 tap items-start">
+              <input type="checkbox" class="mt-1.5 accent-[#4C5BF0] task-c" onchange="batchCount()">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-1.5 mb-0.5"><span class="text-sm font-medium">林佳</span><span class="text-[10px] px-1 rounded bg-violet-100 text-violet-700">首购</span><span class="text-[10px] text-emerald-600 ml-auto">80%</span></div>
+                <div class="text-xs text-gray-600 leading-relaxed">您目前最想解决的理财难题是哪类呢？</div>
+              </div>
+            </label>
+            <label class="p-3 flex gap-2.5 tap items-start">
+              <input type="checkbox" class="mt-1.5 accent-[#4C5BF0] task-c" onchange="batchCount()">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-1.5 mb-0.5"><span class="text-sm font-medium">周一</span><span class="text-[10px] px-1 rounded bg-violet-100 text-violet-700">优惠</span><span class="text-[10px] text-amber-600 ml-auto">76%</span></div>
+                <div class="text-xs text-gray-600 leading-relaxed">目前有拼团价，2 人成团立减 200 元～</div>
+              </div>
+            </label>
+            <label class="p-3 flex gap-2.5 tap items-start">
+              <input type="checkbox" class="mt-1.5 accent-[#4C5BF0] task-c" onchange="batchCount()">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-1.5 mb-0.5"><span class="text-sm font-medium">郑明</span><span class="text-[10px] px-1 rounded bg-violet-100 text-violet-700">试听</span><span class="text-[10px] text-emerald-600 ml-auto">84%</span></div>
+                <div class="text-xs text-gray-600 leading-relaxed">给您安排一节免费试听课，您方便哪个时间？</div>
+              </div>
+            </label>
+            <label class="p-3 flex gap-2.5 tap items-start">
+              <input type="checkbox" class="mt-1.5 accent-[#4C5BF0] task-c" onchange="batchCount()">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-1.5 mb-0.5"><span class="text-sm font-medium">许琳</span><span class="text-[10px] px-1 rounded bg-violet-100 text-violet-700">退课</span><span class="text-[10px] text-amber-600 ml-auto">72%</span></div>
+                <div class="text-xs text-gray-600 leading-relaxed">我看下您是否符合无条件退课窗口，稍等...</div>
+              </div>
+            </label>
+            <label class="p-3 flex gap-2.5 tap items-start">
+              <input type="checkbox" class="mt-1.5 accent-[#4C5BF0] task-c" onchange="batchCount()">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-1.5 mb-0.5"><span class="text-sm font-medium">黄石</span><span class="text-[10px] px-1 rounded bg-violet-100 text-violet-700">进度</span><span class="text-[10px] text-emerald-600 ml-auto">81%</span></div>
+                <div class="text-xs text-gray-600 leading-relaxed">您目前在第 4 章，建议这周把模拟题刷一下...</div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div>
+          <div class="px-2 mb-2 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="text-sm font-semibold">VIP 销售组</span>
+              <span class="text-[10px] text-gray-500">3 条</span>
+            </div>
+            <label class="text-[10px] text-[#4C5BF0]"><input type="checkbox" class="mr-1 align-middle accent-[#4C5BF0]" onchange="batchGroup(this, 'g3')">本组全选</label>
+          </div>
+          <div class="bg-white rounded-2xl divide-y divide-gray-100" id="g3">
+            <label class="p-3 flex gap-2.5 tap items-start">
+              <input type="checkbox" class="mt-1.5 accent-[#4C5BF0] task-c" onchange="batchCount()">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-1.5 mb-0.5"><span class="text-sm font-medium">陈总</span><span class="text-[10px] px-1 rounded bg-violet-100 text-violet-700">签约</span><span class="text-[10px] text-amber-600 ml-auto">70%</span></div>
+                <div class="text-xs text-gray-600 leading-relaxed">合同已收到，周二前给您回传盖章版...</div>
+              </div>
+            </label>
+            <label class="p-3 flex gap-2.5 tap items-start">
+              <input type="checkbox" class="mt-1.5 accent-[#4C5BF0] task-c" onchange="batchCount()">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-1.5 mb-0.5"><span class="text-sm font-medium">方姐</span><span class="text-[10px] px-1 rounded bg-violet-100 text-violet-700">VIP 咨询</span><span class="text-[10px] text-amber-600 ml-auto">75%</span></div>
+                <div class="text-xs text-gray-600 leading-relaxed">VIP 定制班 ROI 测算我发您邮箱...</div>
+              </div>
+            </label>
+            <label class="p-3 flex gap-2.5 tap items-start">
+              <input type="checkbox" class="mt-1.5 accent-[#4C5BF0] task-c" onchange="batchCount()">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-1.5 mb-0.5"><span class="text-sm font-medium">赵总</span><span class="text-[10px] px-1 rounded bg-violet-100 text-violet-700">复购</span><span class="text-[10px] text-amber-600 ml-auto">79%</span></div>
+                <div class="text-xs text-gray-600 leading-relaxed">老客户续费有专属礼品和 95 折...</div>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- 底部操作 -->
+      <div class="flex-shrink-0 bg-white/95 backdrop-blur border-t border-gray-200 px-4 pt-3 pb-5 flex gap-2">
+        <button class="flex-1 h-11 rounded-xl border border-gray-200 text-sm text-gray-700 tap" onclick="batchDo('rewrite')">让 Agent 重写</button>
+        <button class="flex-1 h-11 rounded-xl bg-gradient-to-r from-[#4C5BF0] to-[#6D5CE5] text-white text-sm font-medium tap" onclick="batchDo('send')">批量发送</button>
+      </div>
+    </div>
+
+    <!-- ============ 作战室（子页） ============ -->
+    <div id="sub-battle" class="sub-page">
+      <div class="sub-nav">
+        <button class="w-9 h-9 rounded-full flex items-center justify-center bg-gray-100 tap" onclick="closeSub('battle')">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
+        </button>
+        <div class="flex-1">
+          <div class="text-sm font-semibold">Agent 作战室</div>
+          <div class="text-[10px] text-gray-500">医助 1 组 · 247 并行 · 均响应 1.4s</div>
+        </div>
+        <button class="w-9 h-9 rounded-full flex items-center justify-center bg-gray-100 tap" onclick="toast('已刷新','info')">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+        </button>
+      </div>
+
+      <!-- 顶部指标 -->
+      <div class="px-4 pt-3 pb-2 bg-gradient-to-br from-violet-50 to-indigo-50 flex-shrink-0 border-b border-violet-100">
+        <div class="grid grid-cols-4 gap-2 text-center">
+          <div><div class="text-lg font-bold">287</div><div class="text-[10px] text-gray-600">处理</div></div>
+          <div><div class="text-lg font-bold text-emerald-600">220</div><div class="text-[10px] text-gray-600">自动</div></div>
+          <div><div class="text-lg font-bold text-amber-600">12</div><div class="text-[10px] text-gray-600">上抛</div></div>
+          <div><div class="text-lg font-bold text-emerald-600">6</div><div class="text-[10px] text-gray-600">成交</div></div>
+        </div>
+      </div>
+
+      <div class="sub-body px-4 py-4 space-y-3">
+        <!-- A1 -->
+        <div class="bg-white rounded-2xl overflow-hidden shadow-sm">
+          <div class="p-3 border-b border-gray-100 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-400 to-violet-600 flex items-center justify-center text-white font-bold text-sm">A1</div>
+            <div class="flex-1">
+              <div class="text-sm font-semibold">销售助理型</div>
+              <div class="text-[10px] text-gray-500">47 并行 · 成交 3</div>
+            </div>
+            <div class="text-right">
+              <div class="text-lg font-bold text-emerald-600">83%</div>
+              <div class="text-[10px] text-gray-500">健康</div>
+            </div>
+          </div>
+          <div class="p-2 space-y-1.5 bg-gray-50/50">
+            <div class="p-2 rounded-lg bg-red-50 border border-red-100 tap" onclick="openChat('李可')">
+              <div class="flex items-center justify-between text-xs"><span class="font-medium">🚨 李可 · 高价值</span><span class="text-red-600 font-semibold">58%</span></div>
+              <div class="text-[11px] text-gray-600 mt-0.5 truncate">能不能便宜点 / 有折扣吗</div>
+            </div>
+            <div class="p-2 rounded-lg bg-white tap" onclick="toast('进入 吴珊 会话')">
+              <div class="flex items-center justify-between text-xs"><span class="font-medium">吴珊 · 进阶</span><span class="text-emerald-600 font-semibold">88%</span></div>
+              <div class="text-[11px] text-gray-600 mt-0.5 truncate">想了解新课安排</div>
+            </div>
+            <div class="text-[10px] text-gray-400 text-center py-1">+ 43 个正常处理中</div>
+          </div>
+        </div>
+
+        <!-- A4 需关注 -->
+        <div class="bg-white rounded-2xl overflow-hidden shadow-sm border-2 border-amber-300">
+          <div class="p-3 border-b border-gray-100 flex items-center gap-3 bg-amber-50/30">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center text-white font-bold text-sm">A4</div>
+            <div class="flex-1">
+              <div class="text-sm font-semibold flex items-center gap-1.5">合作咨询型 <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-700">需关注</span></div>
+              <div class="text-[10px] text-gray-500">22 并行 · 上抛 4</div>
+            </div>
+            <div class="text-right">
+              <div class="text-lg font-bold text-red-600">68%</div>
+              <div class="text-[10px] text-gray-500">偏低</div>
+            </div>
+          </div>
+          <div class="p-2 space-y-1.5 bg-gray-50/50">
+            <div class="p-2 rounded-lg bg-red-50 border border-red-100 tap" onclick="toast('进入 何总 会话')">
+              <div class="flex items-center justify-between text-xs"><span class="font-medium">🚨 何总 · 合作</span><span class="text-red-600 font-semibold">68%</span></div>
+              <div class="text-[11px] text-gray-600 mt-0.5 truncate">方案能发邮箱吗</div>
+            </div>
+            <div class="p-2 rounded-lg bg-amber-50 tap" onclick="toast('进入 方莉 会话')">
+              <div class="flex items-center justify-between text-xs"><span class="font-medium">🔥 方莉 · 合作</span><span class="text-amber-600 font-semibold">72%</span></div>
+              <div class="text-[11px] text-gray-600 mt-0.5 truncate">渠道分成怎么算</div>
+            </div>
+          </div>
+          <div class="p-3 bg-amber-50/50 border-t border-amber-100">
+            <div class="text-[11px] text-amber-700 mb-1.5">合作咨询场景训练数据不足</div>
+            <button class="w-full h-8 rounded-lg bg-amber-600 text-white text-xs tap" onclick="closeSub('battle'); go('train')">去补话术 →</button>
+          </div>
+        </div>
+
+        <!-- A5 -->
+        <div class="bg-white rounded-2xl overflow-hidden shadow-sm">
+          <div class="p-3 border-b border-gray-100 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-white font-bold text-sm">A5</div>
+            <div class="flex-1">
+              <div class="text-sm font-semibold">服务支持型</div>
+              <div class="text-[10px] text-gray-500">58 并行 · 解决 60</div>
+            </div>
+            <div class="text-right">
+              <div class="text-lg font-bold text-emerald-600">85%</div>
+              <div class="text-[10px] text-gray-500">健康</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- A2 -->
+        <div class="bg-white rounded-2xl overflow-hidden shadow-sm">
+          <div class="p-3 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-400 to-indigo-600 flex items-center justify-center text-white font-bold text-sm">A2</div>
+            <div class="flex-1">
+              <div class="text-sm font-semibold">新客接待型</div>
+              <div class="text-[10px] text-gray-500">62 并行 · 转意向 14</div>
+            </div>
+            <div class="text-right">
+              <div class="text-lg font-bold text-emerald-600">81%</div>
+              <div class="text-[10px] text-gray-500">健康</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- A3 -->
+        <div class="bg-white rounded-2xl overflow-hidden shadow-sm">
+          <div class="p-3 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-bold text-sm">A3</div>
+            <div class="flex-1">
+              <div class="text-sm font-semibold">新客接待型</div>
+              <div class="text-[10px] text-gray-500">58 并行 · 转意向 11</div>
+            </div>
+            <div class="text-right">
+              <div class="text-lg font-bold text-amber-600">78%</div>
+              <div class="text-[10px] text-gray-500">一般</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ 今日报告（子页） ============ -->
+    <div id="sub-report" class="sub-page">
+      <div class="sub-nav">
+        <button class="w-9 h-9 rounded-full flex items-center justify-center bg-gray-100 tap" onclick="closeSub('report')">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
+        </button>
+        <div class="flex-1">
+          <div class="text-sm font-semibold">今日交付报告</div>
+          <div class="text-[10px] text-gray-500">2026-04-25 · 医助 1 组</div>
+        </div>
+      </div>
+
+      <div class="sub-body">
+        <!-- Hero -->
+        <div class="px-5 py-5 bg-gradient-to-br from-violet-500 to-indigo-600 text-white">
+          <div class="text-sm opacity-90 leading-relaxed">
+            今天 5 个 Agent 并行处理了 <b>247</b> 个客户跟进，自动完成 <b>220</b> 个，升级给你 <b>12</b> 个（已处理 9 个）。
+          </div>
+          <div class="grid grid-cols-4 gap-2 mt-4">
+            <div class="bg-white/15 rounded-lg p-2 text-center backdrop-blur">
+              <div class="text-lg font-bold">247</div>
+              <div class="text-[9px] opacity-80">处理</div>
+            </div>
+            <div class="bg-white/15 rounded-lg p-2 text-center backdrop-blur">
+              <div class="text-lg font-bold">89%</div>
+              <div class="text-[9px] opacity-80">自动</div>
+            </div>
+            <div class="bg-white/15 rounded-lg p-2 text-center backdrop-blur">
+              <div class="text-lg font-bold">4.6</div>
+              <div class="text-[9px] opacity-80">CSAT</div>
+            </div>
+            <div class="bg-white/15 rounded-lg p-2 text-center backdrop-blur">
+              <div class="text-lg font-bold">6</div>
+              <div class="text-[9px] opacity-80">成交</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 关键事件 -->
+        <div class="px-4 py-4 space-y-2.5">
+          <div class="text-sm font-semibold mb-1">关键事件</div>
+          <div class="bg-white rounded-2xl p-3 flex gap-2.5">
+            <div class="w-1 rounded-full bg-emerald-500 flex-shrink-0"></div>
+            <div class="flex-1">
+              <div class="text-sm">话术 <b>#A-127</b> 转化率 <b class="text-emerald-600">38%</b>，+12% 比昨天</div>
+              <div class="text-[11px] text-gray-500 mt-0.5">建议扩展到基础学员群</div>
+              <button class="mt-2 text-xs px-2.5 py-1 rounded bg-emerald-50 text-emerald-700 font-medium" onclick="toast('已启动扩展','success')">立即扩展</button>
+            </div>
+          </div>
+          <div class="bg-white rounded-2xl p-3 flex gap-2.5">
+            <div class="w-1 rounded-full bg-red-500 flex-shrink-0"></div>
+            <div class="flex-1">
+              <div class="text-sm">"三线城市有老师吗" 被问 <b>7</b> 次，流失 <b class="text-red-600">60%</b></div>
+              <div class="text-[11px] text-gray-500 mt-0.5">建议写针对性话术</div>
+              <button class="mt-2 text-xs px-2.5 py-1 rounded bg-red-50 text-red-700 font-medium" onclick="closeSub('report'); openTrain('三线城市有老师吗')">去写话术</button>
+            </div>
+          </div>
+          <div class="bg-white rounded-2xl p-3 flex gap-2.5">
+            <div class="w-1 rounded-full bg-amber-500 flex-shrink-0"></div>
+            <div class="flex-1">
+              <div class="text-sm">Agent A4 置信度均值 <b class="text-amber-600">71%</b>（集群均 83%）</div>
+              <div class="text-[11px] text-gray-500 mt-0.5">合作咨询场景训练数据不足</div>
+              <button class="mt-2 text-xs px-2.5 py-1 rounded bg-amber-50 text-amber-700 font-medium" onclick="closeSub('report'); openAgent('A4')">查看 A4</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 需要决策 -->
+        <div class="px-4 pb-4 space-y-2.5">
+          <div class="text-sm font-semibold mb-1 flex items-center justify-between">
+            <span>需要你决策</span>
+            <span class="text-[10px] text-gray-500 font-normal">下班前 · 预计 5 分钟</span>
+          </div>
+          <div class="bg-white rounded-2xl p-3">
+            <div class="text-sm font-medium mb-1">3 个高价值客户今天流失</div>
+            <div class="text-[11px] text-gray-500">李可、陈晓、王霖 · 价格异议环节卡壳</div>
+            <div class="flex gap-2 mt-3">
+              <button class="flex-1 h-9 rounded-lg bg-[#4C5BF0] text-white text-xs" onclick="toast('已交给 Agent A1 明日回访','success')">交给 Agent 回访</button>
+              <button class="flex-1 h-9 rounded-lg border border-gray-200 text-xs" onclick="toast('已加入我的待办','info')">我来联系</button>
+            </div>
+          </div>
+          <div class="bg-white rounded-2xl p-3">
+            <div class="text-sm font-medium mb-1">把 #A-089 更新到 v2？</div>
+            <div class="text-[11px] text-gray-500">你今天训练的新版本，2h 内已在 4 个 Agent 上成功复用</div>
+            <div class="flex gap-2 mt-3">
+              <button class="flex-1 h-9 rounded-lg bg-violet-600 text-white text-xs" onclick="toast('#A-089 v2 已正式发布','train')">正式发布 v2</button>
+              <button class="flex-1 h-9 rounded-lg border border-gray-200 text-xs" onclick="toast('再观察 24h','info')">再观察</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ Bottom Tab Bar ============ -->
+    <nav class="tab-bar">
+      <div class="tab-btn active" data-tab="home" onclick="go('home')">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/></svg>
+        <span>首页</span>
+      </div>
+      <div class="tab-btn" data-tab="tasks" onclick="go('tasks')">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+        <span>任务</span>
+        <span class="tab-badge">3</span>
+      </div>
+      <div class="tab-btn" data-tab="agents" onclick="go('agents')">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        <span>Agent</span>
+      </div>
+      <div class="tab-btn" data-tab="train" onclick="go('train')">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+        <span>训练</span>
+        <span class="tab-badge" style="background:#8B79F0">4</span>
+      </div>
+      <div class="tab-btn" data-tab="me" onclick="go('me')">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+        <span>我的</span>
+      </div>
+    </nav>
+
+    <!-- Sheet：更多 -->
+    <div class="sheet-mask" id="sheetMask" onclick="closeAllSheets()"></div>
+
+    <div id="moreSheet" class="sheet">
+      <div class="sheet-handle"></div>
+      <div class="px-4 pb-2 text-xs text-gray-500 text-center">李可 · 高价值</div>
+      <div class="divide-y divide-gray-100">
+        <div class="p-4 flex items-center gap-3 tap" onclick="closeAllSheets(); toast('会话模式切换到 Agent 接管','info')">
+          <span class="w-8 h-8 rounded-lg bg-violet-50 flex items-center justify-center">🤖</span>
+          <div class="flex-1 text-sm">切到 Agent 接管</div>
+        </div>
+        <div class="p-4 flex items-center gap-3 tap" onclick="closeAllSheets(); toast('切到我接管','info')">
+          <span class="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">👤</span>
+          <div class="flex-1 text-sm">切到我接管</div>
+        </div>
+        <div class="p-4 flex items-center gap-3 tap" onclick="closeAllSheets(); toast('转接给刘丽丽','success')">
+          <span class="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center">↗</span>
+          <div class="flex-1 text-sm">转接给同事</div>
+        </div>
+        <div class="p-4 flex items-center gap-3 tap" onclick="closeAllSheets(); toast('已打开分析','info')">
+          <span class="w-8 h-8 rounded-lg bg-gray-50 flex items-center justify-center">📊</span>
+          <div class="flex-1 text-sm">对话分析</div>
+        </div>
+        <div class="p-4 flex items-center gap-3 tap" onclick="closeAllSheets(); markDone()">
+          <span class="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center">✓</span>
+          <div class="flex-1 text-sm">标记完成</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sheet：规则详情 -->
+    <div id="ruleSheet" class="sheet">
+      <div class="sheet-handle"></div>
+      <div class="px-4 pb-2">
+        <div class="text-base font-semibold">R-032 · 价格异议升级</div>
+        <div class="text-xs text-gray-500">自动路由规则</div>
+      </div>
+      <div class="px-4 py-3">
+        <div class="rounded-xl bg-gray-50 p-3 text-xs font-mono space-y-1 mb-4">
+          <div>WHEN confidence &lt; 70%</div>
+          <div>AND customer.tag CONTAINS "高价值"</div>
+          <div>AND objection.type = "price"</div>
+          <div>AND objection.round >= 3</div>
+          <div class="pt-1 border-t border-gray-200">THEN escalate_to = supervisor</div>
+        </div>
+        <div class="text-xs font-semibold text-gray-700 mb-2">本次触发</div>
+        <ul class="space-y-1.5 text-xs text-gray-600">
+          <li>· 置信度 92% → 74% → 58% <span class="text-red-500">（低于 70%）</span></li>
+          <li>· 客户标签：高价值 ✓</li>
+          <li>· 异议类型：price ✓</li>
+          <li>· 异议轮次：3 ✓</li>
+        </ul>
+        <button class="mt-4 w-full h-11 rounded-xl bg-[#4C5BF0] text-white text-sm font-medium" onclick="closeAllSheets()">知道了</button>
+      </div>
+    </div>
+
+    <!-- Sheet: Plan -->
+    <div id="planSheet" class="sheet">
+      <div class="sheet-handle"></div>
+      <div class="px-4 pb-2">
+        <div class="text-base font-semibold flex items-center gap-2">🧭 让 Agent 提方案 <span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700 font-mono">Plan</span></div>
+        <div class="text-xs text-gray-500">Agent 给你 2-3 个思路，选一个再落字</div>
+      </div>
+      <div class="px-4 py-2 space-y-2">
+        <div class="rounded-xl border-2 border-gray-200 p-3 bg-white tap" onclick="closeAllSheets(); toast('已采用方案 A，切到 Co-write','success'); openSheet('cowriteSheet')">
+          <div class="flex items-center gap-2 mb-1"><span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500 text-white">A</span><span class="text-sm font-semibold">让步策略</span><span class="text-[10px] text-emerald-600 ml-auto font-semibold">预估 35%</span></div>
+          <div class="text-xs text-gray-600 leading-relaxed">发限时券 + 锁名额。"亲～高价值学员可申请专属优惠：100 元抵扣券..."</div>
+        </div>
+        <div class="rounded-xl border-2 border-emerald-300 p-3 bg-emerald-50/30 tap" onclick="closeAllSheets(); toast('已采用方案 B，切到 Co-write','success'); openSheet('cowriteSheet')">
+          <div class="flex items-center gap-2 mb-1"><span class="text-[10px] px-1.5 py-0.5 rounded bg-blue-500 text-white">B</span><span class="text-sm font-semibold">共情 + 引入案例</span><span class="text-[10px] text-emerald-600 ml-auto font-semibold">预估 42% 🏆</span></div>
+          <div class="text-xs text-gray-600 leading-relaxed">学员证言 + 价值锚定。"理解您觉得贵～其实之前李姐跟您情况差不多..."</div>
+        </div>
+        <div class="rounded-xl border-2 border-gray-200 p-3 bg-white tap" onclick="closeAllSheets(); toast('已采用方案 C，切到 Co-write','success'); openSheet('cowriteSheet')">
+          <div class="flex items-center gap-2 mb-1"><span class="text-[10px] px-1.5 py-0.5 rounded bg-violet-500 text-white">C</span><span class="text-sm font-semibold">转移焦点</span><span class="text-[10px] text-gray-500 ml-auto font-semibold">预估 28%</span></div>
+          <div class="text-xs text-gray-600 leading-relaxed">先了解再报价。"您方便聊下最想解决的问题吗（家庭储蓄 / 子女教育）..."</div>
+        </div>
+      </div>
+      <div class="px-4 py-2 text-[10px] text-gray-500 text-center">基于 12 条同类成交对话 + 3 条流失对话提炼</div>
+    </div>
+
+    <!-- Sheet: Manual -->
+    <div id="manualSheet" class="sheet">
+      <div class="sheet-handle"></div>
+      <div class="px-4 pb-2">
+        <div class="text-base font-semibold flex items-center gap-2">✍️ 我来写 <span class="text-[10px] px-1.5 py-0.5 rounded bg-gray-100 text-gray-600 font-mono">Manual</span></div>
+      </div>
+      <div class="px-4 py-2">
+        <textarea class="w-full rounded-xl border border-gray-200 p-3 text-sm outline-none focus:border-[#4C5BF0]" rows="4" placeholder="直接回复给李可..." id="manualText"></textarea>
+        <div class="mt-2 flex items-center justify-between">
+          <label class="flex items-center gap-1.5 text-xs text-gray-600"><input type="checkbox" checked class="accent-[#4C5BF0]"> 发送后交还 Agent</label>
+          <button class="h-9 px-4 rounded-xl bg-[#4C5BF0] text-white text-sm font-medium" onclick="sendManual()">发送</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sheet: Co-write -->
+    <div id="cowriteSheet" class="sheet">
+      <div class="sheet-handle"></div>
+      <div class="px-4 pb-2">
+        <div class="text-base font-semibold flex items-center gap-2">⚡ 指令 Agent <span class="text-[10px] px-1.5 py-0.5 rounded bg-blue-100 text-blue-700 font-mono">Co-write</span></div>
+        <div class="text-xs text-gray-500">你给方向，Agent 落字</div>
+      </div>
+      <div class="px-4 py-2">
+        <textarea class="w-full rounded-xl border-2 border-blue-200 p-3 text-sm outline-none bg-blue-50/30 focus:border-blue-400" rows="2" placeholder="例：换个更委婉的说法，强调一下限时优惠"></textarea>
+        <div class="flex flex-wrap gap-1.5 mt-2">
+          <button class="text-[11px] px-2.5 py-1.5 rounded-lg bg-white border border-gray-200 tap">更委婉</button>
+          <button class="text-[11px] px-2.5 py-1.5 rounded-lg bg-white border border-gray-200 tap">更简短</button>
+          <button class="text-[11px] px-2.5 py-1.5 rounded-lg bg-white border border-gray-200 tap">强调稀缺</button>
+          <button class="text-[11px] px-2.5 py-1.5 rounded-lg bg-white border border-gray-200 tap">换话术</button>
+        </div>
+        <button class="mt-3 w-full h-11 rounded-xl bg-blue-600 text-white text-sm font-medium" onclick="closeAllSheets(); toast('Agent 重写中...','info'); setTimeout(()=>toast('Agent 重写完成，请审核草稿','success'), 1500)">让 Agent 重写</button>
+      </div>
+    </div>
+
+    <!-- Sheet: Teach -->
+    <div id="teachSheet" class="sheet">
+      <div class="sheet-handle"></div>
+      <div class="px-4 pb-2">
+        <div class="text-base font-semibold flex items-center gap-2">🎯 训练成话术 <span class="text-[10px] px-1.5 py-0.5 rounded bg-violet-100 text-violet-700 font-mono">Teach</span></div>
+        <div class="text-xs text-violet-700">一次训练，5 个 Agent 当天生效</div>
+      </div>
+      <div class="px-4 py-2">
+        <div class="text-[11px] text-gray-500 mb-1">触发条件（可改）</div>
+        <div class="flex flex-wrap gap-1.5 mb-3">
+          <span class="text-[11px] px-2 py-0.5 rounded bg-violet-100 text-violet-700">价格异议</span>
+          <span class="text-[11px] px-2 py-0.5 rounded bg-violet-100 text-violet-700">高价值客户</span>
+          <span class="text-[11px] px-2 py-0.5 rounded bg-violet-100 text-violet-700">第 3 轮+</span>
+          <button class="text-[11px] px-2 py-0.5 rounded border border-dashed border-gray-300 text-gray-500">+条件</button>
+        </div>
+        <div class="text-[11px] text-gray-500 mb-1">标准回答（存入 #A-089-v2）</div>
+        <textarea class="w-full rounded-xl border-2 border-dashed border-violet-300 p-3 text-sm outline-none bg-violet-50/30" rows="4" placeholder="写你想给的标准答案..."></textarea>
+        <div class="text-[11px] text-gray-500 mt-2 mb-3">影响：医助 1 组 5 Agent · 预计每日 11 次</div>
+        <button class="w-full h-11 rounded-xl bg-violet-600 text-white text-sm font-medium" onclick="closeAllSheets(); toast('#A-089-v2 已训练，5 个 Agent 全部生效','train')">训练并立即生效</button>
+      </div>
+    </div>
+
+    <!-- Sheet: Agent 详情 -->
+    <div id="agentSheet" class="sheet">
+      <div class="sheet-handle"></div>
+      <div id="agentSheetBody" class="px-4 pb-4"></div>
+    </div>
+
+    <!-- Sheet: 训练面板 -->
+    <div id="trainSheet" class="sheet">
+      <div class="sheet-handle"></div>
+      <div id="trainSheetBody" class="px-4 pb-4"></div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"><span class="toast-msg"></span></div>
+  </div>
+</div>
+
+<div class="desktop-hint">
+  Agent 协作工作台 · 移动端原型（iPhone 14 · 390 × 844）<br/>
+  点击底部 tab 切换 · 左上角 ← 返回 · 长卡片可点击进入详情
+</div>
+
+<script>
+  // 切换底部 tab
+  function go(tab) {
+    ['home','tasks','agents','train','me'].forEach(n => {
+      document.getElementById('page-'+n).classList.toggle('hidden', n !== tab);
+    });
+    document.querySelectorAll('.tab-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.tab === tab);
+    });
+  }
+
+  // sub page
+  function openSub(name) { document.getElementById('sub-'+name).classList.add('open'); }
+  function closeSub(name) { document.getElementById('sub-'+name).classList.remove('open'); }
+
+  // Toast
+  function toast(msg, type='info') {
+    const el = document.getElementById('toast');
+    el.querySelector('.toast-msg').textContent = msg;
+    el.className = 'toast show' + (type !== 'info' ? ' ' + type : '');
+    clearTimeout(window._t);
+    window._t = setTimeout(() => el.classList.remove('show'), 2000);
+  }
+
+  // Sheet
+  function openSheet(id) {
+    document.getElementById('sheetMask').classList.add('open');
+    document.getElementById(id).classList.add('open');
+  }
+  function closeAllSheets() {
+    document.getElementById('sheetMask').classList.remove('open');
+    document.querySelectorAll('.sheet').forEach(s => s.classList.remove('open'));
+  }
+
+  // 会话切换
+  function openChat(name) {
+    document.getElementById('chatName').textContent = name;
+    openSub('chat');
+    if (name !== '李可') toast('为简化原型，会话内容继续沿用李可样例','info');
+  }
+
+  function editDraft() {
+    openSheet('manualSheet');
+    document.getElementById('manualText').value = '亲～现在确实没有优惠活动呢。不过高价值学员有专属福利，我帮您申请一张 100 元抵扣券，您看可以吗？';
+  }
+  function sendDraft() {
+    const d = document.getElementById('m-draft');
+    if (d) d.style.opacity = 0.4;
+    toast('Agent 草稿已发送给客户','success');
+  }
+  function sendManual() {
+    const v = document.getElementById('manualText').value.trim();
+    if (!v) { toast('请先输入内容','warn'); return; }
+    closeAllSheets();
+    toast('消息已发送，交还 Agent 继续处理','success');
+    document.getElementById('manualText').value = '';
+  }
+  function markDone() {
+    toast('已标记完成 · 结论同步 Agent 学习集','success');
+  }
+
+  // 任务 tab 过滤
+  function filterTask(btn, type) {
+    btn.parentElement.querySelectorAll('button').forEach(b => {
+      b.classList.remove('bg-white','font-medium','shadow-sm');
+      b.classList.add('text-gray-600');
+    });
+    btn.classList.add('bg-white','font-medium','shadow-sm');
+    btn.classList.remove('text-gray-600');
+    document.querySelectorAll('[data-group]').forEach(g => {
+      g.style.display = (type === 'all' || g.dataset.group === type) ? '' : 'none';
+    });
+  }
+
+  // 训练 tab
+  function switchTrainTab(btn, type) {
+    btn.parentElement.querySelectorAll('button').forEach(b => {
+      b.classList.remove('bg-white','font-medium','shadow-sm');
+      b.classList.add('text-gray-600');
+    });
+    btn.classList.add('bg-white','font-medium','shadow-sm');
+    btn.classList.remove('text-gray-600');
+    document.getElementById('trainPane-opps').classList.toggle('hidden', type !== 'opps');
+    document.getElementById('trainPane-exp').classList.toggle('hidden', type !== 'exp');
+  }
+
+  // Agent 详情 sheet
+  const agentData = {
+    A1: { type:'销售助理型', skill:'进阶转化 / 价格异议 / 续课', conf:83, active:47, today:'处理 58 · 成交 3 · 上抛 2', color:'violet' },
+    A2: { type:'新客接待型', skill:'首次破冰 / 需求挖掘', conf:81, active:62, today:'处理 72 · 转意向 14', color:'indigo' },
+    A3: { type:'新客接待型', skill:'首次破冰 / 需求挖掘', conf:78, active:58, today:'处理 64 · 转意向 11', color:'blue' },
+    A4: { type:'合作咨询型', skill:'渠道对接 / B 端', conf:68, active:22, today:'处理 28 · 上抛 4', color:'teal', warn:true, warnMsg:'合作咨询场景训练数据不足' },
+    A5: { type:'服务支持型', skill:'退费 / 售后 / 咨询', conf:85, active:58, today:'处理 65 · 解决 60', color:'amber' }
+  };
+  function openAgent(id) {
+    const a = agentData[id];
+    if (!a) return;
+    const confColor = a.conf >= 80 ? 'text-emerald-600' : a.conf >= 70 ? 'text-amber-600' : 'text-red-600';
+    document.getElementById('agentSheetBody').innerHTML = `
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-${a.color}-400 to-${a.color}-600 flex items-center justify-center text-white text-xl font-bold">${id}</div>
+        <div>
+          <div class="font-bold">Agent ${id} · ${a.type}</div>
+          <div class="text-xs text-gray-500">${a.skill}</div>
+        </div>
+      </div>
+      ${a.warn ? `<div class="bg-amber-50 border border-amber-100 rounded-xl p-3 mb-3 text-xs text-amber-700">⚠ ${a.warnMsg}</div>` : ''}
+      <div class="grid grid-cols-3 gap-2 mb-4">
+        <div class="p-3 rounded-xl bg-gray-50 text-center">
+          <div class="text-[10px] text-gray-500">当前置信</div>
+          <div class="text-lg font-bold ${confColor}">${a.conf}%</div>
+        </div>
+        <div class="p-3 rounded-xl bg-gray-50 text-center">
+          <div class="text-[10px] text-gray-500">并行处理</div>
+          <div class="text-lg font-bold">${a.active}</div>
+        </div>
+        <div class="p-3 rounded-xl bg-gray-50 text-center">
+          <div class="text-[10px] text-gray-500">状态</div>
+          <div class="text-lg font-bold text-emerald-600">在岗</div>
+        </div>
+      </div>
+      <div class="text-[11px] text-gray-500 mb-1">今日摘要</div>
+      <div class="p-3 rounded-xl bg-gradient-to-br from-${a.color}-50 to-white text-sm">${a.today}</div>
+      <div class="mt-4 flex gap-2">
+        <button class="flex-1 h-11 rounded-xl border border-gray-200 text-sm" onclick="closeAllSheets(); toast('已暂停 ${id}','warn')">暂停</button>
+        <button class="flex-1 h-11 rounded-xl border border-gray-200 text-sm" onclick="closeAllSheets(); toast('打开 ${id} 配置','info')">配置</button>
+        <button class="flex-1 h-11 rounded-xl bg-[#4C5BF0] text-white text-sm" onclick="closeAllSheets(); toast('进入 ${id} 实时监督','info')">监督</button>
+      </div>
+    `;
+    openSheet('agentSheet');
+  }
+
+  // 训练面板 sheet
+  function openTrain(topic) {
+    document.getElementById('trainSheetBody').innerHTML = `
+      <div class="mb-3">
+        <div class="text-base font-semibold flex items-center gap-2">🎯 为这个问题写一条话术</div>
+        <div class="text-xs text-gray-500">"${topic}"</div>
+      </div>
+      <div class="rounded-xl bg-gradient-to-br from-violet-50 to-indigo-50 border border-violet-100 p-3 mb-3 text-xs">
+        <div class="text-violet-700 font-medium">一次训练，5 个 Agent 当天生效</div>
+        <div class="text-gray-600 mt-1">同类问题以后 Agent 自己会用</div>
+      </div>
+      <div>
+        <div class="text-[11px] text-gray-500 mb-1">触发条件（自动识别）</div>
+        <div class="flex flex-wrap gap-1.5 mb-3">
+          <span class="text-[11px] px-2 py-0.5 rounded bg-gray-100">${topic.slice(0, 8)}</span>
+          <span class="text-[11px] px-2 py-0.5 rounded bg-gray-100">新客</span>
+          <button class="text-[11px] px-2 py-0.5 rounded border border-dashed border-gray-300 text-gray-500">+条件</button>
+        </div>
+        <div class="text-[11px] text-gray-500 mb-1">标准回答</div>
+        <textarea class="w-full rounded-xl border-2 border-dashed border-violet-300 p-3 text-sm bg-violet-50/30 outline-none" rows="5" placeholder="写你想给的标准答案..."></textarea>
+      </div>
+      <button class="mt-4 w-full h-11 rounded-xl bg-violet-600 text-white text-sm font-medium" onclick="closeAllSheets(); toast('新话术已训练 · 5 个 Agent 全部生效','train')">训练并立即生效</button>
+    `;
+    openSheet('trainSheet');
+  }
+
+  // 批量审核
+  function batchCount() {
+    const n = document.querySelectorAll('.task-c:checked').length;
+    document.getElementById('batchCount').textContent = n;
+  }
+  function batchAll(on) {
+    document.querySelectorAll('.task-c').forEach(c => c.checked = on);
+    batchCount();
+  }
+  function batchGroup(cb, gid) {
+    document.querySelectorAll('#'+gid+' .task-c').forEach(c => c.checked = cb.checked);
+    batchCount();
+  }
+  function batchDo(kind) {
+    const n = document.querySelectorAll('.task-c:checked').length;
+    if (!n) { toast('请先勾选','warn'); return; }
+    toast((kind === 'send' ? '已批量发送 ' : '已让 Agent 重写 ') + n + ' 条', kind === 'send' ? 'success' : 'info');
+    if (kind === 'send') {
+      document.querySelectorAll('.task-c:checked').forEach(c => {
+        c.closest('label').style.opacity = 0.4;
+        c.checked = false;
+      });
+      batchCount();
+    }
+  }
+</script>
+
+</body>
+</html>

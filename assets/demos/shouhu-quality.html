@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>句子守护 · Agent Quality Center</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: "PingFang SC", -apple-system, "Helvetica Neue", sans-serif;
+  background: #FAFBFD;
+  color: #1A1A2E;
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+.app {
+  width: 1440px; height: 900px;
+  display: grid; grid-template-columns: 220px 1fr;
+  background: #fff;
+}
+
+.sidebar {
+  background: #0E1A33; color: #fff;
+  padding: 20px 16px;
+}
+.brand {
+  font-size: 16px; font-weight: 800;
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 24px;
+}
+.brand-mark {
+  width: 28px; height: 28px; border-radius: 7px;
+  background: #00C28B; color: #fff;
+  display: grid; place-items: center;
+  font-weight: 800; font-size: 14px;
+}
+.nav-section {
+  font-size: 11px; color: rgba(255,255,255,.5);
+  font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase;
+  margin: 18px 0 10px;
+}
+.nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 12px; border-radius: 8px;
+  color: rgba(255,255,255,.85);
+  font-size: 13px; cursor: pointer;
+  margin-bottom: 2px;
+}
+.nav-item:hover { background: rgba(255,255,255,.06); }
+.nav-item.active { background: #00C28B; color: #fff; font-weight: 600; }
+.nav-item .icon { width: 16px; opacity: .8; font-size: 14px; }
+
+.content { padding: 28px 32px; overflow-y: hidden; }
+.page-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  margin-bottom: 22px;
+}
+.page-title {
+  font-size: 22px; font-weight: 800;
+  letter-spacing: -.01em;
+}
+.page-title .sub {
+  font-size: 13px; color: #6B7A99; font-weight: 500;
+  margin-left: 12px;
+}
+.tabs {
+  display: flex; gap: 4px;
+  background: #F4F8FF; border-radius: 8px;
+  padding: 4px;
+}
+.tab {
+  padding: 7px 14px; border-radius: 6px;
+  font-size: 13px; color: #6B7A99; font-weight: 600;
+  cursor: pointer;
+}
+.tab.active { background: #fff; color: #00C28B; box-shadow: 0 1px 3px rgba(15,23,42,.06); }
+
+/* KPI strip */
+.kpi-row {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 22px;
+}
+.kpi-card {
+  background: #fff;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+.kpi-card .l {
+  font-size: 12px; color: #6B7A99; font-weight: 600;
+  margin-bottom: 6px;
+}
+.kpi-card .v {
+  font-size: 26px; font-weight: 800; letter-spacing: -.01em;
+  color: #1A1A2E;
+}
+.kpi-card .delta {
+  font-size: 11.5px; font-weight: 700; margin-top: 4px;
+}
+.delta.up { color: #00C28B; }
+.delta.down { color: #DC2626; }
+
+/* Test cases section */
+.section-card {
+  background: #fff;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 16px;
+}
+.section-head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 16px;
+}
+.section-head h3 {
+  font-size: 15px; font-weight: 800;
+}
+.section-head .actions {
+  display: flex; gap: 8px;
+}
+.btn-sm {
+  font-size: 12px; font-weight: 600;
+  padding: 6px 12px; border-radius: 6px;
+  border: 1px solid #E2E8F0; background: #fff;
+  cursor: pointer;
+}
+.btn-sm.primary { background: #00C28B; color: #fff; border-color: #00C28B; }
+
+/* Test case rows */
+.test-row {
+  display: grid;
+  grid-template-columns: 24px 1fr 100px 100px 60px;
+  gap: 14px; align-items: center;
+  padding: 11px 0;
+  border-bottom: 1px solid #F1F5F9;
+  font-size: 13px;
+}
+.test-row:last-child { border-bottom: 0; }
+.test-row .status {
+  width: 18px; height: 18px; border-radius: 50%;
+  display: grid; place-items: center;
+  font-size: 11px; font-weight: 800;
+}
+.test-row .status.pass { background: #E0F7EC; color: #00C28B; }
+.test-row .status.fail { background: #FEE; color: #DC2626; }
+.test-row .status.run { background: #E8F0FF; color: #1659E5; }
+.test-row .desc { color: #1A1A2E; }
+.test-row .desc .input {
+  font-size: 11.5px; color: #6B7A99; margin-top: 2px;
+}
+.test-row .conf { font-weight: 700; color: #1A1A2E; }
+.test-row .conf.low { color: #DC2626; }
+.test-row .meta { font-size: 11.5px; color: #6B7A99; }
+.test-row .more {
+  font-size: 11px; color: #1659E5; font-weight: 700;
+  text-align: right; cursor: pointer;
+}
+
+/* Right canvas split */
+.split {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 16px;
+}
+
+/* Badcase panel */
+.badcase-card {
+  background: #fff;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 20px 22px;
+}
+.bc-row {
+  display: flex; gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid #F1F5F9;
+}
+.bc-row:last-child { border-bottom: 0; }
+.bc-row .avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: #FFF1E0; color: #FF7A00;
+  display: grid; place-items: center;
+  font-weight: 800; font-size: 12px;
+  flex: 0 0 32px;
+}
+.bc-row .body { flex: 1; min-width: 0; }
+.bc-row .body .q { font-size: 13px; color: #1A1A2E; margin-bottom: 4px; }
+.bc-row .body .meta {
+  font-size: 11.5px; color: #6B7A99;
+  display: flex; align-items: center; gap: 8px;
+}
+.bc-row .body .meta .tag {
+  background: #FFF1E0; color: #FF7A00;
+  padding: 2px 8px; border-radius: 4px;
+  font-weight: 700;
+}
+.bc-row .status-tag {
+  font-size: 11px; font-weight: 700;
+  padding: 4px 8px; border-radius: 4px;
+  align-self: flex-start;
+  flex: 0 0 auto;
+}
+.status-tag.pending { background: #FEE; color: #DC2626; }
+.status-tag.fixing { background: #E8F0FF; color: #1659E5; }
+.status-tag.done { background: #E0F7EC; color: #00C28B; }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">守</div>
+      <div>句子守护</div>
+    </div>
+    <div class="nav-section">质量保障</div>
+    <div class="nav-item active"><span class="icon">🧪</span>测试中心</div>
+    <div class="nav-item"><span class="icon">✅</span>批量验收</div>
+    <div class="nav-item"><span class="icon">🚦</span>灰度发布</div>
+    <div class="nav-item"><span class="icon">📮</span>Badcase 跟进</div>
+    <div class="nav-item"><span class="icon">🔄</span>回归测试</div>
+    <div class="nav-item"><span class="icon">🔍</span>AI 质检</div>
+    <div class="nav-section">数据洞察</div>
+    <div class="nav-item"><span class="icon">📊</span>质量看板</div>
+    <div class="nav-item"><span class="icon">📝</span>审计日志</div>
+    <div class="nav-section">企业</div>
+    <div class="nav-item"><span class="icon">⚙️</span>项目管理</div>
+    <div class="nav-item"><span class="icon">🛡️</span>权限</div>
+  </aside>
+
+  <main class="content">
+    <div class="page-head">
+      <div class="page-title">
+        测试中心 <span class="sub">售前咨询 Agent · v2.1 · 上线前批量验收</span>
+      </div>
+      <div class="tabs">
+        <div class="tab">测试用例</div>
+        <div class="tab active">执行结果</div>
+        <div class="tab">回归对比</div>
+      </div>
+    </div>
+
+    <div class="kpi-row">
+      <div class="kpi-card">
+        <div class="l">测试用例总数</div>
+        <div class="v">247</div>
+        <div class="delta up">↑ AI 自动生成 +28</div>
+      </div>
+      <div class="kpi-card">
+        <div class="l">通过率</div>
+        <div class="v" style="color:#00C28B;">94.3%</div>
+        <div class="delta up">较上版本 +6.2%</div>
+      </div>
+      <div class="kpi-card">
+        <div class="l">未通过 / 待处理</div>
+        <div class="v" style="color:#DC2626;">14</div>
+        <div class="delta down">需 PE 跟进</div>
+      </div>
+      <div class="kpi-card">
+        <div class="l">本次执行耗时</div>
+        <div class="v">3:42</div>
+        <div class="delta up">较人工快 92%</div>
+      </div>
+    </div>
+
+    <div class="split">
+      <div class="section-card">
+        <div class="section-head">
+          <h3>测试用例执行 · 售前场景</h3>
+          <div class="actions">
+            <button class="btn-sm">筛选</button>
+            <button class="btn-sm primary">+ AI 生成</button>
+          </div>
+        </div>
+
+        <div class="test-row">
+          <div class="status pass">✓</div>
+          <div class="desc">询价 · 标准产品价格<div class="input">→ 您家这款风衣多少钱？</div></div>
+          <div class="conf">98%</div>
+          <div class="meta">价格表匹配</div>
+          <div class="more">详情 →</div>
+        </div>
+        <div class="test-row">
+          <div class="status pass">✓</div>
+          <div class="desc">活动咨询 · 双 11 促销<div class="input">→ 现在买有什么优惠吗？</div></div>
+          <div class="conf">95%</div>
+          <div class="meta">促销规则</div>
+          <div class="more">详情 →</div>
+        </div>
+        <div class="test-row">
+          <div class="status pass">✓</div>
+          <div class="desc">尺码咨询 · 个性化推荐<div class="input">→ 我 165 / 52 选什么码？</div></div>
+          <div class="conf">92%</div>
+          <div class="meta">尺码表 + 客户档案</div>
+          <div class="more">详情 →</div>
+        </div>
+        <div class="test-row">
+          <div class="status fail">✗</div>
+          <div class="desc">竞品对比 · 未给明确策略<div class="input">→ 你家比 X 家好在哪？</div></div>
+          <div class="conf low">62%</div>
+          <div class="meta">需补充话术</div>
+          <div class="more">详情 →</div>
+        </div>
+        <div class="test-row">
+          <div class="status pass">✓</div>
+          <div class="desc">退换货 · 7 天无理由说明<div class="input">→ 不喜欢可以退吗？</div></div>
+          <div class="conf">96%</div>
+          <div class="meta">合规话术</div>
+          <div class="more">详情 →</div>
+        </div>
+        <div class="test-row">
+          <div class="status fail">✗</div>
+          <div class="desc">投诉 · 配送慢<div class="input">→ 等了两周还没到，太慢了</div></div>
+          <div class="conf low">71%</div>
+          <div class="meta">情绪识别 + 升级策略缺失</div>
+          <div class="more">详情 →</div>
+        </div>
+        <div class="test-row">
+          <div class="status run">●</div>
+          <div class="desc">还有 12 条用例正在执行...<div class="input"></div></div>
+          <div class="conf"></div>
+          <div class="meta"></div>
+          <div class="more"></div>
+        </div>
+      </div>
+
+      <div class="badcase-card">
+        <div class="section-head">
+          <h3>Badcase 跟进</h3>
+          <div class="actions">
+            <button class="btn-sm">查看全部</button>
+          </div>
+        </div>
+
+        <div class="bc-row">
+          <div class="avatar">王</div>
+          <div class="body">
+            <div class="q">王姐：我前天就咨询了为什么一直没回复？</div>
+            <div class="meta">
+              <span class="tag">客户感受不佳</span>
+              <span>10:23 · 来自 售后会话</span>
+            </div>
+          </div>
+          <div class="status-tag pending">待跟进</div>
+        </div>
+        <div class="bc-row">
+          <div class="avatar">李</div>
+          <div class="body">
+            <div class="q">李总：我要的是发票抬头，不是开票流程</div>
+            <div class="meta">
+              <span class="tag">理解偏差</span>
+              <span>09:48 · PE 已认领</span>
+            </div>
+          </div>
+          <div class="status-tag fixing">优化中</div>
+        </div>
+        <div class="bc-row">
+          <div class="avatar">张</div>
+          <div class="body">
+            <div class="q">张哥：你这话术不对，跟上次说的不一样</div>
+            <div class="meta">
+              <span class="tag">话术不一致</span>
+              <span>09:12 · 已修复</span>
+            </div>
+          </div>
+          <div class="status-tag done">✓ 已修</div>
+        </div>
+        <div class="bc-row">
+          <div class="avatar">陈</div>
+          <div class="body">
+            <div class="q">陈姐：能直接转人工客服吗？</div>
+            <div class="meta">
+              <span class="tag">主动转人工</span>
+              <span>08:55 · 已转</span>
+            </div>
+          </div>
+          <div class="status-tag done">✓ 已转</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+</div>
+</body>
+</html>
