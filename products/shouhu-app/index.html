@@ -1,0 +1,1678 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>句子守护 · Agent 舰队 (Fleet) | 产品原型</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231659E5'/%3E%3Ctext x='16' y='22' font-family='system-ui' font-size='18' font-weight='800' fill='white' text-anchor='middle'%3E句%3C/text%3E%3C/svg%3E" />
+<style>
+:root{
+  --blue:#1659E5; --blue-mid:#3D7FFF; --blue-light:#E8F0FF; --blue-bg:#F4F8FF;
+  --orange:#FF7A00; --orange-lt:#FFF1E0;
+  --black:#1A1A2E; --gray-bg:#F5F7FB; --gray-line:#E2E8F0; --gray-text:#6B7A99;
+  --green:#00C28B; --green-lt:#E0F7EC;
+  --red:#E5495C; --red-lt:#FDE8EC;
+  --purple:#8B5CF6; --purple-lt:#F1EBFF;
+  --teal:#00AFA5; --teal-lt:#DFF4F2;
+  --yellow:#F5A623; --yellow-lt:#FFF4DC;
+  --shadow-sm:0 1px 2px rgba(15,23,42,.04),0 1px 1px rgba(15,23,42,.03);
+  --shadow-md:0 6px 24px -8px rgba(22,89,229,.12),0 2px 6px rgba(15,23,42,.04);
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;height:100%}
+body{
+  font-family:"PingFang SC","Helvetica Neue","Inter",-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif;
+  font-size:14px;line-height:1.55;color:var(--black);
+  background:var(--gray-bg);-webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:0;background:transparent}
+.app{display:grid;grid-template-columns:260px 1fr;grid-template-rows:56px 1fr;height:100vh;}
+/* ───── Topbar ───── */
+.topbar{
+  grid-column:1/3;grid-row:1;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px;background:#fff;border-bottom:1px solid var(--gray-line);z-index:10;
+}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:15px}
+.brand-mark{width:28px;height:28px;border-radius:7px;background:var(--blue);color:#fff;display:grid;place-items:center;font-weight:800}
+.brand small{color:var(--gray-text);font-weight:500;font-size:12px}
+.crumbs{display:flex;align-items:center;gap:8px;color:var(--gray-text);font-size:13px;margin-left:24px}
+.crumbs .sep{color:var(--gray-line)}
+.crumbs .here{color:var(--black);font-weight:600}
+.crumbs .link{color:var(--blue);cursor:pointer}
+.crumbs .link:hover{text-decoration:underline}
+.top-right{display:flex;align-items:center;gap:14px;color:var(--gray-text);font-size:13px}
+.avatar{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;display:grid;place-items:center;font-weight:700;font-size:13px}
+.icon-btn{width:32px;height:32px;border-radius:7px;display:grid;place-items:center;color:var(--gray-text)}
+.icon-btn:hover{background:var(--gray-bg);color:var(--black)}
+.badge-dot{position:relative}
+.badge-dot::after{content:"";position:absolute;top:6px;right:6px;width:7px;height:7px;border-radius:50%;background:var(--red)}
+/* ───── Sidebar ───── */
+.sidebar{
+  grid-column:1;grid-row:2;background:#fff;border-right:1px solid var(--gray-line);
+  padding:14px 12px 20px;overflow-y:auto;display:flex;flex-direction:column;
+}
+.sb-section{font-size:11px;color:var(--gray-text);text-transform:uppercase;letter-spacing:.08em;padding:14px 10px 6px;font-weight:700;display:flex;justify-content:space-between;align-items:center}
+.sb-section .ct{font-size:11px;color:var(--gray-text);font-weight:700}
+.sb-item{
+  display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;
+  font-size:13.5px;color:var(--black);cursor:pointer;margin-bottom:2px;font-weight:500;width:100%;text-align:left;
+}
+.sb-item:hover{background:var(--gray-bg)}
+.sb-item.active{background:var(--blue-bg);color:var(--blue);font-weight:700}
+.sb-item .ic{width:22px;height:22px;border-radius:6px;background:var(--gray-bg);color:var(--gray-text);display:grid;place-items:center;font-size:11px;font-weight:700;flex:0 0 22px}
+.sb-item.active .ic{background:var(--blue);color:#fff}
+.sb-item .pill-num{margin-left:auto;font-size:11px;padding:1px 6px;border-radius:10px;background:var(--red);color:#fff;font-weight:700}
+.sb-item .stat{margin-left:auto;width:8px;height:8px;border-radius:50%}
+.sb-item.module{padding-left:36px;font-size:12.5px;color:var(--gray-text);font-weight:500}
+.sb-item.module.active{color:var(--blue);font-weight:700;background:var(--blue-bg)}
+.sb-foot{margin-top:auto;padding:14px 10px 0;font-size:11px;color:var(--gray-text);border-top:1px solid var(--gray-line)}
+.sb-foot strong{color:var(--black)}
+/* status dots */
+.s-green{background:var(--green)}
+.s-blue{background:var(--blue)}
+.s-orange{background:var(--orange)}
+.s-red{background:var(--red)}
+.s-yellow{background:var(--yellow)}
+.s-gray{background:var(--gray-text)}
+.s-purple{background:var(--purple)}
+
+/* ───── Main ───── */
+.main{grid-column:2;grid-row:2;overflow-y:auto;padding:24px 28px 80px}
+.view{display:none}
+.view.active{display:block}
+.page-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:18px;gap:24px;flex-wrap:wrap}
+.page-head h1{font-size:22px;font-weight:800;margin:0 0 4px;letter-spacing:-.01em}
+.page-head .desc{color:var(--gray-text);font-size:13.5px;margin:0;max-width:720px}
+.page-head .head-actions{display:flex;gap:8px;flex-shrink:0}
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;font-size:13px;font-weight:600;border:1px solid transparent;cursor:pointer;line-height:1}
+.btn-primary{background:var(--blue);color:#fff}
+.btn-primary:hover{background:#0E45BC}
+.btn-ghost{background:#fff;color:var(--black);border-color:var(--gray-line)}
+.btn-ghost:hover{border-color:var(--blue);color:var(--blue)}
+.btn-danger{background:var(--red);color:#fff}
+.btn-warn{background:var(--orange);color:#fff}
+.btn-sm{padding:5px 10px;font-size:12px}
+
+/* Cards */
+.card{background:#fff;border:1px solid var(--gray-line);border-radius:12px;padding:18px}
+.card-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.card-h h3{font-size:15px;font-weight:700;margin:0}
+.card-h .meta{color:var(--gray-text);font-size:12px}
+
+/* KPI */
+.kpi-row{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:18px}
+.kpi-row.k4{grid-template-columns:repeat(4,1fr)}
+.kpi{background:#fff;border:1px solid var(--gray-line);border-radius:12px;padding:14px}
+.kpi .l{font-size:11.5px;color:var(--gray-text);font-weight:600}
+.kpi .v{font-size:24px;font-weight:800;letter-spacing:-.02em;margin:6px 0 4px}
+.kpi .delta{font-size:11px;color:var(--green);font-weight:600}
+.kpi .delta.bad{color:var(--red)}
+.kpi.alert{border-color:#FFD2D8;background:linear-gradient(180deg,#FFF6F7,#fff)}
+.kpi.alert .v{color:var(--red)}
+.kpi.warn{border-color:#FFE5C4;background:linear-gradient(180deg,#FFFAF1,#fff)}
+.kpi.warn .v{color:var(--orange)}
+
+/* Tags */
+.tag{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:10px;font-size:11.5px;font-weight:600;line-height:1.6}
+.tag-blue{background:var(--blue-light);color:var(--blue)}
+.tag-green{background:var(--green-lt);color:var(--green)}
+.tag-orange{background:var(--orange-lt);color:var(--orange)}
+.tag-red{background:var(--red-lt);color:var(--red)}
+.tag-purple{background:var(--purple-lt);color:var(--purple)}
+.tag-teal{background:var(--teal-lt);color:var(--teal)}
+.tag-gray{background:var(--gray-bg);color:var(--gray-text)}
+.tag-yellow{background:var(--yellow-lt);color:var(--yellow)}
+.dot{width:6px;height:6px;border-radius:50%;background:currentColor;display:inline-block}
+
+/* Tables */
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th{text-align:left;padding:10px 12px;background:var(--gray-bg);color:var(--gray-text);font-weight:600;font-size:12px;letter-spacing:.02em;border-bottom:1px solid var(--gray-line)}
+.tbl td{padding:12px;border-bottom:1px solid var(--gray-line);vertical-align:middle}
+.tbl tr:hover td{background:#FAFBFE}
+.tbl .cell-strong{font-weight:600}
+.row-link{color:var(--blue);font-weight:600;cursor:pointer}
+.row-link:hover{text-decoration:underline}
+
+/* Toolbar */
+.toolbar{display:flex;gap:8px;align-items:center;margin-bottom:14px;flex-wrap:wrap}
+.toolbar .input,.toolbar select{font-size:13px;padding:7px 12px;border:1px solid var(--gray-line);border-radius:8px;background:#fff;font-family:inherit;color:var(--black)}
+.toolbar .input{min-width:240px}
+.tabbar{display:flex;gap:4px;border-bottom:1px solid var(--gray-line);margin-bottom:18px}
+.tabbar .tab{padding:10px 16px;font-size:13.5px;color:var(--gray-text);border-bottom:2px solid transparent;cursor:pointer;font-weight:600}
+.tabbar .tab.active{color:var(--blue);border-bottom-color:var(--blue)}
+.toggle-grp{display:inline-flex;border:1px solid var(--gray-line);border-radius:8px;overflow:hidden;background:#fff}
+.toggle-grp button{padding:6px 14px;font-size:12.5px;color:var(--gray-text);font-weight:600;border-right:1px solid var(--gray-line)}
+.toggle-grp button:last-child{border-right:0}
+.toggle-grp button.active{background:var(--blue);color:#fff}
+
+/* Splits */
+.split-2{display:grid;grid-template-columns:1.4fr 1fr;gap:18px}
+.split-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+
+/* Fleet grid */
+.fleet-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.agent-card{
+  background:#fff;border:1px solid var(--gray-line);border-radius:12px;padding:16px 18px;cursor:pointer;
+  transition:border-color .15s,box-shadow .15s;position:relative;overflow:hidden;
+}
+.agent-card:hover{border-color:var(--blue);box-shadow:var(--shadow-md)}
+.agent-card .stat-bar{position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--gray-text)}
+.agent-card.s-green .stat-bar{background:var(--green)}
+.agent-card.s-red .stat-bar{background:var(--red)}
+.agent-card.s-blue .stat-bar{background:var(--blue)}
+.agent-card.s-orange .stat-bar{background:var(--orange)}
+.agent-card.s-yellow .stat-bar{background:var(--yellow)}
+.agent-card.s-gray .stat-bar{background:var(--gray-text)}
+.agent-card .ac-h{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:10px}
+.agent-card .ac-name{font-size:15px;font-weight:800;margin:0 0 2px}
+.agent-card .ac-sub{font-size:11.5px;color:var(--gray-text);font-weight:600}
+.agent-card .ac-status{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700}
+.agent-card .ac-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0 10px}
+.agent-card .ac-meta .l{font-size:10.5px;color:var(--gray-text);font-weight:600;letter-spacing:.02em;text-transform:uppercase}
+.agent-card .ac-meta .v{font-size:14px;font-weight:700;margin-top:2px}
+.agent-card .pipe{display:flex;gap:3px;margin-bottom:10px}
+.agent-card .pipe i{flex:1;height:5px;border-radius:3px;background:var(--gray-bg);display:block}
+.agent-card .pipe i.done{background:var(--green)}
+.agent-card .pipe i.active{background:var(--blue)}
+.agent-card .pipe i.fail{background:var(--red)}
+.agent-card .ac-foot{font-size:12px;color:var(--gray-text);display:flex;justify-content:space-between;align-items:center;border-top:1px dashed var(--gray-line);padding-top:10px;margin-top:6px}
+.agent-card .ac-foot .alert{color:var(--red);font-weight:700}
+.agent-card .ac-foot .ok{color:var(--green);font-weight:700}
+
+/* Status row */
+.status-row{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--gray-text)}
+.status-pulse{
+  width:8px;height:8px;border-radius:50%;background:var(--green);
+  box-shadow:0 0 0 0 rgba(0,194,139,.5);animation:pulse 1.6s infinite;
+}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(0,194,139,.5)}70%{box-shadow:0 0 0 8px rgba(0,194,139,0)}100%{box-shadow:0 0 0 0 rgba(0,194,139,0)}}
+.status-pulse.red{background:var(--red);animation-name:pulseRed}
+@keyframes pulseRed{0%{box-shadow:0 0 0 0 rgba(229,73,92,.5)}70%{box-shadow:0 0 0 8px rgba(229,73,92,0)}100%{box-shadow:0 0 0 0 rgba(229,73,92,0)}}
+
+/* Banner */
+.banner{display:flex;align-items:center;gap:14px;padding:14px 18px;border-radius:12px;
+  background:linear-gradient(90deg,#FFF6F7,#fff);border:1px solid #FFD2D8;margin-bottom:18px}
+.banner .ic{width:36px;height:36px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;font-size:18px;font-weight:800;flex:0 0 36px}
+.banner .b-title{font-weight:700;font-size:14px}
+.banner .b-desc{font-size:12.5px;color:var(--gray-text);margin-top:2px}
+.banner.ok{background:linear-gradient(90deg,#F0FBF5,#fff);border-color:#BFEFD8}
+.banner.ok .ic{background:var(--green)}
+
+/* Steps */
+.steps{display:flex;align-items:center;gap:0}
+.step{flex:1;padding:14px 16px;background:#fff;border:1px solid var(--gray-line);border-right:0;position:relative}
+.step:first-child{border-radius:10px 0 0 10px}
+.step:last-child{border-radius:0 10px 10px 0;border-right:1px solid var(--gray-line)}
+.step::after{content:"";position:absolute;right:-13px;top:50%;transform:translateY(-50%) rotate(45deg);width:24px;height:24px;background:#fff;border-top:1px solid var(--gray-line);border-right:1px solid var(--gray-line);z-index:2}
+.step:last-child::after{display:none}
+.step.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.step.active::after{background:var(--blue);border-color:var(--blue)}
+.step.done{background:var(--green-lt);border-color:#BFEFD8;color:var(--green)}
+.step.done::after{background:var(--green-lt);border-color:#BFEFD8}
+.step.fail{background:var(--red-lt);border-color:#FFD2D8;color:var(--red)}
+.step.fail::after{background:var(--red-lt);border-color:#FFD2D8}
+.step .s-num{font-size:11px;font-weight:700;opacity:.7}
+.step .s-name{font-size:13.5px;font-weight:700;margin-top:2px}
+
+/* Bars / Bars / chart */
+.bar{height:8px;border-radius:4px;background:var(--gray-bg);overflow:hidden;margin:6px 0}
+.bar > span{display:block;height:100%;background:var(--blue)}
+.bar.green > span{background:var(--green)}
+.bar.red > span{background:var(--red)}
+.linechart{height:160px;background:linear-gradient(180deg,rgba(22,89,229,.06) 0%,rgba(22,89,229,0) 100%),repeating-linear-gradient(0deg,transparent,transparent 31px,var(--gray-line) 31px,var(--gray-line) 32px);border-radius:10px;position:relative;border:1px solid var(--gray-line)}
+.linechart svg{position:absolute;inset:0;width:100%;height:100%}
+
+/* ───── Lifecycle ring ───── */
+.lifecycle{display:grid;grid-template-columns:400px 1fr;gap:28px;align-items:center}
+.ring{position:relative;width:400px;height:400px;flex-shrink:0;margin:0 auto}
+.ring > svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.lc-node{
+  position:absolute;width:104px;height:104px;border-radius:50%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;font-size:11px;font-weight:700;line-height:1.2;color:#fff;
+  cursor:pointer;transition:transform .15s ease, box-shadow .15s ease;
+  box-shadow:0 4px 12px rgba(15,23,42,.08);padding:0 6px;
+}
+.lc-node:hover{transform:scale(1.06);box-shadow:0 8px 20px rgba(15,23,42,.12)}
+.lc-node .lc-num{font-size:13px;font-weight:800;letter-spacing:.04em;opacity:.85}
+.lc-node .lc-lbl{font-size:12.5px;font-weight:800;margin-top:1px}
+.lc-node .lc-cnt{font-size:10px;font-weight:600;opacity:.85;margin-top:3px;line-height:1.25}
+.lc-node.c-blue{background:#1659E5}
+.lc-node.c-bluemid{background:#3D7FFF}
+.lc-node.c-green{background:#00C28B}
+.lc-node.c-teal{background:#00AFA5}
+.lc-node.c-orange{background:#FF7A00}
+.lc-node.c-purple{background:#8B5CF6}
+.lc-node.pending{opacity:.42;filter:grayscale(.3)}
+.lc-node.active{animation:lcPulse 1.8s infinite}
+@keyframes lcPulse{0%{box-shadow:0 0 0 0 rgba(229,73,92,.55)}70%{box-shadow:0 0 0 14px rgba(229,73,92,0)}100%{box-shadow:0 0 0 0 rgba(229,73,92,0)}}
+.lc-node.active::after{
+  content:"";position:absolute;inset:-4px;border-radius:50%;
+  border:2px solid var(--red);
+}
+.lc-node.n1{top:6px;left:148px}
+.lc-node.n2{top:74px;left:266px}
+.lc-node.n3{top:222px;left:266px}
+.lc-node.n4{top:290px;left:148px}
+.lc-node.n5{top:222px;left:30px}
+.lc-node.n6{top:74px;left:30px}
+.lc-center{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:188px;height:188px;border-radius:50%;
+  background:linear-gradient(135deg,#1659E5 0%,#3D7FFF 100%);color:#fff;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;box-shadow:0 14px 32px rgba(22,89,229,.3);
+}
+.lc-eyebrow{font-size:11px;opacity:.85;font-weight:600;letter-spacing:.04em}
+.lc-round{font-size:54px;font-weight:800;line-height:1;margin:2px 0;letter-spacing:-.03em}
+.lc-round small{font-size:16px;font-weight:600;opacity:.85;margin-left:3px}
+.lc-step-name{font-size:13px;font-weight:700;margin-top:6px;opacity:.95}
+.lc-step-sub{font-size:10.5px;opacity:.85;margin-top:2px}
+
+/* History column */
+.h-head{font-size:13px;font-weight:700;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+.h-head .h-meta{font-size:11px;color:var(--gray-text);font-weight:600}
+.h-list{background:#FAFBFE;border-radius:10px;border:1px solid var(--gray-line);padding:4px 14px}
+.h-item{display:grid;grid-template-columns:64px 1fr;gap:14px;padding:12px 0;border-bottom:1px dashed var(--gray-line);font-size:13px;align-items:center}
+.h-item:last-child{border-bottom:0}
+.h-round{font-weight:800;font-size:16px;color:var(--blue);line-height:1.1}
+.h-round small{display:block;font-size:10px;font-weight:600;color:var(--gray-text);letter-spacing:.04em;margin-top:2px}
+.h-round.cur{color:var(--red)}
+.h-title{font-weight:600;margin-bottom:4px;display:flex;justify-content:space-between;gap:8px}
+.h-title .when{font-size:11px;color:var(--gray-text);font-weight:500;flex-shrink:0}
+.h-path{display:flex;gap:4px;align-items:center;font-size:11px;flex-wrap:wrap}
+.h-path .pn{width:20px;height:20px;border-radius:50%;background:var(--gray-bg);color:var(--gray-text);display:grid;place-items:center;font-weight:700;font-size:10px}
+.h-path .pn.hit{background:var(--green);color:#fff}
+.h-path .pn.cur{background:var(--red);color:#fff;box-shadow:0 0 0 3px rgba(229,73,92,.18)}
+.h-path .arr{color:var(--gray-line);font-size:10px}
+.h-summary{font-size:11.5px;color:var(--gray-text);margin-top:5px}
+
+/* Round badge in fleet card */
+.round-badge{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:2px 8px;border-radius:10px;background:var(--blue-bg);color:var(--blue);
+  font-size:11px;font-weight:700;line-height:1.6;
+}
+
+/* Donut */
+.donut{--p:95;width:120px;height:120px;border-radius:50%;background:conic-gradient(var(--green) calc(var(--p)*1%),var(--gray-bg) 0);display:grid;place-items:center;position:relative}
+.donut::before{content:"";position:absolute;inset:14px;border-radius:50%;background:#fff}
+.donut .v{position:relative;font-size:24px;font-weight:800}
+.donut.warn{background:conic-gradient(var(--orange) calc(var(--p)*1%),var(--gray-bg) 0)}
+.donut.bad{background:conic-gradient(var(--red) calc(var(--p)*1%),var(--gray-bg) 0)}
+
+/* Heatmap */
+.heatmap{display:grid;grid-template-columns:90px repeat(7,1fr);gap:4px;font-size:11px}
+.heatmap .row-label{padding:6px 4px;color:var(--gray-text);font-weight:600;text-align:right}
+.heatmap .col-label{padding:4px;color:var(--gray-text);font-weight:600;text-align:center;font-size:10.5px}
+.heatmap .cell{height:30px;border-radius:5px;display:grid;place-items:center;font-size:10.5px;font-weight:700;color:#fff;cursor:pointer}
+.heatmap .c-1{background:#D9F2E5;color:var(--green)}
+.heatmap .c-2{background:#9FE0BD;color:#0F7A52}
+.heatmap .c-3{background:#00C28B}
+.heatmap .c-4{background:#F5A623}
+.heatmap .c-5{background:#E5495C}
+.heatmap .c-0{background:var(--gray-bg);color:var(--gray-text)}
+
+/* Drawer */
+.drawer{position:fixed;top:0;right:0;bottom:0;width:560px;background:#fff;border-left:1px solid var(--gray-line);box-shadow:-12px 0 32px rgba(15,23,42,.08);z-index:50;transform:translateX(100%);transition:transform .25s ease;display:flex;flex-direction:column}
+.drawer.open{transform:translateX(0)}
+.drawer-h{padding:18px 22px;border-bottom:1px solid var(--gray-line);display:flex;justify-content:space-between;align-items:center}
+.drawer-b{flex:1;overflow-y:auto;padding:20px 22px}
+.drawer h4{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--gray-text);margin:18px 0 8px;font-weight:700}
+.drawer h4:first-child{margin-top:0}
+.kv{display:grid;grid-template-columns:110px 1fr;gap:6px 12px;font-size:13px}
+.kv > .k{color:var(--gray-text)}
+.scrim{position:fixed;inset:0;background:rgba(15,23,42,.3);z-index:40;display:none}
+.scrim.show{display:block}
+
+/* Toast */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(60px);background:#1A1A2E;color:#fff;padding:11px 18px;border-radius:8px;font-size:13px;font-weight:600;z-index:60;opacity:0;transition:.25s;pointer-events:none;box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+
+/* Misc */
+.timeline{display:flex;flex-direction:column;gap:14px}
+.tl-item{display:grid;grid-template-columns:24px 1fr;gap:12px;font-size:13px}
+.tl-dot{width:10px;height:10px;border-radius:50%;background:var(--blue);margin:6px 0 0 7px;position:relative}
+.tl-dot::after{content:"";position:absolute;top:14px;left:4px;width:2px;height:42px;background:var(--gray-line)}
+.tl-item:last-child .tl-dot::after{display:none}
+.tl-time{font-size:11.5px;color:var(--gray-text)}
+.empty{padding:32px;text-align:center;color:var(--gray-text);font-size:13px}
+.muted{color:var(--gray-text)}
+.divider{height:1px;background:var(--gray-line);margin:14px 0}
+.hint{display:flex;gap:8px;padding:10px 12px;background:var(--blue-bg);border-radius:8px;font-size:12.5px;color:var(--blue);border:1px solid var(--blue-light)}
+.hint.warn{background:var(--orange-lt);color:var(--orange);border-color:#FFD8AC}
+.minicard{padding:12px;background:#FAFBFE;border-radius:10px;border:1px solid var(--gray-line)}
+.minicard .l{font-size:11.5px;color:var(--gray-text);font-weight:600}
+.minicard .v{font-size:18px;font-weight:800;margin-top:2px}
+.kbd{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:12px;padding:3px 8px;border-radius:5px;background:#1A1A2E;color:#9DEDFF;letter-spacing:.02em}
+.match-row{display:flex;gap:6px}
+.match-row label{flex:1;padding:8px 10px;border:1px solid var(--gray-line);border-radius:8px;font-size:12px;cursor:pointer;text-align:center}
+.match-row input{display:none}
+.match-row label:has(input:checked){border-color:var(--blue);background:var(--blue-bg)}
+.match-row label:has(input:checked) span{color:var(--blue);font-weight:700}
+.flow-wrap{padding:18px;background:#FAFBFE;border-radius:10px;border:1px dashed var(--gray-line)}
+.flow-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.flow-node{flex:1;min-width:130px;background:#fff;border:1px solid var(--gray-line);border-radius:10px;padding:10px 12px;font-size:12.5px;font-weight:600;text-align:center}
+.flow-node .n-h{font-size:11px;color:var(--gray-text);font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}
+.flow-node.start{background:var(--blue);color:#fff;border-color:var(--blue)}
+.flow-node.end{background:var(--green);color:#fff;border-color:var(--green)}
+.flow-node.fail{border-color:var(--red);background:var(--red-lt);color:var(--red)}
+.flow-arrow{color:var(--gray-text);font-weight:700;font-size:14px;flex:0 0 12px;text-align:center}
+.case-list{display:flex;flex-direction:column;gap:6px}
+.case{display:grid;grid-template-columns:24px 1fr auto auto;gap:10px;padding:10px 12px;border:1px solid var(--gray-line);border-radius:8px;background:#fff;align-items:center}
+.case .ic{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;color:#fff}
+.case .ic.ok{background:var(--green)}
+.case .ic.fail{background:var(--red)}
+.case .ic.pending{background:var(--gray-text)}
+.case .name{font-size:13px;font-weight:600}
+.case .sub{font-size:11.5px;color:var(--gray-text);margin-top:2px}
+.case .actions{display:flex;gap:6px}
+.chat{background:#F0F2F5;border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px;font-size:13px}
+.chat .bubble{max-width:80%;padding:8px 12px;border-radius:10px;line-height:1.5}
+.chat .bubble.user{align-self:flex-start;background:#fff}
+.chat .bubble.bot{align-self:flex-end;background:#95EC69}
+.chat .meta-line{font-size:11px;color:var(--gray-text);text-align:center;margin:4px 0}
+.chat .bubble.flagged{border:1.5px solid var(--red)}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- ─────────────── TOPBAR ─────────────── -->
+<header class="topbar">
+  <div style="display:flex;align-items:center">
+    <a class="brand" href="../shouhu.html" title="返回官网">
+      <span class="brand-mark">句</span>
+      句子守护 <small>· Agentic QA</small>
+    </a>
+    <nav class="crumbs" id="crumbs">
+      <span>句子秒懂</span><span class="sep">/</span>
+      <span>测试中心</span><span class="sep">/</span>
+      <span class="here">Agent 总览</span>
+    </nav>
+  </div>
+  <div class="top-right">
+    <span class="status-row" id="globalStatus"><span class="status-pulse red"></span>1 个回归没过 · 1 个验收没到 95%</span>
+    <button class="icon-btn" title="文档">📘</button>
+    <button class="icon-btn badge-dot" title="通知">🔔</button>
+    <div class="avatar" title="grace">G</div>
+  </div>
+</header>
+
+<!-- ─────────────── SIDEBAR ─────────────── -->
+<aside class="sidebar">
+  <button class="sb-item active" data-route="fleet"><span class="ic">🛡️</span> Agent 总览 <span class="pill-num" id="sb-fleet-alert">2</span></button>
+
+  <div class="sb-section"><span>电商</span><span class="ct">3</span></div>
+  <button class="sb-item" data-route="agent:pre-sales"><span class="ic">🛒</span> 售前咨询 Agent <span class="stat s-red"></span></button>
+  <button class="sb-item" data-route="agent:after-sales"><span class="ic">🎧</span> 售后客服 Agent <span class="stat s-blue"></span></button>
+  <button class="sb-item" data-route="agent:retail-guide"><span class="ic">🛍️</span> AI 导购 Agent <span class="stat s-green"></span></button>
+
+  <div class="sb-section"><span>直播</span><span class="ct">1</span></div>
+  <button class="sb-item" data-route="agent:livestream"><span class="ic">🎥</span> 直播解说 Agent <span class="stat s-green"></span></button>
+
+  <div class="sb-section"><span>政务</span><span class="ct">1</span></div>
+  <button class="sb-item" data-route="agent:gov-mediation"><span class="ic">🏛</span> 政务调解 Agent <span class="stat s-green"></span></button>
+
+  <div class="sb-section"><span>金融</span><span class="ct">2</span></div>
+  <button class="sb-item" data-route="agent:bank-marketing"><span class="ic">🏦</span> 银行营销 Agent <span class="stat s-yellow"></span></button>
+  <button class="sb-item" data-route="agent:fin-advisor"><span class="ic">💼</span> AI 顾问 Agent <span class="stat s-green"></span></button>
+
+  <div class="sb-section"><span>教育</span><span class="ct">1</span></div>
+  <button class="sb-item" data-route="agent:edu-renew"><span class="ic">🎓</span> 教培续报 Agent <span class="stat s-gray"></span></button>
+
+  <div class="sb-foot">
+    <strong>句子守护 · Agent Test Lab</strong><br>
+    8 个 Agent：稳定 4 · 灰度 1 · 候发 1 · 阻塞 1 · 测试中 1
+  </div>
+</aside>
+
+<!-- ─────────────── MAIN ─────────────── -->
+<main class="main">
+
+<!-- ═════════════════ VIEW: FLEET ═════════════════ -->
+<section class="view active" id="view-fleet">
+  <div class="page-head">
+    <div>
+      <h1>Agent 总览</h1>
+      <p class="desc">8 个 Agent。今天 1 个回归没过、1 个验收没到阈值，下面是它们的状态。</p>
+    </div>
+    <div class="head-actions">
+      <div class="toggle-grp">
+        <button class="active">卡片</button>
+        <button>表格</button>
+      </div>
+      <button class="btn btn-ghost">导出周报</button>
+      <button class="btn btn-primary">+ 接入新 Agent</button>
+    </div>
+  </div>
+
+  <!-- KPIs -->
+  <div class="kpi-row">
+    <div class="kpi"><div class="l">Agent</div><div class="v">8</div><div class="delta">上线 7 · 测试中 1</div></div>
+    <div class="kpi"><div class="l">累计上线</div><div class="v">61<small style="font-size:14px;color:var(--gray-text);font-weight:600;margin-left:3px">次</small></div><div class="delta">守护合计 1030 天</div></div>
+    <div class="kpi alert"><div class="l">阻塞 / 候发</div><div class="v">1 / 1</div><div class="delta bad">售前 · 银行营销</div></div>
+    <div class="kpi"><div class="l">线上通过率</div><div class="v">97.1%</div><div class="delta">比上周 +0.6pp</div></div>
+    <div class="kpi warn"><div class="l">待处理 Badcase</div><div class="v">19</div><div class="delta bad">售前 7 · 营销 6 · 其他 6</div></div>
+    <div class="kpi"><div class="l">今日质检覆盖</div><div class="v">100%</div><div class="delta">28,432 条</div></div>
+  </div>
+
+  <!-- Agent grid -->
+  <div class="card" style="margin-bottom:18px">
+    <div class="card-h">
+      <h3>所有 Agent</h3>
+      <div class="status-row">
+        <span><span class="dot" style="color:var(--green)"></span> 稳定</span>
+        <span><span class="dot" style="color:var(--blue)"></span> 灰度</span>
+        <span><span class="dot" style="color:var(--yellow)"></span> 候发</span>
+        <span><span class="dot" style="color:var(--red)"></span> 阻塞</span>
+        <span><span class="dot" style="color:var(--gray-text)"></span> 测试中</span>
+      </div>
+    </div>
+    <div class="fleet-grid" id="fleetGrid"><!-- filled by JS --></div>
+  </div>
+
+  <div class="split-2">
+    <!-- Heatmap -->
+    <div class="card">
+      <div class="card-h">
+        <h3>近 7 天通过率</h3>
+        <span class="meta">颜色越深，通过率越低</span>
+      </div>
+      <div class="heatmap" id="heatmap"><!-- filled by JS --></div>
+    </div>
+    <!-- Cross-agent activity -->
+    <div class="card">
+      <div class="card-h"><h3>最近动态</h3><span class="meta">近 6 小时</span></div>
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-dot" style="background:var(--red)"></div><div><div><strong>售前咨询</strong> · v1.4 回归 2/52 没过</div><div class="tl-time">14:32 · 系统 · <span class="row-link" data-route="agent:pre-sales">查看</span></div></div></div>
+        <div class="tl-item"><div class="tl-dot" style="background:var(--yellow)"></div><div><div><strong>银行营销</strong> · v1.0 验收 89%（阈值 95%）</div><div class="tl-time">13:18 · 系统 · <span class="row-link" data-route="agent:bank-marketing">查看</span></div></div></div>
+        <div class="tl-item"><div class="tl-dot" style="background:var(--blue)"></div><div><div><strong>售后客服</strong> · v2.1 灰度跑满 72h，对比报告出来了</div><div class="tl-time">11:42 · 系统 · <span class="row-link" data-route="agent:after-sales">查看</span></div></div></div>
+        <div class="tl-item"><div class="tl-dot" style="background:var(--green)"></div><div><div><strong>政务调解</strong> · 周报质检完成，合规 100%</div><div class="tl-time">09:00 · 定时</div></div></div>
+        <div class="tl-item"><div class="tl-dot" style="background:var(--purple)"></div><div><div><strong>AI 导购</strong> · 客户点踩 1 条（BC-N12）</div><div class="tl-time">08:42 · @陈同学</div></div></div>
+        <div class="tl-item"><div class="tl-dot" style="background:var(--teal)"></div><div><div><strong>AI 顾问</strong> · 实时质检 0 条命中</div><div class="tl-time">06:00 · 定时</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════ VIEW: AGENT OVERVIEW (PRE-SALES) ═════════════════ -->
+<section class="view" id="view-overview">
+  <div class="page-head">
+    <div>
+      <h1>售前咨询 Agent</h1>
+      <p class="desc">v1.3 上线 14 天，v1.4 候发被 2 条回归卡住。</p>
+    </div>
+    <div class="head-actions">
+      <button class="btn btn-ghost" data-route="fleet">← 返回</button>
+      <button class="btn btn-ghost">导出周报</button>
+      <button class="btn btn-primary">▶ 重跑 v1.4 回归</button>
+    </div>
+  </div>
+
+  <div class="banner">
+    <div class="ic">!</div>
+    <div style="flex:1">
+      <div class="b-title">v1.4 回归 2 条没过，没法上线</div>
+      <div class="b-desc">52 条用例，过 50 失 2（<span class="row-link" data-route="agent:pre-sales:regression">竞品对比策略</span>、<span class="row-link" data-route="agent:pre-sales:regression">砍价转优惠</span>）。PE 在处理。</div>
+    </div>
+    <div style="text-align:right">
+      <div style="font-size:11px;color:var(--gray-text);font-weight:600">已等</div>
+      <div style="font-size:18px;font-weight:800;color:var(--red)">2h 14m</div>
+    </div>
+  </div>
+
+  <div class="kpi-row k4">
+    <div class="kpi"><div class="l">v1.3 线上通过率</div><div class="v">96.4%</div><div class="delta">比上周 +1.2pp</div></div>
+    <div class="kpi"><div class="l">v1.4 测试通过率</div><div class="v">95.2%</div><div class="delta">118 / 124</div></div>
+    <div class="kpi alert"><div class="l">待处理 Badcase</div><div class="v">7</div><div class="delta bad">3 条已合进 v1.4</div></div>
+    <div class="kpi"><div class="l">今日质检覆盖</div><div class="v">100%</div><div class="delta">2,148 条</div></div>
+  </div>
+
+  <!-- Lifecycle ring · Agent 工作量 + 迭代历史 -->
+  <div class="card" style="margin-bottom:18px">
+    <div class="card-h">
+      <h3>守护循环 · 已上线 5 次</h3>
+      <span class="meta">每完成一圈是一次上线 · Agent 上线 60 天，迭代过 4 个版本，正在做第 5 个</span>
+    </div>
+    <div class="lifecycle">
+      <div class="ring">
+        <svg viewBox="0 0 400 400">
+          <circle cx="200" cy="200" r="142" fill="none" stroke="#E2E8F0" stroke-width="1.5" stroke-dasharray="3 5"/>
+        </svg>
+        <div class="lc-center">
+          <div class="lc-eyebrow">已上线</div>
+          <div class="lc-round">5<small>次</small></div>
+          <div class="lc-step-name">第 5 轮 · 卡在回归</div>
+          <div class="lc-step-sub">v1.4 等了 2h 14m</div>
+        </div>
+        <div class="lc-node n1 c-blue done"><span class="lc-num">01</span><span class="lc-lbl">AI 测试</span><span class="lc-cnt">写过 580 条</span></div>
+        <div class="lc-node n2 c-bluemid done"><span class="lc-num">02</span><span class="lc-lbl">批量验收</span><span class="lc-cnt">跑 24 次</span></div>
+        <div class="lc-node n3 c-green active"><span class="lc-num">03</span><span class="lc-lbl">回归测试</span><span class="lc-cnt">这次 50/52</span></div>
+        <div class="lc-node n4 c-teal pending"><span class="lc-num">04</span><span class="lc-lbl">灰度</span><span class="lc-cnt">开过 4 次</span></div>
+        <div class="lc-node n5 c-orange pending"><span class="lc-num">05</span><span class="lc-lbl">上线</span><span class="lc-cnt">5 次</span></div>
+        <div class="lc-node n6 c-purple done"><span class="lc-num">06</span><span class="lc-lbl">质检 / Badcase</span><span class="lc-cnt">修 42 条 · 12.8 万对话</span></div>
+      </div>
+      <div>
+        <div class="h-head"><span>迭代历史</span><span class="h-meta">每轮经过的步骤不同</span></div>
+        <div class="h-list">
+          <div class="h-item">
+            <div class="h-round cur">第 5 轮<small>当前</small></div>
+            <div>
+              <div class="h-title"><span><strong>v1.4 候发</strong> · 修 3 条 Badcase + 加竞品对比</span><span class="when">今日</span></div>
+              <div class="h-path">
+                <span class="pn hit">6</span><span class="arr">→</span>
+                <span class="pn hit">1</span><span class="arr">→</span>
+                <span class="pn hit">2</span><span class="arr">→</span>
+                <span class="pn cur">3</span><span class="arr">→</span>
+                <span class="pn">4</span><span class="arr">→</span>
+                <span class="pn">5</span>
+              </div>
+              <div class="h-summary">从 Badcase 反馈起头，回归卡在第 3 步</div>
+            </div>
+          </div>
+          <div class="h-item">
+            <div class="h-round">第 4 轮</div>
+            <div>
+              <div class="h-title"><span><strong>v1.3</strong> · 修 BC-104 + 加多轮咨询</span><span class="when">14d 前</span></div>
+              <div class="h-path">
+                <span class="pn hit">6</span><span class="arr">→</span>
+                <span class="pn hit">1</span><span class="arr">→</span>
+                <span class="pn hit">2</span><span class="arr">→</span>
+                <span class="pn hit">3</span><span class="arr">→</span>
+                <span class="pn hit">4</span><span class="arr">→</span>
+                <span class="pn hit">5</span>
+              </div>
+              <div class="h-summary">完整跑完 6 步，14 天前上线</div>
+            </div>
+          </div>
+          <div class="h-item">
+            <div class="h-round">第 3 轮</div>
+            <div>
+              <div class="h-title"><span><strong>v1.2</strong> · 加价格分级功能（非 Badcase 触发）</span><span class="when">28d 前</span></div>
+              <div class="h-path">
+                <span class="pn hit">1</span><span class="arr">→</span>
+                <span class="pn hit">2</span><span class="arr">→</span>
+                <span class="pn hit">3</span><span class="arr">→</span>
+                <span class="pn hit">4</span><span class="arr">→</span>
+                <span class="pn hit">5</span>
+              </div>
+              <div class="h-summary">主动迭代，没经过第 6 步</div>
+            </div>
+          </div>
+          <div class="h-item">
+            <div class="h-round">第 2 轮</div>
+            <div>
+              <div class="h-title"><span><strong>v1.1</strong> · 修 BC-091 退货流程</span><span class="when">42d 前</span></div>
+              <div class="h-path">
+                <span class="pn hit">6</span><span class="arr">→</span>
+                <span class="pn hit">1</span><span class="arr">→</span>
+                <span class="pn hit">2</span><span class="arr">→</span>
+                <span class="pn hit">3</span><span class="arr">→</span>
+                <span class="pn hit">4</span><span class="arr">→</span>
+                <span class="pn hit">5</span>
+              </div>
+              <div class="h-summary">客户点踩触发，全 6 步走完</div>
+            </div>
+          </div>
+          <div class="h-item">
+            <div class="h-round">第 1 轮</div>
+            <div>
+              <div class="h-title"><span><strong>v1.0</strong> · 首次上线</span><span class="when">60d 前</span></div>
+              <div class="h-path">
+                <span class="pn hit">1</span><span class="arr">→</span>
+                <span class="pn hit">2</span><span class="arr">→</span>
+                <span class="pn hit">3</span><span class="arr">→</span>
+                <span class="pn hit">4</span><span class="arr">→</span>
+                <span class="pn hit">5</span>
+              </div>
+              <div class="h-summary">从 0 到 1，跑完前 5 步</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="split-2">
+    <div class="card">
+      <div class="card-h"><h3>v1.4 改了什么</h3><span class="meta">3 修 + 1 新增</span></div>
+      <div class="case-list">
+        <div class="case"><div class="ic ok">✓</div><div><div class="name">BC-201 · 客户砍价没触发优惠</div><div class="sub">@lihua · 已合进回归集</div></div><span class="tag tag-purple">修 Badcase</span><button class="btn btn-sm btn-ghost" data-route="agent:pre-sales:badcase">查看</button></div>
+        <div class="case"><div class="ic ok">✓</div><div><div class="name">BC-198 · 退款没转人工</div><div class="sub">@lihua · 已合进回归集</div></div><span class="tag tag-purple">修 Badcase</span><button class="btn btn-sm btn-ghost" data-route="agent:pre-sales:badcase">查看</button></div>
+        <div class="case"><div class="ic ok">✓</div><div><div class="name">BC-189 · 复杂咨询绕圈</div><div class="sub">@grace · 已合进回归集</div></div><span class="tag tag-purple">修 Badcase</span><button class="btn btn-sm btn-ghost" data-route="agent:pre-sales:badcase">查看</button></div>
+        <div class="case"><div class="ic pending">＋</div><div><div class="name">加「竞品对比」分支</div><div class="sub">@sales 提的 · 用例 16 条采纳 13</div></div><span class="tag tag-blue">新增</span><button class="btn btn-sm btn-ghost" data-route="agent:pre-sales:testing">查看</button></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-h"><h3>今日动态</h3><span class="meta"></span></div>
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-dot" style="background:var(--red)"></div><div><div><strong>回归没过</strong> · 2 条新失败，v1.4 卡在这里</div><div class="tl-time">14:32 · 系统</div></div></div>
+        <div class="tl-item"><div class="tl-dot" style="background:var(--blue)"></div><div><div><strong>跑回归</strong> · 52 条用例 → v1.4</div><div class="tl-time">14:18 · @grace</div></div></div>
+        <div class="tl-item"><div class="tl-dot" style="background:var(--green)"></div><div><div><strong>验收完成</strong> · 124 条，过 95.2%</div><div class="tl-time">13:42 · 系统</div></div></div>
+        <div class="tl-item"><div class="tl-dot" style="background:var(--purple)"></div><div><div><strong>BC-198 修完</strong> · 退款转人工流程</div><div class="tl-time">11:05 · @lihua</div></div></div>
+        <div class="tl-item"><div class="tl-dot" style="background:var(--blue)"></div><div><div><strong>「竞品对比」生成 16 条用例</strong></div><div class="tl-time">10:24 · @grace</div></div></div>
+        <div class="tl-item"><div class="tl-dot" style="background:var(--orange)"></div><div><div><strong>质检命中 1 条</strong> · 已转 Badcase</div><div class="tl-time">09:17 · 系统</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════ VIEW: AI 测试 ═════════════════ -->
+<section class="view" id="view-testing">
+  <div class="page-head">
+    <div><h1>AI 测试</h1><p class="desc">AI 看 Agent 的流程图，每个分支生成一组用例。每条单独采纳或拒绝。</p></div>
+    <div class="head-actions">
+      <button class="btn btn-ghost" data-route="agent:pre-sales">← 返回</button>
+      <button class="btn btn-primary">＋ 给「竞品对比」生成 20 条</button>
+    </div>
+  </div>
+
+  <div class="hint" style="margin-bottom:14px">
+    <span>💡</span>
+    <span>v1.4 新增了「竞品对比」分支。这个分支的 16 条用例已生成，13 条采纳。</span>
+  </div>
+
+  <div class="split-2">
+    <div class="card">
+      <div class="card-h"><h3>流程图</h3><span class="meta">5 节点 · 8 分支</span></div>
+      <div class="flow-wrap">
+        <div class="flow-row">
+          <div class="flow-node start"><div class="n-h">START</div>用户进线</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node"><div class="n-h">NODE</div>意图识别</div>
+        </div>
+        <div style="margin:14px 0;color:var(--gray-text);text-align:center;font-size:12px">↓ 分流到 4 条业务分支</div>
+        <div class="flow-row">
+          <div class="flow-node"><div class="n-h">BRANCH 1</div>价格咨询<br><span class="muted" style="font-weight:500;font-size:11px">22 条用例</span></div>
+          <div class="flow-node"><div class="n-h">BRANCH 2</div>砍价 / 优惠<br><span class="muted" style="font-weight:500;font-size:11px">28 条用例</span></div>
+          <div class="flow-node"><div class="n-h">BRANCH 3</div>退款 / 售后<br><span class="muted" style="font-weight:500;font-size:11px">18 条用例</span></div>
+          <div class="flow-node fail"><div class="n-h">BRANCH 4 · v1.4</div>竞品对比<br><span style="font-weight:600;font-size:11px">16 / 16 (失败 2)</span></div>
+        </div>
+        <div style="margin:14px 0;color:var(--gray-text);text-align:center;font-size:12px">↓</div>
+        <div class="flow-row"><div class="flow-node end"><div class="n-h">END</div>留资 / 转人工 / 闭环</div></div>
+      </div>
+      <h4 style="font-size:12px;color:var(--gray-text);margin:18px 0 10px;text-transform:uppercase;letter-spacing:.06em">怎么算通过</h4>
+      <div class="match-row">
+        <label><input type="radio" name="m" checked><span>精确匹配</span></label>
+        <label><input type="radio" name="m"><span>相似度匹配</span></label>
+        <label><input type="radio" name="m"><span>AI 语义判断</span></label>
+      </div>
+      <div class="hint" style="margin-top:10px"><span>ℹ️</span><span>AI 语义判断：让模型读 Agent 的回答，判断是不是符合预期。开放式问题用这个。</span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-h"><h3>「竞品对比」用例 · 16 条</h3><span class="meta status-row"><span class="status-pulse"></span>实时生成</span></div>
+      <div class="case-list">
+        <div class="case"><div class="ic ok">✓</div><div><div class="name">"友商 A 比你们便宜，能匹配吗？"</div><div class="sub">期望：讲差异化，不直接降价</div></div><span class="tag tag-green">采纳</span><button class="btn btn-sm btn-ghost">编辑</button></div>
+        <div class="case"><div class="ic ok">✓</div><div><div class="name">"我朋友推荐我用 X，你们有什么不同？"</div><div class="sub">期望：进竞品对比分支，给 3 个差异点</div></div><span class="tag tag-green">采纳</span><button class="btn btn-sm btn-ghost">编辑</button></div>
+        <div class="case"><div class="ic ok">✓</div><div><div class="name">"X 家承诺 7 天无理由，你们呢？"</div><div class="sub">期望：讲清售后政策，不贬低对方</div></div><span class="tag tag-green">采纳</span><button class="btn btn-sm btn-ghost">编辑</button></div>
+        <div class="case"><div class="ic fail">✗</div><div><div class="name">"竞品都送赠品，你们有吗？"</div><div class="sub">回归没过 — 回答里带了贬低词</div></div><span class="tag tag-red">回归没过</span><button class="btn btn-sm btn-primary" data-route="agent:pre-sales:regression">查看</button></div>
+        <div class="case"><div class="ic pending">＋</div><div><div class="name">"我看小红书说 Y 比你们好"</div><div class="sub">期望回答还在生成…</div></div><span class="tag tag-yellow">待审</span><div></div></div>
+      </div>
+      <div class="divider"></div>
+      <div style="display:flex;gap:8px;justify-content:space-between;align-items:center"><span class="muted" style="font-size:12px">采纳 13 · 拒绝 1 · 待审 2 · 4 条还在生成</span><button class="btn btn-sm btn-primary">全部采纳</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════ VIEW: 批量验收 ═════════════════ -->
+<section class="view" id="view-acceptance">
+  <div class="page-head">
+    <div><h1>批量验收</h1><p class="desc">把测试集跑一遍，看通过率、失败用例、各分支覆盖。</p></div>
+    <div class="head-actions">
+      <button class="btn btn-ghost" data-route="agent:pre-sales">← 返回</button>
+      <button class="btn btn-primary">▶ 重跑全场景</button>
+    </div>
+  </div>
+  <div class="tabbar">
+    <div class="tab active">售前咨询全场景 · 124 条</div>
+    <div class="tab">闲聊兜底 · 18 条</div>
+    <div class="tab">合规高敏 · 32 条</div>
+    <div class="tab" style="color:var(--green)">+ 新建</div>
+  </div>
+  <div class="split-2" style="margin-bottom:18px">
+    <div class="card">
+      <div class="card-h"><h3>本次执行结果 · v1.4</h3><span class="meta">13:42 完成 · 4m12s</span></div>
+      <div style="display:flex;gap:24px;align-items:center">
+        <div class="donut warn" style="--p:95"><div class="v">95.2%</div></div>
+        <div style="flex:1">
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px">
+            <div class="minicard"><div class="l">通过</div><div class="v" style="color:var(--green)">118</div></div>
+            <div class="minicard"><div class="l">失败</div><div class="v" style="color:var(--red)">6</div></div>
+            <div class="minicard"><div class="l">用时</div><div class="v">4m12s</div></div>
+          </div>
+          <div style="font-size:12px;display:flex;justify-content:space-between"><span>价格咨询 22/22</span><span style="color:var(--green)">100%</span></div>
+          <div class="bar green"><span style="width:100%"></span></div>
+          <div style="font-size:12px;display:flex;justify-content:space-between"><span>砍价/优惠 26/28</span><span style="color:var(--orange)">93%</span></div>
+          <div class="bar"><span style="width:93%;background:var(--orange)"></span></div>
+          <div style="font-size:12px;display:flex;justify-content:space-between"><span>退款/售后 18/18</span><span style="color:var(--green)">100%</span></div>
+          <div class="bar green"><span style="width:100%"></span></div>
+          <div style="font-size:12px;display:flex;justify-content:space-between"><span>竞品对比 12/16</span><span style="color:var(--orange)">75%</span></div>
+          <div class="bar"><span style="width:75%;background:var(--orange)"></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-h"><h3>历次执行</h3><span class="meta">最近 5 次</span></div>
+      <table class="tbl">
+        <thead><tr><th>版本</th><th>通过率</th><th>用例数</th><th>时间</th></tr></thead>
+        <tbody>
+          <tr><td><span class="tag tag-orange">v1.4 · 候发</span></td><td><strong style="color:var(--orange)">95.2%</strong></td><td>118 / 124</td><td class="muted">今日 13:42</td></tr>
+          <tr><td><span class="tag tag-blue">v1.3 · 正式</span></td><td><strong style="color:var(--green)">100%</strong></td><td>108 / 108</td><td class="muted">14 天前</td></tr>
+          <tr><td>v1.3-rc</td><td>99.1%</td><td>107 / 108</td><td class="muted">14 天前</td></tr>
+          <tr><td>v1.2</td><td>97.2%</td><td>105 / 108</td><td class="muted">28 天前</td></tr>
+          <tr><td>v1.1</td><td>94.4%</td><td>102 / 108</td><td class="muted">42 天前</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-h"><h3>失败用例 · 6 条</h3><span class="meta">点开看详情，可转 Badcase</span></div>
+    <table class="tbl">
+      <thead><tr><th>用例</th><th>分支</th><th>验证方式</th><th>为什么没过</th><th></th></tr></thead>
+      <tbody>
+        <tr><td><span class="row-link" onclick="openDrawer('case-fail-1')">"竞品都送赠品，你们有吗？"</span></td><td>竞品对比</td><td>AI 语义判断</td><td><span class="tag tag-red">回答里带了贬低词</span></td><td><button class="btn btn-sm btn-ghost">转 Badcase</button></td></tr>
+        <tr><td><span class="row-link">"按你们友商方案给我配置一下"</span></td><td>竞品对比</td><td>AI 语义判断</td><td><span class="tag tag-red">没进竞品对比分支</span></td><td><button class="btn btn-sm btn-ghost">转 Badcase</button></td></tr>
+        <tr><td><span class="row-link">"X 平台给我打了 8 折，你能匹配吗？"</span></td><td>砍价/优惠</td><td>精确匹配</td><td><span class="tag tag-red">优惠规则没命中</span></td><td><button class="btn btn-sm btn-ghost">转 Badcase</button></td></tr>
+        <tr><td><span class="row-link">"老客户复购能再便宜点吗？"</span></td><td>砍价/优惠</td><td>相似度匹配</td><td><span class="tag tag-red">相似度 0.62（阈值 0.8）</span></td><td><button class="btn btn-sm btn-ghost">转 Badcase</button></td></tr>
+        <tr><td><span class="row-link">"我看小红书 Y 评测的更好"</span></td><td>竞品对比</td><td>AI 语义判断</td><td><span class="tag tag-red">没给 3 个差异点</span></td><td><button class="btn btn-sm btn-ghost">转 Badcase</button></td></tr>
+        <tr><td><span class="row-link">"赠品能换其他规格吗"</span></td><td>竞品对比</td><td>精确匹配</td><td><span class="tag tag-red">缺关键词</span></td><td><button class="btn btn-sm btn-ghost">转 Badcase</button></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═════════════════ VIEW: 灰度发布 ═════════════════ -->
+<section class="view" id="view-gray">
+  <div class="page-head">
+    <div><h1>灰度发布</h1><p class="desc">带激活密钥的会话进新版本，其他会话还在旧版。出问题随时关掉，灰度会话立刻回到旧版。</p></div>
+    <div class="head-actions">
+      <button class="btn btn-ghost" data-route="agent:pre-sales">← 返回</button>
+      <button class="btn btn-primary" disabled style="opacity:.4;cursor:not-allowed">开 v1.4 灰度（回归先过了再来）</button>
+    </div>
+  </div>
+  <div class="hint warn" style="margin-bottom:18px"><span>⚠️</span><span>v1.4 回归 2 条没过，灰度先锁着。回归全过才能开。</span></div>
+  <div class="split-2" style="margin-bottom:18px">
+    <div class="card">
+      <div class="card-h"><h3>两个版本</h3><span class="meta"></span></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div style="padding:14px;border:1px solid var(--blue-light);border-radius:10px;background:var(--blue-bg)">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><strong style="color:var(--blue)">v1.3 · 正式</strong><span class="status-row"><span class="status-pulse"></span>线上</span></div>
+          <div class="kv" style="font-size:12px">
+            <span class="k">流量</span><span><strong>100%</strong></span>
+            <span class="k">上线</span><span>14 天</span>
+            <span class="k">通过率</span><span style="color:var(--green)"><strong>96.4%</strong></span>
+            <span class="k">日均对话</span><span>2,148 条</span>
+          </div>
+        </div>
+        <div style="padding:14px;border:1px dashed var(--orange);border-radius:10px;background:var(--orange-lt);opacity:.85">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><strong style="color:var(--orange)">v1.4 · 候发</strong><span class="tag tag-orange">回归没过</span></div>
+          <div class="kv" style="font-size:12px">
+            <span class="k">流量</span><span><strong>0%</strong></span>
+            <span class="k">改动</span><span>修 3 条 + 加 1 个分支</span>
+            <span class="k">回归</span><span style="color:var(--orange)"><strong>50/52</strong></span>
+            <span class="k">激活密钥</span><span><span class="kbd">GRAY-V14-7K2P</span></span>
+          </div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <h4 style="font-size:12px;color:var(--gray-text);margin:0 0 10px;text-transform:uppercase;letter-spacing:.06em">灰度怎么配的</h4>
+      <table class="tbl">
+        <tbody>
+          <tr><td style="color:var(--gray-text);width:130px">激活密钥</td><td><span class="kbd">GRAY-V14-7K2P</span> <span class="muted" style="font-size:11px;margin-left:6px">客户输入这串就进灰度</span></td></tr>
+          <tr><td style="color:var(--gray-text)">灰度范围</td><td>打了 <span class="kbd">[内测]</span> 标签的私域客户，最多 50 个会话</td></tr>
+          <tr><td style="color:var(--gray-text)">观察期</td><td>72h，两版差异超过 3% 会告警</td></tr>
+          <tr><td style="color:var(--gray-text)">回滚</td><td>关掉灰度，会话立刻回 v1.3</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-h"><h3>流量怎么分</h3><span class="meta"></span></div>
+      <div style="padding:18px;background:#FAFBFE;border-radius:10px;border:1px dashed var(--gray-line)">
+        <div style="text-align:center;font-size:13px;color:var(--gray-text);margin-bottom:12px">客户进线</div>
+        <div style="text-align:center;color:var(--gray-text)">↓ 看有没有激活密钥</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0">
+          <div style="padding:14px;background:var(--blue);color:#fff;border-radius:10px;text-align:center;font-weight:700">没密钥<br><span style="font-weight:500;font-size:12px;opacity:.85">→ v1.3 正式</span></div>
+          <div style="padding:14px;background:var(--orange);color:#fff;border-radius:10px;text-align:center;font-weight:700">有密钥<br><span style="font-weight:500;font-size:12px;opacity:.85">→ v1.4 灰度</span></div>
+        </div>
+        <div style="text-align:center;color:var(--gray-text);font-size:12px;margin-top:10px">两版数据分开记 · 72h 出对比</div>
+      </div>
+      <div class="divider"></div>
+      <h4 style="font-size:12px;color:var(--gray-text);margin:0 0 10px;text-transform:uppercase;letter-spacing:.06em">两版对比（灰度开了之后）</h4>
+      <div class="empty" style="padding:18px">还没开灰度 · <span class="row-link" data-route="agent:after-sales">看售后 Agent 的灰度对比</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════ VIEW: Badcase ═════════════════ -->
+<section class="view" id="view-badcase">
+  <div class="page-head">
+    <div><h1>Badcase</h1><p class="desc">客户点踩、质检命中、验收失败的对话都进这里。修完会自动加进回归集，下次发版必跑。</p></div>
+    <div class="head-actions"><button class="btn btn-ghost" data-route="agent:pre-sales">← 返回</button><button class="btn btn-primary">+ 手动新增</button></div>
+  </div>
+  <div class="kpi-row k4">
+    <div class="kpi"><div class="l">待处理</div><div class="v" style="color:var(--red)">7</div><div class="delta bad">今日新增 2 条</div></div>
+    <div class="kpi"><div class="l">在修</div><div class="v" style="color:var(--orange)">3</div><div class="delta">合进 v1.4</div></div>
+    <div class="kpi"><div class="l">本月修完</div><div class="v" style="color:var(--green)">42</div><div class="delta">比上月 +12%</div></div>
+    <div class="kpi"><div class="l">平均处理时长</div><div class="v">5.2h</div><div class="delta">SLA 24h</div></div>
+  </div>
+  <div class="tabbar"><div class="tab active">全部 · 52</div><div class="tab">待处理 · 7</div><div class="tab">在修 · 3</div><div class="tab">已修完 · 42</div></div>
+  <div class="card">
+    <div class="toolbar">
+      <input class="input" placeholder="搜索 Badcase ID / 关键词…">
+      <select><option>所有来源</option><option>客户点踩</option><option>PE 录入</option><option>质检命中</option><option>验收失败</option></select>
+      <select><option>所有分支</option><option>价格咨询</option><option>砍价/优惠</option><option>竞品对比</option><option>退款/售后</option></select>
+      <span class="muted" style="margin-left:auto;font-size:12px">1–8 / 52</span>
+    </div>
+    <table class="tbl">
+      <thead><tr><th>ID</th><th>问题</th><th>来源</th><th>分支</th><th>状态</th><th>处理人</th><th></th></tr></thead>
+      <tbody>
+        <tr><td class="cell-strong">BC-203</td><td><span class="row-link" onclick="openDrawer('bc-203')">"竞品都送赠品" 回复贬低对方</span></td><td><span class="tag tag-blue">验收失败</span></td><td>竞品对比</td><td><span class="tag tag-red"><span class="dot"></span>待处理</span></td><td class="muted">没人接</td><td><button class="btn btn-sm btn-primary">认领</button></td></tr>
+        <tr><td class="cell-strong">BC-202</td><td><span class="row-link">"X 平台 8 折你能匹配" 优惠没命中</span></td><td><span class="tag tag-blue">验收失败</span></td><td>砍价/优惠</td><td><span class="tag tag-red"><span class="dot"></span>待处理</span></td><td class="muted">没人接</td><td><button class="btn btn-sm btn-primary">认领</button></td></tr>
+        <tr><td class="cell-strong">BC-201</td><td><span class="row-link" onclick="openDrawer('bc-201')">客户砍价没触发优惠</span></td><td><span class="tag tag-purple">客户点踩</span></td><td>砍价/优惠</td><td><span class="tag tag-orange"><span class="dot"></span>合进 v1.4</span></td><td>@lihua</td><td><button class="btn btn-sm btn-ghost">查看</button></td></tr>
+        <tr><td class="cell-strong">BC-198</td><td><span class="row-link">退款没转人工</span></td><td><span class="tag tag-purple">客户点踩</span></td><td>退款/售后</td><td><span class="tag tag-orange"><span class="dot"></span>合进 v1.4</span></td><td>@lihua</td><td><button class="btn btn-sm btn-ghost">查看</button></td></tr>
+        <tr><td class="cell-strong">BC-189</td><td><span class="row-link">复杂咨询绕圈</span></td><td><span class="tag tag-teal">质检命中</span></td><td>价格咨询</td><td><span class="tag tag-orange"><span class="dot"></span>合进 v1.4</span></td><td>@grace</td><td><button class="btn btn-sm btn-ghost">查看</button></td></tr>
+        <tr><td class="cell-strong">BC-180</td><td><span class="row-link">老客户复购优惠没认出来</span></td><td><span class="tag tag-purple">客户点踩</span></td><td>砍价/优惠</td><td><span class="tag tag-red"><span class="dot"></span>待处理</span></td><td class="muted">没人接</td><td><button class="btn btn-sm btn-primary">认领</button></td></tr>
+        <tr><td class="cell-strong">BC-176</td><td><span class="row-link">售后政策前后不一致</span></td><td><span class="tag tag-teal">质检命中</span></td><td>退款/售后</td><td><span class="tag tag-red"><span class="dot"></span>待处理</span></td><td class="muted">没人接</td><td><button class="btn btn-sm btn-primary">认领</button></td></tr>
+        <tr><td class="cell-strong">BC-172</td><td><span class="row-link">客户问发货时间被忽略</span></td><td><span class="tag tag-purple">客户点踩</span></td><td>价格咨询</td><td><span class="tag tag-green"><span class="dot"></span>已修 · v1.3</span></td><td>@lihua</td><td><button class="btn btn-sm btn-ghost">查看</button></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═════════════════ VIEW: 回归测试 ═════════════════ -->
+<section class="view" id="view-regression">
+  <div class="page-head">
+    <div><h1>回归测试</h1><p class="desc">新版本上线前跑一遍历史用例。同一个错不犯第二次。</p></div>
+    <div class="head-actions"><button class="btn btn-ghost" data-route="agent:pre-sales">← 返回</button><button class="btn btn-primary">▶ 重跑 v1.4</button></div>
+  </div>
+  <div class="banner">
+    <div class="ic">!</div>
+    <div style="flex:1"><div class="b-title">v1.4 回归 2 条没过</div><div class="b-desc">52 条用例，过 50 失 2。已等 2h 14m。</div></div>
+    <button class="btn btn-warn">紧急通道（CTO 审批）</button>
+  </div>
+  <div class="split-2" style="margin-bottom:18px">
+    <div class="card">
+      <div class="card-h"><h3>这次回归 · v1.4</h3><span class="meta">14:18 开跑 · 14:32 跑完</span></div>
+      <div style="display:flex;gap:24px;align-items:center">
+        <div class="donut bad" style="--p:96"><div class="v" style="color:var(--red)">96%</div></div>
+        <div style="flex:1">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+            <div class="minicard"><div class="l">过</div><div class="v" style="color:var(--green)">50</div></div>
+            <div class="minicard"><div class="l">新失败</div><div class="v" style="color:var(--red)">2</div></div>
+          </div>
+          <div class="hint warn"><span>⚠️</span><span>新失败：v1.3 过、v1.4 不过。只要有 1 条新失败，就阻塞上线。</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-h"><h3>历次回归通过率</h3><span class="meta">最近 6 版</span></div>
+      <div class="linechart">
+        <svg viewBox="0 0 600 160" preserveAspectRatio="none">
+          <polyline fill="none" stroke="#1659E5" stroke-width="2.5" points="20,40 120,30 220,28 320,20 420,28 540,55"/>
+          <circle cx="20" cy="40" r="4" fill="#1659E5"/><circle cx="120" cy="30" r="4" fill="#1659E5"/><circle cx="220" cy="28" r="4" fill="#1659E5"/><circle cx="320" cy="20" r="4" fill="#1659E5"/><circle cx="420" cy="28" r="4" fill="#1659E5"/><circle cx="540" cy="55" r="5" fill="#E5495C"/>
+        </svg>
+        <div style="position:absolute;left:10px;top:8px;font-size:11px;color:var(--gray-text);font-weight:600">100% ──</div>
+        <div style="position:absolute;left:10px;bottom:8px;font-size:11px;color:var(--gray-text);font-weight:600">90% ──</div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--gray-text);margin-top:6px;font-weight:600"><span>v1.0</span><span>v1.1</span><span>v1.2</span><span>v1.3-rc</span><span>v1.3</span><span style="color:var(--red)">v1.4 ⚠</span></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-h"><h3>回归集 · 52 条</h3><span class="meta">17 条来自历史 Badcase</span></div>
+    <table class="tbl">
+      <thead><tr><th>用例</th><th>来源</th><th>分支</th><th>v1.3</th><th>v1.4</th><th></th></tr></thead>
+      <tbody>
+        <tr style="background:#FFF6F7"><td><span class="row-link" onclick="openDrawer('reg-fail-1')">"友商 A 比你们便宜，能匹配吗？"</span></td><td>v1.4 新加</td><td>竞品对比</td><td><span class="tag tag-gray">没跑过</span></td><td><span class="tag tag-red">✗ 回答带贬低</span></td><td><button class="btn btn-sm btn-primary">转 Badcase</button></td></tr>
+        <tr style="background:#FFF6F7"><td><span class="row-link">"老客户复购能再便宜点吗？"</span></td><td>BC-201</td><td>砍价/优惠</td><td><span class="tag tag-green">✓</span></td><td><span class="tag tag-red">✗ 相似度 0.62</span></td><td><button class="btn btn-sm btn-primary">回 PE</button></td></tr>
+        <tr><td>"我想买你们的产品"</td><td>BC-091</td><td>价格咨询</td><td><span class="tag tag-green">✓</span></td><td><span class="tag tag-green">✓</span></td><td class="muted">—</td></tr>
+        <tr><td>"能不能再便宜点"</td><td>BC-103</td><td>砍价/优惠</td><td><span class="tag tag-green">✓</span></td><td><span class="tag tag-green">✓</span></td><td class="muted">—</td></tr>
+        <tr><td>"我要退款"</td><td>BC-198</td><td>退款/售后</td><td><span class="tag tag-green">✓</span></td><td><span class="tag tag-green">✓</span></td><td class="muted">—</td></tr>
+        <tr><td>"复杂多轮咨询"</td><td>BC-189</td><td>价格咨询</td><td><span class="tag tag-green">✓</span></td><td><span class="tag tag-green">✓</span></td><td class="muted">—</td></tr>
+        <tr><td colspan="6" style="text-align:center;color:var(--gray-text);padding:14px">还有 46 条都过了</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═════════════════ VIEW: AI 质检 ═════════════════ -->
+<section class="view" id="view-qa">
+  <div class="page-head">
+    <div><h1>AI 质检</h1><p class="desc">所有对话都过一遍质检，AI 客服和人工客服一套规则。命中规则的会话直接转 Badcase。</p></div>
+    <div class="head-actions"><button class="btn btn-ghost" data-route="agent:pre-sales">← 返回</button><button class="btn btn-primary">+ 新建质检任务</button></div>
+  </div>
+  <div class="kpi-row k4">
+    <div class="kpi"><div class="l">今日覆盖</div><div class="v">100%</div><div class="delta">2,148 条</div></div>
+    <div class="kpi"><div class="l">合规率</div><div class="v" style="color:var(--green)">98.6%</div><div class="delta">比昨天 +0.4pp</div></div>
+    <div class="kpi alert"><div class="l">命中规则</div><div class="v">31</div><div class="delta bad">12 条已转 Badcase</div></div>
+    <div class="kpi"><div class="l">人工 / AI</div><div class="v">98.2 / 98.9</div><div class="delta">同一套规则</div></div>
+  </div>
+  <div class="split-2" style="margin-bottom:18px">
+    <div class="card">
+      <div class="card-h"><h3>质检任务</h3><span class="meta">3 个在跑</span></div>
+      <div class="case-list">
+        <div class="case"><div class="ic ok">⚡</div><div><div class="name">实时质检 · 售前所有对话</div><div class="sub">会话结束就跑 · 12 条规则</div></div><span class="tag tag-green">在跑</span><button class="btn btn-sm btn-ghost">查看</button></div>
+        <div class="case"><div class="ic ok">📅</div><div><div class="name">日报 · 敏感词扫描</div><div class="sub">每天 23:00 · 敏感词、承诺词、价格泄露</div></div><span class="tag tag-blue">定时</span><button class="btn btn-sm btn-ghost">查看</button></div>
+        <div class="case"><div class="ic ok">📅</div><div><div class="name">周报 · 满意度抽样</div><div class="sub">每周一 09:00 · 抽 10% 上周对话</div></div><span class="tag tag-blue">定时</span><button class="btn btn-sm btn-ghost">查看</button></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-h"><h3>近 7 天</h3><span class="meta">合规率 + 命中数</span></div>
+      <div class="linechart">
+        <svg viewBox="0 0 600 160" preserveAspectRatio="none">
+          <polyline fill="none" stroke="#00C28B" stroke-width="2.5" points="20,30 110,28 200,32 290,25 380,22 470,18 560,16"/>
+          <polyline fill="none" stroke="#E5495C" stroke-width="2" stroke-dasharray="4 3" points="20,80 110,90 200,88 290,100 380,110 470,118 560,125"/>
+        </svg>
+        <div style="position:absolute;left:10px;top:8px;font-size:11px;color:var(--green);font-weight:600">合规率 98.6% ↑</div>
+        <div style="position:absolute;left:10px;bottom:8px;font-size:11px;color:var(--red);font-weight:600">命中 31 ↓</div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-h"><h3>今日命中</h3><span class="meta">31 条 · 12 已转 Badcase · 19 待复核</span></div>
+    <table class="tbl">
+      <thead><tr><th>会话</th><th>客服</th><th>命中规则</th><th>风险</th><th>状态</th><th></th></tr></thead>
+      <tbody>
+        <tr><td><span class="row-link" onclick="openDrawer('qa-1')">陈同学 · 09:14 (32 轮)</span></td><td><span class="tag tag-blue">AI</span></td><td>承诺词「保证」</td><td><span class="tag tag-red">高</span></td><td><span class="tag tag-green">转 BC-203</span></td><td><button class="btn btn-sm btn-ghost">查看</button></td></tr>
+        <tr><td><span class="row-link">王女士 · 10:42 (18 轮)</span></td><td><span class="tag tag-blue">AI</span></td><td>价格泄露</td><td><span class="tag tag-orange">中</span></td><td><span class="tag tag-yellow">待复核</span></td><td><button class="btn btn-sm btn-primary">复核</button></td></tr>
+        <tr><td><span class="row-link">赵先生 · 11:15 (24 轮)</span></td><td><span class="tag tag-purple">人工</span></td><td>SLA 超时</td><td><span class="tag tag-orange">中</span></td><td><span class="tag tag-yellow">待复核</span></td><td><button class="btn btn-sm btn-primary">复核</button></td></tr>
+        <tr><td><span class="row-link">李先生 · 12:08 (9 轮)</span></td><td><span class="tag tag-blue">AI</span></td><td>没进竞品对比分支</td><td><span class="tag tag-red">高</span></td><td><span class="tag tag-yellow">待复核</span></td><td><button class="btn btn-sm btn-primary">复核</button></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═════════════════ VIEW: GENERIC AGENT (非售前的简略页) ═════════════════ -->
+<section class="view" id="view-agent-generic">
+  <div class="page-head">
+    <div>
+      <h1 id="ga-name">Agent</h1>
+      <p class="desc" id="ga-desc"></p>
+    </div>
+    <div class="head-actions">
+      <button class="btn btn-ghost" data-route="fleet">← 返回舰队</button>
+      <button class="btn btn-primary" id="ga-cta">查看详情</button>
+    </div>
+  </div>
+
+  <div id="ga-banner"></div>
+
+  <div class="kpi-row k4" id="ga-kpis"></div>
+
+  <!-- Lifecycle ring -->
+  <div class="card" id="ga-ring-card" style="margin-bottom:18px">
+    <div class="card-h">
+      <h3 id="ga-ring-title">守护循环</h3>
+      <span class="meta" id="ga-ring-meta"></span>
+    </div>
+    <div class="lifecycle" id="ga-lifecycle"></div>
+  </div>
+
+  <div class="split-2" style="margin-bottom:18px">
+    <div class="card">
+      <div class="card-h"><h3 id="ga-changes-title">本期改动</h3><span class="meta" id="ga-changes-meta"></span></div>
+      <div id="ga-changes"></div>
+    </div>
+    <div class="card">
+      <div class="card-h"><h3>近期动态</h3><span class="meta">最近 7 天</span></div>
+      <div class="timeline" id="ga-activity"></div>
+    </div>
+  </div>
+
+  <div class="hint" id="ga-foot">
+    <span>💡</span>
+    <span>原型只展开了售前咨询 Agent 的 6 个模块。其他 Agent 模块结构相同。</span>
+  </div>
+</section>
+
+</main>
+</div>
+
+<!-- Drawer -->
+<div class="scrim" id="scrim" onclick="closeDrawer()"></div>
+<aside class="drawer" id="drawer">
+  <div class="drawer-h">
+    <div>
+      <div style="font-size:11px;color:var(--gray-text);font-weight:700;letter-spacing:.06em;text-transform:uppercase" id="drawer-eyebrow">详情</div>
+      <h3 style="margin:2px 0 0;font-size:16px;font-weight:800" id="drawer-title">—</h3>
+    </div>
+    <button class="icon-btn" onclick="closeDrawer()">✕</button>
+  </div>
+  <div class="drawer-b" id="drawer-body"></div>
+</aside>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ─────────────── DATA ───────────────
+const AGENTS = {
+  'pre-sales': {
+    name:'售前咨询 Agent', dept:'电商', icon:'🛒', status:'red', statusLabel:'阻塞',
+    current:'v1.3', candidate:'v1.4', releases:4, days:60,
+    metaA:{l:'线上通过率',v:'96.4%'}, metaB:{l:'日均对话',v:'2,148'}, metaC:{l:'待 Badcase',v:'7'},
+    pipe:['done','done','fail','idle','idle'],
+    foot:'<span class="alert">v1.4 卡回归 2h 14m</span>',
+    isMain:true,
+  },
+  'after-sales': {
+    name:'售后客服 Agent', dept:'电商', icon:'🎧', status:'blue', statusLabel:'灰度中',
+    current:'v2.0', candidate:'v2.1', releases:12, days:188,
+    metaA:{l:'灰度占比',v:'12%'}, metaB:{l:'灰度对比',v:'+2.1pp'}, metaC:{l:'72h 进度',v:'48 / 72h'},
+    pipe:['done','done','done','active','idle'],
+    foot:'<span class="ok">灰度比正式版好 +2.1pp</span>',
+  },
+  'retail-guide': {
+    name:'AI 导购 Agent', dept:'电商', icon:'🛍️', status:'green', statusLabel:'稳定',
+    current:'v2.4', candidate:'—', releases:14, days:215,
+    metaA:{l:'线上通过率',v:'98.7%'}, metaB:{l:'日均对话',v:'8,542'}, metaC:{l:'待 Badcase',v:'2'},
+    pipe:['done','done','done','done','done'],
+    foot:'<span class="ok">线上稳定 21 天</span>',
+  },
+  'livestream': {
+    name:'直播解说 Agent', dept:'直播', icon:'🎥', status:'green', statusLabel:'稳定',
+    current:'v1.5', candidate:'—', releases:5, days:95,
+    metaA:{l:'线上通过率',v:'97.3%'}, metaB:{l:'直播间数',v:'128'}, metaC:{l:'待 Badcase',v:'1'},
+    pipe:['done','done','done','done','done'],
+    foot:'<span class="ok">128 直播间稳定</span>',
+  },
+  'gov-mediation': {
+    name:'政务调解 Agent', dept:'政务', icon:'🏛', status:'green', statusLabel:'稳定',
+    current:'v3.2', candidate:'—', releases:18, days:320,
+    metaA:{l:'线上通过率',v:'99.1%'}, metaB:{l:'合规率',v:'100%'}, metaC:{l:'质检覆盖',v:'100%'},
+    pipe:['done','done','done','done','done'],
+    foot:'<span class="ok">合规 100% · 0 违规</span>',
+  },
+  'bank-marketing': {
+    name:'银行营销 Agent', dept:'金融', icon:'🏦', status:'yellow', statusLabel:'候发',
+    current:'v0.9', candidate:'v1.0', releases:0, days:7,
+    metaA:{l:'验收通过率',v:'89%'}, metaB:{l:'阈值',v:'95%'}, metaC:{l:'待 Badcase',v:'6'},
+    pipe:['done','active','idle','idle','idle'],
+    foot:'<span class="alert">验收 89%，没到 95%</span>',
+  },
+  'fin-advisor': {
+    name:'AI 顾问 Agent', dept:'金融', icon:'💼', status:'green', statusLabel:'稳定',
+    current:'v1.8', candidate:'—', releases:8, days:142,
+    metaA:{l:'线上通过率',v:'98.4%'}, metaB:{l:'日均对话',v:'1,820'}, metaC:{l:'合规率',v:'99.6%'},
+    pipe:['done','done','done','done','done'],
+    foot:'<span class="ok">合规 99.6%</span>',
+  },
+  'edu-renew': {
+    name:'教培续报 Agent', dept:'教育', icon:'🎓', status:'gray', statusLabel:'测试中',
+    current:'—', candidate:'v0.9', releases:0, days:3,
+    metaA:{l:'测试通过率',v:'82%'}, metaB:{l:'用例覆盖',v:'68 / 90'}, metaC:{l:'阻塞项',v:'3'},
+    pipe:['active','idle','idle','idle','idle'],
+    foot:'<span class="muted">用例还差 22 条</span>',
+  },
+};
+
+const PIPE_LABELS = ['AI 测试','批量验收','回归测试','灰度发布','全量上线'];
+
+// Generic agent overview content
+const GENERIC = {
+  'after-sales':{
+    desc:'v2.1 灰度跑了 48 小时（共 72）。三个指标都比 v2.0 好。72h 满了直接全量。',
+    banner:'<div class="banner ok"><div class="ic">✓</div><div style="flex:1"><div class="b-title">v2.1 三个指标都比 v2.0 好</div><div class="b-desc">解决率 +2.1pp，转人工率 -1.4pp，满意度 +3.6pp。再跑 24 小时。</div></div><button class="btn btn-primary">72h 满了全量</button></div>',
+    kpis:[['v2.0 通过率','97.8%','比上周 +0.3pp'],['v2.1 灰度通过率','99.0%','比 v2.0 +1.2pp','green'],['灰度会话','347','密钥 GRAY-V21'],['灰度进度','48/72h','再 24h 评估']],
+    ringTitle:'守护循环 · 已上线 12 次',
+    ringMeta:'188 天前首次上线，迭代过 12 个版本，正在做第 13 个',
+    ring:{
+      big:'12', unit:'次', sub:'第 13 轮 · 灰度中', tag:'v2.1 灰度 48 / 72h',
+      active:4, done:[6,1,2,3],
+      counts:['','写 1 840 条','跑 84 次','跑 84 次','开 13 次','12 次','修 156 条 · 56 万对话']
+    },
+    history:[
+      {round:13, ver:'v2.1 候发', when:'今日', desc:'退款话术 + 物流 FAQ', path:[6,1,2,3,4], cur:4, summary:'灰度中，再 24h 评估'},
+      {round:12, ver:'v2.0', when:'30d 前', desc:'重构售后分支', path:[6,1,2,3,4,5], summary:'全 6 步走完'},
+      {round:11, ver:'v1.9', when:'52d 前', desc:'修 BC-178 等 5 条', path:[6,1,2,3,4,5], summary:'客户点踩触发'},
+      {round:'…', ver:'更早 10 轮', when:'最早 188 天前', desc:'省略', path:null, summary:'共上线 10 个版本'},
+    ],
+    changes:`
+      <div class="case-list">
+        <div class="case"><div class="ic ok">✓</div><div><div class="name">退款引导话术改写</div><div class="sub">@客服总监 提的，12 条用例采纳</div></div><span class="tag tag-blue">改</span></div>
+        <div class="case"><div class="ic ok">✓</div><div><div class="name">补 18 条物流 FAQ</div><div class="sub">@产品 提的，自动进回归集</div></div><span class="tag tag-blue">加</span></div>
+      </div>`,
+    activity:[
+      ['var(--blue)','灰度过半','24h 后看是否全量','03:18 · 系统'],
+      ['var(--green)','灰度 24h 自检过','三个指标都超基线','昨日 03:18 · 系统'],
+      ['var(--blue)','开 v2.1 灰度','密钥 GRAY-V21-3M9F · 50 会话上限','5/5 09:00 · @grace'],
+      ['var(--green)','v2.1 回归全过','48 / 48','5/5 08:42 · 系统'],
+    ],
+  },
+  'retail-guide':{
+    desc:'v2.4 上线 21 天，通过率 98.7%。本周新增 2 条 Badcase。',
+    banner:'<div class="banner ok"><div class="ic">✓</div><div style="flex:1"><div class="b-title">v2.4 上线 21 天</div><div class="b-desc">日均 8,542 条对话，通过率 98.7%。</div></div></div>',
+    kpis:[['v2.4 通过率','98.7%','比上周 +0.4pp','green'],['日均对话','8,542','比上周 +12%'],['待 Badcase','2','本周新增'],['NPS','+18','—']],
+    ringTitle:'守护循环 · 已上线 14 次',
+    ringMeta:'215 天前首次上线，是这里上线次数第二多的 Agent',
+    ring:{
+      big:'14', unit:'次', sub:'第 14 轮已完成', tag:'稳定运行 21 天，等下一次反馈',
+      active:0, done:[1,2,3,4,5,6],
+      counts:['','写 2 200 条','跑 98 次','跑 98 次','开 14 次','14 次','修 196 条 · 180 万对话']
+    },
+    history:[
+      {round:14, ver:'v2.4', when:'21d 前', desc:'修 BC-N02 + 加品类专属话术', path:[6,1,2,3,4,5], summary:'最近一次上线'},
+      {round:13, ver:'v2.3', when:'45d 前', desc:'扩品类支持', path:[1,2,3,4,5], summary:'主动迭代'},
+      {round:12, ver:'v2.2', when:'70d 前', desc:'修 8 条 Badcase', path:[6,1,2,3,4,5]},
+      {round:'…', ver:'更早 11 轮', when:'最早 215 天前', desc:'从 v1.0 到 v2.1', path:null, summary:'共 11 个版本'},
+    ],
+    changes:`<div class="empty" style="padding:14px">当前无候发版本 · 最近一次更新 21 天前</div>`,
+    activity:[
+      ['var(--purple)','BC-N12 客户点踩','商品规格识别错位','08:42 · @陈同学'],
+      ['var(--teal)','日报质检 · 0 高风险','98.9% 合规','昨日 23:00 · 定时'],
+      ['var(--green)','v2.4 全量上线','21 天前','—'],
+    ],
+  },
+  'livestream':{
+    desc:'v1.5 上线 9 天，跑在 128 个直播间。响应平均 1.4s。',
+    banner:'<div class="banner ok"><div class="ic">✓</div><div style="flex:1"><div class="b-title">v1.5 上线 9 天</div><div class="b-desc">128 个直播间，响应 1.4s，通过率 97.3%。</div></div></div>',
+    kpis:[['通过率','97.3%','比上周 +0.8pp','green'],['响应','1.4s','SLA 2s 内'],['直播间','128','本周 +18'],['待 Badcase','1','—']],
+    ringTitle:'守护循环 · 已上线 5 次',
+    ringMeta:'95 天前首次上线，迭代过 5 个版本',
+    ring:{
+      big:'5', unit:'次', sub:'第 5 轮已完成', tag:'稳定运行 9 天',
+      active:0, done:[1,2,3,4,5,6],
+      counts:['','写 750 条','跑 35 次','跑 35 次','开 5 次','5 次','修 62 条 · 25 万对话']
+    },
+    history:[
+      {round:5, ver:'v1.5', when:'9d 前', desc:'扩支持品类 + 修延迟 BC', path:[6,1,2,3,4,5], summary:'最近一次'},
+      {round:4, ver:'v1.4', when:'24d 前', desc:'优化直播弹幕识别', path:[1,2,3,4,5]},
+      {round:3, ver:'v1.3', when:'42d 前', desc:'修 4 条 Badcase', path:[6,1,2,3,4,5]},
+      {round:2, ver:'v1.2', when:'68d 前', desc:'多直播间并发', path:[1,2,3,4,5]},
+      {round:1, ver:'v1.0', when:'95d 前', desc:'首次上线', path:[1,2,3,4,5]},
+    ],
+    changes:`<div class="empty" style="padding:14px">当前无候发 · 9 天前完成 v1.5 全量</div>`,
+    activity:[
+      ['var(--green)','直播解说 · 单场峰值 8.2k 条','响应稳定 1.4s','21:14 · 系统'],
+      ['var(--teal)','实时质检 · 通过','所有直播间在 SLA 内','15:00 · 定时'],
+    ],
+  },
+  'gov-mediation':{
+    desc:'v3.2 上线 62 天，合规率 100%。所有对话过质检。',
+    banner:'<div class="banner ok"><div class="ic">✓</div><div style="flex:1"><div class="b-title">合规 100% · 0 违规</div><div class="b-desc">v3.2 上线 62 天，所有对话都过合规检查。</div></div></div>',
+    kpis:[['v3.2 通过率','99.1%','比上周 +0.2pp','green'],['合规率','100%','0 违规','green'],['质检覆盖','100%','全量','green'],['日均调解','382 次','—']],
+    ringTitle:'守护循环 · 已上线 18 次',
+    ringMeta:'320 天前首次上线，是这里上线次数最多的 Agent',
+    ring:{
+      big:'18', unit:'次', sub:'第 18 轮已完成', tag:'稳定运行 62 天',
+      active:0, done:[1,2,3,4,5,6],
+      counts:['','写 3 200 条','跑 130 次','跑 130 次','开 18 次','18 次','修 280 条 · 12 万调解']
+    },
+    history:[
+      {round:18, ver:'v3.2', when:'62d 前', desc:'合规规则 v3 落地', path:[1,2,3,4,5], summary:'季度合规更新'},
+      {round:17, ver:'v3.1', when:'124d 前', desc:'敏感词扩到 167 个', path:[1,2,3,4,5]},
+      {round:16, ver:'v3.0', when:'180d 前', desc:'重写调解话术框架', path:[1,2,3,4,5]},
+      {round:'…', ver:'更早 15 轮', when:'最早 320 天前', desc:'从 v1.0 到 v2.x', path:null, summary:'共 15 个版本，0 监管告警'},
+    ],
+    changes:`
+      <div class="case-list">
+        <div class="case"><div class="ic ok">✓</div><div><div class="name">合规规则 v3 · 已审批落地</div><div class="sub">来源：法务团队季度更新</div></div><span class="tag tag-teal">合规</span></div>
+        <div class="case"><div class="ic ok">✓</div><div><div class="name">敏感词库扩充 142 → 167</div><div class="sub">区域性政策更新自动同步</div></div><span class="tag tag-teal">合规</span></div>
+      </div>`,
+    activity:[
+      ['var(--green)','周报质检完成','合规率 100% · 0 违规','09:00 · 定时'],
+      ['var(--teal)','合规规则同步','法务季度更新已生效','7d 前'],
+      ['var(--green)','v3.2 上线 60 天','零事故','—'],
+    ],
+  },
+  'bank-marketing':{
+    desc:'v1.0 候发，验收 89%（阈值 95%）。先修完 6 条 Badcase 再跑回归。',
+    banner:'<div class="banner"><div class="ic">!</div><div style="flex:1"><div class="b-title">v1.0 验收 89%，没到 95%</div><div class="b-desc">失败用例集中在「理财风险话术」和「合规问询」。6 条 Badcase 已派给 PE。</div></div><button class="btn btn-warn">看失败用例</button></div>',
+    kpis:[['v1.0 验收通过率','89%','阈值 95%','warn'],['失败用例','17','/ 156','warn'],['待 Badcase','6','优先级 高'],['计划上线','+3 天','PE 修完之后']],
+    ringTitle:'守护循环 · 还在第 1 轮',
+    ringMeta:'7 天前开始接入，从 0 到 1 中。还没上过线',
+    ring:{
+      big:'0', unit:'次上线', sub:'第 1 轮 · 验收没过', tag:'卡在第 2 步',
+      active:2, done:[1],
+      counts:['','写 156 条','跑 1 次（89%）','—','—','—','—']
+    },
+    history:[
+      {round:1, ver:'v1.0 候发', when:'今日', desc:'金融场景首版 · 156 条用例', path:[1,2], cur:2, summary:'验收 89%，PE 在修'},
+      {round:'前期', ver:'起步', when:'7d 前', desc:'流程图 + prompt 试制', path:null, summary:'刚接入'},
+    ],
+    changes:`
+      <div class="case-list">
+        <div class="case"><div class="ic fail">✗</div><div><div class="name">"这款理财稳赚吗？" 触发承诺类违规</div><div class="sub">合规要求：禁用"稳赚""保本"等承诺词</div></div><span class="tag tag-red">阻塞</span></div>
+        <div class="case"><div class="ic fail">✗</div><div><div class="name">"我能贷多少？" 未触发尽调流程</div><div class="sub">需先核身、再给额度估算</div></div><span class="tag tag-red">阻塞</span></div>
+        <div class="case"><div class="ic fail">✗</div><div><div class="name">"年化多少？" 未明确为预期</div><div class="sub">需补"历史业绩，不代表未来"披露</div></div><span class="tag tag-red">阻塞</span></div>
+      </div>`,
+    activity:[
+      ['var(--red)','批量验收完成 · 89%','17 / 156 失败 · 阻塞上线','13:18 · 系统'],
+      ['var(--orange)','PE 已认领 6 条阻塞','@周律师 · @lihua','12:42 · @grace'],
+      ['var(--blue)','AI 测试生成 156 条用例','理财风险话术专项','昨日 16:30 · @grace'],
+    ],
+  },
+  'fin-advisor':{
+    desc:'v1.8 上线 45 天。每条对话都过质检，每月抽样做人工复核。',
+    banner:'<div class="banner ok"><div class="ic">✓</div><div style="flex:1"><div class="b-title">v1.8 合规率 99.6%</div><div class="b-desc">日均 1,820 条投顾对话。本月抽样 312 条人工复核，全过。</div></div></div>',
+    kpis:[['v1.8 通过率','98.4%','比上周 +0.1pp','green'],['合规率','99.6%','—','green'],['人工复核通过','100%','本月抽 312 条','green'],['待 Badcase','3','低优']],
+    ringTitle:'守护循环 · 已上线 8 次',
+    ringMeta:'142 天前首次上线，迭代过 8 个版本',
+    ring:{
+      big:'8', unit:'次', sub:'第 8 轮已完成', tag:'稳定运行 45 天',
+      active:0, done:[1,2,3,4,5,6],
+      counts:['','写 1 100 条','跑 56 次','跑 56 次','开 8 次','8 次','修 92 条 · 25 万对话']
+    },
+    history:[
+      {round:8, ver:'v1.8', when:'45d 前', desc:'季度 prompt 调整', path:[1,2,3,4,5]},
+      {round:7, ver:'v1.7', when:'82d 前', desc:'修 5 条合规相关 BC', path:[6,1,2,3,4,5]},
+      {round:6, ver:'v1.6', when:'108d 前', desc:'扩支持基金品种', path:[1,2,3,4,5]},
+      {round:'…', ver:'更早 5 轮', when:'最早 142 天前', desc:'省略', path:null, summary:'共 5 个版本'},
+    ],
+    changes:`<div class="empty" style="padding:14px">无候发版本 · 月度 prompt 调整周期</div>`,
+    activity:[
+      ['var(--green)','月度合规复检 · 通过','312 条抽样 · 0 违规','3d 前 · 法务'],
+      ['var(--teal)','实时质检 · 0 告警','低风险阈值','06:00 · 定时'],
+    ],
+  },
+  'edu-renew':{
+    desc:'v0.9 还在测试，没上线。用例覆盖 68/90，还差 22 条。',
+    banner:'<div class="banner"><div class="ic">!</div><div style="flex:1"><div class="b-title">v0.9 测试中，用例 68/90</div><div class="b-desc">还差 22 条用例（价格异议、续报犹豫、往期效果质疑）。预计 5 天能跑完。</div></div><button class="btn btn-primary">让 AI 补 22 条</button></div>',
+    kpis:[['测试通过率','82%','—','warn'],['用例覆盖','68 / 90','差 22'],['阻塞项','3','分支没覆盖'],['计划灰度','+5d','PE 估']],
+    ringTitle:'守护循环 · 还在第 1 轮',
+    ringMeta:'3 天前刚接入，还在写测试用例',
+    ring:{
+      big:'0', unit:'次上线', sub:'第 1 轮 · 写用例', tag:'用例 68 / 90，差 22 条',
+      active:1, done:[],
+      counts:['','已写 68 条','—','—','—','—','—']
+    },
+    history:[
+      {round:1, ver:'v0.9 测试中', when:'今日', desc:'教培续报首版 · 用例还在补', path:[1], cur:1, summary:'AI 在生成 22 条用例'},
+      {round:'前期', ver:'起步', when:'3d 前', desc:'流程图设计', path:null, summary:'刚接入'},
+    ],
+    changes:`
+      <div class="case-list">
+        <div class="case"><div class="ic pending">＋</div><div><div class="name">扩充「价格异议」分支用例</div><div class="sub">AI 自动生成中 · 12 条</div></div><span class="tag tag-yellow">进行中</span></div>
+        <div class="case"><div class="ic pending">＋</div><div><div class="name">扩充「续报犹豫」分支用例</div><div class="sub">AI 自动生成中 · 6 条</div></div><span class="tag tag-yellow">进行中</span></div>
+        <div class="case"><div class="ic pending">＋</div><div><div class="name">扩充「往期效果质疑」分支</div><div class="sub">AI 自动生成中 · 4 条</div></div><span class="tag tag-yellow">进行中</span></div>
+      </div>`,
+    activity:[
+      ['var(--blue)','AI 生成中 · 22 条用例','三个未覆盖分支','刚刚 · 系统'],
+      ['var(--orange)','测试通过率 82%','部分分支未覆盖','昨日 · 系统'],
+      ['var(--blue)','创建 v0.9 测试集','基于教培行业 prompt 模板','3d 前 · @lihua'],
+    ],
+  },
+};
+
+// ─────────────── ROUTING ───────────────
+function renderFleet(){
+  const grid = document.getElementById('fleetGrid');
+  grid.innerHTML = Object.entries(AGENTS).map(([key,a])=>{
+    const pipe = a.pipe.map(s=>`<i class="${s==='idle'?'':s}"></i>`).join('');
+    const work = a.releases > 0
+      ? `<strong style="color:var(--blue);font-size:13px">${a.releases}</strong> 次上线 · 守护 ${a.days} 天`
+      : `还没上线 · ${a.days <= 7 ? '内测中' : '测试 '+a.days+' 天'}`;
+    return `
+      <div class="agent-card s-${a.status}" data-route="agent:${key}">
+        <div class="stat-bar"></div>
+        <div class="ac-h">
+          <div>
+            <div class="ac-name">${a.icon} ${a.name}</div>
+            <div class="ac-sub">${a.dept} · ${a.current==='—'?'未上线':a.current}${a.candidate&&a.candidate!=='—'?`，候发 ${a.candidate}`:''}</div>
+          </div>
+          <div class="ac-status" style="color:var(--${a.status==='gray'?'gray-text':a.status})"><span class="dot"></span>${a.statusLabel}</div>
+        </div>
+        <div class="ac-meta">
+          <div><div class="l">${a.metaA.l}</div><div class="v">${a.metaA.v}</div></div>
+          <div><div class="l">${a.metaB.l}</div><div class="v">${a.metaB.v}</div></div>
+          <div><div class="l">${a.metaC.l}</div><div class="v">${a.metaC.v}</div></div>
+        </div>
+        <div class="pipe">${pipe}</div>
+        <div class="ac-foot"><span>${work}</span><span>${a.foot}</span></div>
+      </div>
+    `;
+  }).join('');
+}
+function renderHeatmap(){
+  // 7 days x 8 agents
+  const days=['5/1','5/2','5/3','5/4','5/5','5/6','今日'];
+  const data={
+    'pre-sales':[1,2,2,1,1,2,5],
+    'after-sales':[1,1,2,1,1,1,1],
+    'retail-guide':[1,1,1,1,1,1,1],
+    'livestream':[1,2,1,1,1,1,1],
+    'gov-mediation':[1,1,1,1,1,1,1],
+    'bank-marketing':[0,0,2,3,3,4,4],
+    'fin-advisor':[1,1,1,1,1,1,1],
+    'edu-renew':[0,0,0,3,3,3,3],
+  };
+  const hm = document.getElementById('heatmap');
+  let html = `<div></div>` + days.map(d=>`<div class="col-label">${d}</div>`).join('');
+  Object.entries(AGENTS).forEach(([k,a])=>{
+    html += `<div class="row-label">${a.icon} ${a.name.replace(' Agent','')}</div>`;
+    data[k].forEach(c=>{
+      const labels=['—','99','98','95','92','88'];
+      html += `<div class="cell c-${c}" title="${a.name}">${c===0?'—':labels[c]}</div>`;
+    });
+  });
+  hm.innerHTML = html;
+}
+
+const STEP_NAMES = ['','AI 测试','批量验收','回归测试','灰度','上线','质检/Badcase'];
+const STEP_COLORS = ['','c-blue','c-bluemid','c-green','c-teal','c-orange','c-purple'];
+
+function buildRing(r){
+  let nodes = '';
+  for(let i=1;i<=6;i++){
+    let stat = '';
+    if(r.active === i) stat = 'active';
+    else if(r.done && r.done.includes(i)) stat = 'done';
+    else stat = 'pending';
+    nodes += `<div class="lc-node n${i} ${STEP_COLORS[i]} ${stat}"><span class="lc-num">0${i}</span><span class="lc-lbl">${STEP_NAMES[i]}</span><span class="lc-cnt">${r.counts[i]||'—'}</span></div>`;
+  }
+  return `
+    <div class="ring">
+      <svg viewBox="0 0 400 400"><circle cx="200" cy="200" r="142" fill="none" stroke="#E2E8F0" stroke-width="1.5" stroke-dasharray="3 5"/></svg>
+      <div class="lc-center">
+        <div class="lc-eyebrow">${r.eyebrow||'已上线'}</div>
+        <div class="lc-round">${r.big}<small>${r.unit}</small></div>
+        <div class="lc-step-name">${r.sub}</div>
+        <div class="lc-step-sub">${r.tag}</div>
+      </div>
+      ${nodes}
+    </div>
+  `;
+}
+
+function buildHistory(history){
+  if(!history) return '';
+  const rows = history.map(h=>{
+    let pathHTML;
+    if(!h.path){
+      pathHTML = `<span class="muted" style="font-size:11.5px">${h.summary||'—'}</span>`;
+    } else {
+      const all = [1,2,3,4,5,6];
+      pathHTML = h.path.map((p,idx) => {
+        const cls = (h.cur && p === h.cur) ? 'cur' : 'hit';
+        return `<span class="pn ${cls}">${p}</span>${idx<h.path.length-1?'<span class="arr">→</span>':''}`;
+      }).join('');
+      // append empty trailing nodes if cur (still in progress)
+      if(h.cur){
+        const nextSteps = all.filter(s => !h.path.includes(s));
+        if(nextSteps.length){
+          pathHTML += '<span class="arr">→</span>' + nextSteps.map((p,i)=>`<span class="pn">${p}</span>${i<nextSteps.length-1?'<span class="arr">→</span>':''}`).join('');
+        }
+      }
+    }
+    const roundClass = h.cur ? 'cur' : '';
+    const roundLabel = typeof h.round === 'number' ? `第 ${h.round} 轮` : h.round;
+    const roundSuffix = h.cur ? '<small>当前</small>' : '';
+    return `
+      <div class="h-item">
+        <div class="h-round ${roundClass}">${roundLabel}${roundSuffix}</div>
+        <div>
+          <div class="h-title"><span><strong>${h.ver}</strong>${h.desc?' · '+h.desc:''}</span><span class="when">${h.when}</span></div>
+          <div class="h-path">${pathHTML}</div>
+          ${h.summary && h.path ? `<div class="h-summary">${h.summary}</div>` : ''}
+        </div>
+      </div>
+    `;
+  }).join('');
+  return `
+    <div>
+      <div class="h-head"><span>迭代历史</span><span class="h-meta">每轮经过的步骤不同</span></div>
+      <div class="h-list">${rows}</div>
+    </div>
+  `;
+}
+
+function renderGenericAgent(key){
+  const a = AGENTS[key];
+  const g = GENERIC[key];
+  if(!a||!g) return;
+  document.getElementById('ga-name').innerHTML = `${a.icon} ${a.name}`;
+  document.getElementById('ga-desc').textContent = g.desc;
+  document.getElementById('ga-banner').innerHTML = g.banner||'';
+  document.getElementById('ga-kpis').innerHTML = g.kpis.map(([l,v,d,cls])=>`<div class="kpi ${cls||''}"><div class="l">${l}</div><div class="v">${v}</div><div class="delta">${d}</div></div>`).join('');
+  // ring + history
+  if(g.ring){
+    document.getElementById('ga-ring-card').style.display = '';
+    document.getElementById('ga-ring-title').textContent = g.ringTitle || '守护循环';
+    document.getElementById('ga-ring-meta').textContent = g.ringMeta || '';
+    document.getElementById('ga-lifecycle').innerHTML = buildRing(g.ring) + buildHistory(g.history);
+  } else {
+    document.getElementById('ga-ring-card').style.display = 'none';
+  }
+  document.getElementById('ga-changes-title').textContent = '本期改动';
+  document.getElementById('ga-changes-meta').textContent = '';
+  document.getElementById('ga-changes').innerHTML = g.changes;
+  document.getElementById('ga-activity').innerHTML = g.activity.map(([c,t,s,tm])=>`<div class="tl-item"><div class="tl-dot" style="background:${c}"></div><div><div><strong>${t}</strong> · ${s}</div><div class="tl-time">${tm}</div></div></div>`).join('');
+  document.getElementById('ga-cta').onclick = ()=>toast('原型只展开了售前咨询 Agent 的 6 个模块');
+}
+
+function setCrumbs(route){
+  const c = document.getElementById('crumbs');
+  let html = `<span class="link" data-route="fleet">句子秒懂</span><span class="sep">/</span><span class="link" data-route="fleet">测试中心</span><span class="sep">/</span>`;
+  if(route==='fleet'){ html += `<span class="here">Agent 总览</span>`; }
+  else {
+    const [, agentKey, mod] = parseRoute(route);
+    const a = AGENTS[agentKey];
+    if(!a) return;
+    if(mod){
+      html += `<span class="link" data-route="agent:${agentKey}">${a.icon} ${a.name}</span><span class="sep">/</span><span class="here">${mod}</span>`;
+    } else {
+      html += `<span class="here">${a.icon} ${a.name}</span>`;
+    }
+  }
+  c.innerHTML = html;
+}
+
+function parseRoute(route){
+  if(route==='fleet') return ['fleet'];
+  const parts = route.split(':');
+  return ['agent', parts[1], parts[2]||null];
+}
+
+const MOD_VIEW = {
+  'overview':'view-overview',
+  'testing':'view-testing','测试':'view-testing',
+  'acceptance':'view-acceptance','验收':'view-acceptance',
+  'gray':'view-gray','灰度':'view-gray',
+  'badcase':'view-badcase','Badcase':'view-badcase',
+  'regression':'view-regression','回归':'view-regression',
+  'qa':'view-qa','质检':'view-qa',
+};
+const MOD_LABEL = {
+  'overview':'概览','testing':'AI 测试','acceptance':'批量验收',
+  'gray':'灰度发布','badcase':'Badcase 跟进','regression':'回归测试','qa':'AI 质检'
+};
+
+function go(route){
+  // hide all views
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.querySelectorAll('.sb-item').forEach(i=>i.classList.remove('active'));
+  // collapse old module items
+  document.querySelectorAll('.sb-item.module').forEach(i=>i.remove());
+
+  if(route==='fleet'){
+    document.getElementById('view-fleet').classList.add('active');
+    document.querySelector('[data-route="fleet"]').classList.add('active');
+    setCrumbs('fleet');
+  } else {
+    const [, agentKey, mod] = parseRoute(route);
+    const sbBtn = document.querySelector(`[data-route="agent:${agentKey}"]`);
+    if(sbBtn) sbBtn.classList.add('active');
+    // expand modules under sidebar
+    if(sbBtn) injectModules(sbBtn, agentKey, mod);
+
+    if(!mod){
+      // Agent overview
+      if(agentKey==='pre-sales'){
+        document.getElementById('view-overview').classList.add('active');
+      } else {
+        renderGenericAgent(agentKey);
+        document.getElementById('view-agent-generic').classList.add('active');
+      }
+      setCrumbs(`agent:${agentKey}`);
+    } else {
+      // module view
+      if(agentKey==='pre-sales'){
+        document.getElementById(MOD_VIEW[mod]).classList.add('active');
+        setCrumbs(`agent:${agentKey}:${MOD_LABEL[mod]}`);
+      } else {
+        // Other agents: show generic with toast hint
+        renderGenericAgent(agentKey);
+        document.getElementById('view-agent-generic').classList.add('active');
+        setCrumbs(`agent:${agentKey}`);
+        toast(`「${MOD_LABEL[mod]}」原型仅在售前咨询 Agent 演示完整模块`);
+      }
+    }
+  }
+  document.querySelector('.main').scrollTop = 0;
+}
+
+function injectModules(sbBtn, agentKey, mod){
+  const isMain = agentKey === 'pre-sales';
+  const mods = [
+    ['overview','概览', isMain ? null : null],
+    ['testing','AI 测试'],
+    ['acceptance','批量验收'],
+    ['gray','灰度发布'],
+    ['badcase','Badcase 跟进'],
+    ['regression','回归测试'],
+    ['qa','AI 质检'],
+  ];
+  const frag = document.createDocumentFragment();
+  mods.forEach(([k,label])=>{
+    const el = document.createElement('button');
+    el.className = 'sb-item module' + (mod===k?' active':'');
+    el.dataset.route = `agent:${agentKey}:${k}`;
+    el.innerHTML = `<span style="opacity:.5">›</span> ${label}`;
+    el.addEventListener('click', () => go(el.dataset.route));
+    frag.appendChild(el);
+  });
+  sbBtn.parentNode.insertBefore(frag, sbBtn.nextSibling);
+}
+
+document.addEventListener('click', e=>{
+  const t = e.target.closest('[data-route]');
+  if(t){ e.preventDefault(); go(t.dataset.route); }
+});
+
+// ── Drawer ───────
+const drawerData = {
+  'bc-201':{eyebrow:'Badcase · BC-201',title:'用户砍价后没触发优惠规则',body:`
+    <h4>对话原文</h4>
+    <div class="chat">
+      <div class="meta-line">售前咨询 Agent · v1.3 · 2026-04-22</div>
+      <div class="bubble user">老客户复购能再便宜点吗？</div>
+      <div class="bubble bot flagged">我们的产品质量很好，性价比超高，建议您直接下单 😊</div>
+      <div class="meta-line" style="margin-top:18px">用户点踩 · 反馈"答非所问"</div>
+    </div>
+    <h4>分析</h4>
+    <div class="kv">
+      <span class="k">来源</span><span><span class="tag tag-purple">客户点踩</span> · @陈同学</span>
+      <span class="k">分支</span><span>砍价 / 优惠</span>
+      <span class="k">触发节点</span><span class="muted">未匹配「老客户优惠」（v1.3 缺失"复购"关键词）</span>
+      <span class="k">处理人</span><span>@lihua · 已认领</span>
+      <span class="k">绑定版本</span><span><span class="tag tag-orange">v1.4 修复</span></span>
+      <span class="k">绑定回归集</span><span>售前咨询回归 (52 条)</span>
+    </div>
+    <h4>修复方案</h4>
+    <p style="font-size:13px">在「砍价/优惠」分支补充关键词："复购"、"老客户"、"再来一次"。优惠规则升级为：识别历史订单 → 自动报最优价。</p>
+    <h4>状态变更</h4>
+    <div class="timeline">
+      <div class="tl-item"><div class="tl-dot" style="background:var(--red)"></div><div><strong>新建</strong> · 客户点踩反馈<div class="tl-time">04-21 16:32</div></div></div>
+      <div class="tl-item"><div class="tl-dot" style="background:var(--orange)"></div><div><strong>已认领</strong> · @lihua 接手<div class="tl-time">04-21 17:08</div></div></div>
+      <div class="tl-item"><div class="tl-dot" style="background:var(--blue)"></div><div><strong>修复完成</strong> · 已提交 v1.4<div class="tl-time">04-22 11:14</div></div></div>
+      <div class="tl-item"><div class="tl-dot" style="background:var(--green)"></div><div><strong>入回归集</strong> · 已绑定下次必跑<div class="tl-time">04-22 11:14</div></div></div>
+    </div>`},
+  'bc-203':{eyebrow:'Badcase · BC-203',title:'"竞品都送赠品" 回复贬低竞品',body:`
+    <h4>对话原文</h4>
+    <div class="chat">
+      <div class="meta-line">售前咨询 Agent · v1.4 测试 · 2026-05-07</div>
+      <div class="bubble user">竞品都送赠品，你们有吗？</div>
+      <div class="bubble bot flagged">他们家的赠品都是廉价的小东西，您不要被忽悠。我们虽然不送赠品，但产品本身就是最好的回报。</div>
+    </div>
+    <h4>触发规则</h4>
+    <div class="kv">
+      <span class="k">来源</span><span><span class="tag tag-blue">批量验收</span></span>
+      <span class="k">触发模板</span><span>合规检查 → 不得贬低竞品</span>
+      <span class="k">关键词命中</span><span>"忽悠"、"廉价"</span>
+      <span class="k">状态</span><span><span class="tag tag-red">待处理 · 未分配</span></span>
+      <span class="k">优先级</span><span style="color:var(--red);font-weight:700">高 · 阻塞 v1.4</span>
+    </div>
+    <h4>建议</h4>
+    <p style="font-size:13px">在「竞品对比」节点 prompt 中加入：禁止使用贬义词描述竞品；只陈述自身差异化价值。</p>
+    <div style="margin-top:20px;display:flex;gap:8px"><button class="btn btn-primary" style="flex:1">认领并修复</button><button class="btn btn-ghost">转给 @lihua</button></div>`},
+  'reg-fail-1':{eyebrow:'回归失败 · v1.4',title:'"友商 A 比你们便宜，能匹配吗？"',body:`
+    <h4>失败详情</h4>
+    <div class="kv">
+      <span class="k">用例 ID</span><span>RC-052</span>
+      <span class="k">来源</span><span>新增 · 配合 v1.4 「竞品对比」节点</span>
+      <span class="k">期望</span><span>引用差异化卖点 · 不直接降价 · 不贬低竞品</span>
+      <span class="k">v1.4 实际</span><span style="color:var(--red)">含"忽悠"等贬低性词汇</span>
+      <span class="k">验证方式</span><span>AI 语义判断（阈值 0.85）</span>
+      <span class="k">阻塞</span><span style="color:var(--red);font-weight:700">是 · 必须修复才能上线</span>
+    </div>
+    <h4>处置链路</h4>
+    <div class="timeline">
+      <div class="tl-item"><div class="tl-dot" style="background:var(--blue)"></div><div><strong>用例生成</strong> · AI 测试模块<div class="tl-time">今日 10:24</div></div></div>
+      <div class="tl-item"><div class="tl-dot" style="background:var(--green)"></div><div><strong>用例采纳</strong> · @grace 审核<div class="tl-time">今日 10:31</div></div></div>
+      <div class="tl-item"><div class="tl-dot" style="background:var(--red)"></div><div><strong>回归失败</strong> · v1.4 不通过<div class="tl-time">今日 14:32</div></div></div>
+    </div>
+    <div style="margin-top:20px;display:flex;gap:8px"><button class="btn btn-primary" style="flex:1">转 Badcase 给 @lihua</button></div>`},
+  'case-fail-1':{eyebrow:'验收失败用例',title:'"竞品都送赠品，你们有吗？"',body:`
+    <h4>预期 vs 实际</h4>
+    <div class="kv">
+      <span class="k">分支</span><span>竞品对比</span>
+      <span class="k">期望</span><span>明确售后政策 + 不贬低竞品</span>
+      <span class="k">实际</span><span style="color:var(--red)">"廉价的小东西"、"被忽悠"</span>
+      <span class="k">验证</span><span>AI 语义判断 → 不通过</span>
+    </div>
+    <h4>对话内容</h4>
+    <div class="chat">
+      <div class="bubble user">竞品都送赠品，你们有吗？</div>
+      <div class="bubble bot flagged">他们家的赠品都是廉价的小东西，您不要被忽悠…</div>
+    </div>
+    <div style="margin-top:20px"><button class="btn btn-primary" style="width:100%">转 Badcase 处理</button></div>`},
+  'qa-1':{eyebrow:'AI 质检告警',title:'陈同学 · 09:14 (32 轮)',body:`
+    <h4>触发规则</h4>
+    <div class="kv">
+      <span class="k">规则</span><span>承诺类敏感词「保证」</span>
+      <span class="k">质检模式</span><span>实时质检</span>
+      <span class="k">客服</span><span><span class="tag tag-blue">AI</span> · 售前咨询 Agent v1.3</span>
+      <span class="k">风险</span><span style="color:var(--red);font-weight:700">高</span>
+    </div>
+    <h4>命中片段</h4>
+    <div class="chat">
+      <div class="bubble user">买了用着不行能退吗？</div>
+      <div class="bubble bot flagged">放心吧，我们保证 7 天无理由退换。</div>
+    </div>
+    <p class="muted" style="font-size:12px;margin-top:12px">"保证"是承诺型措辞，规则要求改为"支持"/"提供"。</p>
+    <h4>处置</h4><p style="font-size:13px">已自动转 Badcase BC-203 · 进入修复队列。</p>`},
+};
+function openDrawer(key){
+  const d = drawerData[key]; if(!d) return;
+  document.getElementById('drawer-eyebrow').textContent = d.eyebrow;
+  document.getElementById('drawer-title').textContent = d.title;
+  document.getElementById('drawer-body').innerHTML = d.body;
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('scrim').classList.add('show');
+}
+function closeDrawer(){
+  document.getElementById('drawer').classList.remove('open');
+  document.getElementById('scrim').classList.remove('show');
+}
+window.openDrawer=openDrawer; window.closeDrawer=closeDrawer;
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer()});
+
+let toastTimer;
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>t.classList.remove('show'), 2400);
+}
+
+// init
+renderFleet();
+renderHeatmap();
+go('fleet');
+</script>
+</body>
+</html>

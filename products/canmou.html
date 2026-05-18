@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>句子参谋 · 对话式数据洞察 | 句子互动</title>
+<meta name="description" content="句子参谋是 AI 劳动力的「参谋」——把公司所有数据接进来，用对话方式问。一句话查、秒级出图表、异常主动预警、给老板用。1000+ 客户数据为样本。" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231659E5'/%3E%3Ctext x='16' y='22' font-family='system-ui' font-size='18' font-weight='800' fill='white' text-anchor='middle'%3E句%3C/text%3E%3C/svg%3E" />
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<!-- ════════════ ANNOUNCEMENT BAR ════════════ -->
+<div class="ann-bar" role="marquee" aria-label="公告">
+  <div class="ann-track">
+    <span class="ann-item"><span class="dot"></span><span class="tag">在线教育</span>销售岗按结果付费已跑通——3 家头部品牌，每家年贡献 ¥500w+</span>
+    <span class="ann-item"><span class="dot"></span><span class="tag">消费品电商</span>几百家品牌私域导购上线，长尾客户 24×7 接住</span>
+    <span class="ann-item"><span class="dot"></span><span class="tag">金融</span>银行 · 证券 · 保险头部机构落地——合规边界提前写死</span>
+    <span class="ann-item"><span class="dot"></span>1000+ 大型企业已在用 · 4 年连续盈利 · 89% 对话自动完成率</span>
+    <span class="ann-item"><span class="dot"></span><span class="tag">在线教育</span>销售岗按结果付费已跑通——3 家头部品牌，每家年贡献 ¥500w+</span>
+    <span class="ann-item"><span class="dot"></span><span class="tag">消费品电商</span>几百家品牌私域导购上线，长尾客户 24×7 接住</span>
+    <span class="ann-item"><span class="dot"></span><span class="tag">金融</span>银行 · 证券 · 保险头部机构落地——合规边界提前写死</span>
+    <span class="ann-item"><span class="dot"></span>1000+ 大型企业已在用 · 4 年连续盈利 · 89% 对话自动完成率</span>
+  </div>
+</div>
+
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="../index.html" class="brand">
+      <span class="brand-mark">句</span>
+      句子互动 <small>JuziBot</small>
+    </a>
+    <div class="nav-links">
+      <div class="nav-item">
+        <button>产品 <span class="caret"></span></button>
+        <div class="dropdown wide">
+          <a href="../products/miaohui.html"><div class="d-title">句子秒回 · 工位</div><div class="d-desc">11 个 IM 通道汇成一个工位</div></a>
+          <a href="../products/miaodong.html"><div class="d-title">句子秒懂 · 大脑</div><div class="d-desc">业务人员不写代码搭多 Agent</div></a>
+          <a href="../products/shouhu.html"><div class="d-title">句子守护 · 主管</div><div class="d-desc">Agent 上线前 / 中 / 后管住</div></a>
+          <a href="../products/canmou.html"><div class="d-title">句子参谋 · 参谋</div><div class="d-desc">一句话查所有业务数据</div></a>
+          <a href="../products/zhizao.html"><div class="d-title">句子制造 · 兜底</div><div class="d-desc">一客一环境 · 标品搞不定时定开</div></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <button>AI 劳动力 <span class="caret"></span></button>
+        <div class="dropdown wide">
+          <a href="../workforce/sales.html"><div class="d-title">AI 销售</div><div class="d-desc">直播搬家、私域承接、漏斗跟进——首单成交全程接管</div></a>
+          <a href="../workforce/marketing.html"><div class="d-title">AI 导购</div><div class="d-desc">头部零售品牌的私域导购运营，长尾客户也覆盖</div></a>
+          <a href="../workforce/service.html"><div class="d-title">AI 客服</div><div class="d-desc">从售前到售后都接得住 · 5 年 BadCase 沉淀</div></a>
+          <a href="../workforce/government.html"><div class="d-title">AI 社工 / 调解员</div><div class="d-desc">政务高合规要求 + 全程可追溯 · 已稳步落地</div></a>
+          <a href="../workforce/finance.html"><div class="d-title">AI 顾问 / 营销</div><div class="d-desc">银行 / 证券 / 保险头部机构落地 · 9 年风控话术</div></a>
+          <a href="../workforce/livestream.html"><div class="d-title">AI 解说员 / 主理人</div><div class="d-desc">直播间智能解说 + 全媒体运营，10× 人手放大</div></a>
+        </div>
+      </div>
+      <div class="nav-item"><a href="../industries.html">客户与行业</a></div>
+      <div class="nav-item"><a href="../enterprise.html">企业级能力</a></div>
+      <div class="nav-item"><a href="../insights.html">AI 原生组织</a></div>
+      <div class="nav-item"><a href="../about.html">关于我们</a></div>
+    </div>
+    <a href="../index.html#cta" class="nav-cta">联系我们 →</a>
+  </div>
+</nav>
+
+<header class="page-hero">
+  <div class="container">
+    <div class="crumbs"><a href="../index.html">首页</a> <span class="sep">/</span> <span class="here">产品</span> <span class="sep">/</span> <span class="here">句子参谋</span></div>
+    <div style="font-size:13px;font-weight:800;color:var(--purple);letter-spacing:.12em;text-transform:uppercase;margin-bottom:16px;">PRODUCT · 04  ·  参谋</div>
+    <h1>句子参谋 · <span class="accent">把公司所有数据，做成一个能聊的参谋</span></h1>
+    <p class="lede">不是 dashboard。<strong>是能聊的运营参谋</strong>——把公司所有数据接进来，自然语言问数，秒级出图表；再追问，再钻一层。退费苗头、流失风险、合规偏差，参谋主动跳出来——还附可执行的建议。给老板用、给运营用。</p>
+    <div class="pill-row"><span class="pill"><span class="dot"></span>一句话查公司所有数据</span><span class="pill"><span class="dot"></span>秒级图表 / 表格 / 建议</span><span class="pill"><span class="dot"></span>异常主动预警</span><span class="pill"><span class="dot"></span>1000+ 客户数据当样本</span></div>
+  </div>
+</header>
+
+<section class="section-block">
+  <div class="container">
+    <div class="block-head">
+      <div class="eyebrow">4 件事 · 一次性给你</div>
+      <h2>从被动展示，变成主动开口——这是 BI 之后的形态</h2>
+      <div class="sub">不写 SQL、不点报表、不等周报、不约 BI——一句话问，秒级有答案。</div>
+    </div>
+    <div class="feat-grid-3">
+      <div class="feat-block bl">
+        <div class="ic">💬</div>
+        <h3>对话即查询</h3>
+        <p>自然语言问数，秒级出图表。不写 SQL、不点报表——一句话拿结果，再追问钻下一层。</p>
+      </div>
+      <div class="feat-block or">
+        <div class="ic">🔎</div>
+        <h3>一句话钻取</h3>
+        <p>漏斗在哪流失、谁转化最好、哪段话术退费最低——一问就出。要细的还能继续问，参谋顺着你的思路走。</p>
+      </div>
+      <div class="feat-block gr">
+        <div class="ic">🚨</div>
+        <h3>异常主动预警</h3>
+        <p>退费苗头、流失风险、合规偏差——参谋主动跳出来，还给可执行建议。不用人盯着 dashboard。</p>
+      </div>
+      <div class="feat-block pu">
+        <div class="ic">📱</div>
+        <h3>给老板用</h3>
+        <p>不等周报、不约 BI、不看 dashboard——手机上问一句就有答案。运营用、老板自己也能问。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-block">
+  <div class="container">
+    <div class="split">
+      <div class="split-text">
+        <div class="eyebrow">为什么需要它</div>
+        <h3>BI 是数据等人来看，参谋是数据主动开口</h3>
+        <p>过去的 BI / 数据中台：先建模型 → 排 dashboard → 等人定时打开 → 看到异常再排查。慢、被动、需要懂 SQL 的人当中间层。</p>
+        <p>参谋反过来——你只问一句「这周哪批客户掉了」，参谋秒级回答，再问就再深一层。异常不用你去找，参谋自己跳出来告诉你。</p>
+        <ul>
+          <li><strong>给老板</strong>：手机上问一句「今天销售有什么问题」，立刻有答案 + 建议</li>
+          <li><strong>给运营</strong>：「上周续费率为什么降了」，参谋一句话定位到具体环节</li>
+          <li><strong>给业务团队</strong>：随时拉客户数据样本，秒级看 Agent 表现，当天调</li>
+        </ul>
+      </div>
+      <div class="split-visual pu">
+        <div style="background:#fff;border-radius:12px;padding:18px;border:1px solid var(--gray-line);">
+          <div style="font-size:12px;font-weight:700;color:var(--purple);margin-bottom:14px;letter-spacing:.04em;">老板的手机 · 周一早上</div>
+          <div style="display:flex;flex-direction:column;gap:10px;font-size:13px;">
+            <div style="background:var(--purple-lt);color:var(--purple);padding:10px 14px;border-radius:8px;font-weight:600;">"上周续费率为什么降了？"</div>
+            <div style="background:#f7f7f9;color:var(--black);padding:12px 14px;border-radius:8px;line-height:1.55;">
+              ↓ 续费率：78% → 71%（-7pp）<br/>
+              主要原因：A 校区课时延期、B 老师离职。<br/>
+              建议：A 校区先补偿 + B 老师班分流到 C 老师，预计回正 +5pp。
+            </div>
+            <div style="background:var(--purple-lt);color:var(--purple);padding:10px 14px;border-radius:8px;font-weight:600;">"B 老师那班具体是哪些学生？"</div>
+            <div style="background:#f7f7f9;color:var(--black);padding:12px 14px;border-radius:8px;line-height:1.55;">
+              共 47 人。已生成名单 + 分流建议 → <span style="color:var(--purple);font-weight:700;">点这里发给招生</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-block alt">
+  <div class="container">
+    <div class="block-head">
+      <div class="eyebrow">和我们的团队一起跑</div>
+      <h2>参谋是团队的眼睛 — 看你的业务、看 Agent 表现</h2>
+      <div class="sub">我们的团队贴着你跑——用参谋随时拉真实业务数据样本，Agent 在哪个环节卡了、哪批客户没接住、哪段话术效果差——一问就出。</div>
+    </div>
+    <div class="feat-grid-3">
+      <div class="feat-block pu">
+        <div class="ic">🧭</div>
+        <h3>客户业务样本</h3>
+        <p>不用 ETL——参谋直接接你的系统，团队当天看数据当天调 Agent。</p>
+      </div>
+      <div class="feat-block bl">
+        <div class="ic">📈</div>
+        <h3>Agent 表现回路</h3>
+        <p>Agent 转化率、置信度分布、客户反馈分布——一问就出，反哺给守护和秒懂。</p>
+      </div>
+      <div class="feat-block or">
+        <div class="ic">⚡</div>
+        <h3>飞轮越转越快</h3>
+        <p>团队看到的业务痛点直接进产品研发——下一个客户起步就更高。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-block">
+  <div class="container">
+    <div class="block-head">
+      <div class="eyebrow">结果</div>
+      <h2>参谋上岗后，运营节奏变了</h2>
+      <div class="sub">数据来自客户真实部署反馈。</div>
+    </div>
+    <div class="kpi-row">
+      <div><div class="v">一句话</div><div class="l">查公司所有数据</div></div>
+      <div><div class="v">秒级</div><div class="l">图表 / 表格 / 建议</div></div>
+      <div><div class="v">主动</div><div class="l">异常预警 + 建议</div></div>
+      <div><div class="v">1000+</div><div class="l">客户数据当样本</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section-block">
+  <div class="container">
+    <div class="cta-band">
+      <div>
+        <h4>让参谋接上你的所有数据——一句话就能问</h4>
+        <p>从老板的一句话 demo 开始，到运营全员日常使用——90 天内，参谋会接上你的 CRM / 业务系统 / 客服记录。</p>
+      </div>
+      <a href="mailto:hello@juzibot.com" class="btn-primary">预约演示 <span class="btn-arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="brand-block">
+        <div class="brand">
+          <span class="brand-mark">句</span>
+          句子互动 <small>JuziBot</small>
+        </div>
+        <p>
+          为企业部署 AI 劳动力。<br/>
+          1000+ 家中国企业在用 · 4 年连续盈利。
+        </p>
+      </div>
+      <div>
+        <h6>产品 · 5 个</h6>
+        <ul>
+          <li><a href="../products/miaohui.html">句子秒回 · 工位</a></li>
+          <li><a href="../products/miaodong.html">句子秒懂 · 大脑</a></li>
+          <li><a href="../products/shouhu.html">句子守护 · 主管</a></li>
+          <li><a href="../products/canmou.html">句子参谋 · 参谋</a></li>
+          <li><a href="../products/zhizao.html">句子制造 · 兜底</a></li>
+        </ul>
+      </div>
+      <div>
+        <h6>AI 劳动力</h6>
+        <ul>
+          <li><a href="../workforce/sales.html">AI 销售</a></li>
+          <li><a href="../workforce/marketing.html">AI 导购</a></li>
+          <li><a href="../workforce/service.html">AI 客服</a></li>
+          <li><a href="../workforce/government.html">AI 社工 / 调解员</a></li>
+          <li><a href="../workforce/finance.html">AI 顾问 / 营销</a></li>
+          <li><a href="../workforce/livestream.html">AI 解说员 / 主理人</a></li>
+        </ul>
+      </div>
+      <div>
+        <h6>公司</h6>
+        <ul>
+          <li><a href="../about.html">关于我们</a></li>
+          <li><a href="../industries.html">客户与行业</a></li>
+          <li><a href="../insights.html">AI 原生组织</a></li>
+          <li><a href="../index.html#cta">联系我们</a></li>
+          <li><a href="https://github.com/wechaty/wechaty">Wechaty 开源</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 句子互动 · JuziBot</div>
+      <div>为企业部署 AI 劳动力</div>
+    </div>
+  </div>
+</footer>
+
+<div class="float-panel" id="floatPanel">
+  <button class="fp-btn" onclick="openContact('在线咨询')">
+    <span class="fp-icon">💬</span>在线咨询
+    <span class="fp-tip">在线咨询</span>
+  </button>
+  <button class="fp-btn fp-orange" onclick="openContact('预约演示')">
+    <span class="fp-icon">📅</span>预约演示
+    <span class="fp-tip">预约 Demo 演示</span>
+  </button>
+  <button class="fp-btn fp-green" onclick="openContact('获取方案')">
+    <span class="fp-icon">📋</span>获取<br/>方案
+    <span class="fp-tip">获取行业解决方案</span>
+  </button>
+</div>
+
+<div class="modal-overlay" id="contactModal">
+  <div class="modal" style="max-width:520px;" role="dialog" aria-modal="true">
+    <div class="modal-hd" style="padding:26px 32px 24px;">
+      <button class="mclose" onclick="closeModal('contactModal')" aria-label="关闭">×</button>
+      <div class="meyebrow">联系我们</div>
+      <h3 id="contactTitle" style="font-size:20px;margin-bottom:0;">预约演示 / 获取方案</h3>
+    </div>
+    <div class="modal-bd">
+      <div id="cfForm">
+        <div class="cf-row">
+          <input class="cf-input" type="text" placeholder="您的姓名 *" id="cf-name">
+          <input class="cf-input" type="text" placeholder="公司名称 *" id="cf-company">
+        </div>
+        <div class="cf-row">
+          <input class="cf-input" type="tel" placeholder="手机号 *" id="cf-phone">
+          <select class="cf-input" id="cf-industry">
+            <option value="" disabled selected>所在行业</option>
+            <option>在线教育</option>
+            <option>消费品电商</option>
+            <option>金融（银行 / 证券 / 保险）</option>
+            <option>政务 / 司法</option>
+            <option>泛互联网</option>
+            <option>其他</option>
+          </select>
+        </div>
+        <div class="cf-row full">
+          <textarea class="cf-input" placeholder="想了解什么？具体场景描述一下（选填）" id="cf-msg" style="height:80px;resize:none;"></textarea>
+        </div>
+        <button class="cf-submit" onclick="submitContact()">提交 — 工作日当天回复</button>
+        <p class="m-note" style="margin-top:12px;text-align:center;font-size:12.5px;color:var(--gray-text);">也可以直接发邮件：<a href="mailto:hello@juzibot.com" style="color:var(--blue);font-weight:700;">hello@juzibot.com</a></p>
+      </div>
+      <div id="cfSuccess" style="text-align:center;padding:32px 20px;display:none;">
+        <div style="font-size:48px;margin-bottom:12px;">✅</div>
+        <h4 style="font-size:20px;font-weight:800;margin-bottom:8px;">收到了，稍等一下</h4>
+        <p style="color:var(--gray-text);font-size:14.5px;">工作日内联系您。如果比较急：<a href="mailto:hello@juzibot.com" style="color:var(--blue);font-weight:700;">hello@juzibot.com</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function openModal(id){var el=document.getElementById(id);if(!el)return;el.classList.add('open');document.body.style.overflow='hidden';}
+function closeModal(id){var el=document.getElementById(id);if(!el)return;el.classList.remove('open');document.body.style.overflow='';}
+document.querySelectorAll('.modal-overlay').forEach(function(o){o.addEventListener('click',function(e){if(e.target===o)closeModal(o.id);});});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')document.querySelectorAll('.modal-overlay.open').forEach(function(m){closeModal(m.id);});});
+function openContact(t){var el=document.getElementById('contactTitle');if(el)el.textContent=t||'联系我们';openModal('contactModal');}
+function submitContact(){
+  var n=(document.getElementById('cf-name').value||'').trim();
+  var c=(document.getElementById('cf-company').value||'').trim();
+  var p=(document.getElementById('cf-phone').value||'').trim();
+  if(!n||!c||!p){alert('请填写姓名、公司名和手机号');return;}
+  document.getElementById('cfForm').style.display='none';
+  document.getElementById('cfSuccess').style.display='block';
+}
+(function(){
+  var fp=document.getElementById('floatPanel');if(!fp)return;
+  fp.style.opacity='0';fp.style.transition='opacity .3s ease';
+  window.addEventListener('scroll',function(){fp.style.opacity=window.scrollY>200?'1':'0';fp.style.pointerEvents=window.scrollY>200?'':'none';},{passive:true});
+})();
+</script>
+
+</body>
+</html>
