@@ -25,10 +25,12 @@ def nav_html(rel):
           <a href="{rel}products/miaohui.html"><div class="d-title">句子秒回</div><div class="d-desc">AI 劳动力的「工位」 · IM 通道里的执行系统</div></a>
           <a href="{rel}products/miaodong.html"><div class="d-title">句子秒懂</div><div class="d-desc">AI 劳动力的「大脑」 · Agent workflow 引擎</div></a>
           <a href="{rel}products/shouhu.html"><div class="d-title">句子守护</div><div class="d-desc">Agent 的「质量底线」 · Agentic Quality Assurance</div></a>
+          <a href="{rel}products/canmou.html"><div class="d-title">句子参谋</div><div class="d-desc">对话式数据洞察 · 一句话查所有业务数据</div></a>
+          <a href="{rel}products/zhizao.html"><div class="d-title">句子制造</div><div class="d-desc">一客一环境 · 标品搞不定时当场定开</div></a>
         </div>
       </div>
       <div class="nav-item">
-        <button>AI 劳动力 <span class="caret"></span></button>
+        <button>AI 员工 <span class="caret"></span></button>
         <div class="dropdown wide">
           <a href="{rel}workforce/sales.html"><div class="d-title">AI 销售</div><div class="d-desc">直播搬家、私域承接、漏斗跟进——首单成交全程接管</div></a>
           <a href="{rel}workforce/marketing.html"><div class="d-title">AI 导购</div><div class="d-desc">头部零售品牌的私域导购运营，长尾客户也覆盖</div></a>
@@ -70,11 +72,13 @@ def footer_html(rel):
           <li><a href="{rel}products/miaohui.html">句子秒回</a></li>
           <li><a href="{rel}products/miaodong.html">句子秒懂</a></li>
           <li><a href="{rel}products/shouhu.html">句子守护</a></li>
+          <li><a href="{rel}products/canmou.html">句子参谋</a></li>
+          <li><a href="{rel}products/zhizao.html">句子制造</a></li>
           <li><a href="{rel}enterprise.html">企业级能力</a></li>
         </ul>
       </div>
       <div>
-        <h6>AI 劳动力</h6>
+        <h6>AI 员工</h6>
         <ul>
           <li><a href="{rel}workforce/sales.html">AI 销售</a></li>
           <li><a href="{rel}workforce/marketing.html">AI 导购</a></li>
@@ -89,6 +93,7 @@ def footer_html(rel):
         <ul>
           <li><a href="{rel}about.html">关于我们</a></li>
           <li><a href="{rel}industries.html">客户与行业</a></li>
+          <li><a href="{rel}case-xingqudao.html">客户案例 · 兴趣岛</a></li>
           <li><a href="{rel}insights.html">AI 原生组织</a></li>
           <li><a href="{rel}index.html#cta">联系我们</a></li>
           <li><a href="https://github.com/wechaty/wechaty">Wechaty 开源</a></li>
@@ -962,8 +967,8 @@ def workforce_pages():
         title='AI 社工 / 调解员',
         kicker='AI 劳动力 · 政务岗',
         h1='AI 社工 / 调解员 · <span class="accent">在政务高合规下跑得通的 AI</span>',
-        lede='AI 普法调解员、AI 社工已稳步落地多个城市试点。<strong>政务高合规要求 + 全程可追溯的 Agent 行为日志</strong>——金融、政务客户特别在意这一条。',
-        pills=['多个城市试点落地', '高合规 + 全程可审计', '普法 / 调解 / 民意场景', '工作量减负 60%+'],
+        lede='AI 普法调解员、AI 社工已在 <strong>北京海淀区东升镇</strong>率先落地——AI 社工 7×24 响应、累计服务居民约 50 万人次；AI 普法调解员参与调解近百起、成功率约 93%，获海淀区首届法治实践优秀案例。<strong>政务高合规要求 + 全程可追溯的 Agent 行为日志</strong>——金融、政务客户特别在意这一条。',
+        pills=['海淀东升镇率先落地', '高合规 + 全程可审计', '居民服务约 50 万人次', '调解成功率约 93%'],
         color='pu',
         industry='政务 · 司法 · 公共服务',
         role_desc='政务场景对 AI 的要求最高——合规、可审计、说错一句都不行',
@@ -999,10 +1004,10 @@ def workforce_pages():
             ('🌐', '多端接入', '12345 热线、政务 App、公众号、社区企微——一套 Agent 多端服务。', 'pu'),
         ], cols=3),
         kpi_items=[
-            ('多个', '城市试点落地'),
-            ('60%+', '人工工作量减负'),
-            ('100%', '决策可审计'),
-            ('稳步', '推进中（持续）'),
+            ('约 50 万', 'AI 社工累计服务居民（人次）'),
+            ('↓ 约 45%', '居民投诉率'),
+            ('↑ 约 85%', '居民满意度'),
+            ('约 93%', 'AI 调解员调解成功率'),
         ],
         cta_text='把 AI 社工 / 调解员部署到你的政务系统',
     )
@@ -1186,7 +1191,7 @@ def page_enterprise():
          '<strong>1000+ 大型企业客户验证过的部署能力</strong>——已经在生产环境跑了 9 年，不是 demo。从单一场景到多职能 Agent 矩阵，从一个客户的私域到集团央企的多租户隔离，跑得通。',
          '<div style="font-size:11px;color:var(--gray-text);font-weight:700;letter-spacing:.04em;margin-bottom:8px;">部署规模</div>'
          '<div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--gray-line);padding:6px 0;font-size:12.5px;"><span>大型企业客户</span><span style="color:var(--blue);font-weight:800;font-size:16px;">1000+</span></div>'
-         '<div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--gray-line);padding:6px 0;font-size:12.5px;"><span>同时在岗 Agent</span><span style="color:var(--blue);font-weight:800;font-size:16px;">12,847</span></div>'
+         '<div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--gray-line);padding:6px 0;font-size:12.5px;"><span>累计服务终端用户</span><span style="color:var(--blue);font-weight:800;font-size:16px;">4 亿 + 人次</span></div>'
          '<div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--gray-line);padding:6px 0;font-size:12.5px;"><span>日均处理消息</span><span style="color:var(--blue);font-weight:800;font-size:16px;">200 万 +</span></div>'
          '<div style="display:flex;justify-content:space-between;align-items:baseline;padding:6px 0;font-size:12.5px;"><span>SaaS 服务可用性</span><span style="color:var(--green);font-weight:800;font-size:16px;">99.9%</span></div>'),
 
@@ -1228,6 +1233,17 @@ def page_enterprise():
         "不是抽象的功能清单，是客户在每个项目里实打实问过的问题。每一项都讲清楚痛点和我们的回答。",
         deep_html,
         alt=True,
+    )
+
+    body += block(
+        "自研引擎",
+        "把成本和交付周期压下来——<span class=\"accent\">规模化才跑得起来</span>",
+        "AI 员工要能上岗、能复制、还得算得过账。自研 Token 成本控制引擎和 Agent 工厂 2.0，把企业最担心的两件事——烧钱和上线慢——直接压下来。",
+        '<div style="max-width:1000px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:22px;">'
+        '<div style="background:#fff;border:1px solid var(--gray-line);border-radius:16px;padding:30px 24px;text-align:center;"><div style="font-size:40px;font-weight:900;color:var(--blue);letter-spacing:-.02em;line-height:1;">↓ 87%</div><div style="font-size:14px;font-weight:800;margin:14px 0 8px;">大模型调用成本</div><div style="font-size:13px;color:var(--gray-text);line-height:1.6;">自研 Token 成本控制引擎 + 按任务分层做模型路由，把大模型调用成本降低约 87%。</div></div>'
+        '<div style="background:#fff;border:1px solid var(--gray-line);border-radius:16px;padding:30px 24px;text-align:center;"><div style="font-size:40px;font-weight:900;color:var(--orange);letter-spacing:-.02em;line-height:1;">↓ 70%</div><div style="font-size:14px;font-weight:800;margin:14px 0 8px;">AI 员工定制交付周期</div><div style="font-size:13px;color:var(--gray-text);line-height:1.6;">Agent 工厂 2.0 的 SOP 模板化能力，让 AI 员工定制与交付周期缩短约 70%。</div></div>'
+        '<div style="background:#fff;border:1px solid var(--gray-line);border-radius:16px;padding:30px 24px;text-align:center;"><div style="font-size:40px;font-weight:900;color:var(--green);letter-spacing:-.02em;line-height:1;">↑ 30–40%</div><div style="font-size:14px;font-weight:800;margin:14px 0 8px;">客户转化率</div><div style="font-size:13px;color:var(--gray-text);line-height:1.6;">在销售与服务场景，AI 员工帮客户把转化率提升约 30%—40%。</div></div>'
+        '</div>',
     )
 
     body += split_section(
@@ -1333,7 +1349,7 @@ def page_industries():
 
     industries_detail = [
         ('education', '在线教育', '📚', 'bl', '400+ 客户 · 头部 RPA 已覆盖',
-         '在线教育是句子互动最早进入的行业。9 年下来覆盖了几乎所有头部公司——从大班课、小班课到 1 对 1，从招生、续费到 NPS。',
+         '在线教育是句子互动最早进入的行业。9 年下来覆盖了几乎所有头部公司——从大班课、小班课到 1 对 1，从招生、续费到 NPS。其中<strong>兴趣岛</strong>是我们目前成单体量最大的客户，AI 把整条「低转高」链路跑通：人效翻倍、单线索成本砍 50~62%、转人工率从 27% 压到 2.73%。<a href="case-xingqudao.html" style="color:var(--blue);font-weight:700;">看兴趣岛完整案例 →</a>',
          [
              ('400+', '客户'),
              ('头部', 'RPA 已覆盖'),
@@ -1512,9 +1528,10 @@ def page_about():
         '<div style="font-size:24px;font-weight:800;color:var(--black);line-height:1.55;letter-spacing:-.01em;">在 1000+ 家中国企业的微信、客服、销售、合规流程里跑——按业务结果计价。</div>'
         '<div style="margin-top:24px;display:flex;justify-content:center;gap:32px;flex-wrap:wrap;">'
         '<div><div style="font-size:32px;font-weight:800;color:var(--orange);letter-spacing:-.01em;line-height:1.1;">1000+</div><div style="font-size:13px;color:var(--gray-text);margin-top:4px;">大型企业客户</div></div>'
-        '<div><div style="font-size:32px;font-weight:800;color:var(--blue);letter-spacing:-.01em;line-height:1.1;">5 个</div><div style="font-size:13px;color:var(--gray-text);margin-top:4px;">高合规高垂直行业</div></div>'
-        '<div><div style="font-size:32px;font-weight:800;color:var(--green);letter-spacing:-.01em;line-height:1.1;">9 年</div><div style="font-size:13px;color:var(--gray-text);margin-top:4px;">行业 know-how 沉淀</div></div>'
-        '<div><div style="font-size:32px;font-weight:800;color:var(--purple);letter-spacing:-.01em;line-height:1.1;">13 万</div><div style="font-size:13px;color:var(--gray-text);margin-top:4px;">Wechaty GitHub Star</div></div>'
+        '<div><div style="font-size:32px;font-weight:800;color:var(--blue);letter-spacing:-.01em;line-height:1.1;">4 亿</div><div style="font-size:13px;color:var(--gray-text);margin-top:4px;">累计服务终端用户（人次）</div></div>'
+        '<div><div style="font-size:32px;font-weight:800;color:var(--green);letter-spacing:-.01em;line-height:1.1;">5 个</div><div style="font-size:13px;color:var(--gray-text);margin-top:4px;">高合规高垂直行业</div></div>'
+        '<div><div style="font-size:32px;font-weight:800;color:var(--purple);letter-spacing:-.01em;line-height:1.1;">9 年</div><div style="font-size:13px;color:var(--gray-text);margin-top:4px;">行业 know-how 沉淀</div></div>'
+        '<div><div style="font-size:32px;font-weight:800;color:var(--black);letter-spacing:-.01em;line-height:1.1;">22k+</div><div style="font-size:13px;color:var(--gray-text);margin-top:4px;">Wechaty GitHub Star</div></div>'
         '</div>'
         '</div>'
     )
@@ -1522,7 +1539,7 @@ def page_about():
     body += block(
         "AI NATIVE 团队",
         "大模型时代如何构建 AI Agent——<span class=\"accent\">《Chatbot 从 0 到 1》</span>",
-        "团队从 2017 年的 Wechaty 开源框架起步，到 2020 年出版中文首本聊天机器人专著《Chatbot 从 0 到 1》，到 2024 年第二版升级到大模型时代——9 年里持续在企业级 Agent 这件事上探索本质。",
+        "由创始人 <strong>李佳芮</strong>（Wechaty 开源作者）带队。团队从 2017 年的 Wechaty 开源框架起步，到 2020 年出版中文首本聊天机器人专著《Chatbot 从 0 到 1》，到 2024 年第二版升级到大模型时代——9 年里持续在企业级 Agent 这件事上探索本质。",
         '''<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;max-width:1100px;margin:0 auto;">
 <div style="padding:28px 24px;background:#fff;border:1px solid var(--gray-line);border-radius:18px;">
   <div style="display:inline-block;font-size:11px;font-weight:800;letter-spacing:.1em;background:var(--blue-light);color:var(--blue);padding:4px 10px;border-radius:6px;margin-bottom:14px;">2020</div>
@@ -1537,7 +1554,7 @@ def page_about():
 <div style="padding:28px 24px;background:#fff;border:1px solid var(--gray-line);border-radius:18px;">
   <div style="display:inline-block;font-size:11px;font-weight:800;letter-spacing:.1em;background:var(--green-lt);color:var(--green);padding:4px 10px;border-radius:6px;margin-bottom:14px;">2017 至今</div>
   <h4 style="font-size:18px;font-weight:800;margin:0 0 12px;">Wechaty 开源框架</h4>
-  <p style="font-size:14px;color:var(--gray-text);line-height:1.7;margin:0;">全球最大的 IM 自动化开源生态——13 万 GitHub Star。这一层基础设施，是大模型公司给钱也拿不到的渠道身份。</p>
+  <p style="font-size:14px;color:var(--gray-text);line-height:1.7;margin:0;">全球最大的 IM 自动化开源生态之一——22k+ GitHub Star。这一层基础设施，是大模型公司给钱也拿不到的渠道身份。</p>
 </div>
 </div>''',
         alt=True,
@@ -1614,6 +1631,45 @@ def page_about():
     )
 
     body += block(
+        "资质与荣誉",
+        "国家级资质 + 行业标准 + 赛事冠军——<span class=\"accent\">不是一句口号，是一摞证书</span>",
+        "国家高新技术企业、北京市专精特新「小巨人」、公安部信息安全等级保护三级——TO B 客户在意的硬资质都过了。",
+        '''<div style="max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:18px;">
+<div style="display:grid;grid-template-columns:140px 1fr;gap:18px;align-items:center;background:var(--blue-light);border-radius:14px;padding:20px 24px;">
+<div style="font-size:15px;font-weight:800;color:var(--blue);">国家级资质</div>
+<div style="display:flex;flex-wrap:wrap;gap:10px;">
+<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">国家高新技术企业</span>
+<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">北京市专精特新「小巨人」</span>
+<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">公安部等保三级认证</span>
+</div>
+</div>
+<div style="display:grid;grid-template-columns:140px 1fr;gap:18px;align-items:center;background:var(--green-lt);border-radius:14px;padding:20px 24px;">
+<div style="font-size:15px;font-weight:800;color:var(--green);">行业标准 / 计划</div>
+<div style="display:flex;flex-wrap:wrap;gap:10px;">
+<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">中国互联网协会 · 智能体创新推进计划合作伙伴（2025—2027）</span>
+<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">工信部年度数字营销服务领航企业</span>
+<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">参与信通院「智能营销」系列标准制定</span>
+</div>
+</div>
+<div style="display:grid;grid-template-columns:140px 1fr;gap:18px;align-items:center;background:var(--orange-lt);border-radius:14px;padding:20px 24px;">
+<div style="font-size:15px;font-weight:800;color:var(--orange);">赛事荣誉</div>
+<div style="display:flex;flex-wrap:wrap;gap:10px;">
+<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">WAIC 世界人工智能大会 · 全球创新项目路演冠军暨最佳应用奖</span>
+<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">MWC 上海 · 5G 消息创新价值奖</span>
+</div>
+</div>
+<div style="display:grid;grid-template-columns:140px 1fr;gap:18px;align-items:center;background:var(--purple-lt);border-radius:14px;padding:20px 24px;">
+<div style="font-size:15px;font-weight:800;color:var(--purple);">权威榜单</div>
+<div style="display:flex;flex-wrap:wrap;gap:10px;">
+<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">2025 CHINA AI 100</span>
+<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">高科技高成长新锐企业 TOP50</span>
+<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">Plug and Play × 清华大学全球开放式创新百强</span>
+</div>
+</div>
+</div>''',
+    )
+
+    body += block(
         "媒体与生态",
         "新闻报道与生态合作",
         "",
@@ -1630,8 +1686,8 @@ def page_about():
 </div>
 <div style="padding:28px 24px;background:#fff;border:1px solid var(--gray-line);border-radius:18px;">
   <div style="font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--green);margin-bottom:12px;">OPEN SOURCE</div>
-  <h4 style="font-size:17px;font-weight:800;margin:0 0 12px;">Wechaty 13 万 GitHub Star</h4>
-  <p style="font-size:13.5px;color:var(--gray-text);line-height:1.65;margin:0;">全球最大的 IM 自动化开源生态，全球开发者社区共建。这层渠道身份是大模型公司给钱也拿不到的资产。</p>
+  <h4 style="font-size:17px;font-weight:800;margin:0 0 12px;">Wechaty 22k+ GitHub Star</h4>
+  <p style="font-size:13.5px;color:var(--gray-text);line-height:1.65;margin:0;">全球最大的 IM 自动化开源生态之一，全球开发者社区共建。这层渠道身份是大模型公司给钱也拿不到的资产。</p>
 </div>
 </div>''',
     )
@@ -1646,13 +1702,13 @@ def page_about():
 
     return page_layout(
         title="关于我们 · 关于句子互动 · 9 年扎在企业里的 AI 团队",
-        description="句子互动是企业级 Agentic AI 平台。9 年沉淀，1000+ 大型企业客户，《Chatbot 从 0 到 1》两版作者团队，Wechaty 开源框架 13 万 GitHub Star。",
+        description="句子互动是企业级 Agentic AI 平台，由 Wechaty 开源作者李佳芮创立。9 年沉淀，1000+ 大型企业客户、累计服务终端用户约 4 亿人次。国家高新技术企业、北京市专精特新「小巨人」、公安部等保三级，WAIC 全球创新冠军、2025 CHINA AI 100。",
         rel="",
         breadcrumbs=[("首页", "index.html"), ("关于我们", None)],
         hero_kicker="ABOUT JUZIBOT",
         hero_h1='把过去要一支团队干的活，<span class="accent">交给 1 个人 + 一支 Agent 团队</span>',
         hero_lede="句子互动是企业级 Agentic AI 平台。<strong>把大模型 + 企业全域数据接进微信生态、抖音、钉钉、飞书、WhatsApp 等主流社交媒体</strong>——为企业造具备自主决策能力的 AI 劳动力。9 年沉淀，1000+ 大型企业客户。",
-        pills=["1000+ 大型企业客户", "5 个高合规高垂直行业", "9 年沉淀", "Wechaty 13 万 Star"],
+        pills=["1000+ 大型企业客户", "5 个高合规高垂直行业", "9 年沉淀", "Wechaty 22k+ Star"],
         body=body,
     )
 
@@ -1821,6 +1877,272 @@ def page_insights():
     )
 
 
+# ────────────────────────── case · 兴趣岛 ──────────────────────────
+
+def page_case_xingqudao():
+    body = ''
+
+    # ── 执行摘要：6 大指标 ──
+    metrics = [
+        ('200<span style="font-size:18px;color:var(--gray-text);">→</span>913', '人服比（先锋组）<br/>约大盘 2 倍、基准 4.5 倍', 'var(--blue)'),
+        ('28 万元', '最高单人月度产出<br/>月人效', 'var(--orange)'),
+        ('↓50~62%', '单线索成本<br/>太极 ↓50% · 普拉提 ↓62%', 'var(--green)'),
+        ('27%<span style="font-size:18px;color:var(--gray-text);">→</span>2.73%', 'AI 转人工率<br/>上线初 → 当前', 'var(--purple)'),
+        ('16.26%<span style="font-size:18px;color:var(--gray-text);">→</span>0.13%', '系统故障率<br/>峰值 → 当前', 'var(--teal)'),
+        ('24.3 万', '月度服务线索<br/>AI 月回复 211.5 万条消息', 'var(--blue)'),
+    ]
+    cards = ''.join(
+        f'<div style="background:#fff;border:1px solid var(--gray-line);border-radius:16px;padding:26px 22px;text-align:center;">'
+        f'<div style="font-size:30px;font-weight:800;color:{c};letter-spacing:-.02em;line-height:1.05;">{v}</div>'
+        f'<div style="font-size:13px;color:var(--gray-text);margin-top:8px;line-height:1.5;">{l}</div></div>'
+        for v, l, c in metrics
+    )
+    body += block(
+        "执行摘要",
+        "AI 把整条「低转高」链路跑通",
+        "人效翻倍、ROI 不掉、单线索成本砍半——这是兴趣岛敢把活按结果包给我们的核心原因。",
+        f'<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:1000px;margin:0 auto;">{cards}</div>'
+        '<p style="text-align:center;font-size:13.5px;color:var(--gray-text);margin:28px auto 0;max-width:720px;line-height:1.7;">'
+        '月度服务线索 24.3 万条、AI 回复消息 211.5 万条——这是一个跑在生产上、有真实业务量的案例，不是 demo。</p>',
+    )
+
+    # ── 客户是谁 + 转化流程 ──
+    body += split_section(
+        eyebrow="客户是谁",
+        title="在线教育头部品牌 · 我们成单体量最大的客户",
+        paragraphs=[
+            "兴趣岛做兴趣技能在线教育，旗下太极、普拉提、瑜伽、健康食养多个事业部。场景是<strong>企业微信 1v1 私聊</strong>，2025 年 6 月启动至今。",
+            "线下驻场对比发现：各事业部流程框架一致，只是课程和开营时间不同——<strong>一个事业部跑通的搭法，可以直接复制到下一个</strong>。这是兴趣岛能不断加业务线的底层原因，也是我们这套打法可复制的根据。",
+        ],
+        bullets=[
+            "<strong>① 广告投放获客</strong>：信息流广告报名体验营",
+            "<strong>② 7 天 6 课体验营</strong>：低价引流，直播 + 回放",
+            "<strong>③ 企微 1v1 破冰</strong>：班主任一对一私聊",
+            "<strong>④ 识别诉求 / 痛点</strong>：学习目标、身体状况、能否上课",
+            "<strong>⑤ 转正价课</strong>：陪学建立信任 → 销转",
+        ],
+        visual_html="""
+<div style="background:#fff;border-radius:12px;padding:20px;border:1px solid var(--gray-line);">
+<div style="font-size:12px;font-weight:800;color:var(--gray-text);letter-spacing:.04em;margin-bottom:14px;">客户档案</div>
+<div style="display:flex;flex-direction:column;gap:10px;font-size:13.5px;">
+<div style="display:flex;justify-content:space-between;"><span style="color:var(--gray-text);">行业</span><span style="font-weight:700;">兴趣技能在线教育</span></div>
+<div style="display:flex;justify-content:space-between;"><span style="color:var(--gray-text);">事业部</span><span style="font-weight:700;">太极 / 普拉提 / 瑜伽 / 健康食养</span></div>
+<div style="display:flex;justify-content:space-between;"><span style="color:var(--gray-text);">场景</span><span style="font-weight:700;">企业微信 · 私聊 1v1</span></div>
+<div style="display:flex;justify-content:space-between;"><span style="color:var(--gray-text);">启动</span><span style="font-weight:700;">2025 年 6 月至今</span></div>
+<div style="display:flex;justify-content:space-between;"><span style="color:var(--gray-text);">地位</span><span style="font-weight:700;color:var(--blue);">成单体量最大客户</span></div>
+</div>
+</div>
+""",
+    )
+
+    # ── AI 干了什么 ──
+    body += block(
+        "AI 干了什么",
+        "全链路接管：从「人海一对一」变成一套系统在跑",
+        "人手不再是接量规模的天花板——接量期破冰挖需、服务期陪学建信任，被动回复 + 主动触达都交给 AI。",
+        feat_grid([
+            ("📥", "接量期 · 被动回复", "破冰挖需、知识库答疑、通用闲聊；命中严重病症直接转人工。", "bl"),
+            ("📤", "接量期 · 主动触达", "加好友 1 小时内触达、对话结束 30 分钟追问、连续 3 天定点催回。", "or"),
+            ("📚", "服务期 · 被动回复", "课前软促课、课中引导、课后点评——按学习节奏自适应。", "gr"),
+            ("🔔", "服务期 · 主动触达", "第一天课前催自我介绍、每天课后触达、课后半小时催打卡。", "pu"),
+        ], cols=2),
+    )
+
+    # ── 业务效果 ──
+    body += split_section(
+        eyebrow="业务效果",
+        title="人效翻倍，ROI 不掉",
+        paragraphs=[
+            "在高人服比的情况下 ROI 不掉——这是兴趣岛敢把活按结果包给我们的核心原因。",
+            "先锋组人服比做到 <strong>913</strong>，约是大盘的 2 倍、AI 上线前基准的 4.5 倍；最高单人月度产出 <strong>28 万元</strong>。",
+        ],
+        bullets=[
+            "AI 上线前基准人服比：200",
+            "大盘均值：456",
+            "先锋组最高：913（约大盘 2 倍）",
+            "ROI 与大盘持平，部分期次更高",
+        ],
+        visual_html="""
+<div style="background:#fff;border-radius:12px;padding:22px;border:1px solid var(--gray-line);">
+<div style="font-size:12px;font-weight:800;color:var(--gray-text);letter-spacing:.04em;margin-bottom:18px;">人服比 · 人 / 周期</div>
+<div style="display:flex;flex-direction:column;gap:16px;font-size:13px;">
+<div><div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span>AI 前 · 基准</span><span style="font-weight:800;">200</span></div><div style="height:14px;background:var(--gray-bg);border-radius:7px;overflow:hidden;"><div style="width:22%;height:100%;background:var(--gray-text);border-radius:7px;"></div></div></div>
+<div><div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span>大盘均值</span><span style="font-weight:800;">456</span></div><div style="height:14px;background:var(--gray-bg);border-radius:7px;overflow:hidden;"><div style="width:50%;height:100%;background:var(--orange);border-radius:7px;"></div></div></div>
+<div><div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-weight:700;color:var(--blue);">先锋组 · 最高</span><span style="font-weight:800;color:var(--blue);">913</span></div><div style="height:14px;background:var(--gray-bg);border-radius:7px;overflow:hidden;"><div style="width:100%;height:100%;background:var(--blue);border-radius:7px;"></div></div></div>
+</div>
+</div>
+""",
+        color="bl",
+        reverse=True,
+    )
+
+    # ── 系统稳定性 ──
+    body += split_section(
+        eyebrow="系统效果",
+        title="转人工率从 27% 压到 2.73%——用了大半年",
+        paragraphs=[
+            "稳定性不是一上线就有的——是靠 badcase 集、回归测试集、评判标准、周例会复盘，一点点压下来的。<strong>这条曲线本身，就是「能不能把活真正交给 AI」的答案。</strong>",
+            "当前 2.73% 里，74% 是图片 / 视频规则性触发，26% 是意图转人工；异常质检不通过转人工占比 <strong>&lt;0.001%</strong>——AI 自己说错话需要人接管的情况，几乎不发生。",
+        ],
+        bullets=[
+            "AI 转人工率：27% → 2.73%",
+            "系统故障率：16.26% → 0.13%（峰值 → 当前）",
+            "AI 首次响应：21.2 秒（用户开口到 AI 回复）",
+            "流程引擎执行：1.9 秒（单次链路均值）",
+        ],
+        visual_html="""
+<div style="background:#fff;border-radius:12px;padding:22px;border:1px solid var(--gray-line);">
+<div style="font-size:12px;font-weight:800;color:var(--gray-text);letter-spacing:.04em;margin-bottom:16px;">AI 转人工率 · 上线至今</div>
+<div style="display:flex;align-items:flex-end;gap:14px;height:140px;">
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;"><div style="font-weight:800;color:var(--orange);margin-bottom:6px;">27%</div><div style="width:100%;height:100%;background:var(--orange-lt);border-radius:8px 8px 0 0;"></div><div style="font-size:11px;color:var(--gray-text);margin-top:6px;">上线初</div></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;"><div style="font-weight:800;color:var(--gray-text);margin-bottom:6px;">~10%</div><div style="width:100%;height:37%;background:var(--gray-bg);border-radius:8px 8px 0 0;"></div><div style="font-size:11px;color:var(--gray-text);margin-top:6px;">中期</div></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;"><div style="font-weight:800;color:var(--green);margin-bottom:6px;">2.73%</div><div style="width:100%;height:10%;background:var(--green);border-radius:8px 8px 0 0;"></div><div style="font-size:11px;color:var(--gray-text);margin-top:6px;">当前</div></div>
+</div>
+</div>
+""",
+        color="gr",
+    )
+
+    # ── token 效率 ──
+    rows = [
+        ('2 月', '¥0.89', '4.8w'),
+        ('3 月', '¥0.73', '11.5w'),
+        ('4 月', '¥0.37', '12.0w'),
+        ('5 月', '¥0.44', '16.0w'),
+    ]
+    table_rows = ''.join(
+        f'<tr><td style="padding:10px 14px;border-top:1px solid var(--gray-line);font-weight:700;">{m}</td>'
+        f'<td style="padding:10px 14px;border-top:1px solid var(--gray-line);text-align:right;color:var(--green);font-weight:700;">{cost}</td>'
+        f'<td style="padding:10px 14px;border-top:1px solid var(--gray-line);text-align:right;font-weight:700;">{leads}</td></tr>'
+        for m, cost, leads in rows
+    )
+    body += block(
+        "Token 效率",
+        "成本砍半的同时，线索量翻 3 倍",
+        "先把结果做对，再把每个结果的 token 用量压下来——越懂这门生意，每个结果越省。这是规模摊不薄、对手买不到的效率。",
+        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:1000px;margin:0 auto;align-items:start;">'
+        '<div style="background:#fff;border:1px solid var(--gray-line);border-radius:14px;padding:20px;">'
+        '<div style="font-size:13px;font-weight:800;margin-bottom:8px;">太极正式服 · 月度单线索成本 vs 线索量</div>'
+        '<table style="width:100%;border-collapse:collapse;font-size:13.5px;">'
+        '<tr><th style="padding:8px 14px;text-align:left;font-size:12px;color:var(--gray-text);">月份</th>'
+        '<th style="padding:8px 14px;text-align:right;font-size:12px;color:var(--gray-text);">单线索成本</th>'
+        '<th style="padding:8px 14px;text-align:right;font-size:12px;color:var(--gray-text);">线索量</th></tr>'
+        + table_rows +
+        '</table></div>'
+        '<div style="display:flex;flex-direction:column;gap:14px;">'
+        '<div style="background:var(--green-lt);border-radius:14px;padding:20px;"><div style="font-size:13px;font-weight:800;color:var(--green);margin-bottom:8px;">成本怎么压下来的</div>'
+        '<ul style="margin:0;padding-left:18px;font-size:13px;color:var(--gray-text);line-height:1.7;">'
+        '<li><strong>换模型</strong>：按任务分层选模型——判断类用小模型，生成类用便宜的快模型</li>'
+        '<li><strong>精简输入</strong>：去掉冗余历史、限制 RAG 检索，砍掉无效 token</li>'
+        '<li><strong>链路优化</strong>：上下文重写与意图识别由并行改串行，消息延迟进线合并</li>'
+        '</ul></div>'
+        '<div style="background:#fff;border:1px solid var(--gray-line);border-radius:14px;padding:18px;text-align:center;">'
+        '<div style="font-size:14px;font-weight:800;">太极 <span style="color:var(--green);">↓50%</span> · 普拉提 <span style="color:var(--green);">↓62%</span></div>'
+        '<div style="font-size:12px;color:var(--gray-text);margin-top:4px;">单线索成本降幅</div></div>'
+        '</div>'
+        '</div>',
+        alt=True,
+    )
+
+    # ── 怎么做到的：5 个产品 + FDE ──
+    body += block(
+        "怎么做到的",
+        "这套结果，是 5 个产品 + 一支 FDE 团队一起跑出来的",
+        "不是套壳调一个模型——一条消息背后是 6 个节点的自研流程引擎，5 个产品各管一段，FDE 团队贴着客户调。",
+        feat_grid([
+            ("💬", "句子秒回 · 工位", "企业微信 1v1，AI 月回复 211.5 万条消息；全自动跑，命中严重病症 / 异常自动转人工。", "bl"),
+            ("🧠", "句子秒懂 · 大脑", "一条消息背后 6 节点：上下文重写 → 意图识别 → 破冰挖需 → 知识库检索 → 生成回复 → 全链路质检；按任务分层做模型路由。", "or"),
+            ("🛡️", "句子守护 · 主管", "全链路质检 + 质检不过二次生成、badcase 集 + 回归测试集——转人工率从 27% 压到 2.73% 靠的就是这套循环。", "gr"),
+            ("📊", "句子参谋 · 参谋", "用户画像自动聚合、同步到企微用户描述，给业务老师做销售参考；业务进展一问就出。", "pu"),
+            ("🏗️", "句子制造 · 兜底", "测试服 / 正式服双环境、毫秒时序对齐、静默时段延迟再生成——真实业务的脏活都在系统里解决。", "te"),
+        ], cols=3),
+    )
+
+    # ── FDE 交付 ──
+    body += split_section(
+        eyebrow="FDE 怎么交付",
+        title="贴着客户把第一个项目跑通，方法论让下一个客户起步更快",
+        paragraphs=[
+            "这是别人挖不走的复合能力：理解客户业务 → 拆 SOP → 整理知识库 → 设计提示词 + Workflow → 测试调优 → 上线支持 + 周会复盘。",
+            "<strong>同一套打法，多家头部在跑</strong>——火花思维、尚德集团、方塘易朴、飞书。一个客户跑出来的方法论，能复制到下一个客户。",
+        ],
+        bullets=[
+            "① 理解客户业务问题",
+            "② 拆解 SOP",
+            "③ 整理知识库（适配 AI 检索）",
+            "④ 设计提示词 + Workflow",
+            "⑤ 测试调优（badcase / 回归集）",
+            "⑥ 上线支持 + 周会复盘",
+        ],
+        visual_html="""
+<div style="background:#fff;border-radius:12px;padding:22px;border:1px solid var(--gray-line);">
+<div style="font-size:12px;font-weight:800;color:var(--gray-text);letter-spacing:.04em;margin-bottom:14px;">同一套打法 · 多家头部在跑</div>
+<div style="display:flex;flex-wrap:wrap;gap:10px;">
+<span style="background:var(--blue-light);color:var(--blue);padding:8px 16px;border-radius:8px;font-size:14px;font-weight:700;">兴趣岛</span>
+<span style="background:var(--gray-bg);padding:8px 16px;border-radius:8px;font-size:14px;font-weight:700;color:var(--gray-text);">火花思维</span>
+<span style="background:var(--gray-bg);padding:8px 16px;border-radius:8px;font-size:14px;font-weight:700;color:var(--gray-text);">尚德集团</span>
+<span style="background:var(--gray-bg);padding:8px 16px;border-radius:8px;font-size:14px;font-weight:700;color:var(--gray-text);">方塘易朴</span>
+<span style="background:var(--gray-bg);padding:8px 16px;border-radius:8px;font-size:14px;font-weight:700;color:var(--gray-text);">飞书</span>
+</div>
+<div style="margin-top:16px;font-size:13px;color:var(--gray-text);line-height:1.65;">一个事业部跑通的搭法，复制到下一个事业部；一个客户跑出来的方法论，复制到下一个客户。</div>
+</div>
+""",
+        color="or",
+        reverse=True,
+    )
+
+    # ── 越用越多 ──
+    body += block(
+        "越用越多",
+        "老客户上岗后，线索量一直爬坡",
+        "线索量 = token 消耗 = 收入的领先指标。客户不流失、还越用越多——这是 AI 员工模式区别于卖软件最关键的一条曲线。",
+        '<div style="background:#fff;border:1px solid var(--gray-line);border-radius:16px;padding:28px;max-width:820px;margin:0 auto;">'
+        '<div style="font-size:13px;font-weight:800;color:var(--gray-text);margin-bottom:20px;">太极事业部 · 月度服务线索量（万条） · 4 个月 3.3 倍</div>'
+        '<div style="display:flex;align-items:flex-end;gap:20px;height:180px;">'
+        + ''.join(
+            f'<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;">'
+            f'<div style="font-weight:800;color:var(--blue);margin-bottom:6px;">{v}w</div>'
+            f'<div style="width:100%;height:{h}%;background:linear-gradient(180deg,var(--blue),var(--blue-mid));border-radius:8px 8px 0 0;"></div>'
+            f'<div style="font-size:12px;color:var(--gray-text);margin-top:8px;">{m}</div></div>'
+            for m, v, h in [('2 月', '4.8', 30), ('3 月', '11.5', 72), ('4 月', '12.0', 75), ('5 月', '16.0', 100)]
+        )
+        + '</div></div>',
+        alt=True,
+    )
+
+    # ── 三大结论 ──
+    body += block(
+        "三大结论",
+        "这套模式最完整的一次验证",
+        "兴趣岛是我们目前成单体量最大的客户，也是「按结果交付」最完整的一次跑通。",
+        feat_grid([
+            ("✅", "按结果跑得通", "人服比翻 4.5 倍、约大盘 2 倍，ROI 不掉——这是「客户赚到我们才赚」能成立的前提。", "bl"),
+            ("⚡", "token 效率是真壁垒", "单线索成本砍 50~62%，同时线索量翻 3 倍。越懂这门生意，每个结果越省 token。", "or"),
+            ("🏗️", "自研平台扛得住生产", "多节点编排、全链路质检、二次生成、时序对齐——真实业务的脏活都在系统里解决。", "gr"),
+        ], cols=3),
+    )
+
+    body += f"""
+<section class="section-block">
+  <div class="container">
+    {cta_band("把兴趣岛这套打法，跑到你的业务里")}
+  </div>
+</section>
+""".strip()
+
+    return page_layout(
+        title="客户案例 · 兴趣岛 · AI 跑通低转高全链路 | 句子互动",
+        description="兴趣岛是句子互动成单体量最大的客户。AI 把整条「低转高」链路跑通：人服比 200→913、月人效 28 万、单线索成本砍 50~62%、AI 转人工率从 27% 压到 2.73%、故障率 16.26%→0.13%。月度服务线索 24.3 万条、AI 回复 211.5 万条。",
+        rel="",
+        breadcrumbs=[("首页", "index.html"), ("客户与行业", "industries.html"), ("兴趣岛", None)],
+        hero_kicker="CUSTOMER CASE · 兴趣岛",
+        hero_h1='兴趣岛 · <span class="accent">AI 把整条低转高链路跑通</span>',
+        hero_lede="在线教育头部品牌，<strong>我们目前成单体量最大的客户</strong>。2025-06 启动至今——人效翻倍、单线索成本砍 50~62%、ROI 不掉，AI 转人工率从 27% 压到 2.73%。这是「客户赚到我们才赚」能成立的前提。",
+        pills=["2025-06 启动至今", "企业微信 1v1 私聊", "太极 / 普拉提 / 瑜伽 / 健康食养", "成单体量最大客户"],
+        body=body,
+    )
+
+
 # ────────────────────────── build all ──────────────────────────
 
 if __name__ == '__main__':
@@ -1832,6 +2154,7 @@ if __name__ == '__main__':
         'industries.html': page_industries(),
         'about.html': page_about(),
         'insights.html': page_insights(),
+        'case-xingqudao.html': page_case_xingqudao(),
     }
     workforce = workforce_pages()
     for slug, content in workforce.items():
