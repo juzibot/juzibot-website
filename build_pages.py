@@ -1462,17 +1462,17 @@ def page_industries():
         "找一个通用平台你也能搭起来，但跑通你这个行业的具体场景需要的是已经踩过坑的人。",
         '''<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:1100px;margin:0 auto;">
 <div style="padding:28px 24px;background:#fff;border:1px solid var(--gray-line);border-radius:18px;">
-  <div style="font-size:13px;font-weight:800;color:var(--orange);letter-spacing:.1em;margin-bottom:12px;">YOUR BENEFIT</div>
+  <div style="font-size:13px;font-weight:800;color:var(--orange);letter-spacing:.1em;margin-bottom:12px;">客户拿到什么</div>
   <h4 style="font-size:18px;font-weight:800;margin:0 0 12px;">你的行业话术和 SOP 我们已经有底子</h4>
   <p style="font-size:14px;color:var(--gray-text);line-height:1.7;margin:0;">在线教育的报名漏斗、电商的私域召回、金融的合规话术、政务的调解流程——你不用从 0 开始喂 AI，开通就能上岗。</p>
 </div>
 <div style="padding:28px 24px;background:#fff;border:1px solid var(--gray-line);border-radius:18px;">
-  <div style="font-size:13px;font-weight:800;color:var(--blue);letter-spacing:.1em;margin-bottom:12px;">YOUR BENEFIT</div>
+  <div style="font-size:13px;font-weight:800;color:var(--blue);letter-spacing:.1em;margin-bottom:12px;">客户拿到什么</div>
   <h4 style="font-size:18px;font-weight:800;margin:0 0 12px;">同行的坑我们都帮你踩过</h4>
   <p style="font-size:14px;color:var(--gray-text);line-height:1.7;margin:0;">你这个行业里头部公司用了多年——什么场景容易出错、合规怎么绕、客户什么话不爱听，我们都见过。少走半年弯路。</p>
 </div>
 <div style="padding:28px 24px;background:#fff;border:1px solid var(--gray-line);border-radius:18px;">
-  <div style="font-size:13px;font-weight:800;color:var(--green);letter-spacing:.1em;margin-bottom:12px;">YOUR BENEFIT</div>
+  <div style="font-size:13px;font-weight:800;color:var(--green);letter-spacing:.1em;margin-bottom:12px;">客户拿到什么</div>
   <h4 style="font-size:18px;font-weight:800;margin:0 0 12px;">你的反馈直接进入产品</h4>
   <p style="font-size:14px;color:var(--gray-text);line-height:1.7;margin:0;">每个客户的真实业务结果都反馈回 Agent——你今天遇到的问题，下个版本就修好了。AI 越用越懂你的业务。</p>
 </div>
