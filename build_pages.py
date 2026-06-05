@@ -1539,7 +1539,7 @@ def page_about():
 <div style="padding:28px 24px;background:#fff;border:1px solid var(--gray-line);border-radius:18px;">
   <div style="display:inline-block;font-size:11px;font-weight:800;letter-spacing:.1em;background:var(--green-lt);color:var(--green);padding:4px 10px;border-radius:6px;margin-bottom:14px;">2017 至今</div>
   <h4 style="font-size:18px;font-weight:800;margin:0 0 12px;">Wechaty 开源框架</h4>
-  <p style="font-size:14px;color:var(--gray-text);line-height:1.7;margin:0;">全球最大的 IM 自动化开源社区之一，22k+ GitHub Star。这层渠道身份，大模型公司很难复制。</p>
+  <p style="font-size:14px;color:var(--gray-text);line-height:1.7;margin:0;">全球最大的 IM 自动化开源社区之一，22k+ GitHub Star。这层渠道身份，是攒了 9 年才有的。</p>
 </div>
 </div>''',
         alt=True,
@@ -2151,7 +2151,7 @@ def page_case_xingqudao():
         "这套模式最完整的一次验证",
         "这家在线教育头部品牌，是我们目前成单体量最大的客户，也是「按结果交付」最完整的一次跑通。",
         feat_grid([
-            ("✅", "按结果跑得通", "人服比翻 4.5 倍、约大盘 2 倍，ROI 不掉。这是「客户赚到我们才赚」能成立的前提。", "bl"),
+            ("✅", "按结果跑得通", "人服比翻 4.5 倍、约大盘 2 倍，ROI 不掉。客户赚到我们才赚，就靠这个数撑着。", "bl"),
             ("⚡", "token 效率是真省出来的", "单线索成本砍 50~62%，同时线索量翻 3 倍。越懂这门生意，每个结果越省 token。", "or"),
             ("🏗️", "自研平台扛得住生产", "多节点编排、全程质检、二次生成、时序对齐——真实业务的脏活都在系统里解决。", "gr"),
         ], cols=3),
