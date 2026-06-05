@@ -727,7 +727,7 @@ def page_shouhu():
 <div style="text-align:center;background:var(--gray-bg);padding:12px 8px;border-radius:8px;"><div style="font-size:22px;font-weight:800;color:var(--orange);">5 类</div><div style="font-size:11px;color:var(--gray-text);">用例类型</div></div>
 <div style="text-align:center;background:var(--gray-bg);padding:12px 8px;border-radius:8px;"><div style="font-size:22px;font-weight:800;color:var(--purple);">9 条</div><div style="font-size:11px;color:var(--gray-text);">故障咨询待修</div></div>
 </div>
-<div style="font-size:11.5px;color:var(--gray-text);line-height:1.6;background:var(--orange-lt);padding:10px 12px;border-radius:8px;">某家电服务客户上线前一轮：28 条用例全没过，最大短板是故障咨询（9 条）——问题全拦在上线前，这正是守护要做的事。</div>
+<div style="font-size:11.5px;color:var(--gray-text);line-height:1.6;background:var(--orange-lt);padding:10px 12px;border-radius:8px;">某家电服务客户上线前一轮：28 条用例全没过，最大短板是故障咨询（9 条）。问题全拦在上线前，这正是守护要做的事。</div>
 </div>
 """,
         color="bl",
@@ -839,7 +839,7 @@ def workforce_pages():
 </div>
 """,
         capability_block=feat_grid([
-            ('💬', '7×24 在岗', '凌晨 3 点也能接待——客户不再因为客服下班而流失。', 'bl'),
+            ('💬', '7×24 在岗', '凌晨 3 点也能接待，客户不再因为客服下班流失。', 'bl'),
             ('📋', '业务流程标准化', '同一个客户被不同销售碰上，听到的话术是一致的，不会因为人员流动而退步。', 'or'),
             ('🎯', '客户分层', '按 RFM、来源、行为分层——不同客户给不同话术，转化更高。', 'gr'),
             ('🔁', '智能跟进', 'SOP 自动跟进 + AI 决策何时介入：未读消息提醒、流失前召回、续费前转化。', 'pu'),
@@ -922,7 +922,7 @@ def workforce_pages():
         role_desc='通用客服解决不了的疑难场景，AI 客服顶上',
         pain_paragraphs=[
             '通用 AI 客服对常见问题（"怎么退款？""快递到哪了？"）回答 OK。但客户的真实问题很多是边缘场景：商品破损但快递员说不接受退货、双 11 优惠和会员折扣冲突、跨境订单关税计算——通用客服直接卡壳。',
-            'AI 客服基于 5 年 BadCase 标注数据训练，对这些边缘场景的处理能力比通用方案深一个量级。再难的问题，先尝试自动解决；真的搞不定再转人工——80%+ 的工单被在 AI 这层吃掉。',
+            'AI 客服基于 5 年 BadCase 标注数据训练，对这些边缘场景的处理能力比通用方案深一个量级。再难的问题，先尝试自动解决；真的搞不定再转人工。八成以上的工单，在 AI 这层就吃掉了。',
         ],
         pain_bullets=[
             '售前咨询：商品参数、库存、配送、活动一次回答清楚',
@@ -953,7 +953,7 @@ def workforce_pages():
             ('🎯', '情绪识别', '识别客户情绪（愤怒、焦虑、满意），决定是否提前转人工。', 'or'),
             ('📞', '人机协作', '难活转人工时，把对话上下文 + AI 已尝试的方案打包给客服，少问一遍。', 'pu'),
             ('🌍', '多语言', '中英双语 + 海外业务多语言支持，全球客户一套客服。', 'te'),
-            ('📚', 'BadCase 积累', '每一次失败都被记录、标注、反向训练——错过一次的问题不会再错。', 'gr'),
+            ('📚', 'BadCase 积累', '每一次失败都被记录、标注、反向训练，错过一次的问题不会再错。', 'gr'),
         ], cols=3),
         kpi_items=[
             ('89%', '对话自动完成率'),
@@ -1738,7 +1738,7 @@ def page_insights():
 <div style="background:#fff;border:1px solid var(--gray-line);border-radius:14px;padding:22px;">
   <div style="font-size:12px;font-weight:800;color:var(--orange);letter-spacing:.06em;margin-bottom:8px;">销售</div>
   <div style="font-size:15px;font-weight:800;margin-bottom:8px;">一个销售，月接 200 → 913 人</div>
-  <p style="font-size:13px;color:var(--gray-text);line-height:1.6;margin:0;">在线教育头部客户的先锋组，AI 把人服比拉到大盘的好几倍——这套打法我们自己先跑通。</p>
+  <p style="font-size:13px;color:var(--gray-text);line-height:1.6;margin:0;">在线教育头部客户的先锋组，AI 把人服比拉到大盘的好几倍。这套打法我们自己先跑通的。</p>
 </div>
 <div style="background:#fff;border:1px solid var(--gray-line);border-radius:14px;padding:22px;">
   <div style="font-size:12px;font-weight:800;color:var(--purple);letter-spacing:.06em;margin-bottom:8px;">法务</div>
@@ -1753,7 +1753,7 @@ def page_insights():
 <div style="background:#fff;border:1px solid var(--gray-line);border-radius:14px;padding:22px;">
   <div style="font-size:12px;font-weight:800;color:var(--blue);letter-spacing:.06em;margin-bottom:8px;">财务</div>
   <div style="font-size:15px;font-weight:800;margin-bottom:8px;">连财务也用上了 Claude Code</div>
-  <p style="font-size:13px;color:var(--gray-text);line-height:1.6;margin:0;">从 2021 年就在公司的财务同事，现在也开始用 Claude Code 干活——AI 下沉到了组织最深的地方。</p>
+  <p style="font-size:13px;color:var(--gray-text);line-height:1.6;margin:0;">从 2021 年就在公司的财务同事，现在也开始用 Claude Code 干活。AI 下沉到了组织最深的地方。</p>
 </div>
 </div>
 <p style="text-align:center;font-size:14.5px;color:var(--gray-text);margin:32px auto 0;max-width:700px;line-height:1.7;">90 后 AI native 配 9 年 toB 老兵——<strong style="color:var(--black);">这个组合全市场几乎没有</strong>。我们自己先活成 AI 原生组织，再带客户一起跑。</p>''',
@@ -1762,7 +1762,7 @@ def page_insights():
     body += block(
         "我们自己先在跑",
         "用 AI，办了一场全程由 AI 共建的 Hackathon",
-        "2026 年 4 月，句子互动办了首届 AI Hackathon。海报、议程、BGM、记分牌、开场视频、评分规则，连赛后那篇推文——全是 AI 做的。我们写在开场视频最后一帧：如果没有 AI，这场比赛办不起来。",
+        "2026 年 4 月，句子互动办了首届 AI Hackathon。海报、议程、BGM、记分牌、开场视频、评分规则，连赛后那篇推文，也是 AI 做的。我们写在开场视频最后一帧：如果没有 AI，这场比赛办不起来。",
         '''<div style="max-width:1080px;margin:0 auto;">
 <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;">
   <div style="text-align:center;background:#fff;border:1px solid var(--gray-line);border-radius:14px;padding:22px 14px;"><div style="font-size:30px;font-weight:900;color:var(--blue);">48 小时</div><div style="font-size:12.5px;color:var(--gray-text);margin-top:6px;">连续开干</div></div>
@@ -1774,7 +1774,7 @@ def page_insights():
   <div style="background:#fff;border:1px solid var(--gray-line);border-radius:16px;padding:26px;">
     <div style="font-size:13px;font-weight:800;color:var(--blue);margin-bottom:12px;">Demo Day 的规矩</div>
     <ul style="margin:0;padding-left:18px;font-size:13.5px;color:var(--gray-text);line-height:1.9;">
-      <li>不准只讲 PPT——评委当场打开亲测，跑不起来分归零</li>
+      <li>不准只讲 PPT，评委当场打开亲测，跑不起来分归零</li>
       <li>方案必须真接进句子秒回或句子秒懂，光有想法不算</li>
       <li>全员非技术的队伍，再加 25% 的分</li>
       <li>评委来自得到、奇绩创坛等机构</li>
@@ -1799,7 +1799,7 @@ def page_insights():
         eyebrow="CLAUDE 永动机",
         title='只要我还在动脑，<span style="color:var(--blue);">它就一直在动手</span>',
         paragraphs=[
-            '过去能写代码的人是 0.1%。Agent 把这个数字推到 1-3%——几十倍。配上环境、查命令、看报错——以前挡在我和代码之间的那堆破事，Agent 全吃掉了。',
+            '过去能写代码的人是 0.1%。Agent 把这个数字推到 1-3%，翻了几十倍。配上环境、查命令、看报错——以前挡在我和代码之间的那堆破事，Agent 全吃掉了。',
             '我每天最稳定的工作方式：脑子里想，顺手写出来，让 Claude 干，我 review。审得没他写得快，所以他从来不闲着。<strong>瓶颈只剩"我想清楚要什么"。</strong>',
         ],
         bullets=[
@@ -1899,7 +1899,7 @@ def page_insights():
 <a href="https://rui.juzi.bot/thought/2026-04-28-return-to-code.html" target="_blank" style="padding:32px 28px;background:#fff;border:1px solid var(--gray-line);border-radius:18px;display:block;transition:all .2s ease;text-decoration:none;color:inherit;">
   <div style="font-size:11.5px;font-weight:800;color:var(--blue);letter-spacing:.1em;margin-bottom:12px;">2026-04-28 · CLAUDE 永动机</div>
   <h4 style="font-size:20px;font-weight:800;margin:0 0 12px;letter-spacing:-.01em;line-height:1.35;">接近 10 年没写代码了，被 Claude Opus 4.5 拉了回来</h4>
-  <p style="font-size:14px;color:var(--gray-text);line-height:1.7;margin:0 0 14px;">十年没碰代码的人又开始写了——不是因为模型多聪明，是因为以前挡在我和代码之间的那堆破事全没了。这里将是我的下一代组织试验田。</p>
+  <p style="font-size:14px;color:var(--gray-text);line-height:1.7;margin:0 0 14px;">十年没碰代码的人又开始写了，不是因为模型多聪明，是因为以前挡在我和代码之间的那堆破事全没了。这里将是我的下一代组织试验田。</p>
   <div style="font-size:13px;color:var(--blue);font-weight:700;">继续读 →</div>
 </a>
 <a href="https://rui.juzi.bot/thought/2026-05-04-ai-era-competitiveness.html" target="_blank" style="padding:32px 28px;background:#fff;border:1px solid var(--gray-line);border-radius:18px;display:block;transition:all .2s ease;text-decoration:none;color:inherit;">
@@ -1911,7 +1911,7 @@ def page_insights():
 <a href="https://rui.juzi.bot/thought/2026-05-06-anthropic-won-enterprise.html" target="_blank" style="padding:32px 28px;background:#fff;border:1px solid var(--gray-line);border-radius:18px;display:block;transition:all .2s ease;text-decoration:none;color:inherit;">
   <div style="font-size:11.5px;font-weight:800;color:var(--green);letter-spacing:.1em;margin-bottom:12px;">2026-05-06 · 思考</div>
   <h4 style="font-size:20px;font-weight:800;margin:0 0 12px;letter-spacing:-.01em;line-height:1.35;">OpenAI 输给 Anthropic，不是输在产品，是输在组织</h4>
-  <p style="font-size:14px;color:var(--gray-text);line-height:1.7;margin:0 0 14px;">2026 年企业 LLM API 市场份额，Anthropic 32%，OpenAI 25%。财富 10 强里 8 家在用 Claude。OpenAI 输的不是产品，是被 ChatGPT 训练出来的整套组织——五年前 Anthropic 选了反共识那条路。</p>
+  <p style="font-size:14px;color:var(--gray-text);line-height:1.7;margin:0 0 14px;">2026 年企业 LLM API 市场份额，Anthropic 32%，OpenAI 25%。财富 10 强里 8 家在用 Claude。OpenAI 输的不是产品，是被 ChatGPT 训练出来的整套组织。五年前，Anthropic 选了反共识那条路。</p>
   <div style="font-size:13px;color:var(--green);font-weight:700;">继续读 →</div>
 </a>
 <a href="https://rui.juzi.bot/claude/" target="_blank" style="padding:32px 28px;background:linear-gradient(135deg,var(--blue),var(--blue-mid));color:#fff;border:0;border-radius:18px;display:flex;flex-direction:column;justify-content:center;text-decoration:none;">
@@ -1967,10 +1967,10 @@ def page_case_xingqudao():
     body += block(
         "执行摘要",
         "AI 把整条「低转高」链路跑通",
-        "人效翻倍、ROI 不掉、单线索成本砍半——这是客户敢把活按结果包给我们的核心原因。",
+        "人效翻倍、ROI 不掉、单线索成本砍半。这是客户敢把活按结果包给我们的核心原因。",
         f'<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:1000px;margin:0 auto;">{cards}</div>'
         '<p style="text-align:center;font-size:13.5px;color:var(--gray-text);margin:28px auto 0;max-width:720px;line-height:1.7;">'
-        '月度服务线索 24.3 万条、AI 回复消息 211.5 万条——这是一个跑在生产上、有真实业务量的案例，不是 demo。</p>',
+        '月度服月度服务线索 24.3 万条、AI 回复 211.5 万条。这是个跑在生产上、有真实业务量的案例，不是 demo。</p>',
     )
 
     # ── 客户是谁 + 转化流程 ──
@@ -2020,7 +2020,7 @@ def page_case_xingqudao():
         eyebrow="业务效果",
         title="人效翻倍，ROI 不掉",
         paragraphs=[
-            "在高人服比的情况下 ROI 不掉——这是客户敢把活按结果包给我们的核心原因。",
+            "在高人服比下 ROI 不掉。这是客户敢把活按结果包给我们的核心原因。",
             "先锋组人服比做到 <strong>913</strong>，约是大盘的 2 倍、AI 上线前基准的 4.5 倍；最高单人月度产出 <strong>28 万元</strong>。",
         ],
         bullets=[
@@ -2046,7 +2046,7 @@ def page_case_xingqudao():
     # ── 系统稳定性 ──
     body += split_section(
         eyebrow="系统效果",
-        title="转人工率从 27% 压到 2.73%——用了大半年",
+        title="转人工率从 27% 压到 2.73%，用了大半年",
         paragraphs=[
             "稳定性不是一上线就有的——是靠 badcase 集、回归测试集、评判标准、周例会复盘，一点点压下来的。<strong>这条曲线本身，就是「能不能把活真正交给 AI」的答案。</strong>",
             "当前 2.73% 里，74% 是图片 / 视频规则性触发，26% 是意图转人工；异常质检不通过转人工占比 <strong>&lt;0.001%</strong>——AI 自己说错话需要人接管的情况，几乎不发生。",
@@ -2162,7 +2162,7 @@ def page_case_xingqudao():
     body += block(
         "越用越多",
         "老客户上岗后，线索量一直爬坡",
-        "线索量 = token 消耗 = 收入的领先指标。客户不流失、还越用越多——这是 AI 员工模式区别于卖软件最关键的一条曲线。",
+        "线索量 = token 消耗 = 收入的领先指标。客户不流失、还越用越多。这条曲线，正是 AI 员工模式区别于卖软件的地方。",
         '<div style="background:#fff;border:1px solid var(--gray-line);border-radius:16px;padding:28px;max-width:820px;margin:0 auto;">'
         '<div style="font-size:13px;font-weight:800;color:var(--gray-text);margin-bottom:20px;">业务线 A事业部 · 月度服务线索量（万条） · 4 个月 3.3 倍</div>'
         '<div style="display:flex;align-items:flex-end;gap:20px;height:180px;">'
@@ -2183,7 +2183,7 @@ def page_case_xingqudao():
         "这套模式最完整的一次验证",
         "这家在线教育头部品牌，是我们目前成单体量最大的客户，也是「按结果交付」最完整的一次跑通。",
         feat_grid([
-            ("✅", "按结果跑得通", "人服比翻 4.5 倍、约大盘 2 倍，ROI 不掉——这是「客户赚到我们才赚」能成立的前提。", "bl"),
+            ("✅", "按结果跑得通", "人服比翻 4.5 倍、约大盘 2 倍，ROI 不掉。这是「客户赚到我们才赚」能成立的前提。", "bl"),
             ("⚡", "token 效率是真壁垒", "单线索成本砍 50~62%，同时线索量翻 3 倍。越懂这门生意，每个结果越省 token。", "or"),
             ("🏗️", "自研平台扛得住生产", "多节点编排、全程质检、二次生成、时序对齐——真实业务的脏活都在系统里解决。", "gr"),
         ], cols=3),
@@ -2345,7 +2345,7 @@ def page_dongxing():
         description="句子智库——AI 员工的记忆。把客户几百万字散乱知识炼成 AI 能查、能用、越用越准的可检索资产。知识工程是 Agent 上岗的前提：先把知识做对，再上产品。",
         rel="../",
         breadcrumbs=[("首页", "../index.html"), ("产品", None), ("句子智库", None)],
-        hero_kicker="PRODUCT · 懂行 · 记忆",
+        hero_kicker="PRODUCT · 智库 · 记忆",
         hero_h1='句子智库 · <span class="accent">AI 员工的记忆</span>',
         hero_lede="客户给的几百万字知识库，AI 直接用不了——散、乱、格式不一、查不准。<strong>句子智库把它炼成 AI 能查、能用、越用越准的知识资产</strong>。先把知识工程做对，再上 Agent，否则给多少字都跑不通。",
         pills=["知识工程进场第一步", "几百万字 → 可检索资产", "每条回答可追溯出处", "Agent 上岗的前提"],
