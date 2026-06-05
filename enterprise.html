@@ -99,7 +99,7 @@
   </div>
   <div class="dc-text">
     <div class="label">企业的真实痛点</div>
-    <p class="pain">消费场景偶尔答错没事，企业场景不行。生成财务摘要、起草法律文书——同一个问题问三次给出三个答案，业务跑不下去。</p>
+    <p class="pain">消费场景偶尔答错没事，企业场景不行。生成财务摘要、起草法律文书，同一个问题问三次给出三个答案，业务跑不下去。</p>
     <div class="label">句子互动怎么做</div>
     <p class="ours">9 年 outcome-tagged 部署数据让 Agent 行为可标定、可回归。<strong>同一个 query 给一致的回答，不是每次掷骰子</strong>。Anthropic 靠的是模型对齐，我们靠的是行业 outcome 数据。</p>
   </div>
@@ -113,7 +113,7 @@
   </div>
   <div class="dc-text">
     <div class="label">企业的真实痛点</div>
-    <p class="pain">内部文档、客户信息、专有数据怕被模型吃掉再吐给别人——这是企业 AI 落地最大的拦路虎。</p>
+    <p class="pain">内部文档、客户信息、专有数据，怕被模型吃掉再吐给别人。这是企业 AI 落地最大的拦路虎。</p>
     <div class="label">句子互动怎么做</div>
     <p class="ours"><strong>支持私有化 / 一体机部署，客户数据不出域</strong>。多租户严格隔离 + TLS 1.3 传输 + AES-256 存储 + 数据脱敏。客户数据不用于模型训练（合同里写明）。</p>
   </div>
@@ -127,7 +127,7 @@
   </div>
   <div class="dc-text">
     <div class="label">企业的真实痛点</div>
-    <p class="pain">要 AI 按公司政策回答——能说什么、不能说什么、出了事谁负责，必须事先划好红线。靠 prompt "请不要 xxx" 顶不住。</p>
+    <p class="pain">要 AI 按公司政策回答：能说什么、不能说什么、出了事谁负责，必须事先划好红线。靠 prompt "请不要 xxx" 顶不住。</p>
     <div class="label">句子互动怎么做</div>
     <p class="ours">workflow 引擎里把<strong>能说什么、不能说什么</strong>提前写死 + 5 个高合规行业策略库——不是靠 prompt 软提示，是工程化边界。金融的合规话术、政务的法规引用，AI 跨不出去。</p>
   </div>
@@ -141,7 +141,7 @@
   </div>
   <div class="dc-text">
     <div class="label">企业的真实痛点</div>
-    <p class="pain">银保监来检查、政务来巡检、客户起诉——AI 的每一次回答必须能被回溯：用了哪个知识库、参考了什么 context、谁批准的版本上线。</p>
+    <p class="pain">银保监来检查、政务来巡检、客户起诉，AI 的每一次回答都得能回溯：用了哪个知识库、参考了什么 context、谁批准的版本上线。</p>
     <div class="label">句子互动怎么做</div>
     <p class="ours"><strong>每一次 Agent 决策可追溯</strong>：调用的知识库、使用的模型、参考的 context、决策路径、版本号——全量日志记录。金融、政务客户特别在意这一条，过得了等保三级。</p>
   </div>
@@ -155,7 +155,7 @@
   </div>
   <div class="dc-text">
     <div class="label">企业的真实痛点</div>
-    <p class="pain">AI 不能孤立运行——必须接客户已有的 CRM、工单、知识库、订单系统。Agent 上岗的第一天就要能查到客户的真实数据，不然就是花架子。</p>
+    <p class="pain">AI 不能孤立运行，必须接客户已有的 CRM、工单、知识库、订单系统。Agent 上岗的第一天就要能查到客户的真实数据，不然就是花架子。</p>
     <div class="label">句子互动怎么做</div>
     <p class="ours"><strong>9 年 IM 通道适配 + 企业 CRM / 工单 / 知识库直连</strong>。11 个 IM 通道 + 主流企业系统对接经验——Agent 上岗就接管真实业务流，不在角落跑。</p>
   </div>
@@ -183,7 +183,7 @@
   </div>
   <div class="dc-text">
     <div class="label">企业的真实痛点</div>
-    <p class="pain">企业不再赌单一供应商——这个月用 GPT，下个月可能切 Claude，年底说不定上 DeepSeek。模型涨价、出 bug、被监管——任何一个都可能让企业被动。</p>
+    <p class="pain">企业不再赌单一供应商。这个月用 GPT，下个月可能切 Claude，年底说不定上 DeepSeek。模型涨价、出 bug、被监管，任何一个都可能让企业被动。</p>
     <div class="label">句子互动怎么做</div>
     <p class="ours"><strong>模型层抽象</strong>——DeepSeek、Claude、Qwen、文心一言、GPT 都可切换。客户按场景选最合适的模型，按价格 / 性能动态调整。我们不绑死，你也不被绑。</p>
   </div>
@@ -229,7 +229,7 @@
       <div class="split-text">
         <div class="eyebrow">安全与合规</div>
         <h3>从底层就为企业级合规设计</h3>
-        <p>不是上线之后再补合规——从架构第一天就考虑数据隔离、行为审计、权限分发。</p>
+        <p>不是上线之后再补合规，从架构第一天就考虑数据隔离、行为审计、权限分发。</p>
         <ul><li>数据加密：传输 TLS 1.3 + 存储 AES-256</li><li>权限管理：RBAC + 细粒度数据权限</li><li>审计日志：每一次 Agent 决策可溯源</li><li>隐私保护：客户数据不用于模型训练（合同里写明）</li><li>合规认证：等保三级（部分客户已通过）</li></ul>
       </div>
       <div class="split-visual gr">

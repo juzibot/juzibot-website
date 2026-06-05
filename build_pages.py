@@ -355,7 +355,7 @@ def page_miaohui():
 '''.strip()
     body += block(        "5 大核心能力",
         "Agent 在 IM 通道上岗，需要的不止是聊天框",
-        "句子秒回是 AI 劳动力的工位——把 11 个 IM 通道收拢到一个工作台，让 Agent 像真人一样上班、协作、被管理。",
+        "句子秒回是 AI 劳动力的工位，把 11 个 IM 通道收拢到一个工作台，让 Agent 像真人一样上班、协作、被管理。",
         feat_grid([
             ("📥", "多平台聚合", "11 个 IM 通道（企微、抖音、小红书、WhatsApp、飞书、钉钉、公众号、小程序、TikTok、Instagram）统一到一个工作台，海内外账号一起管。", "bl"),
             ("🎯", "主动外呼", "私聊 / 群聊群发、SOP 自动跟进、自动加好友、新客欢迎语——一次配置批量执行，不受原生应用群发次数限制。", "or"),
@@ -370,7 +370,7 @@ def page_miaohui():
         eyebrow="架构",
         title="三大控制台 + 一个工作台，覆盖企业全角色",
         paragraphs=[
-            "句子秒回按企业组织结构搭的协作系统——管理者、小组负责人、一线客服各有自己的工作台，权限和数据各司其职。",
+            "句子秒回按企业组织结构搭的协作系统，管理者、小组负责人、一线客服各有自己的工作台，权限和数据各司其职。",
         ],
         bullets=[
             "<strong>企业控制台</strong>：管理者全局视角，跨小组操作，全公司数据看板",
@@ -439,7 +439,7 @@ def page_miaohui():
         eyebrow="主动外呼",
         title="一次配置，批量执行的 SOP 引擎",
         paragraphs=[
-            "传统群发受限于 IM 平台规则——次数有限、时间窗口卡死、没法做定向。句子秒回的 SOP 引擎绕开这些限制，让 Agent 像真人一样有节奏地跟进客户。",
+            "传统群发受限于 IM 平台规则：次数有限、时间窗口卡死、没法做定向。句子秒回的 SOP 引擎绕开这些限制，让 Agent 像真人一样有节奏地跟进客户。",
         ],
         bullets=[
             "私聊 / 群聊群发：一次配置自动发给成百上千客户",
@@ -513,7 +513,7 @@ def page_miaodong():
             ("🤖", "智能体与工作流", "三种智能体类型 + Canvas 可视化工作流编辑器，不写代码就能配置 Agent 行为逻辑。", "or"),
             ("📊", "知识分析", "AI 自动打标分类、标签体系管理、知识覆盖度分析——发现没覆盖的客户问题。", "gr"),
             ("📝", "会话小结", "AI 自动分析聊天内容生成对话摘要，客户意向、关键诉求、跟进建议一目了然。", "pu"),
-            ("🔌", "插件应用", "对接 CRM、工单、订单系统、天气工具等——Agent 不止能回话，能真的执行业务动作。", "te"),
+            ("🔌", "插件应用", "对接 CRM、工单、订单系统、天气工具等，Agent 不止能回话，能真的执行业务动作。", "te"),
             ("📈", "AI 调优", "BadCase 跟进 + 模型微调 + 调优中心——客户业务结果反馈到 Agent，越用越懂业务。", "bl"),
         ], cols=3),
     )
@@ -636,7 +636,7 @@ def page_shouhu():
     # ── 为什么：上一代 vs 下一代 ──
     body += block(        "为什么要守护",
         "Agent 上线，不能是一场赌博",
-        "上一代 AI 搭完一堆流程节点就算交付，上线就撒手。句子守护交付的是一个有人盯着的 AI 员工——上线前测够，上线后看得见。",
+        "上一代 AI 搭完一堆流程节点就算交付，上线就撒手。句子守护交付的是一个有人盯着的 AI 员工：上线前测够，上线后看得见。",
         '''<div style="max-width:980px;margin:0 auto;border:1px solid var(--gray-line);border-radius:16px;overflow:hidden;">
 <div style="display:grid;grid-template-columns:1fr 1fr;">
   <div style="background:var(--gray-bg);padding:15px 22px;font-weight:800;font-size:13.5px;color:var(--gray-text);">上一代 · 搭完流程就交付</div>
@@ -806,14 +806,14 @@ def workforce_pages():
         industry='直播 · 教育 · 电商',
         role_desc='传统销售跟不上的客户量，AI 销售扛得住',
         pain_paragraphs=[
-            '直播间一场流量进来 5 万人，私域 2000 人建联。客户问题都集中在前 1 小时——人手再多也跟不上。',
+            '直播间一场流量进来 5 万人，私域 2000 人建联。客户问题都集中在前 1 小时，人手再多也跟不上。',
             'AI 销售在每个客户建联的瞬间就接管对话：自我介绍、需求挖掘、产品讲解、约课转化，全程不掉队。难的活才转给真人销售。',
         ],
         pain_bullets=[
             '直播搬家：直播间客户建联后立刻 AI 跟进，不放冷',
             '需求挖掘：通过 3-5 轮对话识别客户意向、收入水平、购买动机',
             '产品讲解：基于知识库对上产品，按客户类型推荐',
-            '促销执行：限时优惠、价格策略、组合方案——按公司规则执行',
+            '促销执行：限时优惠、价格策略、组合方案，按公司规则执行',
             '续费提醒：到期前 N 天 AI 主动跟进，按客户 RFM 分层',
         ],
         pain_visual="""
@@ -830,7 +830,7 @@ def workforce_pages():
         capability_block=feat_grid([
             ('💬', '7×24 在岗', '凌晨 3 点也能接待，客户不再因为客服下班流失。', 'bl'),
             ('📋', '业务流程标准化', '同一个客户被不同销售碰上，听到的话术是一致的，不会因为人员流动而退步。', 'or'),
-            ('🎯', '客户分层', '按 RFM、来源、行为分层——不同客户给不同话术，转化更高。', 'gr'),
+            ('🎯', '客户分层', '按 RFM、来源、行为分层，不同客户给不同话术，转化更高。', 'gr'),
             ('🔁', '智能跟进', 'SOP 自动跟进 + AI 决策何时介入：未读消息提醒、流失前召回、续费前转化。', 'pu'),
             ('🤝', '人机协作', '高意向客户直接转给真人成交，AI 把客户预热到位再交接。', 'te'),
             ('📊', '数据积累', '每一段对话被打标记录——哪句话术成交率最高，下次自动用。', 'bl'),
@@ -856,7 +856,7 @@ def workforce_pages():
         industry='消费品 · 零售品牌',
         role_desc='把人工导购的服务能力，复制到每一个长尾客户身上',
         pain_paragraphs=[
-            '一家品牌私域有 50 万客户，活跃的 5%，沉睡的 95%。人工导购一天能服务 200 个客户——剩下的没人管。',
+            '一家品牌私域有 50 万客户，活跃的 5%，沉睡的 95%。人工导购一天能服务 200 个客户，剩下的没人管。',
             'AI 导购把人工导购的服务能力复制到每一个长尾客户身上：到货提醒、新品种草、试穿建议、尺码推荐、活动通知——长尾客户也被持续唤起。',
         ],
         pain_bullets=[
@@ -884,7 +884,7 @@ def workforce_pages():
         capability_block=feat_grid([
             ('🛍️', '商品智能推荐', '基于客户购买历史 + 浏览行为 + 标签体系，对着客户推。', 'or'),
             ('📅', '活动节奏管理', '双 11、618、品牌日等大促节点，按计划批量推送给对应客户。', 'bl'),
-            ('🎁', '会员运营', '生日礼、积分到期、等级升降——按会员体系自动执行营销动作。', 'gr'),
+            ('🎁', '会员运营', '生日礼、积分到期、等级升降，按会员体系自动执行营销动作。', 'gr'),
             ('🛒', '购物车救援', '加购未付款客户分层召回，限时优惠自动触发。', 'pu'),
             ('💼', '门店协同', '线下导购加客户企微 → AI 接管后续运营，门店人均服务客户量翻倍。', 'te'),
             ('📈', '复购挖掘', 'NPS 调研 + 老客户深耕——把睡着的客户唤回来。', 'or'),
@@ -963,7 +963,7 @@ def workforce_pages():
         pills=['海淀东升镇率先落地', '高合规 + 全程可审计', '居民服务约 50 万人次', '调解成功率约 93%'],
         color='pu',
         industry='政务 · 司法 · 公共服务',
-        role_desc='政务场景对 AI 的要求最高——合规、可审计、说错一句都不行',
+        role_desc='政务场景对 AI 的要求最高：合规、可审计、说错一句都不行',
         pain_paragraphs=[
             '政务 AI 不能像电商客服那样"先上线再迭代"——一次说错就是舆情。但社区调解员忙不过来、12345 热线打爆、12348 普法咨询排队——人手永远不够。',
             'AI 社工 / 调解员把人工干不过来的活先承接住：基础咨询答得了、矛盾分类做得对、热点问题自动同步给真人。每一句话都被审视过，每一次决策都可追溯。',
@@ -1014,9 +1014,9 @@ def workforce_pages():
         pills=['多家头部金融机构', '9 年风控话术库', '可设的合规边界', 'KYC / 反洗钱集成'],
         color='te',
         industry='银行 · 证券 · 保险',
-        role_desc='金融行业对 AI 最严苛——一句越界都可能踩监管红线',
+        role_desc='金融行业对 AI 最严苛，一句越界都可能踩监管红线',
         pain_paragraphs=[
-            '银行客户经理一人服务 500 个客户已经超负荷——但每个客户对理财、保险、信贷的咨询都不能怠慢。AI 顾问把基础咨询和合规材料解读接住，让人工聚焦高价值客户。',
+            '银行客户经理一人服务 500 个客户已经超负荷，可每个客户对理财、保险、信贷的咨询都不能怠慢。AI 顾问把基础咨询和合规材料解读接住，让人工聚焦高价值客户。',
             '难点是合规：不能给投资建议、不能保证收益、不能误导销售。AI 顾问的话术由风控团队预设硬边界，每一句都过审。9 年金融场景积累的话术库——通用 Agent 平台 1 年内追不上。',
         ],
         pain_bullets=[
@@ -1066,7 +1066,7 @@ def workforce_pages():
         pills=['10× 人手杠杆', '24 小时不下播', '多平台内容矩阵', '互动 + 选品 + 解说'],
         color='or',
         industry='直播电商 · 全媒体',
-        role_desc='直播间忙不过来——主播说话、运营盯互动、客服回评论，一晚上累趴',
+        role_desc='直播间忙不过来：主播说话、运营盯互动、客服回评论，一晚上累趴',
         pain_paragraphs=[
             '一场带货直播：主播讲产品、运营盯互动、客服回评论、选品师切链接、剪辑剪短视频——一个团队 5-8 人通宵都不够。流量大的时候评论刷屏，互动跟不上，转化漏掉。',
             'AI 解说员 / 主理人把这条流水线压缩到 1-2 个真人 + 一套 Agent：AI 24 小时不下播解说、自动回评论、按节奏切链接、自动剪短视频分发到全媒体——把直播间人手放大 10 倍。',
@@ -1125,7 +1125,7 @@ def page_enterprise():
     deep_items = [
         # (color, num, en, zh, pain, ours, visual_html)
         ('bl', '01', 'Predictability', '输出可重复',
-         '消费场景偶尔答错没事，企业场景不行。生成财务摘要、起草法律文书——同一个问题问三次给出三个答案，业务跑不下去。',
+         '消费场景偶尔答错没事，企业场景不行。生成财务摘要、起草法律文书，同一个问题问三次给出三个答案，业务跑不下去。',
          '9 年 outcome-tagged 部署数据让 Agent 行为可标定、可回归。<strong>同一个 query 给一致的回答，不是每次掷骰子</strong>。Anthropic 靠的是模型对齐，我们靠的是行业 outcome 数据。',
          '<div style="font-size:11px;color:var(--gray-text);font-weight:700;letter-spacing:.04em;margin-bottom:8px;">同一个 query × 3</div>'
          '<div style="background:#fff;padding:9px 12px;border-radius:6px;border:1px solid var(--gray-line);font-size:12.5px;color:var(--blue);">→ 您的退款政策是 7 天无理由</div>'
@@ -1134,7 +1134,7 @@ def page_enterprise():
          '<div style="font-size:11px;color:var(--green);font-weight:800;text-align:right;margin-top:4px;">✓ 一致</div>'),
 
         ('or', '02', 'Data Security & Privacy', '数据隔离',
-         '内部文档、客户信息、专有数据怕被模型吃掉再吐给别人——这是企业 AI 落地最大的拦路虎。',
+         '内部文档、客户信息、专有数据，怕被模型吃掉再吐给别人。这是企业 AI 落地最大的拦路虎。',
          '<strong>支持私有化 / 一体机部署，客户数据不出域</strong>。多租户严格隔离 + TLS 1.3 传输 + AES-256 存储 + 数据脱敏。客户数据不用于模型训练（合同里写明）。',
          '<div style="font-size:11px;color:var(--gray-text);font-weight:700;letter-spacing:.04em;margin-bottom:8px;">数据流向</div>'
          '<div style="display:flex;align-items:center;gap:6px;font-size:12px;"><span style="background:#fff;padding:6px 10px;border-radius:6px;border:1px solid var(--gray-line);">企业内部</span><span>→</span><span style="background:var(--orange-lt);color:var(--orange);padding:6px 10px;border-radius:6px;font-weight:700;">私有化 Agent</span></div>'
@@ -1142,7 +1142,7 @@ def page_enterprise():
          '<div style="font-size:11px;color:var(--green);font-weight:800;margin-top:4px;">✓ 数据不出域</div>'),
 
         ('gr', '03', 'Governance & Control', '行为可管控',
-         '要 AI 按公司政策回答——能说什么、不能说什么、出了事谁负责，必须事先划好红线。靠 prompt "请不要 xxx" 顶不住。',
+         '要 AI 按公司政策回答：能说什么、不能说什么、出了事谁负责，必须事先划好红线。靠 prompt "请不要 xxx" 顶不住。',
          'workflow 引擎里把<strong>能说什么、不能说什么</strong>提前写死 + 5 个高合规行业策略库——不是靠 prompt 软提示，是工程化边界。金融的合规话术、政务的法规引用，AI 跨不出去。',
          '<div style="font-size:11px;color:var(--gray-text);font-weight:700;letter-spacing:.04em;margin-bottom:8px;">行为边界</div>'
          '<div style="background:#fff;padding:8px 11px;border-radius:6px;border:1px solid var(--gray-line);font-size:12px;display:flex;justify-content:space-between;"><span>解读产品条款</span><span style="color:var(--green);font-weight:800;">✓ 允许</span></div>'
@@ -1151,14 +1151,14 @@ def page_enterprise():
          '<div style="background:#fff;padding:8px 11px;border-radius:6px;border:1px solid var(--gray-line);font-size:12px;display:flex;justify-content:space-between;"><span>承诺保本保收益</span><span style="color:#c00;font-weight:800;">✗ 拒答</span></div>'),
 
         ('pu', '04', 'Auditability & Transparency', '全程可审计',
-         '银保监来检查、政务来巡检、客户起诉——AI 的每一次回答必须能被回溯：用了哪个知识库、参考了什么 context、谁批准的版本上线。',
+         '银保监来检查、政务来巡检、客户起诉，AI 的每一次回答都得能回溯：用了哪个知识库、参考了什么 context、谁批准的版本上线。',
          '<strong>每一次 Agent 决策可追溯</strong>：调用的知识库、使用的模型、参考的 context、决策路径、版本号——全量日志记录。金融、政务客户特别在意这一条，过得了等保三级。',
          '<div style="font-size:11px;color:var(--gray-text);font-weight:700;letter-spacing:.04em;margin-bottom:8px;">Agent 决策日志</div>'
          '<div style="background:#fff;padding:9px 11px;border-radius:6px;border:1px solid var(--gray-line);font-size:11.5px;line-height:1.6;font-family:monospace;">[09:23:04] query → "退款 7 天"<br/>[09:23:04] kb_search → K3#FAQ#142<br/>[09:23:05] model → claude-3.5 v2.1<br/>[09:23:05] reply → "您可享 7 天无理由..."<br/>[09:23:05] log_id → AGT-2026050609234</div>'
          '<div style="font-size:11px;color:var(--purple);font-weight:800;margin-top:4px;">✓ 全量日志归档 7 年</div>'),
 
         ('te', '05', 'Integration', '对接现有系统',
-         'AI 不能孤立运行——必须接客户已有的 CRM、工单、知识库、订单系统。Agent 上岗的第一天就要能查到客户的真实数据，不然就是花架子。',
+         'AI 不能孤立运行，必须接客户已有的 CRM、工单、知识库、订单系统。Agent 上岗的第一天就要能查到客户的真实数据，不然就是花架子。',
          '<strong>9 年 IM 通道适配 + 企业 CRM / 工单 / 知识库直连</strong>。11 个 IM 通道 + 主流企业系统对接经验——Agent 上岗就接管真实业务流，不在角落跑。',
          '<div style="font-size:11px;color:var(--gray-text);font-weight:700;letter-spacing:.04em;margin-bottom:8px;">系统对接</div>'
          '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;font-size:11px;font-weight:700;text-align:center;">'
@@ -1187,7 +1187,7 @@ def page_enterprise():
          '<div style="display:flex;justify-content:space-between;align-items:baseline;padding:6px 0;font-size:12.5px;"><span>SaaS 服务可用性</span><span style="color:var(--green);font-weight:800;font-size:16px;">99.9%</span></div>'),
 
         ('or', '07', 'Multi-Model Flexibility', '不绑死单一模型',
-         '企业不再赌单一供应商——这个月用 GPT，下个月可能切 Claude，年底说不定上 DeepSeek。模型涨价、出 bug、被监管——任何一个都可能让企业被动。',
+         '企业不再赌单一供应商。这个月用 GPT，下个月可能切 Claude，年底说不定上 DeepSeek。模型涨价、出 bug、被监管，任何一个都可能让企业被动。',
          '<strong>模型层抽象</strong>——DeepSeek、Claude、Qwen、文心一言、GPT 都可切换。客户按场景选最合适的模型，按价格 / 性能动态调整。我们不绑死，你也不被绑。',
          '<div style="font-size:11px;color:var(--gray-text);font-weight:700;letter-spacing:.04em;margin-bottom:8px;">模型矩阵</div>'
          '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:12px;font-weight:700;">'
@@ -1265,7 +1265,7 @@ def page_enterprise():
         eyebrow="安全与合规",
         title="从底层就为企业级合规设计",
         paragraphs=[
-            '不是上线之后再补合规——从架构第一天就考虑数据隔离、行为审计、权限分发。',
+            '不是上线之后再补合规，从架构第一天就考虑数据隔离、行为审计、权限分发。',
         ],
         bullets=[
             '数据加密：传输 TLS 1.3 + 存储 AES-256',
@@ -1336,7 +1336,7 @@ def page_industries():
 
     industries_detail = [
         ('education', '在线教育', '📚', 'bl', '400+ 客户 · 头部 RPA 已覆盖',
-         '在线教育是句子互动最早进入的行业。9 年下来覆盖了几乎所有头部公司——从大班课、小班课到 1 对 1，从招生、续费到 NPS。其中我们目前成单体量最大的客户，是一家<strong>在线教育头部品牌（兴趣技能赛道）</strong>，AI 把整条「低转高」链路跑通：人效翻倍、单线索成本砍 50~62%、转人工率从 27% 压到 2.73%。<a href="case-xingqudao.html" style="color:var(--blue);font-weight:700;">看完整案例 →</a>',
+         '在线教育是句子互动最早进入的行业。9 年下来覆盖了几乎所有头部公司，从大班课、小班课到 1 对 1，从招生、续费到 NPS。其中我们目前成单体量最大的客户，是一家<strong>在线教育头部品牌（兴趣技能赛道）</strong>，AI 把整条「低转高」链路跑通：人效翻倍、单线索成本砍 50~62%、转人工率从 27% 压到 2.73%。<a href="case-xingqudao.html" style="color:var(--blue);font-weight:700;">看完整案例 →</a>',
          [
              ('400+', '客户'),
              ('头部', 'RPA 已覆盖'),
@@ -1384,7 +1384,7 @@ def page_industries():
          ['多家头部银行', '证券机构', '保险机构', '消费金融']),
 
         ('gov', '政务 · 司法', '⚖️', 'pu', 'AI 社工 / AI 调解员稳步落地',
-         '政务场景对 AI 要求最高——一句越界都可能引发舆情。我们的 AI 普法调解员、AI 社工已在多个城市试点。',
+         '政务场景对 AI 要求最高，一句越界都可能引发舆情。我们的 AI 普法调解员、AI 社工已在多个城市试点。',
          [
              ('多个', '城市试点'),
              ('60%+', '人工减负'),
@@ -2208,9 +2208,9 @@ def page_fde():
         "贴着客户的业务跑，把脏活在现场解决",
         "AI 落地难的从来不是模型，是客户那套各不相同的真实业务。FDE 就是去啃这块。",
         feat_grid([
-            ("🤝", "先搞懂这门生意", "不是上来就装软件。先和客户把业务、流程、卡点搞清楚——AI 要干的活，得先有人真懂。", "bl"),
+            ("🤝", "先搞懂这门生意", "不是上来就装软件。先和客户把业务、流程、卡点搞清楚。AI 要干的活，得先有人真懂。", "bl"),
             ("🎯", "对结果负责", "和客户签对赌、按结果收费。客户的转化、人效真变好了，我们才拿钱。", "or"),
-            ("🔁", "能力回流产品", "在一个客户现场踩出来的能力，抽象成产品里的标准能力——下一个客户起步就用得上。做一次，卖多次。", "gr"),
+            ("🔁", "能力回流产品", "在一个客户现场踩出来的能力，抽象成产品里的标准能力，下一个客户起步就用得上。做一次，卖多次。", "gr"),
             ("🧑‍🎓", "不一定是码农", "FDE 不一定要会写代码的人做，不写代码的反而常常做得更好——我们的 FDE 负责人，是个学法语的 00 后。懂业务、肯钻，比什么都重要。", "pu"),
         ], cols=2),
     )
@@ -2312,7 +2312,7 @@ def page_dongxing():
         breadcrumbs=[("首页", "../index.html"), ("产品", None), ("句子智库", None)],
         hero_kicker="产品 · 智库 · 记忆",
         hero_h1='句子智库 · <span class="accent">AI 员工的记忆</span>',
-        hero_lede="客户给的几百万字知识库，AI 直接用不了——散、乱、格式不一、查不准。<strong>句子智库把它炼成 AI 能查、能用、越用越准的知识资产</strong>。先把知识工程做对，再上 Agent，否则给多少字都跑不通。",
+        hero_lede="客户给的几百万字知识库，AI 直接用不了：散、乱、格式不一、查不准。<strong>句子智库把它炼成 AI 能查、能用、越用越准的知识资产</strong>。先把知识工程做对，再上 Agent，否则给多少字都跑不通。",
         pills=["知识工程进场第一步", "几百万字 → 可检索资产", "每条回答可追溯出处", "Agent 上岗的前提"],
         body=body,
     )
@@ -2322,10 +2322,10 @@ def page_cli():
     body = ''
     body += block(        "为什么 AI 需要一双手",
         "很多企业的核心系统，没 API、改不动",
-        "AI 想接进客户业务，常卡在一个地方：那套用了十几年的老系统没有 API，谁也不敢动。模型再聪明，没手也干不了活。句子 CLI 给 AI 一双手——人能在电脑上点的，它都能替你点。",
+        "AI 想接进客户业务，常卡在一个地方：那套用了十几年的老系统没有 API，谁也不敢动。模型再聪明，没手也干不了活。句子 CLI 给 AI 一双手。人能在电脑上点的，它都能替你点。",
         feat_grid([
             ("🖱️", "像人一样操作界面", "没有 API 也能接。CLI 直接驱动鼠标键盘、读屏幕，像人一样操作任何软件界面。", "bl"),
-            ("🔗", "跨系统搬运", "从一个系统取数、填进另一个系统——中间没接口的活，CLI 自动跑通，不用人来回复制粘贴。", "or"),
+            ("🔗", "跨系统搬运", "从一个系统取数、填进另一个系统，中间没接口的活，CLI 自动跑通，不用人来回复制粘贴。", "or"),
             ("⏱️", "定时批处理", "对账、导表、批量录入这类重复的活，设好就自动跑，人不用守着。", "gr"),
             ("🧱", "真实沙盒隔离", "每个任务在独立沙盒里跑，崩了自动续跑，不影响别的任务、也不碰客户其他系统。", "te"),
         ], cols=2),
