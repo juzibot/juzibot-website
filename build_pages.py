@@ -1126,7 +1126,7 @@ def page_enterprise():
         # (color, num, en, zh, pain, ours, visual_html)
         ('bl', '01', 'Predictability', '输出可重复',
          '消费场景偶尔答错没事，企业场景不行。生成财务摘要、起草法律文书，同一个问题问三次给出三个答案，业务跑不下去。',
-         '9 年带结果标注的部署数据让 Agent 行为可标定、可回归。<strong>同一个 query 给一致的回答，不是每次掷骰子</strong>。Anthropic 靠模型对齐，我们靠行业结果数据。',
+         '9 年带结果标注的部署数据让 Agent 行为可标定、可回归。<strong>同一个问题给一致的回答，不是每次重掷</strong>。Anthropic 靠模型对齐，我们靠行业结果数据。',
          '<div style="font-size:11px;color:var(--gray-text);font-weight:700;letter-spacing:.04em;margin-bottom:8px;">同一个 query × 3</div>'
          '<div style="background:#fff;padding:9px 12px;border-radius:6px;border:1px solid var(--gray-line);font-size:12.5px;color:var(--blue);">→ 您的退款政策是 7 天无理由</div>'
          '<div style="background:#fff;padding:9px 12px;border-radius:6px;border:1px solid var(--gray-line);font-size:12.5px;color:var(--blue);">→ 您的退款政策是 7 天无理由</div>'
@@ -1336,7 +1336,7 @@ def page_industries():
 
     industries_detail = [
         ('education', '在线教育', '📚', 'bl', '400+ 客户 · 头部 RPA 已覆盖',
-         '在线教育是句子互动最早进入的行业。9 年下来覆盖了几乎所有头部公司，从大班课、小班课到 1 对 1，从招生、续费到 NPS。其中我们目前成单体量最大的客户，是一家<strong>在线教育头部品牌（兴趣技能赛道）</strong>，AI 把整条「低转高」链路跑通：人效翻倍、单线索成本砍 50~62%、转人工率从 27% 压到 2.73%。<a href="case-xingqudao.html" style="color:var(--blue);font-weight:700;">看完整案例 →</a>',
+         '在线教育是句子互动最早进入的行业。9 年下来覆盖了几乎所有头部公司，从大班课、小班课到 1 对 1，从招生、续费到 NPS。其中我们目前成单体量最大的客户，是一家<strong>在线教育头部品牌（兴趣技能方向）</strong>，AI 把整条「低转高」链路跑通：人效翻倍、单线索成本砍 50~62%、转人工率从 27% 压到 2.73%。<a href="case-xingqudao.html" style="color:var(--blue);font-weight:700;">看完整案例 →</a>',
          [
              ('400+', '客户'),
              ('头部', 'RPA 已覆盖'),
@@ -2171,7 +2171,7 @@ def page_case_xingqudao():
         rel="",
         breadcrumbs=[("首页", "index.html"), ("客户与行业", "industries.html"), ("在线教育头部客户", None)],
         hero_kicker="客户案例 · 在线教育头部客户",
-        hero_h1='在线教育头部客户（兴趣技能赛道） · <span class="accent">AI 把整条低转高链路跑通</span>',
+        hero_h1='在线教育头部客户（兴趣技能方向） · <span class="accent">AI 把整条低转高链路跑通</span>',
         hero_lede="在线教育头部品牌，<strong>我们目前成单体量最大的客户</strong>。2025-06 启动至今——人效翻倍、单线索成本砍 50~62%、ROI 不掉，AI 转人工率从 27% 压到 2.73%。这是「客户赚到我们才赚」能成立的前提。",
         pills=["2025-06 启动至今", "企业微信 1v1 私聊", "业务线 A / 业务线 B / 瑜伽 / 健康食养", "成单体量最大客户"],
         body=body,
