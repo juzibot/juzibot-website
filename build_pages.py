@@ -1126,7 +1126,7 @@ def page_enterprise():
         # (color, num, en, zh, pain, ours, visual_html)
         ('bl', '01', 'Predictability', '输出可重复',
          '消费场景偶尔答错没事，企业场景不行。生成财务摘要、起草法律文书——同一个问题问三次给出三个答案，业务跑不下去。',
-         '9 年 outcome-tagged 部署数据让 Agent 行为可标定、可回归。<strong>同一个 query 给一致的回答，不是每次掷骰子</strong>。Anthropic 靠的是 alignment，我们靠的是行业 outcome 数据。',
+         '9 年 outcome-tagged 部署数据让 Agent 行为可标定、可回归。<strong>同一个 query 给一致的回答，不是每次掷骰子</strong>。Anthropic 靠的是模型对齐，我们靠的是行业 outcome 数据。',
          '<div style="font-size:11px;color:var(--gray-text);font-weight:700;letter-spacing:.04em;margin-bottom:8px;">同一个 query × 3</div>'
          '<div style="background:#fff;padding:9px 12px;border-radius:6px;border:1px solid var(--gray-line);font-size:12.5px;color:var(--blue);">→ 您的退款政策是 7 天无理由</div>'
          '<div style="background:#fff;padding:9px 12px;border-radius:6px;border:1px solid var(--gray-line);font-size:12.5px;color:var(--blue);">→ 您的退款政策是 7 天无理由</div>'
@@ -1178,7 +1178,7 @@ def page_enterprise():
          '</div>'),
 
         ('bl', '06', 'Scalability', '规模化',
-         '很多公司的 AI 卡在 pilot 阶段——demo 跑得动，扩到几千客户、几十种业务场景就崩。企业 AI 从第一天就得想清楚怎么跑得稳。',
+         '很多公司的 AI 卡在试点阶段——demo 跑得动，扩到几千客户、几十种业务场景就崩。企业 AI 从第一天就得想清楚怎么跑得稳。',
          '<strong>1000+ 大型企业客户验证过的部署能力</strong>——已经在生产环境跑了多年，不是 demo。从单一场景到多职能 Agent 矩阵，从一个客户的私域到集团央企的多租户隔离，跑得通。',
          '<div style="font-size:11px;color:var(--gray-text);font-weight:700;letter-spacing:.04em;margin-bottom:8px;">部署规模</div>'
          '<div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--gray-line);padding:6px 0;font-size:12.5px;"><span>大型企业客户</span><span style="color:var(--blue);font-weight:800;font-size:16px;">1000+</span></div>'
@@ -1187,7 +1187,7 @@ def page_enterprise():
          '<div style="display:flex;justify-content:space-between;align-items:baseline;padding:6px 0;font-size:12.5px;"><span>SaaS 服务可用性</span><span style="color:var(--green);font-weight:800;font-size:16px;">99.9%</span></div>'),
 
         ('or', '07', 'Multi-Model Flexibility', '不绑死单一模型',
-         '企业不再赌单一 vendor——这个月用 GPT，下个月可能切 Claude，年底说不定上 DeepSeek。模型涨价、出 bug、被监管——任何一个都可能让企业被动。',
+         '企业不再赌单一供应商——这个月用 GPT，下个月可能切 Claude，年底说不定上 DeepSeek。模型涨价、出 bug、被监管——任何一个都可能让企业被动。',
          '<strong>模型层抽象</strong>——DeepSeek、Claude、Qwen、文心一言、GPT 都可切换。客户按场景选最合适的模型，按价格 / 性能动态调整。我们不绑死，你也不被绑。',
          '<div style="font-size:11px;color:var(--gray-text);font-weight:700;letter-spacing:.04em;margin-bottom:8px;">模型矩阵</div>'
          '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:12px;font-weight:700;">'
@@ -1313,7 +1313,7 @@ def page_enterprise():
 
     return page_layout(
         title="企业级能力 · 和 Anthropic 同判断 | 句子互动",
-        description="句子互动企业级 AI 能力——consistent outputs · audit-ready governance · enterprise-grade control. 7 个 TO B 必过的门槛 + SaaS / 私有化 / 混合 / 一体机部署 + 等保三级合规。",
+        description="句子互动企业级 AI 能力：输出稳定、行为可审计、企业级可控。7 个 TO B 必过的门槛 + SaaS / 私有化 / 混合 / 一体机部署 + 等保三级合规。",
         rel="",
         breadcrumbs=[("首页", "index.html"), ("企业级能力", None)],
         hero_kicker="生来就是企业级",
