@@ -1188,7 +1188,7 @@ def page_enterprise():
 
         ('or', '07', 'Multi-Model Flexibility', '不绑死单一模型',
          '企业不再赌单一供应商。这个月用 GPT，下个月可能切 Claude，年底说不定上 DeepSeek。模型涨价、出 bug、被监管，任何一个都可能让企业被动。',
-         '<strong>模型层抽象</strong>：DeepSeek、Claude、Qwen、文心一言、GPT 都可切换。客户按场景选模型，按价格、性能随时换。',
+         '<strong>底层不绑死任何一家模型</strong>：DeepSeek、Claude、Qwen、文心一言、GPT 都能换。客户按场景选模型，按价格、性能随时换。',
          '<div style="font-size:11px;color:var(--gray-text);font-weight:700;letter-spacing:.04em;margin-bottom:8px;">模型矩阵</div>'
          '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:12px;font-weight:700;">'
          '<div style="background:#fff;padding:8px 11px;border-radius:6px;border:1px solid var(--gray-line);display:flex;justify-content:space-between;align-items:center;"><span>DeepSeek-V3</span><span style="color:var(--green);">●</span></div>'
