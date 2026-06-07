@@ -49,6 +49,7 @@ def nav_html(rel):
       <div class="nav-item"><a href="{rel}about.html">关于我们</a></div>
     </div>
     <a href="{rel}index.html#cta" class="nav-cta">联系我们 →</a>
+    <button class="nav-burger" aria-label="菜单" onclick="this.closest('.nav').classList.toggle('nav-open')">☰</button>
   </div>
 </nav>
 """.strip()
@@ -1124,7 +1125,7 @@ def page_enterprise():
 
     deep_items = [
         # (color, num, en, zh, pain, ours, visual_html)
-        ('bl', '01', 'Predictability', '输出可重复',
+        ('bl', '01', '可预测', '输出可重复',
          '消费场景偶尔答错没事，企业场景不行。生成财务摘要、起草法律文书，同一个问题问三次给出三个答案，业务跑不下去。',
          '9 年带结果标注的部署数据让 Agent 行为可标定、可回归。<strong>同一个问题给一致的回答，不是每次重掷</strong>。Anthropic 靠模型对齐，我们靠行业结果数据。',
          '<div style="font-size:11px;color:var(--gray-text);font-weight:700;letter-spacing:.04em;margin-bottom:8px;">同一个 query × 3</div>'
@@ -1133,7 +1134,7 @@ def page_enterprise():
          '<div style="background:#fff;padding:9px 12px;border-radius:6px;border:1px solid var(--gray-line);font-size:12.5px;color:var(--blue);">→ 您的退款政策是 7 天无理由</div>'
          '<div style="font-size:11px;color:var(--green);font-weight:800;text-align:right;margin-top:4px;">✓ 一致</div>'),
 
-        ('or', '02', 'Data Security & Privacy', '数据隔离',
+        ('or', '02', '数据安全', '数据隔离',
          '内部文档、客户信息、专有数据，怕被模型吃掉再吐给别人。企业 AI 落地，最先卡在这。',
          '<strong>支持私有化 / 一体机部署，客户数据不出域</strong>。多租户严格隔离 + TLS 1.3 传输 + AES-256 存储 + 数据脱敏。客户数据不用于模型训练（合同里写明）。',
          '<div style="font-size:11px;color:var(--gray-text);font-weight:700;letter-spacing:.04em;margin-bottom:8px;">数据流向</div>'
@@ -1141,7 +1142,7 @@ def page_enterprise():
          '<div style="display:flex;align-items:center;gap:6px;font-size:12px;margin-top:8px;"><span style="background:#fff;padding:6px 10px;border-radius:6px;border:1px solid var(--gray-line);">企业内部</span><span>↛</span><span style="background:#fee;color:#c00;padding:6px 10px;border-radius:6px;text-decoration:line-through;">公网模型</span></div>'
          '<div style="font-size:11px;color:var(--green);font-weight:800;margin-top:4px;">✓ 数据不出域</div>'),
 
-        ('gr', '03', 'Governance & Control', '行为可管控',
+        ('gr', '03', '行为管控', '行为可管控',
          '要 AI 按公司政策回答：能说什么、不能说什么、出了事谁负责，都得事先划好红线。光在 prompt 里写「请不要 xxx」顶不住。',
          'workflow 引擎里把<strong>能说什么、不能说什么</strong>提前写死，再配 5 个高合规行业策略库，不靠 prompt 软提示。金融的合规话术、政务的法规引用，AI 跨不出去。',
          '<div style="font-size:11px;color:var(--gray-text);font-weight:700;letter-spacing:.04em;margin-bottom:8px;">行为边界</div>'
@@ -1150,14 +1151,14 @@ def page_enterprise():
          '<div style="background:#fff;padding:8px 11px;border-radius:6px;border:1px solid var(--gray-line);font-size:12px;display:flex;justify-content:space-between;"><span>给具体投资建议</span><span style="color:#c00;font-weight:800;">✗ 拒答</span></div>'
          '<div style="background:#fff;padding:8px 11px;border-radius:6px;border:1px solid var(--gray-line);font-size:12px;display:flex;justify-content:space-between;"><span>承诺保本保收益</span><span style="color:#c00;font-weight:800;">✗ 拒答</span></div>'),
 
-        ('pu', '04', 'Auditability & Transparency', '全程可审计',
+        ('pu', '04', '可审计', '全程可审计',
          '银保监来检查、政务来巡检、客户起诉，AI 的每一次回答都得能回溯：用了哪个知识库、参考了什么 context、谁批准的版本上线。',
          '<strong>每一次 Agent 决策可追溯</strong>：调用的知识库、用的模型、参考的上下文、决策路径、版本号，全量日志记录。金融、政务客户特别在意这一条，过得了等保三级。',
          '<div style="font-size:11px;color:var(--gray-text);font-weight:700;letter-spacing:.04em;margin-bottom:8px;">Agent 决策日志</div>'
          '<div style="background:#fff;padding:9px 11px;border-radius:6px;border:1px solid var(--gray-line);font-size:11.5px;line-height:1.6;font-family:monospace;">[09:23:04] query → "退款 7 天"<br/>[09:23:04] kb_search → K3#FAQ#142<br/>[09:23:05] model → claude-3.5 v2.1<br/>[09:23:05] reply → "您可享 7 天无理由..."<br/>[09:23:05] log_id → AGT-2026050609234</div>'
          '<div style="font-size:11px;color:var(--purple);font-weight:800;margin-top:4px;">✓ 全量日志归档 7 年</div>'),
 
-        ('te', '05', 'Integration', '对接现有系统',
+        ('te', '05', '能对接', '对接现有系统',
          'AI 不能孤立运行，得接客户已有的 CRM、工单、知识库、订单系统。Agent 上岗第一天就要能查到客户的真实数据，不然就是摆设。',
          '<strong>9 年 IM 通道适配 + 企业 CRM / 工单 / 知识库直连</strong>。11 个 IM 通道，加主流企业系统的对接经验。Agent 上岗就接管真实业务流，不在角落空转。',
          '<div style="font-size:11px;color:var(--gray-text);font-weight:700;letter-spacing:.04em;margin-bottom:8px;">系统对接</div>'
@@ -1177,7 +1178,7 @@ def page_enterprise():
          '<div style="background:#fff;padding:6px 2px;border-radius:5px;border:1px solid var(--gray-line);">+</div>'
          '</div>'),
 
-        ('bl', '06', 'Scalability', '规模化',
+        ('bl', '06', '可规模化', '规模化',
          '很多公司的 AI 卡在试点阶段——demo 跑得动，扩到几千客户、几十种业务场景就崩。企业 AI 从第一天就得想清楚怎么跑得稳。',
          '<strong>1000+ 大型企业客户验证过的部署能力</strong>，在生产环境跑了多年，不是 demo。从单一场景到多职能 Agent 矩阵，从一个客户的私域到集团央企的多租户隔离，都跑得通。',
          '<div style="font-size:11px;color:var(--gray-text);font-weight:700;letter-spacing:.04em;margin-bottom:8px;">部署规模</div>'
@@ -1186,7 +1187,7 @@ def page_enterprise():
          '<div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--gray-line);padding:6px 0;font-size:12.5px;"><span>日均处理消息</span><span style="color:var(--blue);font-weight:800;font-size:16px;">200 万 +</span></div>'
          '<div style="display:flex;justify-content:space-between;align-items:baseline;padding:6px 0;font-size:12.5px;"><span>SaaS 服务可用性</span><span style="color:var(--green);font-weight:800;font-size:16px;">99.9%</span></div>'),
 
-        ('or', '07', 'Multi-Model Flexibility', '不绑死单一模型',
+        ('or', '07', '不锁模型', '不绑死单一模型',
          '企业不再赌单一供应商。这个月用 GPT，下个月可能切 Claude，年底说不定上 DeepSeek。模型涨价、出 bug、被监管，任何一个都可能让企业被动。',
          '<strong>底层不绑死任何一家模型</strong>：DeepSeek、Claude、Qwen、文心一言、GPT 都能换。客户按场景选模型，按价格、性能随时换。',
          '<div style="font-size:11px;color:var(--gray-text);font-weight:700;letter-spacing:.04em;margin-bottom:8px;">模型矩阵</div>'
