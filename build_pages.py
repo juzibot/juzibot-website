@@ -354,7 +354,7 @@ def page_miaohui():
   </div>
 </section>
 '''.strip()
-    body += block(        "5 大核心能力",
+    body += block(        "核心能力",
         "Agent 在 IM 通道上岗，需要的不止是聊天框",
         "句子秒回是 AI 劳动力的工位。11 个 IM 通道收到一个工作台，Agent 像真人一样上班、协作、接受管理。",
         feat_grid([
@@ -506,7 +506,7 @@ def page_miaodong():
   </div>
 </section>
 '''.strip()
-    body += block(        "5 大核心模块",
+    body += block(        "核心模块",
         "Agent 真的「懂业务」的地方",
         "句子秒懂是 AI 劳动力的「大脑」。把企业的流程、知识、规则封装进 Agent，让 AI 不止会聊天，还能替企业干活。",
         feat_grid([
