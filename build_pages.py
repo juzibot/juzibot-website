@@ -635,9 +635,10 @@ def page_shouhu():
     body = ''
 
     # ── 为什么：上一代 vs 下一代 ──
-    body += block(        "为什么要守护",
-        "Agent 上线，不能是一场赌博",
-        "上一代 AI 搭完流程节点就算交付，上线就撒手。句子守护交付的是一个有人盯着的 AI 员工。上线前测够，上线后看得见。",
+    body += block(
+        "为什么要守护",
+        "上线前没测够，坑就直接甩给客户了",
+        "有个家电客户，上线前我们跑了一轮自动化测试，28 条用例全没过，最大的坑是故障咨询答不好——幸好拦在了上线前。所以 Agent 上线不能是搭完流程就撒手，得有人在上线前把它测够，上线后还盯着。",
         '''<div style="max-width:980px;margin:0 auto;border:1px solid var(--gray-line);border-radius:16px;overflow:hidden;">
 <div style="display:grid;grid-template-columns:1fr 1fr;">
   <div style="background:var(--gray-bg);padding:15px 22px;font-weight:800;font-size:13.5px;color:var(--gray-text);">上一代 · 搭完流程就交付</div>
@@ -1546,9 +1547,10 @@ def page_about():
         alt=True,
     )
 
-    body += block(        "时间线",
+    body += block(
+        "时间线",
         "11 年穿越周期",
-        "2018 资本寒冬、2020 疫情、2022 行业大调整、2024 LLM 大爆发，都活下来了。",
+        "我们靠在线教育起家。2022 年双减一来，最大的一块业务被打穿，那半年是真难。后来把同一套打法搬到消费品和金融，扛过来了——「换个行业也能复用」这件事，是被逼出来的，不是规划出来的。",
         '''<div style="position:relative;padding:48px 0 24px;max-width:1100px;margin:0 auto;">
 <div style="position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:2px;background:var(--gray-line);"></div>
 <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:0;position:relative;">
