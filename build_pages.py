@@ -275,8 +275,8 @@ def feat_grid(items, cols=3):
     """items: list of (icon, title, desc, color_class)"""
     cls = f"feat-grid-{cols}"
     blocks = ''.join(
-        f'<div class="feat-block {color}"><div class="ic">{icon}</div><h3>{title}</h3><p>{desc}</p></div>'
-        for icon, title, desc, color in items
+        f'<div class="feat-block {color}"><div class="ic">{i+1:02d}</div><h3>{title}</h3><p>{desc}</p></div>'
+        for i, (icon, title, desc, color) in enumerate(items)
     )
     return f'<div class="{cls}">{blocks}</div>'
 
@@ -873,7 +873,7 @@ def workforce_pages():
 <div style="display:flex;flex-direction:column;gap:8px;font-size:13px;">
 <div style="background:var(--gray-bg);padding:9px 12px;border-radius:8px;">王姐好，您之前看的那款风衣到货了～</div>
 <div style="background:var(--gray-bg);padding:9px 12px;border-radius:8px;">您 165cm/52kg 建议 M 码，肩线刚好</div>
-<div style="background:var(--gray-bg);padding:9px 12px;border-radius:8px;">还有同色系的腰带搭配，配着穿超有型 ✨</div>
+<div style="background:var(--gray-bg);padding:9px 12px;border-radius:8px;">还有同色系的腰带搭配，配着穿超有型</div>
 <div style="background:var(--orange);color:#fff;margin-left:auto;padding:9px 12px;border-radius:8px;max-width:80%;">嗯帮我拼下单</div>
 </div>
 <div style="margin-top:12px;display:flex;gap:8px;font-size:11px;">
