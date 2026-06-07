@@ -413,7 +413,7 @@ def page_miaohui():
 
     body += block(        "11 个 IM 通道",
         "客户在哪里，Agent 就在哪里上岗",
-        "9 年积累的 IM 通道适配——从国内 IM 通道到海外 WhatsApp，从抖音直播私信到飞书企业 IM，一个工作台管完。",
+        "9 年积累的 IM 通道适配。国内的、海外 WhatsApp 的、抖音直播私信、飞书企业 IM，一个工作台管完。",
         '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:920px;margin:0 auto;">'
         + ''.join(
             f'<div style="padding:18px 16px;background:#fff;border:1px solid var(--gray-line);border-radius:12px;text-align:center;"><div style="font-size:24px;margin-bottom:6px;">{ic}</div><div style="font-size:13.5px;font-weight:700;">{n}</div><div style="font-size:11.5px;color:var(--gray-text);margin-top:2px;">{d}</div></div>'
@@ -893,7 +893,7 @@ def workforce_pages():
         kpi_items=[
             ('几百家', '头部零售品牌部署'),
             ('24×7', '私域全天在岗'),
-            ('5×+', '导购人效杠杆'),
+            ('5×+', '导购人效提升'),
             ('95%+', '客户咨询响应率'),
         ],
         cta_text='让 AI 导购覆盖你的长尾客户',
@@ -1689,7 +1689,7 @@ def page_about():
         breadcrumbs=[("首页", "index.html"), ("关于我们", None)],
         hero_kicker="关于句子互动",
         hero_h1='一支<span class="accent">把 AI 装进 1000+ 家企业</span>的团队',
-        hero_lede="句子互动是企业级 Agentic AI 平台，<strong>2019 年由 Wechaty 开源作者李佳芮创立</strong>。把大模型 + 企业全域数据接进 IM 通道、抖音、钉钉、飞书、WhatsApp——为企业造能自主决策的 AI 劳动力。团队做对话式 AI 这些年，已服务 1000+ 大型企业客户。",
+        hero_lede="句子互动是企业级 Agentic AI 平台，<strong>2019 年由 Wechaty 开源作者李佳芮创立</strong>。把大模型和企业数据接进 IM 通道、抖音、钉钉、飞书、WhatsApp，为企业造能自主决策的 AI 劳动力。做对话式 AI 这些年，已服务 1000+ 大型企业客户。",
         pills=["1000+ 大型企业客户", "累计服务 4 亿人次", "国家高新 · 专精特新", "Wechaty 22k+ Star"],
         body=body,
     )
@@ -1960,7 +1960,7 @@ def page_case_xingqudao():
         title="在线教育头部品牌 · 我们成单体量最大的客户",
         paragraphs=[
             "这家客户做兴趣技能在线教育，旗下业务线 A、业务线 B、瑜伽、健康食养多个事业部。场景是<strong>企业微信 1v1 私聊</strong>，2025 年 6 月启动至今。",
-            "线下驻场对比发现：各事业部流程框架一致，只是课程和开营时间不同——<strong>一个事业部跑通的搭法，可以直接复制到下一个</strong>。这是它能不断加业务线的原因，我们这套打法能复制，也是同一个道理。",
+            "线下驻场对比发现：各事业部流程框架一致，只是课程和开营时间不同——<strong>一个事业部跑通的搭法，可以直接复制到下一个</strong>。这是它能不断加业务线的原因。",
         ],
         bullets=[
             "<strong>① 广告投放获客</strong>：信息流广告报名体验营",
