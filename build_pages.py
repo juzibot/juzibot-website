@@ -821,10 +821,10 @@ def workforce_pages():
 <div style="background:#fff;border-radius:12px;padding:18px;border:1px solid var(--gray-line);">
 <div style="font-size:12px;font-weight:700;color:var(--blue);margin-bottom:12px;">AI 销售 · 当日数据</div>
 <div style="display:flex;flex-direction:column;gap:14px;">
-<div><div style="font-size:11px;color:var(--gray-text);">新建联</div><div style="font-size:24px;font-weight:800;color:var(--blue);">2,847</div></div>
-<div><div style="font-size:11px;color:var(--gray-text);">主动外呼</div><div style="font-size:24px;font-weight:800;color:var(--orange);">5,124</div></div>
-<div><div style="font-size:11px;color:var(--gray-text);">高意向客户</div><div style="font-size:24px;font-weight:800;color:var(--green);">386</div></div>
-<div><div style="font-size:11px;color:var(--gray-text);">今日成交</div><div style="font-size:24px;font-weight:800;color:var(--purple);">73 单 · ¥58,420</div></div>
+<div><div style="font-size:11px;color:var(--gray-text);">新建联</div><div style="font-size:24px;font-weight:800;color:var(--blue);">2,800+</div></div>
+<div><div style="font-size:11px;color:var(--gray-text);">主动外呼</div><div style="font-size:24px;font-weight:800;color:var(--orange);">5,100+</div></div>
+<div><div style="font-size:11px;color:var(--gray-text);">高意向客户</div><div style="font-size:24px;font-weight:800;color:var(--green);">380+</div></div>
+<div><div style="font-size:11px;color:var(--gray-text);">今日成交</div><div style="font-size:24px;font-weight:800;color:var(--purple);">70+ 单 · ¥5.8 万</div></div>
 </div>
 </div>
 """,
@@ -840,7 +840,7 @@ def workforce_pages():
             ('80%', '行业整体提效'),
             ('5×', '人均承接客户量'),
             ('24×7', '不下班的销售'),
-            ('+38.6%', '转化率提升（中位数）'),
+            ('+38%', '转化率提升（中位数）'),
         ],
         cta_text='让 AI 销售在你的私域上岗',
     )
@@ -1083,7 +1083,7 @@ def workforce_pages():
 <div style="background:#fff;border-radius:12px;padding:18px;border:1px solid var(--gray-line);">
 <div style="font-size:13px;color:var(--orange);font-weight:700;margin-bottom:12px;">AI 主理人 · 直播间实时</div>
 <div style="display:flex;flex-direction:column;gap:8px;">
-<div style="display:flex;justify-content:space-between;font-size:13px;align-items:center;"><span>当前观看</span><span style="color:var(--orange);font-weight:800;font-size:18px;">12,847</span></div>
+<div style="display:flex;justify-content:space-between;font-size:13px;align-items:center;"><span>当前观看</span><span style="color:var(--orange);font-weight:800;font-size:18px;">12,800+</span></div>
 <div style="display:flex;justify-content:space-between;font-size:13px;align-items:center;"><span>评论 / 分钟</span><span style="color:var(--blue);font-weight:800;font-size:18px;">328</span></div>
 <div style="display:flex;justify-content:space-between;font-size:13px;align-items:center;"><span>本场成交</span><span style="color:var(--green);font-weight:800;font-size:18px;">¥185,420</span></div>
 <div style="display:flex;justify-content:space-between;font-size:13px;align-items:center;"><span>已切短视频</span><span style="color:var(--purple);font-weight:800;font-size:18px;">14 条</span></div>
