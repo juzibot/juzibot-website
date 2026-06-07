@@ -1617,7 +1617,7 @@ def page_about():
     )
 
     body += block(        "资质与荣誉",
-        "国家级资质、行业标准、赛事冠军，<span class=\"accent\">该有的证书都办下来了</span>",
+        "国家级资质、行业标准、赛事冠军，<span class=\"accent\">企业级资质齐备</span>",
         "国家高新技术企业、北京市专精特新「小巨人」、公安部等保三级，企业客户关注的核心资质均已通过。",
         '''<div style="max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:18px;">
 <div style="display:grid;grid-template-columns:140px 1fr;gap:18px;align-items:center;background:var(--blue-light);border-radius:14px;padding:20px 24px;">
@@ -2094,8 +2094,8 @@ def page_case_xingqudao():
 
     # ── 怎么做到的：5 个产品 + FDE ──
     body += block(        "怎么做到的",
-        "这套结果，是 5 个产品 + 一支 FDE 团队一起跑出来的",
-        "一条消息背后是 6 个节点的自研流程引擎，5 个产品各负责一段，由 FDE 团队贴近客户业务调优而成，并非套壳调用单一模型。",
+        "这套结果，是多个产品 + 一支 FDE 团队一起跑出来的",
+        "一条消息背后是 6 个节点的自研流程引擎，多个产品各负责一段，由 FDE 团队贴近客户业务调优而成，并非套壳调用单一模型。",
         feat_grid([
             ("💬", "句子秒回 · 工位", "企业微信 1v1，AI 月回复 211.5 万条消息；全程自动跑，命中严重病症或异常时自动转人工。", "bl"),
             ("🧠", "句子秒懂 · 大脑", "一条消息背后 6 节点：上下文重写 → 意图识别 → 破冰挖需 → 知识库检索 → 生成回复 → 全程质检；按任务分层做模型路由。", "or"),
