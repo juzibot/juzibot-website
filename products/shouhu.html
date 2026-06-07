@@ -79,8 +79,8 @@
   <div class="container">
     <div class="block-head">
       <div class="eyebrow">为什么要守护</div>
-      <h2>上线前没测够，坑就直接甩给客户了</h2>
-      <div class="sub">有个家电客户，上线前我们跑了一轮自动化测试，28 条用例全没过，最大的坑是故障咨询答不好——幸好拦在了上线前。所以 Agent 上线不能是搭完流程就撒手，得有人在上线前把它测够，上线后还盯着。</div>
+      <h2>上线前测试不充分，问题会直接暴露给客户</h2>
+      <div class="sub">某家电客户上线前的一轮自动化测试中，28 条用例全部未通过，主要短板是故障咨询应答不达标，问题在上线前被拦下。Agent 上线不能止于流程搭建，上线前需充分测试，上线后需持续监控。</div>
     </div>
     <div style="max-width:980px;margin:0 auto;border:1px solid var(--gray-line);border-radius:16px;overflow:hidden;">
 <div style="display:grid;grid-template-columns:1fr 1fr;">
@@ -106,7 +106,7 @@
     <div class="block-head">
       <div class="eyebrow">客户看得见</div>
       <h2>每天打开，就知道你的 AI 员工今天健不健康</h2>
-      <div class="sub">客户不用问我们做了什么。一个看板摆在那：今天为这个 Agent 做了哪些动作、五个维度各到什么程度、健康度多少分。</div>
+      <div class="sub">客户无需询问。一块看板呈现当天为该 Agent 执行的动作、五个维度的各项进展和健康度评分。</div>
     </div>
     <div style="max-width:1000px;margin:0 auto;background:#fff;border:1px solid var(--gray-line);border-radius:18px;padding:32px;box-shadow:var(--shadow-md);">
 <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;border-bottom:1px solid var(--gray-line);padding-bottom:22px;margin-bottom:22px;">
@@ -127,7 +127,7 @@
       <h2>每个 Agent 上线，都要过六道关口</h2>
       <div class="sub">把上线前、上线中、上线后该做的检查排成六道关，哪关没过就不让它上。</div>
     </div>
-    <div class="feat-grid-3"><div class="feat-block bl"><div class="ic">01</div><h3>AI 生成测试用例 · 上线前</h3><p>AI 读懂流程引擎配置和业务场景，几分钟生成上百条用例。不满意接着聊、重新出。还能拿 SOP 流程图、客户资料包、真实历史对话、新旧版本差异来喂——连提示词改了哪都能覆盖。</p></div><div class="feat-block or"><div class="ic">02</div><h3>批量验收 · 上线前</h3><p>跑一轮通过率 98% 看着高，其实大模型每次输出有误差。设好轮数和并发跑多轮，逐条判断回复对不对，把没过的挑出来调，好用例攒进回归集。</p></div><div class="feat-block gr"><div class="ic">03</div><h3>灰度测试 · 上线中</h3><p>想验证新版又怕影响线上。开灰度生成密钥，只有拿到密钥的那条会话走新版，其他人照旧。效果可对比，一键关掉就回到正式版。</p></div><div class="feat-block pu"><div class="ic">04</div><h3>回归测试 · 放行前强制</h3><p>新版一改，老功能可能悄悄坏。回归集跟版本绑定，上线前强制跑：不少于 50 条、通过率必须 100% 才放行。每次结果归档，质量怎么变的可追溯。</p></div><div class="feat-block te"><div class="ic">05</div><h3>AI 工单 · 上线后</h3><p>AI 答错难免，麻烦的是客户没处反馈，也不知道有没有人管。客户在对话里点踩，工单进我们调优中心，也进客户那边的看板，处理完状态回执。</p></div><div class="feat-block bl"><div class="ic">06</div><h3>AI 质检 · 上线后</h3><p>人工质检成本高、覆盖有限。建质检模板,对线上对话批量抽检，给出会话数、未通过比例，可二次复检——人工客服和 AI 客服一套标准。</p></div></div>
+    <div class="feat-grid-3"><div class="feat-block bl"><div class="ic">01</div><h3>AI 生成测试用例 · 上线前</h3><p>AI 读懂流程引擎配置和业务场景，几分钟生成上百条用例。结果不满意可对话调整、重新生成。还可输入 SOP 流程图、客户资料包、历史对话、新旧版本差异作为依据，覆盖提示词的改动。</p></div><div class="feat-block or"><div class="ic">02</div><h3>批量验收 · 上线前</h3><p>单轮通过率 98% 看似达标，但大模型每次输出存在波动。设定轮数与并发跑多轮，逐条判断回复是否正确，筛出未通过的用例修正，合格用例纳入回归集。</p></div><div class="feat-block gr"><div class="ic">03</div><h3>灰度测试 · 上线中</h3><p>需验证新版又要避免影响线上。开启灰度生成密钥，仅持有密钥的会话进入新版，其余会话维持原版。效果可对比，一键关闭即回退正式版。</p></div><div class="feat-block pu"><div class="ic">04</div><h3>回归测试 · 放行前强制</h3><p>新版一改，老功能可能悄悄坏。回归集跟版本绑定，上线前强制跑：不少于 50 条、通过率必须 100% 才放行。每次结果归档，质量怎么变的可追溯。</p></div><div class="feat-block te"><div class="ic">05</div><h3>AI 工单 · 上线后</h3><p>AI 应答出错难以避免，问题在于客户缺少反馈渠道，也无从知晓是否有人跟进。客户在对话中点踩后，工单同步进入调优中心和客户侧看板，处理完成后回执状态。</p></div><div class="feat-block bl"><div class="ic">06</div><h3>AI 质检 · 上线后</h3><p>人工质检成本高、覆盖有限。建立质检模板，对线上对话批量抽检，输出会话数与未通过比例，支持二次复检，人工客服与 AI 客服统一标准。</p></div></div>
   </div>
 </section><section class="section-block">
   <div class="container">
@@ -135,7 +135,7 @@
       <div class="split-text">
         <div class="eyebrow">秀给客户看</div>
         <h3>一句话生成一份测试报告——把工程量摆到客户面前</h3>
-        <p>六道关口背后是大量工程活，客户感受不到的话，跟没做也差不多。</p><p>每次版本交付，一句话生成一份标准测试报告：哪些用例过了、哪些被拦在上线前、问题出在哪。哪怕通过率不高，也说明问题全拦住了，没漏到线上。</p>
+        <p>六道关口背后是大量工程活，客户感受不到的话，跟没做也差不多。</p><p>每次版本交付，一句话生成一份标准测试报告：用例通过情况、上线前拦截的问题、问题定位。即便通过率不高，也意味着问题已全部拦截，未流入线上。</p>
         <ul><li>一句话生成，样式可调、偏好可存</li><li>PDF / PNG 导出，桌面和手机都自适应</li><li>公开链接或密码访问，权限可控</li><li>每次交付攒一份，客户那边的质量证据越来越厚</li></ul>
       </div>
       <div class="split-visual">
@@ -158,7 +158,7 @@
     <div class="cta-band">
   <div>
     <h4>让句子守护把住你的 Agent 质量底线</h4>
-    <p>从一个 AI 角色起步，慢慢扩到多个 Agent。90 天内，第一个 AI 劳动力就在你的 IM 里上岗。</p>
+    <p>从一个 AI 角色起步，逐步扩展到多个 Agent。90 天内，第一个 AI 劳动力即在客户的 IM 中上岗。</p>
   </div>
   <a href="mailto:hello@juzibot.com" class="btn-primary">预约演示 <span class="btn-arrow">→</span></a>
 </div>
@@ -272,8 +272,8 @@
       </div>
       <div id="cfSuccess" style="text-align:center;padding:32px 20px;display:none;">
         <div style="font-size:48px;margin-bottom:12px;">✅</div>
-        <h4 style="font-size:20px;font-weight:800;margin-bottom:8px;">收到了，稍等一下</h4>
-        <p style="color:var(--gray-text);font-size:14.5px;">工作日内联系您。如果比较急：<a href="mailto:hello@juzibot.com" style="color:var(--blue);font-weight:700;">hello@juzibot.com</a></p>
+        <h4 style="font-size:20px;font-weight:800;margin-bottom:8px;">已收到您的信息</h4>
+        <p style="color:var(--gray-text);font-size:14.5px;">我们将在工作日内与您联系。如需加急，请邮件联系：<a href="mailto:hello@juzibot.com" style="color:var(--blue);font-weight:700;">hello@juzibot.com</a></p>
       </div>
     </div>
   </div>
