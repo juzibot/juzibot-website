@@ -40,7 +40,7 @@ def nav_html(rel):
           <a href="{rel}workforce/service.html"><div class="d-title">AI 客服</div><div class="d-desc">从售前到售后都接得住 · 5 年 BadCase 积累</div></a>
           <a href="{rel}workforce/government.html"><div class="d-title">AI 社工 / 调解员</div><div class="d-desc">政务高合规要求 + 全程可追溯 · 已稳步落地</div></a>
           <a href="{rel}workforce/finance.html"><div class="d-title">AI 理财顾问</div><div class="d-desc">银行 / 证券 / 保险头部机构落地 · 9 年风控话术</div></a>
-          <a href="{rel}workforce/lawyer.html"><div class="d-title">AI 律师</div><div class="d-desc">批量仲裁案件代理，律师只做看 / 改 / 签</div></a>
+          <a href="{rel}workforce/hr.html"><div class="d-title">AI HR</div><div class="d-desc">简历初筛 + AI 语音面试，HR 只看 Top 20%</div></a>
         </div>
       </div>
       <div class="nav-item"><a href="{rel}industries.html">客户与行业</a></div>
@@ -94,7 +94,7 @@ def footer_html(rel):
           <li><a href="{rel}workforce/service.html">AI 客服</a></li>
           <li><a href="{rel}workforce/government.html">AI 社工 / 调解员</a></li>
           <li><a href="{rel}workforce/finance.html">AI 理财顾问</a></li>
-          <li><a href="{rel}workforce/lawyer.html">AI 律师</a></li>
+          <li><a href="{rel}workforce/hr.html">AI HR</a></li>
         </ul>
       </div>
       <div>
@@ -598,7 +598,7 @@ def page_miaodong():
             ("📚", "知识库 · RAG", "产品文档、FAQ、网页、表格、API 一次导入，自动切分向量化，回答带出处、不跑偏。", "gr"),
             ("🔌", "插件与工具", "接 CRM、工单、订单、自定义 API，Agent 不止于回复，还能查库存、发券、改订单。", "pu"),
             ("🧩", "100+ 大模型", "DeepSeek、智谱、通义、文心、GPT 任选，按场景和成本随时切换，不绑死任何一家。", "te"),
-            ("🚀", "一键发布多渠道", "配好的 Agent 直接发布到 11 个 IM 通道、网页和 API，复用到销售、客服、律师等多个场景。", "or"),
+            ("🚀", "一键发布多渠道", "配好的 Agent 直接发布到 11 个 IM 通道、网页和 API，复用到销售、客服、招聘等多个场景。", "or"),
         ], cols=3),
     )
 
@@ -1141,59 +1141,59 @@ def workforce_pages():
         cta_text='让 AI 理财顾问在你的合规边界内上岗',
     )
 
-    # ────── AI 律师 ──────
-    pages['lawyer'] = page_workforce(
-        slug='lawyer',
-        title='AI 律师',
-        kicker='AI 员工 · 法务岗',
-        h1='AI 律师 · <span class="accent">律师按案签字，剩下的交给 Agent</span>',
-        lede='面向批量、同质的仲裁 / 诉讼案件——<strong>接案、取证、起草、提交一条流水线跑完，律师只做看、改、签</strong>。单律师月产能从几十件做到两三百件。',
-        pills=['律师只做 看 / 改 / 签', '飞书机器人自动取证', '类案检索 + 自动起草', '单律师月产能约 6 倍'],
+    # ────── AI HR ──────
+    pages['hr'] = page_workforce(
+        slug='hr',
+        title='AI HR',
+        kicker='AI 员工 · 招聘岗',
+        h1='AI HR · <span class="accent">简历初筛到第一轮面试，Agent 全包</span>',
+        lede='简历获取、初筛与第一轮语音面试，<strong>全部由 Agent 自动完成</strong>。HR 只看 Top 20% 的候选人，把时间留给深度面试、团队沟通和人才策略。',
+        pills=['HR 只看 Top 20%', '多渠道简历自动同步去重', 'AI 语音面试 7×24', '统一题库 + 评分卡'],
         color='bl',
-        industry='法律服务 · 批量仲裁',
-        role_desc='平台批量仲裁案件爆发：单案标的不大、量却极大，证据散在企业多个部门，律师一件件人工做根本接不过来',
+        industry='招聘 · 全行业',
+        role_desc='HR 被重复性招聘工作淹没：筛 1000 份简历加面 100 人，平均要 80 小时——渠道分散、初筛靠肉眼、第一轮面试高度重复',
         pain_paragraphs=[
-            '头部互联网平台的网络服务合同纠纷，单案标的常常只有几千元，量却是千件、上万件级别。每件都要在 15 天答辩期内调取证据、检索类案、起草答辩书、提交仲裁平台——证据还散在法务、风控、运营、客服好几个部门。律师一件件人工做，单人一个月也就三五十件，根本接不过来。',
-            'AI 律师把这条流水线自动化：Agent 登录仲裁平台接案、按案由分流，飞书机器人 @ 对应部门自动收齐证据，再做类案检索、起草答辩书；律师在工作台只做看、改、签。单律师月产能从几十件做到两三百件，单案律师工时从 6–10 小时压到 1–2 小时。',
+            'HR 每天登录三五个招聘平台，手动下载、整理、去重，每周就花掉 8–10 小时。80% 的简历第一轮就会被淘汰，但 HR 仍要逐份扫读。第一轮面试问的还是「请做自我介绍」「为什么离开上家」这些可以被标准化的问题。而响应一慢——超过 48 小时不联系，候选人主动回复率掉 70%。',
+            'AI HR 把这条流水线交给 Agent：多渠道简历自动同步、解析评分、按岗位算匹配度；AI 语音面试自动邀约、提问、追问、记录、打分；所有结果汇到一个控制台，HR 一键做录用决策。HR 不再做初面，把时间花在深度面试和人才策略上。',
         ],
         pain_bullets=[
-            'Agent 接案：自动登录仲裁平台，抓取案号、诉请、证据、答辩截止日，结构化入库并触发倒计时',
-            '飞书取证：机器人 @ 法务 / 风控 / 运营 / 客服，业务方在 IM 里直接回证据，自动识别归档、缺啥催啥',
-            '类案检索 + 自动起草：按案由匹配模板与同类裁决，生成答辩书初稿',
-            '律师审核签字：工作台一案一屏，Agent 结果在前，律师只做差异化判断，通过即签字',
-            '自动提交跟进：Agent 提交仲裁平台、跟踪书面审 / 调解进度，结案自动归档、类案沉淀',
+            '简历接入：对接 BOSS 直聘 / LinkedIn / Indeed 等主流渠道，职位与简历自动同步，同一候选人多渠道投递自动去重',
+            '自动初筛：简历筛选 Agent 解析学历、工作年限、技能等 30+ 字段，按 JD 算匹配度排序，硬性条件自动过滤',
+            '多维评分：不只关键词匹配——专业技能、项目经验、教育背景、学习潜力等多维度综合评分，权重可自定义',
+            'AI 语音面试：Agent 自动邀约，通过电话 / 网页 / 小程序做语音面试，动态追问、实时转写、自动评分，单场约 10 分钟，可 200+ 场并发',
+            '录用决策：候选人详情、评估报告、招聘漏斗、待办汇到一个控制台，HR 勾选候选人一键进入下一轮或发感谢信',
         ],
         pain_visual="""
 <div style="background:#fff;border-radius:12px;padding:18px;border:1px solid var(--gray-line);">
-<div style="font-size:13px;color:var(--blue);font-weight:700;margin-bottom:12px;">AI 律师 · 案件工作台</div>
+<div style="font-size:13px;color:var(--blue);font-weight:700;margin-bottom:12px;">AI HR · 招聘控制台</div>
 <div style="display:flex;flex-direction:column;gap:8px;">
-<div style="display:flex;justify-content:space-between;font-size:13px;align-items:center;"><span>待律师审核</span><span style="color:var(--orange);font-weight:800;font-size:18px;">12</span></div>
-<div style="display:flex;justify-content:space-between;font-size:13px;align-items:center;"><span>待业务方取证</span><span style="color:var(--purple);font-weight:800;font-size:18px;">8</span></div>
-<div style="display:flex;justify-content:space-between;font-size:13px;align-items:center;"><span>今日答辩到期</span><span style="color:#e5484d;font-weight:800;font-size:18px;">5</span></div>
-<div style="display:flex;justify-content:space-between;font-size:13px;align-items:center;"><span>本月已提交</span><span style="color:var(--green);font-weight:800;font-size:18px;">240</span></div>
+<div style="display:flex;justify-content:space-between;font-size:13px;align-items:center;"><span>今日简历接入</span><span style="color:var(--blue);font-weight:800;font-size:18px;">612</span></div>
+<div style="display:flex;justify-content:space-between;font-size:13px;align-items:center;"><span>AI 初筛通过</span><span style="color:var(--purple);font-weight:800;font-size:18px;">118</span></div>
+<div style="display:flex;justify-content:space-between;font-size:13px;align-items:center;"><span>今日 AI 面试</span><span style="color:var(--orange);font-weight:800;font-size:18px;">56</span></div>
+<div style="display:flex;justify-content:space-between;font-size:13px;align-items:center;"><span>待 HR 决策</span><span style="color:var(--green);font-weight:800;font-size:18px;">14</span></div>
 <div style="border-top:1px solid var(--gray-line);padding-top:12px;margin-top:6px;display:flex;flex-direction:column;gap:4px;font-size:11.5px;">
-<div style="color:var(--green);font-weight:600;">✓ 案 #2025-1487 证据已齐，答辩书已起草，待律师签字</div>
-<div style="color:var(--green);font-weight:600;">✓ 飞书已向风控 / 客服催办 3 份证据</div>
-<div style="color:var(--gray-text);">… AI 律师在岗中</div>
+<div style="color:var(--green);font-weight:600;">✓ 候选人 92 分，AI 一面已完成，待 HR 决策</div>
+<div style="color:var(--green);font-weight:600;">✓ 已自动向 8 位候选人发出面试邀约</div>
+<div style="color:var(--gray-text);">… AI HR 在岗中</div>
 </div>
 </div>
 </div>
 """,
         capability_block=feat_grid([
-            ('📥', 'Agent 接案', '自动登录仲裁平台，抓取案号、诉请、证据、答辩截止日，结构化入库。', 'bl'),
-            ('🗂️', '案由分流', '按售假 / 仅退款 / 物流 / 虚假宣传等案由自动分类，匹配对应模板线。', 'or'),
-            ('🤖', '飞书取证', '机器人 @ 法务 / 风控 / 运营 / 客服，IM 里直接回证据，缺啥自动催。', 'gr'),
-            ('📝', '类案 + 起草', '检索同类裁决、结合证据生成答辩书初稿，律师在此基础上改。', 'pu'),
-            ('✍️', '律师签字', '一案一屏，Agent 结果在前，律师只做看 / 改 / 签。', 'te'),
-            ('📤', '提交跟进', '自动提交、跟踪书面审 / 调解进度，结案归档 + 类案沉淀。', 'or'),
+            ('📥', '简历自动接入', '对接 BOSS 直聘 / LinkedIn / Indeed，职位与简历自动同步，多渠道自动去重。', 'bl'),
+            ('🔍', 'AI 初筛', '解析 30+ 字段，按 JD 算匹配度排序，不合格简历止步第一关。', 'or'),
+            ('🎯', '多维评分', '专业技能、项目经验、学习潜力多维度综合评分，权重可自定义。', 'gr'),
+            ('🎙️', 'AI 语音面试', '7×24 自动邀约、提问、追问、记录、评分，单场约 10 分钟。', 'pu'),
+            ('📋', '统一题库', '八股题 + 场景题统一题库与评分卡，所有候选人同一把尺子。', 'te'),
+            ('✅', '一键录用决策', '评估、报告、漏斗汇到一处，HR 勾选即进下一轮或发感谢信。', 'or'),
         ], cols=3),
         kpi_items=[
-            ('30→200+', '单律师月产能（件）'),
-            ('6–10h→1–2h', '单案律师工时'),
-            ('15 天', '答辩期内闭环'),
-            ('看 / 改 / 签', '律师只做三件事'),
+            ('5×', '简历处理效率'),
+            ('200+', '面试并发场次'),
+            ('38→19 天', '招聘周期'),
+            ('Top 20%', 'HR 只看这部分'),
         ],
-        cta_text='让 AI 律师接住你的批量案件',
+        cta_text='让 AI HR 接住你的招聘初筛与初面',
     )
 
     return pages
