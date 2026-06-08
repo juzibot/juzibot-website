@@ -1184,7 +1184,7 @@ def page_enterprise():
          '<strong>1000+ 大型企业客户验证过的部署能力</strong>，在生产环境跑了多年，不是 demo。从单一场景到多职能 Agent 矩阵，从一个客户的私域到集团央企的多租户隔离，都跑得通。',
          '<div style="font-size:11px;color:var(--gray-text);font-weight:700;letter-spacing:.04em;margin-bottom:8px;">部署规模</div>'
          '<div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--gray-line);padding:6px 0;font-size:12.5px;"><span>大型企业客户</span><span style="color:var(--blue);font-weight:800;font-size:16px;">1000+</span></div>'
-         '<div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--gray-line);padding:6px 0;font-size:12.5px;"><span>累计服务终端用户</span><span style="color:var(--blue);font-weight:800;font-size:16px;">4 亿 + 人次</span></div>'
+         '<div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--gray-line);padding:6px 0;font-size:12.5px;"><span>覆盖高合规行业</span><span style="color:var(--blue);font-weight:800;font-size:16px;">5 大</span></div>'
          '<div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--gray-line);padding:6px 0;font-size:12.5px;"><span>日均处理消息</span><span style="color:var(--blue);font-weight:800;font-size:16px;">200 万 +</span></div>'
          '<div style="display:flex;justify-content:space-between;align-items:baseline;padding:6px 0;font-size:12.5px;"><span>SaaS 服务可用性</span><span style="color:var(--green);font-weight:800;font-size:16px;">99.9%</span></div>'),
 
@@ -1516,7 +1516,7 @@ def page_about():
         '<div style="font-size:24px;font-weight:800;color:var(--black);line-height:1.55;letter-spacing:-.01em;">在 1000+ 家中国企业的 IM 通道、客服、销售、合规流程里跑，按业务结果收费。</div>'
         '<div style="margin-top:24px;display:flex;justify-content:center;gap:32px;flex-wrap:wrap;">'
         '<div><div style="font-size:32px;font-weight:800;color:var(--orange);letter-spacing:-.01em;line-height:1.1;">1000+</div><div style="font-size:13px;color:var(--gray-text);margin-top:4px;">大型企业客户</div></div>'
-        '<div><div style="font-size:32px;font-weight:800;color:var(--blue);letter-spacing:-.01em;line-height:1.1;">4 亿</div><div style="font-size:13px;color:var(--gray-text);margin-top:4px;">累计服务终端用户（人次）</div></div>'
+        '<div><div style="font-size:32px;font-weight:800;color:var(--blue);letter-spacing:-.01em;line-height:1.1;">10 年</div><div style="font-size:13px;color:var(--gray-text);margin-top:4px;">深耕对话式 AI</div></div>'
         '<div><div style="font-size:32px;font-weight:800;color:var(--green);letter-spacing:-.01em;line-height:1.1;">5 个</div><div style="font-size:13px;color:var(--gray-text);margin-top:4px;">高合规高垂直行业</div></div>'
         '<div><div style="font-size:32px;font-weight:800;color:var(--purple);letter-spacing:-.01em;line-height:1.1;">9 年</div><div style="font-size:13px;color:var(--gray-text);margin-top:4px;">行业 know-how 积累</div></div>'
         '<div><div style="font-size:32px;font-weight:800;color:var(--black);letter-spacing:-.01em;line-height:1.1;">22k+</div><div style="font-size:13px;color:var(--gray-text);margin-top:4px;">Wechaty GitHub Star</div></div>'
@@ -1715,13 +1715,13 @@ def page_about():
 
     return page_layout(
         title="关于我们 · 关于句子互动 · 一支把 AI 装进企业的团队",
-        description="句子互动是企业级 Agentic AI 平台，由 Wechaty 开源作者李佳芮创立。9 年积累，1000+ 大型企业客户、累计服务终端用户约 4 亿人次。国家高新技术企业、北京市专精特新「小巨人」、公安部等保三级，WAIC 全球创新冠军、2025 CHINA AI 100。",
+        description="句子互动是企业级 Agentic AI 平台，由 Wechaty 开源作者李佳芮创立。9 年积累，1000+ 大型企业客户、深耕对话式 AI 十年。国家高新技术企业、北京市专精特新「小巨人」、公安部等保三级，WAIC 全球创新冠军、2025 CHINA AI 100。",
         rel="",
         breadcrumbs=[("首页", "index.html"), ("关于我们", None)],
         hero_kicker="关于句子互动",
         hero_h1='一支<span class="accent">把 AI 装进 1000+ 家企业</span>的团队',
         hero_lede="句子互动是企业级 Agentic AI 平台，<strong>2019 年由 Wechaty 开源作者李佳芮创立</strong>。把大模型和企业数据接进 IM 通道、抖音、钉钉、飞书、WhatsApp，为企业造能自主决策的 AI 劳动力。做对话式 AI 这些年，已服务 1000+ 大型企业客户。",
-        pills=["1000+ 大型企业客户", "累计服务 4 亿人次", "国家高新 · 专精特新", "Wechaty 22k+ Star"],
+        pills=["1000+ 大型企业客户", "深耕对话式 AI 十年", "国家高新 · 专精特新", "Wechaty 22k+ Star"],
         body=body,
     )
 
