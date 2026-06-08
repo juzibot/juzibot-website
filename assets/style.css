@@ -878,7 +878,7 @@ section { padding: 100px 0; }
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
 }
 .moat-card {
-  padding: 36px 32px;
+  padding: 26px 28px;
   border-radius: var(--radius-lg);
   position: relative;
   overflow: hidden;
@@ -890,10 +890,10 @@ section { padding: 100px 0; }
 .moat-card.m5 { background: var(--teal-lt); }
 .moat-card.m6 { background: var(--blue-light); }
 .moat-card .mnum {
-  font-size: 36px; font-weight: 900;
+  font-size: 32px; font-weight: 900;
   letter-spacing: -.02em;
   line-height: 1;
-  margin-bottom: 22px;
+  margin-bottom: 12px;
 }
 .moat-card.m1 .mnum { color: var(--blue); }
 .moat-card.m2 .mnum { color: var(--orange); }
@@ -909,7 +909,7 @@ section { padding: 100px 0; }
 .moat-card .men {
   font-size: 13px; font-weight: 700;
   letter-spacing: .08em;
-  margin-bottom: 18px;
+  margin-bottom: 12px;
   text-transform: uppercase;
 }
 .moat-card.m1 .men { color: var(--blue); }

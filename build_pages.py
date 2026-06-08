@@ -852,7 +852,7 @@ def page_shouhu():
 
     # ── 一键测试报告 ──
     body += split_section(
-        eyebrow="秀给客户看",
+        eyebrow="让客户看得见",
         title="一句话生成一份测试报告——把工程量摆到客户面前",
         paragraphs=[
             "六道关口背后是大量工程活，客户感受不到的话，跟没做也差不多。",
