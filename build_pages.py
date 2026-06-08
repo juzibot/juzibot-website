@@ -46,8 +46,7 @@ def nav_html(rel):
       <div class="nav-item"><a href="{rel}industries.html">客户与行业</a></div>
       <div class="nav-item"><a href="{rel}enterprise.html">企业级能力</a></div>
       <div class="nav-item"><a href="{rel}fde.html">FDE 交付团队</a></div>
-      <div class="nav-item"><a href="{rel}insights.html">AI 原生组织</a></div>
-      <div class="nav-item"><a href="{rel}about.html">关于我们</a></div>
+      <div class="nav-item"><a href="{rel}about.html">AI 原生组织</a></div>
     </div>
     <a href="{rel}index.html#cta" class="nav-cta">联系我们 →</a>
     <button class="nav-burger" aria-label="菜单" onclick="this.closest('.nav').classList.toggle('nav-open')">☰</button>
@@ -98,10 +97,9 @@ def footer_html(rel):
       <div>
         <h6>公司</h6>
         <ul>
-          <li><a href="{rel}about.html">关于我们</a></li>
+          <li><a href="{rel}about.html">AI 原生组织</a></li>
           <li><a href="{rel}fde.html">FDE 交付团队</a></li>
           <li><a href="{rel}industries.html">客户与行业</a></li>
-          <li><a href="{rel}insights.html">AI 原生组织</a></li>
           <li><a href="{rel}index.html#cta">联系我们</a></li>
         </ul>
       </div>
@@ -1596,6 +1594,44 @@ def page_about():
         '</div>'
     )
 
+    body += block(        "AI 下沉到每个部门",
+        "我们自己，就是一家 AI 原生组织",
+        "判断一家公司是不是真的 AI 原生，不看它怎么说，看 AI 有没有落到每个具体岗位。在句子互动，从管理层到一线，每个部门都有自己每天在跑的 AI 活。",
+        '''<div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+<div style="background:#fff;border:1px solid var(--gray-line);border-radius:14px;padding:22px;">
+  <div style="font-size:12px;font-weight:800;color:var(--blue);letter-spacing:.06em;margin-bottom:8px;">战略</div>
+  <div style="font-size:15px;font-weight:800;margin-bottom:8px;">一句话，75 分钟调研三家公司</div>
+  <p style="font-size:13px;color:var(--gray-text);line-height:1.6;margin:0;">一句「判断这家是否为竞争对手」，AI 自动检索、撰写并发布到飞书群。出错后把教训写进 skill，下次自动规避。</p>
+</div>
+<div style="background:#fff;border:1px solid var(--gray-line);border-radius:14px;padding:22px;">
+  <div style="font-size:12px;font-weight:800;color:var(--green);letter-spacing:.06em;margin-bottom:8px;">技术</div>
+  <div style="font-size:15px;font-weight:800;margin-bottom:8px;">AI 自己测 AI、压测自己的系统</div>
+  <p style="font-size:13px;color:var(--gray-text);line-height:1.6;margin:0;">测试 Agent、流量回放压测系统，都是团队用 AI 搭出来的，连提示词改动都能跑回归。</p>
+</div>
+<div style="background:#fff;border:1px solid var(--gray-line);border-radius:14px;padding:22px;">
+  <div style="font-size:12px;font-weight:800;color:var(--orange);letter-spacing:.06em;margin-bottom:8px;">销售</div>
+  <div style="font-size:15px;font-weight:800;margin-bottom:8px;">一个销售，月接 200 → 913 人</div>
+  <p style="font-size:13px;color:var(--gray-text);line-height:1.6;margin:0;">头部教育客户的先锋组，单个销售月接量从 200 增至 913 人，达整体均值数倍，由我们率先验证跑通。</p>
+</div>
+<div style="background:#fff;border:1px solid var(--gray-line);border-radius:14px;padding:22px;">
+  <div style="font-size:12px;font-weight:800;color:var(--purple);letter-spacing:.06em;margin-bottom:8px;">法务</div>
+  <div style="font-size:15px;font-weight:800;margin-bottom:8px;">全量合同走「秒审」</div>
+  <p style="font-size:13px;color:var(--gray-text);line-height:1.6;margin:0;">销售发合同，AI 分钟级返回审核结果，过的自动走用章，异常的带修改建议推回来。</p>
+</div>
+<div style="background:#fff;border:1px solid var(--gray-line);border-radius:14px;padding:22px;">
+  <div style="font-size:12px;font-weight:800;color:var(--teal);letter-spacing:.06em;margin-bottom:8px;">HR · 运营</div>
+  <div style="font-size:15px;font-weight:800;margin-bottom:8px;">一场全靠 AI 办起来的 Hackathon</div>
+  <p style="font-size:13px;color:var(--gray-text);line-height:1.6;margin:0;">海报、议程、记分牌、开场视频全是 AI 做的；还把「AI 员工上岗机制」写成了制度。</p>
+</div>
+<div style="background:#fff;border:1px solid var(--gray-line);border-radius:14px;padding:22px;">
+  <div style="font-size:12px;font-weight:800;color:var(--blue);letter-spacing:.06em;margin-bottom:8px;">财务</div>
+  <div style="font-size:15px;font-weight:800;margin-bottom:8px;">连财务也用上了 AI</div>
+  <p style="font-size:13px;color:var(--gray-text);line-height:1.6;margin:0;">在公司多年的财务同事，现在也用 AI 处理日常工作。</p>
+</div>
+</div>''',
+        alt=True,
+    )
+
     body += block(        "AI 原生团队",
         "大模型时代如何构建 AI Agent——<span class=\"accent\">《Chatbot 从 0 到 1》</span>",
         "由创始人 <strong>李佳芮</strong>（Wechaty 开源作者）带队。团队从 2017 年的 Wechaty 开源框架起步，到 2020 年出版中文首本聊天机器人专著《Chatbot 从 0 到 1》，到 2024 年第二版升级到大模型时代——9 年一直在做企业级 Agent。",
@@ -1650,8 +1686,8 @@ def page_about():
 
     body += block(
         "时间线",
-        "11 年穿越周期",
-        "公司从在线教育起家。2022 年双减政策出台，最大一块业务受到冲击。随后将同一套方法迁移到消费品和金融，验证了跨行业复用的能力。",
+        "9 年，从对话式 AI 到 AI 员工",
+        "公司从在线教育起家，后来把同一套方法复制到消费品、金融、政务等行业，跨行业都跑通了。",
         '''<div style="position:relative;padding:48px 0 24px;max-width:1100px;margin:0 auto;">
 <div style="position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:2px;background:var(--gray-line);"></div>
 <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:0;position:relative;">
@@ -1786,10 +1822,10 @@ def page_about():
 """.strip()
 
     return page_layout(
-        title="关于我们 · 关于句子互动 · 一支把 AI 装进企业的团队",
+        title="AI 原生组织 · 句子互动 · 一支把 AI 装进企业的团队",
         description="句子互动是企业级 Agentic AI 平台，由 Wechaty 开源作者李佳芮创立。9 年积累，1000+ 大型企业客户、深耕对话式 AI 十年。国家高新技术企业、北京市专精特新「小巨人」、公安部等保三级，WAIC 全球创新冠军、2025 CHINA AI 100。",
         rel="",
-        breadcrumbs=[("首页", "index.html"), ("关于我们", None)],
+        breadcrumbs=[("首页", "index.html"), ("AI 原生组织", None)],
         hero_kicker="关于句子互动",
         hero_h1='一支<span class="accent">把 AI 装进 1000+ 家企业</span>的团队',
         hero_lede="句子互动是企业级 Agentic AI 平台，<strong>2019 年由 Wechaty 开源作者李佳芮创立</strong>。把大模型和企业数据接进 IM 通道、抖音、钉钉、飞书、WhatsApp，为企业造能自主决策的 AI 员工。做对话式 AI 这些年，已服务 1000+ 大型企业客户。",
@@ -2023,7 +2059,7 @@ def page_insights():
         breadcrumbs=[("首页", "index.html"), ("AI 原生组织", None)],
         hero_kicker="AI 原生组织 · 我们自己怎么活",
         hero_h1='不是「在用 AI 的公司」，<span class="accent">是 AI 下沉到每个人的组织</span>',
-        hero_lede="很多公司都说自己在用 AI，但真正让每个人日常都离不开 Agent 的，并不多。在句子互动，<strong>从管理层到一线，每个部门、每个人每天都在用 Agent 干活</strong>——不是多配了个工具，是工作方式本身变了。90 后 AI native 加 9 年 toB 老兵，这样的组合市场上几乎没有。这条路我们自己先走通，再带客户一起跑。",
+        hero_lede="很多公司都说自己在用 AI，但真正让每个人日常都离不开 Agent 的，并不多。在句子互动，<strong>从管理层到一线，每个部门、每个人每天都在用 Agent 干活</strong>——不是多配了个工具，是工作方式本身变了。我们先把自己做成 AI 原生组织，再把这套方法带给客户。",
         pills=["AI 下沉到每个人", "90 后 × 9 年 toB", "自己先活成再带客户", "1 + N 组织"],
         body=body,
     )
@@ -2500,7 +2536,6 @@ if __name__ == '__main__':
         'enterprise.html': page_enterprise(),
         'industries.html': page_industries(),
         'about.html': page_about(),
-        'insights.html': page_insights(),
         'case-xingqudao.html': page_case_xingqudao(),
     }
     workforce = workforce_pages()
