@@ -886,6 +886,9 @@ section { padding: 100px 0; }
 .moat-card.m1 { background: var(--blue-light); }
 .moat-card.m2 { background: var(--orange-lt); }
 .moat-card.m3 { background: var(--green-lt); }
+.moat-card.m4 { background: var(--purple-lt); }
+.moat-card.m5 { background: var(--teal-lt); }
+.moat-card.m6 { background: var(--blue-light); }
 .moat-card .mnum {
   font-size: 36px; font-weight: 900;
   letter-spacing: -.02em;
@@ -895,6 +898,9 @@ section { padding: 100px 0; }
 .moat-card.m1 .mnum { color: var(--blue); }
 .moat-card.m2 .mnum { color: var(--orange); }
 .moat-card.m3 .mnum { color: var(--green); }
+.moat-card.m4 .mnum { color: var(--purple); }
+.moat-card.m5 .mnum { color: var(--teal); }
+.moat-card.m6 .mnum { color: var(--blue); }
 .moat-card h4 {
   margin: 0 0 6px;
   font-size: 22px; font-weight: 800;
@@ -909,6 +915,9 @@ section { padding: 100px 0; }
 .moat-card.m1 .men { color: var(--blue); }
 .moat-card.m2 .men { color: var(--orange); }
 .moat-card.m3 .men { color: var(--green); }
+.moat-card.m4 .men { color: var(--purple); }
+.moat-card.m5 .men { color: var(--teal); }
+.moat-card.m6 .men { color: var(--blue); }
 .moat-card ul { list-style: none; padding: 0; margin: 0 0 18px; }
 .moat-card li {
   padding: 6px 0;
