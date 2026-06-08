@@ -115,7 +115,7 @@
       </div>
     </div>
     <div class="nav-right">
-      <a href="#cta" class="nav-cta">联系我们 →</a>
+      <a class="nav-cta" style="cursor:pointer" onclick="openContact('导航·联系我们')">联系我们 →</a>
       <a href="https://insight.juzibot.com/auth/login?from=juzibot.com&amp;type=register" class="nav-login">登录 / 注册</a>
     </div>
     <button class="nav-burger" aria-label="菜单" onclick="this.closest('.nav').classList.toggle('nav-open')">☰</button>
@@ -756,52 +756,15 @@
 
 <!-- ════════════ CONTACT MODAL ════════════ -->
 <div class="modal-overlay" id="contactModal">
-  <div class="modal" style="max-width:680px;" role="dialog" aria-modal="true">
-    <div class="modal-hd" style="padding:26px 32px 24px;">
+  <div class="modal" style="max-width:420px;" role="dialog" aria-modal="true">
+    <div class="modal-hd" style="padding:26px 32px 20px;">
       <button class="mclose" onclick="closeModal('contactModal')" aria-label="关闭">×</button>
       <div class="meyebrow">联系我们</div>
-      <h3 id="contactTitle" style="font-size:20px;margin-bottom:0;">预约演示 / 获取方案</h3>
+      <h3 style="font-size:20px;margin-bottom:0;">扫码加企业微信</h3>
     </div>
-    <div class="modal-bd">
-      <div id="cfForm">
-        <div class="cf-choice">
-          <div class="cf-choice-main">
-            <div class="cf-choice-label">留下联系方式，我们当天联系你</div>
-            <div class="cf-row">
-              <input class="cf-input" type="text" placeholder="您的姓名 *" id="cf-name">
-              <input class="cf-input" type="text" placeholder="公司名称 *" id="cf-company">
-            </div>
-            <div class="cf-row">
-              <input class="cf-input" type="tel" placeholder="手机号 *" id="cf-phone">
-              <select class="cf-input" id="cf-industry">
-                <option value="" disabled selected>所在行业</option>
-                <option>在线教育</option>
-                <option>消费品电商</option>
-                <option>金融（银行 / 证券 / 保险）</option>
-                <option>政务 / 司法</option>
-                <option>泛互联网</option>
-                <option>其他</option>
-              </select>
-            </div>
-            <div class="cf-row full">
-              <textarea class="cf-input" placeholder="想了解什么？具体场景描述一下（选填）" id="cf-msg" style="height:80px;resize:none;"></textarea>
-            </div>
-            <button class="cf-submit" onclick="submitContact()">提交 — 工作日当天回复</button>
-          </div>
-          <div class="cf-choice-or"><span>或</span></div>
-          <div class="cf-choice-qr">
-            <div class="cf-choice-label">扫码加企业微信</div>
-            <img src="assets/brand/qr-qiwei.png" alt="企业微信二维码" width="156" height="156" />
-            <div class="cf-qr-note">直接和我们聊<br/>工作日当天回复</div>
-          </div>
-        </div>
-      </div>
-      <div class="cf-success" id="cfSuccess">
-        <div class="check">✅</div>
-        <h4>已收到您的信息</h4>
-        <p style="margin-bottom:18px;">我们会在工作日当天与您联系。<br/>想更快？扫码加企业微信：</p>
-        <img src="assets/brand/qr-qiwei.png" alt="企业微信二维码" width="140" height="140" style="border-radius:10px;border:1px solid var(--gray-line);" />
-      </div>
+    <div class="modal-bd" style="text-align:center;padding:8px 32px 32px;">
+      <img src="assets/brand/qr-qiwei.png" alt="企业微信二维码" width="200" height="200" style="border-radius:12px;border:1px solid var(--gray-line);" />
+      <p style="margin-top:16px;color:var(--gray-text);font-size:14.5px;">直接和我们聊，工作日当天回复</p>
     </div>
   </div>
 </div>
@@ -860,7 +823,6 @@
 </footer>
 
 <script>
-window.JUZI_LEAD_ENDPOINT = "/api/lead";
 /* ── Modal helpers ── */
 function openModal(id) {
   var el = document.getElementById(id);
@@ -908,41 +870,8 @@ if (!sessionStorage.getItem('intro_shown')) {
   window.addEventListener('scroll', scrollHandler, { passive: true });
 }
 
-/* ── Contact modal ── */
-function openContact(source, title) {
-  window.__leadSource = source || '未知来源';
-  var t = document.getElementById('contactTitle');
-  if (t) t.textContent = title || '预约演示 / 获取方案';
-  openModal('contactModal');
-}
-
-function submitContact() {
-  var name    = (document.getElementById('cf-name').value || '').trim();
-  var company = (document.getElementById('cf-company').value || '').trim();
-  var phone   = (document.getElementById('cf-phone').value || '').trim();
-  var industry= (document.getElementById('cf-industry') || {}).value || '';
-  var message = (document.getElementById('cf-msg') || {}).value || '';
-  if (!name || !company || !phone) {
-    alert('请填写姓名、公司名和手机号');
-    return;
-  }
-  var btn = document.querySelector('#cfForm .cf-submit');
-  if (btn) { btn.disabled = true; btn.textContent = '提交中…'; }
-  var done = function() {
-    document.getElementById('cfForm').style.display = 'none';
-    document.getElementById('cfSuccess').style.display = 'block';
-  };
-  var payload = {
-    name: name, company: company, phone: phone,
-    industry: industry, message: message,
-    source: window.__leadSource || '未知来源',
-    page: location.pathname, submitted_at: new Date().toISOString()
-  };
-  var ep = window.JUZI_LEAD_ENDPOINT;
-  if (!ep) { done(); return; }
-  fetch(ep, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
-    .then(done).catch(done);
-}
+/* ── Contact modal：只弹企微二维码 ── */
+function openContact() { openModal('contactModal'); }
 
 /* ── NAV: highlight active page ── */
 (function() {
