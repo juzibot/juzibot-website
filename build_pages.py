@@ -1303,7 +1303,7 @@ def page_enterprise():
 
     body += split_section(
         eyebrow="部署模式",
-        title="SaaS、私有化、混合、一体机——四种部署都支持",
+        title="四种部署模式，按合规要求任选",
         paragraphs=[
             '不同行业对部署模式要求不同——电商客户用 SaaS 即可，金融政务客户要私有化或一体机交付。我们四种模式都跑得通，按客户合规要求选。',
         ],
@@ -2295,7 +2295,7 @@ def page_fde():
     body = ''
     body += block(        "FDE 是什么",
         "把工程师派到客户现场，对结果负责",
-        "FDE，Forward Deployed Engineer——前移到客户业务现场的工程师。不止于交付软件，而是与客户一起理解业务，让 AI 真正在其中产出结果。",
+        "FDE，Forward Deployed Engineer（前端部署工程师）——前移到客户业务现场的工程师。不止于交付软件，而是与客户一起理解业务，让 AI 真正在其中产出结果。",
         '''<div style="max-width:980px;margin:0 auto;border:1px solid var(--gray-line);border-radius:16px;overflow:hidden;">
 <div style="display:grid;grid-template-columns:1fr 1fr;">
   <div style="background:var(--gray-bg);padding:15px 22px;font-weight:800;font-size:13.5px;color:var(--gray-text);">普通产品工程师</div>
@@ -2394,12 +2394,12 @@ def page_fde():
 """.strip()
     return page_layout(
         title="FDE 交付团队 · 对结果负责的工程师 | 句子互动",
-        description="FDE（Forward Deployed Engineer）——前移到客户业务现场的工程师团队。不只装软件，对客户的业务结果负责：先搞懂这门生意，按结果收费，把现场踩出来的能力回流成产品。",
+        description="FDE（Forward Deployed Engineer，前端部署工程师）——前移到客户业务现场的工程师团队。不只装软件，对客户的业务结果负责：先搞懂这门生意，按结果收费，把现场踩出来的能力回流成产品。",
         rel="",
         breadcrumbs=[("首页", "index.html"), ("FDE 交付团队", None)],
         hero_kicker="FDE · 我们怎么交付",
         hero_h1='一支<span class="accent">对结果负责</span>的 FDE 团队',
-        hero_lede="买软件，员工能否用好，责任落在客户自己身上。我们派出的是 FDE——<strong>Forward Deployed Engineer，前移到客户业务现场的工程师</strong>。先理解客户的业务，再按结果收费。客户业绩增长，我们才有收入，因此现场积累的能力会回流到产品中。",
+        hero_lede="传统软件交付完就结束，用得好不好是客户自己的事。句子互动派出的是 FDE——<strong>Forward Deployed Engineer，前端部署工程师</strong>，前移到客户业务现场：先理解客户的业务，再按结果收费。客户业绩增长，我们才有收入，因此现场积累的能力会回流到产品中。",
         pills=["前移到客户现场", "对业务结果负责", "按结果收费", "能力回流产品"],
         body=body,
     )
