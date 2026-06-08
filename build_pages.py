@@ -1043,7 +1043,7 @@ def workforce_pages():
         slug='government',
         title='AI 社工 / 调解员',
         kicker='AI 员工 · 政务岗',
-        h1='AI 社工 / 调解员 · <span class="accent">政务高合规下也跑得稳</span>',
+        h1='AI 社工 / 调解员 · <span class="accent">高合规下也跑得稳</span>',
         lede='AI 普法调解员、AI 社工已在 <strong>城市基层试点</strong>率先落地——AI 社工 7×24 响应，累计服务居民约 50 万人次；AI 普法调解员参与调解近百起，成功率约 93%，获评地方法治实践优秀案例。每一句输出都有日志记录、可逐句倒查——这是政务和金融客户最看重的一点。',
         pills=['城市基层试点落地', '高合规 + 全程可审计', '居民服务约 50 万人次', '调解成功率约 93%'],
         color='pu',
