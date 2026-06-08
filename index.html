@@ -133,7 +133,7 @@
         <strong>按业务结果交付，而非只提供工具</strong>。销售岗已跑通按成交付费，AI 转化达到人工的 3 倍。
       </p>
       <div class="hero-actions">
-        <a href="#cta" class="btn-primary">预约演示 <span class="btn-arrow">→</span></a>
+        <button type="button" class="btn-primary" onclick="openContact('首页·Hero','预约演示')">预约演示 <span class="btn-arrow">→</span></button>
         <a href="#products" class="btn-secondary">看 7 个产品</a>
       </div>
       <div class="hero-kpis">
@@ -346,7 +346,7 @@
           <div class="ptag">不确定从哪个开始？</div>
           <h3>30 分钟，看真实客户场景</h3>
           <p>告诉我们你的业务在哪一环受阻，我们给出对应的产品组合 + 90 天落地路径，你的同行多半已经在用了。</p>
-          <a href="#cta" class="btn-primary" style="margin-top:auto;align-self:flex-start;">预约演示 <span class="btn-arrow">→</span></a>
+          <button type="button" class="btn-primary" style="margin-top:auto;align-self:flex-start;" onclick="openContact('首页·产品卡','预约演示')">预约演示 <span class="btn-arrow">→</span></button>
         </div>
       </div>
     </div>
@@ -701,8 +701,7 @@
         90 天内，第一个 AI 员工在你的业务里上岗。
       </p>
       <div class="cta-actions">
-        <a href="mailto:hello@juzibot.com" class="btn-primary">预约演示 <span class="btn-arrow">→</span></a>
-        <a href="https://juzibot.com" class="btn-secondary">了解更多</a>
+        <button type="button" class="btn-primary" onclick="openContact('首页·底部CTA')">预约演示 <span class="btn-arrow">→</span></button>
       </div>
     </div>
     <div class="cta-stats">
@@ -724,15 +723,15 @@
 
 <!-- ════════════ RIGHT FLOAT PANEL ════════════ -->
 <div class="float-panel" id="floatPanel">
-  <button class="fp-btn fp-orange" onclick="openContact('预约 30 分钟演示')" style="min-height:80px;">
+  <button class="fp-btn fp-orange" onclick="openContact('首页·悬浮免费演示','预约 30 分钟演示')" style="min-height:80px;">
     <span class="fp-icon">🎯</span>免费<br/>演示
     <span class="fp-tip">预约 30 分钟 Demo，看真实客户场景</span>
   </button>
-  <button class="fp-btn" onclick="openContact('获取行业解决方案')">
+  <button class="fp-btn" onclick="openContact('首页·悬浮获取方案','获取行业解决方案')">
     <span class="fp-icon">📋</span>获取<br/>方案
     <span class="fp-tip">获取你所在行业的解决方案</span>
   </button>
-  <button class="fp-btn fp-green" onclick="openContact('咨询产品')">
+  <button class="fp-btn fp-green" onclick="openContact('首页·悬浮咨询','咨询产品')">
     <span class="fp-icon">💬</span>咨询
     <span class="fp-tip">有问题直接问</span>
   </button>
@@ -777,10 +776,10 @@
         </div>
       </div>
       <div class="m-cta-row">
-        <button class="btn-primary" onclick="closeModal('introModal');openContact('预约 30 分钟演示')">预约演示 → 30 分钟</button>
+        <button class="btn-primary" onclick="closeModal('introModal');openContact('首页·开屏弹窗','预约 30 分钟演示')">预约演示 → 30 分钟</button>
         <button class="btn-secondary" onclick="closeModal('introModal')">先看看再说</button>
       </div>
-      <p class="m-note">不用注册 · 看真实客户场景 · <a href="mailto:hello@juzibot.com" onclick="closeModal('introModal')">有问题直接发邮件</a></p>
+      <p class="m-note">不用注册 · 看真实客户场景 · 工作日当天回复</p>
     </div>
   </div>
 </div>
@@ -819,7 +818,7 @@
       <div class="cf-success" id="cfSuccess">
         <div class="check">✅</div>
         <h4>已收到您的信息</h4>
-        <p>我们会在工作日内联系您。<br/>如果比较急，可以直接发邮件 <a href="mailto:hello@juzibot.com" style="color:var(--blue);font-weight:700;">hello@juzibot.com</a></p>
+        <p>我们会在工作日当天与您联系。</p>
       </div>
     </div>
   </div>
@@ -929,9 +928,10 @@ if (!sessionStorage.getItem('intro_shown')) {
 }
 
 /* ── Contact modal ── */
-function openContact(title) {
+function openContact(source, title) {
+  window.__leadSource = source || '未知来源';
   var t = document.getElementById('contactTitle');
-  if (t) t.textContent = title || '联系我们';
+  if (t) t.textContent = title || '预约演示 / 获取方案';
   openModal('contactModal');
 }
 
@@ -939,13 +939,28 @@ function submitContact() {
   var name    = (document.getElementById('cf-name').value || '').trim();
   var company = (document.getElementById('cf-company').value || '').trim();
   var phone   = (document.getElementById('cf-phone').value || '').trim();
+  var industry= (document.getElementById('cf-industry') || {}).value || '';
+  var message = (document.getElementById('cf-msg') || {}).value || '';
   if (!name || !company || !phone) {
     alert('请填写姓名、公司名和手机号');
     return;
   }
-  /* In production: POST to your CRM/webhook here */
-  document.getElementById('cfForm').style.display = 'none';
-  document.getElementById('cfSuccess').style.display = 'block';
+  var btn = document.querySelector('#cfForm .cf-submit');
+  if (btn) { btn.disabled = true; btn.textContent = '提交中…'; }
+  var done = function() {
+    document.getElementById('cfForm').style.display = 'none';
+    document.getElementById('cfSuccess').style.display = 'block';
+  };
+  var payload = {
+    name: name, company: company, phone: phone,
+    industry: industry, message: message,
+    source: window.__leadSource || '未知来源',
+    page: location.pathname, submitted_at: new Date().toISOString()
+  };
+  var ep = window.JUZI_LEAD_ENDPOINT;
+  if (!ep) { done(); return; }
+  fetch(ep, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+    .then(done).catch(done);
 }
 
 /* ── NAV: highlight active page ── */
