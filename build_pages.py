@@ -1581,13 +1581,13 @@ def page_about():
         "公司简介",
         "我们做的事，<span class=\"accent\">让 AI 在企业真实业务里跑起来</span>",
         "",
-        '<div style="max-width:920px;margin:0 auto;background:linear-gradient(135deg,var(--blue-light),#fff);border-radius:22px;padding:48px;text-align:center;">'
-        '<div style="font-size:24px;font-weight:800;color:var(--black);line-height:1.55;letter-spacing:-.01em;">AI 不是摆在一边等人来问，而是进到客服、销售、合规这些每天都在发生的流程里，把活干完，按业务结果交付。</div>'
-        '<div style="margin-top:28px;display:flex;justify-content:center;gap:40px;flex-wrap:wrap;">'
-        '<div><div style="font-size:32px;font-weight:800;color:var(--orange);letter-spacing:-.01em;line-height:1.1;">1000+</div><div style="font-size:13px;color:var(--gray-text);margin-top:4px;">大型企业客户</div></div>'
-        '<div><div style="font-size:32px;font-weight:800;color:var(--blue);letter-spacing:-.01em;line-height:1.1;">7 年</div><div style="font-size:13px;color:var(--gray-text);margin-top:4px;">企业服务深耕</div></div>'
-        '<div><div style="font-size:32px;font-weight:800;color:var(--green);letter-spacing:-.01em;line-height:1.1;">4 个</div><div style="font-size:13px;color:var(--gray-text);margin-top:4px;">重点行业</div></div>'
-        '<div><div style="font-size:32px;font-weight:800;color:var(--purple);letter-spacing:-.01em;line-height:1.1;">10+</div><div style="font-size:13px;color:var(--gray-text);margin-top:4px;">覆盖 IM 渠道</div></div>'
+        '<div style="max-width:920px;margin:0 auto;background:linear-gradient(135deg,var(--blue-light),#fff);border-radius:22px;padding:44px 48px;text-align:center;">'
+        '<div style="font-size:23px;font-weight:800;color:var(--black);line-height:1.55;letter-spacing:-.01em;max-width:760px;margin:0 auto;">AI 不是摆在一边等人来问，而是进到客服、销售、合规这些每天都在发生的流程里，把活干完，按业务结果交付。</div>'
+        '<div style="margin-top:32px;padding-top:28px;border-top:1px solid rgba(0,0,0,.06);display:flex;justify-content:center;align-items:center;gap:0;flex-wrap:wrap;">'
+        '<div style="padding:0 36px;"><div style="font-size:30px;font-weight:800;color:var(--blue);letter-spacing:-.01em;line-height:1.1;">1000+</div><div style="font-size:13px;color:var(--gray-text);margin-top:6px;">大型企业客户</div></div>'
+        '<div style="padding:0 36px;border-left:1px solid rgba(0,0,0,.08);"><div style="font-size:30px;font-weight:800;color:var(--blue);letter-spacing:-.01em;line-height:1.1;">7 年</div><div style="font-size:13px;color:var(--gray-text);margin-top:6px;">企业服务深耕</div></div>'
+        '<div style="padding:0 36px;border-left:1px solid rgba(0,0,0,.08);"><div style="font-size:30px;font-weight:800;color:var(--blue);letter-spacing:-.01em;line-height:1.1;">4 个</div><div style="font-size:13px;color:var(--gray-text);margin-top:6px;">重点行业</div></div>'
+        '<div style="padding:0 36px;border-left:1px solid rgba(0,0,0,.08);"><div style="font-size:30px;font-weight:800;color:var(--blue);letter-spacing:-.01em;line-height:1.1;">10+</div><div style="font-size:13px;color:var(--gray-text);margin-top:6px;">覆盖 IM 渠道</div></div>'
         '</div>'
         '</div>'
     )
