@@ -45,7 +45,7 @@ def nav_html(rel):
       </div>
       <div class="nav-item"><a href="{rel}industries.html">客户与行业</a></div>
       <div class="nav-item"><a href="{rel}enterprise.html">企业级能力</a></div>
-      <div class="nav-item"><a href="{rel}fde.html">如何交付</a></div>
+      <div class="nav-item"><a href="{rel}fde.html">FDE 交付结果</a></div>
       <div class="nav-item"><a href="{rel}about.html">AI 原生组织</a></div>
     </div>
     <div class="nav-right">
@@ -98,7 +98,7 @@ def footer_html(rel):
       <div>
         <h6>公司</h6>
         <ul>
-          <li><a href="{rel}fde.html">如何交付</a></li>
+          <li><a href="{rel}fde.html">FDE 交付结果</a></li>
           <li><a href="{rel}industries.html">客户与行业</a></li>
           <li><a href="{rel}about.html">AI 原生组织</a></li>
           <li><a href="{rel}index.html#cta">联系我们</a></li>
@@ -543,49 +543,119 @@ def page_miaodong():
     body += '''
 <section class="product-shot-section">
   <div class="container">
-    <div class="ui-mock flow-anim">
-      <div class="ui-topbar">
-        <span class="ui-dot r"></span><span class="ui-dot y"></span><span class="ui-dot g"></span>
-        <span class="ui-title">句子秒懂 · 流程引擎</span>
-        <span class="ui-tabs"><span>试运行</span><span class="on">发布</span><span>启用</span></span>
+    <div class="canvas-mock">
+      <div class="cm-topbar">
+        <span class="cm-back">‹</span>
+        <span class="cm-logo">句</span>
+        <span class="cm-ttl"><b>售前咨询 · Agent 工作流</b><i></i></span>
+        <span class="cm-tbtns">
+          <span class="cm-tbtn icon">◷</span>
+          <span class="cm-tbtn hide-sm">隐藏上次运行结果</span>
+          <span class="cm-tbtn hide-sm">复制</span>
+          <span class="cm-tbtn pub">➤ 发布</span>
+        </span>
       </div>
-      <div class="ui-body">
-        <div class="ui-palette">
-          <div class="pg">触发器</div>
-          <div class="pn">接收消息</div>
-          <div class="pn">新增标签</div>
-          <div class="pg">计算节点</div>
-          <div class="pn">大模型生成</div>
-          <div class="pn">知识库查询</div>
-          <div class="pn">规则中心</div>
-          <div class="pg">动作节点</div>
-          <div class="pn">发送消息</div>
-          <div class="pn">转人工</div>
-        </div>
-        <div class="ui-canvas">
-          <div class="flow-node">接收消息<span>微信 / 抖音 / 小红书</span></div>
-          <div class="flow-arrow">→</div>
-          <div class="flow-node n-purple">规则中心<span>意图分流</span></div>
-          <div class="flow-arrow">→</div>
-          <div class="flow-col">
-            <div class="flow-node n-green">大模型生成<span>DeepSeek-V3</span></div>
-            <div class="flow-node n-teal">知识库查询<span>产品文档</span></div>
+      <div class="cm-stage" data-w="1180" data-h="560">
+        <div class="cm-scaler">
+          <svg class="cm-links" viewBox="0 0 1180 560" preserveAspectRatio="none" aria-hidden="true">
+            <path class="l1" d="M242 270 C301 270 301 125 360 125"/>
+            <path class="l2" d="M242 270 C301 270 301 278 360 278"/>
+            <path class="l3" d="M242 270 C301 270 301 448 360 448"/>
+            <path class="l4" d="M596 125 C641 125 641 206 686 206"/>
+            <path class="l5" d="M596 278 C641 278 641 399 686 399"/>
+            <path class="l6" d="M596 448 C641 448 641 399 686 399"/>
+            <path class="l7" d="M926 206 C946 206 946 399 966 399"/>
+            <path class="l8" d="M922 399 C944 399 944 399 966 399"/>
+            <circle cx="242" cy="270" r="3.5"/>
+            <circle cx="360" cy="125" r="3.5"/><circle cx="596" cy="125" r="3.5"/>
+            <circle cx="360" cy="278" r="3.5"/><circle cx="596" cy="278" r="3.5"/>
+            <circle cx="360" cy="448" r="3.5"/><circle cx="596" cy="448" r="3.5"/>
+            <circle cx="686" cy="206" r="3.5"/><circle cx="926" cy="206" r="3.5"/>
+            <circle cx="686" cy="399" r="3.5"/><circle cx="922" cy="399" r="3.5"/>
+            <circle cx="966" cy="399" r="3.5"/>
+          </svg>
+
+          <div class="cm-node d1" style="left:30px;top:200px;width:212px">
+            <div class="cm-nhd"><span class="cm-ic ic-llm">✦</span><b>大模型</b><span class="cm-play">▷</span><span class="cm-more">···</span></div>
+            <div class="cm-row"><span>输入</span><i class="bar"></i></div>
+            <div class="cm-row"><span>输出</span><i class="bar"></i></div>
+            <div class="cm-row"><span>模型</span><span class="cm-chip"><i class="md"></i>DeepSeek-V3</span></div>
           </div>
-          <div class="flow-arrow">→</div>
-          <div class="flow-node n-orange">发送消息<span>回复客户</span></div>
+
+          <div class="cm-node d2" style="left:360px;top:70px;width:236px">
+            <div class="cm-nhd"><span class="cm-ic ic-tool">⚙</span><b>MCP 工具</b><span class="cm-play">▷</span><span class="cm-more">···</span></div>
+            <div class="cm-row"><span>输入</span><i class="bar"></i></div>
+            <div class="cm-row"><span>输出</span><i class="bar"></i><i class="bar s"></i></div>
+          </div>
+
+          <div class="cm-node d3" style="left:360px;top:212px;width:236px">
+            <div class="cm-nhd"><span class="cm-ic ic-kb">☰</span><b>知识库</b><span class="cm-play">▷</span><span class="cm-more">···</span></div>
+            <div class="cm-row"><span>输入</span><i class="bar"></i></div>
+            <div class="cm-row"><span>输出</span><i class="bar"></i></div>
+            <div class="cm-row"><span>来源</span><span class="cm-chip">产品文档 · 247 篇</span></div>
+          </div>
+
+          <div class="cm-node d4" style="left:360px;top:382px;width:236px">
+            <div class="cm-nhd"><span class="cm-ic ic-mem">◈</span><b>记忆</b><span class="cm-play">▷</span><span class="cm-more">···</span></div>
+            <div class="cm-row"><span>输入</span><i class="bar"></i></div>
+            <div class="cm-row"><span>输出</span><i class="bar"></i></div>
+            <div class="cm-row"><span>读取</span><span class="cm-chip">客户档案 · 长期</span></div>
+          </div>
+
+          <div class="cm-node d5" style="left:686px;top:128px;width:240px">
+            <div class="cm-nhd"><span class="cm-ic ic-agent">✺</span><b>Agent 推理</b><span class="cm-play">▷</span><span class="cm-more">···</span></div>
+            <div class="cm-row"><span>输入</span><i class="bar"></i></div>
+            <div class="cm-row"><span>输出</span><i class="bar"></i></div>
+            <div class="cm-row"><span>模型</span><span class="cm-chip"><i class="md"></i>DeepSeek-V3</span></div>
+            <div class="cm-row"><span>工具</span><span class="cm-chip">自动调用 · 4</span></div>
+          </div>
+
+          <div class="cm-node d6" style="left:686px;top:344px;width:236px">
+            <div class="cm-nhd"><span class="cm-ic ic-code">‹›</span><b>代码</b><span class="cm-play">▷</span><span class="cm-more">···</span></div>
+            <div class="cm-row"><span>输入</span><i class="bar"></i></div>
+            <div class="cm-row"><span>输出</span><i class="bar"></i><i class="bar s"></i></div>
+          </div>
+
+          <div class="cm-node d7" style="left:966px;top:344px;width:198px">
+            <div class="cm-nhd"><span class="cm-ic ic-end">■</span><b>End</b><span class="cm-play">▷</span><span class="cm-more">···</span></div>
+            <div class="cm-row"><span>输出</span><i class="bar"></i></div>
+            <div class="cm-row"><span>回复</span><span class="cm-chip">流式输出</span></div>
+          </div>
         </div>
-        <div class="ui-config">
-          <div class="ui-side-h">节点属性 · 大模型生成</div>
-          <div class="cfg"><span>模型</span><b>DeepSeek-V3</b></div>
-          <div class="cfg"><span>温度</span><b>0.3</b></div>
-          <div class="cfg"><span>引用历史</span><b>开启</b></div>
-          <div class="cfg"><span>知识库</span><b>产品文档</b></div>
-          <div class="cfg"><span>BadCase</span><b>可标注</b></div>
+
+        <div class="cm-toolbar">
+          <span class="cm-tool">⛶</span>
+          <span class="cm-tool">−</span>
+          <span class="cm-tool">+</span>
+          <span class="cm-div"></span>
+          <span class="cm-tool on">⊞</span>
+          <span class="cm-tool run">▷</span>
         </div>
       </div>
     </div>
   </div>
 </section>
+<script>
+(function(){
+  function fit(){
+    var W=1180,H=560;
+    var stages=document.querySelectorAll('.cm-stage');
+    for(var i=0;i<stages.length;i++){
+      var st=stages[i], sc=st.querySelector('.cm-scaler');
+      if(!sc) continue;
+      var s=st.clientWidth/W; if(s>1)s=1; if(s<0.6)s=0.6;
+      var tf='scale('+s+')';
+      if(sc.style.transform!==tf) sc.style.transform=tf;
+      var hpx=Math.round(H*s)+'px';
+      if(st.style.height!==hpx) st.style.height=hpx;
+      st.classList.toggle('scroll', W*s>st.clientWidth+1);
+    }
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',fit); else fit();
+  window.addEventListener('resize',fit);
+  if(window.ResizeObserver){var ro=new ResizeObserver(fit);var ss=document.querySelectorAll('.cm-stage');for(var j=0;j<ss.length;j++)ro.observe(ss[j]);}
+})();
+</script>
 '''.strip()
     body += block(        "核心能力",
         "一个企业级 Agent 开发平台，该有的都有",
@@ -593,7 +663,7 @@ def page_miaodong():
         feat_grid([
             ("🎨", "可视化编排", "Canvas 拖拽节点连成 Agent——条件、循环、并行、转人工，每一步看得见、改得动，运营不写代码也能配。", "or"),
             ("🤖", "多 Agent 协作", "复杂业务拆成各管一段的 Agent，主管 Agent 统一调度，比单个几百节点的大流程更好维护、效果更好。", "bl"),
-            ("📚", "知识库 · RAG", "产品文档、FAQ、网页、表格、API 一次导入，自动切分向量化，回答带出处、不跑偏。", "gr"),
+            ("📚", "知识库", "产品文档、FAQ、网页、表格、API 一次导入，自动建索引，回答带出处、不跑偏。", "gr"),
             ("🔌", "插件与工具", "接 CRM、工单、订单、自定义 API，Agent 不止于回复，还能查库存、发券、改订单。", "pu"),
             ("🧩", "100+ 大模型", "DeepSeek、智谱、通义、文心、GPT 任选，按场景和成本随时切换，不绑死任何一家。", "te"),
             ("🚀", "一键发布多渠道", "配好的 Agent 直接发布到 11 个 IM 通道、网页和 API，复用到销售、客服、招聘等多个场景。", "or"),
@@ -2025,10 +2095,10 @@ def page_fde():
 </section>
 """.strip()
     return page_layout(
-        title="如何交付 · 对结果负责的工程师 | 句子互动",
+        title="FDE 交付结果 · 对结果负责的工程师 | 句子互动",
         description="FDE（Forward Deployed Engineer，前端部署工程师）——前移到客户业务现场的工程师团队。不只装软件，对客户的业务结果负责：先搞懂这门生意，按结果收费，把现场踩出来的能力回流成产品。",
         rel="",
-        breadcrumbs=[("首页", "index.html"), ("如何交付", None)],
+        breadcrumbs=[("首页", "index.html"), ("FDE 交付结果", None)],
         hero_kicker="FDE · 我们怎么交付",
         hero_h1='一支<span class="accent">对结果负责</span>的 FDE 团队',
         hero_lede="传统软件交付完就结束，用得好不好是客户自己的事。句子互动派出的是 FDE——<strong>Forward Deployed Engineer，前端部署工程师</strong>，前移到客户业务现场：先理解客户的业务，再按结果收费。客户业绩增长，我们才有收入，因此现场积累的能力会回流到产品中。",
