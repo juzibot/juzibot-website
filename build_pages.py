@@ -22,13 +22,14 @@ def nav_html(rel):
       <div class="nav-item">
         <button>产品 <span class="caret"></span></button>
         <div class="dropdown wide">
-          <a href="{rel}products/miaohui.html"><div class="d-title">句子秒回 · 工位</div><div class="d-desc">Agent 和人协作的 IM 工作台</div></a>
           <a href="{rel}products/miaodong.html"><div class="d-title">句子秒懂 · 大脑</div><div class="d-desc">多 Agent 编排，业务人员无代码搭</div></a>
           <a href="{rel}products/shouhu.html"><div class="d-title">句子守护 · 主管</div><div class="d-desc">六道关口管住上线前 / 中 / 后</div></a>
           <a href="{rel}products/canmou.html"><div class="d-title">句子参谋 · 参谋</div><div class="d-desc">对话式数据洞察，一句话问数</div></a>
           <a href="{rel}products/dongxing.html"><div class="d-title">句子智库 · 记忆</div><div class="d-desc">知识工程，把散乱知识炼成可检索资产</div></a>
+          <a href="{rel}products/miaohui.html"><div class="d-title">句子秒回 · 工位</div><div class="d-desc">Agent 和人协作的 IM 工作台</div></a>
           <a href="{rel}products/cli.html"><div class="d-title">句子 CLI · 手</div><div class="d-desc">操作一切人用软件的执行层</div></a>
           <a href="{rel}products/zhizao.html"><div class="d-title">句子智造 · 地基</div><div class="d-desc">补齐客户数字化基建，一客一环境</div></a>
+
         </div>
       </div>
       <div class="nav-item">
@@ -66,7 +67,7 @@ def footer_html(rel):
           句子互动 <small>JuziBot</small>
         </div>
         <p>
-          为企业部署 AI 劳动力。<br/>
+          为企业部署 AI 员工。<br/>
           批量、按结果交付——9 年积累，1000+ 大型企业客户验证。
         </p>
       </div>
@@ -100,28 +101,26 @@ def footer_html(rel):
           <li><a href="{rel}about.html">关于我们</a></li>
           <li><a href="{rel}fde.html">FDE 交付团队</a></li>
           <li><a href="{rel}industries.html">客户与行业</a></li>
-          <li><a href="{rel}case-xingqudao.html">客户案例 · 在线教育头部</a></li>
           <li><a href="{rel}insights.html">AI 原生组织</a></li>
           <li><a href="{rel}index.html#cta">联系我们</a></li>
-          <li><a href="https://github.com/wechaty/wechaty">Wechaty 开源</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
       <div>© 2026 句子互动 · JuziBot</div>
-      <div>为企业部署 AI 劳动力 · 批量 · 按结果交付</div>
+      <div>为企业部署 AI 员工 · 批量 · 按结果交付</div>
     </div>
   </div>
 </footer>
 """.strip()
 
 
-def cta_band(text="把第一个 AI 劳动力装进你的业务流程"):
+def cta_band(text="把第一个 AI 员工装进你的业务流程"):
     return f"""
 <div class="cta-band">
   <div>
     <h4>{text}</h4>
-    <p>从一个 AI 角色起步，逐步扩展到多个 Agent。90 天内，第一个 AI 劳动力即在客户的 IM 中上岗。</p>
+    <p>从一个 AI 角色起步，逐步扩展到多个 Agent。90 天内，第一个 AI 员工即在客户的 IM 中上岗。</p>
   </div>
   <a href="mailto:hello@juzibot.com" class="btn-primary">预约演示 <span class="btn-arrow">→</span></a>
 </div>
@@ -356,10 +355,10 @@ def page_miaohui():
 '''.strip()
     body += block(        "核心能力",
         "Agent 在 IM 通道上岗，需要的不止是聊天框",
-        "句子秒回是 AI 劳动力的工位。11 个 IM 通道聚合到一个工作台，Agent 像真人一样工作、与同事协作，并接受统一管理。",
+        "句子秒回是 AI 员工的工位。11 个 IM 通道聚合到一个工作台，Agent 像真人一样工作、与同事协作，并接受统一管理。",
         feat_grid([
-            ("📥", "多平台聚合", "11 个 IM 通道（企微、抖音、小红书、WhatsApp、飞书、钉钉、公众号、小程序、TikTok、Instagram）统一到一个工作台，海内外账号一起管。", "bl"),
-            ("🎯", "主动外呼", "私聊 / 群聊群发、SOP 自动跟进、自动加好友、新客欢迎语——一次配置批量执行，不受原生应用群发次数限制。", "or"),
+            ("📥", "多平台聚合", "11 个 IM 通道（小红书、抖音、微信客服、微信公众号、小程序、WhatsApp、飞书、钉钉、TikTok、Instagram）统一到一个工作台，海内外账号一起管。", "bl"),
+            ("🎯", "主动触达", "私聊 / 群聊群发、SOP 自动跟进、自动加好友、新客欢迎语——一次配置批量执行，不受原生应用群发次数限制。", "or"),
             ("🤝", "人机协作", "AI 全自动 / 人机协作 / 纯人工三种模式，AI 无法处理的对话自动转人工，每条消息可追溯。", "gr"),
             ("👥", "员工协作", "一人管多账号、多人管一账号都支持。系统智能分配消息，管理者统一查看营销数据和员工绩效。", "pu"),
             ("💾", "聊天历史", "每一条对话安全留存，支持按客户、关键词、时间多维搜索，导出方便后续分析。", "te"),
@@ -485,13 +484,13 @@ def page_miaohui():
 """.strip()
 
     return page_layout(
-        title="句子秒回 · IM 通道里的 AI 劳动力工位 | 句子互动",
+        title="句子秒回 · IM 通道里的 AI 员工工位 | 句子互动",
         description="句子秒回是企业级多 IM 聚合管理平台——11 个 IM 通道一个工作台管完，AI 智能回复、SOP 自动跟进、人机协作。1000+ 企业客户验证。",
         rel="../",
         breadcrumbs=[("首页", "../index.html"), ("产品", None), ("句子秒回", None)],
         hero_kicker="产品 · 01",
-        hero_h1='句子秒回 · <span class="accent">让 AI 劳动力在 IM 通道上岗</span>',
-        hero_lede="把企业的 11 个 IM 通道（企微、抖音、小红书、WhatsApp 等）聚合到一个工作台，<strong>Agent 真的在客户面前接管对话</strong>——主动外呼、智能回复、人机协作、多平台一个工作台管完。",
+        hero_h1='句子秒回 · <span class="accent">让 AI 员工在 IM 通道上岗</span>',
+        hero_lede="把企业的 11 个 IM 通道（小红书、抖音、微信客服、微信公众号、小程序、WhatsApp 等）聚合到一个工作台，<strong>Agent 真的在客户面前接管对话</strong>——主动触达、智能回复、人机协作、多平台一个工作台管完。",
         pills=["11 个 IM 通道", "1000+ 企业客户", "89% 对话自动完成率", "9 年通道适配积累"],
         body=body,
     )
@@ -508,7 +507,7 @@ def page_miaodong():
 '''.strip()
     body += block(        "核心模块",
         "Agent 真的「懂业务」的地方",
-        "句子秒懂是 AI 劳动力的「大脑」。把企业的流程、知识、规则封装进 Agent，让 AI 不止于对话，还能承接企业业务。",
+        "句子秒懂是 AI 员工的「大脑」。把企业的流程、知识、规则封装进 Agent，让 AI 不止于对话，还能承接企业业务。",
         feat_grid([
             ("🧠", "知识库管理", "把企业的产品文档、FAQ、网页内容、数据表导入知识库，AI 基于真实业务知识答得准、不跑偏。", "bl"),
             ("🤖", "智能体与工作流", "三种智能体类型 + Canvas 可视化工作流编辑器，不写代码就能配置 Agent 行为逻辑。", "or"),
@@ -556,7 +555,7 @@ def page_miaodong():
         ],
         bullets=[
             "三种智能体：对话型 / 任务型 / 多 Agent 协作",
-            "100+ 种主流大模型可选：DeepSeek、Claude、文心、通义、GPT 等",
+            "100+ 种主流大模型可选：DeepSeek、智谱、文心、通义、GPT 等",
             "版本管理 + 灰度发布：新版本可控上线",
             "工作流模板库：每个行业都有起跑模板",
         ],
@@ -613,13 +612,13 @@ def page_miaodong():
     body += f"""
 <section class="section-block">
   <div class="container">
-    {cta_band("用句子秒懂训练你的 AI 劳动力")}
+    {cta_band("用句子秒懂训练你的 AI 员工")}
   </div>
 </section>
 """.strip()
 
     return page_layout(
-        title="句子秒懂 · AI 劳动力的「大脑」 | 句子互动",
+        title="句子秒懂 · AI 员工的「大脑」 | 句子互动",
         description="句子秒懂是 Agent workflow 引擎——把企业流程、规则、知识训练进 AI，让 Agent 真的懂业务。100+ 大模型支持、Canvas 可视化工作流、5 个高合规行业策略库。",
         rel="../",
         breadcrumbs=[("首页", "../index.html"), ("产品", None), ("句子秒懂", None)],
@@ -781,10 +780,10 @@ def page_workforce(*, slug, title, kicker, h1, lede, pills, color, industry, rol
 """.strip()
 
     return page_layout(
-        title=f"{title} · {kicker} | 句子互动 AI 劳动力",
+        title=f"{title} · {kicker} | 句子互动 AI 员工",
         description=f"{title}——{lede[:120]}",
         rel="../",
-        breadcrumbs=[("首页", "../index.html"), ("AI 劳动力", None), (title, None)],
+        breadcrumbs=[("首页", "../index.html"), ("AI 员工", None), (title, None)],
         hero_kicker=kicker,
         hero_h1=h1,
         hero_lede=lede,
@@ -800,7 +799,7 @@ def workforce_pages():
     pages['sales'] = page_workforce(
         slug='sales',
         title='AI 销售',
-        kicker='AI 劳动力 · 销售岗',
+        kicker='AI 员工 · 销售岗',
         h1='AI 销售 · <span class="accent">从建联到首单成交</span>',
         lede='直播搬家、私域承接、漏斗跟进、续费提醒——<strong>从客户建联到下第一单的全部环节，AI 销售都能接管</strong>。已覆盖直播带货行业头部公司，行业整体提效 80%+。',
         pills=['+80% 行业整体提效', '直播带货头部覆盖', '24×7 在岗', '按结果计价'],
@@ -850,7 +849,7 @@ def workforce_pages():
     pages['marketing'] = page_workforce(
         slug='marketing',
         title='AI 导购',
-        kicker='AI 劳动力 · 零售岗',
+        kicker='AI 员工 · 零售岗',
         h1='AI 导购 · <span class="accent">长尾客户也覆盖到</span>',
         lede='覆盖主流头部零售品牌的私域导购运营——<strong>人工招呼不过来的长尾客户，由 AI 接管</strong>。24×7 在线响应，转化不掉队。',
         pills=['几百家品牌已部署', '24×7 在线', '私域导购全自动', '到店导购 + 线上协同'],
@@ -904,7 +903,7 @@ def workforce_pages():
     pages['service'] = page_workforce(
         slug='service',
         title='AI 客服',
-        kicker='AI 劳动力 · 客服岗',
+        kicker='AI 员工 · 客服岗',
         h1='AI 客服 · <span class="accent">从售前咨询到售后投诉</span>',
         lede='结合 5 年积累的 BadCase 标注数据——<strong>疑难场景比通用客服处理得深</strong>。售前咨询、订单跟进、投诉处理、退换货全流程接管。',
         pills=['89% 自动完成率', '5 年 BadCase 积累', '全行业可用', '7×24 在岗'],
@@ -959,7 +958,7 @@ def workforce_pages():
     pages['government'] = page_workforce(
         slug='government',
         title='AI 社工 / 调解员',
-        kicker='AI 劳动力 · 政务岗',
+        kicker='AI 员工 · 政务岗',
         h1='AI 社工 / 调解员 · <span class="accent">在政务高合规下跑得通的 AI</span>',
         lede='AI 普法调解员、AI 社工已在 <strong>北京海淀区东升镇</strong>率先落地——AI 社工 7×24 响应，累计服务居民约 50 万人次；AI 普法调解员参与调解近百起，成功率约 93%，获评海淀区首届法治实践优秀案例。每一句输出都有日志记录、可逐句倒查——这是政务和金融客户最看重的一点。',
         pills=['海淀东升镇率先落地', '高合规 + 全程可审计', '居民服务约 50 万人次', '调解成功率约 93%'],
@@ -1010,7 +1009,7 @@ def workforce_pages():
     pages['finance'] = page_workforce(
         slug='finance',
         title='AI 顾问 / 营销',
-        kicker='AI 劳动力 · 金融岗',
+        kicker='AI 员工 · 金融岗',
         h1='AI 顾问 / 营销 · <span class="accent">在金融合规边界内跑得稳</span>',
         lede='银行、证券、保险多个头部机构落地——<strong>可设的合规边界 + 9 年风控话术库</strong>，金融客户敢用。',
         pills=['多家头部金融机构', '9 年风控话术库', '可设的合规边界', 'KYC / 反洗钱集成'],
@@ -1062,7 +1061,7 @@ def workforce_pages():
     pages['livestream'] = page_workforce(
         slug='livestream',
         title='AI 解说员 / 主理人',
-        kicker='AI 劳动力 · 直播岗',
+        kicker='AI 员工 · 直播岗',
         h1='AI 解说员 / 主理人 · <span class="accent">把直播间人手放大 10 倍</span>',
         lede='全媒体内容运营 + 直播间智能解说——<strong>内容生产 + 分发 + 现场解说一套人马干完</strong>，把直播间人手放大 10 倍。',
         pills=['10× 人手杠杆', '24 小时不下播', '多平台内容矩阵', '互动 + 选品 + 解说'],
@@ -1189,12 +1188,12 @@ def page_enterprise():
          '<div style="display:flex;justify-content:space-between;align-items:baseline;padding:6px 0;font-size:12.5px;"><span>SaaS 服务可用性</span><span style="color:var(--green);font-weight:800;font-size:16px;">99.9%</span></div>'),
 
         ('or', '07', '不锁模型', '不绑死单一模型',
-         '企业不愿绑定单一供应商。这个月用 GPT，下个月想切到 Claude，年底可能改用 DeepSeek。模型涨价、出现故障、遭遇监管，任何一项都会让企业陷入被动。',
-         '<strong>底层不绑死任何一家模型</strong>：DeepSeek、Claude、Qwen、文心一言、GPT 都能换。客户可按场景选择模型，依据价格与性能随时切换。',
+         '企业不愿绑定单一供应商。这个月用 GPT，下个月想切到智谱，年底可能改用 DeepSeek。模型涨价、出现故障、遭遇监管，任何一项都会让企业陷入被动。',
+         '<strong>底层不绑死任何一家模型</strong>：DeepSeek、智谱、Qwen、文心一言、GPT 都能换。客户可按场景选择模型，依据价格与性能随时切换。',
          '<div style="font-size:11px;color:var(--gray-text);font-weight:700;letter-spacing:.04em;margin-bottom:8px;">模型矩阵</div>'
          '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:12px;font-weight:700;">'
          '<div style="background:#fff;padding:8px 11px;border-radius:6px;border:1px solid var(--gray-line);display:flex;justify-content:space-between;align-items:center;"><span>DeepSeek-V3</span><span style="color:var(--green);">●</span></div>'
-         '<div style="background:#fff;padding:8px 11px;border-radius:6px;border:1px solid var(--gray-line);display:flex;justify-content:space-between;align-items:center;"><span>Claude 4.7</span><span style="color:var(--green);">●</span></div>'
+         '<div style="background:#fff;padding:8px 11px;border-radius:6px;border:1px solid var(--gray-line);display:flex;justify-content:space-between;align-items:center;"><span>智谱 GLM-4</span><span style="color:var(--green);">●</span></div>'
          '<div style="background:#fff;padding:8px 11px;border-radius:6px;border:1px solid var(--gray-line);display:flex;justify-content:space-between;align-items:center;"><span>Qwen 3</span><span style="color:var(--green);">●</span></div>'
          '<div style="background:#fff;padding:8px 11px;border-radius:6px;border:1px solid var(--gray-line);display:flex;justify-content:space-between;align-items:center;"><span>文心 5.0</span><span style="color:var(--green);">●</span></div>'
          '<div style="background:#fff;padding:8px 11px;border-radius:6px;border:1px solid var(--gray-line);display:flex;justify-content:space-between;align-items:center;"><span>GPT-5</span><span style="color:var(--green);">●</span></div>'
@@ -1308,7 +1307,7 @@ def page_enterprise():
     body += f"""
 <section class="section-block">
   <div class="container">
-    {cta_band("把 AI 劳动力装进你的合规边界内")}
+    {cta_band("把 AI 员工装进你的合规边界内")}
   </div>
 </section>
 """.strip()
@@ -1402,7 +1401,7 @@ def page_industries():
          ['多个城市试点', '司法机构', '社区']),
 
         ('internet', '泛互联网', '🌐', 'te', '多家平台型公司部署',
-         '电商平台、内容平台、生活服务平台的客服、运营、销售已在使用 AI 劳动力，承接持续增长的客户量。',
+         '电商平台、内容平台、生活服务平台的客服、运营、销售已在使用 AI 员工，承接持续增长的客户量。',
          [
              ('多家', '平台型公司'),
              ('89%', '对话自动'),
@@ -1460,7 +1459,7 @@ def page_industries():
 </section>""".strip()
 
     body += block(        "为什么我们能在这 5 个行业做得动",
-        "AI 劳动力在你的行业能直接用，是因为这 5 个行业的难点我们已逐个趟过",
+        "AI 员工在你的行业能直接用，是因为这 5 个行业的难点我们已逐个趟过",
         "通用平台你自己也能搭出大致框架。难的是把你所在行业的具体场景真正跑通，这需要在行业里趟过难点的人。",
         '''<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:1100px;margin:0 auto;">
 <div style="padding:28px 24px;background:#fff;border:1px solid var(--gray-line);border-radius:18px;">
@@ -1485,19 +1484,19 @@ def page_industries():
     body += f"""
 <section class="section-block">
   <div class="container">
-    {cta_band("把 AI 劳动力部署到你的行业")}
+    {cta_band("把 AI 员工部署到你的行业")}
   </div>
 </section>
 """.strip()
 
     return page_layout(
         title="客户与行业 · 教育 / 电商 / 金融 / 政务 / 互联网 已部署 | 句子互动",
-        description="句子互动 AI 劳动力已在在线教育、消费品电商、金融、政务·司法、泛互联网 5 个行业头部公司部署。如果你在这些行业，我们已经在这些行业跑了 9 年。",
+        description="句子互动 AI 员工已在在线教育、消费品电商、金融、政务·司法、泛互联网 5 个行业头部公司部署。如果你在这些行业，我们已经在这些行业跑了 9 年。",
         rel="",
         breadcrumbs=[("首页", "index.html"), ("客户与行业", None)],
         hero_kicker="WHO USES JUZIBOT",
         hero_h1='你的行业里，<span class="accent">已经有人在用了</span>。',
-        hero_lede="如果你在<strong>在线教育、消费品电商、金融、政务、互联网</strong>这 5 个行业里，你的同行（甚至头部公司）已经在用句子互动的 AI 劳动力。这些行业的难点我们已经和他们一起趟过，你不必从零开始。",
+        hero_lede="如果你在<strong>在线教育、消费品电商、金融、政务、互联网</strong>这 5 个行业里，你的同行（甚至头部公司）已经在用句子互动的 AI 员工。这些行业的难点我们已经和他们一起趟过，你不必从零开始。",
         pills=["1000+ 大型企业客户", "5 个行业头部公司在用", "开通即可上岗", "同行已在用"],
         body=body,
     )
@@ -1510,7 +1509,7 @@ def page_about():
     body += block(
         "公司简介",
         "我们做的事，<span class=\"accent\">让 AI 在企业真实业务里跑起来</span>",
-        "句子互动是企业级 Agentic AI 平台。把大模型和企业数据接进 IM 通道、抖音、钉钉、飞书、WhatsApp，为企业造能自主决策的 AI 劳动力。",
+        "句子互动是企业级 Agentic AI 平台。把大模型和企业数据接进 IM 通道、抖音、钉钉、飞书、WhatsApp，为企业造能自主决策的 AI 员工。",
         '<div style="max-width:920px;margin:0 auto;background:linear-gradient(135deg,var(--blue-light),#fff);border-radius:22px;padding:48px;text-align:center;">'
         '<div style="font-size:18px;color:var(--blue);font-weight:700;letter-spacing:-.005em;margin-bottom:16px;">我们做的事</div>'
         '<div style="font-size:24px;font-weight:800;color:var(--black);line-height:1.55;letter-spacing:-.01em;">在 1000+ 家中国企业的 IM 通道、客服、销售、合规流程里跑，按业务结果收费。</div>'
@@ -1536,7 +1535,7 @@ def page_about():
 <div style="padding:28px 24px;background:#fff;border:1px solid var(--gray-line);border-radius:18px;">
   <div style="display:inline-block;font-size:11px;font-weight:800;letter-spacing:.1em;background:var(--orange-lt);color:var(--orange);padding:4px 10px;border-radius:6px;margin-bottom:14px;">2024</div>
   <h4 style="font-size:18px;font-weight:800;margin:0 0 12px;">《Chatbot 从 0 到 1》第二版</h4>
-  <p style="font-size:14px;color:var(--gray-text);line-height:1.7;margin:0;">大模型时代升级版。涵盖 LLM Agent、工具调用、多 Agent 协作到实际部署，将 2020 年的对话机器人方法论延伸到 AI 劳动力。</p>
+  <p style="font-size:14px;color:var(--gray-text);line-height:1.7;margin:0;">大模型时代升级版。涵盖 LLM Agent、工具调用、多 Agent 协作到实际部署，将 2020 年的对话机器人方法论延伸到 AI 员工。</p>
 </div>
 <div style="padding:28px 24px;background:#fff;border:1px solid var(--gray-line);border-radius:18px;">
   <div style="display:inline-block;font-size:11px;font-weight:800;letter-spacing:.1em;background:var(--green-lt);color:var(--green);padding:4px 10px;border-radius:6px;margin-bottom:14px;">2017 至今</div>
@@ -1588,13 +1587,13 @@ def page_about():
 <div style="text-align:center;position:relative;"><div style="width:16px;height:16px;border-radius:50%;background:var(--orange);margin:0 auto 18px;border:3px solid #fff;box-shadow:0 0 0 2px var(--orange);"></div><div style="font-size:16px;font-weight:800;color:var(--blue);margin-bottom:4px;">2020</div><div style="font-size:12.5px;color:var(--gray-text);line-height:1.5;padding:0 8px;">《Chatbot 从 0 到 1》出版</div></div>
 <div style="text-align:center;position:relative;"><div style="width:16px;height:16px;border-radius:50%;background:var(--orange);margin:0 auto 18px;border:3px solid #fff;box-shadow:0 0 0 2px var(--orange);"></div><div style="font-size:16px;font-weight:800;color:var(--blue);margin-bottom:4px;">2023</div><div style="font-size:12.5px;color:var(--gray-text);line-height:1.5;padding:0 8px;">Azure OpenAI 中国首发服务商<br/>WAIC 2023 参展</div></div>
 <div style="text-align:center;position:relative;"><div style="width:16px;height:16px;border-radius:50%;background:var(--orange);margin:0 auto 18px;border:3px solid #fff;box-shadow:0 0 0 2px var(--orange);"></div><div style="font-size:16px;font-weight:800;color:var(--blue);margin-bottom:4px;">2024</div><div style="font-size:12.5px;color:var(--gray-text);line-height:1.5;padding:0 8px;">《Chatbot 从 0 到 1》第二版<br/>Agent 流水线成型</div></div>
-<div style="text-align:center;position:relative;"><div style="width:16px;height:16px;border-radius:50%;background:var(--orange);margin:0 auto 18px;border:3px solid #fff;box-shadow:0 0 0 2px var(--orange);"></div><div style="font-size:16px;font-weight:800;color:var(--blue);margin-bottom:4px;">2026</div><div style="font-size:12.5px;color:var(--gray-text);line-height:1.5;padding:0 8px;">AI 劳动力规模化部署</div></div>
+<div style="text-align:center;position:relative;"><div style="width:16px;height:16px;border-radius:50%;background:var(--orange);margin:0 auto 18px;border:3px solid #fff;box-shadow:0 0 0 2px var(--orange);"></div><div style="font-size:16px;font-weight:800;color:var(--blue);margin-bottom:4px;">2026</div><div style="font-size:12.5px;color:var(--gray-text);line-height:1.5;padding:0 8px;">AI 员工规模化部署</div></div>
 </div>
 </div>''',
     )
 
     body += block(        "客户矩阵",
-        "各行业顶尖商业组织都选择句子互动构建 AI 劳动力",
+        "各行业顶尖商业组织都选择句子互动构建 AI 员工",
         "不是一两个标杆——是每个行业都有头部客户。",
         '''<div style="max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:18px;">
 <div style="display:grid;grid-template-columns:140px 1fr;gap:18px;align-items:center;background:var(--blue-light);border-radius:14px;padding:20px 24px;">
@@ -1695,7 +1694,7 @@ def page_about():
 <div style="padding:28px 24px;background:#fff;border:1px solid var(--gray-line);border-radius:18px;">
   <div style="font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:12px;">EVENT · 2023</div>
   <h4 style="font-size:17px;font-weight:800;margin:0 0 12px;">WAIC 2023 参展</h4>
-  <p style="font-size:13.5px;color:var(--gray-text);line-height:1.65;margin:0;">在世界人工智能大会展出 AI 员工矩阵，呈现 9 年 IM 自动化积累与 AI 劳动力路径。</p>
+  <p style="font-size:13.5px;color:var(--gray-text);line-height:1.65;margin:0;">在世界人工智能大会展出 AI 员工矩阵，呈现 9 年 IM 自动化积累与 AI 员工路径。</p>
 </div>
 <div style="padding:28px 24px;background:#fff;border:1px solid var(--gray-line);border-radius:18px;">
   <div style="font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--green);margin-bottom:12px;">OPEN SOURCE</div>
@@ -1708,7 +1707,7 @@ def page_about():
     body += f"""
 <section class="section-block">
   <div class="container">
-    {cta_band("聊聊你想部署的 AI 劳动力")}
+    {cta_band("聊聊你想部署的 AI 员工")}
   </div>
 </section>
 """.strip()
@@ -1720,7 +1719,7 @@ def page_about():
         breadcrumbs=[("首页", "index.html"), ("关于我们", None)],
         hero_kicker="关于句子互动",
         hero_h1='一支<span class="accent">把 AI 装进 1000+ 家企业</span>的团队',
-        hero_lede="句子互动是企业级 Agentic AI 平台，<strong>2019 年由 Wechaty 开源作者李佳芮创立</strong>。把大模型和企业数据接进 IM 通道、抖音、钉钉、飞书、WhatsApp，为企业造能自主决策的 AI 劳动力。做对话式 AI 这些年，已服务 1000+ 大型企业客户。",
+        hero_lede="句子互动是企业级 Agentic AI 平台，<strong>2019 年由 Wechaty 开源作者李佳芮创立</strong>。把大模型和企业数据接进 IM 通道、抖音、钉钉、飞书、WhatsApp，为企业造能自主决策的 AI 员工。做对话式 AI 这些年，已服务 1000+ 大型企业客户。",
         pills=["1000+ 大型企业客户", "深耕对话式 AI 十年", "国家高新 · 专精特新", "Wechaty 22k+ Star"],
         body=body,
     )
