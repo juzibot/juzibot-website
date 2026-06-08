@@ -2023,7 +2023,7 @@ def page_insights():
         breadcrumbs=[("首页", "index.html"), ("AI 原生组织", None)],
         hero_kicker="AI 原生组织 · 我们自己怎么活",
         hero_h1='不是「在用 AI 的公司」，<span class="accent">是 AI 下沉到每个人的组织</span>',
-        hero_lede="真正活成 AI 原生的组织，市面上很少。在句子互动，<strong>从 CEO 到财务，每个部门、每个人每天都在用 Agent 干活</strong>。不是配个工具，是工作方式本身换了。90 后 AI native 配 9 年 toB 老兵，这个组合全市场几乎没有。这条路我们自己先活成，再带客户一起跑。",
+        hero_lede="真正把 AI 用进每个人日常的公司，其实很少。在句子互动，<strong>从 CEO 到财务，每个部门、每个人每天都在用 Agent 干活</strong>——不是多配了个工具，是工作方式本身变了。90 后 AI native 加 9 年 toB 老兵，这样的组合市场上几乎没有。这条路我们自己先走通，再带客户一起跑。",
         pills=["AI 下沉到每个人", "90 后 × 9 年 toB", "自己先活成再带客户", "1 + N 组织"],
         body=body,
     )
