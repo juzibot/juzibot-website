@@ -27,7 +27,7 @@ def nav_html(rel):
           <a href="{rel}products/shouhu.html"><div class="d-title">句子守护 · 主管</div><div class="d-desc">六道关口管住上线前 / 中 / 后</div></a>
           <a href="{rel}products/canmou.html"><div class="d-title">句子参谋 · 参谋</div><div class="d-desc">对话式数据洞察，一句话问数</div></a>
           <a href="{rel}products/dongxing.html"><div class="d-title">句子智库 · 记忆</div><div class="d-desc">知识工程，把散乱知识炼成可检索资产</div></a>
-          <a href="{rel}products/cli.html"><div class="d-title">句子 CLI · 手</div><div class="d-desc">操作一切人用软件的底层 RPA 驱动</div></a>
+          <a href="{rel}products/cli.html"><div class="d-title">句子 CLI · 手</div><div class="d-desc">操作一切人用软件的执行层</div></a>
           <a href="{rel}products/zhizao.html"><div class="d-title">句子智造 · 地基</div><div class="d-desc">补齐客户数字化基建，一客一环境</div></a>
         </div>
       </div>
@@ -2412,13 +2412,13 @@ def page_cli():
 """.strip()
     return page_layout(
         title="句子 CLI · AI 员工的手 | 句子互动",
-        description="句子 CLI——AI 员工的手，操作一切人用软件的底层 RPA 驱动。老系统没有 API、无法对接时，CLI 像人一样直接操作界面，完成任务。",
+        description="句子 CLI——AI 员工的手，操作一切人用软件的执行层。有 API 走 API，没 API 就像人一样点界面；老系统不用改造，也能接进上层。",
         rel="../",
         breadcrumbs=[("首页", "../index.html"), ("产品", None), ("句子 CLI", None)],
         hero_kicker="产品 · CLI · 手",
         hero_h1='句子 CLI · <span class="accent">AI 员工的手</span>',
-        hero_lede="人在电脑上能操作的界面，CLI 都能代为操作。<strong>操作一切人用软件的底层 RPA 驱动</strong>——老系统没 API、对接不了？CLI 像人一样直接操作界面，把活干完。",
-        pills=["操作一切人用软件", "无 API 也能接", "底层 RPA 驱动", "老系统也能接进来"],
+        hero_lede="人在电脑上能操作的界面，CLI 都能代为操作。<strong>操作一切人用软件的执行层</strong>——有 API 走 API，没 API 就像人一样点界面，把活干完。",
+        pills=["操作一切人用软件", "无 API 也能接", "老系统不用改造", "落到真实系统"],
         body=body,
     )
 
