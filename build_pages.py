@@ -1402,7 +1402,7 @@ def page_industries():
 
     industries_detail = [
         ('education', '在线教育', '📚', 'bl', '400+ 客户 · 头部公司已覆盖',
-         '在线教育是句子互动最早深耕的行业，9 年覆盖了几乎所有头部公司——从大班课、小班课到 1 对 1，从招生、续费到 NPS。其中合同体量最大的客户，是一家<strong>头部教育品牌</strong>，AI 跑通了完整的「低转高」转化链路：人效翻倍、单线索成本下降 50~62%、转人工率从 27% 降到 2.73%。<a href="case-xingqudao.html" style="color:var(--blue);font-weight:700;">看完整案例 →</a>',
+         '从大班课、小班课到 1 对 1，从招生、续费到 NPS，几乎所有头部在线教育公司都在用句子互动。其中合同体量最大的客户，是一家<strong>头部教育品牌</strong>，AI 跑通了完整的「低转高」转化链路：人效翻倍、单线索成本下降 50~62%、转人工率从 27% 降到 2.73%。<a href="case-xingqudao.html" style="color:var(--blue);font-weight:700;">看完整案例 →</a>',
          [
              ('400+', '客户'),
              ('头部', '已覆盖'),
