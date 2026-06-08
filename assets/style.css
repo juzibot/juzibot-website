@@ -97,6 +97,16 @@ p, h1, h2, h3, h4, h5, h6, li, span, div, a {
   transition: transform .15s ease, box-shadow .15s ease;
 }
 .nav-cta:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); }
+.nav-right { display: flex; align-items: center; gap: 12px; }
+.nav-login {
+  display: inline-flex; align-items: center;
+  padding: 8px 16px; border-radius: 999px;
+  border: 1px solid var(--gray-line);
+  color: var(--black) !important; opacity: .9;
+  font-size: 14px; font-weight: 600;
+  transition: border-color .15s ease, color .15s ease;
+}
+.nav-login:hover { border-color: var(--blue); color: var(--blue) !important; opacity: 1; }
 
 /* ────────── HERO ────────── */
 .hero {
@@ -1136,6 +1146,8 @@ footer ul a:hover { color: #fff; }
   section { padding: 64px 0; }
   .nav-links { display: none; }
   .nav-cta { padding: 7px 14px; font-size: 12.5px; }
+  .nav-login { padding: 6px 12px; font-size: 12.5px; }
+  .nav-right { gap: 8px; }
   .container { padding: 0 16px; }
   .hero { padding: 48px 0 40px; }
   .hero-inner { gap: 36px; }
@@ -1944,6 +1956,37 @@ footer ul a:hover { color: #fff; }
 .cf-success .check { font-size: 48px; margin-bottom: 12px; }
 .cf-success h4 { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
 .cf-success p { color: var(--gray-text); font-size: 14.5px; }
+
+/* ────────── 联系弹窗：手机号 / 企微 二选一 ────────── */
+.cf-choice { display: flex; gap: 0; align-items: stretch; }
+.cf-choice-main { flex: 1; min-width: 0; }
+.cf-choice-label { font-size: 13px; font-weight: 800; color: var(--black); margin-bottom: 14px; letter-spacing: -.01em; }
+.cf-choice-or {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 0 18px; position: relative;
+}
+.cf-choice-or::before,
+.cf-choice-or::after {
+  content: ""; flex: 1; width: 1px; background: var(--gray-line);
+}
+.cf-choice-or span {
+  font-size: 12px; color: var(--gray-text); padding: 8px 0; font-weight: 600;
+}
+.cf-choice-qr {
+  width: 188px; flex-shrink: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+}
+.cf-choice-qr img {
+  width: 156px; height: 156px; border-radius: 12px; border: 1px solid var(--gray-line);
+}
+.cf-choice-qr .cf-qr-note { font-size: 12px; color: var(--gray-text); margin-top: 12px; line-height: 1.6; }
+@media (max-width: 600px) {
+  .cf-choice { flex-direction: column; }
+  .cf-choice-or { flex-direction: row; padding: 18px 0; }
+  .cf-choice-or::before, .cf-choice-or::after { width: auto; height: 1px; }
+  .cf-choice-or span { padding: 0 12px; }
+  .cf-choice-qr { width: auto; }
+}
 
 /* ────────── 产品卡 · p4 / p5 扩展 ────────── */
 .product-card.p4::before { background: var(--purple); }
