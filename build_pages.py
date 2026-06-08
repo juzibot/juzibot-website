@@ -1629,115 +1629,25 @@ def page_about():
         alt=True,
     )
 
-    body += block(        "客户矩阵",
-        "各行业顶尖商业组织都选择句子互动构建 AI 员工",
-        "不是一两个标杆——是每个行业都有头部客户。",
-        '''<div style="max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:18px;">
-<div style="display:grid;grid-template-columns:140px 1fr;gap:18px;align-items:center;background:var(--blue-light);border-radius:14px;padding:20px 24px;">
-<div style="font-size:15px;font-weight:800;color:var(--blue);">在线教育</div>
-<div style="display:flex;flex-wrap:wrap;gap:10px;">
-<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">头部大班课</span>
-<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">头部小班课</span>
-<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">兴趣技能头部</span>
-<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">头部 1 对 1</span>
-<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">财经职教头部</span>
-<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">众多头部</span>
-</div>
-</div>
-<div style="display:grid;grid-template-columns:140px 1fr;gap:18px;align-items:center;background:var(--orange-lt);border-radius:14px;padding:20px 24px;">
-<div style="font-size:15px;font-weight:800;color:var(--orange);">消费品牌</div>
-<div style="display:flex;flex-wrap:wrap;gap:10px;">
-<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">国际美妆头部</span>
-<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">国际护肤头部</span>
-<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">母婴头部</span>
-<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">功能食品头部</span>
-<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">家电头部</span>
-<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">日化头部</span>
-<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">白电头部</span>
-</div>
-</div>
-<div style="display:grid;grid-template-columns:140px 1fr;gap:18px;align-items:center;background:var(--green-lt);border-radius:14px;padding:20px 24px;">
-<div style="font-size:15px;font-weight:800;color:var(--green);">政务金融</div>
-<div style="display:flex;flex-wrap:wrap;gap:10px;">
-<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">多家头部银行</span>
-<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">证券机构</span>
-<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">保险机构</span>
-<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">消费金融</span>
-<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">城市政务试点</span>
-</div>
-</div>
-<div style="display:grid;grid-template-columns:140px 1fr;gap:18px;align-items:center;background:var(--purple-lt);border-radius:14px;padding:20px 24px;">
-<div style="font-size:15px;font-weight:800;color:var(--purple);">泛互联网</div>
-<div style="display:flex;flex-wrap:wrap;gap:10px;">
-<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">头部搜索平台</span>
-<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">头部电商平台</span>
-<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">头部短视频平台</span>
-<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">头部分类信息</span>
-<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">头部资讯平台</span>
-<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">众多平台</span>
-</div>
-</div>
-</div>''',
-        alt=True,
-    )
-
-    body += block(        "资质与荣誉",
-        "国家级资质、行业标准、赛事冠军，<span class=\"accent\">企业级资质齐备</span>",
-        "国家高新技术企业、北京市专精特新「小巨人」、公安部等保三级，企业客户关注的核心资质均已通过。",
-        '''<div style="max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:18px;">
-<div style="display:grid;grid-template-columns:140px 1fr;gap:18px;align-items:center;background:var(--blue-light);border-radius:14px;padding:20px 24px;">
-<div style="font-size:15px;font-weight:800;color:var(--blue);">国家级资质</div>
-<div style="display:flex;flex-wrap:wrap;gap:10px;">
-<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">国家高新技术企业</span>
-<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">北京市专精特新「小巨人」</span>
-<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">公安部等保三级认证</span>
-</div>
-</div>
-<div style="display:grid;grid-template-columns:140px 1fr;gap:18px;align-items:center;background:var(--green-lt);border-radius:14px;padding:20px 24px;">
-<div style="font-size:15px;font-weight:800;color:var(--green);">行业标准 / 计划</div>
-<div style="display:flex;flex-wrap:wrap;gap:10px;">
-<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">中国互联网协会 · 智能体创新推进计划合作伙伴（2025—2027）</span>
-<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">工信部年度数字营销服务领航企业</span>
-<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">参与信通院「智能营销」系列标准制定</span>
-</div>
-</div>
-<div style="display:grid;grid-template-columns:140px 1fr;gap:18px;align-items:center;background:var(--orange-lt);border-radius:14px;padding:20px 24px;">
-<div style="font-size:15px;font-weight:800;color:var(--orange);">赛事荣誉</div>
-<div style="display:flex;flex-wrap:wrap;gap:10px;">
-<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">WAIC 世界人工智能大会 · 全球创新项目路演冠军暨最佳应用奖</span>
-<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">MWC 上海 · 5G 消息创新价值奖</span>
-</div>
-</div>
-<div style="display:grid;grid-template-columns:140px 1fr;gap:18px;align-items:center;background:var(--purple-lt);border-radius:14px;padding:20px 24px;">
-<div style="font-size:15px;font-weight:800;color:var(--purple);">权威榜单</div>
-<div style="display:flex;flex-wrap:wrap;gap:10px;">
-<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">2025 CHINA AI 100</span>
-<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">高科技高成长新锐企业 TOP50</span>
-<span style="background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-text);">Plug and Play × 清华大学全球开放式创新百强</span>
-</div>
-</div>
-</div>''',
-    )
-
     body += block(        "我们怎么看",
         "AI 原生组织，<span class=\"accent\">长什么样</span>",
         "这些不是写在墙上的口号，是我们自己每天在跑的工作方式。",
         '''<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:1100px;margin:0 auto;">
 <a href="https://rui.juzi.bot/thought/2026-04-28-return-to-code.html" target="_blank" rel="noopener" style="display:flex;flex-direction:column;padding:28px 24px;background:#fff;border:1px solid var(--gray-line);border-radius:18px;text-decoration:none;color:inherit;transition:border-color .2s,box-shadow .2s;">
   <div style="font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:12px;">思考</div>
-  <h4 style="font-size:17px;font-weight:800;margin:0 0 12px;">下一代组织，长在 AI 上</h4>
+  <h4 style="font-size:17px;font-weight:800;margin:0 0 12px;line-height:1.4;">接近 10 年没写代码了，被 Claude Opus 4.5 拉了回来</h4>
   <p style="font-size:13.5px;color:var(--gray-text);line-height:1.65;margin:0 0 16px;flex:1;">脑子里想，顺手写出来，让 Claude 干，自己 review。AI 原生不是把 AI 加进流程，是流程本身就跑在 AI 上。</p>
   <span style="font-size:13px;font-weight:700;color:var(--blue);">阅读全文 →</span>
 </a>
 <a href="https://rui.juzi.bot/thought/2026-05-04-ai-era-competitiveness.html" target="_blank" rel="noopener" style="display:flex;flex-direction:column;padding:28px 24px;background:#fff;border:1px solid var(--gray-line);border-radius:18px;text-decoration:none;color:inherit;transition:border-color .2s,box-shadow .2s;">
   <div style="font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--orange);margin-bottom:12px;">思考</div>
-  <h4 style="font-size:17px;font-weight:800;margin:0 0 12px;">1+N：组织的最小单元</h4>
+  <h4 style="font-size:17px;font-weight:800;margin:0 0 12px;line-height:1.4;">AI 不可替代的那 20%：判断、品味、在场、关系、手艺</h4>
   <p style="font-size:13.5px;color:var(--gray-text);line-height:1.65;margin:0 0 16px;flex:1;">组织的最小单元，从一支团队变成「1 个人 + 一支 Agent 团队」。这个 1 留下判断、品味、在场、关系、手艺，其余交给 N。</p>
   <span style="font-size:13px;font-weight:700;color:var(--orange);">阅读全文 →</span>
 </a>
 <a href="https://rui.juzi.bot/thought/2026-06-04-pe-to-fde.html" target="_blank" rel="noopener" style="display:flex;flex-direction:column;padding:28px 24px;background:#fff;border:1px solid var(--gray-line);border-radius:18px;text-decoration:none;color:inherit;transition:border-color .2s,box-shadow .2s;">
   <div style="font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--green);margin-bottom:12px;">思考</div>
-  <h4 style="font-size:17px;font-weight:800;margin:0 0 12px;">不卖软件，按结果交付</h4>
+  <h4 style="font-size:17px;font-weight:800;margin:0 0 12px;line-height:1.4;">硅谷今年最火的岗位 FDE，我们闷头干了三年</h4>
   <p style="font-size:13.5px;color:var(--gray-text);line-height:1.65;margin:0 0 16px;flex:1;">被中国客户逼着，三年只做一件事：客户业务真的变好，才收钱。这是 AI 原生组织对外的样子。</p>
   <span style="font-size:13px;font-weight:700;color:var(--green);">阅读全文 →</span>
 </a>
