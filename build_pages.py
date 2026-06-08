@@ -1504,14 +1504,16 @@ def page_industries():
         ccolor = {'bl': 'var(--blue)', 'or': 'var(--orange)', 'gr': 'var(--green)', 'pu': 'var(--purple)', 'te': 'var(--teal)'}[color]
         clt = {'bl': 'var(--blue-light)', 'or': 'var(--orange-lt)', 'gr': 'var(--green-lt)', 'pu': 'var(--purple-lt)', 'te': 'var(--teal-lt)'}[color]
         logo_card_html = (
-            f'<div style="margin-top:16px;background:#fff;border:1px solid var(--gray-line);border-radius:18px;padding:22px 20px;">'
+            f'<div style="background:#fff;border:1px solid var(--gray-line);border-radius:18px;padding:22px 20px;">'
             f'<div style="font-size:13px;font-weight:800;letter-spacing:.06em;color:{ccolor};text-transform:uppercase;margin-bottom:16px;">部分客户</div>'
             f'<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">{logo_grid_html}</div></div>'
         ) if logo_cells[slug] else ''
+        grid_cols = '1fr 360px' if logo_card_html else '1fr'
+        right_col = f'<div>{logo_card_html}</div>' if logo_card_html else ''
         body += f"""
 <section class="section-block" id="{slug}">
   <div class="container">
-    <div style="display:grid;grid-template-columns:1fr 380px;gap:48px;">
+    <div style="display:grid;grid-template-columns:{grid_cols};gap:48px;align-items:start;">
       <div>
         <div style="display:inline-flex;align-items:center;gap:10px;padding:6px 14px;background:{clt};color:{ccolor};border-radius:999px;font-size:13px;font-weight:700;margin-bottom:18px;">
           <span style="font-size:18px;">{icon}</span>{tagline}
@@ -1523,19 +1525,8 @@ def page_industries():
         <ul style="margin:0;padding:0;list-style:none;">
           {''.join(f'<li style="padding:6px 0 6px 22px;position:relative;font-size:14.5px;color:var(--black);"><span style="position:absolute;left:0;top:14px;width:14px;height:2px;background:{ccolor};"></span>{c}</li>' for c in capabilities)}
         </ul>
-        <div style="margin-top:24px;display:flex;flex-wrap:wrap;gap:8px;">
-          {cust_html}
-        </div>
       </div>
-      <div>
-        <div style="background:{clt};border-radius:18px;padding:28px 26px;">
-          <div style="font-size:13px;font-weight:800;letter-spacing:.06em;color:{ccolor};text-transform:uppercase;margin-bottom:20px;">数据快览</div>
-          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
-            {''.join(f'<div><div style="font-size:22px;font-weight:800;color:{ccolor};letter-spacing:-.01em;line-height:1.1;">{v}</div><div style="font-size:11.5px;color:var(--gray-text);margin-top:3px;">{l}</div></div>' for v, l in kpis)}
-          </div>
-        </div>
-        {logo_card_html}
-      </div>
+      {right_col}
     </div>
   </div>
 </section>""".strip()
