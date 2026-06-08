@@ -1654,17 +1654,17 @@ def page_about():
         "AI 原生组织，<span class=\"accent\">长什么样</span>",
         "这些不是写在墙上的口号，是我们自己每天在跑的工作方式。",
         '''<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:1100px;margin:0 auto;">
-<a href="https://rui.juzi.bot/thought/2026-04-28-return-to-code.html" target="_blank" rel="noopener" style="display:flex;flex-direction:column;padding:28px 24px;background:#fff;border:1px solid var(--gray-line);border-radius:18px;text-decoration:none;color:inherit;transition:border-color .2s,box-shadow .2s;">
-  <div style="font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:12px;">思考</div>
-  <h4 style="font-size:17px;font-weight:800;margin:0 0 12px;line-height:1.4;">接近 10 年没写代码了，被 Claude Opus 4.5 拉了回来</h4>
-  <p style="font-size:13.5px;color:var(--gray-text);line-height:1.65;margin:0 0 16px;flex:1;">脑子里想，顺手写出来，让 Claude 干，自己 review。AI 原生不是把 AI 加进流程，是流程本身就跑在 AI 上。</p>
-  <span style="font-size:13px;font-weight:700;color:var(--blue);">阅读全文 →</span>
+<a href="https://rui.juzi.bot/slides/files/2026-05-24-dedao-reinvent-organization/index.html" target="_blank" rel="noopener" style="display:flex;flex-direction:column;padding:28px 24px;background:#fff;border:1px solid var(--gray-line);border-radius:18px;text-decoration:none;color:inherit;transition:border-color .2s,box-shadow .2s;">
+  <div style="font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:12px;">分享 · 得到</div>
+  <h4 style="font-size:17px;font-weight:800;margin:0 0 12px;line-height:1.4;">重新发明组织：让小公司也用得起大公司的人</h4>
+  <p style="font-size:13.5px;color:var(--gray-text);line-height:1.65;margin:0 0 16px;flex:1;">AI 让一家小公司，也能用得起过去只有大公司才养得起的那种人。在得到的现场分享。</p>
+  <span style="font-size:13px;font-weight:700;color:var(--blue);">查看分享 →</span>
 </a>
-<a href="https://rui.juzi.bot/thought/2026-05-04-ai-era-competitiveness.html" target="_blank" rel="noopener" style="display:flex;flex-direction:column;padding:28px 24px;background:#fff;border:1px solid var(--gray-line);border-radius:18px;text-decoration:none;color:inherit;transition:border-color .2s,box-shadow .2s;">
-  <div style="font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--orange);margin-bottom:12px;">思考</div>
-  <h4 style="font-size:17px;font-weight:800;margin:0 0 12px;line-height:1.4;">AI 不可替代的那 20%：判断、品味、在场、关系、手艺</h4>
-  <p style="font-size:13.5px;color:var(--gray-text);line-height:1.65;margin:0 0 16px;flex:1;">组织的最小单元，从一支团队变成「1 个人 + 一支 Agent 团队」。这个 1 留下判断、品味、在场、关系、手艺，其余交给 N。</p>
-  <span style="font-size:13px;font-weight:700;color:var(--orange);">阅读全文 →</span>
+<a href="https://rui.juzi.bot/slides/files/2026-04-25-ai-organization-pku/index.html" target="_blank" rel="noopener" style="display:flex;flex-direction:column;padding:28px 24px;background:#fff;border:1px solid var(--gray-line);border-radius:18px;text-decoration:none;color:inherit;transition:border-color .2s,box-shadow .2s;">
+  <div style="font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--orange);margin-bottom:12px;">分享</div>
+  <h4 style="font-size:17px;font-weight:800;margin:0 0 12px;line-height:1.4;">AI 原生时代，我们正在交付的产品和还没解的题</h4>
+  <p style="font-size:13.5px;color:var(--gray-text);line-height:1.65;margin:0 0 16px;flex:1;">重新发明组织——AI 原生时代，一家公司每天怎么用 Agent 干活，哪些跑通了，哪些还在解。</p>
+  <span style="font-size:13px;font-weight:700;color:var(--orange);">查看分享 →</span>
 </a>
 <a href="https://rui.juzi.bot/thought/2026-06-04-pe-to-fde.html" target="_blank" rel="noopener" style="display:flex;flex-direction:column;padding:28px 24px;background:#fff;border:1px solid var(--gray-line);border-radius:18px;text-decoration:none;color:inherit;transition:border-color .2s,box-shadow .2s;">
   <div style="font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--green);margin-bottom:12px;">思考</div>
@@ -2220,7 +2220,7 @@ def page_fde():
             ("🤝", "先搞懂这门生意", "不是先装软件，而是先与客户梳理清楚业务、流程与症结。AI 要承接的工作，必须先有人真正理解。", "bl"),
             ("🎯", "对结果负责", "与客户签订对赌协议，按结果收费。客户的转化和人效确实改善，我们才收费。", "or"),
             ("🔁", "能力回流产品", "在一个客户现场踩出来的能力，抽象成产品里的标准能力，下一个客户起步就用得上。做一次，卖多次。", "gr"),
-            ("🧑‍🎓", "不一定是码农", "FDE 不限于会写代码的人，不写代码的人往往做得更好。我们的 FDE 负责人是一位法语专业的 00 后。理解业务、肯钻研，比技术背景更重要。", "pu"),
+            ("🧑‍🎓", "不一定是工程师", "FDE 不限于会写代码的人——很多最好的 FDE 不写代码。真正重要的是理解业务、肯往一线钻，技术背景只是其次。", "pu"),
         ], cols=2),
     )
 
