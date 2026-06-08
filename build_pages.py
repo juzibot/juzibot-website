@@ -1514,16 +1514,16 @@ def page_industries():
     ]
 
     logo_cells = {
-        'education': [('edu', ci, c) for ci in range(2) for c in range(8)],
-        'ecommerce': [('consumer', ci, c) for ci in range(2) for c in range(8)],
+        'education': [('edu', ci, c) for ci in range(2) for c in range(8)][:15],
+        'ecommerce': [('consumer', ci, c) for ci in range(2) for c in range(8)][:15],
         'finance':   [('govfin', 0, c) for c in range(6)],
         'gov':       [],
         'internet':  [('internet', 0, c) for c in range(8)],
     }
     for slug, name, icon, color, tagline, intro, kpis, scene, capabilities, customers in industries_detail:
-        lg_cols = 4 if len(logo_cells[slug]) >= 12 else 2
+        lg_cols = 3
         logo_grid_html = ''.join(
-            f'<div style="border:1px solid var(--gray-line);border-radius:10px;background:#fff;height:84px;display:flex;align-items:center;justify-content:center;padding:11px 14px;"><img src="assets/brand/logos/{p}-{ci}-{c}.png" alt="" style="max-width:100%;max-height:100%;object-fit:contain;display:block;" loading="lazy"></div>'
+            f'<div style="border:1px solid var(--gray-line);border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:center;padding:9px 14px;"><img src="assets/brand/logos/{p}-{ci}-{c}.png" alt="" style="width:100%;height:auto;display:block;" loading="lazy"></div>'
             for p, ci, c in logo_cells[slug]
         )
         kpi_html = ''.join(
@@ -1554,7 +1554,7 @@ def page_industries():
                 '<div style="margin-top:14px;font-size:12px;color:var(--gray-text);line-height:1.6;">从东升镇起步，已覆盖几十个社区、数百个居民群</div>'
                 '</div>'
             )
-        rw = 480 if (logo_cells[slug] and len(logo_cells[slug]) >= 12) else 400
+        rw = 400 if slug == 'gov' else 480
         grid_cols = f'1fr {rw}px' if logo_card_html else '1fr'
         right_col = f'<div>{logo_card_html}</div>' if logo_card_html else ''
         body += f"""
