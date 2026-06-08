@@ -22,8 +22,8 @@ def nav_html(rel):
       <div class="nav-item">
         <button>产品 <span class="caret"></span></button>
         <div class="dropdown wide">
-          <a href="{rel}products/miaodong.html"><div class="d-title">句子秒懂 · 大脑</div><div class="d-desc">多 Agent 编排，业务人员无代码搭</div></a>
-          <a href="{rel}products/shouhu.html"><div class="d-title">句子守护 · 主管</div><div class="d-desc">六道关口管住上线前 / 中 / 后</div></a>
+          <a href="{rel}products/miaodong.html"><div class="d-title">句子秒懂 · 大脑</div><div class="d-desc">业务人员不写代码也能搭 Agent</div></a>
+          <a href="{rel}products/shouhu.html"><div class="d-title">句子守护 · 主管</div><div class="d-desc">Agent 上线前测过、上线后管着</div></a>
           <a href="{rel}products/canmou.html"><div class="d-title">句子参谋 · 参谋</div><div class="d-desc">对话式数据洞察，一句话问数</div></a>
           <a href="{rel}products/dongxing.html"><div class="d-title">句子智库 · 记忆</div><div class="d-desc">知识工程，把散乱知识炼成可检索资产</div></a>
           <a href="{rel}products/miaohui.html"><div class="d-title">句子秒回 · 工位</div><div class="d-desc">Agent 和人协作的 IM 工作台</div></a>
@@ -801,12 +801,12 @@ def page_shouhu():
 
     return page_layout(
         title="句子守护 · 守护你的 AI 员工 | 句子互动",
-        description="句子守护——守护你的 AI 员工，Agent 健康度看得见。六道关口管住上线前 / 中 / 后：AI 生成测试用例、批量验收、灰度测试、回归测试、AI 工单、AI 质检。没人点头就不上线，每一步都留痕、能查。",
+        description="句子守护——守护你的 AI 员工，Agent 健康度看得见。Agent 上线前测过、上线后管着：AI 生成测试用例、批量验收、灰度测试、回归测试、AI 工单、AI 质检。没人点头就不上线，每一步都留痕、能查。",
         rel="../",
         breadcrumbs=[("首页", "../index.html"), ("产品", None), ("句子守护", None)],
         hero_kicker="产品 · 守护 · 主管",
         hero_h1='句子守护 · <span class="accent">守护你的 AI 员工</span>',
-        hero_lede="我们为你的每一个 AI 员工做了什么、效果如何，一眼可见。<strong>六道关口管住上线前 / 中 / 后</strong>——AI 自动生成用例、批量验收、灰度测试、回归测试、AI 工单、AI 质检。没人拍板不上线，可追溯可审计。",
+        hero_lede="我们为你的每一个 AI 员工做了什么、效果如何，一眼可见。<strong>Agent 上线前测过、上线后管着</strong>——AI 自动生成用例、批量验收、灰度测试、回归测试、AI 工单、AI 质检。没人拍板不上线，可追溯可审计。",
         pills=["六道关口上线把关", "AI 自动生成用例", "健康度持续监控", "金融政务必过的一关"],
         body=body,
     )
