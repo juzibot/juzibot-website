@@ -2148,6 +2148,8 @@ footer ul a:hover { color: #fff; }
   .layer-label { flex-wrap: wrap; gap: 8px; font-size: 16px; }
   .layer-sub { flex-basis: 100%; }
   .prod-row { flex-direction: column; }
+  .prod-row > * { flex: 1 1 auto; }
+  .pcard { min-height: 0; }
 }
 .pcard {
   background: #fff;
@@ -2460,5 +2462,32 @@ footer ul a:hover { color: #fff; }
   .nav-item .dropdown::before { display: none; }
   .nav-item .dropdown a { padding: 9px 34px; }
   .nav-item .dropdown .d-desc { display: none; }
+}
+
+/* ────────── 移动端：内联多列网格塌列（内联样式需 !important 覆盖） ────────── */
+@media (max-width: 760px) {
+  [style*="grid-template-columns:repeat(3,1fr)"],
+  [style*="grid-template-columns:1fr 1fr 1fr"],
+  [style*="grid-template-columns:1fr 400px"],
+  [style*="grid-template-columns:1fr 360px"] {
+    grid-template-columns: 1fr !important;
+  }
+  [style*="grid-template-columns:repeat(4,1fr)"],
+  [style*="grid-template-columns:repeat(5,1fr)"],
+  [style*="grid-template-columns:repeat(6,1fr)"] {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  /* 右侧 logo / 信息面板的固定宽度列在窄屏下铺满 */
+  [style*="1fr 400px"], [style*="1fr 360px"] { gap: 28px !important; }
+}
+@media (max-width: 520px) {
+  [style*="grid-template-columns:1fr 1fr"]:not([style*="1fr 1fr 1fr"]),
+  [style*="grid-template-columns:repeat(2,1fr)"] {
+    grid-template-columns: 1fr !important;
+  }
+  [style*="grid-template-columns:repeat(4,1fr)"],
+  [style*="grid-template-columns:repeat(5,1fr)"] {
+    grid-template-columns: 1fr 1fr !important;
+  }
 }
 
