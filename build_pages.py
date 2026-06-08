@@ -1024,9 +1024,9 @@ def workforce_pages():
         slug='government',
         title='AI 社工 / 调解员',
         kicker='AI 员工 · 政务岗',
-        h1='AI 社工 / 调解员 · <span class="accent">在政务高合规下跑得通的 AI</span>',
-        lede='AI 普法调解员、AI 社工已在 <strong>北京海淀区东升镇</strong>率先落地——AI 社工 7×24 响应，累计服务居民约 50 万人次；AI 普法调解员参与调解近百起，成功率约 93%，获评海淀区首届法治实践优秀案例。每一句输出都有日志记录、可逐句倒查——这是政务和金融客户最看重的一点。',
-        pills=['海淀东升镇率先落地', '高合规 + 全程可审计', '居民服务约 50 万人次', '调解成功率约 93%'],
+        h1='AI 社工 / 调解员 · <span class="accent">政务高合规下也跑得稳</span>',
+        lede='AI 普法调解员、AI 社工已在 <strong>城市基层试点</strong>率先落地——AI 社工 7×24 响应，累计服务居民约 50 万人次；AI 普法调解员参与调解近百起，成功率约 93%，获评地方法治实践优秀案例。每一句输出都有日志记录、可逐句倒查——这是政务和金融客户最看重的一点。',
+        pills=['城市基层试点落地', '高合规 + 全程可审计', '居民服务约 50 万人次', '调解成功率约 93%'],
         color='pu',
         industry='政务 · 司法 · 公共服务',
         role_desc='政务场景对 AI 的要求最高：合规、可审计、说错一句都不行',
@@ -1486,7 +1486,7 @@ def page_industries():
         'education': [('edu', ci, c) for ci in range(2) for c in range(8)],
         'ecommerce': [('consumer', ci, c) for ci in range(2) for c in range(8)],
         'finance':   [('govfin', 0, c) for c in range(6)],
-        'gov':       [('govfin', 0, c) for c in (6, 7)],
+        'gov':       [],
         'internet':  [('internet', 0, c) for c in range(8)],
     }
     for slug, name, icon, color, tagline, intro, kpis, scene, capabilities, customers in industries_detail:
@@ -1503,6 +1503,11 @@ def page_industries():
         # color tokens
         ccolor = {'bl': 'var(--blue)', 'or': 'var(--orange)', 'gr': 'var(--green)', 'pu': 'var(--purple)', 'te': 'var(--teal)'}[color]
         clt = {'bl': 'var(--blue-light)', 'or': 'var(--orange-lt)', 'gr': 'var(--green-lt)', 'pu': 'var(--purple-lt)', 'te': 'var(--teal-lt)'}[color]
+        logo_card_html = (
+            f'<div style="margin-top:16px;background:#fff;border:1px solid var(--gray-line);border-radius:18px;padding:22px 20px;">'
+            f'<div style="font-size:13px;font-weight:800;letter-spacing:.06em;color:{ccolor};text-transform:uppercase;margin-bottom:16px;">部分客户</div>'
+            f'<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">{logo_grid_html}</div></div>'
+        ) if logo_cells[slug] else ''
         body += f"""
 <section class="section-block" id="{slug}">
   <div class="container">
@@ -1529,12 +1534,7 @@ def page_industries():
             {''.join(f'<div><div style="font-size:22px;font-weight:800;color:{ccolor};letter-spacing:-.01em;line-height:1.1;">{v}</div><div style="font-size:11.5px;color:var(--gray-text);margin-top:3px;">{l}</div></div>' for v, l in kpis)}
           </div>
         </div>
-        <div style="margin-top:16px;background:#fff;border:1px solid var(--gray-line);border-radius:18px;padding:22px 20px;">
-          <div style="font-size:13px;font-weight:800;letter-spacing:.06em;color:{ccolor};text-transform:uppercase;margin-bottom:16px;">部分客户</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-            {logo_grid_html}
-          </div>
-        </div>
+        {logo_card_html}
       </div>
     </div>
   </div>
