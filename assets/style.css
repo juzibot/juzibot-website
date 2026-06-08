@@ -2026,14 +2026,14 @@ footer ul a:hover { color: #fff; }
   letter-spacing: 0;
 }
 .prod-row {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
   gap: 20px;
 }
+.prod-row > * { flex: 1 1 0; min-width: 0; }
 @media (max-width: 860px) {
   .layer-label { flex-wrap: wrap; gap: 8px; font-size: 16px; }
   .layer-sub { flex-basis: 100%; }
-  .prod-row { grid-template-columns: 1fr; }
+  .prod-row { flex-direction: column; }
 }
 .pcard {
   background: #fff;
@@ -2062,9 +2062,8 @@ footer ul a:hover { color: #fff; }
 .pcard.c-purple::before { background: var(--purple); }
 .pcard.c-teal::before   { background: var(--teal); }
 .pcard .ptag {
-  font-size: 12px; font-weight: 800; letter-spacing: .14em;
-  text-transform: uppercase;
-  margin-bottom: 14px;
+  font-size: 15px; font-weight: 800; letter-spacing: -.01em;
+  margin-bottom: 12px;
 }
 .pcard.c-blue .ptag   { color: var(--blue); }
 .pcard.c-orange .ptag { color: var(--orange); }
