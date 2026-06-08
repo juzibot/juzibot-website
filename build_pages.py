@@ -39,7 +39,7 @@ def nav_html(rel):
           <a href="{rel}workforce/marketing.html"><div class="d-title">AI 导购</div><div class="d-desc">头部零售品牌的私域导购运营，长尾客户也覆盖</div></a>
           <a href="{rel}workforce/service.html"><div class="d-title">AI 客服</div><div class="d-desc">从售前到售后都接得住 · 5 年 BadCase 积累</div></a>
           <a href="{rel}workforce/government.html"><div class="d-title">AI 社工 / 调解员</div><div class="d-desc">政务高合规要求 + 全程可追溯 · 已稳步落地</div></a>
-          <a href="{rel}workforce/finance.html"><div class="d-title">AI 顾问 / 营销</div><div class="d-desc">银行 / 证券 / 保险头部机构落地 · 9 年风控话术</div></a>
+          <a href="{rel}workforce/finance.html"><div class="d-title">AI 理财顾问</div><div class="d-desc">银行 / 证券 / 保险头部机构落地 · 9 年风控话术</div></a>
           <a href="{rel}workforce/lawyer.html"><div class="d-title">AI 律师</div><div class="d-desc">批量仲裁案件代理，律师只做看 / 改 / 签</div></a>
         </div>
       </div>
@@ -91,7 +91,7 @@ def footer_html(rel):
           <li><a href="{rel}workforce/marketing.html">AI 导购</a></li>
           <li><a href="{rel}workforce/service.html">AI 客服</a></li>
           <li><a href="{rel}workforce/government.html">AI 社工 / 调解员</a></li>
-          <li><a href="{rel}workforce/finance.html">AI 顾问 / 营销</a></li>
+          <li><a href="{rel}workforce/finance.html">AI 理财顾问</a></li>
           <li><a href="{rel}workforce/lawyer.html">AI 律师</a></li>
         </ul>
       </div>
@@ -1070,19 +1070,19 @@ def workforce_pages():
         cta_text='把 AI 社工 / 调解员部署到你的政务系统',
     )
 
-    # ────── AI 顾问 / 营销 (金融) ──────
+    # ────── AI 理财顾问 (金融) ──────
     pages['finance'] = page_workforce(
         slug='finance',
-        title='AI 顾问 / 营销',
+        title='AI 理财顾问',
         kicker='AI 员工 · 金融岗',
-        h1='AI 顾问 / 营销 · <span class="accent">在金融合规边界内跑得稳</span>',
+        h1='AI 理财顾问 · <span class="accent">在金融合规边界内跑得稳</span>',
         lede='银行、证券、保险多个头部机构落地——<strong>可设的合规边界 + 9 年风控话术库</strong>，金融客户敢用。',
         pills=['多家头部金融机构', '9 年风控话术库', '可设的合规边界', 'KYC / 反洗钱集成'],
         color='te',
         industry='银行 · 证券 · 保险',
         role_desc='金融对 AI 的合规要求最严，一句话越界就可能触碰监管红线',
         pain_paragraphs=[
-            '银行客户经理一人服务 500 个客户已经超负荷，可每个客户对理财、保险、信贷的咨询都不能怠慢。AI 顾问接住基础咨询和合规材料解读，人工只管高价值客户。',
+            '银行客户经理一人服务 500 个客户已经超负荷，可每个客户对理财、保险、信贷的咨询都不能怠慢。AI 理财顾问接住基础咨询和合规材料解读，人工只管高价值客户。',
             '难点全在合规这一关。不能给投资建议，不能保证收益，更不能误导客户去买。这些话术由风控团队预先划定边界，AI 输出前每句都经过审查。9 年金融场景积累的话术库，通用 Agent 平台短期内难以补齐。',
         ],
         pain_bullets=[
@@ -1094,7 +1094,7 @@ def workforce_pages():
         ],
         pain_visual="""
 <div style="background:#fff;border-radius:12px;padding:18px;border:1px solid var(--gray-line);">
-<div style="font-size:13px;color:var(--teal);font-weight:700;margin-bottom:12px;">AI 顾问 · 合规边界</div>
+<div style="font-size:13px;color:var(--teal);font-weight:700;margin-bottom:12px;">AI 理财顾问 · 合规边界</div>
 <div style="display:flex;flex-direction:column;gap:10px;font-size:12.5px;">
 <div style="background:var(--green-lt);color:var(--green);padding:9px 12px;border-radius:8px;display:flex;align-items:center;gap:8px;"><span>✓</span><span>解读产品条款 / 介绍历史业绩</span></div>
 <div style="background:var(--green-lt);color:var(--green);padding:9px 12px;border-radius:8px;display:flex;align-items:center;gap:8px;"><span>✓</span><span>风险等级匹配检查</span></div>
@@ -1119,7 +1119,7 @@ def workforce_pages():
             ('100%', '合规可审计'),
             ('5×', '客户经理人均承接'),
         ],
-        cta_text='让 AI 顾问 / 营销在你的合规边界内上岗',
+        cta_text='让 AI 理财顾问在你的合规边界内上岗',
     )
 
     # ────── AI 律师 ──────
@@ -1401,11 +1401,11 @@ def page_industries():
     )
 
     industries_detail = [
-        ('education', '在线教育', '📚', 'bl', '400+ 客户 · 头部 RPA 已覆盖',
+        ('education', '在线教育', '📚', 'bl', '400+ 客户 · 头部公司已覆盖',
          '在线教育是句子互动最早进入的行业。9 年下来覆盖了几乎所有头部公司，从大班课、小班课到 1 对 1，从招生、续费到 NPS。其中我们目前成单体量最大的客户，是一家<strong>在线教育头部品牌（兴趣技能方向）</strong>，AI 把整条「低转高」链路跑通：人效翻倍、单线索成本砍 50~62%、转人工率从 27% 压到 2.73%。<a href="case-xingqudao.html" style="color:var(--blue);font-weight:700;">看完整案例 →</a>',
          [
              ('400+', '客户'),
-             ('头部', 'RPA 已覆盖'),
+             ('头部', '已覆盖'),
              ('9 年', '行业积累'),
          ],
          '· 学员建联：自动欢迎语 + 体验课邀约',
@@ -1561,7 +1561,7 @@ def page_industries():
         breadcrumbs=[("首页", "index.html"), ("客户与行业", None)],
         hero_kicker="WHO USES JUZIBOT",
         hero_h1='你的行业里，<span class="accent">已经有人在用了</span>。',
-        hero_lede="如果你在<strong>在线教育、消费品电商、金融、政务、互联网</strong>这 5 个行业里，你的同行（甚至头部公司）已经在用句子互动的 AI 员工。这些行业的难点我们已经和他们一起趟过，你不必从零开始。",
+        hero_lede="如果你在<strong>在线教育、消费品电商、金融、政务、互联网</strong>这 5 个行业里，你的同行已经在用句子互动的 AI 员工。这些行业的难点我们已经和他们一起趟过，你不必从零开始。",
         pills=["1000+ 大型企业客户", "5 个行业头部公司在用", "开通即可上岗", "同行已在用"],
         body=body,
     )
