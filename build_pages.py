@@ -1589,14 +1589,13 @@ def page_about():
         '<div><div style="font-size:32px;font-weight:800;color:var(--blue);letter-spacing:-.01em;line-height:1.1;">10 年</div><div style="font-size:13px;color:var(--gray-text);margin-top:4px;">深耕对话式 AI</div></div>'
         '<div><div style="font-size:32px;font-weight:800;color:var(--green);letter-spacing:-.01em;line-height:1.1;">5 个</div><div style="font-size:13px;color:var(--gray-text);margin-top:4px;">高合规高垂直行业</div></div>'
         '<div><div style="font-size:32px;font-weight:800;color:var(--purple);letter-spacing:-.01em;line-height:1.1;">9 年</div><div style="font-size:13px;color:var(--gray-text);margin-top:4px;">行业 know-how 积累</div></div>'
-        '<div><div style="font-size:32px;font-weight:800;color:var(--black);letter-spacing:-.01em;line-height:1.1;">22k+</div><div style="font-size:13px;color:var(--gray-text);margin-top:4px;">Wechaty GitHub Star</div></div>'
         '</div>'
         '</div>'
     )
 
     body += block(        "AI 下沉到每个部门",
-        "我们自己，就是一家 AI 原生组织",
-        "判断一家公司是不是真的 AI 原生，不看它怎么说，看 AI 有没有落到每个具体岗位。在句子互动，从管理层到一线，每个部门都有自己每天在跑的 AI 活。",
+        "不是某个部门在试，是每个部门、每个人都在用",
+        "一家公司是不是真正的 AI 原生，关键不在口号，而在 AI 是否落到了每个具体岗位。在句子互动，从管理层到一线，每个部门都有自己日常运行的 AI 工作流。",
         '''<div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
 <div style="background:#fff;border:1px solid var(--gray-line);border-radius:14px;padding:22px;">
   <div style="font-size:12px;font-weight:800;color:var(--blue);letter-spacing:.06em;margin-bottom:8px;">战略</div>
@@ -1630,75 +1629,6 @@ def page_about():
 </div>
 </div>''',
         alt=True,
-    )
-
-    body += block(        "AI 原生团队",
-        "大模型时代如何构建 AI Agent——<span class=\"accent\">《Chatbot 从 0 到 1》</span>",
-        "由创始人 <strong>李佳芮</strong>（Wechaty 开源作者）带队。团队从 2017 年的 Wechaty 开源框架起步，到 2020 年出版中文首本聊天机器人专著《Chatbot 从 0 到 1》，到 2024 年第二版升级到大模型时代——9 年一直在做企业级 Agent。",
-        '''<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;max-width:1100px;margin:0 auto;">
-<div style="padding:28px 24px;background:#fff;border:1px solid var(--gray-line);border-radius:18px;">
-  <div style="display:inline-block;font-size:11px;font-weight:800;letter-spacing:.1em;background:var(--blue-light);color:var(--blue);padding:4px 10px;border-radius:6px;margin-bottom:14px;">2020</div>
-  <h4 style="font-size:18px;font-weight:800;margin:0 0 12px;">《Chatbot 从 0 到 1》第一版</h4>
-  <p style="font-size:14px;color:var(--gray-text);line-height:1.7;margin:0;">中文首本聊天机器人专著。从 0 起步讲解如何构建可用的对话机器人，系统梳理人机交互基础。</p>
-</div>
-<div style="padding:28px 24px;background:#fff;border:1px solid var(--gray-line);border-radius:18px;">
-  <div style="display:inline-block;font-size:11px;font-weight:800;letter-spacing:.1em;background:var(--orange-lt);color:var(--orange);padding:4px 10px;border-radius:6px;margin-bottom:14px;">2024</div>
-  <h4 style="font-size:18px;font-weight:800;margin:0 0 12px;">《Chatbot 从 0 到 1》第二版</h4>
-  <p style="font-size:14px;color:var(--gray-text);line-height:1.7;margin:0;">大模型时代升级版。涵盖 LLM Agent、工具调用、多 Agent 协作到实际部署，将 2020 年的对话机器人方法论延伸到 AI 员工。</p>
-</div>
-<div style="padding:28px 24px;background:#fff;border:1px solid var(--gray-line);border-radius:18px;">
-  <div style="display:inline-block;font-size:11px;font-weight:800;letter-spacing:.1em;background:var(--green-lt);color:var(--green);padding:4px 10px;border-radius:6px;margin-bottom:14px;">2017 至今</div>
-  <h4 style="font-size:18px;font-weight:800;margin:0 0 12px;">Wechaty 开源框架</h4>
-  <p style="font-size:14px;color:var(--gray-text);line-height:1.7;margin:0;">全球最大的 IM 自动化开源社区之一，22k+ GitHub Star，是 9 年持续投入积累的渠道基础。</p>
-</div>
-</div>''',
-        alt=True,
-    )
-
-    body += block(
-        "创始团队",
-        "做对话式 AI 十年的一支队伍",
-        "对 AI 落地的判断，来自十年、1000+ 客户和多次组织迭代，而非论文。",
-        '''<div style="max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:22px;">
-<div style="background:#fff;border:1px solid var(--gray-line);border-radius:18px;padding:30px;">
-  <div style="font-size:19px;font-weight:800;margin-bottom:4px;">李佳芮</div>
-  <div style="font-size:13px;font-weight:700;color:var(--blue);margin-bottom:14px;">CEO · 联合创始人</div>
-  <ul style="margin:0;padding-left:18px;font-size:13.5px;color:var(--gray-text);line-height:1.9;">
-    <li>北京邮电大学 计算机本科 & 硕士</li>
-    <li>《Chatbot 从 0 到 1：对话式交互设计指南》作者</li>
-    <li>Wechaty 开源框架 联合作者</li>
-    <li>Microsoft AI MVP</li>
-  </ul>
-</div>
-<div style="background:#fff;border:1px solid var(--gray-line);border-radius:18px;padding:30px;">
-  <div style="font-size:19px;font-weight:800;margin-bottom:4px;">高原</div>
-  <div style="font-size:13px;font-weight:700;color:var(--orange);margin-bottom:14px;">CTO · 联合创始人</div>
-  <ul style="margin:0;padding-left:18px;font-size:13.5px;color:var(--gray-text);line-height:1.9;">
-    <li>北京邮电大学 计算机本科</li>
-    <li>马里兰大学（UMD）硕士</li>
-    <li>前 Amazon 软件工程师（西雅图）</li>
-    <li>前 Expedia 软件工程师（美国）</li>
-  </ul>
-</div>
-</div>
-<p style="text-align:center;font-size:13.5px;color:var(--gray-text);margin:24px auto 0;max-width:680px;line-height:1.7;">90 后 AI 极客 + 深耕多年的 ToB 实战派——两种背景都具备的团队极为稀缺。</p>''',
-    )
-
-    body += block(
-        "时间线",
-        "9 年，从对话式 AI 到 AI 员工",
-        "公司从在线教育起家，后来把同一套方法复制到消费品、金融、政务等行业，跨行业都跑通了。",
-        '''<div style="position:relative;padding:48px 0 24px;max-width:1100px;margin:0 auto;">
-<div style="position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:2px;background:var(--gray-line);"></div>
-<div style="display:grid;grid-template-columns:repeat(6,1fr);gap:0;position:relative;">
-<div style="text-align:center;position:relative;"><div style="width:16px;height:16px;border-radius:50%;background:var(--orange);margin:0 auto 18px;border:3px solid #fff;box-shadow:0 0 0 2px var(--orange);"></div><div style="font-size:16px;font-weight:800;color:var(--blue);margin-bottom:4px;">2017</div><div style="font-size:12.5px;color:var(--gray-text);line-height:1.5;padding:0 8px;">Wechaty 开源框架发布</div></div>
-<div style="text-align:center;position:relative;"><div style="width:16px;height:16px;border-radius:50%;background:var(--orange);margin:0 auto 18px;border:3px solid #fff;box-shadow:0 0 0 2px var(--orange);"></div><div style="font-size:16px;font-weight:800;color:var(--blue);margin-bottom:4px;">2019</div><div style="font-size:12.5px;color:var(--gray-text);line-height:1.5;padding:0 8px;">句子互动成立</div></div>
-<div style="text-align:center;position:relative;"><div style="width:16px;height:16px;border-radius:50%;background:var(--orange);margin:0 auto 18px;border:3px solid #fff;box-shadow:0 0 0 2px var(--orange);"></div><div style="font-size:16px;font-weight:800;color:var(--blue);margin-bottom:4px;">2020</div><div style="font-size:12.5px;color:var(--gray-text);line-height:1.5;padding:0 8px;">《Chatbot 从 0 到 1》出版</div></div>
-<div style="text-align:center;position:relative;"><div style="width:16px;height:16px;border-radius:50%;background:var(--orange);margin:0 auto 18px;border:3px solid #fff;box-shadow:0 0 0 2px var(--orange);"></div><div style="font-size:16px;font-weight:800;color:var(--blue);margin-bottom:4px;">2023</div><div style="font-size:12.5px;color:var(--gray-text);line-height:1.5;padding:0 8px;">Azure OpenAI 中国首发服务商<br/>WAIC 2023 参展</div></div>
-<div style="text-align:center;position:relative;"><div style="width:16px;height:16px;border-radius:50%;background:var(--orange);margin:0 auto 18px;border:3px solid #fff;box-shadow:0 0 0 2px var(--orange);"></div><div style="font-size:16px;font-weight:800;color:var(--blue);margin-bottom:4px;">2024</div><div style="font-size:12.5px;color:var(--gray-text);line-height:1.5;padding:0 8px;">《Chatbot 从 0 到 1》第二版<br/>Agent 流水线成型</div></div>
-<div style="text-align:center;position:relative;"><div style="width:16px;height:16px;border-radius:50%;background:var(--orange);margin:0 auto 18px;border:3px solid #fff;box-shadow:0 0 0 2px var(--orange);"></div><div style="font-size:16px;font-weight:800;color:var(--blue);margin-bottom:4px;">2026</div><div style="font-size:12.5px;color:var(--gray-text);line-height:1.5;padding:0 8px;">AI 员工规模化部署</div></div>
-</div>
-</div>''',
     )
 
     body += block(        "客户矩阵",
@@ -1805,11 +1735,6 @@ def page_about():
   <h4 style="font-size:17px;font-weight:800;margin:0 0 12px;">WAIC 2023 参展</h4>
   <p style="font-size:13.5px;color:var(--gray-text);line-height:1.65;margin:0;">在世界人工智能大会展出 AI 员工矩阵，呈现 9 年 IM 自动化积累与 AI 员工路径。</p>
 </div>
-<div style="padding:28px 24px;background:#fff;border:1px solid var(--gray-line);border-radius:18px;">
-  <div style="font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--green);margin-bottom:12px;">OPEN SOURCE</div>
-  <h4 style="font-size:17px;font-weight:800;margin:0 0 12px;">Wechaty 22k+ GitHub Star</h4>
-  <p style="font-size:13.5px;color:var(--gray-text);line-height:1.65;margin:0;">全球最大的 IM 自动化开源社区之一，开发者一起建起来的。这层渠道身份，是攒了 9 年才有的。</p>
-</div>
 </div>''',
     )
 
@@ -1822,14 +1747,14 @@ def page_about():
 """.strip()
 
     return page_layout(
-        title="AI 原生组织 · 句子互动 · 一支把 AI 装进企业的团队",
-        description="句子互动是企业级 Agentic AI 平台，由 Wechaty 开源作者李佳芮创立。9 年积累，1000+ 大型企业客户、深耕对话式 AI 十年。国家高新技术企业、北京市专精特新「小巨人」、公安部等保三级，WAIC 全球创新冠军、2025 CHINA AI 100。",
+        title="AI 原生组织 · 句子互动",
+        description="句子互动是一家 AI 原生组织——不只把 AI 卖给客户，公司内部从管理层到一线，每个部门、每个人每天都在用 Agent 完成工作。深耕对话式 AI 多年，已服务 1000+ 大型企业客户。国家高新技术企业、北京市专精特新「小巨人」、公安部等保三级。",
         rel="",
         breadcrumbs=[("首页", "index.html"), ("AI 原生组织", None)],
         hero_kicker="关于句子互动",
-        hero_h1='一支<span class="accent">把 AI 装进 1000+ 家企业</span>的团队',
-        hero_lede="句子互动是企业级 Agentic AI 平台，<strong>2019 年由 Wechaty 开源作者李佳芮创立</strong>。把大模型和企业数据接进 IM 通道、抖音、钉钉、飞书、WhatsApp，为企业造能自主决策的 AI 员工。做对话式 AI 这些年，已服务 1000+ 大型企业客户。",
-        pills=["1000+ 大型企业客户", "深耕对话式 AI 十年", "国家高新 · 专精特新", "Wechaty 22k+ Star"],
+        hero_h1='我们自己，<span class="accent">就是一家 AI 原生组织</span>',
+        hero_lede="句子互动是企业级 Agentic AI 平台。我们不只把 AI 卖给客户——公司内部，从管理层到一线，每个部门、每个人每天都在用 Agent 完成工作。深耕对话式 AI 多年，已服务 1000+ 大型企业客户。",
+        pills=["1000+ 大型企业客户", "深耕对话式 AI 十年", "国家高新 · 专精特新", "每个部门都在用 AI"],
         body=body,
     )
 
