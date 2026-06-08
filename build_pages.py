@@ -1548,6 +1548,35 @@ def page_about():
     )
 
     body += block(
+        "创始团队",
+        "做对话式 AI 十年的一支队伍",
+        "对 AI 落地的判断，来自十年、1000+ 客户和多次组织迭代，而非论文。",
+        '''<div style="max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:22px;">
+<div style="background:#fff;border:1px solid var(--gray-line);border-radius:18px;padding:30px;">
+  <div style="font-size:19px;font-weight:800;margin-bottom:4px;">李佳芮</div>
+  <div style="font-size:13px;font-weight:700;color:var(--blue);margin-bottom:14px;">CEO · 联合创始人</div>
+  <ul style="margin:0;padding-left:18px;font-size:13.5px;color:var(--gray-text);line-height:1.9;">
+    <li>北京邮电大学 计算机本科 & 硕士</li>
+    <li>《Chatbot 从 0 到 1：对话式交互设计指南》作者</li>
+    <li>Wechaty 开源框架 联合作者</li>
+    <li>Microsoft AI MVP</li>
+  </ul>
+</div>
+<div style="background:#fff;border:1px solid var(--gray-line);border-radius:18px;padding:30px;">
+  <div style="font-size:19px;font-weight:800;margin-bottom:4px;">高原</div>
+  <div style="font-size:13px;font-weight:700;color:var(--orange);margin-bottom:14px;">CTO · 联合创始人</div>
+  <ul style="margin:0;padding-left:18px;font-size:13.5px;color:var(--gray-text);line-height:1.9;">
+    <li>北京邮电大学 计算机本科</li>
+    <li>马里兰大学（UMD）硕士</li>
+    <li>前 Amazon 软件工程师（西雅图）</li>
+    <li>前 Expedia 软件工程师（美国）</li>
+  </ul>
+</div>
+</div>
+<p style="text-align:center;font-size:13.5px;color:var(--gray-text);margin:24px auto 0;max-width:680px;line-height:1.7;">90 后 AI 极客 + 深耕多年的 ToB 实战派——两种背景都具备的团队极为稀缺。</p>''',
+    )
+
+    body += block(
         "时间线",
         "11 年穿越周期",
         "公司从在线教育起家。2022 年双减政策出台，最大一块业务受到冲击。随后将同一套方法迁移到消费品和金融，验证了跨行业复用的能力。",
@@ -2224,6 +2253,40 @@ def page_fde():
             ("🧑‍🎓", "不一定是码农", "FDE 不限于会写代码的人，不写代码的人往往做得更好。我们的 FDE 负责人是一位法语专业的 00 后。理解业务、肯钻研，比技术背景更重要。", "pu"),
         ], cols=2),
     )
+
+    # ── Echo + Delta ──
+    body += block(
+        "FDE 由两种人搭班子",
+        "Echo 懂行业，Delta 写代码",
+        "FDE 不是一个全才，而是两种能力的组合。后方还有产品团队，把现场的粗糙定制抽象成可复用的标准产品。",
+        '''<div style="max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:18px;">
+<div style="background:#fff;border:1px solid var(--gray-line);border-radius:16px;padding:28px;">
+  <div style="font-size:13px;font-weight:800;color:var(--blue);letter-spacing:.06em;margin-bottom:10px;">ECHO · 懂行业</div>
+  <p style="font-size:14px;color:var(--gray-text);line-height:1.7;margin:0;">钻进客户的生意里，找出真正该解决的问题。FDE 进场的第一件事不是写代码，是把这门生意先搞清楚。</p>
+</div>
+<div style="background:#fff;border:1px solid var(--gray-line);border-radius:16px;padding:28px;">
+  <div style="font-size:13px;font-weight:800;color:var(--orange);letter-spacing:.06em;margin-bottom:10px;">DELTA · 写代码</div>
+  <p style="font-size:14px;color:var(--gray-text);line-height:1.7;margin:0;">快速把现场需要的东西搭出来。Echo 定义问题，Delta 当场实现，两人扎进同一个客户。</p>
+</div>
+</div>
+<p style="text-align:center;font-size:14px;color:var(--gray-text);margin:24px auto 0;max-width:720px;line-height:1.7;">现场踩出来的粗糙定制，后方产品团队再抽象成能跑 5–10 个客户的标准能力——上一个客户踩的坑，成了下一个 FDE 进场的杠杆。</p>''',
+        alt=True,
+    )
+
+    # ── 全球 FDE 格局 ──
+    body += block(
+        "全球都在抢这个岗位",
+        "FDE 是硅谷今年最火的岗位，我们 2023 年就在做",
+        "FDE 由 Palantir 发明，撑起一家市值超过 Salesforce 的企业服务公司。2026 年，硅谷集体进场抢这个岗位——而我们按结果交付 FDE，已经做了三年。",
+        '''<div style="max-width:1000px;margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);gap:16px;">
+<div style="background:#fff;border:1px solid var(--gray-line);border-radius:14px;padding:22px;"><div style="font-size:13px;font-weight:800;margin-bottom:6px;">Palantir</div><p style="font-size:13px;color:var(--gray-text);line-height:1.6;margin:0;">FDE 的发明者，靠它做成市值超 3000 亿美元的 to B 公司。</p></div>
+<div style="background:#fff;border:1px solid var(--gray-line);border-radius:14px;padding:22px;"><div style="font-size:13px;font-weight:800;margin-bottom:6px;">OpenAI</div><p style="font-size:13px;color:var(--gray-text);line-height:1.6;margin:0;">成立 The Deployment Company（投资超 40 亿美元），并收购英国 Tomoro，一次拿下 150 名 FDE。</p></div>
+<div style="background:#fff;border:1px solid var(--gray-line);border-radius:14px;padding:22px;"><div style="font-size:13px;font-weight:800;margin-bottom:6px;">Sierra · Anthropic</div><p style="font-size:13px;color:var(--gray-text);line-height:1.6;margin:0;">Sierra（OpenAI 前董事长创立）估值 158 亿美元；Anthropic 组建 Applied AI 团队，派工程师进企业现场。</p></div>
+<div style="background:var(--blue-light);border:1px solid var(--gray-line);border-radius:14px;padding:22px;"><div style="font-size:13px;font-weight:800;color:var(--blue);margin-bottom:6px;">a16z</div><p style="font-size:13px;color:var(--gray-text);line-height:1.6;margin:0;">称 FDE 为「tech 最火的岗位」，招聘量过去一年增长 7 倍。</p></div>
+</div>
+<p style="text-align:center;font-size:14.5px;color:var(--black);font-weight:600;margin:24px auto 0;max-width:720px;line-height:1.7;">句子互动 2023 年就被中国客户逼着走上这条路，按结果交付，比硅谷早三年。<a href="https://rui.juzi.bot/thought/2026-06-04-pe-to-fde.html" target="_blank" style="color:var(--blue);font-weight:700;">读创始人的完整复盘 →</a></p>''',
+    )
+
     body += split_section(
         eyebrow="先找离钱最近的场景",
         title="挑场景不看哪个好做，看哪个最值钱",
