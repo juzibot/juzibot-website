@@ -39,7 +39,7 @@ def nav_html(rel):
           <a href="{rel}workforce/marketing.html"><div class="d-title">AI 导购</div><div class="d-desc">头部零售品牌的私域导购运营，长尾客户也覆盖</div></a>
           <a href="{rel}workforce/service.html"><div class="d-title">AI 客服</div><div class="d-desc">从售前到售后都接得住 · 5 年 BadCase 积累</div></a>
           <a href="{rel}workforce/government.html"><div class="d-title">AI 社工 / 调解员</div><div class="d-desc">政务高合规要求 + 全程可追溯 · 已稳步落地</div></a>
-          <a href="{rel}workforce/finance.html"><div class="d-title">AI 理财顾问</div><div class="d-desc">银行 / 证券 / 保险头部机构落地 · 9 年风控话术</div></a>
+          <a href="{rel}workforce/finance.html"><div class="d-title">AI 理财顾问</div><div class="d-desc">银行 / 证券 / 保险头部机构落地 · 多年风控话术</div></a>
           <a href="{rel}workforce/hr.html"><div class="d-title">AI HR</div><div class="d-desc">简历初筛 + AI 语音面试，HR 只看 Top 20%</div></a>
         </div>
       </div>
@@ -70,7 +70,7 @@ def footer_html(rel):
         </div>
         <p>
           为企业部署 AI 员工。<br/>
-          批量、按结果交付——9 年积累，1000+ 大型企业客户验证。
+          批量、按结果交付——多年积累，1000+ 大型企业客户验证。
         </p>
       </div>
       <div>
@@ -456,7 +456,7 @@ def page_miaohui():
 
     body += block(        "11 个 IM 通道",
         "客户在哪个 IM 上，Agent 就去哪个 IM 上岗",
-        "9 年积累的 IM 通道适配。国内的、海外 WhatsApp 的、抖音直播私信、飞书企业 IM，一个工作台管完。",
+        "多年积累的 IM 通道适配。国内的、海外 WhatsApp 的、抖音直播私信、飞书企业 IM，一个工作台管完。",
         '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:920px;margin:0 auto;">'
         + ''.join(
             f'<div style="padding:18px 16px;background:#fff;border:1px solid var(--gray-line);border-radius:12px;text-align:center;"><div style="font-size:24px;margin-bottom:6px;">{ic}</div><div style="font-size:13.5px;font-weight:700;">{n}</div><div style="font-size:11.5px;color:var(--gray-text);margin-top:2px;">{d}</div></div>'
@@ -510,7 +510,7 @@ def page_miaohui():
 
     body += block(        "结果",
         "客户用句子秒回拿到的实际效果",
-        "数据来自 9 年部署的真实客户案例。",
+        "数据来自 多年部署的真实客户案例。",
         kpi_row([
             ("11 个", "已接入 IM 通道"),
             ("89%", "对话自动完成率"),
@@ -535,7 +535,7 @@ def page_miaohui():
         hero_kicker="产品 · 01",
         hero_h1='句子秒回 · <span class="accent">AI 员工的 IM 工位</span>',
         hero_lede="把企业的 11 个 IM 通道（小红书、抖音、微信客服、微信公众号、小程序、WhatsApp 等）聚合到一个工作台，<strong>Agent 真的在客户面前接管对话</strong>——主动触达、智能回复、人机协作、多平台一个工作台管完。",
-        pills=["11 个 IM 通道", "1000+ 企业客户", "89% 对话自动完成率", "9 年通道适配积累"],
+        pills=["11 个 IM 通道", "1000+ 企业客户", "89% 对话自动完成率", "多年通道适配积累"],
         body=body,
     )
 
@@ -666,7 +666,7 @@ def page_miaodong():
 
     body += block(        "5 个高合规高垂直行业的策略库",
         "开通就带一套现成的行业打法",
-        "每个行业的话术、SOP、合规边界，我们都内置好了——9 年沉下来的行业经验，你不用从零调，开通就能用。",
+        "每个行业的话术、SOP、合规边界，我们都内置好了——多年沉下来的行业经验，你不用从零调，开通就能用。",
         '<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:14px;">'
         + ''.join(
             f'<div style="padding:24px 18px;background:#fff;border:1px solid var(--gray-line);border-radius:12px;text-align:center;"><div style="font-size:32px;margin-bottom:8px;">{ic}</div><div style="font-size:14px;font-weight:800;margin-bottom:6px;">{n}</div><div style="font-size:11.5px;color:var(--gray-text);line-height:1.55;">{d}</div></div>'
@@ -689,7 +689,7 @@ def page_miaodong():
             ("100+", "支持的大模型种类"),
             ("89%", "对话自动完成率"),
             ("5 个", "高合规行业策略库"),
-            ("9 年", "行业数据沉淀"),
+            ("多年", "行业数据沉淀"),
         ]),
     )
 
@@ -709,7 +709,7 @@ def page_miaodong():
         hero_kicker="产品 · 02",
         hero_h1='句子秒懂 · <span class="accent">让 AI 真的懂你的业务</span>',
         hero_lede="通用大模型不懂你的业务。把产品文档、SOP、合规规则装进 Agent，AI 才能用企业自己的知识回答客户、按企业的流程办事。",
-        pills=["100+ 大模型支持", "Canvas 可视化工作流", "5 个高合规行业策略库", "9 年行业数据沉淀"],
+        pills=["100+ 大模型支持", "Canvas 可视化工作流", "5 个高合规行业策略库", "多年行业数据沉淀"],
         body=body,
     )
 
@@ -1095,14 +1095,14 @@ def workforce_pages():
         title='AI 理财顾问',
         kicker='AI 员工 · 金融岗',
         h1='AI 理财顾问 · <span class="accent">合规边界内跑得稳</span>',
-        lede='银行、证券、保险多个头部机构落地——<strong>可设的合规边界 + 9 年风控话术库</strong>，金融客户敢用。',
-        pills=['多家头部金融机构', '9 年风控话术库', '可设的合规边界', 'KYC / 反洗钱集成'],
+        lede='银行、证券、保险多个头部机构落地——<strong>可设的合规边界 + 多年风控话术库</strong>，金融客户敢用。',
+        pills=['多家头部金融机构', '多年风控话术库', '可设的合规边界', 'KYC / 反洗钱集成'],
         color='te',
         industry='银行 · 证券 · 保险',
         role_desc='金融对 AI 的合规要求最严，一句话越界就可能触碰监管红线',
         pain_paragraphs=[
             '银行客户经理一人服务 500 个客户已经超负荷，可每个客户对理财、保险、信贷的咨询都不能怠慢。AI 理财顾问接住基础咨询和合规材料解读，人工只管高价值客户。',
-            '难点全在合规这一关。不能给投资建议，不能保证收益，更不能误导客户去买。这些话术由风控团队预先划定边界，AI 输出前每句都经过审查。9 年金融场景积累的话术库，通用 Agent 平台短期内难以补齐。',
+            '难点全在合规这一关。不能给投资建议，不能保证收益，更不能误导客户去买。这些话术由风控团队预先划定边界，AI 输出前每句都经过审查。多年金融场景积累的话术库，通用 Agent 平台短期内难以补齐。',
         ],
         pain_bullets=[
             '产品咨询：理财、保险、信贷条款解读',
@@ -1134,7 +1134,7 @@ def workforce_pages():
         ], cols=3),
         kpi_items=[
             ('多家', '头部金融机构落地'),
-            ('9 年', '风控话术库积累'),
+            ('多年', '风控话术库积累'),
             ('100%', '合规可审计'),
             ('5×', '客户经理人均承接'),
         ],
@@ -1203,7 +1203,7 @@ def page_enterprise():
     body = ''
     body += block(        "和 Anthropic 一个判断",
         "企业上线 AI，先问的往往不是它能多聪明，而是敢不敢把活真交给它",
-        "TO B 要的是输出稳定、行为可审计、企业级可控。这也是 Anthropic 在 2026 年走的路，更是我们 9 年的判断。",
+        "TO B 要的是输出稳定、行为可审计、企业级可控。这也是 Anthropic 在 2026 年走的路，更是我们 多年的判断。",
         '<div style="background:var(--blue-light);border-left:4px solid var(--blue);border-radius:0 14px 14px 0;padding:24px 32px;max-width:920px;margin:0 auto;display:flex;gap:18px;align-items:center;"><div style="font-size:42px;font-weight:900;color:var(--blue);line-height:1;">&ldquo;</div><div style="font-size:17px;color:var(--black);font-weight:600;line-height:1.55;">客户问得最多的，不是「哪个模型最强」，而是「哪个能放心接入我的系统」。<small style="display:block;font-size:13.5px;color:var(--gray-text);font-weight:500;margin-top:6px;">—— 过去一年，几乎每位客户都会提出这个问题</small></div></div>',
     )
 
@@ -1211,7 +1211,7 @@ def page_enterprise():
         # (color, num, en, zh, pain, ours, visual_html)
         ('bl', '01', '可预测', '输出可重复',
          '消费场景里偶尔答错影响有限，企业场景则不可接受。生成财务摘要、起草法律文书时，同一个问题三次给出三种答案，业务无法推进。',
-         '9 年带结果标注的部署数据让 Agent 行为可标定、可回归。<strong>同一个问题，每次给的回答是一致的，不是重新掷一次骰子</strong>。Anthropic 走的是模型对齐这条路，我们靠的是这些行业结果数据。',
+         '多年带结果标注的部署数据让 Agent 行为可标定、可回归。<strong>同一个问题，每次给的回答是一致的，不是重新掷一次骰子</strong>。Anthropic 走的是模型对齐这条路，我们靠的是这些行业结果数据。',
          '<div style="font-size:11px;color:var(--gray-text);font-weight:700;letter-spacing:.04em;margin-bottom:8px;">同一个 query × 3</div>'
          '<div style="background:#fff;padding:9px 12px;border-radius:6px;border:1px solid var(--gray-line);font-size:12.5px;color:var(--blue);">→ 您的退款政策是 7 天无理由</div>'
          '<div style="background:#fff;padding:9px 12px;border-radius:6px;border:1px solid var(--gray-line);font-size:12.5px;color:var(--blue);">→ 您的退款政策是 7 天无理由</div>'
@@ -1244,7 +1244,7 @@ def page_enterprise():
 
         ('te', '05', '能对接', '对接现有系统',
          'AI 不能孤立运行，得接客户已有的 CRM、工单、知识库、订单系统。Agent 上岗第一天就要能查到客户的真实数据，不然就是摆设。',
-         '<strong>9 年 IM 通道适配 + 企业 CRM / 工单 / 知识库直连</strong>。11 个 IM 通道，加主流企业系统的对接经验。Agent 上岗即接管真实业务流，而非闲置空转。',
+         '<strong>多年 IM 通道适配 + 企业 CRM / 工单 / 知识库直连</strong>。11 个 IM 通道，加主流企业系统的对接经验。Agent 上岗即接管真实业务流，而非闲置空转。',
          '<div style="font-size:11px;color:var(--gray-text);font-weight:700;letter-spacing:.04em;margin-bottom:8px;">系统对接</div>'
          '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;font-size:11px;font-weight:700;text-align:center;">'
          '<div style="background:#fff;padding:8px 4px;border-radius:6px;border:1px solid var(--gray-line);">CRM</div>'
@@ -1264,7 +1264,7 @@ def page_enterprise():
 
         ('bl', '06', '可规模化', '规模化',
          '许多公司的 AI 止步于试点：demo 能跑通，扩到几千客户、几十种业务场景就崩溃。企业 AI 必须从第一天就规划稳定运行。',
-         '<strong>1000+ 大型企业客户验证过的部署能力</strong>，在生产环境跑了多年，不是 demo。从单一场景到多职能 Agent 矩阵，从一个客户的私域到集团央企的多租户隔离，都跑得通。',
+         '<strong>1000+ 大型企业客户验证过的部署能力</strong>，在生产环境深耕多年，不是 demo。从单一场景到多职能 Agent 矩阵，从一个客户的私域到集团央企的多租户隔离，都跑得通。',
          '<div style="font-size:11px;color:var(--gray-text);font-weight:700;letter-spacing:.04em;margin-bottom:8px;">部署规模</div>'
          '<div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--gray-line);padding:6px 0;font-size:12.5px;"><span>大型企业客户</span><span style="color:var(--blue);font-weight:800;font-size:16px;">1000+</span></div>'
          '<div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--gray-line);padding:6px 0;font-size:12.5px;"><span>覆盖高合规行业</span><span style="color:var(--blue);font-weight:800;font-size:16px;">5 大</span></div>'
@@ -1378,7 +1378,7 @@ def page_enterprise():
 
     body += block(        "结果",
         "已经验证过的企业级部署能力",
-        "1000+ 大型企业 9 年的部署积累，不是 demo。",
+        "1000+ 大型企业 多年的部署积累，不是 demo。",
         kpi_row([
             ('1000+', '大型企业客户'),
             ('5 个', '高合规高垂直行业'),
@@ -1414,7 +1414,7 @@ def page_enterprise():
 def page_industries():
     body = ''
     body += block(        "5 个行业",
-        "9 年扎根这 5 个高合规高垂直行业",
+        "多年扎根这 5 个高合规高垂直行业",
         "我们没有做广覆盖的通用平台，而是在每个行业里积累了头部客户的做法和经验。",
         '',
     )
@@ -1425,7 +1425,7 @@ def page_industries():
          [
              ('400+', '客户'),
              ('头部', '已覆盖'),
-             ('9 年', '行业积累'),
+             ('多年', '行业积累'),
          ],
          '· 学员建联：自动欢迎语 + 体验课邀约',
          [
@@ -1453,10 +1453,10 @@ def page_industries():
          ['国际美妆头部', '国际护肤头部', '母婴头部', '功能食品头部', '日化头部', '家电头部', '众多品牌']),
 
         ('finance', '金融', '🏦', 'gr', '银证保多家头部机构',
-         '银行、证券、保险。金融对 AI 的管控最严格。我们将合规边界提前固化，配合 9 年积累的风控话术库，金融客户才愿意放手使用。',
+         '银行、证券、保险。金融对 AI 的管控最严格。我们将合规边界提前固化，配合 多年积累的风控话术库，金融客户才愿意放手使用。',
          [
              ('多家', '头部机构'),
-             ('9 年', '风控话术库'),
+             ('多年', '风控话术库'),
              ('100%', '合规可审计'),
          ],
          '· 产品咨询：理财、保险、信贷条款解读',
@@ -1583,7 +1583,7 @@ def page_industries():
 
     return page_layout(
         title="客户与行业 · 教育 / 电商 / 金融 / 政务 / 互联网 已部署 | 句子互动",
-        description="句子互动 AI 员工已在在线教育、消费品电商、金融、政务·司法、泛互联网 5 个行业头部公司部署。如果你在这些行业，我们已经在这些行业跑了 9 年。",
+        description="句子互动 AI 员工已在在线教育、消费品电商、金融、政务·司法、泛互联网 5 个行业头部公司部署。如果你在这些行业，我们已经在这些行业跑了 多年。",
         rel="",
         breadcrumbs=[("首页", "index.html"), ("客户与行业", None)],
         hero_kicker="WHO USES JUZIBOT",
@@ -1735,7 +1735,7 @@ def page_insights():
   <p style="font-size:13px;color:var(--gray-text);line-height:1.6;margin:0;">从 2021 年就在公司的财务同事，现在也开始用 Claude Code 干活。</p>
 </div>
 </div>
-<p style="text-align:center;font-size:14.5px;color:var(--gray-text);margin:32px auto 0;max-width:700px;line-height:1.7;">90 后 AI native 配 9 年 toB 老兵，<strong style="color:var(--black);">这个组合全市场几乎没有</strong>。我们自己先活成 AI 原生组织，再带客户一起跑。</p>''',
+<p style="text-align:center;font-size:14.5px;color:var(--gray-text);margin:32px auto 0;max-width:700px;line-height:1.7;">90 后 AI native 配 多年 toB 老兵，<strong style="color:var(--black);">这个组合全市场几乎没有</strong>。我们自己先活成 AI 原生组织，再带客户一起跑。</p>''',
     )
 
     body += block(        "我们自己先在跑",
@@ -1916,13 +1916,13 @@ def page_insights():
 
     return page_layout(
         title="AI 原生组织 · 我们自己怎么活 | 句子互动",
-        description="句子互动是一家 AI 原生组织——不是'在用 AI 的公司'，是 AI 已经下沉到每个部门、每个人手上。从 CEO 到财务每天真用 Agent 干活。90 后 AI native × 9 年 toB 老兵的组合，全市场几乎没有。这条路我们自己先活成，再带客户一起跑。",
+        description="句子互动是一家 AI 原生组织——不是'在用 AI 的公司'，是 AI 已经下沉到每个部门、每个人手上。从 CEO 到财务每天真用 Agent 干活。90 后 AI native × 多年 toB 老兵的组合，全市场几乎没有。这条路我们自己先活成，再带客户一起跑。",
         rel="",
         breadcrumbs=[("首页", "index.html"), ("AI 原生组织", None)],
         hero_kicker="AI 原生组织 · 我们自己怎么活",
         hero_h1='不是「在用 AI 的公司」，<span class="accent">是 AI 下沉到每个人的组织</span>',
         hero_lede="很多公司都说自己在用 AI，但真正让每个人日常都离不开 Agent 的，并不多。在句子互动，<strong>从管理层到一线，每个部门、每个人每天都在用 Agent 干活</strong>——不是多配了个工具，是工作方式本身变了。我们先把自己做成 AI 原生组织，再把这套方法带给客户。",
-        pills=["AI 下沉到每个人", "90 后 × 9 年 toB", "自己先活成再带客户", "1 + N 组织"],
+        pills=["AI 下沉到每个人", "90 后 × 多年 toB", "自己先活成再带客户", "1 + N 组织"],
         body=body,
     )
 
