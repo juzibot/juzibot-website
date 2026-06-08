@@ -129,7 +129,7 @@
       <span class="kicker"><span class="dot"></span>1000+ 企业部署  ·  覆盖 5 大高合规行业</span>
       <h1 class="hero-title">
         为企业部署<br/>
-        <span class="accent">AI 员工</span>。
+        <span class="accent">AI 员工</span>
       </h1>
       <p class="hero-sub">
         句子互动把 AI 装进企业的销售、客服、合规与数据，部署能直接上岗的 AI 员工。
@@ -606,37 +606,55 @@
     <div class="section-head">
       <div class="eyebrow">harness 工程</div>
       <h2>模型是发动机，<span class="accent">harness 才是能跑起来的车</span>。</h2>
-      <div class="sub">业界在收敛到同一个公式：Agent = 大模型 + harness。模型谁都能调用，难的是把它装进真实业务——给它行业知识、给它工具、给它质量把关。这层工程，我们做了九年。</div>
+      <div class="sub">LLM 本身产不出业务成果——要给它工具、上下文、沙盒、记忆、评估的完整工程支撑。卖模型的越来越多，做这层 harness 的极度稀缺。这层工程，我们做了九年。</div>
     </div>
     <div class="moat-grid">
       <div class="moat-card m1">
         <div class="mnum">01</div>
-        <div class="men">行业知识</div>
-        <h4>把行业 know-how 写进 harness</h4>
+        <div class="men">Agentic Loop</div>
+        <h4>决策主循环</h4>
         <ul>
-          <li>越懂这门生意，每个结果花的 token 越少</li>
-          <li>自研引擎把单次结果的 token 成本压到行业的 1/30</li>
-          <li>这是我们敢按结果付费的底气</li>
+          <li>决策 → 调工具 → 拿结果 → 再决策的迭代引擎</li>
         </ul>
       </div>
       <div class="moat-card m2">
         <div class="mnum">02</div>
-        <div class="men">业务反馈</div>
-        <h4>1000+ 客户的真实业务反馈</h4>
+        <div class="men">Tool Use</div>
+        <h4>工具系统</h4>
         <ul>
-          <li>不是公开语料，是带业务结果反馈的数据</li>
-          <li>教育——哪段话让家长付费；金融——哪句话踩在合规边界外</li>
-          <li>每个客户成交、续费的结果都回流，harness 越用越准</li>
+          <li>100+ 工具，专为 Agent 封装企业软件接口</li>
         </ul>
       </div>
       <div class="moat-card m3">
         <div class="mnum">03</div>
-        <div class="men">交付团队</div>
-        <h4>FDE 把 harness 装进你的现场</h4>
+        <div class="men">Context Eng.</div>
+        <h4>上下文工程</h4>
         <ul>
-          <li>一支贴着客户业务跑的团队，交付的人就是做产品的人</li>
-          <li>现场踩出来的能力，回流成产品里的标准能力</li>
-          <li>下一个客户进场，手里的杠杆更大</li>
+          <li>100 万 token 长上下文，分层压缩省 token</li>
+        </ul>
+      </div>
+      <div class="moat-card m4">
+        <div class="mnum">04</div>
+        <div class="men">Sandbox</div>
+        <h4>沙盒执行</h4>
+        <ul>
+          <li>每会话一个 K8s + gVisor 隔离的真实环境</li>
+        </ul>
+      </div>
+      <div class="moat-card m5">
+        <div class="mnum">05</div>
+        <div class="men">Memory</div>
+        <h4>跨会话记忆</h4>
+        <ul>
+          <li>画像 / 洞察 / 用户纠正 跨会话持久化，越用越准</li>
+        </ul>
+      </div>
+      <div class="moat-card m6">
+        <div class="mnum">06</div>
+        <div class="men">Eval &amp; Test</div>
+        <h4>评估与回归</h4>
+        <ul>
+          <li>对每处改动定向生成回归用例，精准回归</li>
         </ul>
       </div>
     </div>
@@ -651,7 +669,7 @@
       <h2>把第一个 <span class="acc">AI 员工</span><br/>装进你的业务流程。</h2>
       <p class="sub">
         从一个 AI 角色起步，慢慢扩到多个岗位。
-        90 天内，第一个 AI 员工在你的业务里上岗。
+        最快 1 天，第一个 AI 员工在你的业务里上岗。
       </p>
       <div class="cta-actions">
         <button type="button" class="btn-primary" onclick="openContact('首页·底部CTA')">预约演示 <span class="btn-arrow">→</span></button>
@@ -659,8 +677,8 @@
     </div>
     <div class="cta-stats">
       <div class="cta-stat">
-        <div class="csv">90 天</div>
-        <div class="csl">从立项到第一个 AI 员工在岗</div>
+        <div class="csv">最快 1 天</div>
+        <div class="csl">从立项到员工上岗</div>
       </div>
       <div class="cta-stat">
         <div class="csv">按结果</div>
@@ -813,7 +831,6 @@
           <li><a href="products/dongxing.html">句子智库 · 记忆</a></li>
           <li><a href="products/cli.html">句子 CLI · 手</a></li>
           <li><a href="products/zhizao.html">句子智造 · 地基</a></li>
-          <li><a href="#howwework">我们怎么交付</a></li>
         </ul>
       </div>
       <div>
@@ -829,7 +846,6 @@
       <div>
         <h6>公司</h6>
         <ul>
-          <li></li>
           <li><a href="fde.html">FDE 交付团队</a></li>
           <li><a href="industries.html">客户与行业</a></li>
           <li><a href="about.html">AI 原生组织</a></li>
