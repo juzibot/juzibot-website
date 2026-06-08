@@ -368,9 +368,9 @@ def page_miaohui():
 
     body += split_section(
         eyebrow="架构",
-        title="三大控制台 + 一个工作台，覆盖企业全角色",
+        title="两大控制台 + 两个工作台，覆盖企业全角色",
         paragraphs=[
-            "句子秒回按企业组织结构搭协作系统。管理者、小组负责人、一线客服各有自己的工作台，权限和数据分开。",
+            "句子秒回按企业组织结构搭协作系统。管理者、小组负责人、一线客服、AI 运营各有自己的入口，权限和数据分开。",
         ],
         bullets=[
             "<strong>企业控制台</strong>：管理者全局视角，跨小组操作，全公司数据看板",
@@ -379,31 +379,24 @@ def page_miaohui():
             "<strong>AI 运营工作台</strong>：AI 运营人员效果调优、数据洞察",
         ],
         visual_html="""
-<div style="font-family:monospace;font-size:11.5px;line-height:1.85;color:var(--gray-text);background:#fff;padding:20px;border-radius:12px;border:1px solid var(--gray-line);">
-<div style="font-weight:800;color:var(--blue);margin-bottom:12px;font-size:13px;">句子互动 SaaS 平台</div>
-<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
-  <div style="background:var(--blue-light);border-radius:8px;padding:10px;color:var(--blue);">
-    <div style="font-weight:700;font-size:12px;">企业控制台</div>
-    <div style="font-size:10.5px;margin-top:4px;">管理者</div>
+<div style="background:#fff;padding:22px;border-radius:14px;border:1px solid var(--gray-line);">
+<div style="font-weight:800;color:var(--blue);margin-bottom:14px;font-size:13px;">句子互动 · 句子秒回 工作台</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+  <div style="background:var(--blue-light);border-radius:10px;padding:14px;">
+    <div style="font-weight:700;font-size:13px;color:var(--blue);">企业控制台</div>
+    <div style="font-size:11px;color:var(--gray-text);margin-top:5px;">管理者 · 全局数据看板</div>
   </div>
-  <div style="background:var(--orange-lt);border-radius:8px;padding:10px;color:var(--orange);">
-    <div style="font-weight:700;font-size:12px;">小组控制台</div>
-    <div style="font-size:10.5px;margin-top:4px;">运营组长</div>
+  <div style="background:var(--orange-lt);border-radius:10px;padding:14px;">
+    <div style="font-weight:700;font-size:13px;color:var(--orange);">小组控制台</div>
+    <div style="font-size:11px;color:var(--gray-text);margin-top:5px;">运营组长 · 配 SOP / 群发</div>
   </div>
-  <div style="background:var(--green-lt);border-radius:8px;padding:10px;color:var(--green);">
-    <div style="font-weight:700;font-size:12px;">聚合聊天</div>
-    <div style="font-size:10.5px;margin-top:4px;">客服 / 销售</div>
+  <div style="background:var(--green-lt);border-radius:10px;padding:14px;">
+    <div style="font-weight:700;font-size:13px;color:var(--green);">聚合聊天工作台</div>
+    <div style="font-size:11px;color:var(--gray-text);margin-top:5px;">客服 / 销售 · 日常回复</div>
   </div>
-</div>
-<div style="text-align:center;margin:14px 0;color:var(--gray-text);">▲ AI 能力</div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-  <div style="background:var(--purple-lt);border-radius:8px;padding:10px;color:var(--purple);">
-    <div style="font-weight:700;font-size:12px;">秒懂 AI 平台</div>
-    <div style="font-size:10.5px;margin-top:4px;">知识库 + 智能体 + 工作流</div>
-  </div>
-  <div style="background:var(--teal-lt);border-radius:8px;padding:10px;color:var(--teal);">
-    <div style="font-weight:700;font-size:12px;">AI 运营</div>
-    <div style="font-size:10.5px;margin-top:4px;">AISOP + 调优 + 洞察</div>
+  <div style="background:var(--purple-lt);border-radius:10px;padding:14px;">
+    <div style="font-weight:700;font-size:13px;color:var(--purple);">AI 运营工作台</div>
+    <div style="font-size:11px;color:var(--gray-text);margin-top:5px;">AI 运营 · 效果调优 / 洞察</div>
   </div>
 </div>
 </div>
@@ -417,15 +410,15 @@ def page_miaohui():
         + ''.join(
             f'<div style="padding:18px 16px;background:#fff;border:1px solid var(--gray-line);border-radius:12px;text-align:center;"><div style="font-size:24px;margin-bottom:6px;">{ic}</div><div style="font-size:13.5px;font-weight:700;">{n}</div><div style="font-size:11.5px;color:var(--gray-text);margin-top:2px;">{d}</div></div>'
             for ic, n, d in [
-                ("💬", "企微", "私域核心"),
-                ("🏢", "企业微信", "企业号"),
-                ("🎵", "抖音", "私信 + 直播"),
                 ("📕", "小红书", "种草沟通"),
-                ("✉️", "WhatsApp", "海外业务"),
+                ("🎵", "抖音", "私信 + 直播"),
+                ("☎️", "电话", "外呼触达"),
+                ("💬", "微信客服", "私域承接"),
+                ("📟", "微信小程序", "客服入口"),
                 ("☁️", "飞书", "企业 IM"),
                 ("📱", "钉钉", "企业 IM"),
-                ("📢", "公众号", "私域承接"),
-                ("📟", "小程序", "客服入口"),
+                ("📢", "微信公众号", "私域承接"),
+                ("✉️", "WhatsApp", "海外业务"),
                 ("🌍", "TikTok", "海外短视频"),
                 ("📷", "Instagram", "海外种草"),
                 ("➕", "...", "持续接入"),
@@ -436,7 +429,7 @@ def page_miaohui():
     )
 
     body += split_section(
-        eyebrow="主动外呼",
+        eyebrow="主动触达",
         title="配一次，自动批量执行的 SOP 引擎",
         paragraphs=[
             "传统群发受 IM 平台规则限制：次数有限、时间窗口固定、无法定向。句子秒回的 SOP 引擎突破这些限制，Agent 按节奏持续跟进客户。",
@@ -581,8 +574,8 @@ def page_miaodong():
     )
 
     body += block(        "5 个高合规高垂直行业的策略库",
-        "9 年扎根，不是通用模板",
-        "搭一套框架，通用平台一年也能做到。但这 5 个行业的 know-how，难以在短期内追平。",
+        "开通就带一套现成的行业打法",
+        "每个行业的话术、SOP、合规边界，我们都内置好了——9 年沉下来的行业经验，你不用从零调，开通就能用。",
         '<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:14px;">'
         + ''.join(
             f'<div style="padding:24px 18px;background:#fff;border:1px solid var(--gray-line);border-radius:12px;text-align:center;"><div style="font-size:32px;margin-bottom:8px;">{ic}</div><div style="font-size:14px;font-weight:800;margin-bottom:6px;">{n}</div><div style="font-size:11.5px;color:var(--gray-text);line-height:1.55;">{d}</div></div>'
@@ -822,7 +815,7 @@ def workforce_pages():
 <div style="font-size:12px;font-weight:700;color:var(--blue);margin-bottom:12px;">AI 销售 · 当日数据</div>
 <div style="display:flex;flex-direction:column;gap:14px;">
 <div><div style="font-size:11px;color:var(--gray-text);">新建联</div><div style="font-size:24px;font-weight:800;color:var(--blue);">2,800+</div></div>
-<div><div style="font-size:11px;color:var(--gray-text);">主动外呼</div><div style="font-size:24px;font-weight:800;color:var(--orange);">5,100+</div></div>
+<div><div style="font-size:11px;color:var(--gray-text);">主动触达</div><div style="font-size:24px;font-weight:800;color:var(--orange);">5,100+</div></div>
 <div><div style="font-size:11px;color:var(--gray-text);">高意向客户</div><div style="font-size:24px;font-weight:800;color:var(--green);">380+</div></div>
 <div><div style="font-size:11px;color:var(--gray-text);">今日成交</div><div style="font-size:24px;font-weight:800;color:var(--purple);">70+ 单 · ¥5.8 万</div></div>
 </div>
