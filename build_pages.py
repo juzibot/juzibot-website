@@ -1753,7 +1753,7 @@ def page_about():
         breadcrumbs=[("首页", "index.html"), ("AI 原生组织", None)],
         hero_kicker="关于句子互动",
         hero_h1='我们自己，<span class="accent">就是一家 AI 原生组织</span>',
-        hero_lede="句子互动是企业级 Agentic AI 平台。我们不只把 AI 卖给客户——公司内部，从管理层到一线，每个部门、每个人每天都在用 Agent 完成工作。深耕对话式 AI 多年，已服务 1000+ 大型企业客户。",
+        hero_lede="我们不只把 AI 卖给客户——公司内部，从管理层到一线，每个部门、每个人每天都在用 Agent 完成工作。深耕对话式 AI 多年，已服务 1000+ 大型企业客户。",
         pills=["1000+ 大型企业客户", "深耕对话式 AI 十年", "国家高新 · 专精特新", "每个部门都在用 AI"],
         body=body,
     )
