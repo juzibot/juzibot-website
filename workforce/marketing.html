@@ -128,7 +128,7 @@
     <h4>让 AI 导购覆盖你的长尾客户</h4>
     <p>从一个 AI 角色起步，逐步扩展到多个 Agent。90 天内，第一个 AI 员工即在客户的 IM 中上岗。</p>
   </div>
-  <a href="mailto:hello@juzibot.com" class="btn-primary">预约演示 <span class="btn-arrow">→</span></a>
+  <button type="button" class="btn-primary" onclick="openContact('底部CTA·预约演示','预约演示')">预约演示 <span class="btn-arrow">→</span></button>
 </div>
   </div>
 </section>
@@ -189,15 +189,15 @@
 
 <!-- ════════════ RIGHT FLOAT PANEL ════════════ -->
 <div class="float-panel" id="floatPanel">
-  <button class="fp-btn" onclick="openContact('在线咨询')">
+  <button class="fp-btn" onclick="openContact('悬浮·在线咨询','在线咨询')">
     <span class="fp-icon">💬</span>在线咨询
     <span class="fp-tip">在线咨询</span>
   </button>
-  <button class="fp-btn fp-orange" onclick="openContact('预约演示')">
+  <button class="fp-btn fp-orange" onclick="openContact('悬浮·预约演示','预约演示')">
     <span class="fp-icon">📅</span>预约演示
     <span class="fp-tip">预约 Demo 演示</span>
   </button>
-  <button class="fp-btn fp-green" onclick="openContact('获取方案')">
+  <button class="fp-btn fp-green" onclick="openContact('悬浮·获取方案','获取方案')">
     <span class="fp-icon">📋</span>获取<br/>方案
     <span class="fp-tip">获取行业解决方案</span>
   </button>
@@ -237,7 +237,7 @@
       <div id="cfSuccess" style="text-align:center;padding:32px 20px;display:none;">
         <div style="font-size:48px;margin-bottom:12px;">✅</div>
         <h4 style="font-size:20px;font-weight:800;margin-bottom:8px;">已收到您的信息</h4>
-        <p style="color:var(--gray-text);font-size:14.5px;">我们将在工作日内与您联系。如需加急，请邮件联系：<a href="mailto:hello@juzibot.com" style="color:var(--blue);font-weight:700;">hello@juzibot.com</a></p>
+        <p style="color:var(--gray-text);font-size:14.5px;">我们将在工作日当天与您联系。</p>
       </div>
     </div>
   </div>
@@ -248,14 +248,21 @@ function openModal(id){var el=document.getElementById(id);if(!el)return;el.class
 function closeModal(id){var el=document.getElementById(id);if(!el)return;el.classList.remove('open');document.body.style.overflow='';}
 document.querySelectorAll('.modal-overlay').forEach(function(o){o.addEventListener('click',function(e){if(e.target===o)closeModal(o.id);});});
 document.addEventListener('keydown',function(e){if(e.key==='Escape')document.querySelectorAll('.modal-overlay.open').forEach(function(m){closeModal(m.id);});});
-function openContact(t){var el=document.getElementById('contactTitle');if(el)el.textContent=t||'联系我们';openModal('contactModal');}
+function openContact(source,title){window.__leadSource=source||'未知来源';var el=document.getElementById('contactTitle');if(el)el.textContent=title||'预约演示 / 获取方案';openModal('contactModal');}
 function submitContact(){
   var n=(document.getElementById('cf-name').value||'').trim();
   var c=(document.getElementById('cf-company').value||'').trim();
   var p=(document.getElementById('cf-phone').value||'').trim();
+  var ind=(document.getElementById('cf-industry')||{}).value||'';
+  var msg=(document.getElementById('cf-msg')||{}).value||'';
   if(!n||!c||!p){alert('请填写姓名、公司名和手机号');return;}
-  document.getElementById('cfForm').style.display='none';
-  document.getElementById('cfSuccess').style.display='block';
+  var btn=document.querySelector('#cfForm .cf-submit');
+  if(btn){btn.disabled=true;btn.textContent='提交中…';}
+  var done=function(){document.getElementById('cfForm').style.display='none';document.getElementById('cfSuccess').style.display='block';};
+  var payload={name:n,company:c,phone:p,industry:ind,message:msg,source:window.__leadSource||'未知来源',page:location.pathname,submitted_at:new Date().toISOString()};
+  var ep=window.JUZI_LEAD_ENDPOINT;
+  if(!ep){done();return;}
+  fetch(ep,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).then(done).catch(done);
 }
 (function(){
   var fp=document.getElementById('floatPanel');if(!fp)return;
