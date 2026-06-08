@@ -78,7 +78,47 @@
 
 <section class="product-shot-section">
   <div class="container">
-    <img src="../assets/product-shots/miaodong-matrix.png" alt="句子秒懂 - Agentic AI 平台功能矩阵" loading="lazy">
+    <div class="ui-mock">
+      <div class="ui-topbar">
+        <span class="ui-dot r"></span><span class="ui-dot y"></span><span class="ui-dot g"></span>
+        <span class="ui-title">句子秒懂 · 流程引擎</span>
+        <span class="ui-tabs"><span>试运行</span><span class="on">发布</span><span>启用</span></span>
+      </div>
+      <div class="ui-body">
+        <div class="ui-palette">
+          <div class="pg">触发器</div>
+          <div class="pn">接收消息</div>
+          <div class="pn">新增标签</div>
+          <div class="pg">计算节点</div>
+          <div class="pn">大模型生成</div>
+          <div class="pn">知识库查询</div>
+          <div class="pn">规则中心</div>
+          <div class="pg">动作节点</div>
+          <div class="pn">发送消息</div>
+          <div class="pn">转人工</div>
+        </div>
+        <div class="ui-canvas">
+          <div class="flow-node">接收消息<span>微信 / 抖音 / 小红书</span></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node n-purple">规则中心<span>意图分流</span></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-col">
+            <div class="flow-node n-green">大模型生成<span>DeepSeek-V3</span></div>
+            <div class="flow-node n-teal">知识库查询<span>产品文档</span></div>
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node n-orange">发送消息<span>回复客户</span></div>
+        </div>
+        <div class="ui-config">
+          <div class="ui-side-h">节点属性 · 大模型生成</div>
+          <div class="cfg"><span>模型</span><b>DeepSeek-V3</b></div>
+          <div class="cfg"><span>温度</span><b>0.3</b></div>
+          <div class="cfg"><span>引用历史</span><b>开启</b></div>
+          <div class="cfg"><span>知识库</span><b>产品文档</b></div>
+          <div class="cfg"><span>BadCase</span><b>可标注</b></div>
+        </div>
+      </div>
+    </div>
   </div>
 </section><section class="section-block">
   <div class="container">

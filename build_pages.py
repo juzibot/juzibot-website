@@ -349,7 +349,39 @@ def page_miaohui():
     body += '''
 <section class="product-shot-section">
   <div class="container">
-    <img src="../assets/product-shots/miaohui-aggregation.png" alt="句子秒回 - 全社交媒体聚合工作台" loading="lazy">
+    <div class="ui-mock">
+      <div class="ui-topbar">
+        <span class="ui-dot r"></span><span class="ui-dot y"></span><span class="ui-dot g"></span>
+        <span class="ui-title">句子秒回 · 聚合聊天工作台</span>
+        <span class="ui-tabs"><span class="on">聚合聊天</span><span>AI 运营</span><span>企业控制台</span></span>
+      </div>
+      <div class="ui-body">
+        <div class="ui-rail">
+          <div class="ui-rail-h">全部对话 · 12</div>
+          <div class="ui-acct"><i class="ch xhs">书</i><div><b>小红书 · 客服1号</b><span>种草沟通</span></div><em>3</em></div>
+          <div class="ui-acct"><i class="ch dy">音</i><div><b>抖音 · 销售2号</b><span>私信 + 直播</span></div><em>5</em></div>
+          <div class="ui-acct on"><i class="ch wx">微</i><div><b>微信客服 · 客服1号</b><span>私域承接</span></div><em>2</em></div>
+          <div class="ui-acct"><i class="ch wa">W</i><div><b>WhatsApp · 海外</b><span>海外业务</span></div></div>
+          <div class="ui-acct"><i class="ch fs">飞</i><div><b>飞书 · 企业 IM</b><span>内部协同</span></div></div>
+        </div>
+        <div class="ui-chat">
+          <div class="ui-chat-h"><b>王女士</b><span>微信客服 · 意向客户</span></div>
+          <div class="ui-msgs">
+            <div class="bub in">您好，看到课程介绍，想了解下体验课</div>
+            <div class="bub out">您好～体验课本周开放预约，给您发个入口 👍</div>
+            <div class="bub ai"><span class="ai-tag">AI 起草</span>已根据她的浏览记录推荐「国画体验课」，待确认发送</div>
+          </div>
+          <div class="ui-input">输入回复…<span class="ui-send">发送</span></div>
+        </div>
+        <div class="ui-side">
+          <div class="ui-side-h">客户档案</div>
+          <div class="ui-tagrow"><span>意向 · 高</span><span>到课 3 次</span><span>未续费</span></div>
+          <div class="ui-side-h">AI 跟进建议</div>
+          <div class="ui-sug">主推大师班，附续费优惠；建议 24 小时内一对一跟进。</div>
+          <div class="ui-stat"><b>+38%</b><span>本月转化</span></div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 '''.strip()
@@ -494,7 +526,47 @@ def page_miaodong():
     body += '''
 <section class="product-shot-section">
   <div class="container">
-    <img src="../assets/product-shots/miaodong-matrix.png" alt="句子秒懂 - Agentic AI 平台功能矩阵" loading="lazy">
+    <div class="ui-mock">
+      <div class="ui-topbar">
+        <span class="ui-dot r"></span><span class="ui-dot y"></span><span class="ui-dot g"></span>
+        <span class="ui-title">句子秒懂 · 流程引擎</span>
+        <span class="ui-tabs"><span>试运行</span><span class="on">发布</span><span>启用</span></span>
+      </div>
+      <div class="ui-body">
+        <div class="ui-palette">
+          <div class="pg">触发器</div>
+          <div class="pn">接收消息</div>
+          <div class="pn">新增标签</div>
+          <div class="pg">计算节点</div>
+          <div class="pn">大模型生成</div>
+          <div class="pn">知识库查询</div>
+          <div class="pn">规则中心</div>
+          <div class="pg">动作节点</div>
+          <div class="pn">发送消息</div>
+          <div class="pn">转人工</div>
+        </div>
+        <div class="ui-canvas">
+          <div class="flow-node">接收消息<span>微信 / 抖音 / 小红书</span></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node n-purple">规则中心<span>意图分流</span></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-col">
+            <div class="flow-node n-green">大模型生成<span>DeepSeek-V3</span></div>
+            <div class="flow-node n-teal">知识库查询<span>产品文档</span></div>
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node n-orange">发送消息<span>回复客户</span></div>
+        </div>
+        <div class="ui-config">
+          <div class="ui-side-h">节点属性 · 大模型生成</div>
+          <div class="cfg"><span>模型</span><b>DeepSeek-V3</b></div>
+          <div class="cfg"><span>温度</span><b>0.3</b></div>
+          <div class="cfg"><span>引用历史</span><b>开启</b></div>
+          <div class="cfg"><span>知识库</span><b>产品文档</b></div>
+          <div class="cfg"><span>BadCase</span><b>可标注</b></div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 '''.strip()
