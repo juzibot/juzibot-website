@@ -1755,6 +1755,111 @@ footer ul a:hover { color: #fff; }
   .flow-arrow { transform: rotate(90deg); }
 }
 
+/* ────────── ANIMATED LOW-CODE BUILDER (句子秒懂) ──────────
+   静态截图 → 会动的演示：节点逐个搭进画布、连线亮起、
+   流程持续跑（高亮在节点间流动）、配置面板填入、发布页签呼吸。
+   只在用户未要求"减少动态效果"时启用；移动端保留竖排箭头。 */
+@media (prefers-reduced-motion: no-preference) {
+
+  /* —— 画布节点：先弹入搭建，再无限循环"运行"高亮 —— */
+  .flow-anim .ui-canvas .flow-node {
+    animation-name: fnPop, fnGlow;
+    animation-duration: .5s, 3.2s;
+    animation-timing-function: cubic-bezier(.2,.85,.3,1), ease-in-out;
+    animation-iteration-count: 1, infinite;
+    animation-fill-mode: both, none;
+    animation-delay: .15s, 2.3s;
+  }
+  /* 搭建顺序 + 运行高亮顺序（两条动画各自的 delay） */
+  .flow-anim .ui-canvas > .flow-node:nth-of-type(1) { animation-delay: .15s, 2.30s; }
+  .flow-anim .ui-canvas > .flow-node:nth-of-type(2) { animation-delay: .65s, 2.55s; }
+  .flow-anim .ui-canvas .flow-col .flow-node:nth-of-type(1) { animation-delay: 1.15s, 2.80s; }
+  .flow-anim .ui-canvas .flow-col .flow-node:nth-of-type(2) { animation-delay: 1.35s, 2.80s; }
+  .flow-anim .ui-canvas > .flow-node:nth-of-type(3) { animation-delay: 1.85s, 3.05s; }
+
+  /* —— 连线：跟着节点逐段画出（只用 opacity，避免覆盖移动端 rotate） —— */
+  .flow-anim .ui-canvas .flow-arrow {
+    animation: fnArrow .45s ease both;
+  }
+  .flow-anim .ui-canvas > .flow-arrow:nth-of-type(1) { animation-delay: .45s; }
+  .flow-anim .ui-canvas > .flow-arrow:nth-of-type(2) { animation-delay: .95s; }
+  .flow-anim .ui-canvas > .flow-arrow:nth-of-type(3) { animation-delay: 1.65s; }
+
+  /* —— 左侧节点面板：高亮自上而下扫一遍，像在挑节点拖进来 —— */
+  .flow-anim .ui-palette .pn { animation: pnSweep 5s ease-in-out infinite; }
+  .flow-anim .ui-palette .pn:nth-of-type(1) { animation-delay: 0s; }
+  .flow-anim .ui-palette .pn:nth-of-type(2) { animation-delay: .35s; }
+  .flow-anim .ui-palette .pn:nth-of-type(3) { animation-delay: .70s; }
+  .flow-anim .ui-palette .pn:nth-of-type(4) { animation-delay: 1.05s; }
+  .flow-anim .ui-palette .pn:nth-of-type(5) { animation-delay: 1.40s; }
+
+  /* —— 右侧配置面板：节点选中后逐行填入 —— */
+  .flow-anim .ui-config .cfg { animation: cfgIn .5s ease both; }
+  .flow-anim .ui-config .cfg:nth-of-type(1) { animation-delay: 1.6s; }
+  .flow-anim .ui-config .cfg:nth-of-type(2) { animation-delay: 1.75s; }
+  .flow-anim .ui-config .cfg:nth-of-type(3) { animation-delay: 1.90s; }
+  .flow-anim .ui-config .cfg:nth-of-type(4) { animation-delay: 2.05s; }
+  .flow-anim .ui-config .cfg:nth-of-type(5) { animation-delay: 2.20s; }
+
+  /* —— 顶部"发布"页签：呼吸，提示流程已上线 —— */
+  .flow-anim .ui-tabs span.on { animation: tabPulse 3.2s ease-in-out infinite; }
+
+  /* —— 知识库可视化：行逐条滑入 + 持续的"扫描"高亮 —— */
+  .kb-anim .kb-rows > div { animation: kbScan 4.5s ease-in-out infinite; }
+  .kb-anim .kb-rows > div:nth-child(1) { animation-delay: 0s; }
+  .kb-anim .kb-rows > div:nth-child(2) { animation-delay: .35s; }
+  .kb-anim .kb-rows > div:nth-child(3) { animation-delay: .70s; }
+  .kb-anim .kb-rows > div:nth-child(4) { animation-delay: 1.05s; }
+  .kb-anim .kb-rows > div:nth-child(5) { animation-delay: 1.40s; }
+  .kb-anim .kb-syncing { animation: syncPulse 1.4s ease-in-out infinite; }
+
+  /* —— 工作流可视化：执行高亮自上而下流动 —— */
+  .wf-anim .wf-steps > div { animation: wfRun 3.6s ease-in-out infinite; }
+  .wf-anim .wf-steps > div:nth-child(1) { animation-delay: 0s; }
+  .wf-anim .wf-steps > div:nth-child(3) { animation-delay: .45s; }
+  .wf-anim .wf-steps > div:nth-child(5) { animation-delay: .90s; }
+  .wf-anim .wf-steps > div:nth-child(7) { animation-delay: 1.35s; }
+  .wf-anim .wf-steps > div:nth-child(9) { animation-delay: 1.80s; }
+}
+
+@keyframes fnPop {
+  0%   { opacity: 0; transform: translateY(9px) scale(.9); }
+  60%  { opacity: 1; transform: translateY(-2px) scale(1.03); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes fnGlow {
+  0%, 13%, 100% { box-shadow: var(--shadow-sm); }
+  4%            { box-shadow: 0 0 0 3px rgba(22,89,229,.18), 0 8px 20px rgba(22,89,229,.22); }
+}
+@keyframes fnArrow {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes pnSweep {
+  0%, 16%, 100% { background: #fff; border-color: var(--gray-line); color: var(--black); }
+  6%            { background: var(--blue-light); border-color: var(--blue); color: var(--blue); }
+}
+@keyframes cfgIn {
+  0%   { opacity: 0; transform: translateX(8px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+@keyframes tabPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(22,89,229,.0); }
+  50%      { box-shadow: 0 0 0 4px rgba(22,89,229,.18); }
+}
+@keyframes kbScan {
+  0%, 20%, 100% { transform: translateX(0); filter: none; }
+  8%            { transform: translateX(4px); filter: brightness(1.05) saturate(1.1); }
+}
+@keyframes syncPulse {
+  0%, 100% { opacity: .45; }
+  50%      { opacity: 1; }
+}
+@keyframes wfRun {
+  0%, 16%, 100% { box-shadow: none; }
+  6%            { box-shadow: 0 0 0 2px rgba(22,89,229,.20); }
+}
+
 /* ────────── TOP ANNOUNCEMENT BAR ────────── */
 .ann-bar {
   background: var(--blue);

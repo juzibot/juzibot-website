@@ -70,11 +70,11 @@ def footer_html(rel):
         </div>
         <p>
           为企业部署 AI 员工。<br/>
-          批量、按结果交付——多年积累，1000+ 大型企业客户验证。
+          1000+ 家中国企业在用 · 覆盖 5 大高合规行业。
         </p>
       </div>
       <div>
-        <h6>产品</h6>
+        <h6>产品 · 7 个</h6>
         <ul>
           <li><a href="{rel}products/miaohui.html">句子秒回 · 工位</a></li>
           <li><a href="{rel}products/miaodong.html">句子秒懂 · 大脑</a></li>
@@ -83,33 +83,31 @@ def footer_html(rel):
           <li><a href="{rel}products/dongxing.html">句子智库 · 记忆</a></li>
           <li><a href="{rel}products/cli.html">句子 CLI · 手</a></li>
           <li><a href="{rel}products/zhizao.html">句子智造 · 地基</a></li>
-          <li><a href="{rel}enterprise.html">企业级能力</a></li>
         </ul>
       </div>
       <div>
-        <h6>AI 员工</h6>
+        <h6>行业</h6>
         <ul>
-          <li><a href="{rel}workforce/sales.html">AI 销售</a></li>
-          <li><a href="{rel}workforce/marketing.html">AI 导购</a></li>
-          <li><a href="{rel}workforce/service.html">AI 客服</a></li>
-          <li><a href="{rel}workforce/government.html">AI 社工 / 调解员</a></li>
-          <li><a href="{rel}workforce/finance.html">AI 理财顾问</a></li>
-          <li><a href="{rel}workforce/hr.html">AI HR</a></li>
+          <li><a href="{rel}industries.html#education">在线教育</a></li>
+          <li><a href="{rel}industries.html#ecommerce">消费品电商</a></li>
+          <li><a href="{rel}industries.html#finance">金融</a></li>
+          <li><a href="{rel}industries.html#gov">政务 · 司法</a></li>
+          <li><a href="{rel}industries.html#internet">泛互联网</a></li>
         </ul>
       </div>
       <div>
         <h6>公司</h6>
         <ul>
-          <li><a href="{rel}about.html">AI 原生组织</a></li>
           <li><a href="{rel}fde.html">FDE 交付团队</a></li>
           <li><a href="{rel}industries.html">客户与行业</a></li>
+          <li><a href="{rel}about.html">AI 原生组织</a></li>
           <li><a href="{rel}index.html#cta">联系我们</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
       <div>Copyright © 2019 北京句子互动科技有限公司　京ICP备19049435号-1　京公网安备 11010802033527号</div>
-      <div>为企业部署 AI 员工 · 批量 · 按结果交付</div>
+      <div>为企业部署 AI 员工</div>
     </div>
   </div>
 </footer>
@@ -545,7 +543,7 @@ def page_miaodong():
     body += '''
 <section class="product-shot-section">
   <div class="container">
-    <div class="ui-mock">
+    <div class="ui-mock flow-anim">
       <div class="ui-topbar">
         <span class="ui-dot r"></span><span class="ui-dot y"></span><span class="ui-dot g"></span>
         <span class="ui-title">句子秒懂 · 流程引擎</span>
@@ -617,14 +615,14 @@ def page_miaodong():
             "多知识库隔离：不同业务线、不同行业各管各的",
         ],
         visual_html="""
-<div style="background:#fff;border-radius:12px;padding:18px;border:1px solid var(--gray-line);">
+<div class="kb-anim" style="background:#fff;border-radius:12px;padding:18px;border:1px solid var(--gray-line);">
 <div style="font-size:12px;font-weight:700;color:var(--gray-text);margin-bottom:14px;letter-spacing:.04em;">知识库 · 已导入 · 247 篇</div>
-<div style="display:flex;flex-direction:column;gap:8px;font-size:13px;">
+<div class="kb-rows" style="display:flex;flex-direction:column;gap:8px;font-size:13px;">
 <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--blue-light);border-radius:8px;"><span style="font-size:16px;">📄</span><span style="flex:1;">产品规格手册 v3.2</span><span style="font-size:11px;color:var(--gray-text);">128 chunks</span></div>
 <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--orange-lt);border-radius:8px;"><span style="font-size:16px;">❓</span><span style="flex:1;">FAQ · 售前售后</span><span style="font-size:11px;color:var(--gray-text);">312 chunks</span></div>
 <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--green-lt);border-radius:8px;"><span style="font-size:16px;">🔒</span><span style="flex:1;">合规话术库</span><span style="font-size:11px;color:var(--gray-text);">86 chunks</span></div>
 <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--purple-lt);border-radius:8px;"><span style="font-size:16px;">💰</span><span style="flex:1;">2026 Q1 促销规则</span><span style="font-size:11px;color:var(--gray-text);">42 chunks</span></div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--gray-bg);border-radius:8px;color:var(--gray-text);"><span style="font-size:16px;">🌐</span><span style="flex:1;">官网内容（自动同步）</span><span style="font-size:11px;">同步中</span></div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--gray-bg);border-radius:8px;color:var(--gray-text);"><span style="font-size:16px;">🌐</span><span style="flex:1;">官网内容（自动同步）</span><span class="kb-syncing" style="font-size:11px;">同步中</span></div>
 </div>
 </div>
 """,
@@ -644,9 +642,9 @@ def page_miaodong():
             "工作流模板库：每个行业都有起跑模板",
         ],
         visual_html="""
-<div style="background:#fff;border-radius:12px;padding:18px;border:1px solid var(--gray-line);font-family:monospace;font-size:11.5px;">
+<div class="wf-anim" style="background:#fff;border-radius:12px;padding:18px;border:1px solid var(--gray-line);font-family:monospace;font-size:11.5px;">
 <div style="font-weight:700;color:var(--orange);margin-bottom:14px;font-family:'PingFang SC';font-size:13px;">智能体 · 售前咨询 v2.1</div>
-<div style="display:flex;flex-direction:column;gap:6px;color:var(--gray-text);">
+<div class="wf-steps" style="display:flex;flex-direction:column;gap:6px;color:var(--gray-text);">
 <div style="background:var(--orange-lt);color:var(--orange);padding:8px 12px;border-radius:6px;font-weight:600;">▼ 用户提问</div>
 <div style="padding-left:12px;color:var(--gray-text);">↓</div>
 <div style="background:var(--blue-light);color:var(--blue);padding:8px 12px;border-radius:6px;font-weight:600;">→ 知识库检索</div>
@@ -1510,7 +1508,7 @@ def page_industries():
     }
     for slug, name, icon, color, tagline, intro, kpis, scene, capabilities, customers in industries_detail:
         logo_grid_html = ''.join(
-            f'<div style="border:1px solid var(--gray-line);border-radius:8px;height:46px;display:flex;align-items:center;justify-content:center;padding:5px 8px;background:#fff;"><img src="assets/brand/logos/{p}-{ci}-{c}.png" alt="" style="max-width:100%;max-height:100%;object-fit:contain;" loading="lazy"></div>'
+            f'<div style="border:1px solid var(--gray-line);border-radius:10px;overflow:hidden;background:#fff;line-height:0;"><img src="assets/brand/logos/{p}-{ci}-{c}.png" alt="" style="width:100%;height:auto;display:block;" loading="lazy"></div>'
             for p, ci, c in logo_cells[slug]
         )
         kpi_html = ''.join(
@@ -1525,9 +1523,9 @@ def page_industries():
         logo_card_html = (
             f'<div style="background:#fff;border:1px solid var(--gray-line);border-radius:18px;padding:22px 20px;">'
             f'<div style="font-size:13px;font-weight:800;letter-spacing:.06em;color:{ccolor};text-transform:uppercase;margin-bottom:16px;">部分客户</div>'
-            f'<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">{logo_grid_html}</div></div>'
+            f'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">{logo_grid_html}</div></div>'
         ) if logo_cells[slug] else ''
-        grid_cols = '1fr 360px' if logo_card_html else '1fr'
+        grid_cols = '1fr 400px' if logo_card_html else '1fr'
         right_col = f'<div>{logo_card_html}</div>' if logo_card_html else ''
         body += f"""
 <section class="section-block" id="{slug}">
