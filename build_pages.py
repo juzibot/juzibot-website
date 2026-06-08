@@ -237,11 +237,11 @@ function submitContact(){{
     <span class="ann-item"><span class="dot"></span><span class="tag">在线教育</span>400+ 家头部公司已部署，AI 销售人均承接 5 倍以上</span>
     <span class="ann-item"><span class="dot"></span><span class="tag">消费品电商</span>几百家头部品牌私域导购上线，长尾客户再不流失</span>
     <span class="ann-item"><span class="dot"></span><span class="tag">金融</span>银行 · 证券 · 保险头部机构落地，合规边界提前写死</span>
-    <span class="ann-item"><span class="dot"></span>1000+ 大型企业已在用 · 扎在这 5 个行业 · 89% 对话自动完成率</span>
+    <span class="ann-item"><span class="dot"></span>1000+ 大型企业已在用 · 扎在这 5 个行业 · 接入 10+ 主流 IM 渠道</span>
     <span class="ann-item"><span class="dot"></span><span class="tag">在线教育</span>400+ 家头部公司已部署，AI 销售人均承接 5× 以上</span>
     <span class="ann-item"><span class="dot"></span><span class="tag">消费品电商</span>几百家头部品牌私域导购上线，长尾客户再不流失</span>
     <span class="ann-item"><span class="dot"></span><span class="tag">金融</span>银行 · 证券 · 保险头部机构落地，合规边界提前写死</span>
-    <span class="ann-item"><span class="dot"></span>1000+ 大型企业已在用 · 扎在这 5 个行业 · 89% 对话自动完成率</span>
+    <span class="ann-item"><span class="dot"></span>1000+ 大型企业已在用 · 扎在这 5 个行业 · 接入 10+ 主流 IM 渠道</span>
   </div>
 </div>
 
