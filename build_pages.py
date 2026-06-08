@@ -1881,7 +1881,7 @@ def page_insights():
 <div style="padding:24px 18px;background:#fff;border:1px solid var(--gray-line);border-radius:14px;">
   <div style="font-size:28px;margin-bottom:10px;">👁️</div>
   <h4 style="font-size:16px;font-weight:800;margin:0 0 8px;color:var(--green);">在场</h4>
-  <p style="font-size:13px;color:var(--gray-text);line-height:1.65;margin:0;">客户当面那一刻、团队卡住那一刻，AI 不在场。</p>
+  <p style="font-size:13px;color:var(--gray-text);line-height:1.65;margin:0;">客户当面那一刻、团队遇到难关那一刻，AI 不在场。</p>
 </div>
 <div style="padding:24px 18px;background:#fff;border:1px solid var(--gray-line);border-radius:14px;">
   <div style="font-size:28px;margin-bottom:10px;">🤝</div>
@@ -2247,7 +2247,7 @@ def page_fde():
         "贴着客户的业务跑，把脏活在现场解决",
         "AI 落地的难点从来不是模型，而是客户各不相同的真实业务。FDE 正是去解决这一部分。",
         feat_grid([
-            ("🤝", "先搞懂这门生意", "不是先装软件，而是先与客户梳理清楚业务、流程和卡点。AI 要承接的工作，必须先有人真正理解。", "bl"),
+            ("🤝", "先搞懂这门生意", "不是先装软件，而是先与客户梳理清楚业务、流程与症结。AI 要承接的工作，必须先有人真正理解。", "bl"),
             ("🎯", "对结果负责", "与客户签订对赌协议，按结果收费。客户的转化和人效确实改善，我们才收费。", "or"),
             ("🔁", "能力回流产品", "在一个客户现场踩出来的能力，抽象成产品里的标准能力，下一个客户起步就用得上。做一次，卖多次。", "gr"),
             ("🧑‍🎓", "不一定是码农", "FDE 不限于会写代码的人，不写代码的人往往做得更好。我们的 FDE 负责人是一位法语专业的 00 后。理解业务、肯钻研，比技术背景更重要。", "pu"),
@@ -2395,7 +2395,7 @@ def page_cli():
     body = ''
     body += block(        "为什么 AI 需要一双手",
         "很多企业的核心系统，没 API、改不动",
-        "AI 接入客户业务时，常卡在同一处：用了十几年的核心系统没有 API，无人敢动。模型再强，没有执行能力也无法完成任务。句子 CLI 为 AI 配上一双手，让它像人一样直接操作界面。",
+        "AI 接入客户业务时，常受阻于同一处：用了十几年的核心系统没有 API，无人敢动。模型再强，没有执行能力也无法完成任务。句子 CLI 为 AI 配上一双手，让它像人一样直接操作界面。",
         feat_grid([
             ("🖱️", "像人一样操作界面", "无需 API 即可接入。CLI 直接驱动鼠标键盘、读取屏幕，像人一样操作任何软件界面。", "bl"),
             ("🔗", "跨系统搬运", "从一个系统取数、填入另一个系统，中间缺少接口的环节由 CLI 自动完成，无需人工来回复制粘贴。", "or"),
