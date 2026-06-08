@@ -1383,7 +1383,7 @@ def page_enterprise():
         rel="",
         breadcrumbs=[("首页", "index.html"), ("企业级能力", None)],
         hero_kicker="生来就是企业级",
-        hero_h1='企业上线 AI，最先问的不是<span class="accent">「能多聪明」</span>，是<span class="accent">「能不能放心交给它」</span>',
+        hero_h1='企业要的 AI，<span class="accent">不是更聪明，是更可控</span>',
         hero_lede="TO B 要的是<strong>输出稳定、行为可审计、企业级可控</strong>。这也是 Anthropic 在 2026 年走的路。我们服务企业客户多年，结论一致。",
         pills=["和 Anthropic 同判断", "1000+ 企业验证", "SaaS / 私有化 / 混合 / 一体机", "100% 决策可审计"],
         body=body,
@@ -1531,24 +1531,24 @@ def page_industries():
   </div>
 </section>""".strip()
 
-    body += block(        "为什么我们能在这 5 个行业做得动",
-        "AI 员工在你的行业能直接用，是因为这 5 个行业的难点我们已逐个趟过",
-        "通用平台你自己也能搭出大致框架。难的是把你所在行业的具体场景真正跑通，这需要在行业里趟过难点的人。",
+    body += block(        "为什么在这 5 个行业能直接用",
+        "这 5 个行业的难点，我们已逐一沉淀出成熟做法",
+        "通用平台能搭出大致框架，但要把行业里的具体场景真正跑通，靠的是对这个行业足够深的理解和积累。",
         '''<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:1100px;margin:0 auto;">
 <div style="padding:28px 24px;background:#fff;border:1px solid var(--gray-line);border-radius:18px;">
   <div style="font-size:13px;font-weight:800;color:var(--orange);letter-spacing:.1em;margin-bottom:12px;">客户拿到什么</div>
-  <h4 style="font-size:18px;font-weight:800;margin:0 0 12px;">你的行业话术和 SOP 我们已经有底子</h4>
-  <p style="font-size:14px;color:var(--gray-text);line-height:1.7;margin:0;">在线教育的报名漏斗、电商的私域召回、金融的合规话术、政务的调解流程，不必从头逐条训练 AI，开通后即可投入使用。</p>
+  <h4 style="font-size:18px;font-weight:800;margin:0 0 12px;">行业话术和 SOP 已内置</h4>
+  <p style="font-size:14px;color:var(--gray-text);line-height:1.7;margin:0;">在线教育的报名漏斗、电商的私域召回、金融的合规话术、政务的调解流程，均已内置，无需从零训练 AI，开通即可使用。</p>
 </div>
 <div style="padding:28px 24px;background:#fff;border:1px solid var(--gray-line);border-radius:18px;">
   <div style="font-size:13px;font-weight:800;color:var(--blue);letter-spacing:.1em;margin-bottom:12px;">客户拿到什么</div>
-  <h4 style="font-size:18px;font-weight:800;margin:0 0 12px;">同行的坑我们都帮你踩过</h4>
-  <p style="font-size:14px;color:var(--gray-text);line-height:1.7;margin:0;">你所在行业的头部公司已使用多年，哪些场景容易出错、合规如何把握、客户对哪些话术反感，我们都清楚，能帮你少走半年弯路。</p>
+  <h4 style="font-size:18px;font-weight:800;margin:0 0 12px;">行业经验已沉淀</h4>
+  <p style="font-size:14px;color:var(--gray-text);line-height:1.7;margin:0;">你所在行业的头部公司已使用多年：哪些场景容易出错、合规边界如何把握、客户对哪些话术敏感，我们都清楚，帮你省下大量试错成本。</p>
 </div>
 <div style="padding:28px 24px;background:#fff;border:1px solid var(--gray-line);border-radius:18px;">
   <div style="font-size:13px;font-weight:800;color:var(--green);letter-spacing:.1em;margin-bottom:12px;">客户拿到什么</div>
   <h4 style="font-size:18px;font-weight:800;margin:0 0 12px;">你的反馈直接进入产品</h4>
-  <p style="font-size:14px;color:var(--gray-text);line-height:1.7;margin:0;">每个客户的真实业务结果都反馈回 Agent。你今天遇到的问题，下个版本就修好了。</p>
+  <p style="font-size:14px;color:var(--gray-text);line-height:1.7;margin:0;">每个客户的真实业务结果都会反馈回 Agent。你现场遇到的问题，会进入下一版产品修复。</p>
 </div>
 </div>''',
         alt=True,
