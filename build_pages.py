@@ -1482,6 +1482,7 @@ def page_industries():
          ['头部搜索平台', '头部电商平台', '头部短视频平台', '头部分类信息', '头部资讯平台', '众多平台']),
     ]
 
+    brand_map = {'education': 'edu', 'ecommerce': 'consumer', 'finance': 'govfin', 'gov': 'govfin', 'internet': 'internet'}
     for slug, name, icon, color, tagline, intro, kpis, scene, capabilities, customers in industries_detail:
         kpi_html = ''.join(
             f'<div style="text-align:center;"><div style="font-size:24px;font-weight:800;color:var(--{color}-color, var(--blue));letter-spacing:-.01em;">{v}</div><div style="font-size:12px;color:var(--gray-text);margin-top:2px;">{l}</div></div>'
@@ -1519,6 +1520,10 @@ def page_industries():
           </div>
         </div>
       </div>
+    </div>
+    <div style="margin-top:36px;">
+      <div style="font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--gray-text);text-transform:uppercase;margin-bottom:14px;">部分客户品牌</div>
+      <img src="assets/brand/wall-{brand_map[slug]}.png" alt="{name} · 部分客户品牌" style="display:block;width:100%;border-radius:14px;border:1px solid var(--gray-line);box-shadow:var(--shadow-sm);" loading="lazy">
     </div>
   </div>
 </section>""".strip()
