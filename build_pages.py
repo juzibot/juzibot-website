@@ -40,7 +40,7 @@ def nav_html(rel):
           <a href="{rel}workforce/service.html"><div class="d-title">AI 客服</div><div class="d-desc">从售前到售后都接得住 · 5 年 BadCase 积累</div></a>
           <a href="{rel}workforce/government.html"><div class="d-title">AI 社工 / 调解员</div><div class="d-desc">政务高合规要求 + 全程可追溯 · 已稳步落地</div></a>
           <a href="{rel}workforce/finance.html"><div class="d-title">AI 顾问 / 营销</div><div class="d-desc">银行 / 证券 / 保险头部机构落地 · 9 年风控话术</div></a>
-          <a href="{rel}workforce/livestream.html"><div class="d-title">AI 解说员 / 主理人</div><div class="d-desc">直播间智能解说 + 全媒体运营，一个人顶十个</div></a>
+          <a href="{rel}workforce/lawyer.html"><div class="d-title">AI 律师</div><div class="d-desc">批量仲裁案件代理，律师只做看 / 改 / 签</div></a>
         </div>
       </div>
       <div class="nav-item"><a href="{rel}industries.html">客户与行业</a></div>
@@ -92,7 +92,7 @@ def footer_html(rel):
           <li><a href="{rel}workforce/service.html">AI 客服</a></li>
           <li><a href="{rel}workforce/government.html">AI 社工 / 调解员</a></li>
           <li><a href="{rel}workforce/finance.html">AI 顾问 / 营销</a></li>
-          <li><a href="{rel}workforce/livestream.html">AI 解说员 / 主理人</a></li>
+          <li><a href="{rel}workforce/lawyer.html">AI 律师</a></li>
         </ul>
       </div>
       <div>
@@ -1122,59 +1122,59 @@ def workforce_pages():
         cta_text='让 AI 顾问 / 营销在你的合规边界内上岗',
     )
 
-    # ────── AI 解说员 / 主理人 ──────
-    pages['livestream'] = page_workforce(
-        slug='livestream',
-        title='AI 解说员 / 主理人',
-        kicker='AI 员工 · 直播岗',
-        h1='AI 解说员 / 主理人 · <span class="accent">把直播间人手放大 10 倍</span>',
-        lede='全媒体内容运营 + 直播间智能解说——<strong>内容生产 + 分发 + 现场解说一套人马干完</strong>，把直播间人手放大 10 倍。',
-        pills=['10× 人手杠杆', '24 小时不下播', '多平台内容矩阵', '互动 + 选品 + 解说'],
-        color='or',
-        industry='直播电商 · 全媒体',
-        role_desc='直播间人手不够：主播讲产品、运营盯互动、客服回评论，一场下来全员超负荷',
+    # ────── AI 律师 ──────
+    pages['lawyer'] = page_workforce(
+        slug='lawyer',
+        title='AI 律师',
+        kicker='AI 员工 · 法务岗',
+        h1='AI 律师 · <span class="accent">律师按案签字，剩下的交给 Agent</span>',
+        lede='面向批量、同质的仲裁 / 诉讼案件——<strong>接案、取证、起草、提交一条流水线跑完，律师只做看、改、签</strong>。单律师月产能从几十件做到两三百件。',
+        pills=['律师只做 看 / 改 / 签', '飞书机器人自动取证', '类案检索 + 自动起草', '单律师月产能约 6 倍'],
+        color='bl',
+        industry='法律服务 · 批量仲裁',
+        role_desc='平台批量仲裁案件爆发：单案标的不大、量却极大，证据散在企业多个部门，律师一件件人工做根本接不过来',
         pain_paragraphs=[
-            '一场带货直播，主播讲产品，运营盯互动，客服回评论，选品师切链接，还有人剪短视频，5 到 8 个人一场常常做不完。流量高峰时评论刷屏，互动跟不上，订单随之流失。',
-            'AI 解说员 / 主理人能把这条流水线压到 1-2 个真人加一套 Agent。它 24 小时不下播解说，自动回复评论，按节奏切换链接，并将直播剪辑成短视频分发，把一个直播间的人手放大约 10 倍。',
+            '头部互联网平台的网络服务合同纠纷，单案标的常常只有几千元，量却是千件、上万件级别。每件都要在 15 天答辩期内调取证据、检索类案、起草答辩书、提交仲裁平台——证据还散在法务、风控、运营、客服好几个部门。律师一件件人工做，单人一个月也就三五十件，根本接不过来。',
+            'AI 律师把这条流水线自动化：Agent 登录仲裁平台接案、按案由分流，飞书机器人 @ 对应部门自动收齐证据，再做类案检索、起草答辩书；律师在工作台只做看、改、签。单律师月产能从几十件做到两三百件，单案律师工时从 6–10 小时压到 1–2 小时。',
         ],
         pain_bullets=[
-            '24×7 直播解说：AI 主理人不下播，深夜流量同样接得住',
-            '评论互动：评论再密集，也能逐条回复',
-            '选品节奏：按观众活跃度、库存、利润动态切链接',
-            '内容剪辑：直播切片自动生成，分发到抖音 / 小红书 / 视频号',
-            '主播协同：与真人主播交替接班，切换过程节奏不断',
+            'Agent 接案：自动登录仲裁平台，抓取案号、诉请、证据、答辩截止日，结构化入库并触发倒计时',
+            '飞书取证：机器人 @ 法务 / 风控 / 运营 / 客服，业务方在 IM 里直接回证据，自动识别归档、缺啥催啥',
+            '类案检索 + 自动起草：按案由匹配模板与同类裁决，生成答辩书初稿',
+            '律师审核签字：工作台一案一屏，Agent 结果在前，律师只做差异化判断，通过即签字',
+            '自动提交跟进：Agent 提交仲裁平台、跟踪书面审 / 调解进度，结案自动归档、类案沉淀',
         ],
         pain_visual="""
 <div style="background:#fff;border-radius:12px;padding:18px;border:1px solid var(--gray-line);">
-<div style="font-size:13px;color:var(--orange);font-weight:700;margin-bottom:12px;">AI 主理人 · 直播间实时</div>
+<div style="font-size:13px;color:var(--blue);font-weight:700;margin-bottom:12px;">AI 律师 · 案件工作台</div>
 <div style="display:flex;flex-direction:column;gap:8px;">
-<div style="display:flex;justify-content:space-between;font-size:13px;align-items:center;"><span>当前观看</span><span style="color:var(--orange);font-weight:800;font-size:18px;">12,800+</span></div>
-<div style="display:flex;justify-content:space-between;font-size:13px;align-items:center;"><span>评论 / 分钟</span><span style="color:var(--blue);font-weight:800;font-size:18px;">328</span></div>
-<div style="display:flex;justify-content:space-between;font-size:13px;align-items:center;"><span>本场成交</span><span style="color:var(--green);font-weight:800;font-size:18px;">¥185,420</span></div>
-<div style="display:flex;justify-content:space-between;font-size:13px;align-items:center;"><span>已切短视频</span><span style="color:var(--purple);font-weight:800;font-size:18px;">14 条</span></div>
+<div style="display:flex;justify-content:space-between;font-size:13px;align-items:center;"><span>待律师审核</span><span style="color:var(--orange);font-weight:800;font-size:18px;">12</span></div>
+<div style="display:flex;justify-content:space-between;font-size:13px;align-items:center;"><span>待业务方取证</span><span style="color:var(--purple);font-weight:800;font-size:18px;">8</span></div>
+<div style="display:flex;justify-content:space-between;font-size:13px;align-items:center;"><span>今日答辩到期</span><span style="color:#e5484d;font-weight:800;font-size:18px;">5</span></div>
+<div style="display:flex;justify-content:space-between;font-size:13px;align-items:center;"><span>本月已提交</span><span style="color:var(--green);font-weight:800;font-size:18px;">240</span></div>
 <div style="border-top:1px solid var(--gray-line);padding-top:12px;margin-top:6px;display:flex;flex-direction:column;gap:4px;font-size:11.5px;">
-<div style="color:var(--green);font-weight:600;">✓ 实时互动 · 28 条评论已回</div>
-<div style="color:var(--green);font-weight:600;">✓ 链接 #4 切上 · 库存 3,200 件</div>
-<div style="color:var(--gray-text);">… AI 主理人在岗中</div>
+<div style="color:var(--green);font-weight:600;">✓ 案 #2025-1487 证据已齐，答辩书已起草，待律师签字</div>
+<div style="color:var(--green);font-weight:600;">✓ 飞书已向风控 / 客服催办 3 份证据</div>
+<div style="color:var(--gray-text);">… AI 律师在岗中</div>
 </div>
 </div>
 </div>
 """,
         capability_block=feat_grid([
-            ('🎙️', '直播解说', '基于产品库 + 话术库实时解说，节奏紧凑不冷场。', 'or'),
-            ('💬', '评论互动', '观众评论实时识别 + 自动回复 + 关键问题升级真人。', 'bl'),
-            ('🛒', '智能选品', '按活跃度、利润、库存调整上链接节奏，承接更多订单。', 'gr'),
-            ('🎬', '内容矩阵', '直播切片自动生成短视频，分发到抖音 / 小红书 / 视频号。', 'pu'),
-            ('🎯', '观众分层', '高意向观众单独标记，私信发送优惠，引导至下单。', 'te'),
-            ('🤝', '人机接力', '真人主播下播后由 AI 主理人接续，直播间 24 小时不间断。', 'or'),
+            ('📥', 'Agent 接案', '自动登录仲裁平台，抓取案号、诉请、证据、答辩截止日，结构化入库。', 'bl'),
+            ('🗂️', '案由分流', '按售假 / 仅退款 / 物流 / 虚假宣传等案由自动分类，匹配对应模板线。', 'or'),
+            ('🤖', '飞书取证', '机器人 @ 法务 / 风控 / 运营 / 客服，IM 里直接回证据，缺啥自动催。', 'gr'),
+            ('📝', '类案 + 起草', '检索同类裁决、结合证据生成答辩书初稿，律师在此基础上改。', 'pu'),
+            ('✍️', '律师签字', '一案一屏，Agent 结果在前，律师只做看 / 改 / 签。', 'te'),
+            ('📤', '提交跟进', '自动提交、跟踪书面审 / 调解进度，结案归档 + 类案沉淀。', 'or'),
         ], cols=3),
         kpi_items=[
-            ('10×', '人手杠杆放大'),
-            ('24×7', '直播间不下播'),
-            ('328', '评论 / 分钟（峰值）'),
-            ('14+', '日均短视频产出'),
+            ('30→200+', '单律师月产能（件）'),
+            ('6–10h→1–2h', '单案律师工时'),
+            ('15 天', '答辩期内闭环'),
+            ('看 / 改 / 签', '律师只做三件事'),
         ],
-        cta_text='让 AI 主理人 24 小时持续带货',
+        cta_text='让 AI 律师接住你的批量案件',
     )
 
     return pages
