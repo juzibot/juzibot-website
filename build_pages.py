@@ -49,7 +49,7 @@ def nav_html(rel):
       <div class="nav-item"><a href="{rel}about.html">AI 原生组织</a></div>
     </div>
     <div class="nav-right">
-      <a href="{rel}index.html#cta" class="nav-cta">联系我们 →</a>
+      <a class="nav-cta" style="cursor:pointer" onclick="openContact('导航·联系我们')">联系我们 →</a>
       <a href="https://insight.juzibot.com/auth/login?from=juzibot.com&amp;type=register" class="nav-login">登录 / 注册</a>
     </div>
     <button class="nav-burger" aria-label="菜单" onclick="this.closest('.nav').classList.toggle('nav-open')">☰</button>
@@ -157,78 +157,25 @@ def page_layout(*, title, description, rel, breadcrumbs, hero_kicker, hero_h1, h
 
 <!-- ════════════ CONTACT MODAL ════════════ -->
 <div class="modal-overlay" id="contactModal">
-  <div class="modal" style="max-width:680px;" role="dialog" aria-modal="true">
-    <div class="modal-hd" style="padding:26px 32px 24px;">
+  <div class="modal" style="max-width:420px;" role="dialog" aria-modal="true">
+    <div class="modal-hd" style="padding:26px 32px 20px;">
       <button class="mclose" onclick="closeModal('contactModal')" aria-label="关闭">×</button>
       <div class="meyebrow">联系我们</div>
-      <h3 id="contactTitle" style="font-size:20px;margin-bottom:0;">预约演示 / 获取方案</h3>
+      <h3 style="font-size:20px;margin-bottom:0;">扫码加企业微信</h3>
     </div>
-    <div class="modal-bd">
-      <div id="cfForm">
-        <div class="cf-choice">
-          <div class="cf-choice-main">
-            <div class="cf-choice-label">留下联系方式，我们当天联系你</div>
-            <div class="cf-row">
-              <input class="cf-input" type="text" placeholder="您的姓名 *" id="cf-name">
-              <input class="cf-input" type="text" placeholder="公司名称 *" id="cf-company">
-            </div>
-            <div class="cf-row">
-              <input class="cf-input" type="tel" placeholder="手机号 *" id="cf-phone">
-              <select class="cf-input" id="cf-industry">
-                <option value="" disabled selected>所在行业</option>
-                <option>在线教育</option>
-                <option>消费品电商</option>
-                <option>金融（银行 / 证券 / 保险）</option>
-                <option>政务 / 司法</option>
-                <option>泛互联网</option>
-                <option>其他</option>
-              </select>
-            </div>
-            <div class="cf-row full">
-              <textarea class="cf-input" placeholder="想了解什么？具体场景描述一下（选填）" id="cf-msg" style="height:80px;resize:none;"></textarea>
-            </div>
-            <button class="cf-submit" onclick="submitContact()">提交 — 工作日当天回复</button>
-          </div>
-          <div class="cf-choice-or"><span>或</span></div>
-          <div class="cf-choice-qr">
-            <div class="cf-choice-label">扫码加企业微信</div>
-            <img src="{rel}assets/brand/qr-qiwei.png" alt="企业微信二维码" width="156" height="156" />
-            <div class="cf-qr-note">直接和我们聊<br/>工作日当天回复</div>
-          </div>
-        </div>
-      </div>
-      <div id="cfSuccess" style="text-align:center;padding:32px 20px;display:none;">
-        <div style="font-size:48px;margin-bottom:12px;">✅</div>
-        <h4 style="font-size:20px;font-weight:800;margin-bottom:8px;">已收到您的信息</h4>
-        <p style="color:var(--gray-text);font-size:14.5px;margin-bottom:18px;">我们将在工作日当天与您联系。<br/>想更快？扫码加企业微信：</p>
-        <img src="{rel}assets/brand/qr-qiwei.png" alt="企业微信二维码" width="140" height="140" style="border-radius:10px;border:1px solid var(--gray-line);" />
-      </div>
+    <div class="modal-bd" style="text-align:center;padding:8px 32px 32px;">
+      <img src="{rel}assets/brand/qr-qiwei.png" alt="企业微信二维码" width="200" height="200" style="border-radius:12px;border:1px solid var(--gray-line);" />
+      <p style="color:var(--gray-text);font-size:14.5px;margin-top:16px;">直接和我们聊，工作日当天回复</p>
     </div>
   </div>
 </div>
 
 <script>
-window.JUZI_LEAD_ENDPOINT = "/api/lead";
 function openModal(id){{var el=document.getElementById(id);if(!el)return;el.classList.add('open');document.body.style.overflow='hidden';}}
 function closeModal(id){{var el=document.getElementById(id);if(!el)return;el.classList.remove('open');document.body.style.overflow='';}}
 document.querySelectorAll('.modal-overlay').forEach(function(o){{o.addEventListener('click',function(e){{if(e.target===o)closeModal(o.id);}});}});
 document.addEventListener('keydown',function(e){{if(e.key==='Escape')document.querySelectorAll('.modal-overlay.open').forEach(function(m){{closeModal(m.id);}});}});
-function openContact(source,title){{window.__leadSource=source||'未知来源';var el=document.getElementById('contactTitle');if(el)el.textContent=title||'预约演示 / 获取方案';openModal('contactModal');}}
-function submitContact(){{
-  var n=(document.getElementById('cf-name').value||'').trim();
-  var c=(document.getElementById('cf-company').value||'').trim();
-  var p=(document.getElementById('cf-phone').value||'').trim();
-  var ind=(document.getElementById('cf-industry')||{{}}).value||'';
-  var msg=(document.getElementById('cf-msg')||{{}}).value||'';
-  if(!n||!c||!p){{alert('请填写姓名、公司名和手机号');return;}}
-  var btn=document.querySelector('#cfForm .cf-submit');
-  if(btn){{btn.disabled=true;btn.textContent='提交中…';}}
-  var done=function(){{document.getElementById('cfForm').style.display='none';document.getElementById('cfSuccess').style.display='block';}};
-  var payload={{name:n,company:c,phone:p,industry:ind,message:msg,source:window.__leadSource||'未知来源',page:location.pathname,submitted_at:new Date().toISOString()}};
-  var ep=window.JUZI_LEAD_ENDPOINT;
-  if(!ep){{done();return;}}
-  fetch(ep,{{method:'POST',headers:{{'Content-Type':'application/json'}},body:JSON.stringify(payload)}}).then(done).catch(done);
-}}
+function openContact(){{openModal('contactModal');}}
 (function(){{
   var fp=document.getElementById('floatPanel');if(!fp)return;
   fp.style.opacity='0';fp.style.transition='opacity .3s ease';
@@ -1538,9 +1485,9 @@ def page_industries():
          ['多家头部银行', '证券机构', '保险机构', '消费金融']),
 
         ('gov', '政务 · 司法', '⚖️', 'pu', 'AI 社工 / AI 调解员稳步落地',
-         '政务对合规的要求最高，AI 一句话出错都可能引发舆情。我们的 AI 普法调解员和 AI 社工已在多个城市试点。',
+         '政务对合规的要求最高，AI 一句话出错都可能引发舆情。我们的 AI 社工从海淀东升镇起步，已落地学院路、曙光、万寿路、清河、花园路等多个街道、几十个社区；AI 普法调解员在海淀区司法局上线。',
          [
-             ('多个', '城市试点'),
+             ('几十个', '社区落地'),
              ('60%+', '人工减负'),
              ('100%', '决策可审计'),
          ],
@@ -1551,7 +1498,7 @@ def page_industries():
              '民意收集：群众反馈结构化整理',
              '工单流转：超出 AI 能力自动登记给真人调解员',
          ],
-         ['多个城市试点', '司法机构', '社区']),
+         ['海淀·东升镇', '学院路街道', '曙光街道', '万寿路街道', '清河街道', '花园路街道', '海淀区司法局', '几十个社区']),
 
         ('internet', '泛互联网', '🌐', 'te', '多家平台型公司部署',
          '电商平台、内容平台、生活服务平台的客服、运营、销售已在使用 AI 员工，承接持续增长的客户量。',
@@ -1596,6 +1543,20 @@ def page_industries():
             f'<div style="font-size:13px;font-weight:800;letter-spacing:.06em;color:{ccolor};text-transform:uppercase;margin-bottom:16px;">部分客户</div>'
             f'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">{logo_grid_html}</div></div>'
         ) if logo_cells[slug] else ''
+        # 政务：街道办没有可商用 logo（用政府徽标做商业背书有合规风险），右栏用真实落地街道名做客户墙
+        if slug == 'gov':
+            gov_sites = ['海淀·东升镇', '学院路街道', '曙光街道', '万寿路街道', '清河街道', '花园路街道', '海淀区司法局']
+            gov_cells = ''.join(
+                f'<div style="border:1px solid var(--gray-line);border-radius:10px;padding:13px 10px;text-align:center;font-size:13px;font-weight:700;color:var(--black);background:#fff;">{s}</div>'
+                for s in gov_sites
+            )
+            logo_card_html = (
+                '<div style="background:#fff;border:1px solid var(--gray-line);border-radius:18px;padding:22px 20px;">'
+                '<div style="font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--purple);text-transform:uppercase;margin-bottom:16px;">落地街道 · 北京海淀</div>'
+                f'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">{gov_cells}</div>'
+                '<div style="margin-top:14px;font-size:12px;color:var(--gray-text);line-height:1.6;">从东升镇起步，已覆盖几十个社区、数百个居民群</div>'
+                '</div>'
+            )
         grid_cols = '1fr 400px' if logo_card_html else '1fr'
         right_col = f'<div>{logo_card_html}</div>' if logo_card_html else ''
         body += f"""
@@ -1674,7 +1635,7 @@ def page_about():
         '<div style="max-width:920px;margin:0 auto;background:linear-gradient(135deg,var(--blue-light),#fff);border-radius:22px;padding:40px 48px;text-align:center;">'
         '<div style="display:flex;justify-content:center;align-items:center;gap:0;flex-wrap:wrap;">'
         '<div style="padding:0 36px;"><div style="font-size:30px;font-weight:800;color:var(--blue);letter-spacing:-.01em;line-height:1.1;">1000+</div><div style="font-size:13px;color:var(--gray-text);margin-top:6px;">大型企业客户</div></div>'
-        '<div style="padding:0 36px;border-left:1px solid rgba(0,0,0,.08);"><div style="font-size:30px;font-weight:800;color:var(--blue);letter-spacing:-.01em;line-height:1.1;">7 年</div><div style="font-size:13px;color:var(--gray-text);margin-top:6px;">企业服务深耕</div></div>'
+        '<div style="padding:0 36px;border-left:1px solid rgba(0,0,0,.08);"><div style="font-size:30px;font-weight:800;color:var(--blue);letter-spacing:-.01em;line-height:1.1;">多年</div><div style="font-size:13px;color:var(--gray-text);margin-top:6px;">企业服务深耕</div></div>'
         '<div style="padding:0 36px;border-left:1px solid rgba(0,0,0,.08);"><div style="font-size:30px;font-weight:800;color:var(--blue);letter-spacing:-.01em;line-height:1.1;">4 个</div><div style="font-size:13px;color:var(--gray-text);margin-top:6px;">重点行业</div></div>'
         '<div style="padding:0 36px;border-left:1px solid rgba(0,0,0,.08);"><div style="font-size:30px;font-weight:800;color:var(--blue);letter-spacing:-.01em;line-height:1.1;">10+</div><div style="font-size:13px;color:var(--gray-text);margin-top:6px;">覆盖 IM 渠道</div></div>'
         '</div>'
