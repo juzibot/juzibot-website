@@ -590,11 +590,6 @@
         <div class="nh"><span class="nnum">07</span><span class="nen">不锁模型</span></div>
         <div class="nans">底层不绑死任何一家模型，智谱 / DeepSeek / Qwen 想换就换。</div>
       </div>
-      <div class="need-conclusion">
-        <div class="pre">结论</div>
-        <div class="head">Anthropic 在美国走的这条路，我们在中国扎着干了这些年。</div>
-        <div class="sub">企业要的 AI 不是 demo 那种，是真能装进业务里天天跑的东西。</div>
-      </div>
     </div>
   </div>
 </section>
@@ -756,16 +751,12 @@
 
 <!-- ════════════ CONTACT MODAL ════════════ -->
 <div class="modal-overlay" id="contactModal">
-  <div class="modal" style="max-width:420px;" role="dialog" aria-modal="true">
-    <div class="modal-hd" style="padding:26px 32px 20px;">
-      <button class="mclose" onclick="closeModal('contactModal')" aria-label="关闭">×</button>
-      <div class="meyebrow">联系我们</div>
-      <h3 style="font-size:20px;margin-bottom:0;">扫码加企业微信</h3>
-    </div>
-    <div class="modal-bd" style="text-align:center;padding:8px 32px 32px;">
-      <img src="assets/brand/qr-qiwei.png" alt="企业微信二维码" width="200" height="200" style="border-radius:12px;border:1px solid var(--gray-line);" />
-      <p style="margin-top:16px;color:var(--gray-text);font-size:14.5px;">直接和我们聊，工作日当天回复</p>
-    </div>
+  <div class="modal modal-qr" role="dialog" aria-modal="true">
+    <button class="qr-close" onclick="closeModal('contactModal')" aria-label="关闭">×</button>
+    <div class="qr-eyebrow">联系我们</div>
+    <h3 class="qr-title">扫码加企业微信</h3>
+    <img class="qr-img" src="assets/brand/qr-qiwei.png" alt="企业微信二维码" width="200" height="200" />
+    <p class="qr-note">直接和我们聊，工作日当天回复</p>
   </div>
 </div>
 

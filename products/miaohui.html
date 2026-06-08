@@ -13,11 +13,11 @@
 <!-- ════════════ ANNOUNCEMENT BAR ════════════ -->
 <div class="ann-bar" role="marquee" aria-label="公告">
   <div class="ann-track">
-    <span class="ann-item"><span class="dot"></span><span class="tag">在线教育</span>400+ 家头部公司已部署，AI 销售人均承接 5 倍以上</span>
+    <span class="ann-item"><span class="dot"></span><span class="tag">在线教育</span>几百家头部公司已部署，AI 销售人均承接 5 倍以上</span>
     <span class="ann-item"><span class="dot"></span><span class="tag">消费品电商</span>几百家头部品牌私域导购上线，长尾客户再不流失</span>
     <span class="ann-item"><span class="dot"></span><span class="tag">金融</span>银行 · 证券 · 保险头部机构落地，合规边界提前写死</span>
     <span class="ann-item"><span class="dot"></span>1000+ 大型企业已在用 · 扎在这 5 个行业 · 接入 10+ 主流 IM 渠道</span>
-    <span class="ann-item"><span class="dot"></span><span class="tag">在线教育</span>400+ 家头部公司已部署，AI 销售人均承接 5× 以上</span>
+    <span class="ann-item"><span class="dot"></span><span class="tag">在线教育</span>几百家头部公司已部署，AI 销售人均承接 5× 以上</span>
     <span class="ann-item"><span class="dot"></span><span class="tag">消费品电商</span>几百家头部品牌私域导购上线，长尾客户再不流失</span>
     <span class="ann-item"><span class="dot"></span><span class="tag">金融</span>银行 · 证券 · 保险头部机构落地，合规边界提前写死</span>
     <span class="ann-item"><span class="dot"></span>1000+ 大型企业已在用 · 扎在这 5 个行业 · 接入 10+ 主流 IM 渠道</span>
@@ -284,16 +284,12 @@
 
 <!-- ════════════ CONTACT MODAL ════════════ -->
 <div class="modal-overlay" id="contactModal">
-  <div class="modal" style="max-width:420px;" role="dialog" aria-modal="true">
-    <div class="modal-hd" style="padding:26px 32px 20px;">
-      <button class="mclose" onclick="closeModal('contactModal')" aria-label="关闭">×</button>
-      <div class="meyebrow">联系我们</div>
-      <h3 style="font-size:20px;margin-bottom:0;">扫码加企业微信</h3>
-    </div>
-    <div class="modal-bd" style="text-align:center;padding:8px 32px 32px;">
-      <img src="../assets/brand/qr-qiwei.png" alt="企业微信二维码" width="200" height="200" style="border-radius:12px;border:1px solid var(--gray-line);" />
-      <p style="color:var(--gray-text);font-size:14.5px;margin-top:16px;">直接和我们聊，工作日当天回复</p>
-    </div>
+  <div class="modal modal-qr" role="dialog" aria-modal="true">
+    <button class="qr-close" onclick="closeModal('contactModal')" aria-label="关闭">×</button>
+    <div class="qr-eyebrow">联系我们</div>
+    <h3 class="qr-title">扫码加企业微信</h3>
+    <img class="qr-img" src="../assets/brand/qr-qiwei.png" alt="企业微信二维码" width="200" height="200" />
+    <p class="qr-note">直接和我们聊，工作日当天回复</p>
   </div>
 </div>
 

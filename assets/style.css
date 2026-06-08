@@ -809,11 +809,12 @@ section { padding: 100px 0; }
   margin-top: 4px;
 }
 .needs-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  flex-wrap: wrap;
   gap: 16px;
 }
 .need-card {
+  flex: 1 1 calc(25% - 12px);
   background: #fff;
   border: 1px solid var(--gray-line);
   border-radius: var(--radius);
@@ -1141,7 +1142,8 @@ footer ul a:hover { color: #fff; }
   .hero-im { right: -8px; }
   .product-grid { grid-template-columns: 1fr; gap: 20px; }
   .why-grid, .roles-grid, .moat-grid { grid-template-columns: repeat(2, 1fr); }
-  .needs-grid, .industries-grid { grid-template-columns: repeat(2, 1fr); }
+  .industries-grid { grid-template-columns: repeat(2, 1fr); }
+  .needs-grid .need-card { flex-basis: calc(50% - 8px); }
   .factory-pipeline { grid-template-columns: 1fr 1fr; }
   .factory-step .tail { display: none !important; }
   .timeline-row { grid-template-columns: repeat(3, 1fr); gap: 24px; }
@@ -1153,10 +1155,6 @@ footer ul a:hover { color: #fff; }
 }
 @media (max-width: 640px) {
   section { padding: 64px 0; }
-  .nav-links { display: none; }
-  .nav-cta { padding: 7px 14px; font-size: 12.5px; }
-  .nav-login { padding: 6px 12px; font-size: 12.5px; }
-  .nav-right { gap: 8px; }
   .container { padding: 0 16px; }
   .hero { padding: 48px 0 40px; }
   .hero-inner { gap: 36px; }
@@ -1166,9 +1164,10 @@ footer ul a:hover { color: #fff; }
   .hero-im { right: -4px; padding: 5px; }
   .hero-im-icon { width: 24px; height: 24px; font-size: 10px; border-radius: 6px; }
   .compare-grid, .product-grid, .why-grid, .roles-grid, .moat-grid,
-  .needs-grid, .industries-grid, .team-grid, .footer-grid {
+  .industries-grid, .team-grid, .footer-grid {
     grid-template-columns: 1fr;
   }
+  .needs-grid .need-card { flex-basis: 100%; }
   .timeline-row { grid-template-columns: 1fr 1fr; gap: 24px 12px; }
   .timeline { padding: 16px 0; }
   h1.hero-title { font-size: 30px; line-height: 1.18; }
@@ -2076,6 +2075,42 @@ footer ul a:hover { color: #fff; }
   margin-top: 3px; line-height: 1.45;
 }
 
+/* 联系我们：纯企微二维码弹窗 */
+.modal-qr {
+  max-width: 360px;
+  text-align: center;
+  padding: 38px 32px 32px;
+}
+.modal-qr .qr-close {
+  position: absolute; top: 14px; right: 14px;
+  width: 32px; height: 32px; border-radius: 50%;
+  background: #f1f3f7; border: 0;
+  color: var(--gray-text); font-size: 18px;
+  cursor: pointer; display: grid; place-items: center;
+  transition: background .15s; font-family: inherit;
+}
+.modal-qr .qr-close:hover { background: #e4e8f0; }
+.modal-qr .qr-eyebrow {
+  font-size: 12px; font-weight: 800;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--blue); margin-bottom: 8px;
+}
+.modal-qr .qr-title {
+  font-size: 21px; font-weight: 800;
+  letter-spacing: -.01em; margin: 0 0 24px;
+  color: var(--black);
+}
+.modal-qr .qr-img {
+  width: 200px; height: 200px;
+  margin: 0 auto;
+  border-radius: 14px; border: 1px solid var(--gray-line);
+  padding: 10px; background: #fff;
+}
+.modal-qr .qr-note {
+  margin: 16px 0 0;
+  color: var(--gray-text); font-size: 14px;
+}
+
 .modal-bd { padding: 28px 36px 32px; }
 .modal-bd .intro {
   font-size: 14.5px; color: var(--gray-text);
@@ -2496,17 +2531,18 @@ footer ul a:hover { color: #fff; }
   padding: 6px 8px; margin-left: 6px;
 }
 @media (max-width: 860px) {
-  .nav-burger { display: inline-flex; align-items: center; }
+  /* 顶栏只留 品牌 + 汉堡；菜单和 登录/咨询 全部收进抽屉，避免挤成多行 */
+  .nav-inner { flex-wrap: wrap; height: auto; min-height: 64px; }
+  .brand { order: 1; }
+  .nav-burger { display: inline-flex; align-items: center; order: 2; margin-left: auto; }
   .nav-links {
+    order: 3; flex-basis: 100%; width: 100%;
     display: none;
-    position: absolute; top: 64px; left: 0; right: 0;
     flex-direction: column; gap: 0; align-items: stretch;
     background: #fff;
     border-top: 1px solid var(--gray-line);
-    border-bottom: 1px solid var(--gray-line);
     box-shadow: 0 18px 36px -10px rgba(15, 23, 42, .18);
-    padding: 6px 0;
-    max-height: calc(100vh - 64px); overflow-y: auto;
+    padding: 6px 0; margin: 0 -16px;
   }
   .nav.nav-open .nav-links { display: flex; }
   .nav-links > .nav-item { width: 100%; }
@@ -2525,6 +2561,22 @@ footer ul a:hover { color: #fff; }
   .nav-item .dropdown::before { display: none; }
   .nav-item .dropdown a { padding: 9px 34px; }
   .nav-item .dropdown .d-desc { display: none; }
+
+  /* 登录/注册 + 联系我们 收进抽屉，整块铺满 */
+  .nav-right {
+    order: 4; flex-basis: 100%; width: 100%;
+    display: none;
+    flex-direction: column; gap: 10px;
+    background: #fff;
+    padding: 14px 22px 18px; margin: 0 -16px;
+    border-bottom: 1px solid var(--gray-line);
+    box-shadow: 0 18px 36px -10px rgba(15, 23, 42, .18);
+  }
+  .nav.nav-open .nav-right { display: flex; }
+  .nav-right .nav-cta, .nav-right .nav-login {
+    width: 100%; justify-content: center; box-sizing: border-box;
+    padding: 13px; font-size: 15px;
+  }
 }
 
 /* ────────── 移动端：内联多列网格塌列（内联样式需 !important 覆盖） ────────── */

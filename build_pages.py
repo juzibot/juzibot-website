@@ -157,16 +157,12 @@ def page_layout(*, title, description, rel, breadcrumbs, hero_kicker, hero_h1, h
 
 <!-- ════════════ CONTACT MODAL ════════════ -->
 <div class="modal-overlay" id="contactModal">
-  <div class="modal" style="max-width:420px;" role="dialog" aria-modal="true">
-    <div class="modal-hd" style="padding:26px 32px 20px;">
-      <button class="mclose" onclick="closeModal('contactModal')" aria-label="关闭">×</button>
-      <div class="meyebrow">联系我们</div>
-      <h3 style="font-size:20px;margin-bottom:0;">扫码加企业微信</h3>
-    </div>
-    <div class="modal-bd" style="text-align:center;padding:8px 32px 32px;">
-      <img src="{rel}assets/brand/qr-qiwei.png" alt="企业微信二维码" width="200" height="200" style="border-radius:12px;border:1px solid var(--gray-line);" />
-      <p style="color:var(--gray-text);font-size:14.5px;margin-top:16px;">直接和我们聊，工作日当天回复</p>
-    </div>
+  <div class="modal modal-qr" role="dialog" aria-modal="true">
+    <button class="qr-close" onclick="closeModal('contactModal')" aria-label="关闭">×</button>
+    <div class="qr-eyebrow">联系我们</div>
+    <h3 class="qr-title">扫码加企业微信</h3>
+    <img class="qr-img" src="{rel}assets/brand/qr-qiwei.png" alt="企业微信二维码" width="200" height="200" />
+    <p class="qr-note">直接和我们聊，工作日当天回复</p>
   </div>
 </div>
 
@@ -199,11 +195,11 @@ function openContact(){{openModal('contactModal');}}
 <!-- ════════════ ANNOUNCEMENT BAR ════════════ -->
 <div class="ann-bar" role="marquee" aria-label="公告">
   <div class="ann-track">
-    <span class="ann-item"><span class="dot"></span><span class="tag">在线教育</span>400+ 家头部公司已部署，AI 销售人均承接 5 倍以上</span>
+    <span class="ann-item"><span class="dot"></span><span class="tag">在线教育</span>几百家头部公司已部署，AI 销售人均承接 5 倍以上</span>
     <span class="ann-item"><span class="dot"></span><span class="tag">消费品电商</span>几百家头部品牌私域导购上线，长尾客户再不流失</span>
     <span class="ann-item"><span class="dot"></span><span class="tag">金融</span>银行 · 证券 · 保险头部机构落地，合规边界提前写死</span>
     <span class="ann-item"><span class="dot"></span>1000+ 大型企业已在用 · 扎在这 5 个行业 · 接入 10+ 主流 IM 渠道</span>
-    <span class="ann-item"><span class="dot"></span><span class="tag">在线教育</span>400+ 家头部公司已部署，AI 销售人均承接 5× 以上</span>
+    <span class="ann-item"><span class="dot"></span><span class="tag">在线教育</span>几百家头部公司已部署，AI 销售人均承接 5× 以上</span>
     <span class="ann-item"><span class="dot"></span><span class="tag">消费品电商</span>几百家头部品牌私域导购上线，长尾客户再不流失</span>
     <span class="ann-item"><span class="dot"></span><span class="tag">金融</span>银行 · 证券 · 保险头部机构落地，合规边界提前写死</span>
     <span class="ann-item"><span class="dot"></span>1000+ 大型企业已在用 · 扎在这 5 个行业 · 接入 10+ 主流 IM 渠道</span>
@@ -1436,7 +1432,7 @@ def page_industries():
     )
 
     industries_detail = [
-        ('education', '在线教育', '📚', 'bl', '400+ 客户 · 头部公司已覆盖',
+        ('education', '在线教育', '📚', 'bl', '几百家头部公司已覆盖',
          '从大班课、小班课到 1 对 1，从招生、续费到 NPS，几乎所有头部在线教育公司都在用句子互动。AI 把「低转高」的招生与续费链路跑通——招生漏斗、续费提醒、督学服务、退课处理，每一环都有 AI 在岗。',
          [
              ('400+', '客户'),
@@ -1525,8 +1521,9 @@ def page_industries():
         'internet':  [('internet', 0, c) for c in range(8)],
     }
     for slug, name, icon, color, tagline, intro, kpis, scene, capabilities, customers in industries_detail:
+        lg_cols = 4 if len(logo_cells[slug]) >= 12 else 2
         logo_grid_html = ''.join(
-            f'<div style="border:1px solid var(--gray-line);border-radius:10px;overflow:hidden;background:#fff;line-height:0;"><img src="assets/brand/logos/{p}-{ci}-{c}.png" alt="" style="width:100%;height:auto;display:block;" loading="lazy"></div>'
+            f'<div style="border:1px solid var(--gray-line);border-radius:10px;background:#fff;height:84px;display:flex;align-items:center;justify-content:center;padding:11px 14px;"><img src="assets/brand/logos/{p}-{ci}-{c}.png" alt="" style="max-width:100%;max-height:100%;object-fit:contain;display:block;" loading="lazy"></div>'
             for p, ci, c in logo_cells[slug]
         )
         kpi_html = ''.join(
@@ -1541,7 +1538,7 @@ def page_industries():
         logo_card_html = (
             f'<div style="background:#fff;border:1px solid var(--gray-line);border-radius:18px;padding:22px 20px;">'
             f'<div style="font-size:13px;font-weight:800;letter-spacing:.06em;color:{ccolor};text-transform:uppercase;margin-bottom:16px;">部分客户</div>'
-            f'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">{logo_grid_html}</div></div>'
+            f'<div style="display:grid;grid-template-columns:repeat({lg_cols},1fr);gap:10px;">{logo_grid_html}</div></div>'
         ) if logo_cells[slug] else ''
         # 政务：街道办没有可商用 logo（用政府徽标做商业背书有合规风险），右栏用真实落地街道名做客户墙
         if slug == 'gov':
@@ -1557,7 +1554,8 @@ def page_industries():
                 '<div style="margin-top:14px;font-size:12px;color:var(--gray-text);line-height:1.6;">从东升镇起步，已覆盖几十个社区、数百个居民群</div>'
                 '</div>'
             )
-        grid_cols = '1fr 400px' if logo_card_html else '1fr'
+        rw = 480 if (logo_cells[slug] and len(logo_cells[slug]) >= 12) else 400
+        grid_cols = f'1fr {rw}px' if logo_card_html else '1fr'
         right_col = f'<div>{logo_card_html}</div>' if logo_card_html else ''
         body += f"""
 <section class="section-block" id="{slug}">
