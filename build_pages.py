@@ -2347,16 +2347,10 @@ def page_fde():
 
     # ── 全球 FDE 格局 ──
     body += block(
-        "全球都在抢这个岗位",
-        "FDE 是硅谷今年最火的岗位，我们 2023 年就在做",
-        "FDE 由 Palantir 发明，撑起一家市值超过 Salesforce 的企业服务公司。2026 年，硅谷集体进场抢这个岗位——而我们按结果交付 FDE，已经做了三年。",
-        '''<div style="max-width:1000px;margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);gap:16px;">
-<div style="background:#fff;border:1px solid var(--gray-line);border-radius:14px;padding:22px;"><div style="font-size:13px;font-weight:800;margin-bottom:6px;">Palantir</div><p style="font-size:13px;color:var(--gray-text);line-height:1.6;margin:0;">FDE 的发明者，靠它做成市值超 3000 亿美元的 to B 公司。</p></div>
-<div style="background:#fff;border:1px solid var(--gray-line);border-radius:14px;padding:22px;"><div style="font-size:13px;font-weight:800;margin-bottom:6px;">OpenAI</div><p style="font-size:13px;color:var(--gray-text);line-height:1.6;margin:0;">成立 The Deployment Company（投资超 40 亿美元），并收购英国 Tomoro，一次拿下 150 名 FDE。</p></div>
-<div style="background:#fff;border:1px solid var(--gray-line);border-radius:14px;padding:22px;"><div style="font-size:13px;font-weight:800;margin-bottom:6px;">Sierra · Anthropic</div><p style="font-size:13px;color:var(--gray-text);line-height:1.6;margin:0;">Sierra（OpenAI 前董事长创立）估值 158 亿美元；Anthropic 组建 Applied AI 团队，派工程师进企业现场。</p></div>
-<div style="background:var(--blue-light);border:1px solid var(--gray-line);border-radius:14px;padding:22px;"><div style="font-size:13px;font-weight:800;color:var(--blue);margin-bottom:6px;">a16z</div><p style="font-size:13px;color:var(--gray-text);line-height:1.6;margin:0;">称 FDE 为「tech 最火的岗位」，招聘量过去一年增长 7 倍。</p></div>
-</div>
-<p style="text-align:center;font-size:14.5px;color:var(--black);font-weight:600;margin:24px auto 0;max-width:720px;line-height:1.7;">句子互动 2023 年就被中国客户逼着走上这条路，按结果交付，比硅谷早三年。<a href="https://rui.juzi.bot/thought/2026-06-04-pe-to-fde.html" target="_blank" style="color:var(--blue);font-weight:700;">读创始人的完整复盘 →</a></p>''',
+        "全球验证过的模式",
+        "FDE 是被全球验证的交付模式，我们 2023 年就在做",
+        "FDE 由 Palantir 首创，如今 OpenAI、Anthropic、谷歌云等都在组建 FDE 团队，把 AI 真正落进企业。句子互动被中国客户逼着，从 2023 年起就按结果交付——比硅谷早了三年。",
+        '''<p style="text-align:center;font-size:14.5px;color:var(--black);font-weight:600;margin:0 auto;max-width:720px;line-height:1.7;">想了解我们这三年怎么走过来的？<a href="https://rui.juzi.bot/thought/2026-06-04-pe-to-fde.html" target="_blank" style="color:var(--blue);font-weight:700;">读创始人的完整复盘 →</a></p>''',
     )
 
     body += split_section(
