@@ -514,7 +514,7 @@ def page_miaohui():
         rel="../",
         breadcrumbs=[("首页", "../index.html"), ("产品", None), ("句子秒回", None)],
         hero_kicker="产品 · 01",
-        hero_h1='句子秒回 · <span class="accent">让 AI 员工在 IM 通道上岗</span>',
+        hero_h1='句子秒回 · <span class="accent">AI 员工的 IM 工位</span>',
         hero_lede="把企业的 11 个 IM 通道（小红书、抖音、微信客服、微信公众号、小程序、WhatsApp 等）聚合到一个工作台，<strong>Agent 真的在客户面前接管对话</strong>——主动触达、智能回复、人机协作、多平台一个工作台管完。",
         pills=["11 个 IM 通道", "1000+ 企业客户", "89% 对话自动完成率", "9 年通道适配积累"],
         body=body,
@@ -2417,10 +2417,10 @@ def page_fde():
 def page_dongxing():
     body = ''
     body += block(        "知识工程",
-        "知识工程：把几百万字，炼成 AI 答得准的资产",
+        "知识工程：把散落的知识，炼成 AI 答得准的资产",
         "很多客户以为把知识库直接接进 AI 就行，结果命中率反而更低、答得更乱。问题不在 AI，在知识没被整理过。这件事叫知识工程——句子智库用下面四步，把散乱的知识炼成 AI 真正用得上的资产。",
         feat_grid([
-            ("🧹", "清洗去重", "几百万字里，重复的、过期的、互相打架的内容很多。先清一遍，去掉冗余和矛盾，只留下可用的知识。", "bl"),
+            ("🧹", "清洗去重", "原始资料里，重复的、过期的、互相打架的内容很多。先清一遍，去掉冗余和矛盾，只留下可用的知识。", "bl"),
             ("✂️", "结构化切分", "整篇长文档直接拿去检索，AI 查不准。按语义切成一块块，每块带好上下文和标签，检索才命中得准。", "or"),
             ("🎯", "问法对齐", "同一个问题，客户有十种问法。把同义、近义、口语化的说法对齐到一起，命中率才稳定。", "gr"),
             ("🔁", "持续回流", "上线后没答好的问题，回流进知识库再修正。用得越多、知识越准，不是整理一次就不管了。", "pu"),
@@ -2428,10 +2428,10 @@ def page_dongxing():
     )
     body += split_section(
         eyebrow="知识工程",
-        title="几百万字 → 二十万字能查的资产",
+        title="把散落的知识，炼成能查的资产",
         paragraphs=[
             "知识工程不止于把文档存进数据库。客户的经验、文档、历史对话中散落的知识，需整理成 AI 可查准、可调用的资产。",
-            "通常先用句子智库将几百万字炼成约二十万字的可检索资产，再引入其余产品与 FDE 团队。顺序颠倒，则无法跑通。",
+            "通常先用句子智库把散乱的知识炼成可检索的资产，再引入其余产品与 FDE 团队。顺序颠倒，则无法跑通。",
         ],
         bullets=[
             "文档、表格、历史对话、SOP——多来源一起进",
@@ -2442,9 +2442,9 @@ def page_dongxing():
         visual_html="""
 <div style="background:#fff;border-radius:12px;padding:20px;border:1px solid var(--gray-line);">
 <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
-<div style="text-align:center;flex:1;"><div style="font-size:26px;font-weight:900;color:var(--gray-text);">200 万字</div><div style="font-size:12px;color:var(--gray-text);margin-top:4px;">散、乱、重复、过期</div></div>
+<div style="text-align:center;flex:1;"><div style="font-size:26px;font-weight:900;color:var(--gray-text);">原始资料</div><div style="font-size:12px;color:var(--gray-text);margin-top:4px;">散、乱、重复、过期</div></div>
 <div style="font-size:22px;color:var(--purple);">→</div>
-<div style="text-align:center;flex:1;"><div style="font-size:26px;font-weight:900;color:var(--purple);">20 万字</div><div style="font-size:12px;color:var(--gray-text);margin-top:4px;">干净、可检索、带出处</div></div>
+<div style="text-align:center;flex:1;"><div style="font-size:26px;font-weight:900;color:var(--purple);">知识资产</div><div style="font-size:12px;color:var(--gray-text);margin-top:4px;">干净、可检索、带出处</div></div>
 </div>
 <div style="margin-top:16px;font-size:11.5px;color:var(--gray-text);background:var(--purple-lt);padding:10px 12px;border-radius:8px;">先把这层做对，AI 才查得准。知识工程是 Agent 上岗的前提，不是上线后再补的活。</div>
 </div>
@@ -2461,13 +2461,13 @@ def page_dongxing():
 """.strip()
     return page_layout(
         title="句子智库 · AI 员工的记忆 | 句子互动",
-        description="句子智库——AI 员工的记忆。把客户几百万字散乱知识炼成 AI 能查、能用、越用越准的可检索资产。知识工程是 Agent 上岗的前提：先把知识做对，再上产品。",
+        description="句子智库——AI 员工的记忆。把客户散乱的知识炼成 AI 能查、能用、越用越准的可检索资产。知识工程是 Agent 上岗的前提：先把知识做对，再上产品。",
         rel="../",
         breadcrumbs=[("首页", "../index.html"), ("产品", None), ("句子智库", None)],
         hero_kicker="产品 · 智库 · 记忆",
         hero_h1='句子智库 · <span class="accent">AI 员工的记忆</span>',
-        hero_lede="客户给的几百万字知识库，AI 直接用不了：散、乱、格式不一、查不准。<strong>句子智库把它炼成 AI 能查、能用的知识资产，越用越准</strong>。知识工程做对，是 Agent 上岗的前提。知识不整理，喂再多字也跑不通。",
-        pills=["知识工程进场第一步", "几百万字 → 可检索资产", "每条回答可追溯出处", "Agent 上岗的前提"],
+        hero_lede="客户给的一堆知识库资料，AI 直接用不了：散、乱、格式不一、查不准。<strong>句子智库把它炼成 AI 能查、能用的知识资产，越用越准</strong>。知识工程做对，是 Agent 上岗的前提。知识不整理，接再多资料也跑不通。",
+        pills=["知识工程进场第一步", "散乱知识 → 可检索资产", "每条回答可追溯出处", "Agent 上岗的前提"],
         body=body,
     )
 
