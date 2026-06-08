@@ -1580,7 +1580,7 @@ def page_about():
     body += block(
         "公司简介",
         "我们做的事，<span class=\"accent\">让 AI 在企业真实业务里跑起来</span>",
-        "句子互动是企业级 Agentic AI 平台。让 Agent 进入企业每天真实发生的业务流程——IM、客服、销售、合规——把活干完，而不只是回答问题。",
+        "",
         '<div style="max-width:920px;margin:0 auto;background:linear-gradient(135deg,var(--blue-light),#fff);border-radius:22px;padding:48px;text-align:center;">'
         '<div style="font-size:24px;font-weight:800;color:var(--black);line-height:1.55;letter-spacing:-.01em;">AI 不是摆在一边等人来问，而是进到客服、销售、合规这些每天都在发生的流程里，把活干完，按业务结果交付。</div>'
         '<div style="margin-top:28px;display:flex;justify-content:center;gap:40px;flex-wrap:wrap;">'
