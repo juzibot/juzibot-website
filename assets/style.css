@@ -1755,54 +1755,122 @@ footer ul a:hover { color: #fff; }
   .flow-arrow { transform: rotate(90deg); }
 }
 
-/* ────────── ANIMATED LOW-CODE BUILDER (句子秒懂) ──────────
-   静态截图 → 会动的演示：节点逐个搭进画布、连线亮起、
-   流程持续跑（高亮在节点间流动）、配置面板填入、发布页签呼吸。
-   只在用户未要求"减少动态效果"时启用；移动端保留竖排箭头。 */
+/* ────────── 句子秒懂 · 现代 Agent 工作流画布 ──────────
+   把首屏静态截图换成一张真正的 DAG 画布：节点卡片 + 端口圆点 +
+   贝塞尔虚线连线 + 分支拓扑 + 顶部/底部工具条。整张画布用 JS 等比缩放
+   (.cm-stage[data-w])，窄屏不够放时横向滚动。 */
+.canvas-mock {
+  max-width: 1100px; margin: 0 auto; background: #fff;
+  border: 1px solid var(--gray-line); border-radius: 16px;
+  box-shadow: var(--shadow-md); overflow: hidden;
+}
+.cm-topbar {
+  display: flex; align-items: center; gap: 11px;
+  padding: 12px 16px; border-bottom: 1px solid var(--gray-line); background: #fff;
+}
+.cm-back { color: #9aa6bb; font-size: 18px; line-height: 1; }
+.cm-logo {
+  width: 30px; height: 30px; border-radius: 9px; flex: none;
+  background: linear-gradient(135deg, #20c489, #0f9e6e);
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-weight: 800; font-size: 15px;
+}
+.cm-ttl { display: flex; flex-direction: column; gap: 6px; }
+.cm-ttl b { font-size: 14px; font-weight: 800; color: var(--black); line-height: 1; }
+.cm-ttl i { display: block; width: 116px; height: 6px; border-radius: 4px; background: var(--gray-line); }
+.cm-tbtns { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+.cm-tbtn {
+  display: flex; align-items: center; gap: 5px;
+  padding: 6px 12px; border: 1px solid var(--gray-line); border-radius: 8px;
+  font-size: 12px; color: var(--gray-text); background: #fff;
+}
+.cm-tbtn.icon { padding: 6px 9px; }
+.cm-tbtn.pub { background: var(--blue); color: #fff; border-color: var(--blue); font-weight: 700; }
+
+.cm-stage {
+  position: relative; width: 100%; overflow: hidden; aspect-ratio: 1180 / 560;
+  background:
+    radial-gradient(circle, rgba(178,194,224,.55) 1px, transparent 1.6px) 0 0 / 26px 26px,
+    #eef1f6;
+}
+.cm-stage.scroll { overflow-x: auto; }
+.cm-scaler { position: relative; width: 1180px; height: 560px; transform-origin: top left; }
+
+.cm-links { position: absolute; inset: 0; width: 1180px; height: 560px; pointer-events: none; overflow: visible; }
+.cm-links path { fill: none; stroke: #3b6ff6; stroke-width: 1.7; stroke-dasharray: 6 7; stroke-linecap: round; }
+.cm-links circle { fill: #3b6ff6; }
+
+.cm-node {
+  position: absolute; box-sizing: border-box; background: #fff;
+  border: 1px solid #e6eaf2; border-radius: 14px;
+  box-shadow: 0 7px 20px rgba(20,35,75,.09); padding: 12px 14px;
+}
+.cm-nhd { display: flex; align-items: center; gap: 8px; margin-bottom: 9px; }
+.cm-ic {
+  width: 22px; height: 22px; border-radius: 7px; flex: none;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; color: #fff;
+}
+.cm-nhd b { font-size: 13.5px; font-weight: 800; color: var(--black); flex: 1; white-space: nowrap; }
+.cm-play, .cm-more { color: #b4bdcd; font-size: 13px; }
+.cm-more { letter-spacing: 1.5px; }
+.cm-row { display: flex; align-items: center; gap: 8px; font-size: 11.5px; margin-top: 7px; }
+.cm-row > span:first-child { width: 32px; flex: none; color: #9aa6bb; }
+.cm-row .bar { height: 7px; border-radius: 4px; background: #eef1f6; flex: 1; }
+.cm-row .bar.s { flex: none; width: 52px; }
+.cm-chip { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; color: var(--black); }
+.cm-chip .md { width: 13px; height: 13px; border-radius: 4px; flex: none; background: linear-gradient(135deg, #4b7bff, #7a5cff); }
+.ic-llm  { background: #1a1a2e; }
+.ic-tool { background: #3b6ff6; }
+.ic-kb   { background: #12b886; }
+.ic-mem  { background: #7c5cff; }
+.ic-agent{ background: #ff8a3d; }
+.ic-code { background: #2b8aef; }
+.ic-end  { background: #5b6b8c; }
+
+.cm-toolbar {
+  position: absolute; left: 16px; bottom: 16px; z-index: 6;
+  display: flex; align-items: center; gap: 3px;
+  background: #fff; border: 1px solid var(--gray-line); border-radius: 12px;
+  padding: 6px; box-shadow: 0 7px 20px rgba(20,35,75,.12);
+}
+.cm-tool {
+  width: 30px; height: 30px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--gray-text); font-size: 14px;
+}
+.cm-tool.on { background: var(--blue-light); color: var(--blue); }
+.cm-tool.run { border: 1px solid var(--blue); color: var(--blue); }
+.cm-div { width: 1px; height: 18px; background: var(--gray-line); margin: 0 4px; }
+@media (max-width: 720px) { .cm-tbtn.hide-sm { display: none; } }
+
+/* —— 画布动效：节点弹入搭建 → 连线画出 → 虚线持续流动(运行中) —— */
 @media (prefers-reduced-motion: no-preference) {
 
-  /* —— 画布节点：先弹入搭建，再无限循环"运行"高亮 —— */
-  .flow-anim .ui-canvas .flow-node {
-    animation-name: fnPop, fnGlow;
-    animation-duration: .5s, 3.2s;
-    animation-timing-function: cubic-bezier(.2,.85,.3,1), ease-in-out;
-    animation-iteration-count: 1, infinite;
-    animation-fill-mode: both, none;
-    animation-delay: .15s, 2.3s;
+  .canvas-mock .cm-node { animation: cmPop .55s cubic-bezier(.2,.85,.3,1) both; }
+  .canvas-mock .cm-node.d1 { animation-delay: .10s; }
+  .canvas-mock .cm-node.d2 { animation-delay: .35s; }
+  .canvas-mock .cm-node.d3 { animation-delay: .50s; }
+  .canvas-mock .cm-node.d4 { animation-delay: .65s; }
+  .canvas-mock .cm-node.d5 { animation-delay: .95s; }
+  .canvas-mock .cm-node.d6 { animation-delay: 1.05s; }
+  .canvas-mock .cm-node.d7 { animation-delay: 1.35s; }
+
+  .canvas-mock .cm-links path {
+    opacity: 0;
+    animation: cmLink .5s ease forwards, march 1.1s linear infinite;
   }
-  /* 搭建顺序 + 运行高亮顺序（两条动画各自的 delay） */
-  .flow-anim .ui-canvas > .flow-node:nth-of-type(1) { animation-delay: .15s, 2.30s; }
-  .flow-anim .ui-canvas > .flow-node:nth-of-type(2) { animation-delay: .65s, 2.55s; }
-  .flow-anim .ui-canvas .flow-col .flow-node:nth-of-type(1) { animation-delay: 1.15s, 2.80s; }
-  .flow-anim .ui-canvas .flow-col .flow-node:nth-of-type(2) { animation-delay: 1.35s, 2.80s; }
-  .flow-anim .ui-canvas > .flow-node:nth-of-type(3) { animation-delay: 1.85s, 3.05s; }
+  .canvas-mock .cm-links path.l1 { animation-delay: .55s, 1.7s; }
+  .canvas-mock .cm-links path.l2 { animation-delay: .60s, 1.7s; }
+  .canvas-mock .cm-links path.l3 { animation-delay: .70s, 1.7s; }
+  .canvas-mock .cm-links path.l4 { animation-delay: 1.00s, 1.7s; }
+  .canvas-mock .cm-links path.l5 { animation-delay: 1.10s, 1.7s; }
+  .canvas-mock .cm-links path.l6 { animation-delay: 1.15s, 1.7s; }
+  .canvas-mock .cm-links path.l7 { animation-delay: 1.40s, 1.7s; }
+  .canvas-mock .cm-links path.l8 { animation-delay: 1.45s, 1.7s; }
 
-  /* —— 连线：跟着节点逐段画出（只用 opacity，避免覆盖移动端 rotate） —— */
-  .flow-anim .ui-canvas .flow-arrow {
-    animation: fnArrow .45s ease both;
-  }
-  .flow-anim .ui-canvas > .flow-arrow:nth-of-type(1) { animation-delay: .45s; }
-  .flow-anim .ui-canvas > .flow-arrow:nth-of-type(2) { animation-delay: .95s; }
-  .flow-anim .ui-canvas > .flow-arrow:nth-of-type(3) { animation-delay: 1.65s; }
-
-  /* —— 左侧节点面板：高亮自上而下扫一遍，像在挑节点拖进来 —— */
-  .flow-anim .ui-palette .pn { animation: pnSweep 5s ease-in-out infinite; }
-  .flow-anim .ui-palette .pn:nth-of-type(1) { animation-delay: 0s; }
-  .flow-anim .ui-palette .pn:nth-of-type(2) { animation-delay: .35s; }
-  .flow-anim .ui-palette .pn:nth-of-type(3) { animation-delay: .70s; }
-  .flow-anim .ui-palette .pn:nth-of-type(4) { animation-delay: 1.05s; }
-  .flow-anim .ui-palette .pn:nth-of-type(5) { animation-delay: 1.40s; }
-
-  /* —— 右侧配置面板：节点选中后逐行填入 —— */
-  .flow-anim .ui-config .cfg { animation: cfgIn .5s ease both; }
-  .flow-anim .ui-config .cfg:nth-of-type(1) { animation-delay: 1.6s; }
-  .flow-anim .ui-config .cfg:nth-of-type(2) { animation-delay: 1.75s; }
-  .flow-anim .ui-config .cfg:nth-of-type(3) { animation-delay: 1.90s; }
-  .flow-anim .ui-config .cfg:nth-of-type(4) { animation-delay: 2.05s; }
-  .flow-anim .ui-config .cfg:nth-of-type(5) { animation-delay: 2.20s; }
-
-  /* —— 顶部"发布"页签：呼吸，提示流程已上线 —— */
-  .flow-anim .ui-tabs span.on { animation: tabPulse 3.2s ease-in-out infinite; }
+  .canvas-mock .cm-links circle { animation: dotPulse 2.4s ease-in-out infinite; }
+  .canvas-mock .cm-tool.run { animation: tabPulse 2.6s ease-in-out infinite; }
 
   /* —— 知识库可视化：行逐条滑入 + 持续的"扫描"高亮 —— */
   .kb-anim .kb-rows > div { animation: kbScan 4.5s ease-in-out infinite; }
@@ -1822,26 +1890,21 @@ footer ul a:hover { color: #fff; }
   .wf-anim .wf-steps > div:nth-child(9) { animation-delay: 1.80s; }
 }
 
-@keyframes fnPop {
-  0%   { opacity: 0; transform: translateY(9px) scale(.9); }
-  60%  { opacity: 1; transform: translateY(-2px) scale(1.03); }
+@keyframes cmPop {
+  0%   { opacity: 0; transform: translateY(10px) scale(.92); }
+  60%  { opacity: 1; transform: translateY(-2px) scale(1.02); }
   100% { opacity: 1; transform: translateY(0) scale(1); }
 }
-@keyframes fnGlow {
-  0%, 13%, 100% { box-shadow: var(--shadow-sm); }
-  4%            { box-shadow: 0 0 0 3px rgba(22,89,229,.18), 0 8px 20px rgba(22,89,229,.22); }
-}
-@keyframes fnArrow {
+@keyframes cmLink {
   0%   { opacity: 0; }
   100% { opacity: 1; }
 }
-@keyframes pnSweep {
-  0%, 16%, 100% { background: #fff; border-color: var(--gray-line); color: var(--black); }
-  6%            { background: var(--blue-light); border-color: var(--blue); color: var(--blue); }
+@keyframes march {
+  to { stroke-dashoffset: -13; }
 }
-@keyframes cfgIn {
-  0%   { opacity: 0; transform: translateX(8px); }
-  100% { opacity: 1; transform: translateX(0); }
+@keyframes dotPulse {
+  0%, 100% { r: 3.5; opacity: 1; }
+  50%      { r: 5;   opacity: .7; }
 }
 @keyframes tabPulse {
   0%, 100% { box-shadow: 0 0 0 0 rgba(22,89,229,.0); }

@@ -45,7 +45,7 @@ def nav_html(rel):
       </div>
       <div class="nav-item"><a href="{rel}industries.html">客户与行业</a></div>
       <div class="nav-item"><a href="{rel}enterprise.html">企业级能力</a></div>
-      <div class="nav-item"><a href="{rel}fde.html">FDE 交付团队</a></div>
+      <div class="nav-item"><a href="{rel}fde.html">如何交付</a></div>
       <div class="nav-item"><a href="{rel}about.html">AI 原生组织</a></div>
     </div>
     <div class="nav-right">
@@ -98,7 +98,7 @@ def footer_html(rel):
       <div>
         <h6>公司</h6>
         <ul>
-          <li><a href="{rel}fde.html">FDE 交付团队</a></li>
+          <li><a href="{rel}fde.html">如何交付</a></li>
           <li><a href="{rel}industries.html">客户与行业</a></li>
           <li><a href="{rel}about.html">AI 原生组织</a></li>
           <li><a href="{rel}index.html#cta">联系我们</a></li>
@@ -2025,10 +2025,10 @@ def page_fde():
 </section>
 """.strip()
     return page_layout(
-        title="FDE 交付团队 · 对结果负责的工程师 | 句子互动",
+        title="如何交付 · 对结果负责的工程师 | 句子互动",
         description="FDE（Forward Deployed Engineer，前端部署工程师）——前移到客户业务现场的工程师团队。不只装软件，对客户的业务结果负责：先搞懂这门生意，按结果收费，把现场踩出来的能力回流成产品。",
         rel="",
-        breadcrumbs=[("首页", "index.html"), ("FDE 交付团队", None)],
+        breadcrumbs=[("首页", "index.html"), ("如何交付", None)],
         hero_kicker="FDE · 我们怎么交付",
         hero_h1='一支<span class="accent">对结果负责</span>的 FDE 团队',
         hero_lede="传统软件交付完就结束，用得好不好是客户自己的事。句子互动派出的是 FDE——<strong>Forward Deployed Engineer，前端部署工程师</strong>，前移到客户业务现场：先理解客户的业务，再按结果收费。客户业绩增长，我们才有收入，因此现场积累的能力会回流到产品中。",
