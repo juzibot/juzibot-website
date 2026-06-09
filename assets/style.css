@@ -365,6 +365,7 @@ h1.hero-title .underline {
   display: grid; place-items: center;
   color: #fff; font-weight: 800; font-size: 12px;
 }
+.hero-im-icon svg { width: 60%; height: 60%; fill: #fff; display: block; }
 .hero-im-icon.wx { background: #07C160; }
 .hero-im-icon.dy { background: #1F1F1F; }
 .hero-im-icon.xhs { background: #FF2442; }
