@@ -160,8 +160,8 @@ def page_layout(*, title, description, rel, breadcrumbs, hero_kicker, hero_h1, h
   <div class="modal modal-qr" role="dialog" aria-modal="true">
     <button class="qr-close" onclick="closeModal('contactModal')" aria-label="关闭">×</button>
     <div class="qr-eyebrow">联系我们</div>
-    <h3 class="qr-title">扫码加企业微信</h3>
-    <img class="qr-img" src="{rel}assets/brand/qr-qiwei.png" alt="企业微信二维码" width="200" height="200" />
+    <h3 class="qr-title">扫码加微信</h3>
+    <img class="qr-img" src="{rel}assets/brand/qr-qiwei.png" alt="微信二维码" width="200" height="200" />
     <p class="qr-note">直接和我们聊，工作日当天回复</p>
   </div>
 </div>
@@ -983,7 +983,7 @@ def workforce_pages():
             ('📅', '活动节奏管理', '双 11、618、品牌日等大促，按计划批量推送给对应客户。', 'bl'),
             ('🎁', '会员运营', '生日礼、积分到期、等级升降，按会员体系自动执行营销动作。', 'gr'),
             ('🛒', '购物车救援', '加购未付款客户分层召回，限时优惠自动触发。', 'pu'),
-            ('💼', '门店协同', '线下导购添加客户企微后，AI 接管后续运营，门店人均服务客户量翻倍。', 'te'),
+            ('💼', '门店协同', '线下导购添加客户微信后，AI 接管后续运营，门店人均服务客户量翻倍。', 'te'),
             ('📈', '复购挖掘', 'NPS 调研与老客户回访，唤起长期沉默客户。', 'or'),
         ], cols=3),
         kpi_items=[
@@ -1090,7 +1090,7 @@ def workforce_pages():
             ('🤝', '情绪安抚', '识别投诉者的情绪状态，先安抚再处理，避免一开口就激化矛盾。', 'gr'),
             ('📋', '工单流转', '超出 AI 能力的问题自动登记工单，转给真人调解员跟进。', 'or'),
             ('🔒', '全程可审计', '每一次决策、每一次引用都有日志记录，满足合规审查的取证要求。', 'te'),
-            ('🌐', '多端接入', '12345 热线、政务 App、公众号、社区企微——一套 Agent 多端服务。', 'pu'),
+            ('🌐', '多端接入', '12345 热线、政务 App、公众号、社区微信——一套 Agent 多端服务。', 'pu'),
         ], cols=3),
         kpi_items=[
             ('约 50 万', 'AI 社工累计服务居民（人次）'),
@@ -1268,7 +1268,7 @@ def page_enterprise():
          '<div style="text-align:center;color:var(--teal);font-size:14px;margin:4px 0;">↕</div>'
          '<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px;font-size:10.5px;font-weight:700;text-align:center;">'
          '<div style="background:#fff;padding:6px 2px;border-radius:5px;border:1px solid var(--gray-line);">微</div>'
-         '<div style="background:#fff;padding:6px 2px;border-radius:5px;border:1px solid var(--gray-line);">企微</div>'
+         '<div style="background:#fff;padding:6px 2px;border-radius:5px;border:1px solid var(--gray-line);">红</div>'
          '<div style="background:#fff;padding:6px 2px;border-radius:5px;border:1px solid var(--gray-line);">抖</div>'
          '<div style="background:#fff;padding:6px 2px;border-radius:5px;border:1px solid var(--gray-line);">飞</div>'
          '<div style="background:#fff;padding:6px 2px;border-radius:5px;border:1px solid var(--gray-line);">+</div>'
