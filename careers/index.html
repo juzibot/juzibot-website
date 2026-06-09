@@ -93,6 +93,11 @@
   .nav .wm img{width:27px;height:27px;object-fit:contain;display:block;filter:drop-shadow(0 4px 10px rgba(255,106,0,.28))}
   .nav .wm .dv{width:1px;height:16px;background:var(--line);margin:0 2px}
   .nav .wm small{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+  .nav-links{display:flex;align-items:center;gap:clamp(13px,1.7vw,26px)}
+  .nav-links a{font-size:14.5px;font-weight:600;letter-spacing:-.01em;color:var(--ink-2);white-space:nowrap;transition:color .2s var(--ease)}
+  .nav-links a:hover{color:var(--red)}
+  .nav-links a[aria-current]{color:var(--ink)}
+  @media(max-width:920px){.nav-links{display:none}}
 
   /* ============ HERO ============ */
   .hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;
@@ -640,12 +645,21 @@
 <body>
 
   <nav class="nav" id="nav">
-    <a class="wm" href="#join">
+    <a class="wm" href="../index.html">
       <img src="logo-cut.png" alt="句子互动" width="27" height="27" decoding="async" />
       <span>句子互动</span>
       <span class="dv"></span>
       <small>Careers</small>
     </a>
+    <div class="nav-links">
+      <a href="../index.html#products">产品</a>
+      <a href="../index.html#workforce">AI 员工</a>
+      <a href="../industries.html">客户与行业</a>
+      <a href="../enterprise.html">企业级能力</a>
+      <a href="../fde.html">FDE 交付结果</a>
+      <a href="../about.html">AI 原生组织</a>
+      <a href="#join" aria-current="page">加入我们</a>
+    </div>
     <a href="#openings" class="btn btn-red ar-host" data-mag>
       <span class="ts"><span>职位详情</span><span>职位详情</span></span>
       <span class="ar">
