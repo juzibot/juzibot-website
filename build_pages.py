@@ -47,6 +47,7 @@ def nav_html(rel):
       <div class="nav-item"><a href="{rel}enterprise.html">企业级能力</a></div>
       <div class="nav-item"><a href="{rel}fde.html">FDE 交付结果</a></div>
       <div class="nav-item"><a href="{rel}about.html">AI 原生组织</a></div>
+      <div class="nav-item"><a href="{rel}careers/">加入我们</a></div>
     </div>
     <div class="nav-right">
       <a class="nav-cta" style="cursor:pointer" onclick="openContact('导航·联系我们')">联系我们 →</a>
