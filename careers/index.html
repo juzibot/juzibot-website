@@ -11,7 +11,7 @@
 <meta property="og:title" content="加入我们 · 句子互动" />
 <meta property="og:description" content="在 AI 员工时代，和我们一起重新发明组织。14 个岗位在招，没有合适的也为你单开一个。" />
 <meta property="og:image" content="https://juzibot.com/careers/logo.png" />
-<meta property="og:url" content="https://juzibot.com/careers/index.html" />
+<meta property="og:url" content="https://juzibot.com/careers/" />
 <meta name="twitter:card" content="summary_large_image" />
 <style>
   /* ============================================================
@@ -97,7 +97,22 @@
   .nav-links a{font-size:14.5px;font-weight:600;letter-spacing:-.01em;color:var(--ink-2);white-space:nowrap;transition:color .2s var(--ease)}
   .nav-links a:hover{color:var(--red)}
   .nav-links a[aria-current]{color:var(--ink)}
-  @media(max-width:920px){.nav-links{display:none}}
+  .nav-burger{display:none;background:none;border:0;padding:6px;margin-right:-6px;cursor:pointer;color:var(--ink);line-height:0}
+  .nav-burger svg{width:26px;height:26px;display:block}
+  .nav-burger .bg-close{display:none}
+  @media(max-width:920px){
+    .nav-links{display:none}
+    .nav-burger{display:inline-flex;align-items:center}
+    .nav.menu-open{background:rgba(255,255,255,.97);backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--line)}
+    .nav.menu-open .bg-open{display:none}
+    .nav.menu-open .bg-close{display:block}
+    .nav.menu-open .nav-links{display:flex;flex-direction:column;align-items:stretch;gap:0;
+      position:absolute;top:100%;left:0;right:0;background:#fff;border-top:1px solid var(--line);
+      box-shadow:0 22px 44px -16px rgba(25,23,28,.24);padding:6px 0;max-height:calc(100vh - 64px);overflow:auto}
+    .nav.menu-open .nav-links a{padding:15px var(--gut);font-size:16px;color:var(--ink);white-space:normal;border-bottom:1px solid var(--line)}
+    .nav.menu-open .nav-links a:last-child{border-bottom:0}
+    .nav.menu-open .nav-links a[aria-current]{color:var(--red)}
+  }
 
   /* ============ HERO ============ */
   .hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;
@@ -651,7 +666,7 @@
       <span class="dv"></span>
       <small>Careers</small>
     </a>
-    <div class="nav-links">
+    <div class="nav-links" id="navLinks">
       <a href="../index.html#products">产品</a>
       <a href="../index.html#workforce">AI 员工</a>
       <a href="../industries.html">客户与行业</a>
@@ -667,6 +682,10 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </span>
     </a>
+    <button class="nav-burger" type="button" aria-label="打开导航菜单" aria-expanded="false" aria-controls="navLinks">
+      <svg class="bg-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      <svg class="bg-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
   </nav>
 
   <!-- ============ HERO ============ -->
@@ -1265,6 +1284,17 @@
     /* 导航滚动浮起 */
     const nav=document.getElementById('nav');
     addEventListener('scroll',()=>nav.classList.toggle('float',scrollY>40),{passive:true});
+    // 移动端汉堡菜单
+    const burger=document.querySelector('.nav-burger');
+    if(burger){
+      burger.addEventListener('click',()=>{
+        const open=nav.classList.toggle('menu-open');
+        burger.setAttribute('aria-expanded',open?'true':'false');
+      });
+      nav.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',()=>{
+        nav.classList.remove('menu-open');burger.setAttribute('aria-expanded','false');
+      }));
+    }
   </script>
   <div class="fab" id="fab">
     <span class="fab-tip" aria-hidden="true">30 秒投递 · 直达 HR · 14 个岗位在招</span>
