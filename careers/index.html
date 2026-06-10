@@ -11,7 +11,7 @@
 <meta property="og:title" content="加入我们 · 句子互动" />
 <meta property="og:description" content="在 AI 员工时代，和我们一起重新发明组织。14 个岗位在招，没有合适的也为你单开一个。" />
 <meta property="og:image" content="https://juzibot.com/careers/logo.png" />
-<meta property="og:url" content="https://juzibot.com/careers/" />
+<meta property="og:url" content="https://juzibot.com/careers/index.html" />
 <meta name="twitter:card" content="summary_large_image" />
 <style>
   /* ============================================================
@@ -116,7 +116,7 @@
 
   /* ============ HERO ============ */
   .hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;
-    padding:120px 0 70px;
+    padding:120px var(--gut) 70px;
     background:radial-gradient(1100px 560px at 85% -6%,var(--pink-200),transparent 60%),
                radial-gradient(760px 520px at 0% 6%,var(--pink-100),transparent 58%),
                linear-gradient(180deg,var(--pink-50),#fff 70%)}
@@ -341,8 +341,8 @@
   /* 成组子项错落入场（三点差异化卡，依次 0 / .10 / .20s） */
   html.anim .point.rv:nth-of-type(2){transition-delay:.10s}
   html.anim .point.rv:nth-of-type(3){transition-delay:.20s}
-  @media (prefers-reduced-motion:reduce){
-    .rv{opacity:1!important;transform:none!important;filter:none!important}.hero .eyebrow .dot::after{animation:none}.ghost,.ghost2{transform:none!important}
+  @media (prefers-reduced-motion:reduce),(max-width:760px){
+    .rv{opacity:1!important;transform:none!important;filter:none!important;transition:none!important}.hero .eyebrow .dot::after{animation:none}.ghost,.ghost2{transform:none!important}
   }
 
   /* ============ 认识我们的 AI 员工 · 横向长廊 ============ */
@@ -402,6 +402,37 @@
   @media(max-width:760px){
     .gal-track{gap:22px;padding:46px 18px 18px}
     .gfig.up{margin-bottom:50px}.gfig.mid{margin-bottom:22px}
+  }
+
+  /* ============ 触摸端专属交互（桌面端完全不受影响） ============ */
+  @media(pointer:coarse){
+    /* 原生横滑 + 卡片吸附：手指划一下，一张张吸到位 */
+    .gal-track{scroll-snap-type:x mandatory;scroll-padding:0 18px;-webkit-overflow-scrolling:touch;cursor:default}
+    .gfig{scroll-snap-align:center}
+    /* 居中那张轻微聚焦，划到谁谁亮 */
+    .gfig.now .gposter{transform:translateY(-8px) scale(1.02);box-shadow:0 18px 44px -14px rgba(255,45,85,.30)}
+    .gfig .gposter{transition:transform .45s var(--ease),box-shadow .45s var(--ease)}
+    /* app 手感：按下去有回弹，去掉系统灰色闪块 */
+    .btn:active,.fab-btn:active{transform:scale(.965);transition:transform .12s ease}
+    .gposter:active{transform:scale(.985);transition:transform .15s ease}
+    .role:active{background:var(--pink-50);transition:background .15s ease}
+    .wi-item:active .wi-title{color:var(--red)}
+    .chip{padding:10px 2px}  /* 触摸目标加高 */
+    /* 工牌：手机上没法鼠标倾斜，改成填好职位时"啪"地立起来一下 */
+    .idcard.filled{animation:cardPop .55s var(--ease)}
+  }
+  @keyframes cardPop{0%{transform:scale(1)}40%{transform:scale(1.035) rotate(-.8deg)}100%{transform:scale(1)}}
+  html{-webkit-tap-highlight-color:transparent}
+  /* 画廊点指示器（仅触摸端由 JS 插入） */
+  .gal-dots{position:relative;z-index:1;display:flex;justify-content:center;gap:7px;margin-top:14px}
+  .gal-dots i{width:6px;height:6px;border-radius:50%;background:var(--pink-200);transition:all .3s var(--ease)}
+  .gal-dots i.on{width:18px;border-radius:99px;background:var(--red)}
+  @media(max-width:760px){
+    /* 筛选 chips 改成 app 式横滑一行，不再折行挤成团 */
+    .filters{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;
+      gap:18px;padding-bottom:6px;margin-right:calc(var(--gut) * -1);padding-right:var(--gut)}
+    .filters::-webkit-scrollbar{display:none}
+    .chip{flex:0 0 auto;white-space:nowrap}
   }
 
   /* ============ ③ 我们在做一件大事 ============ */
@@ -524,7 +555,7 @@
   .cta .quote-line{position:relative;margin-top:24px;padding-top:20px;border-top:1px solid rgba(255,255,255,.14);font-size:clamp(14px,1.3vw,16px);color:rgba(255,255,255,.62);max-width:46ch}
 
   /* ============ 响应式 ============ */
-  @media(max-width:760px){.grid{grid-template-columns:1fr}.sec-top{flex-wrap:wrap}.filters{margin-left:0;width:100%}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}.sec-top{flex-wrap:wrap}.sec-top .label{display:none}.filters{margin-left:0;width:100%}
     .points,.engines{grid-template-columns:1fr}}
   @media(max-width:560px){
     .hero h1{font-size:clamp(40px,11vw,58px)}.role{gap:14px}.role .go{width:40px;height:40px}
@@ -655,6 +686,53 @@
     .pl-fde .fde-rail{display:none}
     .pl-fde .fde-txt{flex:1 1 100%;min-width:0}
   }
+
+  /* ============ 手机端：流水线 → 竖向地铁线路图（窄屏专属，桌面横向流水线不受影响） ============ */
+  @media(max-width:820px){
+    .pl-track{position:relative;padding-left:30px;gap:24px}
+    /* 轨道底线 + 随滚动点亮的红线 */
+    .pl-track::before{content:"";position:absolute;left:9px;top:12px;bottom:12px;width:2px;border-radius:2px;background:var(--pink-200)}
+    .pl-track::after{content:"";position:absolute;left:9px;top:12px;bottom:12px;width:2px;border-radius:2px;
+      background:linear-gradient(180deg,var(--red),var(--red-deep));transform-origin:top;transform:scaleY(var(--plfill,0))}
+    /* 站点圆点钉上轨道，线到站亮 */
+    .pl-node{position:relative}
+    .pl-node .pl-meta{margin-bottom:10px}
+    .pl-node .pl-dot{position:absolute;left:-27px;top:2px;width:13px;height:13px;background:#fff;border:2px solid #fff;box-shadow:0 0 0 2px var(--pink-200);z-index:1}
+    .pl-node.lit .pl-dot{background:var(--red);box-shadow:0 0 0 2px var(--red),0 0 14px rgba(255,45,85,.55)}
+    .pl-node.base.lit .pl-dot{background:var(--red-deep);box-shadow:0 0 0 2px var(--red-deep),0 0 14px rgba(225,29,72,.5)}
+    /* 产品=白卡片站牌（告别字墙） */
+    .pl-node.prod{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 16px 18px;
+      box-shadow:0 1px 2px rgba(25,23,28,.04),0 14px 30px -18px rgba(255,45,85,.16)}
+    .pl-node.prod .pl-dot{left:-44px;top:19px}
+    .pl-node.prod h3{font-size:clamp(21px,5.6vw,28px)}
+    .pl-node.prod p{margin-top:9px;font-size:14.5px}
+    /* 终点站（结果）：粉底红圈 */
+    .pl-node.exit{background:var(--pink-50);border:1.5px solid rgba(255,45,85,.35);border-radius:16px;padding:18px 16px}
+    .pl-node.exit .pl-dot{left:-44px;top:21px}
+    .pl-node.exit.lit h3{color:var(--red)}
+    /* FDE 条 → "线路运营方"红卡收尾 */
+    .pl-fde{background:linear-gradient(120deg,var(--red),var(--red-2));border-radius:16px;padding:16px;box-shadow:0 14px 34px -12px rgba(255,45,85,.38)}
+    .pl-fde .fde-badge{background:rgba(255,255,255,.16);box-shadow:none;padding:8px 14px}
+    .pl-fde .fde-txt{color:rgba(255,255,255,.92)}
+    .pl-fde .fde-txt em{color:#fff}
+  }
+
+  /* ============ 手机端：四个理由 → 横滑大数字卡片（窄屏专属） ============ */
+  @media(max-width:760px){
+    .why-index .wi-list{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;border-top:0;
+      scrollbar-width:none;-webkit-overflow-scrolling:touch;margin-right:calc(var(--gut)*-1);padding:4px var(--gut) 8px 2px}
+    .why-index .wi-list::-webkit-scrollbar{display:none}
+    .why-index .wi-list li{flex:0 0 84%;scroll-snap-align:center;display:flex}
+    .why-index .wi-item{border:1px solid var(--line);border-radius:18px;background:#fff;padding:20px 18px 22px;
+      box-shadow:0 1px 2px rgba(25,23,28,.04),0 16px 34px -20px rgba(255,45,85,.16)}
+    .why-index .wi-item:hover,.why-index .wi-item.active{padding-left:18px}
+    .why-index .wi-row{display:block}
+    .why-index .wi-num{display:block;font-size:42px;font-weight:850;color:var(--pink-200);letter-spacing:-.02em}
+    .why-index .wi-title{display:block;margin-top:4px}
+    .why-index .wi-body{max-height:none;opacity:1;margin-top:10px;overflow:visible}
+    .why-index::after{content:"← 左右滑动 · 四个理由 →";display:block;text-align:center;margin-top:12px;
+      font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--ink-3)}
+  }
 </style>
 </head>
 <body>
@@ -690,7 +768,7 @@
 
   <!-- ============ HERO ============ -->
   <header class="hero pad" id="join">
-    <div class="ghost" id="ghost" aria-hidden="true">JUZIBOT</div>
+    <div class="ghost" id="ghost" aria-hidden="true">JUZI.BOT</div>
 
     <!-- 借鉴4：手电筒拖尾透出“在干活的 AI 员工”（官网数字员工形象） -->
     <div class="peek" id="peek" aria-hidden="true">
@@ -980,7 +1058,7 @@
         </div>
         <div class="footer">
           <span class="label">北京句子互动科技有限公司 · 2019 · 北京五道口</span>
-          <span class="label">juzibot.com</span>
+          <span class="label">juzi.bot</span>
         </div>
       </div>
     </section>
@@ -1111,7 +1189,8 @@
           <figcaption><span class="gname">${e.n}</span><span class="gstat">↗ ${e.m}</span></figcaption>
         </figure>`;
       }).join('');
-      gal.innerHTML=lines+`<div class="gal-track" id="galTrack" tabindex="0" role="region" aria-label="AI 员工长廊，可左右拖动或用方向键浏览">${cards}</div><div class="gal-hint">← 拖动浏览 · 持续上岗中 →</div>`;
+      const TOUCH=matchMedia('(pointer:coarse)').matches;
+      gal.innerHTML=lines+`<div class="gal-track" id="galTrack" tabindex="0" role="region" aria-label="AI 员工长廊，可左右${TOUCH?'滑动':'拖动'}或用方向键浏览">${cards}</div><div class="gal-hint">${TOUCH?'← 左右滑动 · 持续上岗中 →':'← 拖动浏览 · 持续上岗中 →'}</div>`;
       const track=document.getElementById('galTrack');
       /* 入场动画：进入视口时人物海报逐个错峰上浮淡入 */
       const figs=track.querySelectorAll('.gfig');
@@ -1128,22 +1207,43 @@
         setTimeout(()=>figs.forEach(f=>f.classList.add('in')),4000); /* 兜底，杜绝留白 */
       }
       let down=false,sx=0,sl=0,paused=false,dir=1;
-      track.addEventListener('pointerdown',e=>{down=true;paused=true;sx=e.clientX;sl=track.scrollLeft;track.classList.add('drag');});
-      track.addEventListener('pointermove',e=>{if(down)track.scrollLeft=sl-(e.clientX-sx);});
-      const end=()=>{down=false;track.classList.remove('drag');};
-      addEventListener('pointerup',end);track.addEventListener('pointercancel',end);
-      track.addEventListener('pointerenter',()=>paused=true);
-      track.addEventListener('pointerleave',()=>paused=false);
-      track.addEventListener('focus',()=>paused=true);
-      track.addEventListener('blur',()=>paused=false);
-      track.addEventListener('keydown',e=>{if(e.key==='ArrowRight'){e.preventDefault();track.scrollBy({left:300,behavior:'smooth'});}if(e.key==='ArrowLeft'){e.preventDefault();track.scrollBy({left:-300,behavior:'smooth'});}});
-      if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
-        const drift=()=>{const max=track.scrollWidth-track.clientWidth;
-          if(!down&&!paused&&max>4){track.scrollLeft+=dir*0.4;
-            if(track.scrollLeft>=max-0.5)dir=-1;else if(track.scrollLeft<=0.5)dir=1;}
-          requestAnimationFrame(drift);};
-        requestAnimationFrame(drift);
+      if(!TOUCH){
+        /* 桌面端：保留鼠标拖拽 + 自动漂移（原逻辑，一字未动） */
+        track.addEventListener('pointerdown',e=>{down=true;paused=true;sx=e.clientX;sl=track.scrollLeft;track.classList.add('drag');});
+        track.addEventListener('pointermove',e=>{if(down)track.scrollLeft=sl-(e.clientX-sx);});
+        const end=()=>{down=false;track.classList.remove('drag');};
+        addEventListener('pointerup',end);track.addEventListener('pointercancel',end);
+        track.addEventListener('pointerenter',()=>paused=true);
+        track.addEventListener('pointerleave',()=>paused=false);
+        track.addEventListener('focus',()=>paused=true);
+        track.addEventListener('blur',()=>paused=false);
+        if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
+          const drift=()=>{const max=track.scrollWidth-track.clientWidth;
+            if(!down&&!paused&&max>4){track.scrollLeft+=dir*0.4;
+              if(track.scrollLeft>=max-0.5)dir=-1;else if(track.scrollLeft<=0.5)dir=1;}
+            requestAnimationFrame(drift);};
+          requestAnimationFrame(drift);
+        }
+      }else{
+        /* 触摸端：原生惯性滑动 + 吸附（CSS scroll-snap），JS 只做点指示和居中聚焦 */
+        const dots=document.createElement('div');dots.className='gal-dots';
+        figs.forEach(()=>dots.appendChild(document.createElement('i')));
+        gal.appendChild(dots);
+        const dn=[...dots.children];
+        let tick=null;
+        const mark=()=>{tick=null;
+          const c=track.scrollLeft+track.clientWidth/2;let best=0,bd=1e9;
+          figs.forEach((f,i)=>{const d=Math.abs(f.offsetLeft+f.offsetWidth/2-c);if(d<bd){bd=d;best=i;}});
+          figs.forEach((f,i)=>f.classList.toggle('now',i===best));
+          dn.forEach((d,i)=>d.classList.toggle('on',i===best));
+        };
+        track.addEventListener('scroll',()=>{if(!tick)tick=requestAnimationFrame(mark);},{passive:true});
+        mark();
+        /* 文案随交互方式变：手机上是"划"不是"拖" */
+        const lede=document.querySelector('.crew .why-lede');
+        if(lede)lede.textContent=lede.textContent.replace('拖一拖','划一划');
       }
+      track.addEventListener('keydown',e=>{if(e.key==='ArrowRight'){e.preventDefault();track.scrollBy({left:300,behavior:'smooth'});}if(e.key==='ArrowLeft'){e.preventDefault();track.scrollBy({left:-300,behavior:'smooth'});}});
       /* 炫酷增强：3D 悬停倾斜 + 人物/大字鼠标视差（仅细指针、非减动效） */
       if(matchMedia('(pointer:fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches){
         figs.forEach(f=>{
@@ -1331,6 +1431,19 @@
     window.addEventListener('resize',relayout);
     window.addEventListener('load',relayout);
     relayout();
+    /* 手机端地铁线：红线随滚动生长，到一站亮一站（仅窄屏执行，桌面不进此逻辑） */
+    var mNarrow=window.matchMedia('(max-width:820px)');
+    function rail(){
+      if(!mNarrow.matches)return;
+      var r=track.getBoundingClientRect();
+      var lead=window.innerHeight*0.72;
+      var prog=Math.max(0,Math.min(1,(lead-r.top)/r.height));
+      track.style.setProperty('--plfill',prog.toFixed(4));
+      nodes.forEach(function(n){n.classList.toggle('lit',n.getBoundingClientRect().top+10<lead);});
+    }
+    window.addEventListener('scroll',function(){requestAnimationFrame(rail);},{passive:true});
+    window.addEventListener('load',rail);
+    rail();
   })();
   </script>
 
