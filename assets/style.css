@@ -2488,13 +2488,22 @@ footer ul a:hover { color: #fff; }
     padding: 13px 22px; font-size: 15.5px; opacity: 1;
   }
   .nav-item .caret { margin-left: auto; }
-  /* 移动端把下拉直接内联展开 */
+  /* 移动端：二级菜单折叠成手风琴——默认收起，点一级菜单才展开 */
   .nav-item .dropdown, .nav-item .dropdown.wide {
     position: static; transform: none;
     opacity: 1; visibility: visible; pointer-events: auto;
     box-shadow: none; border: 0; border-radius: 0;
-    min-width: 0; width: auto; padding: 0 0 6px;
+    min-width: 0; width: auto; padding: 0;
+    display: none;
   }
+  .nav-item:focus-within > .dropdown,
+  .nav-item:focus-within > .dropdown.wide,
+  .nav-item.open > .dropdown,
+  .nav-item.open > .dropdown.wide {
+    display: block; padding: 0 0 6px;
+  }
+  .nav-item:focus-within > button .caret,
+  .nav-item.open > button .caret { transform: rotate(135deg); }
   .nav-item .dropdown::before { display: none; }
   .nav-item .dropdown a { padding: 9px 34px; }
   .nav-item .dropdown .d-desc { display: none; }
