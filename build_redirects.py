@@ -15,6 +15,7 @@ TEMPLATE = """<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
+<link rel="icon" href="/favicon.ico" />
 <title>句子互动 · 为企业部署 AI 员工</title>
 <!-- 旧站 locale 路径已下线，跳回干净主页（绝对地址，不保留端口/路径/参数），权重归并到 canonical -->
 <link rel="canonical" href="{home}">

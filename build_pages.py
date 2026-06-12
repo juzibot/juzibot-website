@@ -185,10 +185,10 @@ function openContact(){{openModal('contactModal');}}
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8" />
+<link rel="icon" href="/favicon.ico" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>{title}</title>
 <meta name="description" content="{description}" />
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231659E5'/%3E%3Ctext x='16' y='22' font-family='system-ui' font-size='18' font-weight='800' fill='white' text-anchor='middle'%3E句%3C/text%3E%3C/svg%3E" />
 <link rel="stylesheet" href="{rel}assets/style.css">
 </head>
 <body>
