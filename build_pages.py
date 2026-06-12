@@ -15,7 +15,7 @@ def nav_html(rel):
 <nav class="nav">
   <div class="container nav-inner">
     <a href="{rel}index.html" class="brand">
-      <span class="brand-mark">句</span>
+      <img class="brand-mark" src="/assets/brand/logo.png" alt="句子互动" width="30" height="30" />
       句子互动 <small>JuziBot</small>
     </a>
     <div class="nav-links">
@@ -66,7 +66,7 @@ def footer_html(rel):
     <div class="footer-grid">
       <div class="brand-block">
         <div class="brand">
-          <span class="brand-mark">句</span>
+          <img class="brand-mark" src="/assets/brand/logo.png" alt="句子互动" width="30" height="30" />
           句子互动 <small>JuziBot</small>
         </div>
         <p>
