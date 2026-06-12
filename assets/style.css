@@ -68,11 +68,9 @@ p, h1, h2, h3, h4, h5, h6, li, span, div, a {
   font-weight: 800; font-size: 17px; letter-spacing: -.01em;
 }
 .brand-mark {
-  width: 30px; height: 30px; border-radius: 8px;
-  background: var(--blue);
-  color: #fff; font-weight: 800;
-  display: grid; place-items: center;
-  font-size: 16px;
+  width: 30px; height: 30px;
+  object-fit: contain;
+  flex: 0 0 30px;
 }
 .brand small {
   font-weight: 500; color: var(--gray-text);
