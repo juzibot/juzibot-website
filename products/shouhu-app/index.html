@@ -2,9 +2,10 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8" />
+<link rel="icon" href="/favicon.ico" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>句子守护 · Agent 舰队 (Fleet) | 产品原型</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231659E5'/%3E%3Ctext x='16' y='22' font-family='system-ui' font-size='18' font-weight='800' fill='white' text-anchor='middle'%3E句%3C/text%3E%3C/svg%3E" />
+
 <style>
 :root{
   --blue:#1659E5; --blue-mid:#3D7FFF; --blue-light:#E8F0FF; --blue-bg:#F4F8FF;
@@ -35,7 +36,7 @@ button{font-family:inherit;cursor:pointer;border:0;background:transparent}
   padding:0 20px;background:#fff;border-bottom:1px solid var(--gray-line);z-index:10;
 }
 .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:15px}
-.brand-mark{width:28px;height:28px;border-radius:7px;background:var(--blue);color:#fff;display:grid;place-items:center;font-weight:800}
+.brand-mark{width:28px;height:28px;object-fit:contain;flex:0 0 28px}
 .brand small{color:var(--gray-text);font-weight:500;font-size:12px}
 .crumbs{display:flex;align-items:center;gap:8px;color:var(--gray-text);font-size:13px;margin-left:24px}
 .crumbs .sep{color:var(--gray-line)}
@@ -385,7 +386,7 @@ button{font-family:inherit;cursor:pointer;border:0;background:transparent}
 <header class="topbar">
   <div style="display:flex;align-items:center">
     <a class="brand" href="../shouhu.html" title="返回官网">
-      <span class="brand-mark">句</span>
+      <img class="brand-mark" src="/assets/brand/logo.png" alt="句子互动" width="30" height="30" />
       句子守护 <small>· Agentic QA</small>
     </a>
     <nav class="crumbs" id="crumbs">
