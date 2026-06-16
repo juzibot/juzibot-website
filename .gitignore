@@ -7,3 +7,14 @@ node_modules/
 tmp/
 .env
 .env.*
+
+# Python test harness artifacts
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.hypothesis/
+
+# Playwright / layout harness artifacts
+test-results/
+playwright-report/
+playwright/.cache/

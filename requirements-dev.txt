@@ -1,0 +1,7 @@
+# Development / test dependencies for the website-redesign test harness.
+# Install with:  python -m pip install -r requirements-dev.txt
+#
+# These power the Python (structural / preservation / metadata / token)
+# property tests and example-based unit tests driven from verify_site.py.
+pytest>=8.0
+hypothesis>=6.100
