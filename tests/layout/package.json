@@ -1,0 +1,23 @@
+{
+  "name": "website-redesign-layout-tests",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Layout-measurement property tests (Node + fast-check + Playwright) for the website-redesign spec. Covers responsive/interaction Correctness Properties 4, 5, 6, 12.",
+  "type": "module",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "install:browsers": "playwright install chromium"
+  },
+  "keywords": [
+    "website-redesign",
+    "property-based-testing",
+    "fast-check",
+    "playwright"
+  ],
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "@playwright/test": "^1.48.0",
+    "fast-check": "^3.23.0"
+  }
+}

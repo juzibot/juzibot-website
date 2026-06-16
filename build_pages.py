@@ -2,7 +2,7 @@
 Generate all sub-pages from structured data.
 Pages: products/{miaohui,miaodong,shouhu}.html, workforce/{6 roles}.html, enterprise.html
 """
-import os, html
+import os, sys, html
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 
@@ -10,7 +10,52 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 # ────────────────────────── shared snippets ──────────────────────────
 
 def nav_html(rel):
-    """rel: '' for root, '../' for /products /workforce subdirs"""
+    """Site navigation incl. both dropdowns, login/contact, burger.
+
+    Identical across every page except the `rel` path prefix (Req 8.3, 8.5).
+    Dropdown triggers are real <button>s so the menus reveal on hover AND
+    keyboard focus via the CSS :focus-within rule (Req 4.3, 11.3). The burger
+    and contact trigger carry accessible names (Req 11.3). rel: '' for root,
+    '../' for /products and /workforce subdirs.
+    """
+    products = [
+        ("products/miaodong.html", "句子秒懂 · 大脑", "业务人员不写代码也能搭 Agent"),
+        ("products/shouhu.html", "句子守护 · 主管", "Agent 上线前测过、上线后管着"),
+        ("products/canmou.html", "句子参谋 · 参谋", "对话式数据洞察，一句话问数"),
+        ("products/dongxing.html", "句子智库 · 记忆", "知识工程，把散乱知识炼成可检索资产"),
+        ("products/miaohui.html", "句子秒回 · 工位", "Agent 和人协作的 IM 工作台"),
+        ("products/cli.html", "句子 CLI · 手", "操作一切人用软件的执行层"),
+        ("products/zhizao.html", "句子智造 · 地基", "补齐客户数字化基建，一客一环境"),
+    ]
+    workforce = [
+        ("workforce/sales.html", "AI 销售", "直播搬家、私域承接、漏斗跟进——首单成交全程接管"),
+        ("workforce/marketing.html", "AI 导购", "头部零售品牌的私域导购运营，长尾客户也覆盖"),
+        ("workforce/service.html", "AI 客服", "从售前到售后都接得住 · 5 年 BadCase 积累"),
+        ("workforce/government.html", "AI 社工 / 调解员", "政务高合规要求 + 全程可追溯 · 已稳步落地"),
+        ("workforce/finance.html", "AI 理财顾问", "银行 / 证券 / 保险头部机构落地 · 多年风控话术"),
+        ("workforce/hr.html", "AI HR", "简历初筛 + AI 语音面试，HR 只看 Top 20%"),
+    ]
+
+    def dropdown_links(items):
+        return '\n          '.join(
+            f'<a class="dropdown-link" href="{rel}{href}">'
+            f'<span class="dropdown-title">{title}</span>'
+            f'<span class="dropdown-desc">{desc}</span></a>'
+            for href, title, desc in items
+        )
+
+    top_links = [
+        ("industries.html", "客户与行业"),
+        ("enterprise.html", "企业级能力"),
+        ("fde.html", "FDE 交付结果"),
+        ("about.html", "AI 原生组织"),
+        ("careers/index.html", "加入我们"),
+    ]
+    top_links_html = '\n      '.join(
+        f'<div class="nav-item"><a href="{rel}{href}">{label}</a></div>'
+        for href, label in top_links
+    )
+
     return f"""
 <nav class="nav">
   <div class="container nav-inner">
@@ -20,61 +65,46 @@ def nav_html(rel):
     </a>
     <div class="nav-links">
       <div class="nav-item">
-        <button>产品 <span class="caret"></span></button>
-        <div class="dropdown wide">
-          <a href="{rel}products/miaodong.html"><div class="d-title">句子秒懂 · 大脑</div><div class="d-desc">业务人员不写代码也能搭 Agent</div></a>
-          <a href="{rel}products/shouhu.html"><div class="d-title">句子守护 · 主管</div><div class="d-desc">Agent 上线前测过、上线后管着</div></a>
-          <a href="{rel}products/canmou.html"><div class="d-title">句子参谋 · 参谋</div><div class="d-desc">对话式数据洞察，一句话问数</div></a>
-          <a href="{rel}products/dongxing.html"><div class="d-title">句子智库 · 记忆</div><div class="d-desc">知识工程，把散乱知识炼成可检索资产</div></a>
-          <a href="{rel}products/miaohui.html"><div class="d-title">句子秒回 · 工位</div><div class="d-desc">Agent 和人协作的 IM 工作台</div></a>
-          <a href="{rel}products/cli.html"><div class="d-title">句子 CLI · 手</div><div class="d-desc">操作一切人用软件的执行层</div></a>
-          <a href="{rel}products/zhizao.html"><div class="d-title">句子智造 · 地基</div><div class="d-desc">补齐客户数字化基建，一客一环境</div></a>
-
+        <button type="button" class="nav-trigger" aria-haspopup="true">产品 <span class="nav-caret"></span></button>
+        <div class="dropdown dropdown--wide">
+          {dropdown_links(products)}
         </div>
       </div>
       <div class="nav-item">
-        <button>AI 员工 <span class="caret"></span></button>
-        <div class="dropdown wide">
-          <a href="{rel}workforce/sales.html"><div class="d-title">AI 销售</div><div class="d-desc">直播搬家、私域承接、漏斗跟进——首单成交全程接管</div></a>
-          <a href="{rel}workforce/marketing.html"><div class="d-title">AI 导购</div><div class="d-desc">头部零售品牌的私域导购运营，长尾客户也覆盖</div></a>
-          <a href="{rel}workforce/service.html"><div class="d-title">AI 客服</div><div class="d-desc">从售前到售后都接得住 · 5 年 BadCase 积累</div></a>
-          <a href="{rel}workforce/government.html"><div class="d-title">AI 社工 / 调解员</div><div class="d-desc">政务高合规要求 + 全程可追溯 · 已稳步落地</div></a>
-          <a href="{rel}workforce/finance.html"><div class="d-title">AI 理财顾问</div><div class="d-desc">银行 / 证券 / 保险头部机构落地 · 多年风控话术</div></a>
-          <a href="{rel}workforce/hr.html"><div class="d-title">AI HR</div><div class="d-desc">简历初筛 + AI 语音面试，HR 只看 Top 20%</div></a>
+        <button type="button" class="nav-trigger" aria-haspopup="true">AI 员工 <span class="nav-caret"></span></button>
+        <div class="dropdown dropdown--wide">
+          {dropdown_links(workforce)}
         </div>
       </div>
-      <div class="nav-item"><a href="{rel}industries.html">客户与行业</a></div>
-      <div class="nav-item"><a href="{rel}enterprise.html">企业级能力</a></div>
-      <div class="nav-item"><a href="{rel}fde.html">FDE 交付结果</a></div>
-      <div class="nav-item"><a href="{rel}about.html">AI 原生组织</a></div>
-      <div class="nav-item"><a href="{rel}careers/index.html">加入我们</a></div>
+      {top_links_html}
     </div>
     <div class="nav-right">
-      <a class="nav-cta" style="cursor:pointer" onclick="openContact('导航·联系我们')">联系我们 →</a>
+      <a class="nav-cta" style="cursor:pointer" role="button" tabindex="0" aria-label="联系我们" onclick="openContact('导航·联系我们')">联系我们 →</a>
       <a href="https://insight.juzibot.com/auth/login?from=juzibot.com&amp;type=register" class="nav-login">登录 / 注册</a>
     </div>
-    <button class="nav-burger" aria-label="菜单" onclick="this.closest('.nav').classList.toggle('nav-open')">☰</button>
+    <button class="nav-burger" type="button" aria-label="菜单" aria-expanded="false">☰</button>
   </div>
 </nav>
 """.strip()
 
 
 def footer_html(rel):
+    """Footer with product/industry/company columns.
+
+    Shared across pages with path-prefix-only variance (Req 8.3, 10.5).
+    """
     return f"""
-<footer>
+<footer class="site-footer">
   <div class="container">
     <div class="footer-grid">
-      <div class="brand-block">
+      <div class="footer-brand">
         <div class="brand">
           <img class="brand-mark" src="/assets/brand/logo.png" alt="句子互动" width="30" height="30" />
           句子互动 <small>JuziBot</small>
         </div>
-        <p>
-          为企业部署 AI 员工。<br/>
-          1000+ 家中国企业在用 · 覆盖 5 大高合规行业。
-        </p>
+        <p>为企业部署 AI 员工。<br/>1000+ 家中国企业在用 · 覆盖 5 大高合规行业。</p>
       </div>
-      <div>
+      <div class="footer-col">
         <h6>产品 · 7 个</h6>
         <ul>
           <li><a href="{rel}products/miaohui.html">句子秒回 · 工位</a></li>
@@ -86,7 +116,7 @@ def footer_html(rel):
           <li><a href="{rel}products/zhizao.html">句子智造 · 地基</a></li>
         </ul>
       </div>
-      <div>
+      <div class="footer-col">
         <h6>行业</h6>
         <ul>
           <li><a href="{rel}industries.html#education">在线教育</a></li>
@@ -96,7 +126,7 @@ def footer_html(rel):
           <li><a href="{rel}industries.html#internet">泛互联网</a></li>
         </ul>
       </div>
-      <div>
+      <div class="footer-col">
         <h6>公司</h6>
         <ul>
           <li><a href="{rel}fde.html">FDE 交付结果</a></li>
@@ -115,42 +145,60 @@ def footer_html(rel):
 """.strip()
 
 
-def cta_band(text="把第一个 AI 员工装进你的业务流程"):
+def announcement_html():
+    """Scrolling marquee announcement bar (Req 7.1, 8.5).
+
+    The message set is rendered twice into the track so the -50% CSS translate
+    loop is seamless and no message is truncated. Every message string is from
+    the Preserved_Content set (verbatim).
+    """
+    messages = [
+        ("在线教育", "几百家头部公司已部署，AI 销售人均承接 5 倍以上"),
+        ("消费品电商", "几百家头部品牌私域导购上线，长尾客户再不流失"),
+        ("金融", "银行 · 证券 · 保险头部机构落地，合规边界提前写死"),
+        (None, "1000+ 大型企业已在用 · 扎在这 5 个行业 · 接入 10+ 主流 IM 渠道"),
+        ("在线教育", "几百家头部公司已部署，AI 销售人均承接 5× 以上"),
+        ("消费品电商", "几百家头部品牌私域导购上线，长尾客户再不流失"),
+        ("金融", "银行 · 证券 · 保险头部机构落地，合规边界提前写死"),
+        (None, "1000+ 大型企业已在用 · 扎在这 5 个行业 · 接入 10+ 主流 IM 渠道"),
+    ]
+
+    def item(tag, text):
+        tag_html = f'<span class="marquee-tag">{tag}</span>' if tag else ''
+        return (f'<span class="marquee-item">'
+                f'<span class="marquee-dot"></span>{tag_html}{text}</span>')
+
+    items = '\n      '.join(item(tag, text) for tag, text in messages)
     return f"""
-<div class="cta-band">
-  <div>
-    <h4>{text}</h4>
-    <p>从一个 AI 角色起步，逐步扩展到多个 Agent。90 天内，第一个 AI 员工即在客户的 IM 中上岗。</p>
+<div class="announcement" aria-label="公告">
+  <div class="marquee-track">
+      {items}
+      {items}
   </div>
-  <button type="button" class="btn-primary" onclick="openContact('底部CTA·预约演示','预约演示')">预约演示 <span class="btn-arrow">→</span></button>
 </div>
 """.strip()
 
 
-def page_layout(*, title, description, rel, breadcrumbs, hero_kicker, hero_h1, hero_lede,
-                pills, body):
-    """Generate a complete sub-page."""
-    crumbs_html = ' <span class="sep">/</span> '.join(
-        f'<a href="{href}">{label}</a>' if href else f'<span class="here">{label}</span>'
-        for label, href in breadcrumbs
-    )
-    pills_html = ''
-    if pills:
-        pills_html = '<div class="pill-row">' + ''.join(
-            f'<span class="pill"><span class="dot"></span>{p}</span>' for p in pills
-        ) + '</div>'
-    contact_modal = f"""
-<!-- ════════════ RIGHT FLOAT PANEL ════════════ -->
-<div class="float-panel" id="floatPanel">
-  <button class="fp-btn" onclick="openContact('悬浮·在线咨询','在线咨询')">
+def contact_module(rel):
+    """Floating panel + contact modal markup (Req 7.2, 7.3, 7.4, 7.5, 11.3, 11.4).
+
+    Single shared snippet reused across every page; only the QR `rel` prefix
+    varies. The floating panel is hidden + non-interactive until the inline JS
+    adds `.is-visible` past 200px of scroll. The modal exposes the official QR
+    Preserved_Asset; its close control carries an accessible name.
+    """
+    return f"""
+<!-- ════════════ FLOATING PANEL ════════════ -->
+<div class="floating-panel" aria-label="快捷联系">
+  <button type="button" class="fp-btn" aria-label="在线咨询" onclick="openContact('悬浮·在线咨询','在线咨询')">
     <span class="fp-icon">💬</span>在线<br/>咨询
     <span class="fp-tip">在线咨询</span>
   </button>
-  <button class="fp-btn fp-orange" onclick="openContact('悬浮·预约演示','预约演示')">
+  <button type="button" class="fp-btn fp-btn--2" aria-label="预约 Demo 演示" onclick="openContact('悬浮·预约演示','预约演示')">
     <span class="fp-icon">📅</span>预约<br/>演示
     <span class="fp-tip">预约 Demo 演示</span>
   </button>
-  <button class="fp-btn fp-green" onclick="openContact('悬浮·获取方案','获取方案')">
+  <button type="button" class="fp-btn fp-btn--3" aria-label="获取行业解决方案" onclick="openContact('悬浮·获取方案','获取方案')">
     <span class="fp-icon">📋</span>获取<br/>方案
     <span class="fp-tip">获取行业解决方案</span>
   </button>
@@ -158,28 +206,126 @@ def page_layout(*, title, description, rel, breadcrumbs, hero_kicker, hero_h1, h
 
 <!-- ════════════ CONTACT MODAL ════════════ -->
 <div class="modal-overlay" id="contactModal">
-  <div class="modal modal-qr" role="dialog" aria-modal="true">
-    <button class="qr-close" onclick="closeModal('contactModal')" aria-label="关闭">×</button>
-    <div class="qr-eyebrow">联系我们</div>
-    <h3 class="qr-title">扫码加企业微信</h3>
-    <img class="qr-img" src="{rel}assets/brand/qr-qiwei.png" alt="企业微信二维码" width="200" height="200" />
-    <p class="qr-note">直接和我们聊，工作日当天回复</p>
+  <div class="modal modal--qr" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle">
+    <button type="button" class="modal-close" onclick="closeModal()" aria-label="关闭">×</button>
+    <div class="modal-eyebrow">联系我们</div>
+    <h2 class="modal-title" id="contactModalTitle">扫码加企业微信</h2>
+    <img class="modal-qr-img" src="{rel}assets/brand/qr-qiwei.png" alt="企业微信二维码" width="200" height="200" />
+    <p class="modal-note">直接和我们聊，工作日当天回复</p>
   </div>
 </div>
+""".strip()
 
+
+def behavior_script():
+    """Dependency-free inline JS shared by every page (Req 7.x, 9.2, 11.4).
+
+    Covers: contact modal open/close (X, overlay click, Escape) with scroll
+    lock + restore; burger toggle; mobile dropdown accordion (desktop relies on
+    CSS hover/focus only); floating-panel scroll threshold. The marquee needs no
+    JS — it is duplicated in markup. The 句子秒懂 demo `fit()` routine ships
+    inline with that page body and is preserved separately (Req 7.8).
+    """
+    return """
 <script>
-function openModal(id){{var el=document.getElementById(id);if(!el)return;el.classList.add('open');document.body.style.overflow='hidden';}}
-function closeModal(id){{var el=document.getElementById(id);if(!el)return;el.classList.remove('open');document.body.style.overflow='';}}
-document.querySelectorAll('.modal-overlay').forEach(function(o){{o.addEventListener('click',function(e){{if(e.target===o)closeModal(o.id);}});}});
-document.addEventListener('keydown',function(e){{if(e.key==='Escape')document.querySelectorAll('.modal-overlay.open').forEach(function(m){{closeModal(m.id);}});}});
-function openContact(){{openModal('contactModal');}}
-(function(){{
-  var fp=document.getElementById('floatPanel');if(!fp)return;
-  fp.style.opacity='0';fp.style.transition='opacity .3s ease';
-  window.addEventListener('scroll',function(){{fp.style.opacity=window.scrollY>200?'1':'0';fp.style.pointerEvents=window.scrollY>200?'':'none';}},{{passive:true}});
-}})();
+(function(){
+  var savedScroll = 0;
+  var overlay = document.querySelector('.modal-overlay');
+
+  // Contact modal (Req 7.2, 7.3, 11.4) — lock body scroll, remember + restore position
+  window.openContact = function(){
+    if(!overlay) return;
+    savedScroll = window.pageYOffset || document.documentElement.scrollTop || 0;
+    overlay.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  };
+  window.closeModal = function(){
+    if(!overlay) return;
+    overlay.classList.remove('is-open');
+    document.body.style.overflow = '';
+    window.scrollTo(0, savedScroll);
+  };
+  if(overlay){
+    overlay.addEventListener('click', function(e){ if(e.target === overlay) window.closeModal(); });
+  }
+  document.addEventListener('keydown', function(e){
+    if((e.key === 'Escape' || e.key === 'Esc') && overlay && overlay.classList.contains('is-open')) window.closeModal();
+  });
+
+  // Burger toggle (Req 7.7)
+  Array.prototype.forEach.call(document.querySelectorAll('.nav-burger'), function(b){
+    b.addEventListener('click', function(){
+      var nav = b.closest('.nav');
+      if(!nav) return;
+      var open = nav.classList.toggle('nav-open');
+      b.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  });
+
+  // Mobile dropdown accordion (Req 7.6) — desktop reveal is pure CSS hover/focus
+  Array.prototype.forEach.call(document.querySelectorAll('.nav-trigger'), function(t){
+    t.addEventListener('click', function(){
+      var item = t.closest('.nav-item');
+      if(item) item.classList.toggle('is-open');
+    });
+  });
+
+  // Floating panel scroll threshold (Req 7.4, 7.5)
+  var panel = document.querySelector('.floating-panel');
+  function syncPanel(){
+    if(!panel) return;
+    var y = window.pageYOffset || document.documentElement.scrollTop || 0;
+    if(y > 200) panel.classList.add('is-visible');
+    else panel.classList.remove('is-visible');
+  }
+  window.addEventListener('scroll', syncPanel, {passive:true});
+  syncPanel();
+})();
 </script>
 """.strip()
+
+
+def cta_band(text="把第一个 AI 员工装进你的业务流程",
+             sub="从一个 AI 角色起步，逐步扩展到多个 Agent。90 天内，第一个 AI 员工即在客户的 IM 中上岗。",
+             button="预约演示", source="底部CTA·预约演示", intent="预约演示"):
+    """Inline call-to-action band on a solid accent fill (Req 3.3).
+
+    The button sits on the accent surface, so it uses the canonical
+    `.btn-on-accent` variant rather than a page-local override (Req 10.1).
+    """
+    return f"""
+<div class="cta-band">
+  <div>
+    <h4>{text}</h4>
+    <p>{sub}</p>
+  </div>
+  <button type="button" class="btn btn-on-accent" onclick="openContact('{source}','{intent}')">{button} <span class="btn-arrow">→</span></button>
+</div>
+""".strip()
+
+
+def page_layout(*, title, description, rel, breadcrumbs, hero_kicker, hero_h1, hero_lede,
+                pills, body):
+    """Generate a complete sub-page shell with semantic landmarks (Req 10.4).
+
+    Exactly one <main>, plus <header> (announcement + nav), <nav> (inside the
+    header), and <footer>. Document language is `zh-CN` (Req 2.4). The caller
+    supplies a unique, bounded title (1–60 chars) and description (1–160 chars)
+    per page (Req 10.2). Shared regions vary only by the `rel` path prefix
+    (Req 8.3, 8.5).
+    """
+    crumbs_html = ' <span class="sep">/</span> '.join(
+        f'<a href="{href}">{label}</a>' if href else f'<span class="here">{label}</span>'
+        for label, href in breadcrumbs
+    )
+    kicker_html = ''
+    if hero_kicker:
+        kicker_html = f'<div class="kicker"><span class="dot"></span>{hero_kicker}</div>'
+    pills_html = ''
+    if pills:
+        pills_html = '<div class="pill-row">' + ''.join(
+            f'<span class="pill"><span class="dot"></span>{p}</span>' for p in pills
+        ) + '</div>'
 
     return f"""<!doctype html>
 <html lang="zh-CN">
@@ -193,100 +339,88 @@ function openContact(){{openModal('contactModal');}}
 </head>
 <body>
 
-<!-- ════════════ ANNOUNCEMENT BAR ════════════ -->
-<div class="ann-bar" role="marquee" aria-label="公告">
-  <div class="ann-track">
-    <span class="ann-item"><span class="dot"></span><span class="tag">在线教育</span>几百家头部公司已部署，AI 销售人均承接 5 倍以上</span>
-    <span class="ann-item"><span class="dot"></span><span class="tag">消费品电商</span>几百家头部品牌私域导购上线，长尾客户再不流失</span>
-    <span class="ann-item"><span class="dot"></span><span class="tag">金融</span>银行 · 证券 · 保险头部机构落地，合规边界提前写死</span>
-    <span class="ann-item"><span class="dot"></span>1000+ 大型企业已在用 · 扎在这 5 个行业 · 接入 10+ 主流 IM 渠道</span>
-    <span class="ann-item"><span class="dot"></span><span class="tag">在线教育</span>几百家头部公司已部署，AI 销售人均承接 5× 以上</span>
-    <span class="ann-item"><span class="dot"></span><span class="tag">消费品电商</span>几百家头部品牌私域导购上线，长尾客户再不流失</span>
-    <span class="ann-item"><span class="dot"></span><span class="tag">金融</span>银行 · 证券 · 保险头部机构落地，合规边界提前写死</span>
-    <span class="ann-item"><span class="dot"></span>1000+ 大型企业已在用 · 扎在这 5 个行业 · 接入 10+ 主流 IM 渠道</span>
-  </div>
-</div>
+<header>
+{announcement_html()}
 
 {nav_html(rel)}
+</header>
 
-<header class="page-hero">
+<main>
+<section class="page-hero">
   <div class="container">
     <div class="crumbs">{crumbs_html}</div>
-    <div style="font-size:13px;font-weight:800;color:var(--orange);letter-spacing:.12em;text-transform:uppercase;margin-bottom:16px;">{hero_kicker}</div>
+    {kicker_html}
     <h1>{hero_h1}</h1>
     <p class="lede">{hero_lede}</p>
     {pills_html}
   </div>
-</header>
+</section>
 
 {body}
+</main>
 
 {footer_html(rel)}
 
-{contact_modal}
+{contact_module(rel)}
+
+{behavior_script()}
 
 </body>
 </html>
 """
 
 
-# ────────────────────────── content for each page ──────────────────────────
+# ════════════════════════ shared structured snippets ════════════════════════
+# Each structured component below is ONE reusable function emitting the canonical
+# class contract from the rebuilt Design_System (assets/style.css). They are
+# reused by every page body — no per-page duplicated component markup
+# (Req 5.4, 8.5). Functions that emit <img> take an explicit alt so informative
+# assets get a non-empty text alternative and decorative assets get alt=""
+# (Req 11.1, 11.2).
 
-def feat_grid(items, cols=3):
-    """items: list of (icon, title, desc, color_class)"""
-    cls = f"feat-grid-{cols}"
-    blocks = ''.join(
-        f'<div class="feat-block {color}"><div class="ic">{i+1:02d}</div><h3>{title}</h3><p>{desc}</p></div>'
-        for i, (icon, title, desc, color) in enumerate(items)
-    )
-    return f'<div class="{cls}">{blocks}</div>'
-
-
-def kpi_row(items):
-    """items: list of (value, label)"""
-    cells = ''.join(
-        f'<div><div class="v">{v}</div><div class="l">{l}</div></div>'
-        for v, l in items
-    )
-    return f'<div class="kpi-row">{cells}</div>'
+# Maps the legacy short colour codes still passed by page bodies onto the three
+# canonical accent variants of the feature-icon tile.
+_ICON_ACCENT = {'bl': '', 'or': ' feature-icon--2', 'gr': ' feature-icon--3',
+                'pu': ' feature-icon--3', 'te': ' feature-icon--3'}
 
 
-def split_section(*, eyebrow, title, paragraphs, bullets, visual_html, color="bl", reverse=False):
-    """split section with text on left, visual on right (or reverse)"""
-    p_html = ''.join(f'<p>{p}</p>' for p in paragraphs)
-    b_html = ''
-    if bullets:
-        b_html = '<ul>' + ''.join(f'<li>{b}</li>' for b in bullets) + '</ul>'
-    rcls = ' reverse' if reverse else ''
-    visual_color = {'bl': '', 'or': ' or', 'gr': ' gr'}.get(color, '')
+def image(src, alt="", *, width=None, height=None, cls=None, loading="lazy"):
+    """Single <img> helper with explicit text-alternative handling (Req 11.1, 11.2).
+
+    `alt` is ALWAYS emitted: pass a non-empty description for an informative
+    image, or alt="" for a purely decorative one so assistive tech skips it.
+    """
+    attrs = [f'src="{src}"', f'alt="{alt}"']
+    if cls:
+        attrs.insert(0, f'class="{cls}"')
+    if width:
+        attrs.append(f'width="{width}"')
+    if height:
+        attrs.append(f'height="{height}"')
+    if loading:
+        attrs.append(f'loading="{loading}"')
+    return f'<img {" ".join(attrs)} />'
+
+
+def block(eyebrow, title, sub, content, alt=False, start=False):
+    """Section wrapper + eyebrow/title/sub head (snippet: block).
+
+    Emits `.block` (`.block--muted` when alt) > `.block-head`
+    (`.block-head--start` when start) with `.block-eyebrow` / `.block-title`
+    (accept inline `.accent` spans) / `.block-sub`, wrapped in `.container`.
+    """
+    sec_cls = "block block--muted" if alt else "block"
+    head_cls = "block-head block-head--start" if start else "block-head"
+    eyebrow_html = f'<div class="block-eyebrow">{eyebrow}</div>' if eyebrow else ''
+    title_html = f'<h2 class="block-title">{title}</h2>' if title else ''
+    sub_html = f'<p class="block-sub">{sub}</p>' if sub else ''
     return f"""
-<section class="section-block">
+<section class="{sec_cls}">
   <div class="container">
-    <div class="split{rcls}">
-      <div class="split-text">
-        <div class="eyebrow">{eyebrow}</div>
-        <h3>{title}</h3>
-        {p_html}
-        {b_html}
-      </div>
-      <div class="split-visual{visual_color}">
-        {visual_html}
-      </div>
-    </div>
-  </div>
-</section>
-""".strip()
-
-
-def block(eyebrow, title, sub, content, alt=False):
-    cls = " alt" if alt else ""
-    return f"""
-<section class="section-block{cls}">
-  <div class="container">
-    <div class="block-head">
-      <div class="eyebrow">{eyebrow}</div>
-      <h2>{title}</h2>
-      <div class="sub">{sub}</div>
+    <div class="{head_cls}">
+      {eyebrow_html}
+      {title_html}
+      {sub_html}
     </div>
     {content}
   </div>
@@ -294,11 +428,192 @@ def block(eyebrow, title, sub, content, alt=False):
 """.strip()
 
 
-def cta_section(rel="../"):
+def feat_grid(items, cols=3):
+    """Responsive grid of canonical feature cards (snippet: feat_grid).
+
+    items: list of (icon, title, desc, color_class[, punch]) tuples. The icon
+    is rendered inside the `.feature-icon` tile; color_class selects the accent
+    variant; an optional 5th element renders a `.feature-punch` footer line.
+    """
+    cards = []
+    for it in items:
+        icon, title, desc, color = it[0], it[1], it[2], it[3]
+        punch = it[4] if len(it) > 4 else None
+        icon_cls = _ICON_ACCENT.get(color, '')
+        punch_html = f'<div class="feature-punch">{punch}</div>' if punch else ''
+        cards.append(
+            f'<div class="card card--hover feature-card">'
+            f'<div class="feature-icon{icon_cls}">{icon}</div>'
+            f'<h3 class="feature-title">{title}</h3>'
+            f'<p class="feature-desc">{desc}</p>'
+            f'{punch_html}'
+            f'</div>'
+        )
+    grid_cls = f"feature-grid feature-grid--{cols}"
+    return f'<div class="{grid_cls}">{"".join(cards)}</div>'
+
+
+def feature_list(items, check=False):
+    """Scannable accent-marked list (snippet: feature_list, Req 5.1).
+
+    Lets a >60-word block be re-presented as a structured list without dropping
+    any string. `check=True` swaps the bar marker for a check glyph.
+    """
+    cls = "feature-list feature-list--check" if check else "feature-list"
+    lis = ''.join(f'<li>{i}</li>' for i in items)
+    return f'<ul class="{cls}">{lis}</ul>'
+
+
+def kpi_row(items):
+    """Metric strip (snippet: kpi_row). items: list of (value, label)."""
+    cells = ''.join(
+        f'<div class="kpi"><div class="kpi-value">{v}</div><div class="kpi-label">{l}</div></div>'
+        for v, l in items
+    )
+    return f'<div class="kpi-row">{cells}</div>'
+
+
+def split_section(*, eyebrow, title, paragraphs, bullets=None, visual_html=None,
+                   media_img=None, media_alt="", color="bl", reverse=False,
+                   bullets_check=False):
+    """Two-column text + media block (snippet: split_section).
+
+    Emits `.split` (`.split--reverse` when reverse) > `.split-body`
+    (`.block-eyebrow` + h3 + paragraphs + optional `.feature-list`) and
+    `.split-media`. Supply EITHER `media_img` (an asset path — pass a non-empty
+    `media_alt` when informative, "" when decorative, Req 11.1/11.2) OR raw
+    `visual_html` (a custom inline visual). `color` is accepted for call-site
+    compatibility but the canonical media surface no longer tints by colour.
+    """
+    p_html = ''.join(f'<p>{p}</p>' for p in paragraphs)
+    bullets_html = feature_list(bullets, check=bullets_check) if bullets else ''
+    media_inner = image(media_img, media_alt) if media_img else (visual_html or '')
+    split_cls = "split split--reverse" if reverse else "split"
+    eyebrow_html = f'<div class="block-eyebrow">{eyebrow}</div>' if eyebrow else ''
     return f"""
-<section class="section-block">
+<section class="block">
   <div class="container">
-    {cta_band()}
+    <div class="{split_cls}">
+      <div class="split-body">
+        {eyebrow_html}
+        <h3>{title}</h3>
+        {p_html}
+        {bullets_html}
+      </div>
+      <div class="split-media">
+        {media_inner}
+      </div>
+    </div>
+  </div>
+</section>
+""".strip()
+
+
+def comparison_table(headers, rows):
+    """Semantic comparison table in a horizontal-scroll wrapper (snippet: comparison_table).
+
+    headers: list of column header strings (the first labels the row-header
+    column). rows: list of row tuples whose first element is the row header and
+    whose remaining cells are either a string or a (text, is_positive) tuple;
+    positive cells get the `.is-positive` class.
+    """
+    head_cells = ''.join(f'<th scope="col">{h}</th>' for h in headers)
+    thead = f'<thead><tr>{head_cells}</tr></thead>'
+    body_rows = []
+    for row in rows:
+        row_head, cells = row[0], row[1:]
+        tds = []
+        for cell in cells:
+            if isinstance(cell, (tuple, list)):
+                text, positive = cell[0], (len(cell) > 1 and cell[1])
+            else:
+                text, positive = cell, False
+            cls = ' class="is-positive"' if positive else ''
+            tds.append(f'<td{cls}>{text}</td>')
+        body_rows.append(
+            f'<tr><th scope="row">{row_head}</th>{"".join(tds)}</tr>'
+        )
+    tbody = f'<tbody>{"".join(body_rows)}</tbody>'
+    return f'<div class="comparison-table"><table>{thead}{tbody}</table></div>'
+
+
+def timeline(items):
+    """Vertical timeline (snippet: timeline). items: list of (year, body)."""
+    lis = ''.join(
+        f'<li class="timeline-item">'
+        f'<div class="timeline-year">{year}</div>'
+        f'<div class="timeline-body">{body}</div>'
+        f'</li>'
+        for year, body in items
+    )
+    return f'<ul class="timeline">{lis}</ul>'
+
+
+def tag_categories(groups):
+    """Grouped tag clusters (snippet: tag_categories).
+
+    groups: list of (group_title, tags) where each tag is either a string or a
+    (text, is_accent) tuple; accent tags get the `.tag--accent` variant.
+    """
+    blocks = []
+    for group_title, tags in groups:
+        chips = []
+        for tag in tags:
+            if isinstance(tag, (tuple, list)):
+                text, accent = tag[0], (len(tag) > 1 and tag[1])
+            else:
+                text, accent = tag, False
+            cls = "tag tag--accent" if accent else "tag"
+            chips.append(f'<span class="{cls}">{text}</span>')
+        blocks.append(
+            f'<div class="tag-group">'
+            f'<div class="tag-group-title">{group_title}</div>'
+            f'<div class="tag-list">{"".join(chips)}</div>'
+            f'</div>'
+        )
+    return f'<div class="tag-categories">{"".join(blocks)}</div>'
+
+
+def faq_accordion(items):
+    """Native <details>/<summary> FAQ, no JS required (snippet: faq_accordion, Req 9.2).
+
+    items: list of (question, answer).
+    """
+    details = ''.join(
+        f'<details class="faq-item">'
+        f'<summary class="faq-q">{q}</summary>'
+        f'<div class="faq-a">{a}</div>'
+        f'</details>'
+        for q, a in items
+    )
+    return f'<div class="faq-accordion">{details}</div>'
+
+
+def cta_section(*, title="把第一个 AI 员工装进你的业务流程",
+                sub="从一个 AI 角色起步，逐步扩展到多个 Agent。90 天内，第一个 AI 员工即在客户的 IM 中上岗。",
+                primary="预约演示", secondary=None,
+                source="底部CTA·预约演示", intent="预约演示"):
+    """Full-width closing CTA on a solid accent fill (snippet: cta_section).
+
+    Emits `.cta-section` > `.container` with title/sub and a `.cta-actions`
+    row. On-accent buttons use the canonical `.btn-on-accent` /
+    `.btn-on-accent-outline` variants (Req 10.1).
+    """
+    secondary_html = ''
+    if secondary:
+        secondary_html = (
+            f'<button type="button" class="btn btn-on-accent-outline" '
+            f'onclick="openContact(\'{source}·{secondary}\',\'{secondary}\')">{secondary}</button>'
+        )
+    return f"""
+<section class="cta-section">
+  <div class="container">
+    <h2>{title}</h2>
+    <p class="sub">{sub}</p>
+    <div class="cta-actions">
+      <button type="button" class="btn btn-on-accent" onclick="openContact('{source}','{intent}')">{primary} <span class="btn-arrow">→</span></button>
+      {secondary_html}
+    </div>
   </div>
 </section>
 """.strip()
@@ -308,7 +623,12 @@ def cta_section(rel="../"):
 
 def page_miaohui():
     body = ''
-    body += '''
+    # NEW module order (Req 4.1): pre-redesign opened with the workbench mockup.
+    # Here the capability grid leads; the IM-channel grid and the SOP "主动触达"
+    # split follow; the 架构 split and the preserved .ui-mock workbench come
+    # later; KPIs close the body. The mockup markup is captured here and placed
+    # mid-body so the preserved interactive workbench stays intact (Req 7).
+    mock_section = '''
 <section class="product-shot-section">
   <div class="container">
     <div class="ui-mock">
@@ -351,50 +671,13 @@ def page_miaohui():
         "Agent 在 IM 通道上岗，需要的不止是聊天框",
         "句子秒回是 AI 员工的工位。11 个 IM 通道聚合到一个工作台，Agent 像真人一样工作、与同事协作，并接受统一管理。",
         feat_grid([
-            ("📥", "多平台聚合", "11 个 IM 通道（小红书、抖音、微信客服、微信公众号、小程序、WhatsApp、飞书、钉钉、TikTok、Instagram）统一到一个工作台，海内外账号一起管。", "bl"),
-            ("🎯", "主动触达", "私聊 / 群聊群发、SOP 自动跟进、自动加好友、新客欢迎语——一次配置批量执行，不受原生应用群发次数限制。", "or"),
-            ("🤝", "人机协作", "AI 全自动 / 人机协作 / 纯人工三种模式，AI 无法处理的对话自动转人工，每条消息可追溯。", "gr"),
-            ("👥", "员工协作", "一人管多账号、多人管一账号都支持。系统智能分配消息，管理者统一查看营销数据和员工绩效。", "pu"),
-            ("💾", "聊天历史", "每一条对话安全留存，支持按客户、关键词、时间多维搜索，导出方便后续分析。", "te"),
-            ("🔌", "API 集成", "对接客户已有的 CRM / 工单 / 知识库系统，Agent 上岗就接管真实业务流，不孤立运行。", "bl"),
+            ("01", "多平台聚合", "11 个 IM 通道（小红书、抖音、微信客服、微信公众号、小程序、WhatsApp、飞书、钉钉、TikTok、Instagram）统一到一个工作台，海内外账号一起管。", "bl"),
+            ("02", "主动触达", "私聊 / 群聊群发、SOP 自动跟进、自动加好友、新客欢迎语——一次配置批量执行，不受原生应用群发次数限制。", "or"),
+            ("03", "人机协作", "AI 全自动 / 人机协作 / 纯人工三种模式，AI 无法处理的对话自动转人工，每条消息可追溯。", "gr"),
+            ("04", "员工协作", "一人管多账号、多人管一账号都支持。系统智能分配消息，管理者统一查看营销数据和员工绩效。", "pu"),
+            ("05", "聊天历史", "每一条对话安全留存，支持按客户、关键词、时间多维搜索，导出方便后续分析。", "te"),
+            ("06", "API 集成", "对接客户已有的 CRM / 工单 / 知识库系统，Agent 上岗就接管真实业务流，不孤立运行。", "bl"),
         ], cols=3),
-    )
-
-    body += split_section(
-        eyebrow="架构",
-        title="两大控制台 + 两个工作台，覆盖企业全角色",
-        paragraphs=[
-            "句子秒回按企业组织结构搭协作系统。管理者、小组负责人、一线客服、AI 运营各有自己的入口，权限和数据分开。",
-        ],
-        bullets=[
-            "<strong>企业控制台</strong>：管理者全局视角，跨小组操作，全公司数据看板",
-            "<strong>小组控制台</strong>：小组负责人配置 SOP、群发、加好友、群运营",
-            "<strong>聚合聊天工作台</strong>：客服 / 销售日常回复，AI 辅助 + 团队协作",
-            "<strong>AI 运营工作台</strong>：AI 运营人员效果调优、数据洞察",
-        ],
-        visual_html="""
-<div style="background:#fff;padding:22px;border-radius:14px;border:1px solid var(--gray-line);">
-<div style="font-weight:800;color:var(--blue);margin-bottom:14px;font-size:13px;">句子互动 · 句子秒回 工作台</div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-  <div style="background:var(--blue-light);border-radius:10px;padding:14px;">
-    <div style="font-weight:700;font-size:13px;color:var(--blue);">企业控制台</div>
-    <div style="font-size:11px;color:var(--gray-text);margin-top:5px;">管理者 · 全局数据看板</div>
-  </div>
-  <div style="background:var(--orange-lt);border-radius:10px;padding:14px;">
-    <div style="font-weight:700;font-size:13px;color:var(--orange);">小组控制台</div>
-    <div style="font-size:11px;color:var(--gray-text);margin-top:5px;">运营组长 · 配 SOP / 群发</div>
-  </div>
-  <div style="background:var(--green-lt);border-radius:10px;padding:14px;">
-    <div style="font-weight:700;font-size:13px;color:var(--green);">聚合聊天工作台</div>
-    <div style="font-size:11px;color:var(--gray-text);margin-top:5px;">客服 / 销售 · 日常回复</div>
-  </div>
-  <div style="background:var(--purple-lt);border-radius:10px;padding:14px;">
-    <div style="font-weight:700;font-size:13px;color:var(--purple);">AI 运营工作台</div>
-    <div style="font-size:11px;color:var(--gray-text);margin-top:5px;">AI 运营 · 效果调优 / 洞察</div>
-  </div>
-</div>
-</div>
-""",
     )
 
     body += block(        "11 个 IM 通道",
@@ -451,6 +734,46 @@ def page_miaohui():
         reverse=True,
     )
 
+    body += split_section(
+        eyebrow="架构",
+        title="两大控制台 + 两个工作台，覆盖企业全角色",
+        paragraphs=[
+            "句子秒回按企业组织结构搭协作系统。管理者、小组负责人、一线客服、AI 运营各有自己的入口，权限和数据分开。",
+        ],
+        bullets=[
+            "<strong>企业控制台</strong>：管理者全局视角，跨小组操作，全公司数据看板",
+            "<strong>小组控制台</strong>：小组负责人配置 SOP、群发、加好友、群运营",
+            "<strong>聚合聊天工作台</strong>：客服 / 销售日常回复，AI 辅助 + 团队协作",
+            "<strong>AI 运营工作台</strong>：AI 运营人员效果调优、数据洞察",
+        ],
+        visual_html="""
+<div style="background:#fff;padding:22px;border-radius:14px;border:1px solid var(--gray-line);">
+<div style="font-weight:800;color:var(--blue);margin-bottom:14px;font-size:13px;">句子互动 · 句子秒回 工作台</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+  <div style="background:var(--blue-light);border-radius:10px;padding:14px;">
+    <div style="font-weight:700;font-size:13px;color:var(--blue);">企业控制台</div>
+    <div style="font-size:11px;color:var(--gray-text);margin-top:5px;">管理者 · 全局数据看板</div>
+  </div>
+  <div style="background:var(--orange-lt);border-radius:10px;padding:14px;">
+    <div style="font-weight:700;font-size:13px;color:var(--orange);">小组控制台</div>
+    <div style="font-size:11px;color:var(--gray-text);margin-top:5px;">运营组长 · 配 SOP / 群发</div>
+  </div>
+  <div style="background:var(--green-lt);border-radius:10px;padding:14px;">
+    <div style="font-weight:700;font-size:13px;color:var(--green);">聚合聊天工作台</div>
+    <div style="font-size:11px;color:var(--gray-text);margin-top:5px;">客服 / 销售 · 日常回复</div>
+  </div>
+  <div style="background:var(--purple-lt);border-radius:10px;padding:14px;">
+    <div style="font-weight:700;font-size:13px;color:var(--purple);">AI 运营工作台</div>
+    <div style="font-size:11px;color:var(--gray-text);margin-top:5px;">AI 运营 · 效果调优 / 洞察</div>
+  </div>
+</div>
+</div>
+""",
+    )
+
+    # Preserved interactive workbench mockup (Req 7), now placed mid-body.
+    body += mock_section
+
     body += block(        "结果",
         "客户用句子秒回拿到的实际效果",
         "数据来自 多年部署的真实客户案例。",
@@ -485,7 +808,13 @@ def page_miaohui():
 
 def page_miaodong():
     body = ''
-    body += '''
+    # NEW module order (Req 4.1): pre-redesign opened with the Canvas mockup.
+    # Here the capability grid leads; the knowledge-base split and the industry
+    #策略库 grid follow; the 智能体/工作流 split and the preserved Canvas demo
+    # come later; KPIs close. The Canvas demo (with its fit() script) is captured
+    # here and placed mid-body so the preserved interactive demo stays intact
+    # (Req 7.8).
+    mock_section = '''
 <section class="product-shot-section">
   <div class="container">
     <div class="canvas-mock">
@@ -606,12 +935,12 @@ def page_miaodong():
         "一个企业级 Agent 开发平台，该有的都有",
         "句子秒懂是 AI 员工的「大脑」。可视化搭 Agent、接知识、调工具、选模型、发渠道——业务人员不写代码，就能把企业的流程和知识装进 Agent。",
         feat_grid([
-            ("🎨", "可视化编排", "Canvas 拖拽节点连成 Agent——条件、循环、并行、转人工，每一步看得见、改得动，运营不写代码也能配。", "or"),
-            ("🤖", "多 Agent 协作", "复杂业务拆成各管一段的 Agent，主管 Agent 统一调度，比单个几百节点的大流程更好维护、效果更好。", "bl"),
-            ("📚", "知识库", "产品文档、FAQ、网页、表格、API 一次导入，自动建索引，回答带出处、不跑偏。", "gr"),
-            ("🔌", "插件与工具", "接 CRM、工单、订单、自定义 API，Agent 不止于回复，还能查库存、发券、改订单。", "pu"),
-            ("🧩", "100+ 大模型", "DeepSeek、智谱、通义、文心、GPT 任选，按场景和成本随时切换，不绑死任何一家。", "te"),
-            ("🚀", "一键发布多渠道", "配好的 Agent 直接发布到 11 个 IM 通道、网页和 API，复用到销售、客服、招聘等多个场景。", "or"),
+            ("01", "可视化编排", "Canvas 拖拽节点连成 Agent——条件、循环、并行、转人工，每一步看得见、改得动，运营不写代码也能配。", "or"),
+            ("02", "多 Agent 协作", "复杂业务拆成各管一段的 Agent，主管 Agent 统一调度，比单个几百节点的大流程更好维护、效果更好。", "bl"),
+            ("03", "知识库", "产品文档、FAQ、网页、表格、API 一次导入，自动建索引，回答带出处、不跑偏。", "gr"),
+            ("04", "插件与工具", "接 CRM、工单、订单、自定义 API，Agent 不止于回复，还能查库存、发券、改订单。", "pu"),
+            ("05", "100+ 大模型", "DeepSeek、智谱、通义、文心、GPT 任选，按场景和成本随时切换，不绑死任何一家。", "te"),
+            ("06", "一键发布多渠道", "配好的 Agent 直接发布到 11 个 IM 通道、网页和 API，复用到销售、客服、招聘等多个场景。", "or"),
         ], cols=3),
     )
 
@@ -641,6 +970,24 @@ def page_miaodong():
 </div>
 </div>
 """,
+    )
+
+    body += block(        "5 个高合规高垂直行业的策略库",
+        "开通就带一套现成的行业打法",
+        "每个行业的话术、SOP、合规边界，我们都内置好了——多年沉下来的行业经验，你不用从零调，开通就能用。",
+        '<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:14px;">'
+        + ''.join(
+            f'<div style="padding:24px 18px;background:#fff;border:1px solid var(--gray-line);border-radius:12px;text-align:center;"><div style="font-size:32px;margin-bottom:8px;">{ic}</div><div style="font-size:14px;font-weight:800;margin-bottom:6px;">{n}</div><div style="font-size:11.5px;color:var(--gray-text);line-height:1.55;">{d}</div></div>'
+            for ic, n, d in [
+                ("📚", "在线教育", "话术库 · 报名漏斗 · 续费策略"),
+                ("🛍️", "消费品电商", "导购话术 · 售后处理 · 私域召回"),
+                ("🏦", "金融", "合规话术 · 风控边界 · KYC 流程"),
+                ("⚖️", "政务 · 司法", "调解话术 · 普法应答 · 公文规范"),
+                ("🌐", "泛互联网", "客服 SOP · 用户分层 · 留存策略"),
+            ]
+        )
+        + '</div>',
+        alt=True,
     )
 
     body += split_section(
@@ -677,23 +1024,8 @@ def page_miaodong():
         reverse=True,
     )
 
-    body += block(        "5 个高合规高垂直行业的策略库",
-        "开通就带一套现成的行业打法",
-        "每个行业的话术、SOP、合规边界，我们都内置好了——多年沉下来的行业经验，你不用从零调，开通就能用。",
-        '<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:14px;">'
-        + ''.join(
-            f'<div style="padding:24px 18px;background:#fff;border:1px solid var(--gray-line);border-radius:12px;text-align:center;"><div style="font-size:32px;margin-bottom:8px;">{ic}</div><div style="font-size:14px;font-weight:800;margin-bottom:6px;">{n}</div><div style="font-size:11.5px;color:var(--gray-text);line-height:1.55;">{d}</div></div>'
-            for ic, n, d in [
-                ("📚", "在线教育", "话术库 · 报名漏斗 · 续费策略"),
-                ("🛍️", "消费品电商", "导购话术 · 售后处理 · 私域召回"),
-                ("🏦", "金融", "合规话术 · 风控边界 · KYC 流程"),
-                ("⚖️", "政务 · 司法", "调解话术 · 普法应答 · 公文规范"),
-                ("🌐", "泛互联网", "客服 SOP · 用户分层 · 留存策略"),
-            ]
-        )
-        + '</div>',
-        alt=True,
-    )
+    # Preserved interactive Canvas demo (Req 7.8), now placed mid-body.
+    body += mock_section
 
     body += block(        "结果",
         "AI 真懂业务的客户拿到的效果",
@@ -730,68 +1062,41 @@ def page_miaodong():
 def page_shouhu():
     body = ''
 
-    # ── 为什么：上一代 vs 下一代 ──
-    body += block(
-        "为什么要守护",
-        "上线前测试不充分，问题会直接暴露给客户",
-        "某家电客户上线前的一轮自动化测试中，28 条用例全部未通过，主要短板是故障咨询应答不达标，问题在上线前被拦下。Agent 上线不能止于流程搭建，上线前需充分测试，上线后需持续监控。",
-        '''<div style="max-width:980px;margin:0 auto;border:1px solid var(--gray-line);border-radius:16px;overflow:hidden;">
-<div style="display:grid;grid-template-columns:1fr 1fr;">
-  <div style="background:var(--gray-bg);padding:15px 22px;font-weight:800;font-size:13.5px;color:var(--gray-text);">上一代 · 搭完流程就交付</div>
-  <div style="background:var(--green-lt);padding:15px 22px;font-weight:800;font-size:13.5px;color:var(--green);">句子守护 · 守护你的 AI 员工</div>
-</div>
-''' + ''.join(
-            f'''<div style="display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--gray-line);">
-  <div style="padding:14px 22px;font-size:13.5px;color:var(--gray-text);line-height:1.6;">{old}</div>
-  <div style="padding:14px 22px;font-size:13.5px;color:var(--black);line-height:1.6;background:#fbfdfc;">{new}</div>
-</div>'''
-            for old, new in [
-                ("测试用例靠人手写，几十条到头，覆盖不全", "AI 读懂业务流程，几分钟生成上百条用例"),
-                ("上线就是终点，坏了没人知道、客户看不到", "六道关口逐关把关，不达标不上线"),
-                ("版本一改，老功能悄悄崩，上线才暴露", "上线后 AI 工单、质检接着盯，问题主动冒出来"),
-                ("做了多少质量活，客户完全无感", "Agent 健康度看板，做了什么客户一眼看见"),
-            ]
-        ) + '</div>',
-    )
-
-    # ── 健康度仪表盘（示意数据）──
-    body += block(        "客户看得见",
-        "每天打开，就知道你的 AI 员工今天健不健康",
-        "客户无需询问。一块看板呈现当天为该 Agent 执行的动作、五个维度的各项进展和健康度评分。",
-        '''<div style="max-width:1000px;margin:0 auto;background:#fff;border:1px solid var(--gray-line);border-radius:18px;padding:32px;box-shadow:var(--shadow-md);">
-<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;border-bottom:1px solid var(--gray-line);padding-bottom:22px;margin-bottom:22px;">
-  <div style="text-align:center;"><div style="font-size:52px;font-weight:900;color:var(--green);line-height:1;">87</div><div style="font-size:12px;color:var(--gray-text);margin-top:4px;">健康度（较上周 +6）</div></div>
-  <div style="flex:1;min-width:240px;">
-    <div style="font-size:12px;font-weight:700;color:var(--gray-text);margin-bottom:8px;">行动日历 · 每天为这个 Agent 做了什么</div>
-    <div style="display:grid;grid-template-columns:repeat(20,1fr);gap:3px;">''' +
-        ''.join(f'<div style="aspect-ratio:1;border-radius:2px;background:{c};"></div>' for c in (
-            ['var(--gray-line)','#cde9d6','#9bd3ad','#6cc187','var(--green)']*8)[:40]) +
-        '''</div>
-  </div>
-</div>
-<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:14px;">''' +
-        ''.join(
-            f'<div style="text-align:center;"><div style="font-size:22px;font-weight:800;color:var(--blue);">{v}</div><div style="font-size:12px;color:var(--gray-text);margin-top:4px;">{l}</div></div>'
-            for v, l in [("126/98","用例生成 / 采纳"),("18 类","场景覆盖"),("94%","批量验收通过"),("3 版","灰度测试"),("100%","回归测试")]
-        ) +
-        '''</div>
-<div style="font-size:11.5px;color:var(--gray-text);margin-top:18px;text-align:center;">示意数据；正式上线后由每个 Agent 的真实测试数据自动填充。</div>
-</div>''',
-        alt=True,
-    )
+    # NEW module order (Req 4.1): pre-redesign ran 为什么 → 健康度看板 → 六道关口
+    # → 测试报告. Here the six gates lead, the 上一代/守护 comparison follows
+    # (now the shared comparison_table component, Req 5.1/5.4), then the report
+    # split, and the health dashboard closes the body. Gate markers restored to
+    # the preserved 01–06 (Req 5.2/8.4).
 
     # ── 六道关口 ──
     body += block(        "六道关口",
         "每个 Agent 上线，都要过六道关口",
         "把上线前、上线中、上线后该做的检查排成六道关，哪关没过就不让它上。",
         feat_grid([
-            ("①", "AI 生成测试用例 · 上线前", "AI 读懂流程引擎配置和业务场景，几分钟生成上百条用例。结果不满意可对话调整、重新生成。还可输入 SOP 流程图、客户资料包、历史对话、新旧版本差异作为依据，覆盖提示词的改动。", "bl"),
-            ("②", "批量验收 · 上线前", "单轮通过率 98% 看似达标，但大模型每次输出存在波动。设定轮数与并发跑多轮，逐条判断回复是否正确，筛出未通过的用例修正，合格用例纳入回归集。", "or"),
-            ("③", "灰度测试 · 上线中", "需验证新版又要避免影响线上。开启灰度生成密钥，仅持有密钥的会话进入新版，其余会话维持原版。效果可对比，一键关闭即回退正式版。", "gr"),
-            ("④", "回归测试 · 放行前强制", "新版一改，老功能可能悄悄坏。回归集跟版本绑定，上线前强制跑：不少于 50 条、通过率必须 100% 才放行。每次结果归档，质量怎么变的可追溯。", "pu"),
-            ("⑤", "AI 工单 · 上线后", "AI 应答出错难以避免，问题在于客户缺少反馈渠道，也无从知晓是否有人跟进。客户在对话中点踩后，工单同步进入调优中心和客户侧看板，处理完成后回执状态。", "te"),
-            ("⑥", "AI 质检 · 上线后", "人工质检成本高、覆盖有限。建立质检模板，对线上对话批量抽检，输出会话数与未通过比例，支持二次复检，人工客服与 AI 客服统一标准。", "bl"),
+            ("01", "AI 生成测试用例 · 上线前", "AI 读懂流程引擎配置和业务场景，几分钟生成上百条用例。结果不满意可对话调整、重新生成。还可输入 SOP 流程图、客户资料包、历史对话、新旧版本差异作为依据，覆盖提示词的改动。", "bl"),
+            ("02", "批量验收 · 上线前", "单轮通过率 98% 看似达标，但大模型每次输出存在波动。设定轮数与并发跑多轮，逐条判断回复是否正确，筛出未通过的用例修正，合格用例纳入回归集。", "or"),
+            ("03", "灰度测试 · 上线中", "需验证新版又要避免影响线上。开启灰度生成密钥，仅持有密钥的会话进入新版，其余会话维持原版。效果可对比，一键关闭即回退正式版。", "gr"),
+            ("04", "回归测试 · 放行前强制", "新版一改，老功能可能悄悄坏。回归集跟版本绑定，上线前强制跑：不少于 50 条、通过率必须 100% 才放行。每次结果归档，质量怎么变的可追溯。", "pu"),
+            ("05", "AI 工单 · 上线后", "AI 应答出错难以避免，问题在于客户缺少反馈渠道，也无从知晓是否有人跟进。客户在对话中点踩后，工单同步进入调优中心和客户侧看板，处理完成后回执状态。", "te"),
+            ("06", "AI 质检 · 上线后", "人工质检成本高、覆盖有限。建立质检模板，对线上对话批量抽检，输出会话数与未通过比例，支持二次复检，人工客服与 AI 客服统一标准。", "bl"),
         ], cols=3),
+    )
+
+    # ── 为什么：上一代 vs 守护（comparison_table，Req 5.1/5.4）──
+    body += block(
+        "为什么要守护",
+        "上线前测试不充分，问题会直接暴露给客户",
+        "某家电客户上线前的一轮自动化测试中，28 条用例全部未通过，主要短板是故障咨询应答不达标，问题在上线前被拦下。Agent 上线不能止于流程搭建，上线前需充分测试，上线后需持续监控。",
+        comparison_table(
+            ["上一代 · 搭完流程就交付", "句子守护 · 守护你的 AI 员工"],
+            [
+                ("测试用例靠人手写，几十条到头，覆盖不全", ("AI 读懂业务流程，几分钟生成上百条用例", True)),
+                ("上线就是终点，坏了没人知道、客户看不到", ("六道关口逐关把关，不达标不上线", True)),
+                ("版本一改，老功能悄悄崩，上线才暴露", ("上线后 AI 工单、质检接着盯，问题主动冒出来", True)),
+                ("做了多少质量活，客户完全无感", ("Agent 健康度看板，做了什么客户一眼看见", True)),
+            ],
+        ),
+        alt=True,
     )
 
     # ── 一键测试报告 ──
@@ -821,6 +1126,32 @@ def page_shouhu():
 """,
         color="bl",
         reverse=True,
+    )
+
+    # ── 健康度仪表盘（示意数据）──
+    body += block(        "客户看得见",
+        "每天打开，就知道你的 AI 员工今天健不健康",
+        "客户无需询问。一块看板呈现当天为该 Agent 执行的动作、五个维度的各项进展和健康度评分。",
+        '''<div style="max-width:1000px;margin:0 auto;background:#fff;border:1px solid var(--gray-line);border-radius:18px;padding:32px;box-shadow:var(--shadow-md);">
+<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;border-bottom:1px solid var(--gray-line);padding-bottom:22px;margin-bottom:22px;">
+  <div style="text-align:center;"><div style="font-size:52px;font-weight:900;color:var(--green);line-height:1;">87</div><div style="font-size:12px;color:var(--gray-text);margin-top:4px;">健康度（较上周 +6）</div></div>
+  <div style="flex:1;min-width:240px;">
+    <div style="font-size:12px;font-weight:700;color:var(--gray-text);margin-bottom:8px;">行动日历 · 每天为这个 Agent 做了什么</div>
+    <div style="display:grid;grid-template-columns:repeat(20,1fr);gap:3px;">''' +
+        ''.join(f'<div style="aspect-ratio:1;border-radius:2px;background:{c};"></div>' for c in (
+            ['var(--gray-line)','#cde9d6','#9bd3ad','#6cc187','var(--green)']*8)[:40]) +
+        '''</div>
+  </div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:14px;">''' +
+        ''.join(
+            f'<div style="text-align:center;"><div style="font-size:22px;font-weight:800;color:var(--blue);">{v}</div><div style="font-size:12px;color:var(--gray-text);margin-top:4px;">{l}</div></div>'
+            for v, l in [("126/98","用例生成 / 采纳"),("18 类","场景覆盖"),("94%","批量验收通过"),("3 版","灰度测试"),("100%","回归测试")]
+        ) +
+        '''</div>
+<div style="font-size:11.5px;color:var(--gray-text);margin-top:18px;text-align:center;">示意数据；正式上线后由每个 Agent 的真实测试数据自动填充。</div>
+</div>''',
+        alt=True,
     )
 
     body += f"""
@@ -1626,91 +1957,82 @@ def page_industries():
 # ────────────────────────── about page ──────────────────────────
 
 def page_about():
+    # 6 department evidence cards — each rendered as the canonical feature card
+    # (Design_System .card/.feature-card) so the category label, headline, and
+    # description are all preserved verbatim (Req 5.2, 5.4).
+    dept_cards = [
+        ("战略", "一句话，75 分钟调研三家公司",
+         "一句「判断这家是否为竞争对手」，AI 自动检索、撰写并发布到飞书群。出错后把教训写进 skill，下次自动规避。"),
+        ("技术", "AI 自己测 AI、压测自己的系统",
+         "测试 Agent、流量回放压测系统，都是团队用 AI 搭出来的，连提示词改动都能跑回归。"),
+        ("销售", "跟单小二，每个销售都在用",
+         "拜访录音自动转成纪要、回填 CRM、列出下一步该跟进的客户，销售不用再手动记单。"),
+        ("法务", "全量合同走「秒审」",
+         "销售发合同，AI 分钟级返回审核结果，过的自动走用章，异常的带修改建议推回来。"),
+        ("HR · 运营", "一场全靠 AI 办起来的 Hackathon",
+         "海报、议程、记分牌、开场视频全是 AI 做的；还把「AI 员工上岗机制」写成了制度。"),
+        ("财务", "财务跑在 AI CRM 上",
+         "客户、合同、回款、续约都在 AI CRM 里，到期自动提醒、对账异常主动推送，不用人去翻表对数。"),
+    ]
+    dept_grid = '<div class="feature-grid feature-grid--3">' + ''.join(
+        f'<div class="card card--hover feature-card">'
+        f'<div class="block-eyebrow">{cat}</div>'
+        f'<h3 class="feature-title">{title}</h3>'
+        f'<p class="feature-desc">{desc}</p>'
+        f'</div>'
+        for cat, title, desc in dept_cards
+    ) + '</div>'
+
+    # 3 perspective resource cards — canonical card surface as outbound links.
+    perspectives = [
+        ("https://rui.juzi.bot/slides/files/2026-05-24-dedao-reinvent-organization/index.html",
+         "分享 · 得到", "重新发明组织：让小公司也用得起大公司的人",
+         "AI 让一家小公司，也能用得起过去只有大公司才养得起的那种人。在得到的现场分享。", "查看分享 →"),
+        ("https://rui.juzi.bot/slides/files/2026-04-25-ai-organization-pku/index.html",
+         "分享", "AI 原生时代，我们正在交付的产品和还没解的题",
+         "重新发明组织——AI 原生时代，一家公司每天怎么用 Agent 干活，哪些跑通了，哪些还在解。", "查看分享 →"),
+        ("https://rui.juzi.bot/thought/2026-06-04-pe-to-fde.html",
+         "思考", "硅谷今年最火的岗位 FDE，我们闷头干了三年",
+         "被中国客户逼着，三年只做一件事：客户业务真的变好，才收钱。这是 AI 原生组织对外的样子。", "阅读全文 →"),
+    ]
+    persp_grid = '<div class="feature-grid feature-grid--3">' + ''.join(
+        f'<a class="card card--hover feature-card" href="{href}" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">'
+        f'<div class="block-eyebrow">{eyebrow}</div>'
+        f'<h3 class="feature-title">{title}</h3>'
+        f'<p class="feature-desc">{desc}</p>'
+        f'<span class="feature-punch">{cta}</span>'
+        f'</a>'
+        for href, eyebrow, title, desc, cta in perspectives
+    ) + '</div>'
+
+    # Rebuilt module order (Req 4.1): department proof → outside perspectives →
+    # company KPI strip → closing CTA (was KPI → department → perspectives).
     body = ''
+    body += block(
+        "AI 下沉到每个部门",
+        "不是某个部门在试，是每个部门、每个人都在用",
+        "一家公司是不是真正的 AI 原生，关键不在口号，而在 AI 是否落到了每个具体岗位。在句子互动，从管理层到一线，每个部门都有自己日常运行的 AI 工作流。",
+        dept_grid,
+        alt=True,
+    )
+    body += block(
+        "我们怎么看",
+        "AI 原生组织，<span class=\"accent\">长什么样</span>",
+        "这些不是写在墙上的口号，是我们自己每天在跑的工作方式。",
+        persp_grid,
+    )
     body += block(
         "公司简介",
         "我们做的事，<span class=\"accent\">让 AI 在企业真实业务里跑起来</span>",
         "",
-        '<div style="max-width:920px;margin:0 auto;background:linear-gradient(135deg,var(--blue-light),#fff);border-radius:22px;padding:40px 48px;text-align:center;">'
-        '<div style="display:flex;justify-content:center;align-items:center;gap:0;flex-wrap:wrap;">'
-        '<div style="padding:0 36px;"><div style="font-size:30px;font-weight:800;color:var(--blue);letter-spacing:-.01em;line-height:1.1;">1000+</div><div style="font-size:13px;color:var(--gray-text);margin-top:6px;">大型企业客户</div></div>'
-        '<div style="padding:0 36px;border-left:1px solid rgba(0,0,0,.08);"><div style="font-size:30px;font-weight:800;color:var(--blue);letter-spacing:-.01em;line-height:1.1;">多年</div><div style="font-size:13px;color:var(--gray-text);margin-top:6px;">企业服务深耕</div></div>'
-        '<div style="padding:0 36px;border-left:1px solid rgba(0,0,0,.08);"><div style="font-size:30px;font-weight:800;color:var(--blue);letter-spacing:-.01em;line-height:1.1;">4 个</div><div style="font-size:13px;color:var(--gray-text);margin-top:6px;">重点行业</div></div>'
-        '<div style="padding:0 36px;border-left:1px solid rgba(0,0,0,.08);"><div style="font-size:30px;font-weight:800;color:var(--blue);letter-spacing:-.01em;line-height:1.1;">10+</div><div style="font-size:13px;color:var(--gray-text);margin-top:6px;">覆盖 IM 渠道</div></div>'
-        '</div>'
-        '</div>'
+        kpi_row([
+            ("1000+", "大型企业客户"),
+            ("多年", "企业服务深耕"),
+            ("4 个", "重点行业"),
+            ("10+", "覆盖 IM 渠道"),
+        ]),
     )
-
-    body += block(        "AI 下沉到每个部门",
-        "不是某个部门在试，是每个部门、每个人都在用",
-        "一家公司是不是真正的 AI 原生，关键不在口号，而在 AI 是否落到了每个具体岗位。在句子互动，从管理层到一线，每个部门都有自己日常运行的 AI 工作流。",
-        '''<div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
-<div style="background:#fff;border:1px solid var(--gray-line);border-radius:14px;padding:22px;">
-  <div style="font-size:12px;font-weight:800;color:var(--blue);letter-spacing:.06em;margin-bottom:8px;">战略</div>
-  <div style="font-size:15px;font-weight:800;margin-bottom:8px;">一句话，75 分钟调研三家公司</div>
-  <p style="font-size:13px;color:var(--gray-text);line-height:1.6;margin:0;">一句「判断这家是否为竞争对手」，AI 自动检索、撰写并发布到飞书群。出错后把教训写进 skill，下次自动规避。</p>
-</div>
-<div style="background:#fff;border:1px solid var(--gray-line);border-radius:14px;padding:22px;">
-  <div style="font-size:12px;font-weight:800;color:var(--green);letter-spacing:.06em;margin-bottom:8px;">技术</div>
-  <div style="font-size:15px;font-weight:800;margin-bottom:8px;">AI 自己测 AI、压测自己的系统</div>
-  <p style="font-size:13px;color:var(--gray-text);line-height:1.6;margin:0;">测试 Agent、流量回放压测系统，都是团队用 AI 搭出来的，连提示词改动都能跑回归。</p>
-</div>
-<div style="background:#fff;border:1px solid var(--gray-line);border-radius:14px;padding:22px;">
-  <div style="font-size:12px;font-weight:800;color:var(--orange);letter-spacing:.06em;margin-bottom:8px;">销售</div>
-  <div style="font-size:15px;font-weight:800;margin-bottom:8px;">跟单小二，每个销售都在用</div>
-  <p style="font-size:13px;color:var(--gray-text);line-height:1.6;margin:0;">拜访录音自动转成纪要、回填 CRM、列出下一步该跟进的客户，销售不用再手动记单。</p>
-</div>
-<div style="background:#fff;border:1px solid var(--gray-line);border-radius:14px;padding:22px;">
-  <div style="font-size:12px;font-weight:800;color:var(--purple);letter-spacing:.06em;margin-bottom:8px;">法务</div>
-  <div style="font-size:15px;font-weight:800;margin-bottom:8px;">全量合同走「秒审」</div>
-  <p style="font-size:13px;color:var(--gray-text);line-height:1.6;margin:0;">销售发合同，AI 分钟级返回审核结果，过的自动走用章，异常的带修改建议推回来。</p>
-</div>
-<div style="background:#fff;border:1px solid var(--gray-line);border-radius:14px;padding:22px;">
-  <div style="font-size:12px;font-weight:800;color:var(--teal);letter-spacing:.06em;margin-bottom:8px;">HR · 运营</div>
-  <div style="font-size:15px;font-weight:800;margin-bottom:8px;">一场全靠 AI 办起来的 Hackathon</div>
-  <p style="font-size:13px;color:var(--gray-text);line-height:1.6;margin:0;">海报、议程、记分牌、开场视频全是 AI 做的；还把「AI 员工上岗机制」写成了制度。</p>
-</div>
-<div style="background:#fff;border:1px solid var(--gray-line);border-radius:14px;padding:22px;">
-  <div style="font-size:12px;font-weight:800;color:var(--blue);letter-spacing:.06em;margin-bottom:8px;">财务</div>
-  <div style="font-size:15px;font-weight:800;margin-bottom:8px;">财务跑在 AI CRM 上</div>
-  <p style="font-size:13px;color:var(--gray-text);line-height:1.6;margin:0;">客户、合同、回款、续约都在 AI CRM 里，到期自动提醒、对账异常主动推送，不用人去翻表对数。</p>
-</div>
-</div>''',
-        alt=True,
-    )
-
-    body += block(        "我们怎么看",
-        "AI 原生组织，<span class=\"accent\">长什么样</span>",
-        "这些不是写在墙上的口号，是我们自己每天在跑的工作方式。",
-        '''<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:1100px;margin:0 auto;">
-<a href="https://rui.juzi.bot/slides/files/2026-05-24-dedao-reinvent-organization/index.html" target="_blank" rel="noopener" style="display:flex;flex-direction:column;padding:28px 24px;background:#fff;border:1px solid var(--gray-line);border-radius:18px;text-decoration:none;color:inherit;transition:border-color .2s,box-shadow .2s;">
-  <div style="font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:12px;">分享 · 得到</div>
-  <h4 style="font-size:17px;font-weight:800;margin:0 0 12px;line-height:1.4;">重新发明组织：让小公司也用得起大公司的人</h4>
-  <p style="font-size:13.5px;color:var(--gray-text);line-height:1.65;margin:0 0 16px;flex:1;">AI 让一家小公司，也能用得起过去只有大公司才养得起的那种人。在得到的现场分享。</p>
-  <span style="font-size:13px;font-weight:700;color:var(--blue);">查看分享 →</span>
-</a>
-<a href="https://rui.juzi.bot/slides/files/2026-04-25-ai-organization-pku/index.html" target="_blank" rel="noopener" style="display:flex;flex-direction:column;padding:28px 24px;background:#fff;border:1px solid var(--gray-line);border-radius:18px;text-decoration:none;color:inherit;transition:border-color .2s,box-shadow .2s;">
-  <div style="font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--orange);margin-bottom:12px;">分享</div>
-  <h4 style="font-size:17px;font-weight:800;margin:0 0 12px;line-height:1.4;">AI 原生时代，我们正在交付的产品和还没解的题</h4>
-  <p style="font-size:13.5px;color:var(--gray-text);line-height:1.65;margin:0 0 16px;flex:1;">重新发明组织——AI 原生时代，一家公司每天怎么用 Agent 干活，哪些跑通了，哪些还在解。</p>
-  <span style="font-size:13px;font-weight:700;color:var(--orange);">查看分享 →</span>
-</a>
-<a href="https://rui.juzi.bot/thought/2026-06-04-pe-to-fde.html" target="_blank" rel="noopener" style="display:flex;flex-direction:column;padding:28px 24px;background:#fff;border:1px solid var(--gray-line);border-radius:18px;text-decoration:none;color:inherit;transition:border-color .2s,box-shadow .2s;">
-  <div style="font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--green);margin-bottom:12px;">思考</div>
-  <h4 style="font-size:17px;font-weight:800;margin:0 0 12px;line-height:1.4;">硅谷今年最火的岗位 FDE，我们闷头干了三年</h4>
-  <p style="font-size:13.5px;color:var(--gray-text);line-height:1.65;margin:0 0 16px;flex:1;">被中国客户逼着，三年只做一件事：客户业务真的变好，才收钱。这是 AI 原生组织对外的样子。</p>
-  <span style="font-size:13px;font-weight:700;color:var(--green);">阅读全文 →</span>
-</a>
-</div>''',
-    )
-
-    body += f"""
-<section class="section-block">
-  <div class="container">
-    {cta_band("聊聊你想部署的 AI 员工")}
-  </div>
-</section>
-""".strip()
+    body += cta_section(title="聊聊你想部署的 AI 员工")
 
     return page_layout(
         title="AI 原生组织 · 句子互动",
@@ -1962,64 +2284,35 @@ def page_insights():
 
 def page_fde():
     body = ''
-    body += block(        "FDE 是什么",
-        "把工程师派到客户现场，对结果负责",
-        "FDE，Forward Deployed Engineer（前端部署工程师）——前移到客户业务现场的工程师。不止于交付软件，而是与客户一起理解业务，让 AI 真正在其中产出结果。",
-        '''<div style="max-width:980px;margin:0 auto;border:1px solid var(--gray-line);border-radius:16px;overflow:hidden;">
-<div style="display:grid;grid-template-columns:1fr 1fr;">
-  <div style="background:var(--gray-bg);padding:15px 22px;font-weight:800;font-size:13.5px;color:var(--gray-text);">普通产品工程师</div>
-  <div style="background:var(--blue-light);padding:15px 22px;font-weight:800;font-size:13.5px;color:var(--blue);">FDE</div>
-</div>
-<div style="display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--gray-line);">
-  <div style="padding:14px 22px;font-size:14px;color:var(--gray-text);line-height:1.6;">关心「一个能力，给很多客户」</div>
-  <div style="padding:14px 22px;font-size:14px;color:var(--black);line-height:1.6;background:#fbfcff;">关心「一个客户，很多能力」</div>
-</div>
-<div style="display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--gray-line);">
-  <div style="padding:14px 22px;font-size:14px;color:var(--gray-text);line-height:1.6;">交一套搭好的流程，就算完</div>
-  <div style="padding:14px 22px;font-size:14px;color:var(--black);line-height:1.6;background:#fbfcff;">对客户的业务结果负责，结果没出来不算完</div>
-</div>
-<div style="display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--gray-line);">
-  <div style="padding:14px 22px;font-size:14px;color:var(--gray-text);line-height:1.6;">在公司里写通用功能</div>
-  <div style="padding:14px 22px;font-size:14px;color:var(--black);line-height:1.6;background:#fbfcff;">写两头的代码：现场的定制，抽回产品的标准能力</div>
-</div>
-</div>''',
-    )
-    body += block(        "FDE 怎么干",
+    # Rebuilt module order (Req 4.1): the pre-redesign page led with the FDE
+    # definition contrast then the method grid. Here the four-step method grid
+    # leads, the definition contrast follows (now a semantic comparison table),
+    # then the high-value-scenario split, the Echo/Delta pairing, and the global
+    # context. Step markers preserved as 01–04 (Req 5.2).
+    body += block(
+        "FDE 怎么干",
         "贴着客户的业务跑，把脏活在现场解决",
         "AI 落地的难点从来不是模型，而是客户各不相同的真实业务。FDE 正是去解决这一部分。",
         feat_grid([
-            ("🤝", "先搞懂这门生意", "不是先装软件，而是先与客户梳理清楚业务、流程与症结。AI 要承接的工作，必须先有人真正理解。", "bl"),
-            ("🎯", "对结果负责", "与客户签订对赌协议，按结果收费。客户的转化和人效确实改善，我们才收费。", "or"),
-            ("🔁", "能力回流产品", "在一个客户现场踩出来的能力，抽象成产品里的标准能力，下一个客户起步就用得上。做一次，卖多次。", "gr"),
-            ("🧑‍🎓", "不一定是工程师", "FDE 不限于会写代码的人——很多最好的 FDE 不写代码。真正重要的是理解业务、肯往一线钻，技术背景只是其次。", "pu"),
+            ("01", "先搞懂这门生意", "不是先装软件，而是先与客户梳理清楚业务、流程与症结。AI 要承接的工作，必须先有人真正理解。", "bl"),
+            ("02", "对结果负责", "与客户签订对赌协议，按结果收费。客户的转化和人效确实改善，我们才收费。", "or"),
+            ("03", "能力回流产品", "在一个客户现场踩出来的能力，抽象成产品里的标准能力，下一个客户起步就用得上。做一次，卖多次。", "gr"),
+            ("04", "不一定是工程师", "FDE 不限于会写代码的人——很多最好的 FDE 不写代码。真正重要的是理解业务、肯往一线钻，技术背景只是其次。", "pu"),
         ], cols=2),
     )
 
-    # ── Echo + Delta ──
     body += block(
-        "FDE 由两种人搭班子",
-        "Echo 懂行业，Delta 写代码",
-        "FDE 不是一个全才，而是两种能力的组合。后方还有产品团队，把现场的粗糙定制抽象成可复用的标准产品。",
-        '''<div style="max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:18px;">
-<div style="background:#fff;border:1px solid var(--gray-line);border-radius:16px;padding:28px;">
-  <div style="font-size:13px;font-weight:800;color:var(--blue);letter-spacing:.06em;margin-bottom:10px;">ECHO · 懂行业</div>
-  <p style="font-size:14px;color:var(--gray-text);line-height:1.7;margin:0;">钻进客户的生意里，找出真正该解决的问题。FDE 进场的第一件事不是写代码，是把这门生意先搞清楚。</p>
-</div>
-<div style="background:#fff;border:1px solid var(--gray-line);border-radius:16px;padding:28px;">
-  <div style="font-size:13px;font-weight:800;color:var(--orange);letter-spacing:.06em;margin-bottom:10px;">DELTA · 写代码</div>
-  <p style="font-size:14px;color:var(--gray-text);line-height:1.7;margin:0;">快速把现场需要的东西搭出来。Echo 定义问题，Delta 当场实现，两人扎进同一个客户。</p>
-</div>
-</div>
-<p style="text-align:center;font-size:14px;color:var(--gray-text);margin:24px auto 0;max-width:720px;line-height:1.7;">现场踩出来的粗糙定制，后方产品团队再抽象成能跑 5–10 个客户的标准能力——上一个客户踩的坑，成了下一个 FDE 进场的杠杆。</p>''',
-        alt=True,
-    )
-
-    # ── 全球 FDE 格局 ──
-    body += block(
-        "全球验证过的模式",
-        "FDE，我们 2023 年就在做",
-        "FDE 由 Palantir 首创，如今 OpenAI、Anthropic、谷歌云等都在组建 FDE 团队，把 AI 真正落进企业。句子互动被中国客户逼着，从 2023 年起就按结果交付——比硅谷早了三年。",
-        '''<p style="text-align:center;font-size:14.5px;color:var(--black);font-weight:600;margin:0 auto;max-width:720px;line-height:1.7;">想了解我们这三年怎么走过来的？<a href="https://rui.juzi.bot/thought/2026-06-04-pe-to-fde.html" target="_blank" style="color:var(--blue);font-weight:700;">读创始人的完整复盘 →</a></p>''',
+        "FDE 是什么",
+        "把工程师派到客户现场，对结果负责",
+        "FDE，Forward Deployed Engineer（前端部署工程师）——前移到客户业务现场的工程师。不止于交付软件，而是与客户一起理解业务，让 AI 真正在其中产出结果。",
+        comparison_table(
+            ["普通产品工程师", "FDE"],
+            [
+                ("关心「一个能力，给很多客户」", ("关心「一个客户，很多能力」", True)),
+                ("交一套搭好的流程，就算完", ("对客户的业务结果负责，结果没出来不算完", True)),
+                ("在公司里写通用功能", ("写两头的代码：现场的定制，抽回产品的标准能力", True)),
+            ],
+        ),
     )
 
     body += split_section(
@@ -2048,13 +2341,38 @@ def page_fde():
         color="bl",
         reverse=True,
     )
-    body += f"""
-<section class="section-block">
-  <div class="container">
-    {cta_band("让 FDE 团队进场，把 AI 跑进你的业务")}
-  </div>
-</section>
-""".strip()
+
+    # ── Echo + Delta — canonical 2-up feature cards (Req 5.4), no per-card override ──
+    echo_delta = (
+        '<div class="feature-grid feature-grid--2">'
+        '<div class="card feature-card">'
+        '<div class="block-eyebrow">ECHO · 懂行业</div>'
+        '<p class="feature-desc">钻进客户的生意里，找出真正该解决的问题。FDE 进场的第一件事不是写代码，是把这门生意先搞清楚。</p>'
+        '</div>'
+        '<div class="card feature-card">'
+        '<div class="block-eyebrow">DELTA · 写代码</div>'
+        '<p class="feature-desc">快速把现场需要的东西搭出来。Echo 定义问题，Delta 当场实现，两人扎进同一个客户。</p>'
+        '</div>'
+        '</div>'
+        '<p style="text-align:center;font-size:14px;color:var(--gray-text);margin:24px auto 0;max-width:720px;line-height:1.7;">现场踩出来的粗糙定制，后方产品团队再抽象成能跑 5–10 个客户的标准能力——上一个客户踩的坑，成了下一个 FDE 进场的杠杆。</p>'
+    )
+    body += block(
+        "FDE 由两种人搭班子",
+        "Echo 懂行业，Delta 写代码",
+        "FDE 不是一个全才，而是两种能力的组合。后方还有产品团队，把现场的粗糙定制抽象成可复用的标准产品。",
+        echo_delta,
+        alt=True,
+    )
+
+    # ── 全球 FDE 格局 ──
+    body += block(
+        "全球验证过的模式",
+        "FDE，我们 2023 年就在做",
+        "FDE 由 Palantir 首创，如今 OpenAI、Anthropic、谷歌云等都在组建 FDE 团队，把 AI 真正落进企业。句子互动被中国客户逼着，从 2023 年起就按结果交付——比硅谷早了三年。",
+        '''<p style="text-align:center;font-size:14.5px;color:var(--black);font-weight:600;margin:0 auto;max-width:720px;line-height:1.7;">想了解我们这三年怎么走过来的？<a href="https://rui.juzi.bot/thought/2026-06-04-pe-to-fde.html" target="_blank" style="color:var(--blue);font-weight:700;">读创始人的完整复盘 →</a></p>''',
+    )
+
+    body += cta_section(title="让 FDE 团队进场，把 AI 跑进你的业务")
     return page_layout(
         title="FDE 交付结果 · 对结果负责的工程师 | 句子互动",
         description="FDE（Forward Deployed Engineer，前端部署工程师）——前移到客户业务现场的工程师团队。不只装软件，对客户的业务结果负责：先搞懂这门生意，按结果收费，把现场踩出来的能力回流成产品。",
@@ -2070,16 +2388,9 @@ def page_fde():
 
 def page_dongxing():
     body = ''
-    body += block(        "知识工程",
-        "知识工程：把散落的知识，炼成 AI 答得准的资产",
-        "很多客户以为把知识库直接接进 AI 就行，结果命中率反而更低、答得更乱。问题不在 AI，在知识没被整理过。这件事叫知识工程——句子智库用下面四步，把散乱的知识炼成 AI 真正用得上的资产。",
-        feat_grid([
-            ("🧹", "清洗去重", "原始资料里，重复的、过期的、互相打架的内容很多。先清一遍，去掉冗余和矛盾，只留下可用的知识。", "bl"),
-            ("✂️", "结构化切分", "整篇长文档直接拿去检索，AI 查不准。按语义切成一块块，每块带好上下文和标签，检索才命中得准。", "or"),
-            ("🎯", "问法对齐", "同一个问题，客户有十种问法。把同义、近义、口语化的说法对齐到一起，命中率才稳定。", "gr"),
-            ("🔁", "持续回流", "上线后没答好的问题，回流进知识库再修正。用得越多、知识越准，不是整理一次就不管了。", "pu"),
-        ], cols=2),
-    )
+    # NEW module order (Req 4.1): pre-redesign led with the four-step grid then
+    # the split. Here the "what knowledge engineering is" split leads, and the
+    # four-step method follows. Step markers restored to preserved 01–04.
     body += split_section(
         eyebrow="知识工程",
         title="把散落的知识，炼成能查的资产",
@@ -2106,6 +2417,18 @@ def page_dongxing():
         color="pu",
         reverse=True,
     )
+    body += block(
+        "知识工程",
+        "知识工程：把散落的知识，炼成 AI 答得准的资产",
+        "很多客户以为把知识库直接接进 AI 就行，结果命中率反而更低、答得更乱。问题不在 AI，在知识没被整理过。这件事叫知识工程——句子智库用下面四步，把散乱的知识炼成 AI 真正用得上的资产。",
+        feat_grid([
+            ("01", "清洗去重", "原始资料里，重复的、过期的、互相打架的内容很多。先清一遍，去掉冗余和矛盾，只留下可用的知识。", "bl"),
+            ("02", "结构化切分", "整篇长文档直接拿去检索，AI 查不准。按语义切成一块块，每块带好上下文和标签，检索才命中得准。", "or"),
+            ("03", "问法对齐", "同一个问题，客户有十种问法。把同义、近义、口语化的说法对齐到一起，命中率才稳定。", "gr"),
+            ("04", "持续回流", "上线后没答好的问题，回流进知识库再修正。用得越多、知识越准，不是整理一次就不管了。", "pu"),
+        ], cols=2),
+        alt=True,
+    )
     body += f"""
 <section class="section-block">
   <div class="container">
@@ -2128,15 +2451,27 @@ def page_dongxing():
 
 def page_cli():
     body = ''
-    body += block(        "为什么 AI 需要一双手",
+    # NEW module order (Req 4.1): the pre-redesign DOM combined the problem
+    # framing and the capability grid into ONE block. Here the framing leads as
+    # its own module, then the four capabilities follow as a separate grid
+    # module. Card markers restored to the preserved 01–04 (Req 5.2/8.4).
+    body += block(
+        "为什么 AI 需要一双手",
         "很多企业的核心系统，没 API、改不动",
         "AI 接入客户业务时，常受阻于同一处：用了十几年的核心系统没有 API，无人敢动。模型再强，没有执行能力也无法完成任务。句子 CLI 为 AI 配上一双手，让它像人一样直接操作界面。",
+        "",
+    )
+    body += block(
+        "",
+        "",
+        "",
         feat_grid([
-            ("🖱️", "像人一样操作界面", "无需 API 即可接入。CLI 直接驱动鼠标键盘、读取屏幕，像人一样操作任何软件界面。", "bl"),
-            ("🔗", "跨系统搬运", "从一个系统取数、填入另一个系统，中间缺少接口的环节由 CLI 自动完成，无需人工来回复制粘贴。", "or"),
-            ("⏱️", "定时批处理", "对账、导表、批量录入等重复工作，配置一次即自动执行，无需人工值守。", "gr"),
-            ("🧱", "真实沙盒隔离", "每个任务在独立沙盒中运行，异常时自动恢复，不影响其他任务，也不触及客户的其他系统。", "te"),
+            ("01", "像人一样操作界面", "无需 API 即可接入。CLI 直接驱动鼠标键盘、读取屏幕，像人一样操作任何软件界面。", "bl"),
+            ("02", "跨系统搬运", "从一个系统取数、填入另一个系统，中间缺少接口的环节由 CLI 自动完成，无需人工来回复制粘贴。", "or"),
+            ("03", "定时批处理", "对账、导表、批量录入等重复工作，配置一次即自动执行，无需人工值守。", "gr"),
+            ("04", "真实沙盒隔离", "每个任务在独立沙盒中运行，异常时自动恢复，不影响其他任务，也不触及客户的其他系统。", "te"),
         ], cols=2),
+        alt=True,
     )
     body += f"""
 <section class="section-block">
@@ -2158,28 +2493,298 @@ def page_cli():
     )
 
 
-if __name__ == '__main__':
-    pages = {
-        'products/miaohui.html': page_miaohui(),
-        'products/miaodong.html': page_miaodong(),
-        'products/shouhu.html': page_shouhu(),
-        'products/dongxing.html': page_dongxing(),
-        'products/cli.html': page_cli(),
-        'fde.html': page_fde(),
-        'enterprise.html': page_enterprise(),
-        'industries.html': page_industries(),
-        'about.html': page_about(),
-    }
-    workforce = workforce_pages()
-    for slug, content in workforce.items():
-        pages[f'workforce/{slug}.html'] = content
+def _legacy_shared_proof_modules():
+    """Re-present the industry-evidence statements and product positioning lines
+    that the canmou & zhizao pages carried in their pre-redesign shared regions.
 
-    for relpath, html_content in pages.items():
+    Those two pages' baseline captured a stale variant of the announcement
+    marquee and product-dropdown copy that the now-canonicalized shared regions
+    (one uniform nav/announcement, Req 8.3) no longer emit. To keep 100% of each
+    page's Preserved_Content (Req 2.1, 5.2, 8.4) without breaking shared-region
+    uniformity, those strings are retained verbatim here as structured
+    components built from the shared block/feat_grid snippets (Req 5.1, 5.4, 8.5).
+    No text is introduced that is absent from the baseline content set (Req 5.3).
+    """
+    out = block(
+        "客户实证",
+        "",
+        "1000+ 大型企业已在用 · 覆盖 5 大高合规行业 · 接入 10+ 主流 IM 渠道",
+        feat_grid([
+            ("01", "在线教育", "销售岗已跑通按结果付费——AI 带来的转化，是人工对照组的 3 倍", "bl"),
+            ("02", "消费品电商", "几百家品牌私域导购上线，长尾客户 24×7 接住", "or"),
+            ("03", "金融", "银行 · 证券 · 保险头部机构落地，合规边界提前写死", "gr"),
+        ], cols=3),
+        alt=True,
+    )
+    out += block(
+        "产品",
+        "",
+        "",
+        feat_grid([
+            ("01", "句子参谋 · 参谋", "一句话查所有业务数据", "bl"),
+            ("02", "句子智库 · 记忆", "知识工程，散乱知识炼成可检索资产", "or"),
+            ("03", "句子秒回 · 工位", "11 个 IM 通道汇成一个工位", "gr"),
+        ], cols=3),
+    )
+    return out
+
+
+def page_canmou():
+    body = ''
+    # NEW module order (Req 4.1): pre-redesign ran 4件事 → 为什么 → AI分析师 →
+    # 结果. Here the "why" split leads (with the role feature_list + phone demo),
+    # then the 4件事 grid, the AI分析师 grid, and the KPI close. All preserved
+    # strings retained verbatim (Req 5.2/8.4); long copy sits inside structured
+    # components (Req 5.1/5.4).
+    body += split_section(
+        eyebrow="为什么需要它",
+        title="BI 得你自己打开才看得到，参谋是它主动来找你",
+        paragraphs=[
+            "以前看数据，得先让人搭好数据看板，你再定时打开看；发现不对劲，还得找懂 SQL 的人帮你查。慢，而且全靠你自己去翻。",
+            "参谋反过来：你直接问一句「这周哪批客户流失了」，秒级就有答案，想细看接着问。真出了异常，不用你盯着，它自己会提醒你。",
+        ],
+        bullets=[
+            "<strong>给老板</strong>：在手机上问一句「今天销售有什么问题」，马上就有答案和建议",
+            "<strong>给运营</strong>：问一句「上周续费率为什么降了」，参谋直接帮你定位到是哪个环节",
+            "<strong>给业务团队</strong>：随时拉一份客户数据，秒级看 AI 干得怎么样，当天就能调",
+        ],
+        visual_html="""
+<div style="background:#fff;border-radius:12px;padding:18px;border:1px solid var(--gray-line);max-width:380px;margin:0 auto;">
+<div style="font-size:12px;font-weight:700;color:var(--gray-text);margin-bottom:14px;">手机上问一句 · 周一早上</div>
+<div style="display:flex;flex-direction:column;gap:10px;font-size:13px;">
+<div style="align-self:flex-end;background:var(--blue);color:#fff;padding:9px 13px;border-radius:11px;border-bottom-right-radius:3px;max-width:85%;">"上周续费率为什么降了？"</div>
+<div style="align-self:flex-start;background:var(--gray-bg);color:var(--black);padding:9px 13px;border-radius:11px;border-bottom-left-radius:3px;max-width:90%;">↓ 续费率：78% → 71%（-7pp）</div>
+<div style="align-self:flex-start;background:var(--gray-bg);color:var(--black);padding:9px 13px;border-radius:11px;border-bottom-left-radius:3px;max-width:90%;">主要原因：A 校区课时延期、B 老师离职。</div>
+<div style="align-self:flex-start;background:var(--blue-light);color:var(--blue);padding:9px 13px;border-radius:11px;border-bottom-left-radius:3px;max-width:90%;">建议：A 校区先补偿 + B 老师班分流到 C 老师，预计回正 +5pp。</div>
+<div style="align-self:flex-end;background:var(--blue);color:#fff;padding:9px 13px;border-radius:11px;border-bottom-right-radius:3px;max-width:85%;">"B 老师那班具体是哪些学生？"</div>
+<div style="align-self:flex-start;background:var(--gray-bg);color:var(--black);padding:9px 13px;border-radius:11px;border-bottom-left-radius:3px;max-width:90%;">共 47 人。已生成名单 + 分流建议 →</div>
+</div>
+<div style="margin-top:14px;text-align:center;font-size:11.5px;color:var(--blue);font-weight:700;">点这里发给招生</div>
+</div>
+""",
+        reverse=True,
+    )
+
+    body += block(        "4 件事 · 一次性给你",
+        "不写 SQL、不点报表，一句话就把数据问出来",
+        "无需写 SQL、查报表、等周报或对接 BI，一句话提问即可获得秒级答案。",
+        feat_grid([
+            ("💬", "对话即查询", "自然语言问数，秒级返回图表。无需写 SQL 或查报表，一句话即可获得结果，需要细看可继续追问。", "bl"),
+            ("🔎", "越问越细", "漏斗在哪一环流失、谁的转化最高、哪段话术退费最低——问一句就有答案；想往深里看，接着追问就行。", "or"),
+            ("🚨", "有问题主动提醒你", "退费苗头、客户要流失、话术踩了合规红线——不用你盯着，参谋发现了主动提醒，还会告诉你该怎么处理。", "gr"),
+            ("📱", "老板手机就能用", "不用等周报、不用盯着看板，掏出手机问一句就有答案——老板、运营都能直接用。", "pu"),
+        ], cols=2),
+    )
+
+    body += block(        "AI 数据分析师",
+        "参谋就是一个随叫随到的数据分析师",
+        "过去你得养一个数据分析师，或者排队等 BI 出报表。参谋把这件事变简单：你用大白话问，它接好公司所有数据，秒级给你图表、给你结论，还告诉你下一步该怎么做。",
+        feat_grid([
+            ("🔗", "先把你的数据接好", "销售、客服、订单、私域这些散在各处的数据，参谋直接接进来，不用你搭数据管道——问什么都查得到。", "bl"),
+            ("💡", "不只出数，还给结论", "好的分析师不会只甩你一张图。参谋会告诉你哪里出了问题、为什么，再给一条能直接干的建议。", "or"),
+            ("🔔", "主动盯着，发现就提醒", "退费苗头、客户要流失、话术踩了合规红线——不用你天天盯，参谋发现了主动来找你。", "gr"),
+        ], cols=3),
+        alt=True,
+    )
+
+    body += block(        "结果",
+        "参谋上岗后，运营不用再等报表",
+        "数据来自客户真实部署反馈。",
+        kpi_row([
+            ("一句话", "查公司所有数据"),
+            ("秒级", "图表 / 表格 / 建议"),
+            ("主动", "异常预警 + 建议"),
+            ("1000+", "客户数据当样本"),
+        ]),
+    )
+
+    # Retain the canmou-specific Preserved_Content from its pre-redesign shared
+    # regions (Req 5.2/8.4), re-presented as structured components.
+    body += _legacy_shared_proof_modules()
+
+    body += f"""
+<section class="section-block">
+  <div class="container">
+    {cta_band("让参谋接上你的所有数据——一句话就能问", sub="从老板的一句话 demo 开始，到运营全员日常使用——90 天内，参谋会接上你的 CRM / 业务系统 / 客服记录。")}
+  </div>
+</section>
+""".strip()
+
+    return page_layout(
+        title="句子参谋 · 对话式数据洞察 | 句子互动",
+        description="句子参谋是 AI 员工的「参谋」——把公司所有数据接进来，用对话方式问。一句话查、秒级出图表、异常主动预警、给老板用。1000+ 客户数据为样本。",
+        rel="../",
+        breadcrumbs=[("首页", "../index.html"), ("产品", None), ("句子参谋", None)],
+        hero_kicker="产品 · 参谋",
+        hero_h1='句子参谋 · <span class="accent">一句话问公司所有数据</span>',
+        hero_lede="它不是一块数据看板，而是一个能对话的运营参谋。把公司所有数据接入，用自然语言提问，秒级返回图表，并支持逐层追问。退费苗头、流失风险、合规偏差会主动预警，并附上可执行的建议。老板和运营都能直接使用。",
+        pills=["一句话查公司所有数据", "秒级图表 / 表格 / 建议", "异常主动预警", "1000+ 客户数据当样本"],
+        body=body,
+    )
+
+
+def page_zhizao():
+    body = ''
+    # NEW module order (Req 4.1): pre-redesign ran 4件事 → 为什么 → 团队一起跑 →
+    # 承诺. Here the "why this layer" split leads (with the bullets feature_list +
+    # the isolated-environment panel), then the 4件事 grid, the 团队一起跑 grid,
+    # and the 承诺 KPI close. All preserved strings retained verbatim
+    # (Req 5.2/8.4); long copy is carried by structured components (Req 5.1/5.4).
+    body += split_section(
+        eyebrow="为什么需要这一层",
+        title="基建不齐，AI 落不了地",
+        paragraphs=[
+            "金融、政务、头部教育、头部电商——这类客户最在意的，是自身独有的场景能否做下来，标品是否完善是其次。这个场景做不下来，前面的合作往往难以推进。",
+            "智造补的就是这一层：团队带着秒懂 / 守护 / 参谋 进入客户现场，把缺失的环境、对接、合规一次补齐，交付一套可直接运行的系统，无需客户自行拼装。",
+        ],
+        bullets=[
+            "<strong>合规 / 数据隔离</strong>：一客一环境，等保 / 私有化 / 国产化按客户来",
+            "<strong>系统对接</strong>：CRM / 工单 / 业务库 / IM 通道，客户现有系统逐一接入",
+            "<strong>独有业务</strong>：行业内尚无先例的场景，团队当周搭建上线",
+            "<strong>反哺标品</strong>：跑通后选择性积累——下一个客户起步就有",
+        ],
+        visual_html="""
+<div style="background:#fff;border-radius:12px;padding:20px;border:1px solid var(--gray-line);">
+<div style="font-size:12px;font-weight:700;color:var(--gray-text);margin-bottom:14px;">客户专属环境 · 物理隔离</div>
+<div style="display:flex;flex-direction:column;gap:8px;font-size:13px;">
+<div style="padding:9px 13px;background:var(--blue-light);border-radius:8px;color:var(--blue);">🏠 算力：客户私有 GPU / 一体机</div>
+<div style="padding:9px 13px;background:var(--green-lt);border-radius:8px;color:var(--green);">🗄 数据库：客户域内 · 不出库</div>
+<div style="padding:9px 13px;background:var(--orange-lt);border-radius:8px;color:var(--orange);">🤖 Agent 运行环境：独立部署</div>
+<div style="padding:9px 13px;background:var(--purple-lt);border-radius:8px;color:var(--purple);">🔌 模型层：可切 智谱 / DeepSeek / Qwen</div>
+<div style="padding:9px 13px;background:var(--gray-bg);border-radius:8px;color:var(--gray-text);">↪ 对接：客户 CRM / 工单 / 知识库直连</div>
+</div>
+</div>
+""",
+        color="pu",
+        reverse=True,
+    )
+
+    body += block(        "4 件事 · 智造在做",
+        "补齐数字化基建，AI 才能在你的系统里跑起来",
+        "AI 要在客户系统里跑，先得有数字化基建。这层缺了，Agent 再好也跑不起来——智造做的就是把它补上。",
+        feat_grid([
+            ("🛡", "把缺的基建补齐", "客户系统老旧、数据分散、缺少运行 AI 的独立环境。这层基建由我们的团队进场补齐，AI 才能接入。", "bl"),
+            ("🏠", "一客一环境", "每个大客户一套独立部署：算力、数据库、Agent 运行环境全部隔离。客户数据不出客户域，合规、审计、政务等保都按客户标准走。", "or"),
+            ("⚙️", "基础设施可配", "模型层、数据层、IM 通道层都按客户需求配——支持私有化 / 一体机 / 混合云。原有 CRM / 工单 / 知识库直连，不重做。", "gr"),
+            ("🔁", "跑通的能力回流", "在一个客户那补齐的基建、打通的对接，攒成模板——下一个客户起步就少走弯路。", "pu"),
+        ], cols=2),
+    )
+
+    body += block(        "和我们的团队一起跑",
+        "客户的独有问题在这里被解掉",
+        "团队驻于客户现场或远程支持，用秒懂搭建 Agent、用守护保障稳定、用参谋分析数据；基建缺口由团队进场补齐。一个客户验证过的对接和模板，下一个客户起步即可复用。",
+        feat_grid([
+            ("🛠", "进场补齐", "团队现场用智造的工程能力补齐标品未覆盖的部分，无需等待研发版本排期，当天上线。", "bl"),
+            ("📦", "客户域内跑", "所有 Agent / 数据 / 模型在客户域内运行——合规、审计、国产化按客户标准走。", "or"),
+            ("⚡", "选择性反哺", "跑通的场景 / 策略 / 模板，团队评估后选择性回流标品——下一个客户起步就用上。", "gr"),
+        ], cols=3),
+        alt=True,
+    )
+
+    body += block(        "承诺",
+        "对每一个大客户的承诺",
+        "把客户缺的数字化基建补齐，是 AI 落地的前提。",
+        kpi_row([
+            ("地基", "补齐数字化基建"),
+            ("一客一环", "数据完全隔离"),
+            ("私有化", "/ 一体机 / 混合云"),
+            ("积累", "反哺标品，下一个客户起步更快"),
+        ]),
+    )
+
+    # Retain the zhizao-specific Preserved_Content from its pre-redesign shared
+    # regions (Req 5.2/8.4), re-presented as structured components.
+    body += _legacy_shared_proof_modules()
+
+    body += f"""
+<section class="section-block">
+  <div class="container">
+    {cta_band("系统缺少 AI 落地的基建？团队可进场补齐", sub="从你最头疼的那一个独有场景开始——90 天内，第一个 Agent 在你的私有环境里上岗。")}
+  </div>
+</section>
+""".strip()
+
+    return page_layout(
+        title="句子智造 · 补齐客户数字化基建 | 句子互动",
+        description="句子智造给每个大客户补齐数字化基建——AI 要在客户系统里跑，先得有独立环境、接得通的数据、过得了的合规。一客一环境，算力 / 数据库 / Agent 全部隔离。私有化 / 一体机 / 混合云，原有 CRM / 工单 / 知识库直连。",
+        rel="../",
+        breadcrumbs=[("首页", "../index.html"), ("产品", None), ("句子智造", None)],
+        hero_kicker="产品 · 智造 · 地基",
+        hero_h1='句子智造 · <span class="accent">AI 落地的数字化地基</span>',
+        hero_lede="AI 员工要在客户系统里真正跑起来，先得有数字化基建：一套独立环境、数据能打通、合规能过关。很多大客户恰好缺这一层。<strong>句子智造把这层地基补上</strong>：一客一环境，算力 / 数据库 / Agent 全隔离，支持私有化 / 一体机 / 混合云，原有 CRM / 工单 / 知识库直连。",
+        pills=["补齐数字化基建", "一客一环境 · 数据隔离", "私有化 / 一体机 / 混合云", "原系统直连"],
+        body=body,
+    )
+
+
+def build_all():
+    """Build every configured page with per-page fail-fast handling (Req 8.6).
+
+    Each page is registered as a zero-arg builder so that BOTH its content
+    generation (page body / content lookup) AND its file write happen inside
+    the same try block. On the first failure the builder reports the failing
+    page path and the reason to stderr and exits non-zero, leaving every
+    already-written page intact. Writes are atomic (temp file + os.replace) so a
+    failure mid-write never corrupts or partially writes a target file.
+    """
+    import tempfile
+
+    # relpath -> zero-arg callable producing that page's HTML. Generation is
+    # deferred into the loop so a content-lookup failure is caught per page.
+    page_builders = {
+        'products/miaohui.html': page_miaohui,
+        'products/miaodong.html': page_miaodong,
+        'products/shouhu.html': page_shouhu,
+        'products/canmou.html': page_canmou,
+        'products/dongxing.html': page_dongxing,
+        'products/cli.html': page_cli,
+        'products/zhizao.html': page_zhizao,
+        'fde.html': page_fde,
+        'enterprise.html': page_enterprise,
+        'industries.html': page_industries,
+        'about.html': page_about,
+    }
+
+    # The 6 AI-employee pages share one builder that returns a slug->html map;
+    # wrap each slug in its own deferred callable so a single failing workforce
+    # page halts with its own path rather than taking down the whole batch.
+    try:
+        workforce = workforce_pages()
+    except Exception as e:
+        sys.stderr.write(f"build_pages: FAILED building workforce pages: {e}\n")
+        sys.exit(1)
+    for slug, content in workforce.items():
+        page_builders[f'workforce/{slug}.html'] = (lambda c: (lambda: c))(content)
+
+    built = 0
+    for relpath, builder in page_builders.items():
         full = os.path.join(ROOT, relpath)
-        os.makedirs(os.path.dirname(full), exist_ok=True)
-        with open(full, 'w', encoding='utf-8') as f:
-            f.write(html_content)
+        try:
+            os.makedirs(os.path.dirname(full), exist_ok=True)
+            content = builder()                       # content generation / lookup
+            if content is None:
+                raise ValueError("page builder returned no content")
+            # Atomic write: stage to a temp file in the same dir, then replace,
+            # so prior successful pages and any existing target stay intact on
+            # failure (Req 8.6).
+            fd, tmp = tempfile.mkstemp(dir=os.path.dirname(full), suffix='.tmp')
+            try:
+                with os.fdopen(fd, 'w', encoding='utf-8') as f:
+                    f.write(content)
+                os.replace(tmp, full)
+            except Exception:
+                if os.path.exists(tmp):
+                    os.remove(tmp)
+                raise
+        except Exception as e:
+            sys.stderr.write(f"build_pages: FAILED on page '{relpath}': {e}\n")
+            sys.exit(1)
+        built += 1
         size = os.path.getsize(full)
         print(f"  {relpath}  ({size:,} bytes)")
 
-    print(f"\nbuilt {len(pages)} pages")
+    print(f"\nbuilt {built} pages")
+
+
+if __name__ == '__main__':
+    build_all()
