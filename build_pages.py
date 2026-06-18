@@ -15,7 +15,7 @@ def nav_html(rel):
 <nav class="nav">
   <div class="container nav-inner">
     <a href="{rel}index.html" class="brand">
-      <img class="brand-mark" src="/assets/brand/logo.png" alt="句子互动" width="30" height="30" />
+      <span class="brand-mark">句</span>
       句子互动 <small>JuziBot</small>
     </a>
     <div class="nav-links">
@@ -66,7 +66,7 @@ def footer_html(rel):
     <div class="footer-grid">
       <div class="brand-block">
         <div class="brand">
-          <img class="brand-mark" src="/assets/brand/logo.png" alt="句子互动" width="30" height="30" />
+          <span class="brand-mark">句</span>
           句子互动 <small>JuziBot</small>
         </div>
         <p>
@@ -185,10 +185,10 @@ function openContact(){{openModal('contactModal');}}
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8" />
-<link rel="icon" href="/favicon.ico" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>{title}</title>
 <meta name="description" content="{description}" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231659E5'/%3E%3Ctext x='16' y='22' font-family='system-ui' font-size='18' font-weight='800' fill='white' text-anchor='middle'%3E句%3C/text%3E%3C/svg%3E" />
 <link rel="stylesheet" href="{rel}assets/style.css">
 </head>
 <body>
