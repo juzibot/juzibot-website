@@ -329,6 +329,8 @@
   .msg.me .m-av{background:var(--ink-2)}
   .msg.me .m-col{display:flex;flex-direction:column;align-items:flex-end}
   .msg.me .bubble{background:var(--blue);color:#fff;border-color:transparent;border-radius:14px 4px 14px 14px}
+  /* 客服直接发出的企业微信二维码 */
+  .msg .bubble .chat-qr{display:block;width:172px;height:172px;margin:10px 0 2px;border-radius:10px;border:1px solid var(--line);background:#fff}
   /* 输入中省略点 */
   .msg .typing{display:inline-flex;gap:4px;align-items:center}
   .msg .typing i{width:6px;height:6px;border-radius:50%;background:var(--blue);animation:think 1.2s var(--ease) infinite}
@@ -3392,8 +3394,8 @@ if(!sessionStorage.getItem('intro_shown')){
       a:"能。按业务结果交付——转化、有效线索、人效都对齐你的指标：头部客户人效翻倍、转人工率从 27% 压到 2.73%。",
       next:["deploy","demo"]},
     demo:{q:"怎么预约演示？",
-      a:"点页面上的「预约演示」留个联系方式，顾问会带你所在行业的真实客户场景演示给你看。",
-      next:["diff","safety"],cta:true}
+      a:"扫下方企业微信二维码直接找我们，工作日当天回复，会带你所在行业的真实客户场景做演示 👇",
+      next:["diff","safety"],qr:true}
   };
   var STARTER=["diff","deploy","safety"];
   var FALLBACK="好问题！我可以帮你梳理 AI 员工在你业务里的落地方案。点下面接着聊，或直接「预约演示」看真实效果。";
@@ -3418,6 +3420,20 @@ if(!sessionStorage.getItem('intro_shown')){
       if(onDone)onDone();
     },reduce?80:760);
   }
+  /* 客服直接在对话里发出企业微信二维码 */
+  function addBotQR(text,onDone){
+    var m=document.createElement('div');m.className='msg bot';
+    m.innerHTML='<span class="m-av"><img src="logo.png" alt="句子互动" /></span><div class="m-col"><div class="m-who">小句 · AI 客服</div><div class="bubble"><span class="typing"><i></i><i></i><i></i></span></div></div>';
+    body.appendChild(m);scrollDown();
+    setTimeout(function(){
+      var b=m.querySelector('.bubble');b.textContent=text;
+      var img=document.createElement('img');
+      img.className='chat-qr';img.src='assets/brand/qr-qiwei.png';
+      img.alt='企业微信二维码';img.width=172;img.height=172;img.loading='lazy';
+      b.appendChild(img);scrollDown();
+      if(onDone)onDone();
+    },reduce?80:760);
+  }
   function renderChips(ids,opts){
     removeChips();opts=opts||{};
     if((!ids||!ids.length)&&!opts.cta)return;
@@ -3436,6 +3452,7 @@ if(!sessionStorage.getItem('intro_shown')){
   }
   function botAnswer(id){
     var tp=TOPICS[id];if(!tp)return;
+    if(tp.qr){addBotQR(tp.a,function(){renderChips(tp.next);});return;}
     addBot(tp.a,function(){renderChips(tp.next,{cta:!!tp.cta});});
   }
   function matchTopic(text){
