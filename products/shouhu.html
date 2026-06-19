@@ -1,265 +1,422 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>句子守护 · 守护你的 AI 员工 | 句子互动</title>
 <meta name="description" content="句子守护——守护你的 AI 员工，Agent 健康度看得见。Agent 上线前测过、上线后管着：AI 生成测试用例、批量验收、灰度测试、回归测试、AI 工单、AI 质检。没人点头就不上线，每一步都留痕、能查。" />
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231659E5'/%3E%3Ctext x='16' y='22' font-family='system-ui' font-size='18' font-weight='800' fill='white' text-anchor='middle'%3E句%3C/text%3E%3C/svg%3E" />
-<link rel="stylesheet" href="../assets/style.css">
+<link rel="icon" href="../logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../assets/site.css" />
+<style>
+  /* scoped · 仅用 site.css 既有变量，承接首页配色，不引入异色 */
+  /* —— 产品页头：沿用 .hero 的浅色径向底，承接面包屑 + KPI —— */
+  .ph{position:relative;overflow:hidden;padding:clamp(104px,13vh,150px) var(--gut) clamp(48px,6vw,76px);
+    background:radial-gradient(1100px 540px at 82% 4%,var(--blue-100),transparent 60%),
+               radial-gradient(680px 480px at 4% 10%,var(--orange-lt),transparent 56%),
+               linear-gradient(180deg,var(--blue-50),#fff 78%)}
+  .ph .wrap{position:relative}
+  .crumbs{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--ink-3);margin-bottom:clamp(16px,2.4vw,24px);flex-wrap:wrap}
+  .crumbs a{color:var(--ink-2)}
+  .crumbs a:hover{color:var(--blue)}
+  .crumbs .sep{color:var(--line)}
+  .crumbs .here{color:var(--ink-2);font-weight:650}
+  .ph-grid{display:grid;grid-template-columns:1.04fr .96fr;gap:clamp(34px,5vw,72px);align-items:center}
+  .ph h1{font-size:clamp(34px,5vw,64px);font-weight:850;letter-spacing:-.04em;line-height:1.04;
+    max-width:15ch;text-wrap:balance;margin-bottom:clamp(14px,2vw,24px)}
+  .ph h1 .accent{color:var(--blue)}
+  .ph-lede{font-size:clamp(16px,1.4vw,18.5px);color:var(--ink-2);max-width:50ch;line-height:1.7}
+  .ph-lede strong{color:var(--ink);font-weight:700}
+  .ph-cta{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:clamp(20px,2.6vw,30px)}
+  /* hero 内嵌真实质量中心演示（iframe） */
+  .ph-demo{position:relative;border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;
+    background:linear-gradient(180deg,#FBFCFF,#F3F7FE);
+    box-shadow:0 1px 2px rgba(14,20,48,.05),0 40px 80px -30px rgba(67,56,202,.35),0 12px 24px -12px rgba(14,20,48,.12)}
+  .ph-demo .win{display:flex;align-items:center;gap:8px;padding:11px 15px;background:rgba(255,255,255,.78);
+    backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .ph-demo .win .d{width:9px;height:9px;border-radius:50%}
+  .ph-demo .win .d.r{background:#FF5F57}.ph-demo .win .d.y{background:#FEBC2E}.ph-demo .win .d.g{background:#28C840}
+  .ph-demo .win .t{margin-left:6px;font-family:var(--mono);font-size:11px;letter-spacing:.03em;color:var(--ink-3)}
+  .ph-demo .win .live{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:750;
+    color:var(--green);background:var(--green-lt);padding:4px 10px;border-radius:999px}
+  .ph-demo .win .live i{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green)}
+  /* 质量中心预览：按真实宽度渲染再等比缩放（布局正确、不挤叠），角上「放大查看」 */
+  .ph-stage{position:relative;width:100%;overflow:hidden;background:#fff}
+  .ph-stage iframe{position:absolute;top:0;left:0;border:0;background:#fff;transform-origin:top left}
+  .ph-zoom{position:absolute;right:12px;bottom:12px;z-index:3;display:inline-flex;align-items:center;gap:7px;
+    font-size:12.5px;font-weight:700;color:#fff;background:rgba(11,16,32,.6);backdrop-filter:blur(4px);
+    border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:8px 14px;cursor:pointer;transition:background .2s,transform .2s}
+  .ph-zoom:hover{background:var(--blue);transform:translateY(-1px)}
+  /* 放大模态：苹果式丝滑开合 · 虚化背景 + 大窗质量中心 */
+  .wbm{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;
+    padding:clamp(12px,3vw,34px);background:rgba(11,16,32,.5);backdrop-filter:blur(13px);-webkit-backdrop-filter:blur(13px)}
+  .wbm.open{display:flex;animation:wbm-bg .34s ease both}
+  .wbm.closing{animation:wbm-bg-out .24s ease both}
+  @keyframes wbm-bg{from{opacity:0}to{opacity:1}}
+  @keyframes wbm-bg-out{from{opacity:1}to{opacity:0}}
+  .wbm-panel{position:relative;background:#fff;border-radius:18px;overflow:hidden;
+    box-shadow:0 50px 140px rgba(11,16,32,.55),0 0 0 1px rgba(255,255,255,.05)}
+  .wbm.open .wbm-panel{animation:wbm-pop .46s cubic-bezier(.22,1,.36,1) both}
+  .wbm.closing .wbm-panel{animation:wbm-pop-out .24s cubic-bezier(.4,0,1,1) both}
+  @keyframes wbm-pop{from{opacity:0;transform:scale(.9) translateY(16px)}to{opacity:1;transform:none}}
+  @keyframes wbm-pop-out{from{opacity:1;transform:none}to{opacity:0;transform:scale(.96) translateY(8px)}}
+  .wbm-stage{position:relative;overflow:hidden;background:#fff}
+  .wbm-stage iframe{position:absolute;top:0;left:0;border:0;background:#fff;transform-origin:top left}
+  .wbm-x{position:absolute;right:14px;top:14px;z-index:3;width:36px;height:36px;border-radius:50%;border:none;
+    background:rgba(11,16,32,.55);backdrop-filter:blur(6px);color:#fff;font-size:19px;line-height:1;cursor:pointer;
+    display:grid;place-items:center;transition:background .2s,transform .2s}
+  .wbm-x:hover{background:var(--blue);transform:scale(1.06)}
+  @media(prefers-reduced-motion:reduce){.wbm.open,.wbm.closing,.wbm.open .wbm-panel,.wbm.closing .wbm-panel{animation:none}}
+  @media(max-width:980px){
+    .ph-grid{grid-template-columns:1fr;gap:clamp(40px,7vw,56px)}
+    .ph-art{order:2}
+  }
+  /* —— 对比表：上一代 vs 句子守护（承接首页墨灰 + 青绿体系）—— */
+  .cmp{max-width:980px;margin:0 auto;border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;
+    box-shadow:0 1px 2px rgba(14,20,48,.05),0 26px 54px -30px rgba(67,56,202,.22)}
+  .cmp-row{display:grid;grid-template-columns:1fr 1fr}
+  .cmp-row + .cmp-row{border-top:1px solid var(--line)}
+  .cmp-old,.cmp-new{padding:15px clamp(18px,2.2vw,24px);font-size:13.5px;line-height:1.62}
+  .cmp-old{color:var(--ink-3);background:#fff}
+  .cmp-new{color:var(--ink);background:#FBFDFC}
+  .cmp-head .cmp-old,.cmp-head .cmp-new{font-weight:820;font-size:13.5px}
+  .cmp-head .cmp-old{background:var(--line-2);color:var(--ink-2)}
+  .cmp-head .cmp-new{background:var(--green-lt);color:var(--green)}
+  .cmp-new b{display:inline-flex;align-items:center;gap:8px;font-weight:inherit}
+  .cmp-new .ck{flex:0 0 auto;width:17px;height:17px;border-radius:5px;display:grid;place-items:center;
+    background:var(--green);color:#fff;font-size:9px}
+  @media(max-width:560px){.cmp-old,.cmp-new{padding:13px 14px;font-size:13px}
+    .cmp-head .cmp-old,.cmp-head .cmp-new{font-size:12.5px}}
+  @media(max-width:400px){.cmp-old,.cmp-new{padding:11px 11px;font-size:12.5px;line-height:1.55}
+    .cmp-head .cmp-old,.cmp-head .cmp-new{font-size:11.5px}
+    .cmp-new .ck{width:15px;height:15px;font-size:8px}
+    .cmp-new b{gap:6px}}
+  /* —— 健康度看板（客户每天打开看的那一屏）—— */
+  .hboard{max-width:1000px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);
+    padding:clamp(22px,3vw,34px);box-shadow:0 1px 2px rgba(14,20,48,.05),0 30px 64px -34px rgba(67,56,202,.26)}
+  .hboard-top{display:flex;align-items:center;gap:clamp(18px,3vw,30px);flex-wrap:wrap;
+    border-bottom:1px solid var(--line);padding-bottom:22px;margin-bottom:22px}
+  .hboard-score{text-align:center;flex:0 0 auto}
+  .hboard-score .v{font-size:clamp(44px,6vw,58px);font-weight:900;color:var(--green);line-height:1;letter-spacing:-.03em}
+  .hboard-score .l{font-size:12px;color:var(--ink-3);margin-top:6px}
+  .hboard-cal{flex:1;min-width:240px}
+  .hboard-cal .cl{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:700;color:var(--ink-2);margin-bottom:10px}
+  .hboard-cal .cl i{color:var(--green)}
+  .hboard-cells{display:grid;grid-template-columns:repeat(20,1fr);gap:3px}
+  .hboard-cells span{aspect-ratio:1;border-radius:3px}
+  .hboard-cells .g0{background:var(--line)}
+  .hboard-cells .g1{background:#CDE9D6}
+  .hboard-cells .g2{background:#9BD3AD}
+  .hboard-cells .g3{background:#6CC187}
+  .hboard-cells .g4{background:var(--green)}
+  .hboard-stats{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+  .hboard-stat{text-align:center}
+  .hboard-stat .v{font-size:clamp(18px,2vw,24px);font-weight:850;color:var(--blue);letter-spacing:-.02em}
+  .hboard-stat .l{font-size:12px;color:var(--ink-3);margin-top:5px;line-height:1.4}
+  .hboard-note{font-size:11.5px;color:var(--ink-3);margin-top:18px;text-align:center}
+  @media(max-width:640px){.hboard-stats{grid-template-columns:repeat(2,1fr);gap:18px}.hboard-cells{grid-template-columns:repeat(10,1fr)}
+    .hboard{padding:clamp(18px,5vw,24px)}
+    .hboard-top{flex-direction:column;align-items:stretch;gap:20px}
+    .hboard-score{text-align:left}
+    .hboard-cal{min-width:0}}
+  @media(max-width:400px){.hboard-stats{gap:14px}.hboard-stat .l{font-size:11px}
+    .hboard-cells{gap:2.5px}.hboard-note{font-size:11px}}
+  /* —— 六道关口（沿用 .pcard，标注每关的上线阶段徽标）—— */
+  .gate-stage{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;margin-top:14px;
+    font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.04em;
+    color:var(--ink-2);background:var(--line-2);border:1px solid var(--line);border-radius:999px;padding:4px 11px}
+  .gate-stage.s-pre i{color:var(--blue)}
+  .gate-stage.s-mid i{color:var(--orange-deep)}
+  .gate-stage.s-post i{color:var(--green)}
+  .gate-stage.s-force i{color:var(--purple)}
+  /* —— 测试报告 split：左文右示意（用 site.css 既有 .ind-why / .ap-feats）—— */
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,4vw,56px);align-items:center}
+  .split-text h3{font-size:clamp(22px,2.4vw,32px);font-weight:840;letter-spacing:-.03em;line-height:1.25;
+    margin-bottom:16px;text-wrap:balance}
+  .split-text p{font-size:15px;line-height:1.75;color:var(--ink-2);margin-bottom:14px;max-width:46ch}
+  .report{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:clamp(20px,2.4vw,26px);
+    box-shadow:0 1px 2px rgba(14,20,48,.05),0 26px 54px -30px rgba(67,56,202,.24)}
+  .report .rh{font-size:12px;font-weight:750;color:var(--ink-3);margin-bottom:16px;
+    display:inline-flex;align-items:center;gap:8px}
+  .report .rh i{color:var(--blue)}
+  .report-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+  .report-stat{text-align:center;background:var(--line-2);border-radius:12px;padding:14px 8px}
+  .report-stat .v{font-size:clamp(20px,2.2vw,26px);font-weight:850;letter-spacing:-.02em;line-height:1}
+  .report-stat:nth-child(1) .v{color:var(--blue)}
+  .report-stat:nth-child(2) .v{color:var(--orange-deep)}
+  .report-stat:nth-child(3) .v{color:var(--purple)}
+  .report-stat .l{font-size:11px;color:var(--ink-3);margin-top:6px}
+  .report-note{font-size:12px;color:var(--ink-2);line-height:1.65;background:var(--orange-lt);
+    border-radius:12px;padding:12px 14px}
+  @media(max-width:860px){.split{grid-template-columns:1fr;gap:clamp(32px,6vw,44px)}.split-visual{order:2}}
+  @media(max-width:400px){.report-stats{gap:7px}.report-stat{padding:12px 4px}
+    .report-stat .l{font-size:10.5px}.report-note{font-size:11.5px;padding:11px 12px}}
+</style>
 </head>
 <body>
+<div id="site-nav"></div>
+<main>
 
-<!-- ════════════ ANNOUNCEMENT BAR ════════════ -->
-<div class="ann-bar" role="marquee" aria-label="公告">
-  <div class="ann-track">
-    <span class="ann-item"><span class="dot"></span><span class="tag">在线教育</span>几百家头部公司已部署，AI 销售人均承接 5 倍以上</span>
-    <span class="ann-item"><span class="dot"></span><span class="tag">消费品电商</span>几百家头部品牌私域导购上线，长尾客户再不流失</span>
-    <span class="ann-item"><span class="dot"></span><span class="tag">金融</span>银行 · 证券 · 保险头部机构落地，合规边界提前写死</span>
-    <span class="ann-item"><span class="dot"></span>1000+ 大型企业已在用 · 扎在这 5 个行业 · 接入 10+ 主流 IM 渠道</span>
-    <span class="ann-item"><span class="dot"></span><span class="tag">在线教育</span>几百家头部公司已部署，AI 销售人均承接 5× 以上</span>
-    <span class="ann-item"><span class="dot"></span><span class="tag">消费品电商</span>几百家头部品牌私域导购上线，长尾客户再不流失</span>
-    <span class="ann-item"><span class="dot"></span><span class="tag">金融</span>银行 · 证券 · 保险头部机构落地，合规边界提前写死</span>
-    <span class="ann-item"><span class="dot"></span>1000+ 大型企业已在用 · 扎在这 5 个行业 · 接入 10+ 主流 IM 渠道</span>
-  </div>
-</div>
-
-<nav class="nav">
-  <div class="container nav-inner">
-    <a href="../index.html" class="brand">
-      <span class="brand-mark">句</span>
-      句子互动 <small>JuziBot</small>
-    </a>
-    <div class="nav-links">
-      <div class="nav-item">
-        <button>产品 <span class="caret"></span></button>
-        <div class="dropdown wide">
-          <a href="../products/miaodong.html"><div class="d-title">句子秒懂 · 大脑</div><div class="d-desc">业务人员不写代码也能搭 Agent</div></a>
-          <a href="../products/shouhu.html"><div class="d-title">句子守护 · 主管</div><div class="d-desc">Agent 上线前测过、上线后管着</div></a>
-          <a href="../products/canmou.html"><div class="d-title">句子问数 · 参谋</div><div class="d-desc">对话式数据洞察，一句话问数</div></a>
-          <a href="../products/dongxing.html"><div class="d-title">句子懂行 · 记忆</div><div class="d-desc">知识工程，把散乱知识炼成可检索资产</div></a>
-          <a href="../products/miaohui.html"><div class="d-title">句子秒回 · 工作台</div><div class="d-desc">Agent 和人协作的 IM 工作台</div></a>
-          <a href="../products/cli.html"><div class="d-title">句子 CLI · 手</div><div class="d-desc">操作一切人用软件的执行层</div></a>
-          <a href="../products/zhizao.html"><div class="d-title">句子制造 · 地基</div><div class="d-desc">补齐客户数字化基建，一客一环境</div></a>
-
+  <!-- ════════════ 产品页头 · 面包屑 + 标题 + KPI + 质量中心实时演示 ════════════ -->
+  <header class="ph" id="top">
+    <div class="wrap">
+      <div class="crumbs">
+        <a href="../index.html">首页</a><span class="sep">/</span>
+        <span class="here">产品</span><span class="sep">/</span>
+        <span class="here">句子守护</span>
+      </div>
+      <div class="ph-grid">
+        <div class="ph-copy">
+          <span class="eyebrow"><span class="dot"></span>产品 · 守护 · 主管</span>
+          <h1>句子守护 ·<br/><span class="accent">守护你的 AI 员工</span></h1>
+          <p class="ph-lede">我们为你的每一个 AI 员工做了什么、效果如何，一眼可见。<strong>Agent 上线前测过、上线后管着</strong>——AI 自动生成用例、批量验收、灰度测试、回归测试、AI 工单、AI 质检。没人拍板不上线，可追溯可审计。</p>
+          <div class="ph-cta">
+            <button type="button" class="btn btn-blue btn-lg ar-host" onclick="openContact('句子守护·页头','预约演示')">
+              预约演示
+              <span class="ar"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h11M10 4l5 5-5 5"/></svg><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h11M10 4l5 5-5 5"/></svg></span>
+            </button>
+            <a href="#gates" class="btn btn-ghost btn-lg">看六道关口</a>
+          </div>
+          <div class="hero-kpis">
+            <div class="hero-kpi"><div class="v">六道</div><div class="l">关口上线把关</div></div>
+            <div class="hero-kpi"><div class="v">AI 自动</div><div class="l">生成用例</div></div>
+            <div class="hero-kpi"><div class="v">持续</div><div class="l">健康度监控</div></div>
+            <div class="hero-kpi"><div class="v">金融政务</div><div class="l">必过的一关</div></div>
+          </div>
+        </div>
+        <div class="ph-art">
+          <div class="ph-demo">
+            <div class="win">
+              <span class="d r"></span><span class="d y"></span><span class="d g"></span>
+              <span class="t">句子守护 · Agent Quality Center</span>
+              <span class="live"><i></i>LIVE</span>
+            </div>
+            <div class="ph-stage" id="wbStage">
+              <iframe id="wbFrame" data-d="../assets/demos/shouhu-quality.html" title="句子守护 · Agent 质量中心 实时演示" loading="lazy"></iframe>
+            </div>
+            <button class="ph-zoom" type="button" onclick="wbOpen()" aria-label="放大查看质量中心演示"><i class="fa-solid fa-up-right-and-down-left-from-center" aria-hidden="true"></i> 放大查看</button>
+          </div>
         </div>
       </div>
-      <div class="nav-item">
-        <button>AI 员工 <span class="caret"></span></button>
-        <div class="dropdown wide">
-          <a href="../workforce/sales.html"><div class="d-title">AI 销售</div><div class="d-desc">直播搬家、私域承接、漏斗跟进——首单成交全程接管</div></a>
-          <a href="../workforce/marketing.html"><div class="d-title">AI 导购</div><div class="d-desc">头部零售品牌的私域导购运营，长尾客户也覆盖</div></a>
-          <a href="../workforce/service.html"><div class="d-title">AI 客服</div><div class="d-desc">从售前到售后都接得住 · 5 年 BadCase 积累</div></a>
-          <a href="../workforce/government.html"><div class="d-title">AI 社工 / 调解员</div><div class="d-desc">政务高合规要求 + 全程可追溯 · 已稳步落地</div></a>
-          <a href="../workforce/finance.html"><div class="d-title">AI 理财顾问</div><div class="d-desc">银行 / 证券 / 保险头部机构落地 · 多年风控话术</div></a>
-          <a href="../workforce/hr.html"><div class="d-title">AI HR</div><div class="d-desc">简历初筛 + AI 语音面试，HR 只看 Top 20%</div></a>
+    </div>
+  </header>
+
+  <!-- ════════════ 为什么要守护 · 对比表 ════════════ -->
+  <section class="sec pad" id="why">
+    <div class="wrap">
+      <div class="sec-top rv">
+        <div>
+          <span class="sec-eyebrow">为什么要守护</span>
+          <h2>上线前测试不充分，<span class="hl warm"><span>问题会直接暴露给客户</span></span>。</h2>
+        </div>
+        <p class="sub">某家电客户上线前的一轮自动化测试中，28 条用例全部未通过，主要短板是故障咨询应答不达标，问题在上线前被拦下。Agent 上线不能止于流程搭建，上线前需充分测试，上线后需持续监控。</p>
+      </div>
+      <div class="cmp rv">
+        <div class="cmp-row cmp-head">
+          <div class="cmp-old">上一代 · 搭完流程就交付</div>
+          <div class="cmp-new">句子守护 · 守护你的 AI 员工</div>
+        </div>
+        <div class="cmp-row">
+          <div class="cmp-old">测试用例靠人手写，几十条到头，覆盖不全</div>
+          <div class="cmp-new"><b><span class="ck"><i class="fa-solid fa-check"></i></span>AI 读懂业务流程，几分钟生成上百条用例</b></div>
+        </div>
+        <div class="cmp-row">
+          <div class="cmp-old">上线就是终点，坏了没人知道、客户看不到</div>
+          <div class="cmp-new"><b><span class="ck"><i class="fa-solid fa-check"></i></span>六道关口逐关把关，不达标不上线</b></div>
+        </div>
+        <div class="cmp-row">
+          <div class="cmp-old">版本一改，老功能悄悄崩，上线才暴露</div>
+          <div class="cmp-new"><b><span class="ck"><i class="fa-solid fa-check"></i></span>上线后 AI 工单、质检接着盯，问题主动冒出来</b></div>
+        </div>
+        <div class="cmp-row">
+          <div class="cmp-old">做了多少质量活，客户完全无感</div>
+          <div class="cmp-new"><b><span class="ck"><i class="fa-solid fa-check"></i></span>Agent 健康度看板，做了什么客户一眼看见</b></div>
         </div>
       </div>
-      <div class="nav-item"><a href="../industries.html">客户与行业</a></div>
-      <div class="nav-item"><a href="../enterprise.html">企业级能力</a></div>
-      <div class="nav-item"><a href="../fde.html">FDE 交付结果</a></div>
-      <div class="nav-item"><a href="../about.html">AI 原生组织</a></div>
-      <div class="nav-item"><a href="../careers/index.html">加入我们</a></div>
     </div>
-    <div class="nav-right">
-      <a class="nav-cta" style="cursor:pointer" onclick="openContact('导航·联系我们')">联系我们 →</a>
-      <a href="https://az-bg.juzibot.com/auth/register" class="nav-login">登录 / 注册</a>
-    </div>
-    <button class="nav-burger" aria-label="菜单" onclick="this.closest('.nav').classList.toggle('nav-open')">☰</button>
-  </div>
-</nav>
+  </section>
 
-<header class="page-hero">
-  <div class="container">
-    <div class="crumbs"><a href="../index.html">首页</a> <span class="sep">/</span> <span class="here">产品</span> <span class="sep">/</span> <span class="here">句子守护</span></div>
-    <div style="font-size:13px;font-weight:800;color:var(--orange);letter-spacing:.12em;text-transform:uppercase;margin-bottom:16px;">产品 · 守护 · 主管</div>
-    <h1>句子守护 · <span class="accent">守护你的 AI 员工</span></h1>
-    <p class="lede">我们为你的每一个 AI 员工做了什么、效果如何，一眼可见。<strong>Agent 上线前测过、上线后管着</strong>——AI 自动生成用例、批量验收、灰度测试、回归测试、AI 工单、AI 质检。没人拍板不上线，可追溯可审计。</p>
-    <div class="pill-row"><span class="pill"><span class="dot"></span>六道关口上线把关</span><span class="pill"><span class="dot"></span>AI 自动生成用例</span><span class="pill"><span class="dot"></span>健康度持续监控</span><span class="pill"><span class="dot"></span>金融政务必过的一关</span></div>
-  </div>
-</header>
-
-<section class="section-block">
-  <div class="container">
-    <div class="block-head">
-      <div class="eyebrow">为什么要守护</div>
-      <h2>上线前测试不充分，问题会直接暴露给客户</h2>
-      <div class="sub">某家电客户上线前的一轮自动化测试中，28 条用例全部未通过，主要短板是故障咨询应答不达标，问题在上线前被拦下。Agent 上线不能止于流程搭建，上线前需充分测试，上线后需持续监控。</div>
-    </div>
-    <div style="max-width:980px;margin:0 auto;border:1px solid var(--gray-line);border-radius:16px;overflow:hidden;">
-<div style="display:grid;grid-template-columns:1fr 1fr;">
-  <div style="background:var(--gray-bg);padding:15px 22px;font-weight:800;font-size:13.5px;color:var(--gray-text);">上一代 · 搭完流程就交付</div>
-  <div style="background:var(--green-lt);padding:15px 22px;font-weight:800;font-size:13.5px;color:var(--green);">句子守护 · 守护你的 AI 员工</div>
-</div>
-<div style="display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--gray-line);">
-  <div style="padding:14px 22px;font-size:13.5px;color:var(--gray-text);line-height:1.6;">测试用例靠人手写，几十条到头，覆盖不全</div>
-  <div style="padding:14px 22px;font-size:13.5px;color:var(--black);line-height:1.6;background:#fbfdfc;">AI 读懂业务流程，几分钟生成上百条用例</div>
-</div><div style="display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--gray-line);">
-  <div style="padding:14px 22px;font-size:13.5px;color:var(--gray-text);line-height:1.6;">上线就是终点，坏了没人知道、客户看不到</div>
-  <div style="padding:14px 22px;font-size:13.5px;color:var(--black);line-height:1.6;background:#fbfdfc;">六道关口逐关把关，不达标不上线</div>
-</div><div style="display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--gray-line);">
-  <div style="padding:14px 22px;font-size:13.5px;color:var(--gray-text);line-height:1.6;">版本一改，老功能悄悄崩，上线才暴露</div>
-  <div style="padding:14px 22px;font-size:13.5px;color:var(--black);line-height:1.6;background:#fbfdfc;">上线后 AI 工单、质检接着盯，问题主动冒出来</div>
-</div><div style="display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--gray-line);">
-  <div style="padding:14px 22px;font-size:13.5px;color:var(--gray-text);line-height:1.6;">做了多少质量活，客户完全无感</div>
-  <div style="padding:14px 22px;font-size:13.5px;color:var(--black);line-height:1.6;background:#fbfdfc;">Agent 健康度看板，做了什么客户一眼看见</div>
-</div></div>
-  </div>
-</section><section class="section-block alt">
-  <div class="container">
-    <div class="block-head">
-      <div class="eyebrow">客户看得见</div>
-      <h2>每天打开，就知道你的 AI 员工今天健不健康</h2>
-      <div class="sub">客户无需询问。一块看板呈现当天为该 Agent 执行的动作、五个维度的各项进展和健康度评分。</div>
-    </div>
-    <div style="max-width:1000px;margin:0 auto;background:#fff;border:1px solid var(--gray-line);border-radius:18px;padding:32px;box-shadow:var(--shadow-md);">
-<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;border-bottom:1px solid var(--gray-line);padding-bottom:22px;margin-bottom:22px;">
-  <div style="text-align:center;"><div style="font-size:52px;font-weight:900;color:var(--green);line-height:1;">87</div><div style="font-size:12px;color:var(--gray-text);margin-top:4px;">健康度（较上周 +6）</div></div>
-  <div style="flex:1;min-width:240px;">
-    <div style="font-size:12px;font-weight:700;color:var(--gray-text);margin-bottom:8px;">行动日历 · 每天为这个 Agent 做了什么</div>
-    <div style="display:grid;grid-template-columns:repeat(20,1fr);gap:3px;"><div style="aspect-ratio:1;border-radius:2px;background:var(--gray-line);"></div><div style="aspect-ratio:1;border-radius:2px;background:#cde9d6;"></div><div style="aspect-ratio:1;border-radius:2px;background:#9bd3ad;"></div><div style="aspect-ratio:1;border-radius:2px;background:#6cc187;"></div><div style="aspect-ratio:1;border-radius:2px;background:var(--green);"></div><div style="aspect-ratio:1;border-radius:2px;background:var(--gray-line);"></div><div style="aspect-ratio:1;border-radius:2px;background:#cde9d6;"></div><div style="aspect-ratio:1;border-radius:2px;background:#9bd3ad;"></div><div style="aspect-ratio:1;border-radius:2px;background:#6cc187;"></div><div style="aspect-ratio:1;border-radius:2px;background:var(--green);"></div><div style="aspect-ratio:1;border-radius:2px;background:var(--gray-line);"></div><div style="aspect-ratio:1;border-radius:2px;background:#cde9d6;"></div><div style="aspect-ratio:1;border-radius:2px;background:#9bd3ad;"></div><div style="aspect-ratio:1;border-radius:2px;background:#6cc187;"></div><div style="aspect-ratio:1;border-radius:2px;background:var(--green);"></div><div style="aspect-ratio:1;border-radius:2px;background:var(--gray-line);"></div><div style="aspect-ratio:1;border-radius:2px;background:#cde9d6;"></div><div style="aspect-ratio:1;border-radius:2px;background:#9bd3ad;"></div><div style="aspect-ratio:1;border-radius:2px;background:#6cc187;"></div><div style="aspect-ratio:1;border-radius:2px;background:var(--green);"></div><div style="aspect-ratio:1;border-radius:2px;background:var(--gray-line);"></div><div style="aspect-ratio:1;border-radius:2px;background:#cde9d6;"></div><div style="aspect-ratio:1;border-radius:2px;background:#9bd3ad;"></div><div style="aspect-ratio:1;border-radius:2px;background:#6cc187;"></div><div style="aspect-ratio:1;border-radius:2px;background:var(--green);"></div><div style="aspect-ratio:1;border-radius:2px;background:var(--gray-line);"></div><div style="aspect-ratio:1;border-radius:2px;background:#cde9d6;"></div><div style="aspect-ratio:1;border-radius:2px;background:#9bd3ad;"></div><div style="aspect-ratio:1;border-radius:2px;background:#6cc187;"></div><div style="aspect-ratio:1;border-radius:2px;background:var(--green);"></div><div style="aspect-ratio:1;border-radius:2px;background:var(--gray-line);"></div><div style="aspect-ratio:1;border-radius:2px;background:#cde9d6;"></div><div style="aspect-ratio:1;border-radius:2px;background:#9bd3ad;"></div><div style="aspect-ratio:1;border-radius:2px;background:#6cc187;"></div><div style="aspect-ratio:1;border-radius:2px;background:var(--green);"></div><div style="aspect-ratio:1;border-radius:2px;background:var(--gray-line);"></div><div style="aspect-ratio:1;border-radius:2px;background:#cde9d6;"></div><div style="aspect-ratio:1;border-radius:2px;background:#9bd3ad;"></div><div style="aspect-ratio:1;border-radius:2px;background:#6cc187;"></div><div style="aspect-ratio:1;border-radius:2px;background:var(--green);"></div></div>
-  </div>
-</div>
-<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:14px;"><div style="text-align:center;"><div style="font-size:22px;font-weight:800;color:var(--blue);">126/98</div><div style="font-size:12px;color:var(--gray-text);margin-top:4px;">用例生成 / 采纳</div></div><div style="text-align:center;"><div style="font-size:22px;font-weight:800;color:var(--blue);">18 类</div><div style="font-size:12px;color:var(--gray-text);margin-top:4px;">场景覆盖</div></div><div style="text-align:center;"><div style="font-size:22px;font-weight:800;color:var(--blue);">94%</div><div style="font-size:12px;color:var(--gray-text);margin-top:4px;">批量验收通过</div></div><div style="text-align:center;"><div style="font-size:22px;font-weight:800;color:var(--blue);">3 版</div><div style="font-size:12px;color:var(--gray-text);margin-top:4px;">灰度测试</div></div><div style="text-align:center;"><div style="font-size:22px;font-weight:800;color:var(--blue);">100%</div><div style="font-size:12px;color:var(--gray-text);margin-top:4px;">回归测试</div></div></div>
-<div style="font-size:11.5px;color:var(--gray-text);margin-top:18px;text-align:center;">示意数据；正式上线后由每个 Agent 的真实测试数据自动填充。</div>
-</div>
-  </div>
-</section><section class="section-block">
-  <div class="container">
-    <div class="block-head">
-      <div class="eyebrow">六道关口</div>
-      <h2>每个 Agent 上线，都要过六道关口</h2>
-      <div class="sub">把上线前、上线中、上线后该做的检查排成六道关，哪关没过就不让它上。</div>
-    </div>
-    <div class="feat-grid-3"><div class="feat-block bl"><div class="ic">01</div><h3>AI 生成测试用例 · 上线前</h3><p>AI 读懂流程引擎配置和业务场景，几分钟生成上百条用例。结果不满意可对话调整、重新生成。还可输入 SOP 流程图、客户资料包、历史对话、新旧版本差异作为依据，覆盖提示词的改动。</p></div><div class="feat-block or"><div class="ic">02</div><h3>批量验收 · 上线前</h3><p>单轮通过率 98% 看似达标，但大模型每次输出存在波动。设定轮数与并发跑多轮，逐条判断回复是否正确，筛出未通过的用例修正，合格用例纳入回归集。</p></div><div class="feat-block gr"><div class="ic">03</div><h3>灰度测试 · 上线中</h3><p>需验证新版又要避免影响线上。开启灰度生成密钥，仅持有密钥的会话进入新版，其余会话维持原版。效果可对比，一键关闭即回退正式版。</p></div><div class="feat-block pu"><div class="ic">04</div><h3>回归测试 · 放行前强制</h3><p>新版一改，老功能可能悄悄坏。回归集跟版本绑定，上线前强制跑：不少于 50 条、通过率必须 100% 才放行。每次结果归档，质量怎么变的可追溯。</p></div><div class="feat-block te"><div class="ic">05</div><h3>AI 工单 · 上线后</h3><p>AI 应答出错难以避免，问题在于客户缺少反馈渠道，也无从知晓是否有人跟进。客户在对话中点踩后，工单同步进入调优中心和客户侧看板，处理完成后回执状态。</p></div><div class="feat-block bl"><div class="ic">06</div><h3>AI 质检 · 上线后</h3><p>人工质检成本高、覆盖有限。建立质检模板，对线上对话批量抽检，输出会话数与未通过比例，支持二次复检，人工客服与 AI 客服统一标准。</p></div></div>
-  </div>
-</section><section class="section-block">
-  <div class="container">
-    <div class="split reverse">
-      <div class="split-text">
-        <div class="eyebrow">让客户看得见</div>
-        <h3>一句话生成一份测试报告——把工程量摆到客户面前</h3>
-        <p>六道关口背后是大量工程活，客户感受不到的话，跟没做也差不多。</p><p>每次版本交付，一句话生成一份标准测试报告：用例通过情况、上线前拦截的问题、问题定位。即便通过率不高，也意味着问题已全部拦截，未流入线上。</p>
-        <ul><li>一句话生成，样式可调、偏好可存</li><li>PDF / PNG 导出，桌面和手机都自适应</li><li>公开链接或密码访问，权限可控</li><li>每次交付攒一份，客户那边的质量证据越来越厚</li></ul>
-      </div>
-      <div class="split-visual">
-        
-<div style="background:#fff;border-radius:12px;padding:20px;border:1px solid var(--gray-line);">
-<div style="font-size:12px;font-weight:700;color:var(--gray-text);margin-bottom:14px;">客户服务 Agent · 自动化测试报告</div>
-<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px;">
-<div style="text-align:center;background:var(--gray-bg);padding:12px 8px;border-radius:8px;"><div style="font-size:22px;font-weight:800;color:var(--blue);">28</div><div style="font-size:11px;color:var(--gray-text);">测试用例</div></div>
-<div style="text-align:center;background:var(--gray-bg);padding:12px 8px;border-radius:8px;"><div style="font-size:22px;font-weight:800;color:var(--orange);">5 类</div><div style="font-size:11px;color:var(--gray-text);">用例类型</div></div>
-<div style="text-align:center;background:var(--gray-bg);padding:12px 8px;border-radius:8px;"><div style="font-size:22px;font-weight:800;color:var(--purple);">9 条</div><div style="font-size:11px;color:var(--gray-text);">故障咨询待修</div></div>
-</div>
-<div style="font-size:11.5px;color:var(--gray-text);line-height:1.6;background:var(--orange-lt);padding:10px 12px;border-radius:8px;">某家电服务客户上线前一轮：28 条用例全没过，最大短板是故障咨询（9 条）。问题都拦在了上线前，没放到客户面前。</div>
-</div>
-
-      </div>
-    </div>
-  </div>
-</section><section class="section-block">
-  <div class="container">
-    <div class="cta-band">
-  <div>
-    <h4>让句子守护把住你的 Agent 质量底线</h4>
-    <p>从一个 AI 角色起步，逐步扩展到多个 Agent。90 天内，第一个 AI 员工即在客户的 IM 中上岗。</p>
-  </div>
-  <button type="button" class="btn-primary" onclick="openContact('底部CTA·预约演示','预约演示')">预约演示 <span class="btn-arrow">→</span></button>
-</div>
-  </div>
-</section>
-
-<footer>
-  <div class="container">
-    <div class="footer-grid">
-      <div class="brand-block">
-        <div class="brand">
-          <span class="brand-mark">句</span>
-          句子互动 <small>JuziBot</small>
+  <!-- ════════════ 客户看得见 · 健康度看板 ════════════ -->
+  <section class="sec pad" id="health">
+    <div class="wrap">
+      <div class="sec-top rv">
+        <div>
+          <span class="sec-eyebrow">客户看得见</span>
+          <h2>每天打开，<span class="hl"><span>就知道你的 AI 员工今天健不健康</span></span>。</h2>
         </div>
-        <p>
-          为企业部署 AI 员工。<br/>
-          1000+ 家中国企业在用 · 覆盖 5 大高合规行业。
-        </p>
+        <p class="sub">客户无需询问。一块看板呈现当天为该 Agent 执行的动作、五个维度的各项进展和健康度评分。</p>
       </div>
-      <div>
-        <h6>产品 · 7 个</h6>
-        <ul>
-          <li><a href="../products/miaohui.html">句子秒回 · 工作台</a></li>
-          <li><a href="../products/miaodong.html">句子秒懂 · 大脑</a></li>
-          <li><a href="../products/shouhu.html">句子守护 · 主管</a></li>
-          <li><a href="../products/canmou.html">句子问数 · 参谋</a></li>
-          <li><a href="../products/dongxing.html">句子懂行 · 记忆</a></li>
-          <li><a href="../products/cli.html">句子 CLI · 手</a></li>
-          <li><a href="../products/zhizao.html">句子制造 · 地基</a></li>
-        </ul>
-      </div>
-      <div>
-        <h6>行业</h6>
-        <ul>
-          <li><a href="../industries.html#education">在线教育</a></li>
-          <li><a href="../industries.html#ecommerce">消费品电商</a></li>
-          <li><a href="../industries.html#finance">金融</a></li>
-          <li><a href="../industries.html#gov">政务 · 司法</a></li>
-          <li><a href="../industries.html#internet">泛互联网</a></li>
-        </ul>
-      </div>
-      <div>
-        <h6>公司</h6>
-        <ul>
-          <li><a href="../fde.html">FDE 交付结果</a></li>
-          <li><a href="../industries.html">客户与行业</a></li>
-          <li><a href="../about.html">AI 原生组织</a></li>
-          <li><a href="../index.html#cta">联系我们</a></li>
-        </ul>
+      <div class="hboard rv">
+        <div class="hboard-top">
+          <div class="hboard-score">
+            <div class="v">87</div>
+            <div class="l">健康度（较上周 +6）</div>
+          </div>
+          <div class="hboard-cal">
+            <div class="cl"><i class="fa-solid fa-calendar-check"></i>行动日历 · 每天为这个 Agent 做了什么</div>
+            <div class="hboard-cells">
+              <span class="g0"></span><span class="g1"></span><span class="g2"></span><span class="g3"></span><span class="g4"></span>
+              <span class="g0"></span><span class="g1"></span><span class="g2"></span><span class="g3"></span><span class="g4"></span>
+              <span class="g0"></span><span class="g1"></span><span class="g2"></span><span class="g3"></span><span class="g4"></span>
+              <span class="g0"></span><span class="g1"></span><span class="g2"></span><span class="g3"></span><span class="g4"></span>
+              <span class="g0"></span><span class="g1"></span><span class="g2"></span><span class="g3"></span><span class="g4"></span>
+              <span class="g0"></span><span class="g1"></span><span class="g2"></span><span class="g3"></span><span class="g4"></span>
+              <span class="g0"></span><span class="g1"></span><span class="g2"></span><span class="g3"></span><span class="g4"></span>
+              <span class="g0"></span><span class="g1"></span><span class="g2"></span><span class="g3"></span><span class="g4"></span>
+            </div>
+          </div>
+        </div>
+        <div class="hboard-stats">
+          <div class="hboard-stat"><div class="v">126/98</div><div class="l">用例生成 / 采纳</div></div>
+          <div class="hboard-stat"><div class="v">18 类</div><div class="l">场景覆盖</div></div>
+          <div class="hboard-stat"><div class="v">94%</div><div class="l">批量验收通过</div></div>
+          <div class="hboard-stat"><div class="v">3 版</div><div class="l">灰度测试</div></div>
+          <div class="hboard-stat"><div class="v">100%</div><div class="l">回归测试</div></div>
+        </div>
+        <div class="hboard-note">示意数据；正式上线后由每个 Agent 的真实测试数据自动填充。</div>
       </div>
     </div>
-    <div class="footer-bottom">
-      <div>Copyright © 2019 北京句子互动科技有限公司　京ICP备19049435号-1　京公网安备 11010802033527号</div>
-      <div>为企业部署 AI 员工</div>
+  </section>
+
+  <!-- ════════════ 六道关口 · 6 张 pcard ════════════ -->
+  <section class="sec pad" id="gates">
+    <div class="wrap">
+      <div class="sec-top rv">
+        <div>
+          <span class="sec-eyebrow">六道关口</span>
+          <h2>每个 Agent 上线，<span class="hl"><span>都要过六道关口</span></span>。</h2>
+        </div>
+        <p class="sub">把上线前、上线中、上线后该做的检查排成六道关，哪关没过就不让它上。</p>
+      </div>
+      <div class="arch rv" style="padding:clamp(18px,2.4vw,28px)">
+        <div class="tier-cards three">
+          <div class="pcard c-blue rv">
+            <span class="ptag"><i class="fa-solid fa-wand-magic-sparkles" style="margin-right:7px"></i>01 · AI 生成测试用例</span>
+            <h3>AI 生成测试用例</h3>
+            <p>AI 读懂流程引擎配置和业务场景，几分钟生成上百条用例。结果不满意可对话调整、重新生成。还可输入 SOP 流程图、客户资料包、历史对话、新旧版本差异作为依据，覆盖提示词的改动。</p>
+            <span class="gate-stage s-pre"><i class="fa-solid fa-circle"></i>上线前</span>
+          </div>
+          <div class="pcard c-orange rv rv-d1">
+            <span class="ptag"><i class="fa-solid fa-layer-group" style="margin-right:7px"></i>02 · 批量验收</span>
+            <h3>批量验收</h3>
+            <p>单轮通过率 98% 看似达标，但大模型每次输出存在波动。设定轮数与并发跑多轮，逐条判断回复是否正确，筛出未通过的用例修正，合格用例纳入回归集。</p>
+            <span class="gate-stage s-pre"><i class="fa-solid fa-circle"></i>上线前</span>
+          </div>
+          <div class="pcard c-green rv rv-d2">
+            <span class="ptag"><i class="fa-solid fa-code-branch" style="margin-right:7px"></i>03 · 灰度测试</span>
+            <h3>灰度测试</h3>
+            <p>需验证新版又要避免影响线上。开启灰度生成密钥，仅持有密钥的会话进入新版，其余会话维持原版。效果可对比，一键关闭即回退正式版。</p>
+            <span class="gate-stage s-mid"><i class="fa-solid fa-circle"></i>上线中</span>
+          </div>
+          <div class="pcard c-purple rv">
+            <span class="ptag"><i class="fa-solid fa-rotate-left" style="margin-right:7px"></i>04 · 回归测试</span>
+            <h3>回归测试</h3>
+            <p>新版一改，老功能可能悄悄坏。回归集跟版本绑定，上线前强制跑：不少于 50 条、通过率必须 100% 才放行。每次结果归档，质量怎么变的可追溯。</p>
+            <span class="gate-stage s-force"><i class="fa-solid fa-circle"></i>放行前强制</span>
+          </div>
+          <div class="pcard c-teal rv rv-d1">
+            <span class="ptag"><i class="fa-solid fa-ticket" style="margin-right:7px"></i>05 · AI 工单</span>
+            <h3>AI 工单</h3>
+            <p>AI 应答出错难以避免，问题在于客户缺少反馈渠道，也无从知晓是否有人跟进。客户在对话中点踩后，工单同步进入调优中心和客户侧看板，处理完成后回执状态。</p>
+            <span class="gate-stage s-post"><i class="fa-solid fa-circle"></i>上线后</span>
+          </div>
+          <div class="pcard c-blue rv rv-d2">
+            <span class="ptag"><i class="fa-solid fa-clipboard-check" style="margin-right:7px"></i>06 · AI 质检</span>
+            <h3>AI 质检</h3>
+            <p>人工质检成本高、覆盖有限。建立质检模板，对线上对话批量抽检，输出会话数与未通过比例，支持二次复检，人工客服与 AI 客服统一标准。</p>
+            <span class="gate-stage s-post"><i class="fa-solid fa-circle"></i>上线后</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════ 让客户看得见 · 一句话生成测试报告 ════════════ -->
+  <section class="sec pad" id="report">
+    <div class="wrap">
+      <div class="sec-top rv">
+        <div>
+          <span class="sec-eyebrow">让客户看得见</span>
+          <h2>一句话生成一份测试报告——<span class="hl"><span>把工程量摆到客户面前</span></span>。</h2>
+        </div>
+        <p class="sub">六道关口背后是大量工程活，客户感受不到的话，跟没做也差不多。</p>
+      </div>
+      <div class="split rv">
+        <div class="split-text">
+          <h3>每次版本交付，都有一份标准测试报告</h3>
+          <p>每次版本交付，一句话生成一份标准测试报告：用例通过情况、上线前拦截的问题、问题定位。即便通过率不高，也意味着问题已全部拦截，未流入线上。</p>
+          <ul class="ap-feats">
+            <li>一句话生成，样式可调、偏好可存</li>
+            <li>PDF / PNG 导出，桌面和手机都自适应</li>
+            <li>公开链接或密码访问，权限可控</li>
+            <li>每次交付攒一份，客户那边的质量证据越来越厚</li>
+          </ul>
+        </div>
+        <div class="split-visual">
+          <div class="report">
+            <div class="rh"><i class="fa-solid fa-file-shield"></i>客户服务 Agent · 自动化测试报告</div>
+            <div class="report-stats">
+              <div class="report-stat"><div class="v">28</div><div class="l">测试用例</div></div>
+              <div class="report-stat"><div class="v">5 类</div><div class="l">用例类型</div></div>
+              <div class="report-stat"><div class="v">9 条</div><div class="l">故障咨询待修</div></div>
+            </div>
+            <div class="report-note">某家电服务客户上线前一轮：28 条用例全没过，最大短板是故障咨询（9 条）。问题都拦在了上线前，没放到客户面前。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════ 终极 CTA ════════════ -->
+  <section class="cta" id="cta">
+    <div class="wrap cta-inner">
+      <div class="rv">
+        <h2>让句子守护把住你的 <span class="acc">Agent 质量底线</span>。</h2>
+        <p class="sub">从一个 AI 角色起步，逐步扩展到多个 Agent。90 天内，第一个 AI 员工即在客户的 IM 中上岗。</p>
+        <div class="cta-actions">
+          <button type="button" class="btn btn-blue btn-lg ar-host" onclick="openContact('句子守护·底部CTA','预约演示')">
+            预约演示
+            <span class="ar"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h11M10 4l5 5-5 5"/></svg><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h11M10 4l5 5-5 5"/></svg></span>
+          </button>
+        </div>
+      </div>
+      <div class="cta-stats">
+        <div class="cta-stat rv" style="--ac:#4338CA"><div class="csv">六道</div><div class="csl">关口逐关把关，不达标不上线</div></div>
+        <div class="cta-stat rv rv-d1" style="--ac:#14B8A6"><div class="csv">健康度</div><div class="csl">看板，做了什么客户一眼看见</div></div>
+        <div class="cta-stat rv rv-d2" style="--ac:#6366F1"><div class="csv">可追溯</div><div class="csl">金融政务必过的一关，留痕可审计</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 质量中心放大模态（虚化背景 + 大窗） -->
+  <div class="wbm" id="wbModal" role="dialog" aria-modal="true" aria-label="句子守护 质量中心 · 放大演示">
+    <div class="wbm-panel">
+      <button class="wbm-x" type="button" onclick="wbClose()" aria-label="关闭放大">&times;</button>
+      <div class="wbm-stage" id="wbBigStage"><iframe id="wbFrameBig" title="句子守护 质量中心 · 放大演示"></iframe></div>
     </div>
   </div>
-</footer>
-
-<!-- ════════════ RIGHT FLOAT PANEL ════════════ -->
-<div class="float-panel" id="floatPanel">
-  <button class="fp-btn" onclick="openContact('悬浮·在线咨询','在线咨询')">
-    <span class="fp-icon">💬</span>在线<br/>咨询
-    <span class="fp-tip">在线咨询</span>
-  </button>
-  <button class="fp-btn fp-orange" onclick="openContact('悬浮·预约演示','预约演示')">
-    <span class="fp-icon">📅</span>预约<br/>演示
-    <span class="fp-tip">预约 Demo 演示</span>
-  </button>
-  <button class="fp-btn fp-green" onclick="openContact('悬浮·获取方案','获取方案')">
-    <span class="fp-icon">📋</span>获取<br/>方案
-    <span class="fp-tip">获取行业解决方案</span>
-  </button>
-</div>
-
-<!-- ════════════ CONTACT MODAL ════════════ -->
-<div class="modal-overlay" id="contactModal">
-  <div class="modal modal-qr" role="dialog" aria-modal="true">
-    <button class="qr-close" onclick="closeModal('contactModal')" aria-label="关闭">×</button>
-    <div class="qr-eyebrow">联系我们</div>
-    <h3 class="qr-title">扫码加企业微信</h3>
-    <img class="qr-img" src="../assets/brand/qr-qiwei.png" alt="企业微信二维码" width="200" height="200" />
-    <p class="qr-note">直接和我们聊，工作日当天回复</p>
-  </div>
-</div>
-
-<script>
-function openModal(id){var el=document.getElementById(id);if(!el)return;el.classList.add('open');document.body.style.overflow='hidden';}
-function closeModal(id){var el=document.getElementById(id);if(!el)return;el.classList.remove('open');document.body.style.overflow='';}
-document.querySelectorAll('.modal-overlay').forEach(function(o){o.addEventListener('click',function(e){if(e.target===o)closeModal(o.id);});});
-document.addEventListener('keydown',function(e){if(e.key==='Escape')document.querySelectorAll('.modal-overlay.open').forEach(function(m){closeModal(m.id);});});
-function openContact(){openModal('contactModal');}
-(function(){
-  var fp=document.getElementById('floatPanel');if(!fp)return;
-  fp.style.opacity='0';fp.style.transition='opacity .3s ease';
-  window.addEventListener('scroll',function(){fp.style.opacity=window.scrollY>200?'1':'0';fp.style.pointerEvents=window.scrollY>200?'':'none';},{passive:true});
-})();
-</script>
-
+  <script>
+  (function(){
+    var fr=document.getElementById('wbFrame'),stg=document.getElementById('wbStage');
+    if(!fr||!stg)return;
+    var big=document.getElementById('wbFrameBig'),bstg=document.getElementById('wbBigStage'),modal=document.getElementById('wbModal');
+    function mode(){return {src:fr.getAttribute('data-d'),w:1440,h:880};}
+    function place(frame,host,m,s){frame.style.width=m.w+'px';frame.style.height=m.h+'px';frame.style.transform=(s>=.999?'none':'scale('+s+')');host.style.height=Math.round(m.h*s)+'px';}
+    function fitPrev(){var m=mode();if(fr.getAttribute('src')!==m.src)fr.setAttribute('src',m.src);var w=stg.clientWidth||520;place(fr,stg,m,w/m.w);}
+    function fitBig(){var m=mode();var availW=Math.min(window.innerWidth*0.96,m.w),availH=window.innerHeight*0.9;var s=Math.min(availW/m.w,availH/m.h,1);
+      if(big.getAttribute('src')!==m.src)big.setAttribute('src',m.src);
+      big.style.width=m.w+'px';big.style.height=m.h+'px';big.style.transform=(s>=.999?'none':'scale('+s+')');
+      bstg.style.width=Math.round(m.w*s)+'px';bstg.style.height=Math.round(m.h*s)+'px';}
+    fitPrev();
+    window.wbOpen=function(){modal.classList.remove('closing');modal.classList.add('open');document.body.style.overflow='hidden';fitBig();};
+    window.wbClose=function(){if(!modal.classList.contains('open')||modal.classList.contains('closing'))return;modal.classList.add('closing');document.body.style.overflow='';setTimeout(function(){modal.classList.remove('open');modal.classList.remove('closing');},250);};
+    modal.addEventListener('click',function(e){if(e.target===modal)window.wbClose();});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&modal.classList.contains('open'))window.wbClose();});
+    var rt;window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){fitPrev();if(modal.classList.contains('open'))fitBig();},120);});
+  })();
+  </script>
+</main>
+<div id="site-footer"></div>
+<script>window.SITE_REL='../';window.PAGE_CTX={entity:'shouhu',type:'product',title:'句子守护 · 主管'};</script><script src="../assets/site.js"></script>
 </body>
 </html>

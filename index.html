@@ -3473,12 +3473,41 @@ if(!sessionStorage.getItem('intro_shown')){
     if(input.dataset.demo){input.value='';delete input.dataset.demo;}
     input.readOnly=false;
   }
+  /* —— 自由输入接句子 Insight 客服 agent（同源 /api/hero-chat）；建议气泡仍走脚本秒回 —— */
+  var RB_SESSION='web-'+Math.random().toString(36).slice(2,9);
+  function rbEsc(s){return String(s).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];});}
+  function rbDegrade(text){var id=matchTopic(text);return id?TOPICS[id].a:FALLBACK;}
+  function askRealBot(text){
+    var m=document.createElement('div');m.className='msg bot';
+    m.innerHTML='<span class="m-av"><img src="logo.png" alt="句子互动" /></span><div class="m-col"><div class="m-who">小句 · AI 客服</div><div class="bubble"><span class="typing"><i></i><i></i><i></i></span></div></div>';
+    body.appendChild(m);scrollDown();
+    var b=m.querySelector('.bubble'),done=false;
+    var waitT=setTimeout(function(){
+      if(done||!b.querySelector('.typing'))return;
+      var w=document.createElement('div');w.className='rb-wait';
+      w.style.cssText='margin-top:7px;font-size:11px;color:var(--ink-3)';
+      w.textContent='正在查询，可能要十几秒…';b.appendChild(w);scrollDown();
+    },reduce?800:3500);
+    function finish(txt,opts){
+      if(done)return;done=true;clearTimeout(waitT);opts=opts||{};
+      b.innerHTML='';b.textContent=txt;
+      if(opts.refs&&opts.refs.length){
+        var r=document.createElement('div');
+        r.style.cssText='margin-top:8px;font-size:10px;color:var(--ink-3);display:flex;flex-wrap:wrap;gap:5px;align-items:center';
+        r.innerHTML='<span>来源</span>'+opts.refs.map(function(x){var pct=x.similarity?(' · '+Math.round(parseFloat(x.similarity)*100)+'%'):'';return '<span style="border:1px solid var(--line);border-radius:10px;padding:1px 7px">'+rbEsc(x.label)+pct+'</span>';}).join('');
+        b.appendChild(r);
+      }
+      scrollDown();renderChips(STARTER,{cta:!!opts.cta});
+    }
+    fetch('/api/hero-chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({sessionId:RB_SESSION,message:text})})
+      .then(function(r){return r.json().catch(function(){return {};});})
+      .then(function(j){if(j&&j.code===0&&j.data)finish(j.data.message||rbDegrade(text),{refs:j.data.references,cta:!!j.data.handover});else finish(rbDegrade(text),{cta:true});})
+      .catch(function(){finish(rbDegrade(text),{cta:true});});
+  }
   function handleText(text){
     text=(text||'').trim();if(!text)return;
     cancelDemo();removeChips();addUser(text);
-    var id=matchTopic(text);
-    if(id)botAnswer(id);
-    else addBot(FALLBACK,function(){renderChips(STARTER,{cta:true});});
+    askRealBot(text);
   }
 
   form.addEventListener('submit',function(e){e.preventDefault();handleText(input.value);input.value='';input.focus();});
@@ -3646,7 +3675,7 @@ if(!sessionStorage.getItem('intro_shown')){
 
   cards.forEach(function(c){
     var k=c.dataset.prod;
-    c.addEventListener('click',function(e){e.preventDefault();select(k);});
+    c.addEventListener('click',function(e){e.preventDefault();select(k);if(panel)panel.scrollIntoView({behavior:'smooth',block:'center'});});
     if(FINE)c.addEventListener('mouseenter',function(){show(k);});
     c.addEventListener('keydown',function(e){
       var i=ORDER.indexOf(k);
@@ -3752,5 +3781,8 @@ if(!sessionStorage.getItem('intro_shown')){
   update();
 })();
 </script>
+<!-- 全站对话层（AI-native 大改核心） -->
+<script>window.SITE_REL='';window.PAGE_CTX=null;</script>
+<script src="assets/askbar.js" defer></script>
 </body>
 </html>
