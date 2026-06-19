@@ -2,205 +2,224 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=1440, initial-scale=1">
 <title>句子秒懂 · Agent Workflow Canvas</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
+:root{
+  --ink:#0E1525; --ink-2:#52607A; --ink-3:#8A97AD;
+  --line:#E8EDF5; --bg:#F6F8FC; --panel:#fff;
+  --blue:#1659E5; --blue-soft:#EAF1FF;
+  --orange:#FF7A00; --orange-deep:#E56A00;
+  --purple:#8B5CF6; --green:#00C28B; --teal:#00AFA5;
+}
 body {
   font-family: "PingFang SC", -apple-system, "Helvetica Neue", sans-serif;
-  background: #F4F8FF;
-  color: #1A1A2E;
+  background: var(--bg);
+  color: var(--ink);
   font-size: 14px;
-  line-height: 1.5;
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 .app {
-  width: 1440px; height: 900px;
-  display: grid; grid-template-columns: 220px 1fr 320px;
-  background: #fff;
+  width: 1440px; height: 820px;
+  display: grid; grid-template-columns: 248px 1fr 344px;
+  background: var(--bg);
 }
 
-/* Sidebar */
+/* ───────── Sidebar ───────── */
 .sidebar {
-  background: #0E1A33; color: #fff;
-  padding: 20px 16px;
+  background: #0C1426; color: #fff;
+  padding: 28px 18px;
 }
 .brand {
-  font-size: 16px; font-weight: 800;
-  display: flex; align-items: center; gap: 8px;
-  margin-bottom: 24px;
+  font-size: 16px; font-weight: 700;
+  display: flex; align-items: center; gap: 11px;
+  margin-bottom: 34px; letter-spacing: -.01em;
 }
 .brand-mark {
-  width: 28px; height: 28px; border-radius: 7px;
-  background: #1659E5; color: #fff;
+  width: 30px; height: 30px; border-radius: 9px;
+  background: var(--blue); color: #fff;
   display: grid; place-items: center;
-  font-weight: 800; font-size: 14px;
+  font-weight: 700; font-size: 15px;
 }
 .nav-section {
-  font-size: 11px; color: rgba(255,255,255,.5);
-  font-weight: 700; letter-spacing: .08em;
+  font-size: 11px; color: rgba(255,255,255,.42);
+  font-weight: 600; letter-spacing: .12em;
   text-transform: uppercase;
-  margin: 18px 0 10px;
+  margin: 24px 0 12px; padding: 0 12px;
 }
+.nav-section:first-of-type { margin-top: 0; }
 .nav-item {
-  display: flex; align-items: center; gap: 10px;
-  padding: 8px 12px; border-radius: 8px;
-  color: rgba(255,255,255,.85);
-  font-size: 13px; cursor: pointer;
-  margin-bottom: 2px;
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 13px; border-radius: 10px;
+  color: rgba(255,255,255,.78);
+  font-size: 13.5px; cursor: pointer;
+  margin-bottom: 3px;
 }
-.nav-item:hover { background: rgba(255,255,255,.06); }
-.nav-item.active { background: #1659E5; color: #fff; font-weight: 600; }
-.nav-item .icon { width: 16px; opacity: .8; font-size: 14px; }
+.nav-item:hover { background: rgba(255,255,255,.05); }
+.nav-item.active { background: var(--blue); color: #fff; font-weight: 600; }
+.nav-item .icon { width: 18px; opacity: .85; font-size: 15px; text-align: center; }
 
-/* Canvas */
+/* ───────── Canvas ───────── */
 .canvas {
   position: relative;
   background:
-    radial-gradient(circle, rgba(232, 240, 255, .8) 1px, transparent 1.5px) 0 0/24px 24px,
-    #FAFBFD;
+    radial-gradient(circle, rgba(214,226,247,.7) 1px, transparent 1.6px) 0 0/28px 28px,
+    #FBFCFE;
   overflow: hidden;
 }
 .canvas-toolbar {
-  position: absolute; top: 16px; left: 16px; right: 16px;
-  display: flex; align-items: center; gap: 12px;
-  background: #fff; padding: 10px 16px;
-  border-radius: 10px; box-shadow: 0 2px 8px rgba(15,23,42,.06);
+  position: absolute; top: 24px; left: 28px; right: 28px;
+  display: flex; align-items: center; gap: 14px;
+  background: rgba(255,255,255,.92);
+  backdrop-filter: blur(8px);
+  padding: 12px 18px;
+  border: 1px solid var(--line);
+  border-radius: 12px; box-shadow: 0 6px 22px -10px rgba(15,23,42,.16);
   z-index: 10;
 }
-.canvas-toolbar .crumb { color: #6B7A99; font-size: 13px; }
-.canvas-toolbar .crumb b { color: #1A1A2E; font-weight: 700; }
+.canvas-toolbar .crumb { color: var(--ink-3); font-size: 13px; letter-spacing: -.01em; }
+.canvas-toolbar .crumb b { color: var(--ink); font-weight: 700; }
 .canvas-toolbar .badge {
-  background: #E0F7EC; color: #00C28B;
-  font-size: 11px; font-weight: 700;
-  padding: 3px 10px; border-radius: 999px;
+  background: #E2F8EF; color: #00A878;
+  font-size: 11.5px; font-weight: 700;
+  padding: 5px 12px; border-radius: 999px;
   margin-left: auto;
 }
 .canvas-toolbar .btn {
-  background: #1659E5; color: #fff;
-  font-size: 12.5px; font-weight: 600;
-  padding: 7px 14px; border-radius: 8px; border: 0;
-  cursor: pointer;
+  background: var(--blue); color: #fff;
+  font-size: 13px; font-weight: 600;
+  padding: 9px 18px; border-radius: 9px; border: 0;
+  cursor: pointer; box-shadow: 0 4px 12px -4px rgba(22,89,229,.5);
 }
 
-/* Workflow nodes */
+/* ───────── Workflow nodes ───────── */
 .node {
   position: absolute;
-  background: #fff;
-  border: 1.5px solid #E2E8F0;
-  border-radius: 10px;
-  padding: 14px 18px;
-  min-width: 180px;
-  box-shadow: 0 4px 12px rgba(15,23,42,.06);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px 20px;
+  width: 208px;
+  box-shadow: 0 8px 22px -12px rgba(15,23,42,.18);
+}
+.node::before {
+  content: ""; position: absolute; left: 0; top: 14px; bottom: 14px;
+  width: 3px; border-radius: 3px; background: var(--accent, var(--line));
 }
 .node .ntype {
-  font-size: 10px; font-weight: 800; color: #6B7A99;
-  letter-spacing: .1em; text-transform: uppercase;
-  margin-bottom: 4px;
+  font-size: 10.5px; font-weight: 700; color: var(--accent, var(--ink-3));
+  letter-spacing: .08em; text-transform: uppercase;
+  margin-bottom: 6px;
 }
 .node .ntitle {
-  font-size: 14px; font-weight: 700; color: #1A1A2E;
+  font-size: 15px; font-weight: 700; color: var(--ink); letter-spacing: -.01em;
 }
 .node .nmeta {
-  font-size: 11.5px; color: #6B7A99;
-  margin-top: 4px;
+  font-size: 12px; color: var(--ink-3);
+  margin-top: 6px;
 }
-.node.start { border-color: #1659E5; }
-.node.start .ntype { color: #1659E5; }
-.node.kb { border-color: #FF7A00; }
-.node.kb .ntype { color: #FF7A00; }
-.node.cond { border-color: #8B5CF6; transform: rotate(0deg); }
-.node.cond .ntype { color: #8B5CF6; }
-.node.action { border-color: #00C28B; }
-.node.action .ntype { color: #00C28B; }
-.node.tool { border-color: #00AFA5; }
-.node.tool .ntype { color: #00AFA5; }
-.node.output { border-color: #1A1A2E; background: #1A1A2E; color: #fff; }
-.node.output .ntype { color: #FFC78A; }
+.node.start  { --accent: var(--blue); }
+.node.kb     { --accent: var(--orange); }
+.node.cond   { --accent: var(--purple); }
+.node.action { --accent: var(--green); }
+.node.tool   { --accent: var(--teal); }
+.node.output {
+  --accent: #FFC78A;
+  background: #131C30; border-color: #131C30;
+  box-shadow: 0 12px 30px -12px rgba(19,28,48,.55);
+}
 .node.output .ntitle { color: #fff; }
 
-/* Position the nodes */
-.n1 { top: 100px; left: 60px; }
-.n2 { top: 100px; left: 320px; }
-.n3 { top: 100px; left: 580px; }
-.n4 { top: 240px; left: 320px; }
-.n5 { top: 240px; left: 580px; }
-.n6 { top: 380px; left: 580px; }
-.n7 { top: 380px; left: 320px; }
-.n8 { top: 510px; left: 320px; }
-.n9 { top: 510px; left: 580px; }
+/* Position the nodes — roomy, single airy lane */
+.n1 { top: 132px; left:  88px; }   /* 起点 */
+.n2 { top: 132px; left: 388px; }   /* 知识库 */
+.n3 { top: 132px; left: 688px; }   /* 条件 */
+.n5 { top: 340px; left: 688px; }   /* 模型生成（命中分支） */
+.n4 { top: 340px; left: 388px; }   /* 工具调用（未命中分支） */
+.n7 { top: 548px; left: 388px; }   /* 合规话术替换 */
+.n6 { top: 548px; left: 688px; }   /* 输出 */
 
-/* SVG arrows */
+/* ───────── SVG arrows ───────── */
 .flow-svg {
   position: absolute; top: 0; left: 0;
   width: 100%; height: 100%;
   pointer-events: none;
 }
 .flow-svg path {
-  stroke: #C7D2FE; stroke-width: 2;
-  fill: none;
+  stroke: #CBD7EC; stroke-width: 2;
+  fill: none; stroke-linecap: round;
 }
-.flow-svg path.active { stroke: #1659E5; stroke-width: 2.5; }
+.flow-svg path.active { stroke: var(--blue); stroke-width: 2.5; }
 
-/* Right panel: model & test */
+/* ───────── Right panel: model & test ───────── */
 .right {
-  background: #FAFBFD;
-  border-left: 1px solid #E2E8F0;
-  padding: 20px 18px;
+  background: var(--panel);
+  border-left: 1px solid var(--line);
+  padding: 28px 22px;
   overflow-y: hidden;
 }
-.right-section { margin-bottom: 22px; }
+.right-section { margin-bottom: 30px; }
+.right-section:last-child { margin-bottom: 0; }
 .right-section h4 {
-  font-size: 12px; font-weight: 800; color: #6B7A99;
-  letter-spacing: .08em; text-transform: uppercase;
-  margin-bottom: 10px;
+  font-size: 11.5px; font-weight: 700; color: var(--ink-3);
+  letter-spacing: .1em; text-transform: uppercase;
+  margin-bottom: 14px;
 }
 .model-card {
-  background: #fff; border: 1px solid #E2E8F0;
-  border-radius: 10px; padding: 14px;
-  margin-bottom: 8px;
+  background: #fff; border: 1px solid var(--line);
+  border-radius: 12px; padding: 15px 16px;
+  margin-bottom: 10px;
 }
+.model-card:last-child { margin-bottom: 0; }
 .model-card .row {
   display: flex; justify-content: space-between; align-items: center;
-  margin-bottom: 6px;
+  margin-bottom: 7px;
 }
 .model-card .row:last-child { margin-bottom: 0; }
-.model-card .name { font-weight: 700; font-size: 13.5px; }
+.model-card .name { font-weight: 700; font-size: 14px; letter-spacing: -.01em; }
 .model-card .name .dot {
-  display: inline-block; width: 6px; height: 6px;
-  border-radius: 50%; background: #00C28B; margin-right: 6px;
+  display: inline-block; width: 7px; height: 7px;
+  border-radius: 50%; background: var(--green); margin-right: 8px;
 }
-.model-card .meta { font-size: 11.5px; color: #6B7A99; }
-.model-card .price { color: #FF7A00; font-weight: 700; font-size: 12px; }
+.model-card .meta { font-size: 12px; color: var(--ink-3); }
+.model-card .price { color: var(--orange-deep); font-weight: 700; font-size: 12.5px; }
+.tag { font-size: 11.5px; font-weight: 700; }
+.tag.rec { color: var(--green); }
+.tag.dim { color: var(--ink-3); font-weight: 600; }
 
 .test-input {
-  background: #fff; border: 1px solid #E2E8F0;
-  border-radius: 10px; padding: 12px;
-  font-size: 13px; color: #1A1A2E;
+  background: var(--bg); border: 1px solid var(--line);
+  border-radius: 12px; padding: 14px 15px;
+  font-size: 13.5px; color: var(--ink); line-height: 1.6;
 }
 .test-result {
-  margin-top: 8px;
-  background: #E8F0FF; border-left: 3px solid #1659E5;
-  padding: 10px 12px; border-radius: 0 8px 8px 0;
-  font-size: 12.5px; color: #1A1A2E;
-  line-height: 1.55;
+  margin-top: 12px;
+  background: var(--blue-soft); border-left: 3px solid var(--blue);
+  padding: 14px 16px; border-radius: 0 12px 12px 0;
+  font-size: 13px; color: var(--ink);
+  line-height: 1.65;
 }
 .test-result .label {
-  font-size: 10.5px; color: #1659E5; font-weight: 700;
-  margin-bottom: 4px;
+  font-size: 11px; color: var(--blue); font-weight: 700;
+  letter-spacing: .04em;
+  margin-bottom: 7px;
 }
 .metrics {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
-  margin-top: 8px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  margin-top: 12px;
 }
 .metric {
-  background: #fff; border: 1px solid #E2E8F0;
-  border-radius: 8px; padding: 10px 12px;
+  background: #fff; border: 1px solid var(--line);
+  border-radius: 11px; padding: 13px 15px;
 }
 .metric .v {
-  font-size: 18px; font-weight: 800; color: #1659E5;
-  line-height: 1.1;
+  font-size: 20px; font-weight: 800; color: var(--blue);
+  line-height: 1.1; letter-spacing: -.02em;
 }
-.metric .l { font-size: 10.5px; color: #6B7A99; margin-top: 2px; }
+.metric .l { font-size: 11px; color: var(--ink-3); margin-top: 4px; }
 </style>
 </head>
 <body>
@@ -235,21 +254,19 @@ body {
 
     <svg class="flow-svg">
       <!-- Start → KB -->
-      <path d="M 240 130 L 320 130" />
+      <path d="M 296 168 L 388 168" />
       <!-- KB → Cond -->
-      <path class="active" d="M 500 130 L 580 130" />
-      <!-- Cond Yes → Model gen -->
-      <path class="active" d="M 670 175 L 670 240" />
-      <!-- Cond No → Tool -->
-      <path d="M 580 145 L 510 200 L 510 240" />
+      <path class="active" d="M 596 168 L 688 168" />
+      <!-- Cond → Model gen (命中) -->
+      <path class="active" d="M 792 218 L 792 340" />
+      <!-- Cond → Tool (未命中) -->
+      <path d="M 688 190 L 492 280 L 492 340" />
+      <!-- Tool → Action (合规话术替换) -->
+      <path d="M 492 426 L 492 548" />
       <!-- Model gen → Output -->
-      <path class="active" d="M 670 285 L 670 370" />
-      <!-- Tool → Action -->
-      <path d="M 410 285 L 410 380 L 320 425" />
+      <path class="active" d="M 792 426 L 792 548" />
       <!-- Action → Output -->
-      <path d="M 500 425 L 580 425" />
-      <!-- Output → Done -->
-      <path class="active" d="M 670 425 L 670 510" />
+      <path d="M 596 590 L 688 590" />
     </svg>
 
     <div class="node start n1">
@@ -299,7 +316,7 @@ body {
         </div>
         <div class="row">
           <div class="meta">中文场景 · 速度优先</div>
-          <div style="color:#00C28B;font-size:11px;font-weight:700;">推荐</div>
+          <div class="tag rec">推荐</div>
         </div>
       </div>
       <div class="model-card">
@@ -309,7 +326,7 @@ body {
         </div>
         <div class="row">
           <div class="meta">复杂推理 · 高质量</div>
-          <div style="color:#6B7A99;font-size:11px;">备用</div>
+          <div class="tag dim">备用</div>
         </div>
       </div>
       <div class="model-card">
@@ -319,7 +336,7 @@ body {
         </div>
         <div class="row">
           <div class="meta">国内私有化场景</div>
-          <div style="color:#6B7A99;font-size:11px;">可选</div>
+          <div class="tag dim">可选</div>
         </div>
       </div>
     </div>
@@ -333,7 +350,7 @@ body {
       </div>
       <div class="metrics">
         <div class="metric"><div class="v">182ms</div><div class="l">响应延迟</div></div>
-        <div class="metric"><div class="v" style="color:#00C28B;">0.94</div><div class="l">置信度</div></div>
+        <div class="metric"><div class="v" style="color:var(--green);">0.94</div><div class="l">置信度</div></div>
       </div>
     </div>
   </aside>
