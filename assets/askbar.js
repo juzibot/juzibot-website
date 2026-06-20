@@ -54,6 +54,7 @@
     '.jzab-trigger{display:inline-flex;align-items:center;gap:7px;font:inherit;font-size:13px;font-weight:650;color:var(--ink,#0b1020);background:var(--bg-2,#fff);border:1px solid var(--line,#e6e8ef);border-radius:999px;padding:7px 13px;cursor:pointer;transition:border-color .2s,box-shadow .2s,transform .2s}' +
     '.jzab-trigger:hover{border-color:var(--blue,#4338CA);box-shadow:0 6px 18px rgba(67,56,202,.12);transform:translateY(-1px)}' +
     '.jzab-trigger .jzab-kbd{font:600 11px/1 ui-monospace,monospace;color:var(--ink-3,#8a92a6);border:1px solid var(--line-2,#d7dae3);border-radius:5px;padding:2px 5px}' +
+    '@media(max-width:1080px){.jzab-trigger{display:none}}' + /* 手机/平板：导航 pill 隐藏，右下角浮动按钮兜底，避免撑爆导航 */
     '.jzab-fab{position:fixed;right:max(18px,env(safe-area-inset-right));bottom:max(18px,env(safe-area-inset-bottom));z-index:940;display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:#fff;background:linear-gradient(135deg,var(--blue,#4338CA),#6366F1);border:none;border-radius:999px;padding:13px 18px;cursor:pointer;box-shadow:0 12px 34px rgba(67,56,202,.34);transition:transform .2s,box-shadow .2s}' +
     '.jzab-fab:hover{transform:translateY(-2px);box-shadow:0 18px 44px rgba(67,56,202,.42)}' +
     '.jzab-fab i{font-size:15px}' +
