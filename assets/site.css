@@ -114,6 +114,8 @@
     box-shadow:0 30px 60px -24px rgba(14,20,48,.28),0 4px 12px rgba(14,20,48,.06);
     opacity:0;visibility:hidden;pointer-events:none;transition:opacity .28s var(--ease),transform .28s var(--ease);z-index:60}
   .dropdown.wide{display:grid;grid-template-columns:1fr 1fr;gap:4px;width:min(540px,86vw)}
+  /* 透明桥:填平按钮与下拉之间的 10px 死区,鼠标下移不丢 hover,下拉不闪退 */
+  .dropdown::before{content:"";position:absolute;left:0;right:0;top:-14px;height:14px}
   .nav-item:hover .dropdown{opacity:1;visibility:visible;pointer-events:auto;transform:translateX(-50%) translateY(0)}
   .dropdown a{display:block;padding:12px 14px;border-radius:12px;transition:background .2s var(--ease)}
   .dropdown a:hover{background:var(--blue-50)}
