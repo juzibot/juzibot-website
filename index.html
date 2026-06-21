@@ -44,7 +44,7 @@
   html{-webkit-text-size-adjust:100%}
   html:not(.lenis){scroll-behavior:smooth}
   body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.6;
-    -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:hidden}
+    -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:clip}
   a{color:inherit;text-decoration:none}
   button{font-family:inherit;cursor:pointer}
   img,svg{display:block;max-width:100%}
@@ -1387,7 +1387,7 @@
 </style>
 <style>
 /* ===== 移动端补丁 · index.html 不引 site.css，需就地修 ===== */
-html{overflow-x:hidden}
+html{overflow-x:clip}
 @media(max-width:640px){
   /* 关闭态弹窗不占布局，杜绝横向溢出（原用 visibility 隐藏仍占 432px 宽 → 撑出 481 → 整页缩小） */
   .modal-overlay:not(.open){display:none}
