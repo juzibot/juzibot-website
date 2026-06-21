@@ -126,6 +126,8 @@
     box-shadow:0 30px 60px -24px rgba(14,20,48,.28),0 4px 12px rgba(14,20,48,.06);
     opacity:0;visibility:hidden;pointer-events:none;transition:opacity .28s var(--ease),transform .28s var(--ease);z-index:60}
   .dropdown.wide{display:grid;grid-template-columns:1fr 1fr;gap:4px;width:min(540px,86vw)}
+  /* 透明桥:填平按钮与下拉之间的 10px 死区,鼠标下移不丢 hover,下拉不闪退 */
+  .dropdown::before{content:"";position:absolute;left:0;right:0;top:-14px;height:14px}
   .nav-item:hover .dropdown{opacity:1;visibility:visible;pointer-events:auto;transform:translateX(-50%) translateY(0)}
   .dropdown a{display:block;padding:12px 14px;border-radius:12px;transition:background .2s var(--ease)}
   .dropdown a:hover{background:var(--blue-50)}
@@ -163,9 +165,9 @@
   /* 光标反应式背景：用可动画的自定义属性驱动蓝色径向光斑位置 */
   @property --hx{syntax:"<percentage>";inherits:false;initial-value:80%}
   @property --hy{syntax:"<percentage>";inherits:false;initial-value:2%}
-  .hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;
+  .hero{position:relative;min-height:auto;display:flex;align-items:flex-start;overflow:hidden;
     --hx:80%;--hy:2%;transition:--hx .35s var(--ease),--hy .35s var(--ease);
-    padding:clamp(88px,11vh,128px) var(--gut) clamp(40px,5vh,64px);
+    padding:clamp(112px,13vh,150px) var(--gut) clamp(64px,9vh,112px);
     background:radial-gradient(1100px 560px at var(--hx) var(--hy),var(--blue-100),transparent 60%),
                radial-gradient(720px 520px at 2% 8%,var(--orange-lt),transparent 56%),
                linear-gradient(180deg,var(--blue-50),#fff 72%)}
@@ -177,7 +179,7 @@
   .eyebrow .dot{width:8px;height:8px;border-radius:50%;background:var(--green);position:relative;flex-shrink:0}
   .eyebrow .dot::after{content:"";position:absolute;inset:0;border-radius:50%;background:var(--green);animation:ping 1.8s var(--ease) infinite}
   @keyframes ping{0%{transform:scale(1);opacity:.7}70%,100%{transform:scale(3);opacity:0}}
-  .hero h1{font-size:clamp(40px,6vw,78px);font-weight:850;letter-spacing:-.04em;line-height:1.0;
+  .hero h1{font-size:clamp(40px,6vw,78px);font-weight:850;letter-spacing:-.04em;line-height:1.12;
     max-width:14ch;text-wrap:balance;margin-bottom:clamp(14px,2.2vw,26px)}
   .hero h1 .accent{color:var(--blue)}
   .hero-sub{font-size:clamp(16px,1.4vw,19px);color:var(--ink-2);max-width:46ch;line-height:1.66}
@@ -709,77 +711,6 @@
     background-size:100% 220%;filter:drop-shadow(0 0 5px color-mix(in srgb,var(--ap) 45%,transparent))}
   .arch.has-sel .tier-link::after{border-top-color:var(--ap);border-right-color:var(--ap)}
 
-  /* 预览面板 */
-  .arch-preview{display:none;--ap:#4338CA;margin-top:clamp(16px,2vw,24px);
-    grid-template-columns:1.04fr .96fr;overflow:hidden;
-    border:1px solid var(--line);border-radius:var(--radius-lg);background:#fff;
-    box-shadow:0 1px 2px rgba(14,20,48,.05),0 30px 64px -34px color-mix(in srgb,var(--ap) 42%,rgba(14,20,48,.35))}
-  .arch-preview.ready{display:grid}
-  html.anim .arch-preview.ready{animation:apIn .55s var(--ease)}
-  @keyframes apIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
-  @media (prefers-reduced-motion:reduce){html.anim .arch-preview.ready{animation:none}}
-  /* 左：界面框（模仿应用窗口） */
-  .ap-frame{position:relative;padding:clamp(18px,2.2vw,28px);display:flex;flex-direction:column;
-    border-right:1px solid var(--line);
-    background:radial-gradient(circle at center,rgba(67,56,202,.09) 1.2px,transparent 1.4px) 0 0/20px 20px,
-      linear-gradient(160deg,color-mix(in srgb,var(--ap) 12%,#fff),#F3F7FE)}
-  .ap-win{display:flex;align-items:center;gap:9px;padding:9px 13px;background:rgba(255,255,255,.9);
-    border:1px solid var(--line);border-bottom:0;border-radius:12px 12px 0 0}
-  .ap-dots{display:inline-flex;gap:5px}
-  .ap-dots i{width:9px;height:9px;border-radius:50%;background:#D7DEEC}
-  .ap-dots i:nth-child(1){background:#FF5F57}.ap-dots i:nth-child(2){background:#FEBC2E}.ap-dots i:nth-child(3){background:#28C840}
-  .ap-win-ttl{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);letter-spacing:.02em}
-  .ap-shot{position:relative;aspect-ratio:16/10;overflow:hidden;background:#fff;
-    border:1px solid var(--line);border-radius:0 0 14px 14px;box-shadow:0 18px 34px -20px rgba(14,20,48,.35)}
-  .ap-shot img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
-  /* 无截图产品：品牌色封面（标注「界面示意」，不冒充截图） */
-  .ap-mock{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:15px;text-align:center;
-    color:#fff;background:linear-gradient(150deg,color-mix(in srgb,var(--ap) 86%,#000),var(--ap) 58%,color-mix(in srgb,var(--ap) 72%,#fff))}
-  .ap-mock-ic{width:64px;height:64px;border-radius:18px;display:grid;place-items:center;font-size:27px;
-    background:rgba(255,255,255,.18);box-shadow:inset 0 1.5px 1px rgba(255,255,255,.45),0 10px 22px -8px rgba(0,0,0,.25)}
-  .ap-mock-nm{font-size:18px;font-weight:820;letter-spacing:-.01em}
-  .ap-mock-nm small{font-weight:600;opacity:.82}
-  .ap-mock-tag{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
-    background:rgba(255,255,255,.18);padding:4px 11px;border-radius:999px}
-  .ap-cap{margin-top:13px;font-size:12.5px;color:var(--ink-2);font-weight:600;display:flex;align-items:center;gap:8px}
-  .ap-cap::before{content:"";flex:0 0 auto;width:15px;height:2px;border-radius:2px;background:var(--ap)}
-  /* 右：信息 */
-  .ap-info{padding:clamp(24px,2.8vw,38px);display:flex;flex-direction:column;min-width:0}
-  .ap-tier{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ap);margin-bottom:13px}
-  .ap-name{font-size:clamp(22px,2.4vw,30px);font-weight:840;letter-spacing:-.025em;line-height:1.18}
-  .ap-name small{font-size:.6em;font-weight:700;color:var(--ink-3);letter-spacing:0}
-  .ap-desc{margin-top:13px;font-size:14.5px;line-height:1.7;color:var(--ink-2)}
-  .ap-feats{list-style:none;margin:18px 0 0;display:grid;gap:11px}
-  .ap-feats li{position:relative;padding-left:27px;font-size:14px;line-height:1.55;color:var(--ink)}
-  .ap-feats li::before{content:"";position:absolute;left:0;top:1px;width:18px;height:18px;border-radius:6px;
-    background:color-mix(in srgb,var(--ap) 15%,#fff)}
-  .ap-feats li::after{content:"";position:absolute;left:5.5px;top:6px;width:6px;height:3px;
-    border-left:2px solid var(--ap);border-bottom:2px solid var(--ap);transform:rotate(-45deg)}
-  .ap-rel{margin-top:21px;padding-top:18px;border-top:1px dashed var(--line)}
-  .ap-rel-ttl{font-size:12px;font-weight:700;color:var(--ink-3);margin-bottom:12px}
-  .ap-rel-row{display:flex;align-items:flex-start;gap:10px;margin-top:10px}
-  .ap-rel-k{flex:0 0 auto;font-family:var(--mono);font-size:10.5px;font-weight:800;letter-spacing:.04em;
-    padding:6px 10px;border-radius:8px;line-height:1;white-space:nowrap}
-  .ap-rel-k.dep{background:var(--blue-50);color:var(--blue-deep)}
-  .ap-rel-k.sup{background:var(--orange-lt);color:var(--orange-deep)}
-  .ap-rel-chips{display:flex;flex-wrap:wrap;gap:7px}
-  .ap-chip{font:inherit;font-size:12.5px;font-weight:700;color:var(--ink-2);background:#fff;border:1px solid var(--line);
-    border-radius:999px;padding:6px 13px;cursor:pointer;
-    transition:color .2s,border-color .2s,background .2s,transform .2s var(--ease)}
-  .ap-chip:hover{color:var(--c,var(--blue));border-color:color-mix(in srgb,var(--c,#4338CA) 50%,var(--line));
-    background:color-mix(in srgb,var(--c,#4338CA) 8%,#fff);transform:translateY(-1px)}
-  .ap-chip:focus-visible{outline:2px solid var(--c,var(--blue));outline-offset:2px}
-  .ap-cta{align-self:flex-start;margin-top:26px;display:inline-flex;align-items:center;gap:10px;
-    padding:14px 24px;border-radius:999px;font-size:14.5px;font-weight:750;color:#fff;background:var(--ap);
-    box-shadow:0 12px 26px -10px color-mix(in srgb,var(--ap) 70%,transparent);
-    transition:transform .3s var(--ease),box-shadow .3s var(--ease),filter .2s}
-  .ap-cta:hover{transform:translateY(-2px);filter:brightness(1.05) saturate(1.05);
-    box-shadow:0 18px 34px -10px color-mix(in srgb,var(--ap) 75%,transparent)}
-  .ap-cta .ar svg{stroke:#fff}
-  @media(max-width:820px){
-    .arch-preview{grid-template-columns:1fr}
-    .ap-frame{border-right:0;border-bottom:1px solid var(--line)}
-  }
 
   /* ============ FDE ============ */
   .fde-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(14px,1.4vw,20px);margin-top:8px}
@@ -1318,7 +1249,7 @@
   @media(max-width:460px){.footer-grid{grid-template-columns:1fr}}
 
   /* ============ 悬浮面板 ============ */
-  .float-panel{position:fixed;right:18px;bottom:24px;z-index:40;display:flex;flex-direction:column;gap:10px}
+  .float-panel{position:fixed;right:18px;bottom:84px;z-index:40;display:flex;flex-direction:column;gap:10px}
   .fp-btn{position:relative;width:62px;min-height:62px;border:1px solid var(--line);border-radius:18px;background:#fff;
     color:var(--ink-2);font-size:12px;font-weight:700;line-height:1.2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
     box-shadow:var(--shadow);transition:transform .3s var(--ease),box-shadow .3s var(--ease),color .25s}
@@ -1331,7 +1262,7 @@
     background:var(--ink);color:#fff;font-size:12px;font-weight:600;white-space:nowrap;padding:8px 12px;border-radius:10px;
     opacity:0;pointer-events:none;transition:opacity .25s var(--ease),transform .25s var(--ease)}
   .fp-btn:hover .fp-tip{opacity:1;transform:translateY(-50%) translateX(0)}
-  @media(max-width:600px){.float-panel{right:12px;bottom:14px}.fp-btn{width:54px;min-height:54px}.fp-tip{display:none}}
+  @media(max-width:600px){.float-panel{right:12px;bottom:78px}.fp-btn{width:54px;min-height:54px}.fp-tip{display:none}}
 
   /* ============ 弹窗 ============ */
   .modal-overlay{position:fixed;inset:0;z-index:80;background:rgba(14,20,48,.5);backdrop-filter:blur(6px);
@@ -1618,7 +1549,7 @@ html{overflow-x:hidden}
                     <span class="fn-ic"><svg viewBox="0 0 18 18"><path d="M3 4h12v8H7l-3 3v-3H3z"/></svg></span>
                     <div>
                       <div class="fn-t">客户消息接入</div>
-                      <div class="fn-s">微信 · 抖音 · 飞书 · 10+ 渠道</div>
+                      <div class="fn-s">微信客服 · 抖音 · 飞书 · 10+ 渠道</div>
                     </div>
                   </div>
                 </div>
@@ -1837,7 +1768,7 @@ html{overflow-x:hidden}
           <a href="products/miaohui.html" class="pcard c-blue ar-host">
             <div class="ptag">句子秒回 · 工作台</div>
             <h3>把 11 个 IM 通道收成一个工作台</h3>
-            <p>微信、抖音、小红书、飞书、WhatsApp ——Agent 接所有消息，按置信度三档跑：自主发 / 抽检 / 起草人确认。人改一次，下次更准。</p>
+            <p>微信客服、小程序、公众号、抖音、小红书、飞书、WhatsApp ——Agent 接所有消息，按置信度三档跑：自主发 / 抽检 / 起草人确认。人改一次，下次更准。</p>
             <div class="pmeta">销售 · 客服 · 导购通用 · 1000+ 企业验证</div>
             <span class="plink">了解句子秒回 <span class="ar"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h11M10 4l5 5-5 5"/></svg><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h11M10 4l5 5-5 5"/></svg></span></span>
           </a>
@@ -1912,8 +1843,6 @@ html{overflow-x:hidden}
         </div>
       </div>
     </div>
-
-    <div class="arch-preview" id="archPreview" role="region" aria-label="产品界面预览"></div>
   </div>
 </section>
 
@@ -2102,7 +2031,7 @@ html{overflow-x:hidden}
           <p>一键发布到 IM 通道、网页、API、企业内部系统——哪里有业务，Agent 就在哪里上岗。</p>
           <span class="fs-pill">deploy</span>
           <div class="fs-more">
-            <p>同一套 Agent 一键铺到企业微信、网页、抖音、API 和企业内部系统。哪里有客户，Agent 就在哪里上岗，换渠道不用重做一遍。</p>
+            <p>同一套 Agent 一键铺到微信客服、小程序、公众号、网页、抖音、API 和企业内部系统。哪里有客户，Agent 就在哪里上岗，换渠道不用重做一遍。</p>
             <div class="fm-tags"><span>多渠道</span><span>一键上线</span><span>系统对接</span></div>
           </div>
         </div>
@@ -3401,13 +3330,13 @@ if(!sessionStorage.getItem('intro_shown')){
       a:"普通机器人按关键词命中，答不上就转人工；小句是「AI 员工」——理解上下文、查知识库、调 CRM / 工单，把活直接干完，真搞不定才转人工。",
       next:["result","deploy","safety"]},
     deploy:{q:"接入要多久？",
-      a:"标准 IM 渠道（微信 / 企业微信 / 抖音 / 飞书等）最快 1–3 天就能上岗；复杂业务由我们的 FDE 团队陪跑落地。",
+      a:"标准 IM 渠道（微信客服 / 小程序 / 公众号 / 抖音 / 飞书等）最快 1–3 天就能上岗；复杂业务由我们的 FDE 团队陪跑落地。",
       next:["channels","safety","demo"]},
     safety:{q:"数据安全吗？",
       a:"支持私有化 / 专属部署，数据不出域、全程加密可审计，已服务金融、政务等高合规行业。",
       next:["deploy","result","demo"]},
     channels:{q:"支持哪些渠道？",
-      a:"微信、企业微信、抖音、小红书、飞书、WhatsApp 等 10+ 主流 IM，全部收进一个工作台统一接待。",
+      a:"微信客服、小程序、公众号、抖音、小红书、飞书、WhatsApp 等 10+ 主流 IM，全部收进一个工作台统一接待。",
       next:["result","demo"]},
     result:{q:"效果能量化吗？",
       a:"能。按业务结果交付——转化、有效线索、人效都对齐你的指标：头部客户人效翻倍、转人工率从 27% 压到 2.73%。",
@@ -3575,145 +3504,6 @@ if(!sessionStorage.getItem('intro_shown')){
   else setTimeout(playDemo,700);
 })();
 
-/* ── 产品台 · 7 产品架构可交互探索（点/悬停产品 → 预览 + 高亮依赖与赋能） ── */
-(function(){
-  var arch=document.querySelector('#products .arch');
-  var panel=document.getElementById('archPreview');
-  if(!arch||!panel)return;
-  var cards=[].slice.call(arch.querySelectorAll('.pcard'));
-  if(!cards.length)return;
-
-  /* dep = 它依赖（下层/上游）；sup = 它赋能（上层/被它支撑） */
-  var DATA={
-    miaohui:{name:'句子秒回',sub:'工作台',tier:'应用层 · 给终端用户用',acc:'#4338CA',icon:'fa-comments',
-      shot:'assets/product-shots/miaohui-workbench.png',cap:'统一工作台 · 11 个 IM 通道汇成一个收件箱',
-      desc:'微信、抖音、小红书、飞书、WhatsApp——Agent 接所有消息，按置信度三档跑。',
-      feats:['11 个 IM 通道聚合成一个工作台','自主发 / 抽检 / 起草人确认 三档置信度','人改一次下次更准 · 1000+ 企业验证'],
-      dep:['dongxing','miaodong','shouhu','cli','zhizao'],sup:[]},
-    canmou:{name:'句子问数',sub:'数据洞察',tier:'应用层 · 给终端用户用',acc:'#6366F1',icon:'fa-chart-line',
-      shot:null,cap:'自然语言问数 · 秒级出图表',
-      desc:'一句话查公司所有数据，秒级出图表，再追问钻下一层，异常主动跳出来。',
-      feats:['自然语言问数，不写 SQL、不约 BI','漏斗流失 / 转化 / 话术退费 一问就出','异常主动预警 · 管理者和运营都能用'],
-      dep:['dongxing','zhizao'],sup:[]},
-    dongxing:{name:'句子懂行',sub:'记忆',tier:'编排层 · 搭 Agent',acc:'#6366F1',icon:'fa-book-bookmark',
-      shot:null,cap:'知识工程 · 散乱知识炼成可检索资产',
-      desc:'先清洗、切分、对齐问法，把散乱资料炼成能查、带出处的知识资产，再上 Agent。',
-      feats:['清洗 / 切分 / 对齐问法 的知识工程','检索结果带出处，可追溯','Agent 答得准的前提'],
-      dep:['zhizao'],sup:['miaodong','miaohui','canmou']},
-    miaodong:{name:'句子秒懂',sub:'大脑',tier:'编排层 · 搭 Agent',acc:'#2DD4BF',icon:'fa-diagram-project',
-      shot:'assets/product-shots/miaodong-canvas.png',cap:'可视化画布 · 拖拽搭多 Agent 协作',
-      desc:'业务人员不写代码，把复杂业务拆成各管一段的 Agent 协作，内置 5 行业话术。',
-      feats:['低代码可视化画布，不写代码搭 Agent','多 Agent 协作，比单流程更好维护','内置 5 个行业话术与 SOP，开通即用'],
-      dep:['dongxing','cli','zhizao'],sup:['miaohui']},
-    shouhu:{name:'句子守护',sub:'主管',tier:'编排层 · 搭 Agent',acc:'#2DD4BF',icon:'fa-shield-halved',
-      shot:'assets/product-shots/shouhu-quality.png',cap:'质检中心 · AI 质检 + 健康度看板',
-      desc:'Agent 上线前测过、上线后管着，一关不过不上线，没人拍板不放行。',
-      feats:['AI 生成用例 / 批量验收 / 灰度 / 回归','AI 工单 + AI 质检，健康度看得见','金融政务必过的一关'],
-      dep:['zhizao'],sup:['miaodong','miaohui']},
-    cli:{name:'句子 CLI',sub:'手',tier:'地基层 · 数字化补齐',acc:'#2DD4BF',icon:'fa-terminal',
-      shot:null,cap:'执行层 · 操作一切人用软件',
-      desc:'没 API 的老系统也能接：有接口走接口，没接口像人一样点界面，把活干完。',
-      feats:['有 API 走 API，无 API 直接操作界面','跨系统搬数据，把活干完','十几年的老系统也接得进来'],
-      dep:['zhizao'],sup:['miaodong','miaohui']},
-    zhizao:{name:'句子制造',sub:'地基',tier:'地基层 · 数字化补齐',acc:'#14B8A6',icon:'fa-server',
-      shot:null,cap:'一客一环境 · 数字化基建底座',
-      desc:'一客一独立环境，算力 / 数据库 / 运行环境全隔离，原有 CRM / 工单 / 知识库直连。',
-      feats:['私有化 / 一体机 / 混合云 部署','算力、数据库、运行环境全隔离','合规 · 等保 · 国产化，按客户标准走'],
-      dep:[],sup:['miaohui','canmou','dongxing','miaodong','shouhu','cli']}
-  };
-  var ORDER=['miaohui','canmou','dongxing','miaodong','shouhu','cli','zhizao'];
-  var FINE=matchMedia('(pointer:fine)').matches;
-  var esc=function(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});};
-
-  /* 从 href 推出产品 key，无需改动卡片 HTML（无 JS 时仍能直接跳详情页） */
-  function keyOf(c){var h=c.getAttribute('href')||'';var m=h.match(/products\/([a-z]+)\.html/);return m?m[1]:null;}
-  cards.forEach(function(c){
-    var k=keyOf(c);
-    if(!(k&&DATA[k]))return;
-    c.dataset.prod=k;
-    c.setAttribute('aria-pressed','false');
-    c.setAttribute('aria-label',DATA[k].name+' '+DATA[k].sub+'，点击查看预览');
-    var pl=c.querySelector('.plink');
-    if(pl&&pl.firstChild&&pl.firstChild.nodeType===3)pl.firstChild.textContent='查看预览 ';
-  });
-  cards=cards.filter(function(c){return c.dataset.prod;});
-  if(!cards.length)return;
-
-  var locked=null,shown=null;
-
-  function chip(k){var d=DATA[k];return '<button type="button" class="ap-chip" data-go="'+k+'" style="--c:'+d.acc+'">'+esc(d.name)+'</button>';}
-
-  function render(k){
-    if(shown===k)return;
-    shown=k;
-    var d=DATA[k];
-    var visual=d.shot
-      ?'<div class="ap-shot"><img src="'+d.shot+'" alt="'+esc(d.name)+' 产品界面预览" loading="lazy" decoding="async"></div>'
-      :'<div class="ap-shot ap-mock"><span class="ap-mock-ic"><i class="fa-solid '+d.icon+'" aria-hidden="true"></i></span><span class="ap-mock-nm">'+esc(d.name)+' <small>· '+esc(d.sub)+'</small></span><span class="ap-mock-tag">界面示意</span></div>';
-    var rel='';
-    if(d.dep.length||d.sup.length){
-      rel='<div class="ap-rel"><div class="ap-rel-ttl">在三层架构里和谁协作</div>';
-      if(d.dep.length)rel+='<div class="ap-rel-row"><span class="ap-rel-k dep">依赖</span><span class="ap-rel-chips">'+d.dep.map(chip).join('')+'</span></div>';
-      if(d.sup.length)rel+='<div class="ap-rel-row"><span class="ap-rel-k sup">赋能</span><span class="ap-rel-chips">'+d.sup.map(chip).join('')+'</span></div>';
-      rel+='</div>';
-    }
-    panel.style.setProperty('--ap',d.acc);
-    panel.innerHTML=
-      '<div class="ap-frame">'
-        +'<div class="ap-win"><span class="ap-dots"><i></i><i></i><i></i></span><span class="ap-win-ttl">'+esc(d.name)+' · '+esc(d.sub)+'</span></div>'
-        +visual
-        +'<span class="ap-cap">'+esc(d.cap)+'</span>'
-      +'</div>'
-      +'<div class="ap-info">'
-        +'<span class="ap-tier">'+esc(d.tier)+'</span>'
-        +'<h3 class="ap-name">'+esc(d.name)+' <small>· '+esc(d.sub)+'</small></h3>'
-        +'<p class="ap-desc">'+esc(d.desc)+'</p>'
-        +'<ul class="ap-feats">'+d.feats.map(function(f){return '<li>'+esc(f)+'</li>';}).join('')+'</ul>'
-        +rel
-        +'<a class="ap-cta ar-host" href="products/'+k+'.html">进入 '+esc(d.name)+' 详情页 <span class="ar"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h11M10 4l5 5-5 5"/></svg><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h11M10 4l5 5-5 5"/></svg></span></a>'
-      +'</div>';
-  }
-
-  function highlight(k){
-    var d=DATA[k];
-    var set={};set[k]=2;
-    d.dep.concat(d.sup).forEach(function(x){if(set[x]!==2)set[x]=1;});
-    arch.classList.add('has-sel');
-    arch.style.setProperty('--ap',d.acc);
-    cards.forEach(function(c){
-      var s=set[c.dataset.prod]||0;
-      c.classList.toggle('is-active',s===2);
-      c.classList.toggle('is-related',s===1);
-      c.setAttribute('aria-pressed',s===2?'true':'false');
-    });
-  }
-
-  function show(k){if(!DATA[k])return;render(k);highlight(k);}
-  function select(k){if(!DATA[k])return;locked=k;panel.classList.add('ready');show(k);}
-  function focusCard(k){var c=arch.querySelector('.pcard[data-prod="'+k+'"]');if(c){c.focus();select(k);}}
-
-  cards.forEach(function(c){
-    var k=c.dataset.prod;
-    c.addEventListener('click',function(e){e.preventDefault();select(k);if(panel)panel.scrollIntoView({behavior:'smooth',block:'center'});});
-    if(FINE)c.addEventListener('mouseenter',function(){show(k);});
-    c.addEventListener('keydown',function(e){
-      var i=ORDER.indexOf(k);
-      if(e.key==='ArrowRight'||e.key==='ArrowDown'){e.preventDefault();focusCard(ORDER[(i+1)%ORDER.length]);}
-      else if(e.key==='ArrowLeft'||e.key==='ArrowUp'){e.preventDefault();focusCard(ORDER[(i-1+ORDER.length)%ORDER.length]);}
-    });
-  });
-  if(FINE)arch.addEventListener('mouseleave',function(){if(locked)show(locked);});
-
-  panel.addEventListener('click',function(e){
-    var b=e.target.closest('.ap-chip');if(!b)return;
-    var k=b.getAttribute('data-go');if(!DATA[k])return;
-    select(k);
-    var c=arch.querySelector('.pcard[data-prod="'+k+'"]');
-    if(c)c.scrollIntoView({block:'nearest',behavior:'smooth'});
-  });
-
-  select('miaohui'); /* 默认选中第一个产品，面板即有内容 */
-})();
 
 /* ── 阅读进度条 + 右侧分节导航（滚动联动当前区块高亮，点击平滑跳转） ── */
 (function(){
