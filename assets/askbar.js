@@ -121,7 +121,7 @@
     '    <input class="jzab-in" type="text" placeholder="问句子的 AI 员工任何事，或试试下面…" aria-label="输入你的问题" autocomplete="off" />' +
     '    <button class="jzab-x" aria-label="关闭 (Esc)">Esc</button></div>' +
     '  <div class="jzab-ctx" hidden></div>' +
-    '  <div class="jzab-body" role="log" aria-live="polite" aria-relevant="additions"></div>' +
+    '  <div class="jzab-body" role="log" aria-live="polite" aria-relevant="additions" data-lenis-prevent></div>' +
     '  <div class="jzab-foot">命中常见问题秒答 · 其余实时问真 AI 客服（可能十几秒）</div>' +
     '</div>';
   document.body.appendChild(ov);

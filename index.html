@@ -444,9 +444,9 @@
   .sec-eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--orange-deep);font-weight:700;display:block;margin-bottom:14px}
   .sec-top h2{font-size:clamp(28px,3.8vw,50px);font-weight:840;letter-spacing:-.035em;line-height:1.2;text-wrap:balance;flex:1;min-width:0}
   .sec-top .sub{max-width:42ch;font-size:15.5px;color:var(--ink-2);line-height:1.7;flex-shrink:0}
-  .sec-head{max-width:860px;margin-left:auto;margin-right:auto;text-align:center}
-  .sec-head h2{font-size:clamp(28px,3.8vw,50px);font-weight:840;letter-spacing:-.035em;line-height:1.2;text-wrap:balance}
-  .sec-head .sub{margin-top:18px;font-size:16px;color:var(--ink-2);line-height:1.72;max-width:62ch;margin-left:auto;margin-right:auto}
+  .sec-head{max-width:1060px;margin-left:auto;margin-right:auto;text-align:center}
+  .sec-head h2{font-size:clamp(26px,3.4vw,44px);font-weight:840;letter-spacing:-.03em;line-height:1.36;text-wrap:balance}
+  .sec-head .sub{margin-top:18px;font-size:16px;color:var(--ink-2);line-height:1.72;max-width:920px;text-wrap:pretty;margin-left:auto;margin-right:auto}
 
   /* ============ 落地难题（3 卡，错落入场） ============ */
   .why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,1.6vw,22px)}
@@ -1033,9 +1033,10 @@
 
 
   /* ============ 企业级 · 横向电影流水线（scroll 驱动镜头横移） ============ */
-  .pipeline{position:relative;height:300vh;margin-top:clamp(34px,4vw,52px)}
-  .pl-stage{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
-  .pl-head{position:absolute;top:clamp(40px,8vh,84px);left:0;right:0;display:flex;align-items:center;gap:16px}
+  section#enterprise{padding-top:clamp(54px,6.5vw,92px)}
+  .pipeline{position:relative;height:300vh;margin-top:clamp(6px,1vw,14px)}
+  .pl-stage{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:flex-start;padding-top:clamp(110px,18vh,148px);overflow:hidden}
+  .pl-head{position:static;margin:0 0 clamp(14px,2vh,24px);display:flex;align-items:center;gap:16px}
   .pl-line{position:relative;flex:1;height:3px;background:var(--line);border-radius:3px;overflow:hidden}
   .pl-line #plBar{position:absolute;left:0;top:0;height:100%;width:0;border-radius:3px;
     background:linear-gradient(90deg,#4338CA,#6366F1,#14B8A6,#14B8A6,#14B8A6,#14B8A6,#6366F1);
@@ -1066,19 +1067,19 @@
   @keyframes plPing{0%{transform:scale(.7);opacity:.85}70%,100%{transform:scale(2.2);opacity:0}}
   .pl-tag{font-family:var(--mono);font-size:11px;letter-spacing:.06em;padding:2px 8px;border-radius:999px;background:var(--blue-100);color:var(--blue-deep);transition:.45s var(--ease)}
   .pl-node.on .pl-tag{background:color-mix(in srgb,var(--ac) 16%,#fff);color:color-mix(in srgb,var(--ac) 72%,var(--ink))}
-  .pl-node h3{font-size:clamp(30px,4.2vw,60px);font-weight:850;letter-spacing:-.035em;line-height:1.02;text-wrap:balance;color:var(--ink-3);transition:color .55s var(--ease)}
+  .pl-node h3{font-size:clamp(24px,3.4vw,46px);font-weight:850;letter-spacing:-.035em;line-height:1.02;text-wrap:balance;color:var(--ink-3);transition:color .55s var(--ease)}
   .pl-node.on h3{color:var(--ink)}
   .pl-node.prod.on h3{color:color-mix(in srgb,var(--ac) 88%,var(--ink))}
   .pl-node p{font-size:clamp(15px,1.5vw,18px);color:var(--ink-2);line-height:1.65;margin:18px 0 0;max-width:40ch;opacity:0;transform:translateY(10px);transition:opacity .55s var(--ease) .1s,transform .55s var(--ease) .1s}
   .pl-node.on p{opacity:1;transform:none}
   /* 入口/出口 art-direction */
-  .pl-node.enter h3,.pl-node.exit h3{font-size:clamp(34px,5vw,72px)}
+  .pl-node.enter h3,.pl-node.exit h3{font-size:clamp(26px,3.7vw,50px)}
   .pl-node.enter.on h3{color:var(--ink)}
   .pl-node.exit{position:relative}
   .pl-node.exit.on h3{color:var(--ac)}
   .pl-node.exit .pl-meta b{color:var(--ac)}
   /* 贯穿条 */
-  .pl-fde{position:absolute;left:clamp(16px,3vw,40px);right:clamp(16px,3vw,40px);bottom:clamp(34px,8vh,80px);display:flex;align-items:center;gap:clamp(12px,1.4vw,20px)}
+  .pl-fde{position:static;order:2;margin-top:clamp(18px,2.4vh,30px);display:flex;align-items:center;gap:clamp(12px,1.4vw,20px)}
   .pl-fde .fde-badge{flex:0 0 auto;display:inline-flex;align-items:baseline;gap:9px;padding:11px 20px;border-radius:999px;background:linear-gradient(120deg,#4338CA,#6366F1 55%,#14B8A6);box-shadow:0 10px 28px rgba(99,102,241,.4)}
   .pl-fde .fde-badge b{font-size:clamp(20px,2vw,26px);font-weight:850;color:#fff;letter-spacing:.07em}
   .pl-fde .fde-badge i{font-style:normal;font-size:12px;color:rgba(255,255,255,.9);letter-spacing:.03em;white-space:nowrap}
@@ -1090,7 +1091,7 @@
   .pl-fde .fde-txt em{font-style:normal;background:linear-gradient(90deg,#4338CA,#14B8A6,#14B8A6,#14B8A6,#14B8A6,#6366F1);background-size:200% 100%;
     -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;animation:fdeFlow 6s linear infinite}
   /* 跳站导航（桌面：底部横排可点圆点，直达某项能力，无需滚完全程；圆点取节点强调色） */
-  .pl-nav{position:absolute;left:50%;bottom:calc(clamp(34px,8vh,80px) + clamp(58px,7vh,76px));transform:translateX(-50%);z-index:6;
+  .pl-nav{position:static;order:1;align-self:center;margin-top:clamp(16px,2.2vh,28px);z-index:6;
     display:flex;flex-direction:row;align-items:center;gap:clamp(10px,1.6vw,22px);max-width:calc(100% - 2*clamp(16px,3vw,40px))}
   .pl-pin{position:relative;width:18px;height:26px;background:none;border:0;padding:0;cursor:pointer;display:block;--ac:var(--blue)}
   .pl-pin i{position:absolute;left:50%;bottom:4px;transform:translateX(-50%);width:9px;height:9px;border-radius:50%;
@@ -1237,7 +1238,7 @@
 
   /* ============ Footer ============ */
   footer{padding:clamp(56px,7vw,92px) var(--gut) 40px;border-top:1px solid var(--line);background:#fff}
-  .footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:clamp(28px,4vw,56px)}
+  .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr 1fr;gap:clamp(28px,4vw,56px)}
   .footer-grid .brand{margin-bottom:16px}
   .brand-block p{font-size:14px;line-height:1.7;color:var(--ink-3)}
   footer h6{font-size:12px;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:16px;font-weight:700}
@@ -1384,21 +1385,6 @@
   .sec-dot.is-active .sd-tip{opacity:1;transform:none;color:var(--blue);font-weight:750}
   @media (max-width:1080px){.sec-rail{display:none}}
   @media (prefers-reduced-motion:reduce){.read-progress i,.sec-rail,.sd-tip,.sd-dot{transition:none}}
-  /* ── 企业级流水线:弃用 sticky 滚动劫持,改稳健静态卡片网格(根治 sticky 失效白屏) ── */
-  #pipeline{height:auto!important;margin-top:clamp(28px,4vw,48px)}
-  #pipeline .pl-stage{position:static!important;height:auto!important;display:block!important;overflow:visible!important}
-  #pipeline .pl-head{position:static!important;margin:0 0 clamp(20px,3vw,30px)!important}
-  #pipeline .pl-nav{display:none!important}
-  #pipeline .pl-track{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(270px,1fr))!important;gap:clamp(14px,1.6vw,20px)!important;padding:0!important;transform:none!important;align-items:stretch!important;will-change:auto!important}
-  #pipeline .pl-track::before,#pipeline .pl-track::after{display:none!important}
-  #pipeline .pl-node{width:auto!important;flex:initial!important;opacity:1!important;transform:none!important;background:#fff;border:1px solid var(--line);border-radius:16px;padding:clamp(18px,1.8vw,24px);box-shadow:0 2px 4px rgba(14,20,48,.04),0 12px 28px -12px rgba(14,20,48,.12)}
-  #pipeline .pl-node::before{display:none!important}
-  #pipeline .pl-node h3{color:var(--ink)!important;font-size:clamp(19px,1.7vw,24px)!important;line-height:1.25!important}
-  #pipeline .pl-node p{opacity:1!important;transform:none!important;margin-top:10px!important;max-width:none!important}
-  #pipeline .pl-node.enter,#pipeline .pl-node.exit{grid-column:1/-1!important}
-  #pipeline .pl-node.enter h3,#pipeline .pl-node.exit h3{font-size:clamp(22px,2.2vw,30px)!important}
-  #pipeline .pl-node.exit{background:var(--blue-50);border-color:rgba(67,56,202,.32)}
-  #pipeline .pl-node.enter{background:linear-gradient(120deg,#FBFCFF,var(--blue-50))}
 </style>
 <style>
 /* ===== 移动端补丁 · index.html 不引 site.css，需就地修 ===== */
@@ -1514,7 +1500,7 @@ html{overflow-x:clip}
                 </div>
               </div>
 
-              <div class="chat-body" id="chatBody">
+              <div class="chat-body" id="chatBody" data-lenis-prevent>
                 <div class="msg bot">
                   <span class="m-av"><img src="logo.png" alt="句子互动" /></span>
                   <div class="m-col">
@@ -2230,7 +2216,7 @@ html{overflow-x:clip}
         <span class="emp-badge"></span>
         <img class="emp-pic" src="" alt="" decoding="async" />
       </div>
-      <div class="emp-info">
+      <div class="emp-info" data-lenis-prevent>
         <span class="sec-eyebrow emp-eyebrow"></span>
         <h3 id="empName"></h3>
         <p class="emp-lede"></p>
@@ -2330,6 +2316,17 @@ html{overflow-x:clip}
           <li><a href="products/dongxing.html">句子懂行 · 记忆</a></li>
           <li><a href="products/cli.html">句子 CLI · 手</a></li>
           <li><a href="products/zhizao.html">句子制造 · 地基</a></li>
+        </ul>
+      </div>
+      <div>
+        <h6>AI 员工</h6>
+        <ul>
+          <li><a href="workforce/sales.html">AI 销售</a></li>
+          <li><a href="workforce/marketing.html">AI 导购</a></li>
+          <li><a href="workforce/service.html">AI 客服</a></li>
+          <li><a href="workforce/government.html">AI 社工 / 调解员</a></li>
+          <li><a href="workforce/finance.html">AI 理财顾问</a></li>
+          <li><a href="workforce/hr.html">AI HR</a></li>
         </ul>
       </div>
       <div>

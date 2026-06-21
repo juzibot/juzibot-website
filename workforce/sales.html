@@ -47,9 +47,10 @@
   .live-stat.s3 .v{color:var(--green)}
   .live-stat.s4 .v{color:var(--purple)}
   /* 角色画像：意向能力清单 */
-  .role-split{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(28px,4vw,56px);align-items:start}
+  .role-split{display:block}
+  .role-split>div:first-child{max-width:64ch}
   .role-split p{font-size:15.5px;line-height:1.78;color:var(--ink-2);margin-bottom:16px}
-  .cap-list{display:flex;flex-direction:column;gap:12px}
+  .cap-list{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:clamp(22px,3vw,32px)}
   .cap-list .cap{display:flex;gap:13px;background:#fff;border:1px solid var(--line);border-radius:var(--radius-sm);
     padding:15px 17px;box-shadow:var(--shadow-soft);transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s}
   .cap-list .cap:hover{transform:translateX(4px);box-shadow:var(--shadow);border-color:var(--blue-200)}
@@ -228,7 +229,6 @@
       <div class="role-split rv">
         <div>
           <p>单场直播涌入 5 万人，私域新增 2000 人建联，客户问题集中在开播后 1 小时内，人力难以及时承接。</p>
-          <p>客户添加后，AI 销售随即接手对话：自我介绍、了解需求、讲解产品、预约课程；遇到复杂情况再转交真人。</p>
         </div>
         <div class="cap-list">
           <div class="cap">

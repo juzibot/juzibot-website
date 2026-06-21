@@ -74,6 +74,14 @@
     '        <li><a href="' + REL + 'products/cli.html">句子 CLI · 手</a></li>' +
     '        <li><a href="' + REL + 'products/zhizao.html">句子制造 · 地基</a></li>' +
     '      </ul></div>' +
+    '      <div><h6>AI 员工</h6><ul>' +
+    '        <li><a href="' + REL + 'workforce/sales.html">AI 销售</a></li>' +
+    '        <li><a href="' + REL + 'workforce/marketing.html">AI 导购</a></li>' +
+    '        <li><a href="' + REL + 'workforce/service.html">AI 客服</a></li>' +
+    '        <li><a href="' + REL + 'workforce/government.html">AI 社工 / 调解员</a></li>' +
+    '        <li><a href="' + REL + 'workforce/finance.html">AI 理财顾问</a></li>' +
+    '        <li><a href="' + REL + 'workforce/hr.html">AI HR</a></li>' +
+    '      </ul></div>' +
     '      <div><h6>行业</h6><ul>' +
     '        <li><a href="' + REL + 'industries.html#education">在线教育</a></li>' +
     '        <li><a href="' + REL + 'industries.html#ecommerce">消费品电商</a></li>' +

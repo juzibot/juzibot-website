@@ -48,9 +48,11 @@
   .push-tag.t1{background:var(--blue-50);color:var(--blue)}
   .push-tag.t2{background:var(--green-lt);color:var(--orange-deep)}
   /* 角色画像：能力清单 */
-  .role-split{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(28px,4vw,56px);align-items:start}
+  .role-split{display:block}
+  .role-split>div:first-child{max-width:64ch}
+  .role-split>div:first-child p{margin-bottom:0}
   .role-split p{font-size:15.5px;line-height:1.78;color:var(--ink-2);margin-bottom:16px}
-  .cap-list{display:flex;flex-direction:column;gap:12px}
+  .cap-list{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:clamp(22px,3vw,32px)}
   .cap-list .cap{display:flex;gap:13px;background:#fff;border:1px solid var(--line);border-radius:var(--radius-sm);
     padding:15px 17px;box-shadow:var(--shadow-soft);transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s}
   .cap-list .cap:hover{transform:translateX(4px);box-shadow:var(--shadow);border-color:var(--blue-200)}
@@ -201,7 +203,6 @@ var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isInter
       <div class="role-split rv">
         <div>
           <p>一家品牌私域有 50 万客户，活跃客户约 5%，其余 95% 长期沉默。人工导购一天至多服务 200 个客户，长尾客户无人覆盖。</p>
-          <p>AI 导购把人工导购的服务扩展到每一个长尾客户：到货提醒、新品推荐、试穿建议、尺码推荐、活动通知，原本无人跟进的客户也能持续运营。</p>
         </div>
         <div class="cap-list">
           <div class="cap">
