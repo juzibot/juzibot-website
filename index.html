@@ -44,7 +44,7 @@
   html{-webkit-text-size-adjust:100%}
   html:not(.lenis){scroll-behavior:smooth}
   body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.6;
-    -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:hidden}
+    -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:clip}
   a{color:inherit;text-decoration:none}
   button{font-family:inherit;cursor:pointer}
   img,svg{display:block;max-width:100%}
@@ -1383,10 +1383,25 @@
   .sec-dot.is-active .sd-tip{opacity:1;transform:none;color:var(--blue);font-weight:750}
   @media (max-width:1080px){.sec-rail{display:none}}
   @media (prefers-reduced-motion:reduce){.read-progress i,.sec-rail,.sd-tip,.sd-dot{transition:none}}
+  /* ── 企业级流水线:弃用 sticky 滚动劫持,改稳健静态卡片网格(根治 sticky 失效白屏) ── */
+  #pipeline{height:auto!important;margin-top:clamp(28px,4vw,48px)}
+  #pipeline .pl-stage{position:static!important;height:auto!important;display:block!important;overflow:visible!important}
+  #pipeline .pl-head{position:static!important;margin:0 0 clamp(20px,3vw,30px)!important}
+  #pipeline .pl-nav{display:none!important}
+  #pipeline .pl-track{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(270px,1fr))!important;gap:clamp(14px,1.6vw,20px)!important;padding:0!important;transform:none!important;align-items:stretch!important;will-change:auto!important}
+  #pipeline .pl-track::before,#pipeline .pl-track::after{display:none!important}
+  #pipeline .pl-node{width:auto!important;flex:initial!important;opacity:1!important;transform:none!important;background:#fff;border:1px solid var(--line);border-radius:16px;padding:clamp(18px,1.8vw,24px);box-shadow:0 2px 4px rgba(14,20,48,.04),0 12px 28px -12px rgba(14,20,48,.12)}
+  #pipeline .pl-node::before{display:none!important}
+  #pipeline .pl-node h3{color:var(--ink)!important;font-size:clamp(19px,1.7vw,24px)!important;line-height:1.25!important}
+  #pipeline .pl-node p{opacity:1!important;transform:none!important;margin-top:10px!important;max-width:none!important}
+  #pipeline .pl-node.enter,#pipeline .pl-node.exit{grid-column:1/-1!important}
+  #pipeline .pl-node.enter h3,#pipeline .pl-node.exit h3{font-size:clamp(22px,2.2vw,30px)!important}
+  #pipeline .pl-node.exit{background:var(--blue-50);border-color:rgba(67,56,202,.32)}
+  #pipeline .pl-node.enter{background:linear-gradient(120deg,#FBFCFF,var(--blue-50))}
 </style>
 <style>
 /* ===== 移动端补丁 · index.html 不引 site.css，需就地修 ===== */
-html{overflow-x:hidden}
+html{overflow-x:clip}
 @media(max-width:640px){
   /* 关闭态弹窗不占布局，杜绝横向溢出（原用 visibility 隐藏仍占 432px 宽 → 撑出 481 → 整页缩小） */
   .modal-overlay:not(.open){display:none}
