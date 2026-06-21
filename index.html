@@ -44,7 +44,7 @@
   html{-webkit-text-size-adjust:100%}
   html:not(.lenis){scroll-behavior:smooth}
   body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.6;
-    -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:clip}
+    -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:hidden}
   a{color:inherit;text-decoration:none}
   button{font-family:inherit;cursor:pointer}
   img,svg{display:block;max-width:100%}
@@ -446,7 +446,7 @@
   .sec-top .sub{max-width:42ch;font-size:15.5px;color:var(--ink-2);line-height:1.7;flex-shrink:0}
   .sec-head{max-width:1060px;margin-left:auto;margin-right:auto;text-align:center}
   .sec-head h2{font-size:clamp(28px,3.8vw,50px);font-weight:840;letter-spacing:-.035em;line-height:1.2;text-wrap:balance}
-  .sec-head .sub{margin-top:18px;font-size:16px;color:var(--ink-2);line-height:1.72;max-width:62ch;margin-left:auto;margin-right:auto}
+  .sec-head .sub{margin-top:18px;font-size:16px;color:var(--ink-2);line-height:1.72;max-width:920px;text-wrap:pretty;margin-left:auto;margin-right:auto}
 
   /* ============ 落地难题（3 卡，错落入场） ============ */
   .why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,1.6vw,22px)}
@@ -1033,7 +1033,7 @@
 
 
   /* ============ 企业级 · 横向电影流水线（scroll 驱动镜头横移） ============ */
-  .pipeline{position:relative;height:300vh;margin-top:clamp(34px,4vw,52px)}
+  .pipeline{position:relative;height:580vh;margin-top:clamp(34px,4vw,52px)}
   .pl-stage{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
   .pl-head{position:absolute;top:clamp(40px,8vh,84px);left:0;right:0;display:flex;align-items:center;gap:16px}
   .pl-line{position:relative;flex:1;height:3px;background:var(--line);border-radius:3px;overflow:hidden}
@@ -1384,25 +1384,10 @@
   .sec-dot.is-active .sd-tip{opacity:1;transform:none;color:var(--blue);font-weight:750}
   @media (max-width:1080px){.sec-rail{display:none}}
   @media (prefers-reduced-motion:reduce){.read-progress i,.sec-rail,.sd-tip,.sd-dot{transition:none}}
-  /* ── 企业级流水线:弃用 sticky 滚动劫持,改稳健静态卡片网格(根治 sticky 失效白屏) ── */
-  #pipeline{height:auto!important;margin-top:clamp(28px,4vw,48px)}
-  #pipeline .pl-stage{position:static!important;height:auto!important;display:block!important;overflow:visible!important}
-  #pipeline .pl-head{position:static!important;margin:0 0 clamp(20px,3vw,30px)!important}
-  #pipeline .pl-nav{display:none!important}
-  #pipeline .pl-track{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(270px,1fr))!important;gap:clamp(14px,1.6vw,20px)!important;padding:0!important;transform:none!important;align-items:stretch!important;will-change:auto!important}
-  #pipeline .pl-track::before,#pipeline .pl-track::after{display:none!important}
-  #pipeline .pl-node{width:auto!important;flex:initial!important;opacity:1!important;transform:none!important;background:#fff;border:1px solid var(--line);border-radius:16px;padding:clamp(18px,1.8vw,24px);box-shadow:0 2px 4px rgba(14,20,48,.04),0 12px 28px -12px rgba(14,20,48,.12)}
-  #pipeline .pl-node::before{display:none!important}
-  #pipeline .pl-node h3{color:var(--ink)!important;font-size:clamp(19px,1.7vw,24px)!important;line-height:1.25!important}
-  #pipeline .pl-node p{opacity:1!important;transform:none!important;margin-top:10px!important;max-width:none!important}
-  #pipeline .pl-node.enter,#pipeline .pl-node.exit{grid-column:1/-1!important}
-  #pipeline .pl-node.enter h3,#pipeline .pl-node.exit h3{font-size:clamp(22px,2.2vw,30px)!important}
-  #pipeline .pl-node.exit{background:var(--blue-50);border-color:rgba(67,56,202,.32)}
-  #pipeline .pl-node.enter{background:linear-gradient(120deg,#FBFCFF,var(--blue-50))}
 </style>
 <style>
 /* ===== 移动端补丁 · index.html 不引 site.css，需就地修 ===== */
-html{overflow-x:clip}
+html{overflow-x:hidden}
 @media(max-width:640px){
   /* 关闭态弹窗不占布局，杜绝横向溢出（原用 visibility 隐藏仍占 432px 宽 → 撑出 481 → 整页缩小） */
   .modal-overlay:not(.open){display:none}
