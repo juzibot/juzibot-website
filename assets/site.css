@@ -1305,7 +1305,7 @@
 
   /* ============ Footer ============ */
   footer{padding:clamp(56px,7vw,92px) var(--gut) 40px;border-top:1px solid var(--line);background:#fff}
-  .footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:clamp(28px,4vw,56px)}
+  .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr 1fr;gap:clamp(28px,4vw,56px)}
   .footer-grid .brand{margin-bottom:16px}
   .brand-block p{font-size:14px;line-height:1.7;color:var(--ink-3)}
   footer h6{font-size:12px;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:16px;font-weight:700}
