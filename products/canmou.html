@@ -19,8 +19,8 @@
   .crumbs .sep{color:var(--line)}
   .crumbs .here{color:var(--ink-2);font-weight:650}
   .ph-grid{display:grid;grid-template-columns:1.04fr .96fr;gap:clamp(34px,5vw,72px);align-items:center}
-  .ph h1{font-size:clamp(34px,5vw,64px);font-weight:850;letter-spacing:-.04em;line-height:1.04;
-    max-width:16ch;text-wrap:balance;margin-bottom:clamp(14px,2vw,24px)}
+  .ph h1{font-size:clamp(34px,5vw,64px);font-weight:850;letter-spacing:-.04em;line-height:1.12;
+    max-width:20ch;word-break:keep-all;text-wrap:balance;margin-bottom:clamp(14px,2vw,24px)}
   .ph h1 .accent{color:var(--blue)}
   .ph-lede{font-size:clamp(16px,1.4vw,18.5px);color:var(--ink-2);max-width:52ch;line-height:1.7}
   .ph-lede strong{color:var(--ink);font-weight:700}
@@ -451,9 +451,9 @@
   var DATA = {
     rate: {
       q:'这个月各渠道转化率对比', kind:'bar', unit:'%', aria:'各渠道转化率柱状图',
-      items:[{k:'抖音',v:5.2},{k:'视频号',v:6.8},{k:'小红书',v:4.1},{k:'企微私域',v:12.4},{k:'电话',v:9.0}],
+      items:[{k:'抖音',v:5.2},{k:'视频号',v:6.8},{k:'小红书',v:4.1},{k:'微信私域',v:12.4},{k:'电话',v:9.0}],
       hotIdx:3,
-      conc:'本月转化最高的是 <b>企微私域 12.4%</b>，是小红书（4.1%）的 3 倍——预算往私域倾斜更划算。'
+      conc:'本月转化最高的是 <b>微信私域 12.4%</b>，是小红书（4.1%）的 3 倍——预算往私域倾斜更划算。'
     },
     gmv: {
       q:'最近 6 个月 GMV 走势', kind:'line', unit:'万', aria:'近 6 个月 GMV 走势折线图',
