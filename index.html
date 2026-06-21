@@ -1385,26 +1385,30 @@
   .sec-dot.is-active .sd-tip{opacity:1;transform:none;color:var(--blue);font-weight:750}
   @media (max-width:1080px){.sec-rail{display:none}}
   @media (prefers-reduced-motion:reduce){.read-progress i,.sec-rail,.sd-tip,.sd-dot{transition:none}}
-  /* 生来就是企业级:全部内容收进一屏(弃用 580vh 滚动劫持,改紧凑静态网格) */
-  section#enterprise{padding-top:clamp(28px,3.6vw,52px);padding-bottom:clamp(30px,4vw,56px)}
-  #enterprise .sec-head{margin-bottom:clamp(14px,1.8vw,22px)}
-  #enterprise .sec-head h2{font-size:clamp(24px,2.7vw,38px)!important;line-height:1.18!important}
-  #enterprise .sec-head .sub{margin-top:10px!important;max-width:72ch!important}
+  /* 生来就是企业级:全部内容一屏(保留原版节点配色/glow,仅缩小+网格化,弃用 580vh 滚动) */
+  section#enterprise{padding-top:clamp(26px,3.4vw,48px);padding-bottom:clamp(28px,3.6vw,52px)}
+  #enterprise .sec-head{margin-bottom:clamp(12px,1.6vw,20px)}
+  #enterprise .sec-head h2{font-size:clamp(23px,2.6vw,36px)!important;line-height:1.18!important}
+  #enterprise .sec-head .sub{margin-top:9px!important;max-width:72ch!important}
   #pipeline{height:auto!important;margin-top:0!important}
   #pipeline .pl-stage{position:static!important;height:auto!important;display:block!important;padding-top:0!important;overflow:visible!important}
-  #pipeline .pl-head{position:static!important;margin:0 0 12px!important}
+  #pipeline .pl-head{position:static!important;margin:0 0 14px!important}
   #pipeline .pl-head .pl-line{display:none!important}
   #pipeline .pl-nav{display:none!important}
-  #pipeline .pl-track{display:grid!important;grid-template-columns:repeat(4,1fr)!important;gap:clamp(10px,1vw,14px)!important;padding:0!important;transform:none!important;align-items:stretch!important;will-change:auto!important}
+  #pipeline .pl-track{display:grid!important;grid-template-columns:repeat(4,1fr)!important;gap:clamp(20px,2vw,30px) clamp(14px,1.3vw,20px)!important;padding:6px 0 0!important;transform:none!important;align-items:start!important;will-change:auto!important}
   #pipeline .pl-track::before,#pipeline .pl-track::after{display:none!important}
-  #pipeline .pl-node{width:auto!important;flex:initial!important;opacity:1!important;transform:none!important;background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px 15px;box-shadow:0 1px 3px rgba(14,20,48,.04)}
-  #pipeline .pl-node::before{display:none!important}
-  #pipeline .pl-node h3{color:var(--ink)!important;font-size:clamp(16px,1.5vw,19px)!important;line-height:1.2!important;margin:5px 0 0!important;max-width:none!important}
-  #pipeline .pl-node p{opacity:1!important;transform:none!important;margin-top:6px!important;max-width:none!important;font-size:12.5px!important;line-height:1.5!important}
-  #pipeline .pl-node .pl-meta{margin-bottom:2px!important}
-  #pipeline .pl-node.enter,#pipeline .pl-node.exit{grid-column:1/-1!important;background:linear-gradient(120deg,#FBFCFF,var(--blue-50));border-color:rgba(67,56,202,.18)}
-  #pipeline .pl-node.enter h3,#pipeline .pl-node.exit h3{font-size:clamp(18px,1.9vw,23px)!important;display:inline!important}
-  #pipeline .pl-node.exit{border-color:rgba(67,56,202,.32)}
+  #pipeline .pl-node{width:auto!important;flex:initial!important;opacity:1!important;transform:none!important}
+  #pipeline .pl-node::before{opacity:.4!important;transform:translateY(-50%) scale(1)!important;width:106%!important;height:120%!important;filter:blur(20px)!important}
+  #pipeline .pl-node .pl-meta{margin-bottom:8px!important;font-size:11.5px!important}
+  #pipeline .pl-node .pl-dot{background:var(--ac)!important;box-shadow:0 0 0 1px var(--ac),0 0 12px color-mix(in srgb,var(--ac) 55%,transparent)!important}
+  #pipeline .pl-node .pl-dot::after{display:none!important}
+  #pipeline .pl-node .pl-meta b{color:color-mix(in srgb,var(--ac) 70%,var(--ink))!important}
+  #pipeline .pl-node .pl-tag{background:color-mix(in srgb,var(--ac) 16%,#fff)!important;color:color-mix(in srgb,var(--ac) 72%,var(--ink))!important}
+  #pipeline .pl-node h3{font-size:clamp(17px,1.7vw,22px)!important;line-height:1.18!important;color:color-mix(in srgb,var(--ac) 86%,var(--ink))!important}
+  #pipeline .pl-node p{opacity:1!important;transform:none!important;font-size:12.5px!important;line-height:1.5!important;margin-top:8px!important;max-width:none!important}
+  #pipeline .pl-node.enter,#pipeline .pl-node.exit{grid-column:1/-1!important}
+  #pipeline .pl-node.enter h3,#pipeline .pl-node.exit h3{font-size:clamp(20px,2vw,26px)!important;color:var(--ink)!important}
+  #pipeline .pl-node.enter::before,#pipeline .pl-node.exit::before{width:100%!important;height:110%!important;opacity:.32!important}
 </style>
 <style>
 /* ===== 移动端补丁 · index.html 不引 site.css，需就地修 ===== */
