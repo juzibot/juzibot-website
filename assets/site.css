@@ -783,6 +783,9 @@
 
   /* ============ FDE ============ */
   .fde-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(14px,1.4vw,20px);margin-top:8px}
+  #abilities .fde-grid{grid-template-columns:repeat(3,1fr)}
+  @media(max-width:900px){#abilities .fde-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){#abilities .fde-grid{grid-template-columns:1fr}}
   .fde-card{position:relative;overflow:hidden;background:var(--blue-50);border:1px solid var(--line);border-radius:var(--radius);
     padding:clamp(24px,2.4vw,30px) clamp(22px,2vw,26px);cursor:pointer;opacity:.68;
     transition:transform .4s var(--ease),box-shadow .4s var(--ease),background .4s var(--ease),border-color .4s var(--ease),opacity .4s var(--ease)}
