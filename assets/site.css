@@ -94,7 +94,7 @@
     padding:17px var(--gut);transition:background .4s var(--ease),box-shadow .4s var(--ease),padding .4s var(--ease)}
   .nav.float{background:rgba(255,255,255,.82);backdrop-filter:saturate(180%) blur(14px);
     -webkit-backdrop-filter:saturate(180%) blur(14px);box-shadow:0 1px 0 var(--line);padding-top:12px;padding-bottom:12px}
-  .brand{display:inline-flex;align-items:center;gap:10px;font-weight:800;font-size:17px;letter-spacing:-.01em;color:var(--ink)}
+  .brand{white-space:nowrap;display:inline-flex;align-items:center;gap:10px;font-weight:800;font-size:17px;letter-spacing:-.01em;color:var(--ink)}
   .brand-mark{width:29px;height:29px;border-radius:9px;background:var(--blue);color:#fff;font-weight:800;
     display:grid;place-items:center;font-size:15px;box-shadow:0 6px 14px rgba(67,56,202,.32)}
   .brand-logo{width:29px;height:29px;object-fit:contain;display:block}
@@ -132,7 +132,7 @@
   .nav-burger{display:none;background:none;border:0;padding:6px;margin-right:-6px;color:var(--ink);line-height:0}
   .nav-burger svg{width:26px;height:26px;display:block}
   .nav-burger .bg-close{display:none}
-  @media(max-width:1080px){
+  @media(max-width:1240px){
     .nav-links,.nav-right .nav-login{display:none}
     .nav-burger{display:inline-flex;align-items:center}
     .nav.menu-open{background:rgba(255,255,255,.98);backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--line)}

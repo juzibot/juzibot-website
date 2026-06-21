@@ -106,7 +106,7 @@
     padding:17px var(--gut);transition:background .4s var(--ease),box-shadow .4s var(--ease),padding .4s var(--ease)}
   .nav.float{background:rgba(255,255,255,.82);backdrop-filter:saturate(180%) blur(14px);
     -webkit-backdrop-filter:saturate(180%) blur(14px);box-shadow:0 1px 0 var(--line);padding-top:12px;padding-bottom:12px}
-  .brand{display:inline-flex;align-items:center;gap:10px;font-weight:800;font-size:17px;letter-spacing:-.01em;color:var(--ink)}
+  .brand{white-space:nowrap;display:inline-flex;align-items:center;gap:10px;font-weight:800;font-size:17px;letter-spacing:-.01em;color:var(--ink)}
   .brand-mark{width:29px;height:29px;border-radius:9px;background:var(--blue);color:#fff;font-weight:800;
     display:grid;place-items:center;font-size:15px;box-shadow:0 6px 14px rgba(67,56,202,.32)}
   .brand-logo{width:29px;height:29px;object-fit:contain;display:block}
@@ -144,7 +144,7 @@
   .nav-burger{display:none;background:none;border:0;padding:6px;margin-right:-6px;color:var(--ink);line-height:0}
   .nav-burger svg{width:26px;height:26px;display:block}
   .nav-burger .bg-close{display:none}
-  @media(max-width:1080px){
+  @media(max-width:1240px){
     .nav-links,.nav-right .nav-login{display:none}
     .nav-burger{display:inline-flex;align-items:center}
     .nav.menu-open{background:rgba(255,255,255,.98);backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--line)}
@@ -1032,7 +1032,7 @@
 
 
   /* ============ 企业级 · 横向电影流水线（scroll 驱动镜头横移） ============ */
-  .pipeline{position:relative;height:580vh;margin-top:clamp(34px,4vw,52px)}
+  .pipeline{position:relative;height:300vh;margin-top:clamp(34px,4vw,52px)}
   .pl-stage{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
   .pl-head{position:absolute;top:clamp(40px,8vh,84px);left:0;right:0;display:flex;align-items:center;gap:16px}
   .pl-line{position:relative;flex:1;height:3px;background:var(--line);border-radius:3px;overflow:hidden}
@@ -3230,6 +3230,8 @@ if(!sessionStorage.getItem('intro_shown')){
   window.addEventListener('resize',relayout);
   window.addEventListener('load',relayout);
   relayout();
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(relayout);
+  setTimeout(relayout,500);setTimeout(relayout,1500);
   /* 手机端地铁线：红线随滚动生长，到一站亮一站（仅窄屏执行，桌面不进此逻辑） */
   var mNarrow=window.matchMedia('(max-width:820px)');
   function rail(){
