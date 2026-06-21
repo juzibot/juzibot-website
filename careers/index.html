@@ -97,6 +97,21 @@
   .nav-links a{font-size:14.5px;font-weight:600;letter-spacing:-.01em;color:var(--ink-2);white-space:nowrap;transition:color .2s var(--ease)}
   .nav-links a:hover{color:var(--red)}
   .nav-links a[aria-current]{color:var(--ink)}
+  /* 导航下拉(对齐其他页:产品 / AI 员工 清单) */
+  .nav-item{position:relative;display:inline-flex;align-items:center}
+  .nav-item>button{display:inline-flex;align-items:center;gap:5px;font-size:14.5px;font-weight:600;letter-spacing:-.01em;color:var(--ink-2);background:none;border:0;cursor:pointer;font-family:inherit;white-space:nowrap;transition:color .2s var(--ease)}
+  .nav-item>button:hover{color:var(--red)}
+  .nav-item .caret{width:6px;height:6px;border-right:1.6px solid currentColor;border-bottom:1.6px solid currentColor;transform:rotate(45deg) translateY(-1px);opacity:.5;transition:opacity .25s}
+  .nav-item:hover .caret{opacity:1}
+  .dropdown{position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%) translateY(8px);background:#fff;border:1px solid var(--line);border-radius:18px;padding:10px;box-shadow:0 30px 60px -24px rgba(25,23,28,.26),0 4px 12px rgba(25,23,28,.06);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .26s var(--ease),transform .26s var(--ease);z-index:60}
+  .dropdown.wide{display:grid;grid-template-columns:1fr 1fr;gap:4px;width:min(540px,86vw)}
+  .dropdown::before{content:"";position:absolute;left:0;right:0;top:-16px;height:16px}
+  .nav-item:hover .dropdown{opacity:1;visibility:visible;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+  .dropdown a{display:block;padding:11px 13px;border-radius:12px;transition:background .2s var(--ease)}
+  .dropdown a:hover{background:var(--line-2)}
+  .dropdown .d-title{font-size:14px;font-weight:750;color:var(--ink);letter-spacing:-.01em}
+  .dropdown .d-desc{font-size:12px;color:var(--ink-3);margin-top:3px;line-height:1.45}
+
   .nav-burger{display:none;background:none;border:0;padding:6px;margin-right:-6px;cursor:pointer;color:var(--ink);line-height:0}
   .nav-burger svg{width:26px;height:26px;display:block}
   .nav-burger .bg-close{display:none}
@@ -112,6 +127,13 @@
     .nav.menu-open .nav-links a{padding:15px var(--gut);font-size:16px;color:var(--ink);white-space:normal;border-bottom:1px solid var(--line)}
     .nav.menu-open .nav-links a:last-child{border-bottom:0}
     .nav.menu-open .nav-links a[aria-current]{color:var(--red)}
+    .nav.menu-open .nav-item{display:block;width:100%;border-bottom:1px solid var(--line)}
+    .nav.menu-open .nav-item>button{padding:15px var(--gut);font-size:16px;color:var(--ink);width:100%;justify-content:flex-start}
+    .nav.menu-open .nav-item .caret{display:none}
+    .nav.menu-open .dropdown{position:static;transform:none;opacity:1;visibility:visible;pointer-events:auto;box-shadow:none;border:0;padding:0 var(--gut) 12px;width:auto;display:block}
+    .nav.menu-open .dropdown a{padding:9px 0}
+    .nav.menu-open .dropdown .d-desc{display:none}
+
   }
 
   /* ============ HERO ============ */
@@ -745,8 +767,29 @@
       <small>Careers</small>
     </a>
     <div class="nav-links" id="navLinks">
-      <a href="../index.html#products">产品</a>
-      <a href="../index.html#workforce">AI 员工</a>
+      <div class="nav-item">
+        <button type="button">产品 <span class="caret"></span></button>
+        <div class="dropdown wide">
+          <a href="../products/miaodong.html"><div class="d-title">句子秒懂 · 大脑</div><div class="d-desc">业务人员不写代码也能搭 Agent</div></a>
+          <a href="../products/shouhu.html"><div class="d-title">句子守护 · 主管</div><div class="d-desc">Agent 上线前测过、上线后管着</div></a>
+          <a href="../products/canmou.html"><div class="d-title">句子问数 · 参谋</div><div class="d-desc">一句话查所有业务数据</div></a>
+          <a href="../products/dongxing.html"><div class="d-title">句子懂行 · 记忆</div><div class="d-desc">知识工程，散乱知识炼成可检索资产</div></a>
+          <a href="../products/miaohui.html"><div class="d-title">句子秒回 · 工作台</div><div class="d-desc">11 个 IM 通道汇成一个工作台</div></a>
+          <a href="../products/cli.html"><div class="d-title">句子 CLI · 手</div><div class="d-desc">操作一切人用软件的执行层</div></a>
+          <a href="../products/zhizao.html"><div class="d-title">句子制造 · 地基</div><div class="d-desc">补齐客户数字化基建，一客一环境</div></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <button type="button">AI 员工 <span class="caret"></span></button>
+        <div class="dropdown wide">
+          <a href="../workforce/sales.html"><div class="d-title">AI 销售</div><div class="d-desc">直播搬家、私域承接、漏斗跟进</div></a>
+          <a href="../workforce/marketing.html"><div class="d-title">AI 导购</div><div class="d-desc">头部零售品牌的私域导购运营</div></a>
+          <a href="../workforce/service.html"><div class="d-title">AI 客服</div><div class="d-desc">从售前到售后都接得住</div></a>
+          <a href="../workforce/government.html"><div class="d-title">AI 社工 / 调解员</div><div class="d-desc">政务高合规 + 全程可追溯</div></a>
+          <a href="../workforce/finance.html"><div class="d-title">AI 理财顾问</div><div class="d-desc">银行 / 证券 / 保险头部落地</div></a>
+          <a href="../workforce/hr.html"><div class="d-title">AI HR</div><div class="d-desc">简历初筛 + AI 语音面试</div></a>
+        </div>
+      </div>
       <a href="../industries.html">客户与行业</a>
       <a href="../enterprise.html">企业级能力</a>
       <a href="../fde.html">FDE 交付结果</a>
