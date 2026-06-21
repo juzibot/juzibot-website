@@ -1337,7 +1337,7 @@
   .modal-overlay{position:fixed;inset:0;z-index:80;background:rgba(14,20,48,.5);backdrop-filter:blur(6px);
     display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;visibility:hidden;transition:opacity .3s var(--ease)}
   .modal-overlay.open{opacity:1;visibility:visible}
-  .modal{background:#fff;border-radius:var(--radius-lg);width:100%;max-width:560px;overflow:hidden;
+  .modal{position:relative;background:#fff;border-radius:var(--radius-lg);width:100%;max-width:560px;overflow:hidden;
     box-shadow:0 40px 100px -30px rgba(14,20,48,.5);transform:translateY(20px) scale(.98);transition:transform .35s var(--ease)}
   .modal-overlay.open .modal{transform:none}
   .modal-hd{position:relative;padding:clamp(28px,4vw,40px) clamp(26px,3.4vw,40px) clamp(22px,2.6vw,30px);

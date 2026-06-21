@@ -444,8 +444,9 @@
   .sec-eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--orange-deep);font-weight:700;display:block;margin-bottom:14px}
   .sec-top h2{font-size:clamp(28px,3.8vw,50px);font-weight:840;letter-spacing:-.035em;line-height:1.2;text-wrap:balance;flex:1;min-width:0}
   .sec-top .sub{max-width:42ch;font-size:15.5px;color:var(--ink-2);line-height:1.7;flex-shrink:0}
-  .sec-head{max-width:760px}
-  .sec-head .sub{margin-top:18px;font-size:16px;color:var(--ink-2);line-height:1.72;max-width:58ch}
+  .sec-head{max-width:860px;margin-left:auto;margin-right:auto;text-align:center}
+  .sec-head h2{font-size:clamp(28px,3.8vw,50px);font-weight:840;letter-spacing:-.035em;line-height:1.2;text-wrap:balance}
+  .sec-head .sub{margin-top:18px;font-size:16px;color:var(--ink-2);line-height:1.72;max-width:62ch;margin-left:auto;margin-right:auto}
 
   /* ============ 落地难题（3 卡，错落入场） ============ */
   .why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,1.6vw,22px)}
@@ -676,9 +677,9 @@
   .pcard:hover::before{transform:scaleY(1)}
   .pcard.c-blue{--accent:var(--blue)}.pcard.c-purple{--accent:var(--purple)}.pcard.c-orange{--accent:var(--orange)}
   .pcard.c-green{--accent:var(--green)}.pcard.c-teal{--accent:var(--teal)}
-  .pcard .ptag{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  .pcard .ptag{font-size:clamp(19px,1.9vw,24px);font-weight:850;letter-spacing:-.01em;
     color:var(--accent,var(--blue));margin-bottom:14px}
-  .pcard h3{font-size:clamp(19px,1.7vw,23px);font-weight:800;letter-spacing:-.02em;line-height:1.32;margin-bottom:12px}
+  .pcard h3{font-size:clamp(14.5px,1.3vw,16px);font-weight:600;color:var(--ink);letter-spacing:-.01em;line-height:1.45;margin-bottom:12px}
   .pcard p{font-size:14px;line-height:1.7;color:var(--ink-2);flex:1}
   .pcard .pmeta{font-family:var(--mono);font-size:11.5px;letter-spacing:.02em;color:var(--ink-3);margin-top:18px;line-height:1.5}
   .pcard .plink{display:inline-flex;align-items:center;gap:9px;margin-top:18px;font-size:14px;font-weight:700;color:var(--accent,var(--blue))}
@@ -1268,7 +1269,7 @@
   .modal-overlay{position:fixed;inset:0;z-index:80;background:rgba(14,20,48,.5);backdrop-filter:blur(6px);
     display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;visibility:hidden;transition:opacity .3s var(--ease)}
   .modal-overlay.open{opacity:1;visibility:visible}
-  .modal{background:#fff;border-radius:var(--radius-lg);width:100%;max-width:560px;overflow:hidden;
+  .modal{position:relative;background:#fff;border-radius:var(--radius-lg);width:100%;max-width:560px;overflow:hidden;
     box-shadow:0 40px 100px -30px rgba(14,20,48,.5);transform:translateY(20px) scale(.98);transition:transform .35s var(--ease)}
   .modal-overlay.open .modal{transform:none}
   .modal-hd{position:relative;padding:clamp(28px,4vw,40px) clamp(26px,3.4vw,40px) clamp(22px,2.6vw,30px);
@@ -1889,22 +1890,22 @@ html{overflow-x:clip}
         <div class="fde-card rv is-active" role="button" tabindex="0" aria-pressed="true">
           <div class="fde-num">01</div>
           <h4>先理解业务，再落地系统</h4>
-          <p>交付始于理解业务，而非安装软件。具备行业经验的成员先期驻场，梳理客户的 SOP、知识库与业务全链路——获客、转化与关键瓶颈所在。AI 所要承接的工作，须先被真正理解。</p>
+          <p>懂行业的成员先驻场，摸清客户的 SOP、知识库和获客转化全链路。先弄懂业务，再上 AI。</p>
         </div>
         <div class="fde-card rv rv-d1" role="button" tabindex="0" aria-pressed="false">
           <div class="fde-num">02</div>
           <h4>业务与工程，同一支团队</h4>
-          <p>懂业务的成员在前线对接客户，工程团队与七大产品基建在后方支撑。业务判断与工程实现各司其职，前线成员无需亲自编码，由系统完成落地。</p>
+          <p>懂业务的人在前线，工程和七大基建在后方。前线不写代码，系统负责落地。</p>
         </div>
         <div class="fde-card rv rv-d2" role="button" tabindex="0" aria-pressed="false">
           <div class="fde-num">03</div>
           <h4>现场经验，沉淀为产品</h4>
-          <p>在单个客户现场解决的问题与打磨出的能力，会沉淀回标准产品。下一个客户由此获得更高的起点——一次投入，多次复用。</p>
+          <p>现场打磨出的能力沉淀回产品。下一个客户起点更高，一次投入、多次复用。</p>
         </div>
         <div class="fde-card rv rv-d3" role="button" tabindex="0" aria-pressed="false">
           <div class="fde-num">04</div>
           <h4>按业务结果交付</h4>
-          <p>不销售软件，也不销售订阅。与客户约定可量化的业务目标，直接交付看得见的结果——转化率、人效等指标的实际改善。</p>
+          <p>不卖软件，也不卖订阅。约定可量化目标，直接交付结果:转化率、人效的实际改善。</p>
         </div>
       </div>
     </div>
