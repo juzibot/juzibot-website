@@ -1,28 +1,28 @@
 name: deploy
 on:
   push:
-    branches: [stage]
+    branches: [stage-1, stage-2]
   workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      BR: ${{ github.ref_name }}
     steps:
-      - name: SSH and deploy stage
+      - name: SSH and deploy
         uses: appleboy/ssh-action@v1
         with:
           host:     ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           key:      ${{ secrets.SSH_KEY }}
+          envs: BR
           script: |
             set -e
-            cd /opt/www/juzibot
-            git fetch origin stage
-            BEFORE=$(git rev-parse HEAD 2>/dev/null || echo none)
-            git checkout -B stage origin/stage
-            git reset --hard origin/stage
-            AFTER=$(git rev-parse HEAD)
-            if [ "$BEFORE" = none ] || git diff --name-only "$BEFORE" "$AFTER" | grep -q '^build_pages\.py$'; then
-              python3 build_pages.py
-            fi
-            echo "deployed stage $(git rev-parse --short HEAD)"
+            case "$BR" in stage-1|stage-2) ;; *) echo "refuse branch: $BR"; exit 1 ;; esac
+            DIR="/opt/www/jz-$BR"
+            cd "$DIR"
+            git fetch origin "$BR"
+            git checkout -f -B "$BR" "origin/$BR"
+            git clean -fd
+            echo "deployed $BR -> $DIR ($(git rev-parse --short HEAD))"
