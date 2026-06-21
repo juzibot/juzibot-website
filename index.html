@@ -44,7 +44,7 @@
   html{-webkit-text-size-adjust:100%}
   html:not(.lenis){scroll-behavior:smooth}
   body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.6;
-    -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:hidden}
+    -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:clip}
   a{color:inherit;text-decoration:none}
   button{font-family:inherit;cursor:pointer}
   img,svg{display:block;max-width:100%}
@@ -106,7 +106,7 @@
     padding:17px var(--gut);transition:background .4s var(--ease),box-shadow .4s var(--ease),padding .4s var(--ease)}
   .nav.float{background:rgba(255,255,255,.82);backdrop-filter:saturate(180%) blur(14px);
     -webkit-backdrop-filter:saturate(180%) blur(14px);box-shadow:0 1px 0 var(--line);padding-top:12px;padding-bottom:12px}
-  .brand{display:inline-flex;align-items:center;gap:10px;font-weight:800;font-size:17px;letter-spacing:-.01em;color:var(--ink)}
+  .brand{white-space:nowrap;display:inline-flex;align-items:center;gap:10px;font-weight:800;font-size:17px;letter-spacing:-.01em;color:var(--ink)}
   .brand-mark{width:29px;height:29px;border-radius:9px;background:var(--blue);color:#fff;font-weight:800;
     display:grid;place-items:center;font-size:15px;box-shadow:0 6px 14px rgba(67,56,202,.32)}
   .brand-logo{width:29px;height:29px;object-fit:contain;display:block}
@@ -144,7 +144,7 @@
   .nav-burger{display:none;background:none;border:0;padding:6px;margin-right:-6px;color:var(--ink);line-height:0}
   .nav-burger svg{width:26px;height:26px;display:block}
   .nav-burger .bg-close{display:none}
-  @media(max-width:1080px){
+  @media(max-width:1240px){
     .nav-links,.nav-right .nav-login{display:none}
     .nav-burger{display:inline-flex;align-items:center}
     .nav.menu-open{background:rgba(255,255,255,.98);backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--line)}
@@ -444,8 +444,9 @@
   .sec-eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--orange-deep);font-weight:700;display:block;margin-bottom:14px}
   .sec-top h2{font-size:clamp(28px,3.8vw,50px);font-weight:840;letter-spacing:-.035em;line-height:1.2;text-wrap:balance;flex:1;min-width:0}
   .sec-top .sub{max-width:42ch;font-size:15.5px;color:var(--ink-2);line-height:1.7;flex-shrink:0}
-  .sec-head{max-width:760px}
-  .sec-head .sub{margin-top:18px;font-size:16px;color:var(--ink-2);line-height:1.72;max-width:58ch}
+  .sec-head{max-width:860px;margin-left:auto;margin-right:auto;text-align:center}
+  .sec-head h2{font-size:clamp(28px,3.8vw,50px);font-weight:840;letter-spacing:-.035em;line-height:1.2;text-wrap:balance}
+  .sec-head .sub{margin-top:18px;font-size:16px;color:var(--ink-2);line-height:1.72;max-width:62ch;margin-left:auto;margin-right:auto}
 
   /* ============ 落地难题（3 卡，错落入场） ============ */
   .why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,1.6vw,22px)}
@@ -676,9 +677,9 @@
   .pcard:hover::before{transform:scaleY(1)}
   .pcard.c-blue{--accent:var(--blue)}.pcard.c-purple{--accent:var(--purple)}.pcard.c-orange{--accent:var(--orange)}
   .pcard.c-green{--accent:var(--green)}.pcard.c-teal{--accent:var(--teal)}
-  .pcard .ptag{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  .pcard .ptag{font-size:clamp(19px,1.9vw,24px);font-weight:850;letter-spacing:-.01em;
     color:var(--accent,var(--blue));margin-bottom:14px}
-  .pcard h3{font-size:clamp(19px,1.7vw,23px);font-weight:800;letter-spacing:-.02em;line-height:1.32;margin-bottom:12px}
+  .pcard h3{font-size:clamp(14.5px,1.3vw,16px);font-weight:600;color:var(--ink);letter-spacing:-.01em;line-height:1.45;margin-bottom:12px}
   .pcard p{font-size:14px;line-height:1.7;color:var(--ink-2);flex:1}
   .pcard .pmeta{font-family:var(--mono);font-size:11.5px;letter-spacing:.02em;color:var(--ink-3);margin-top:18px;line-height:1.5}
   .pcard .plink{display:inline-flex;align-items:center;gap:9px;margin-top:18px;font-size:14px;font-weight:700;color:var(--accent,var(--blue))}
@@ -1032,7 +1033,7 @@
 
 
   /* ============ 企业级 · 横向电影流水线（scroll 驱动镜头横移） ============ */
-  .pipeline{position:relative;height:580vh;margin-top:clamp(34px,4vw,52px)}
+  .pipeline{position:relative;height:300vh;margin-top:clamp(34px,4vw,52px)}
   .pl-stage{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
   .pl-head{position:absolute;top:clamp(40px,8vh,84px);left:0;right:0;display:flex;align-items:center;gap:16px}
   .pl-line{position:relative;flex:1;height:3px;background:var(--line);border-radius:3px;overflow:hidden}
@@ -1268,7 +1269,7 @@
   .modal-overlay{position:fixed;inset:0;z-index:80;background:rgba(14,20,48,.5);backdrop-filter:blur(6px);
     display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;visibility:hidden;transition:opacity .3s var(--ease)}
   .modal-overlay.open{opacity:1;visibility:visible}
-  .modal{background:#fff;border-radius:var(--radius-lg);width:100%;max-width:560px;overflow:hidden;
+  .modal{position:relative;background:#fff;border-radius:var(--radius-lg);width:100%;max-width:560px;overflow:hidden;
     box-shadow:0 40px 100px -30px rgba(14,20,48,.5);transform:translateY(20px) scale(.98);transition:transform .35s var(--ease)}
   .modal-overlay.open .modal{transform:none}
   .modal-hd{position:relative;padding:clamp(28px,4vw,40px) clamp(26px,3.4vw,40px) clamp(22px,2.6vw,30px);
@@ -1383,10 +1384,25 @@
   .sec-dot.is-active .sd-tip{opacity:1;transform:none;color:var(--blue);font-weight:750}
   @media (max-width:1080px){.sec-rail{display:none}}
   @media (prefers-reduced-motion:reduce){.read-progress i,.sec-rail,.sd-tip,.sd-dot{transition:none}}
+  /* ── 企业级流水线:弃用 sticky 滚动劫持,改稳健静态卡片网格(根治 sticky 失效白屏) ── */
+  #pipeline{height:auto!important;margin-top:clamp(28px,4vw,48px)}
+  #pipeline .pl-stage{position:static!important;height:auto!important;display:block!important;overflow:visible!important}
+  #pipeline .pl-head{position:static!important;margin:0 0 clamp(20px,3vw,30px)!important}
+  #pipeline .pl-nav{display:none!important}
+  #pipeline .pl-track{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(270px,1fr))!important;gap:clamp(14px,1.6vw,20px)!important;padding:0!important;transform:none!important;align-items:stretch!important;will-change:auto!important}
+  #pipeline .pl-track::before,#pipeline .pl-track::after{display:none!important}
+  #pipeline .pl-node{width:auto!important;flex:initial!important;opacity:1!important;transform:none!important;background:#fff;border:1px solid var(--line);border-radius:16px;padding:clamp(18px,1.8vw,24px);box-shadow:0 2px 4px rgba(14,20,48,.04),0 12px 28px -12px rgba(14,20,48,.12)}
+  #pipeline .pl-node::before{display:none!important}
+  #pipeline .pl-node h3{color:var(--ink)!important;font-size:clamp(19px,1.7vw,24px)!important;line-height:1.25!important}
+  #pipeline .pl-node p{opacity:1!important;transform:none!important;margin-top:10px!important;max-width:none!important}
+  #pipeline .pl-node.enter,#pipeline .pl-node.exit{grid-column:1/-1!important}
+  #pipeline .pl-node.enter h3,#pipeline .pl-node.exit h3{font-size:clamp(22px,2.2vw,30px)!important}
+  #pipeline .pl-node.exit{background:var(--blue-50);border-color:rgba(67,56,202,.32)}
+  #pipeline .pl-node.enter{background:linear-gradient(120deg,#FBFCFF,var(--blue-50))}
 </style>
 <style>
 /* ===== 移动端补丁 · index.html 不引 site.css，需就地修 ===== */
-html{overflow-x:hidden}
+html{overflow-x:clip}
 @media(max-width:640px){
   /* 关闭态弹窗不占布局，杜绝横向溢出（原用 visibility 隐藏仍占 432px 宽 → 撑出 481 → 整页缩小） */
   .modal-overlay:not(.open){display:none}
@@ -1874,22 +1890,22 @@ html{overflow-x:hidden}
         <div class="fde-card rv is-active" role="button" tabindex="0" aria-pressed="true">
           <div class="fde-num">01</div>
           <h4>先理解业务，再落地系统</h4>
-          <p>交付始于理解业务，而非安装软件。具备行业经验的成员先期驻场，梳理客户的 SOP、知识库与业务全链路——获客、转化与关键瓶颈所在。AI 所要承接的工作，须先被真正理解。</p>
+          <p>懂行业的成员先驻场，摸清客户的 SOP、知识库和获客转化全链路。先弄懂业务，再上 AI。</p>
         </div>
         <div class="fde-card rv rv-d1" role="button" tabindex="0" aria-pressed="false">
           <div class="fde-num">02</div>
           <h4>业务与工程，同一支团队</h4>
-          <p>懂业务的成员在前线对接客户，工程团队与七大产品基建在后方支撑。业务判断与工程实现各司其职，前线成员无需亲自编码，由系统完成落地。</p>
+          <p>懂业务的人在前线，工程和七大基建在后方。前线不写代码，系统负责落地。</p>
         </div>
         <div class="fde-card rv rv-d2" role="button" tabindex="0" aria-pressed="false">
           <div class="fde-num">03</div>
           <h4>现场经验，沉淀为产品</h4>
-          <p>在单个客户现场解决的问题与打磨出的能力，会沉淀回标准产品。下一个客户由此获得更高的起点——一次投入，多次复用。</p>
+          <p>现场打磨出的能力沉淀回产品。下一个客户起点更高，一次投入、多次复用。</p>
         </div>
         <div class="fde-card rv rv-d3" role="button" tabindex="0" aria-pressed="false">
           <div class="fde-num">04</div>
           <h4>按业务结果交付</h4>
-          <p>不销售软件，也不销售订阅。与客户约定可量化的业务目标，直接交付看得见的结果——转化率、人效等指标的实际改善。</p>
+          <p>不卖软件，也不卖订阅。约定可量化目标，直接交付结果:转化率、人效的实际改善。</p>
         </div>
       </div>
     </div>
@@ -3230,6 +3246,8 @@ if(!sessionStorage.getItem('intro_shown')){
   window.addEventListener('resize',relayout);
   window.addEventListener('load',relayout);
   relayout();
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(relayout);
+  setTimeout(relayout,500);setTimeout(relayout,1500);
   /* 手机端地铁线：红线随滚动生长，到一站亮一站（仅窄屏执行，桌面不进此逻辑） */
   var mNarrow=window.matchMedia('(max-width:820px)');
   function rail(){
