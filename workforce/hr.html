@@ -53,9 +53,10 @@
   .lc-feed .row.mute{color:var(--ink-3)}
   .lc-feed .row i{flex:0 0 auto;margin-top:2px}
   /* 角色画像：能力清单 */
-  .role-split{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(28px,4vw,56px);align-items:start}
+  .role-split{display:block}
+  .role-split>div:first-child{max-width:64ch}
   .role-split p{font-size:15.5px;line-height:1.78;color:var(--ink-2);margin-bottom:16px}
-  .cap-list{display:flex;flex-direction:column;gap:12px}
+  .cap-list{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:clamp(22px,3vw,32px)}
   .cap-list .cap{display:flex;gap:13px;background:#fff;border:1px solid var(--line);border-radius:var(--radius-sm);
     padding:15px 17px;box-shadow:var(--shadow-soft);transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s}
   .cap-list .cap:hover{transform:translateX(4px);box-shadow:var(--shadow);border-color:var(--blue-200)}
@@ -212,7 +213,6 @@ var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isInter
       <div class="role-split rv">
         <div>
           <p>招聘的时间大量花在重复劳动上：每天在三五个平台下载、去重简历，逐份扫读 80% 会被淘汰的候选人，第一轮面试反复问同样几个标准化问题。响应一慢，候选人就流失了。</p>
-          <p>AI HR 把这条流水线交给 Agent：简历自动同步去重、解析评分、按岗位匹配；AI 语音面试自动邀约、追问、评分；结果汇到一个控制台，HR 只做最后的录用决策。</p>
         </div>
         <div class="cap-list">
           <div class="cap">

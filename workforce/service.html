@@ -52,9 +52,10 @@
   .auto-total .at-v{font-size:clamp(26px,3vw,34px);font-weight:850;letter-spacing:-.03em;line-height:1;
     color:var(--orange-deep)}
   /* 角色画像：能力清单（呼应首页 cap 行式卡片） */
-  .role-split{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(28px,4vw,56px);align-items:start}
+  .role-split{display:block}
+  .role-split>div:first-child{max-width:64ch}
   .role-split p{font-size:15.5px;line-height:1.78;color:var(--ink-2);margin-bottom:16px}
-  .cap-list{display:flex;flex-direction:column;gap:12px}
+  .cap-list{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:clamp(22px,3vw,32px)}
   .cap-list .cap{display:flex;gap:13px;background:#fff;border:1px solid var(--line);border-radius:var(--radius-sm);
     padding:15px 17px;box-shadow:var(--shadow-soft);transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s}
   .cap-list .cap:hover{transform:translateX(4px);box-shadow:var(--shadow);border-color:var(--blue-200)}
