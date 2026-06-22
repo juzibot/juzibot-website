@@ -1,311 +1,513 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>句子秒回 · IM 通道里的 AI 员工工作台 | 句子互动</title>
 <meta name="description" content="句子秒回是企业级多 IM 聚合管理平台——11 个 IM 通道一个工作台管完，AI 智能回复、SOP 自动跟进、人机协作。1000+ 企业客户验证。" />
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231659E5'/%3E%3Ctext x='16' y='22' font-family='system-ui' font-size='18' font-weight='800' fill='white' text-anchor='middle'%3E句%3C/text%3E%3C/svg%3E" />
-<link rel="stylesheet" href="../assets/style.css">
+<link rel="icon" href="../logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../assets/site.css" />
+<style>
+  /* scoped · 仅用 site.css 既有变量，承接首页配色，不引入异色 */
+  /* —— 产品页头：沿用 .hero 的浅色径向底，承接面包屑 + KPI —— */
+  .ph{position:relative;overflow:hidden;padding:clamp(104px,13vh,150px) var(--gut) clamp(48px,6vw,76px);
+    background:radial-gradient(1100px 540px at 82% 4%,var(--blue-100),transparent 60%),
+               radial-gradient(680px 480px at 4% 10%,var(--orange-lt),transparent 56%),
+               linear-gradient(180deg,var(--blue-50),#fff 78%)}
+  .ph .wrap{position:relative}
+  .crumbs{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--ink-3);margin-bottom:clamp(16px,2.4vw,24px);flex-wrap:wrap}
+  .crumbs a{color:var(--ink-2)}
+  .crumbs a:hover{color:var(--blue)}
+  .crumbs .sep{color:var(--line)}
+  .crumbs .here{color:var(--ink-2);font-weight:650}
+  .ph-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:clamp(30px,4vw,56px);align-items:center}
+  .ph h1{font-size:clamp(34px,5vw,64px);font-weight:850;letter-spacing:-.04em;line-height:1.12;
+    max-width:20ch;word-break:keep-all;text-wrap:balance;margin-bottom:clamp(14px,2vw,24px)}
+  .ph h1 .accent{color:var(--blue)}
+  .ph-lede{font-size:clamp(16px,1.4vw,18.5px);color:var(--ink-2);max-width:50ch;line-height:1.7}
+  .ph-lede strong{color:var(--ink);font-weight:700}
+  .ph-cta{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:clamp(20px,2.6vw,30px)}
+  /* hero 内嵌真实工作台演示（iframe） */
+  .ph-demo{position:relative;border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;
+    background:linear-gradient(180deg,#FBFCFF,#F3F7FE);
+    box-shadow:0 1px 2px rgba(14,20,48,.05),0 40px 80px -30px rgba(67,56,202,.35),0 12px 24px -12px rgba(14,20,48,.12)}
+  .ph-demo .win{display:flex;align-items:center;gap:8px;padding:11px 15px;background:rgba(255,255,255,.78);
+    backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .ph-demo .win .d{width:9px;height:9px;border-radius:50%}
+  .ph-demo .win .d.r{background:#FF5F57}.ph-demo .win .d.y{background:#FEBC2E}.ph-demo .win .d.g{background:#28C840}
+  .ph-demo .win .t{margin-left:6px;font-family:var(--mono);font-size:11px;letter-spacing:.03em;color:var(--ink-3)}
+  .ph-demo .win .live{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:750;
+    color:var(--green);background:var(--green-lt);padding:4px 10px;border-radius:999px}
+  .ph-demo .win .live i{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green)}
+  /* 工作台预览：按真实宽度渲染再等比缩放（布局正确、不挤叠），角上「放大查看」 */
+  .ph-stage{position:relative;width:100%;overflow:hidden;background:#fff}
+  .ph-stage iframe{position:absolute;top:0;left:0;border:0;background:#fff;transform-origin:top left}
+  .ph-zoom{position:absolute;right:12px;bottom:12px;z-index:3;display:inline-flex;align-items:center;gap:7px;
+    font-size:12.5px;font-weight:700;color:#fff;background:rgba(11,16,32,.6);backdrop-filter:blur(4px);
+    border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:8px 14px;cursor:pointer;transition:background .2s,transform .2s}
+  .ph-zoom:hover{background:var(--blue);transform:translateY(-1px)}
+  /* 放大模态：苹果式丝滑开合 · 虚化背景 + 大窗工作台 */
+  .wbm{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;
+    padding:clamp(12px,3vw,34px);background:rgba(11,16,32,.5);backdrop-filter:blur(13px);-webkit-backdrop-filter:blur(13px)}
+  .wbm.open{display:flex;animation:wbm-bg .34s ease both}
+  .wbm.closing{animation:wbm-bg-out .24s ease both}
+  @keyframes wbm-bg{from{opacity:0}to{opacity:1}}
+  @keyframes wbm-bg-out{from{opacity:1}to{opacity:0}}
+  .wbm-panel{position:relative;background:#fff;border-radius:18px;overflow:hidden;
+    box-shadow:0 50px 140px rgba(11,16,32,.55),0 0 0 1px rgba(255,255,255,.05)}
+  .wbm.open .wbm-panel{animation:wbm-pop .46s cubic-bezier(.22,1,.36,1) both}
+  .wbm.closing .wbm-panel{animation:wbm-pop-out .24s cubic-bezier(.4,0,1,1) both}
+  @keyframes wbm-pop{from{opacity:0;transform:scale(.9) translateY(16px)}to{opacity:1;transform:none}}
+  @keyframes wbm-pop-out{from{opacity:1;transform:none}to{opacity:0;transform:scale(.96) translateY(8px)}}
+  .wbm-stage{position:relative;overflow:hidden;background:#fff}
+  .wbm-stage iframe{position:absolute;top:0;left:0;border:0;background:#fff;transform-origin:top left}
+  .wbm-x{position:absolute;right:14px;top:14px;z-index:3;width:36px;height:36px;border-radius:50%;border:none;
+    background:rgba(11,16,32,.55);backdrop-filter:blur(6px);color:#fff;font-size:19px;line-height:1;cursor:pointer;
+    display:grid;place-items:center;transition:background .2s,transform .2s}
+  .wbm-x:hover{background:var(--blue);transform:scale(1.06)}
+  @media(prefers-reduced-motion:reduce){.wbm.open,.wbm.closing,.wbm.open .wbm-panel,.wbm.closing .wbm-panel{animation:none}}
+  @media(max-width:980px){
+    .ph-grid{grid-template-columns:1fr;gap:clamp(40px,7vw,56px)}
+    .ph-art{order:2}
+  }
+  /* —— 产品截图陈列（应用窗口框）—— */
+  .shotwrap{display:grid;grid-template-columns:1fr 1fr;gap:clamp(18px,2.4vw,28px)}
+  .shotcard{border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;background:#fff;
+    box-shadow:0 1px 2px rgba(14,20,48,.05),0 26px 54px -28px rgba(67,56,202,.28);
+    transition:transform .4s var(--ease),box-shadow .4s var(--ease),border-color .4s}
+  .shotcard:hover{transform:translateY(-5px);border-color:transparent;
+    box-shadow:0 2px 6px rgba(14,20,48,.06),0 40px 80px -30px rgba(67,56,202,.4)}
+  .shotcard .win{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--line);
+    background:linear-gradient(180deg,#FCFDFF,#F6F9FE)}
+  .shotcard .win .d{width:9px;height:9px;border-radius:50%}
+  .shotcard .win .d.r{background:#FF5F57}.shotcard .win .d.y{background:#FEBC2E}.shotcard .win .d.g{background:#28C840}
+  .shotcard .win .t{margin-left:6px;font-family:var(--mono);font-size:11px;letter-spacing:.03em;color:var(--ink-3)}
+  .shotcard img{width:100%;height:auto;display:block;object-fit:cover;object-position:top center}
+  .shotcard .cap{padding:14px 18px;font-size:13px;color:var(--ink-2);line-height:1.6;border-top:1px solid var(--line)}
+  @media(max-width:760px){.shotwrap{grid-template-columns:1fr}}
+  /* —— IM 通道网格 —— */
+  .imgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(12px,1.4vw,16px)}
+  .imcell{position:relative;background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+    padding:clamp(20px,2.2vw,26px) clamp(16px,1.8vw,20px);text-align:center;
+    transition:transform .4s var(--ease),box-shadow .4s var(--ease),border-color .4s}
+  .imcell:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:transparent}
+  .imcell .ico{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;margin:0 auto 12px;
+    font-size:19px;background:var(--blue-50);color:var(--blue)}
+  .imcell:nth-child(3n+2) .ico{background:var(--orange-lt);color:var(--orange-deep)}
+  .imcell:nth-child(3n) .ico{background:var(--green-lt);color:var(--green)}
+  .imcell .nm{font-size:14px;font-weight:780;letter-spacing:-.01em;color:var(--ink)}
+  .imcell .sc{font-size:11.5px;color:var(--ink-3);margin-top:4px}
+  @media(max-width:760px){.imgrid{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:480px){.imgrid{grid-template-columns:repeat(2,1fr)}}
+  /* —— 架构：四角色控制台 / 工作台 —— */
+  .roles{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(14px,1.6vw,20px)}
+  .role{position:relative;overflow:hidden;background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+    padding:clamp(24px,2.6vw,30px) clamp(22px,2.2vw,28px);--rc:var(--blue);
+    transition:transform .4s var(--ease),box-shadow .4s var(--ease),border-color .4s}
+  .role::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--rc);
+    transform:scaleY(0);transform-origin:top;transition:transform .45s var(--ease)}
+  .role:hover{transform:translateY(-5px);border-color:transparent;box-shadow:var(--shadow)}
+  .role:hover::before{transform:scaleY(1)}
+  .role.r1{--rc:var(--blue)}.role.r2{--rc:var(--orange)}.role.r3{--rc:var(--green)}.role.r4{--rc:var(--purple)}
+  .role .rk{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-size:11px;font-weight:700;
+    letter-spacing:.08em;text-transform:uppercase;color:var(--rc);margin-bottom:14px}
+  .role .rk i{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font-size:13px;
+    color:#fff;background:var(--rc)}
+  .role.r2 .rk i{color:#fff;background:var(--orange-deep)}
+  .role h3{font-size:clamp(18px,1.6vw,22px);font-weight:820;letter-spacing:-.02em;line-height:1.3;margin-bottom:9px}
+  .role p{font-size:14px;line-height:1.7;color:var(--ink-2)}
+  @media(max-width:600px){.roles{grid-template-columns:1fr}}
+  /* —— SOP 时间线 —— */
+  .sop{margin-top:clamp(8px,1.4vw,16px);border:1px solid var(--line);border-radius:var(--radius-lg);
+    background:linear-gradient(180deg,#FBFCFF,#F4F7FE);
+    box-shadow:0 1px 2px rgba(14,20,48,.05),0 30px 64px -34px rgba(67,56,202,.26);
+    padding:clamp(24px,3vw,40px) clamp(20px,3vw,40px)}
+  .sop-rail{position:relative;display:grid;gap:clamp(12px,1.4vw,16px)}
+  .sop-rail::before{content:"";position:absolute;left:clamp(54px,8vw,80px);top:14px;bottom:14px;width:2px;
+    background:linear-gradient(180deg,var(--blue),var(--green));border-radius:2px}
+  .sop-step{position:relative;display:grid;grid-template-columns:clamp(48px,7vw,72px) 1fr;align-items:center;
+    gap:clamp(14px,2vw,24px)}
+  .sop-when{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--ink-2);text-align:right;letter-spacing:.02em}
+  .sop-card{position:relative;background:#fff;border:1px solid var(--line);border-radius:14px;
+    padding:13px 18px;font-size:14px;font-weight:650;color:var(--ink);box-shadow:var(--shadow-soft);
+    transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s}
+  .sop-card::before{content:"";position:absolute;left:calc(-1 * (clamp(14px,2vw,24px) / 2) - 7px);top:50%;
+    width:11px;height:11px;border-radius:50%;background:#fff;border:2.4px solid var(--blue);
+    transform:translate(-50%,-50%);box-shadow:0 0 0 3px #fff;z-index:2}
+  .sop-card:hover{transform:translateX(4px);border-color:var(--blue-200);
+    box-shadow:0 14px 30px -16px rgba(67,56,202,.4)}
+  .sop-step.k-blue .sop-card{border-left:3px solid var(--blue)}
+  .sop-step.k-orange .sop-card{border-left:3px solid var(--orange)}
+  .sop-step.k-orange .sop-card::before{border-color:var(--orange)}
+  .sop-step.k-green .sop-card{border-left:3px solid var(--green)}
+  .sop-step.k-green .sop-card::before{border-color:var(--green)}
+  .sop-step.k-mute .sop-card{border-left:3px solid var(--ink-3);color:var(--ink-2)}
+  .sop-step.k-mute .sop-card::before{border-color:var(--ink-3)}
+  /* —— 结果数据带 —— */
+  .kpiband{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(14px,1.6vw,20px)}
+  .kpicard{position:relative;overflow:hidden;background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+    padding:clamp(26px,2.8vw,34px) clamp(22px,2.2vw,28px);--ac:var(--blue);
+    transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s}
+  .kpicard::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--ac);
+    transform:scaleY(0);transform-origin:bottom;transition:transform .45s var(--ease)}
+  .kpicard:hover{transform:translateY(-4px);border-color:transparent;
+    box-shadow:0 18px 44px -18px color-mix(in srgb,var(--ac) 50%,transparent)}
+  .kpicard:hover::before{transform:scaleY(1)}
+  .kpicard:nth-child(1){--ac:var(--blue)}.kpicard:nth-child(2){--ac:var(--orange-deep)}
+  .kpicard:nth-child(3){--ac:var(--green)}.kpicard:nth-child(4){--ac:var(--purple)}
+  .kpicard .v{font-size:clamp(30px,3.4vw,44px);font-weight:850;letter-spacing:-.03em;line-height:1;color:var(--ac)}
+  .kpicard .l{font-size:13.5px;color:var(--ink-2);margin-top:10px;line-height:1.5}
+  @media(max-width:760px){.kpiband{grid-template-columns:1fr 1fr}}
+
+  /* ============ 移动端适配（hero 缩放 demo 已自带处理，此处仅补 hero 以外的版式塌缩）============ */
+  @media(max-width:900px){
+    /* 节头：标题与副文从并排 flex 改为竖排，避免窄屏挤压/溢出 */
+    .sec-top{flex-direction:column;align-items:flex-start;gap:clamp(10px,2vw,14px)}
+    .sec-top .sub{max-width:60ch;flex-shrink:1}
+  }
+  @media(max-width:640px){
+    /* 页头：留白收紧 */
+    .ph{padding-top:clamp(92px,16vh,118px);padding-bottom:clamp(40px,8vw,56px)}
+    .crumbs{font-size:12px;margin-bottom:16px}
+
+    /* 节头：字号/留白收 */
+    .sec-top{margin-bottom:clamp(28px,7vw,40px)}
+    .sec-top h2{font-size:clamp(24px,7vw,32px)}
+    .sec-top .sub{font-size:14.5px}
+
+    /* 截图卡：标题省略不撑破窗框 */
+    .shotcard .win .t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+    .shotcard .cap{padding:13px 15px;font-size:12.5px}
+
+    /* IM 通道格：内距收，触控区充裕 */
+    .imcell{padding:18px 12px;min-height:44px}
+    .imcell .ico{width:42px;height:42px;font-size:17px;margin-bottom:10px}
+
+    /* 角色卡：内距收 */
+    .role{padding:22px 18px}
+    .role h3{font-size:18px}
+    .role p{font-size:13.5px}
+
+    /* SOP 时间线：窄屏改「时间徽标在上 + 卡片在下」竖排，取消左侧细轨与圆点对齐误差，保证可读 */
+    .sop{padding:22px 16px}
+    .sop-rail{gap:14px}
+    .sop-rail::before{display:none}
+    .sop-step{grid-template-columns:1fr;gap:7px}
+    .sop-when{text-align:left;font-size:11.5px;color:var(--blue)}
+    .sop-card{padding:12px 15px;font-size:13.5px}
+    .sop-card::before{display:none}
+    .sop-step.k-blue .sop-card,.sop-step.k-orange .sop-card,
+    .sop-step.k-green .sop-card,.sop-step.k-mute .sop-card{border-left-width:4px}
+
+    /* SOP 能力清单：内距收 */
+    .ap-feats li{font-size:13.5px}
+
+    /* KPI 数据带：值/内距收，2 列在窄屏不溢出 */
+    .kpicard{padding:22px 16px}
+    .kpicard .v{font-size:clamp(26px,8vw,34px)}
+    .kpicard .l{font-size:12.5px;margin-top:8px}
+
+    /* CTA 主按钮触控区充裕 + 不溢出 */
+    .ph-cta .btn-lg,.cta-actions .btn-lg{padding:16px 28px;font-size:15.5px}
+  }
+  @media(max-width:400px){
+    /* 极窄：KPI 数据带塌单列，避免数字与文案挤压 */
+    .kpiband{grid-template-columns:1fr}
+  }
+</style>
 </head>
 <body>
+<div id="site-nav"></div>
+<main>
 
-<!-- ════════════ ANNOUNCEMENT BAR ════════════ -->
-<div class="ann-bar" role="marquee" aria-label="公告">
-  <div class="ann-track">
-    <span class="ann-item"><span class="dot"></span><span class="tag">在线教育</span>几百家头部公司已部署，AI 销售人均承接 5 倍以上</span>
-    <span class="ann-item"><span class="dot"></span><span class="tag">消费品电商</span>几百家头部品牌私域导购上线，长尾客户再不流失</span>
-    <span class="ann-item"><span class="dot"></span><span class="tag">金融</span>银行 · 证券 · 保险头部机构落地，合规边界提前写死</span>
-    <span class="ann-item"><span class="dot"></span>1000+ 大型企业已在用 · 扎在这 5 个行业 · 接入 10+ 主流 IM 渠道</span>
-    <span class="ann-item"><span class="dot"></span><span class="tag">在线教育</span>几百家头部公司已部署，AI 销售人均承接 5× 以上</span>
-    <span class="ann-item"><span class="dot"></span><span class="tag">消费品电商</span>几百家头部品牌私域导购上线，长尾客户再不流失</span>
-    <span class="ann-item"><span class="dot"></span><span class="tag">金融</span>银行 · 证券 · 保险头部机构落地，合规边界提前写死</span>
-    <span class="ann-item"><span class="dot"></span>1000+ 大型企业已在用 · 扎在这 5 个行业 · 接入 10+ 主流 IM 渠道</span>
-  </div>
-</div>
-
-<nav class="nav">
-  <div class="container nav-inner">
-    <a href="../index.html" class="brand">
-      <span class="brand-mark">句</span>
-      句子互动 <small>JuziBot</small>
-    </a>
-    <div class="nav-links">
-      <div class="nav-item">
-        <button>产品 <span class="caret"></span></button>
-        <div class="dropdown wide">
-          <a href="../products/miaodong.html"><div class="d-title">句子秒懂 · 大脑</div><div class="d-desc">业务人员不写代码也能搭 Agent</div></a>
-          <a href="../products/shouhu.html"><div class="d-title">句子守护 · 主管</div><div class="d-desc">Agent 上线前测过、上线后管着</div></a>
-          <a href="../products/canmou.html"><div class="d-title">句子问数 · 参谋</div><div class="d-desc">对话式数据洞察，一句话问数</div></a>
-          <a href="../products/dongxing.html"><div class="d-title">句子懂行 · 记忆</div><div class="d-desc">知识工程，把散乱知识炼成可检索资产</div></a>
-          <a href="../products/miaohui.html"><div class="d-title">句子秒回 · 工作台</div><div class="d-desc">Agent 和人协作的 IM 工作台</div></a>
-          <a href="../products/cli.html"><div class="d-title">句子 CLI · 手</div><div class="d-desc">操作一切人用软件的执行层</div></a>
-          <a href="../products/zhizao.html"><div class="d-title">句子制造 · 地基</div><div class="d-desc">补齐客户数字化基建，一客一环境</div></a>
-
-        </div>
+  <!-- ════════════ 产品页头 · 面包屑 + 标题 + KPI + 实时工作台演示 ════════════ -->
+  <header class="ph" id="top">
+    <div class="wrap">
+      <div class="crumbs">
+        <a href="../index.html">首页</a><span class="sep">/</span>
+        <span class="here">产品</span><span class="sep">/</span>
+        <span class="here">句子秒回</span>
       </div>
-      <div class="nav-item">
-        <button>AI 员工 <span class="caret"></span></button>
-        <div class="dropdown wide">
-          <a href="../workforce/sales.html"><div class="d-title">AI 销售</div><div class="d-desc">直播搬家、私域承接、漏斗跟进——首单成交全程接管</div></a>
-          <a href="../workforce/marketing.html"><div class="d-title">AI 导购</div><div class="d-desc">头部零售品牌的私域导购运营，长尾客户也覆盖</div></a>
-          <a href="../workforce/service.html"><div class="d-title">AI 客服</div><div class="d-desc">从售前到售后都接得住 · 5 年 BadCase 积累</div></a>
-          <a href="../workforce/government.html"><div class="d-title">AI 社工 / 调解员</div><div class="d-desc">政务高合规要求 + 全程可追溯 · 已稳步落地</div></a>
-          <a href="../workforce/finance.html"><div class="d-title">AI 理财顾问</div><div class="d-desc">银行 / 证券 / 保险头部机构落地 · 多年风控话术</div></a>
-          <a href="../workforce/hr.html"><div class="d-title">AI HR</div><div class="d-desc">简历初筛 + AI 语音面试，HR 只看 Top 20%</div></a>
-        </div>
-      </div>
-      <div class="nav-item"><a href="../industries.html">客户与行业</a></div>
-      <div class="nav-item"><a href="../enterprise.html">企业级能力</a></div>
-      <div class="nav-item"><a href="../fde.html">FDE 交付结果</a></div>
-      <div class="nav-item"><a href="../about.html">AI 原生组织</a></div>
-      <div class="nav-item"><a href="../careers/index.html">加入我们</a></div>
-    </div>
-    <div class="nav-right">
-      <a class="nav-cta" style="cursor:pointer" onclick="openContact('导航·联系我们')">联系我们 →</a>
-      <a href="https://az-bg.juzibot.com/auth/register" class="nav-login">登录 / 注册</a>
-    </div>
-    <button class="nav-burger" aria-label="菜单" onclick="this.closest('.nav').classList.toggle('nav-open')">☰</button>
-  </div>
-</nav>
-
-<header class="page-hero">
-  <div class="container">
-    <div class="crumbs"><a href="../index.html">首页</a> <span class="sep">/</span> <span class="here">产品</span> <span class="sep">/</span> <span class="here">句子秒回</span></div>
-    <div style="font-size:13px;font-weight:800;color:var(--orange);letter-spacing:.12em;text-transform:uppercase;margin-bottom:16px;">产品 · 01</div>
-    <h1>句子秒回 · <span class="accent">AI 员工的 IM 工作台</span></h1>
-    <p class="lede">把企业的 11 个 IM 通道（小红书、抖音、微信客服、微信公众号、小程序、WhatsApp 等）聚合到一个工作台，<strong>Agent 真的在客户面前接管对话</strong>——主动触达、智能回复、人机协作、多平台一个工作台管完。</p>
-    <div class="pill-row"><span class="pill"><span class="dot"></span>11 个 IM 通道</span><span class="pill"><span class="dot"></span>1000+ 企业客户</span><span class="pill"><span class="dot"></span>89% 对话自动完成率</span><span class="pill"><span class="dot"></span>多年通道适配积累</span></div>
-  </div>
-</header>
-
-<section class="product-shot-section">
-  <div class="container">
-    <div class="ui-mock">
-      <div class="ui-topbar">
-        <span class="ui-dot r"></span><span class="ui-dot y"></span><span class="ui-dot g"></span>
-        <span class="ui-title">句子秒回 · 聚合聊天工作台</span>
-        <span class="ui-tabs"><span class="on">聚合聊天</span><span>AI 运营</span><span>企业控制台</span></span>
-      </div>
-      <div class="ui-body">
-        <div class="ui-rail">
-          <div class="ui-rail-h">全部对话 · 12</div>
-          <div class="ui-acct"><i class="ch xhs">书</i><div><b>小红书 · 客服1号</b><span>种草沟通</span></div><em>3</em></div>
-          <div class="ui-acct"><i class="ch dy">音</i><div><b>抖音 · 销售2号</b><span>私信 + 直播</span></div><em>5</em></div>
-          <div class="ui-acct on"><i class="ch wx">微</i><div><b>微信客服 · 客服1号</b><span>私域承接</span></div><em>2</em></div>
-          <div class="ui-acct"><i class="ch wa">W</i><div><b>WhatsApp · 海外</b><span>海外业务</span></div></div>
-          <div class="ui-acct"><i class="ch fs">飞</i><div><b>飞书 · 企业 IM</b><span>内部协同</span></div></div>
-        </div>
-        <div class="ui-chat">
-          <div class="ui-chat-h"><b>王女士</b><span>微信客服 · 意向客户</span></div>
-          <div class="ui-msgs">
-            <div class="bub in">您好，看到课程介绍，想了解下体验课</div>
-            <div class="bub out">您好～体验课本周开放预约，给您发个入口 👍</div>
-            <div class="bub ai"><span class="ai-tag">AI 起草</span>已根据她的浏览记录推荐「国画体验课」，待确认发送</div>
+      <div class="ph-grid">
+        <div class="ph-copy">
+          <span class="eyebrow"><span class="dot"></span>产品 · 01</span>
+          <h1>句子秒回 ·<br/><span class="accent">AI 员工的 IM 工作台</span></h1>
+          <p class="ph-lede">把企业的 11 个 IM 通道（小红书、抖音、微信客服、微信公众号、小程序、WhatsApp 等）聚合到一个工作台，<strong>Agent 真的在客户面前接管对话</strong>——主动触达、智能回复、人机协作、多平台一个工作台管完。</p>
+          <div class="ph-cta">
+            <button type="button" class="btn btn-blue btn-lg ar-host" onclick="openContact('句子秒回·页头','预约演示')">
+              预约演示
+              <span class="ar"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h11M10 4l5 5-5 5"/></svg><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h11M10 4l5 5-5 5"/></svg></span>
+            </button>
+            <a href="#channels" class="btn btn-ghost btn-lg">看 11 个 IM 通道</a>
           </div>
-          <div class="ui-input">输入回复…<span class="ui-send">发送</span></div>
+          <div class="hero-kpis">
+            <div class="hero-kpi"><div class="v">11 个</div><div class="l">IM 通道</div></div>
+            <div class="hero-kpi"><div class="v">1000+</div><div class="l">企业客户</div></div>
+            <div class="hero-kpi"><div class="v">89%</div><div class="l">对话自动完成率</div></div>
+            <div class="hero-kpi"><div class="v">多年</div><div class="l">通道适配积累</div></div>
+          </div>
         </div>
-        <div class="ui-side">
-          <div class="ui-side-h">客户档案</div>
-          <div class="ui-tagrow"><span>意向 · 高</span><span>到课 3 次</span><span>未续费</span></div>
-          <div class="ui-side-h">AI 跟进建议</div>
-          <div class="ui-sug">主推大师班，附续费优惠；建议 24 小时内一对一跟进。</div>
-          <div class="ui-stat"><b>+38%</b><span>本月转化</span></div>
+        <div class="ph-art">
+          <div class="ph-demo">
+            <div class="win">
+              <span class="d r"></span><span class="d y"></span><span class="d g"></span>
+              <span class="t">句子秒回 · 聚合聊天工作台</span>
+              <span class="live"><i></i>LIVE</span>
+            </div>
+            <div class="ph-stage" id="wbStage">
+              <iframe id="wbFrame" data-d="../assets/demos/miaohui-hero-feishu.html" data-m="../assets/demos/miaohui-workbench-mobile.html" title="句子秒回 · 聚合聊天工作台 实时演示" loading="lazy"></iframe>
+            </div>
+            <button class="ph-zoom" type="button" onclick="wbOpen()" aria-label="放大查看工作台演示"><i class="fa-solid fa-up-right-and-down-left-from-center" aria-hidden="true"></i> 放大查看</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section><section class="section-block">
-  <div class="container">
-    <div class="block-head">
-      <div class="eyebrow">核心能力</div>
-      <h2>Agent 在 IM 通道上岗，需要的不止是聊天框</h2>
-      <div class="sub">句子秒回是 AI 员工的工作台。11 个 IM 通道聚合到一个工作台，Agent 像真人一样工作、与同事协作，并接受统一管理。</div>
-    </div>
-    <div class="feat-grid-3"><div class="feat-block bl"><div class="ic">01</div><h3>多平台聚合</h3><p>11 个 IM 通道（小红书、抖音、微信客服、微信公众号、小程序、WhatsApp、飞书、钉钉、TikTok、Instagram）统一到一个工作台，海内外账号一起管。</p></div><div class="feat-block or"><div class="ic">02</div><h3>主动触达</h3><p>私聊 / 群聊群发、SOP 自动跟进、自动加好友、新客欢迎语——一次配置批量执行，不受原生应用群发次数限制。</p></div><div class="feat-block gr"><div class="ic">03</div><h3>人机协作</h3><p>AI 全自动 / 人机协作 / 纯人工三种模式，AI 无法处理的对话自动转人工，每条消息可追溯。</p></div><div class="feat-block pu"><div class="ic">04</div><h3>员工协作</h3><p>一人管多账号、多人管一账号都支持。系统智能分配消息，管理者统一查看营销数据和员工绩效。</p></div><div class="feat-block te"><div class="ic">05</div><h3>聊天历史</h3><p>每一条对话安全留存，支持按客户、关键词、时间多维搜索，导出方便后续分析。</p></div><div class="feat-block bl"><div class="ic">06</div><h3>API 集成</h3><p>对接客户已有的 CRM / 工单 / 知识库系统，Agent 上岗就接管真实业务流，不孤立运行。</p></div></div>
-  </div>
-</section><section class="section-block">
-  <div class="container">
-    <div class="split">
-      <div class="split-text">
-        <div class="eyebrow">架构</div>
-        <h3>两大控制台 + 两个工作台，覆盖企业全角色</h3>
-        <p>句子秒回按企业组织结构搭协作系统。管理者、小组负责人、一线客服、AI 运营各有自己的入口，权限和数据分开。</p>
-        <ul><li><strong>企业控制台</strong>：管理者全局视角，跨小组操作，全公司数据看板</li><li><strong>小组控制台</strong>：小组负责人配置 SOP、群发、加好友、群运营</li><li><strong>聚合聊天工作台</strong>：客服 / 销售日常回复，AI 辅助 + 团队协作</li><li><strong>AI 运营工作台</strong>：AI 运营人员效果调优、数据洞察</li></ul>
-      </div>
-      <div class="split-visual">
-        
-<div style="background:#fff;padding:22px;border-radius:14px;border:1px solid var(--gray-line);">
-<div style="font-weight:800;color:var(--blue);margin-bottom:14px;font-size:13px;">句子互动 · 句子秒回 工作台</div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-  <div style="background:var(--blue-light);border-radius:10px;padding:14px;">
-    <div style="font-weight:700;font-size:13px;color:var(--blue);">企业控制台</div>
-    <div style="font-size:11px;color:var(--gray-text);margin-top:5px;">管理者 · 全局数据看板</div>
-  </div>
-  <div style="background:var(--orange-lt);border-radius:10px;padding:14px;">
-    <div style="font-weight:700;font-size:13px;color:var(--orange);">小组控制台</div>
-    <div style="font-size:11px;color:var(--gray-text);margin-top:5px;">运营组长 · 配 SOP / 群发</div>
-  </div>
-  <div style="background:var(--green-lt);border-radius:10px;padding:14px;">
-    <div style="font-weight:700;font-size:13px;color:var(--green);">聚合聊天工作台</div>
-    <div style="font-size:11px;color:var(--gray-text);margin-top:5px;">客服 / 销售 · 日常回复</div>
-  </div>
-  <div style="background:var(--purple-lt);border-radius:10px;padding:14px;">
-    <div style="font-weight:700;font-size:13px;color:var(--purple);">AI 运营工作台</div>
-    <div style="font-size:11px;color:var(--gray-text);margin-top:5px;">AI 运营 · 效果调优 / 洞察</div>
-  </div>
-</div>
-</div>
+  </header>
 
-      </div>
-    </div>
-  </div>
-</section><section class="section-block alt">
-  <div class="container">
-    <div class="block-head">
-      <div class="eyebrow">11 个 IM 通道</div>
-      <h2>客户在哪个 IM 上，Agent 就去哪个 IM 上岗</h2>
-      <div class="sub">多年积累的 IM 通道适配。国内的、海外 WhatsApp 的、抖音直播私信、飞书企业 IM，一个工作台管完。</div>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:920px;margin:0 auto;"><div style="padding:18px 16px;background:#fff;border:1px solid var(--gray-line);border-radius:12px;text-align:center;"><div style="font-size:24px;margin-bottom:6px;">📕</div><div style="font-size:13.5px;font-weight:700;">小红书</div><div style="font-size:11.5px;color:var(--gray-text);margin-top:2px;">种草沟通</div></div><div style="padding:18px 16px;background:#fff;border:1px solid var(--gray-line);border-radius:12px;text-align:center;"><div style="font-size:24px;margin-bottom:6px;">🎵</div><div style="font-size:13.5px;font-weight:700;">抖音</div><div style="font-size:11.5px;color:var(--gray-text);margin-top:2px;">私信 + 直播</div></div><div style="padding:18px 16px;background:#fff;border:1px solid var(--gray-line);border-radius:12px;text-align:center;"><div style="font-size:24px;margin-bottom:6px;">☎️</div><div style="font-size:13.5px;font-weight:700;">电话</div><div style="font-size:11.5px;color:var(--gray-text);margin-top:2px;">外呼触达</div></div><div style="padding:18px 16px;background:#fff;border:1px solid var(--gray-line);border-radius:12px;text-align:center;"><div style="font-size:24px;margin-bottom:6px;">💬</div><div style="font-size:13.5px;font-weight:700;">微信客服</div><div style="font-size:11.5px;color:var(--gray-text);margin-top:2px;">私域承接</div></div><div style="padding:18px 16px;background:#fff;border:1px solid var(--gray-line);border-radius:12px;text-align:center;"><div style="font-size:24px;margin-bottom:6px;">📟</div><div style="font-size:13.5px;font-weight:700;">微信小程序</div><div style="font-size:11.5px;color:var(--gray-text);margin-top:2px;">客服入口</div></div><div style="padding:18px 16px;background:#fff;border:1px solid var(--gray-line);border-radius:12px;text-align:center;"><div style="font-size:24px;margin-bottom:6px;">☁️</div><div style="font-size:13.5px;font-weight:700;">飞书</div><div style="font-size:11.5px;color:var(--gray-text);margin-top:2px;">企业 IM</div></div><div style="padding:18px 16px;background:#fff;border:1px solid var(--gray-line);border-radius:12px;text-align:center;"><div style="font-size:24px;margin-bottom:6px;">📱</div><div style="font-size:13.5px;font-weight:700;">钉钉</div><div style="font-size:11.5px;color:var(--gray-text);margin-top:2px;">企业 IM</div></div><div style="padding:18px 16px;background:#fff;border:1px solid var(--gray-line);border-radius:12px;text-align:center;"><div style="font-size:24px;margin-bottom:6px;">📢</div><div style="font-size:13.5px;font-weight:700;">微信公众号</div><div style="font-size:11.5px;color:var(--gray-text);margin-top:2px;">私域承接</div></div><div style="padding:18px 16px;background:#fff;border:1px solid var(--gray-line);border-radius:12px;text-align:center;"><div style="font-size:24px;margin-bottom:6px;">✉️</div><div style="font-size:13.5px;font-weight:700;">WhatsApp</div><div style="font-size:11.5px;color:var(--gray-text);margin-top:2px;">海外业务</div></div><div style="padding:18px 16px;background:#fff;border:1px solid var(--gray-line);border-radius:12px;text-align:center;"><div style="font-size:24px;margin-bottom:6px;">🌍</div><div style="font-size:13.5px;font-weight:700;">TikTok</div><div style="font-size:11.5px;color:var(--gray-text);margin-top:2px;">海外短视频</div></div><div style="padding:18px 16px;background:#fff;border:1px solid var(--gray-line);border-radius:12px;text-align:center;"><div style="font-size:24px;margin-bottom:6px;">📷</div><div style="font-size:13.5px;font-weight:700;">Instagram</div><div style="font-size:11.5px;color:var(--gray-text);margin-top:2px;">海外种草</div></div><div style="padding:18px 16px;background:#fff;border:1px solid var(--gray-line);border-radius:12px;text-align:center;"><div style="font-size:24px;margin-bottom:6px;">➕</div><div style="font-size:13.5px;font-weight:700;">...</div><div style="font-size:11.5px;color:var(--gray-text);margin-top:2px;">持续接入</div></div></div>
-  </div>
-</section><section class="section-block">
-  <div class="container">
-    <div class="split reverse">
-      <div class="split-text">
-        <div class="eyebrow">主动触达</div>
-        <h3>配一次，自动批量执行的 SOP 引擎</h3>
-        <p>传统群发受 IM 平台规则限制：次数有限、时间窗口固定、无法定向。句子秒回的 SOP 引擎突破这些限制，Agent 按节奏持续跟进客户。</p>
-        <ul><li>私聊 / 群聊群发：一次配置自动发给成百上千客户</li><li>SOP 自动执行：Day 1 欢迎语、Day 3 产品介绍、Day 7 优惠券——按时间线推进</li><li>自动加好友：批量导入目标客户，系统按节奏发申请</li><li>新客欢迎语：添加好友后自动响应，避免冷场</li><li>海内外账号一起管：海外业务也走同一套 SOP</li></ul>
-      </div>
-      <div class="split-visual or">
-        
-<div style="background:#fff;border-radius:12px;padding:18px;border:1px solid var(--gray-line);">
-<div style="font-size:13px;font-weight:700;margin-bottom:14px;color:var(--blue);">SOP · 客户首次建联后跟进</div>
-<div style="display:flex;flex-direction:column;gap:10px;font-size:13px;">
-<div style="display:flex;align-items:center;gap:10px;"><div style="width:64px;font-size:11px;color:var(--gray-text);font-weight:700;">立即</div><div style="flex:1;background:var(--blue-light);padding:9px 13px;border-radius:8px;color:var(--blue);">发送欢迎语 + 产品介绍</div></div>
-<div style="display:flex;align-items:center;gap:10px;"><div style="width:64px;font-size:11px;color:var(--gray-text);font-weight:700;">+ 1 天</div><div style="flex:1;background:var(--blue-light);padding:9px 13px;border-radius:8px;color:var(--blue);">关怀提醒 + 体验邀约</div></div>
-<div style="display:flex;align-items:center;gap:10px;"><div style="width:64px;font-size:11px;color:var(--gray-text);font-weight:700;">+ 3 天</div><div style="flex:1;background:var(--orange-lt);padding:9px 13px;border-radius:8px;color:var(--orange);">未响应客户 → AI 二次跟进</div></div>
-<div style="display:flex;align-items:center;gap:10px;"><div style="width:64px;font-size:11px;color:var(--gray-text);font-weight:700;">+ 7 天</div><div style="flex:1;background:var(--green-lt);padding:9px 13px;border-radius:8px;color:var(--green);">高意向客户 → 优惠券触发</div></div>
-<div style="display:flex;align-items:center;gap:10px;"><div style="width:64px;font-size:11px;color:var(--gray-text);font-weight:700;">+ 14 天</div><div style="flex:1;background:var(--gray-bg);padding:9px 13px;border-radius:8px;color:var(--gray-text);">流失客户 → 召回话术</div></div>
-</div>
-</div>
-
-      </div>
-    </div>
-  </div>
-</section><section class="section-block">
-  <div class="container">
-    <div class="block-head">
-      <div class="eyebrow">结果</div>
-      <h2>客户用句子秒回拿到的实际效果</h2>
-      <div class="sub">数据来自 多年部署的真实客户案例。</div>
-    </div>
-    <div class="kpi-row"><div><div class="v">11 个</div><div class="l">已接入 IM 通道</div></div><div><div class="v">89%</div><div class="l">对话自动完成率</div></div><div><div class="v">5×</div><div class="l">人均承接客户量提升</div></div><div><div class="v">1000+</div><div class="l">企业客户验证</div></div></div>
-  </div>
-</section><section class="section-block">
-  <div class="container">
-    <div class="cta-band">
-  <div>
-    <h4>把句子秒回装进你的 IM 通道</h4>
-    <p>从一个 AI 角色起步，逐步扩展到多个 Agent。90 天内，第一个 AI 员工即在客户的 IM 中上岗。</p>
-  </div>
-  <button type="button" class="btn-primary" onclick="openContact('底部CTA·预约演示','预约演示')">预约演示 <span class="btn-arrow">→</span></button>
-</div>
-  </div>
-</section>
-
-<footer>
-  <div class="container">
-    <div class="footer-grid">
-      <div class="brand-block">
-        <div class="brand">
-          <span class="brand-mark">句</span>
-          句子互动 <small>JuziBot</small>
+  <!-- ════════════ 产品截图陈列 ════════════ -->
+  <section class="sec pad" id="screens">
+    <div class="wrap">
+      <div class="sec-top rv">
+        <div>
+          <span class="sec-eyebrow">真实界面</span>
+          <h2>一个工作台，<span class="hl"><span>看得见 Agent 在干活</span></span>。</h2>
         </div>
-        <p>
-          为企业部署 AI 员工。<br/>
-          1000+ 家中国企业在用 · 覆盖 5 大高合规行业。
-        </p>
+        <p class="sub">11 个 IM 通道聚合到一个工作台，Agent 像真人一样工作、与同事协作，并接受统一管理。</p>
       </div>
-      <div>
-        <h6>产品 · 7 个</h6>
-        <ul>
-          <li><a href="../products/miaohui.html">句子秒回 · 工作台</a></li>
-          <li><a href="../products/miaodong.html">句子秒懂 · 大脑</a></li>
-          <li><a href="../products/shouhu.html">句子守护 · 主管</a></li>
-          <li><a href="../products/canmou.html">句子问数 · 参谋</a></li>
-          <li><a href="../products/dongxing.html">句子懂行 · 记忆</a></li>
-          <li><a href="../products/cli.html">句子 CLI · 手</a></li>
-          <li><a href="../products/zhizao.html">句子制造 · 地基</a></li>
-        </ul>
-      </div>
-      <div>
-        <h6>行业</h6>
-        <ul>
-          <li><a href="../industries.html#education">在线教育</a></li>
-          <li><a href="../industries.html#ecommerce">消费品电商</a></li>
-          <li><a href="../industries.html#finance">金融</a></li>
-          <li><a href="../industries.html#gov">政务 · 司法</a></li>
-          <li><a href="../industries.html#internet">泛互联网</a></li>
-        </ul>
-      </div>
-      <div>
-        <h6>公司</h6>
-        <ul>
-          <li><a href="../fde.html">FDE 交付结果</a></li>
-          <li><a href="../industries.html">客户与行业</a></li>
-          <li><a href="../about.html">AI 原生组织</a></li>
-          <li><a href="../index.html#cta">联系我们</a></li>
-        </ul>
+      <div class="shotwrap">
+        <div class="shotcard rv">
+          <div class="win"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="t">句子秒回 · 聚合聊天工作台</span></div>
+          <img src="../assets/product-shots/miaohui-workbench.png?v=2" alt="句子秒回 聚合聊天工作台界面" loading="lazy" decoding="async" />
+          <div class="cap">客服 / 销售日常回复，AI 辅助 + 团队协作，客户档案与 AI 跟进建议并排可见。</div>
+        </div>
+        <div class="shotcard rv rv-d1">
+          <div class="win"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="t">句子秒回 · 紧急消息不漏接</span></div>
+          <img src="../assets/product-shots/miaohui-aggregation.png?v=2" alt="句子秒回 紧急消息处理界面" loading="lazy" decoding="async" />
+          <div class="cap">高优先级会话自动识别顶到最前，Agent 先接住、人再跟进，重要客户不漏接。</div>
+        </div>
       </div>
     </div>
-    <div class="footer-bottom">
-      <div>Copyright © 2019 北京句子互动科技有限公司　京ICP备19049435号-1　京公网安备 11010802033527号</div>
-      <div>为企业部署 AI 员工</div>
+  </section>
+
+  <!-- ════════════ 核心能力 · 6 块 ════════════ -->
+  <section class="sec pad" id="capabilities">
+    <div class="wrap">
+      <div class="sec-top rv">
+        <div>
+          <span class="sec-eyebrow">核心能力</span>
+          <h2>Agent 在 IM 通道上岗，<span class="hl warm"><span>需要的不止是聊天框</span></span>。</h2>
+        </div>
+        <p class="sub">句子秒回是 AI 员工的工作台。11 个 IM 通道聚合到一个工作台，Agent 像真人一样工作、与同事协作，并接受统一管理。</p>
+      </div>
+      <div class="arch rv" style="padding:clamp(18px,2.4vw,28px)">
+        <div class="tier-cards three">
+          <div class="pcard c-blue rv">
+            <span class="ptag"><i class="fa-solid fa-layer-group" style="margin-right:7px"></i>01 · 多平台聚合</span>
+            <h3>多平台聚合</h3>
+            <p>11 个 IM 通道（小红书、抖音、微信客服、微信公众号、小程序、WhatsApp、飞书、钉钉、TikTok、Instagram）统一到一个工作台，海内外账号一起管。</p>
+          </div>
+          <div class="pcard c-orange rv rv-d1">
+            <span class="ptag"><i class="fa-solid fa-paper-plane" style="margin-right:7px"></i>02 · 主动触达</span>
+            <h3>主动触达</h3>
+            <p>私聊 / 群聊群发、SOP 自动跟进、自动加好友、新客欢迎语——一次配置批量执行，不受原生应用群发次数限制。</p>
+          </div>
+          <div class="pcard c-green rv rv-d2">
+            <span class="ptag"><i class="fa-solid fa-people-arrows" style="margin-right:7px"></i>03 · 人机协作</span>
+            <h3>人机协作</h3>
+            <p>AI 全自动 / 人机协作 / 纯人工三种模式，AI 无法处理的对话自动转人工，每条消息可追溯。</p>
+          </div>
+          <div class="pcard c-purple rv">
+            <span class="ptag"><i class="fa-solid fa-user-group" style="margin-right:7px"></i>04 · 员工协作</span>
+            <h3>员工协作</h3>
+            <p>一人管多账号、多人管一账号都支持。系统智能分配消息，管理者统一查看营销数据和员工绩效。</p>
+          </div>
+          <div class="pcard c-teal rv rv-d1">
+            <span class="ptag"><i class="fa-solid fa-clock-rotate-left" style="margin-right:7px"></i>05 · 聊天历史</span>
+            <h3>聊天历史</h3>
+            <p>每一条对话安全留存，支持按客户、关键词、时间多维搜索，导出方便后续分析。</p>
+          </div>
+          <div class="pcard c-blue rv rv-d2">
+            <span class="ptag"><i class="fa-solid fa-plug" style="margin-right:7px"></i>06 · API 集成</span>
+            <h3>API 集成</h3>
+            <p>对接客户已有的 CRM / 工单 / 知识库系统，Agent 上岗就接管真实业务流，不孤立运行。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════ 架构 · 两大控制台 + 两个工作台 ════════════ -->
+  <section class="sec pad" id="architecture">
+    <div class="wrap">
+      <div class="sec-top rv">
+        <div>
+          <span class="sec-eyebrow">架构</span>
+          <h2>两大控制台 + 两个工作台，<span class="hl"><span>覆盖企业全角色</span></span>。</h2>
+        </div>
+        <p class="sub">句子秒回按企业组织结构搭协作系统。管理者、小组负责人、一线客服、AI 运营各有自己的入口，权限和数据分开。</p>
+      </div>
+      <div class="roles">
+        <div class="role r1 rv">
+          <span class="rk"><i class="fa-solid fa-gauge-high"></i>企业控制台</span>
+          <h3>企业控制台</h3>
+          <p>管理者全局视角，跨小组操作，全公司数据看板。</p>
+        </div>
+        <div class="role r2 rv rv-d1">
+          <span class="rk"><i class="fa-solid fa-list-check"></i>小组控制台</span>
+          <h3>小组控制台</h3>
+          <p>小组负责人配置 SOP、群发、加好友、群运营。</p>
+        </div>
+        <div class="role r3 rv rv-d1">
+          <span class="rk"><i class="fa-solid fa-comments"></i>聚合聊天工作台</span>
+          <h3>聚合聊天工作台</h3>
+          <p>客服 / 销售日常回复，AI 辅助 + 团队协作。</p>
+        </div>
+        <div class="role r4 rv rv-d2">
+          <span class="rk"><i class="fa-solid fa-wand-magic-sparkles"></i>AI 运营工作台</span>
+          <h3>AI 运营工作台</h3>
+          <p>AI 运营人员效果调优、数据洞察。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════ 11 个 IM 通道 ════════════ -->
+  <section class="sec pad" id="channels">
+    <div class="wrap">
+      <div class="sec-top rv">
+        <div>
+          <span class="sec-eyebrow">11 个 IM 通道</span>
+          <h2>客户在哪个 IM 上，<span class="hl warm"><span>Agent 就去哪个 IM 上岗</span></span>。</h2>
+        </div>
+        <p class="sub">多年积累的 IM 通道适配。国内的、海外 WhatsApp 的、抖音直播私信、飞书企业 IM，一个工作台管完。</p>
+      </div>
+      <div class="imgrid rv">
+        <div class="imcell"><div class="ico"><i class="fa-solid fa-book"></i></div><div class="nm">小红书</div><div class="sc">种草沟通</div></div>
+        <div class="imcell"><div class="ico"><i class="fa-solid fa-music"></i></div><div class="nm">抖音</div><div class="sc">私信 + 直播</div></div>
+        <div class="imcell"><div class="ico"><i class="fa-solid fa-phone"></i></div><div class="nm">电话</div><div class="sc">外呼触达</div></div>
+        <div class="imcell"><div class="ico"><i class="fa-solid fa-comment-dots"></i></div><div class="nm">微信客服</div><div class="sc">私域承接</div></div>
+        <div class="imcell"><div class="ico"><i class="fa-solid fa-mobile-screen"></i></div><div class="nm">微信小程序</div><div class="sc">客服入口</div></div>
+        <div class="imcell"><div class="ico"><i class="fa-solid fa-cloud"></i></div><div class="nm">飞书</div><div class="sc">企业 IM</div></div>
+        <div class="imcell"><div class="ico"><i class="fa-solid fa-comment"></i></div><div class="nm">钉钉</div><div class="sc">企业 IM</div></div>
+        <div class="imcell"><div class="ico"><i class="fa-solid fa-bullhorn"></i></div><div class="nm">微信公众号</div><div class="sc">私域承接</div></div>
+        <div class="imcell"><div class="ico"><i class="fa-brands fa-whatsapp"></i></div><div class="nm">WhatsApp</div><div class="sc">海外业务</div></div>
+        <div class="imcell"><div class="ico"><i class="fa-brands fa-tiktok"></i></div><div class="nm">TikTok</div><div class="sc">海外短视频</div></div>
+        <div class="imcell"><div class="ico"><i class="fa-brands fa-instagram"></i></div><div class="nm">Instagram</div><div class="sc">海外种草</div></div>
+        <div class="imcell"><div class="ico"><i class="fa-solid fa-plus"></i></div><div class="nm">...</div><div class="sc">持续接入</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════ 主动触达 · SOP 引擎 ════════════ -->
+  <section class="sec pad" id="sop">
+    <div class="wrap">
+      <div class="sec-top rv">
+        <div>
+          <span class="sec-eyebrow">主动触达</span>
+          <h2>配一次，<span class="hl"><span>自动批量执行的 SOP 引擎</span></span>。</h2>
+        </div>
+        <p class="sub">传统群发受 IM 平台规则限制：次数有限、时间窗口固定、无法定向。句子秒回的 SOP 引擎突破这些限制，Agent 按节奏持续跟进客户。</p>
+      </div>
+      <div class="arch rv" style="grid-template-columns:1fr;display:grid;gap:0">
+        <div class="ind-why" style="margin-top:0;background:#fff;grid-template-columns:1fr">
+          <div>
+            <h4 style="max-width:none;margin-bottom:16px">SOP 引擎能做什么</h4>
+            <ul class="ap-feats" style="margin-top:0">
+              <li>私聊 / 群聊群发：一次配置自动发给成百上千客户</li>
+              <li>SOP 自动执行：Day 1 欢迎语、Day 3 产品介绍、Day 7 优惠券——按时间线推进</li>
+              <li>自动加好友：批量导入目标客户，系统按节奏发申请</li>
+              <li>新客欢迎语：添加好友后自动响应，避免冷场</li>
+              <li>海内外账号一起管：海外业务也走同一套 SOP</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="sop rv">
+        <div style="font-size:13px;font-weight:750;color:var(--blue);margin-bottom:clamp(16px,2vw,22px);font-family:var(--mono);letter-spacing:.04em">SOP · 客户首次建联后跟进</div>
+        <div class="sop-rail">
+          <div class="sop-step k-blue"><div class="sop-when">立即</div><div class="sop-card">发送欢迎语 + 产品介绍</div></div>
+          <div class="sop-step k-blue"><div class="sop-when">+ 1 天</div><div class="sop-card">关怀提醒 + 体验邀约</div></div>
+          <div class="sop-step k-orange"><div class="sop-when">+ 3 天</div><div class="sop-card">未响应客户 → AI 二次跟进</div></div>
+          <div class="sop-step k-green"><div class="sop-when">+ 7 天</div><div class="sop-card">高意向客户 → 优惠券触发</div></div>
+          <div class="sop-step k-mute"><div class="sop-when">+ 14 天</div><div class="sop-card">流失客户 → 召回话术</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════ 结果 · 数据带 ════════════ -->
+  <section class="sec pad" id="results">
+    <div class="wrap">
+      <div class="sec-top rv">
+        <div>
+          <span class="sec-eyebrow">结果</span>
+          <h2>客户用句子秒回拿到的<span class="hl"><span>实际效果</span></span>。</h2>
+        </div>
+        <p class="sub">数据来自 多年部署的真实客户案例。</p>
+      </div>
+      <div class="kpiband rv">
+        <div class="kpicard"><div class="v">11 个</div><div class="l">已接入 IM 通道</div></div>
+        <div class="kpicard"><div class="v">89%</div><div class="l">对话自动完成率</div></div>
+        <div class="kpicard"><div class="v">5×</div><div class="l">人均承接客户量提升</div></div>
+        <div class="kpicard"><div class="v">1000+</div><div class="l">企业客户验证</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════ 终极 CTA ════════════ -->
+  <section class="cta" id="cta">
+    <div class="wrap cta-inner">
+      <div class="rv">
+        <h2>把句子秒回<br/>装进你的 <span class="acc">IM 通道</span>。</h2>
+        <p class="sub">从一个 AI 角色起步，逐步扩展到多个 Agent。90 天内，第一个 AI 员工即在客户的 IM 中上岗。</p>
+        <div class="cta-actions">
+          <button type="button" class="btn btn-blue btn-lg ar-host" onclick="openContact('句子秒回·底部CTA','预约演示')">
+            预约演示
+            <span class="ar"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h11M10 4l5 5-5 5"/></svg><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h11M10 4l5 5-5 5"/></svg></span>
+          </button>
+        </div>
+      </div>
+      <div class="cta-stats">
+        <div class="cta-stat rv" style="--ac:#4338CA"><div class="csv">11 个 IM 通道</div><div class="csl">一个工作台管完</div></div>
+        <div class="cta-stat rv rv-d1" style="--ac:#14B8A6"><div class="csv">89%</div><div class="csl">对话自动完成率</div></div>
+        <div class="cta-stat rv rv-d2" style="--ac:#6366F1"><div class="csv">1000+</div><div class="csl">企业客户验证过的部署能力</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 工作台放大模态（虚化背景 + 大窗） -->
+  <div class="wbm" id="wbModal" role="dialog" aria-modal="true" aria-label="句子秒回 工作台 · 放大演示">
+    <div class="wbm-panel">
+      <button class="wbm-x" type="button" onclick="wbClose()" aria-label="关闭放大">&times;</button>
+      <div class="wbm-stage" id="wbBigStage"><iframe id="wbFrameBig" title="句子秒回 工作台 · 放大演示"></iframe></div>
     </div>
   </div>
-</footer>
-
-<!-- ════════════ RIGHT FLOAT PANEL ════════════ -->
-<div class="float-panel" id="floatPanel">
-  <button class="fp-btn" onclick="openContact('悬浮·在线咨询','在线咨询')">
-    <span class="fp-icon">💬</span>在线<br/>咨询
-    <span class="fp-tip">在线咨询</span>
-  </button>
-  <button class="fp-btn fp-orange" onclick="openContact('悬浮·预约演示','预约演示')">
-    <span class="fp-icon">📅</span>预约<br/>演示
-    <span class="fp-tip">预约 Demo 演示</span>
-  </button>
-  <button class="fp-btn fp-green" onclick="openContact('悬浮·获取方案','获取方案')">
-    <span class="fp-icon">📋</span>获取<br/>方案
-    <span class="fp-tip">获取行业解决方案</span>
-  </button>
-</div>
-
-<!-- ════════════ CONTACT MODAL ════════════ -->
-<div class="modal-overlay" id="contactModal">
-  <div class="modal modal-qr" role="dialog" aria-modal="true">
-    <button class="qr-close" onclick="closeModal('contactModal')" aria-label="关闭">×</button>
-    <div class="qr-eyebrow">联系我们</div>
-    <h3 class="qr-title">扫码加企业微信</h3>
-    <img class="qr-img" src="../assets/brand/qr-qiwei.png" alt="企业微信二维码" width="200" height="200" />
-    <p class="qr-note">直接和我们聊，工作日当天回复</p>
-  </div>
-</div>
-
-<script>
-function openModal(id){var el=document.getElementById(id);if(!el)return;el.classList.add('open');document.body.style.overflow='hidden';}
-function closeModal(id){var el=document.getElementById(id);if(!el)return;el.classList.remove('open');document.body.style.overflow='';}
-document.querySelectorAll('.modal-overlay').forEach(function(o){o.addEventListener('click',function(e){if(e.target===o)closeModal(o.id);});});
-document.addEventListener('keydown',function(e){if(e.key==='Escape')document.querySelectorAll('.modal-overlay.open').forEach(function(m){closeModal(m.id);});});
-function openContact(){openModal('contactModal');}
-(function(){
-  var fp=document.getElementById('floatPanel');if(!fp)return;
-  fp.style.opacity='0';fp.style.transition='opacity .3s ease';
-  window.addEventListener('scroll',function(){fp.style.opacity=window.scrollY>200?'1':'0';fp.style.pointerEvents=window.scrollY>200?'':'none';},{passive:true});
-})();
-</script>
-
+  <script>
+  (function(){
+    var fr=document.getElementById('wbFrame'),stg=document.getElementById('wbStage');
+    if(!fr||!stg)return;
+    var big=document.getElementById('wbFrameBig'),bstg=document.getElementById('wbBigStage'),modal=document.getElementById('wbModal');
+    var mq=matchMedia('(max-width:760px)');
+    function mode(){return mq.matches?{src:fr.getAttribute('data-m'),w:430,h:860}:{src:fr.getAttribute('data-d'),w:1440,h:780};}
+    function place(frame,host,m,s){frame.style.width=m.w+'px';frame.style.height=m.h+'px';frame.style.transform=(s>=.999?'none':'scale('+s+')');host.style.height=Math.round(m.h*s)+'px';}
+    function fitPrev(){var m=mode();if(fr.getAttribute('src')!==m.src)fr.setAttribute('src',m.src);var w=stg.clientWidth||520;place(fr,stg,m,w/m.w);}
+    function fitBig(){var m=mode();var availW=Math.min(window.innerWidth*0.96,m.w),availH=window.innerHeight*0.9;var s=Math.min(availW/m.w,availH/m.h,1);
+      var want=mq.matches?'m':'d';
+      if(big.getAttribute('data-mode')!==want){big.setAttribute('src',m.src);big.setAttribute('data-mode',want);}
+      big.style.width=m.w+'px';big.style.height=m.h+'px';big.style.transform=(s>=.999?'none':'scale('+s+')');
+      bstg.style.width=Math.round(m.w*s)+'px';bstg.style.height=Math.round(m.h*s)+'px';}
+    fitPrev();
+    window.wbOpen=function(){modal.classList.remove('closing');modal.classList.add('open');document.body.style.overflow='hidden';fitBig();};
+    window.wbClose=function(){if(!modal.classList.contains('open')||modal.classList.contains('closing'))return;modal.classList.add('closing');document.body.style.overflow='';setTimeout(function(){modal.classList.remove('open');modal.classList.remove('closing');},250);};
+    modal.addEventListener('click',function(e){if(e.target===modal)window.wbClose();});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&modal.classList.contains('open'))window.wbClose();});
+    var rt;window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){fitPrev();if(modal.classList.contains('open'))fitBig();},120);});
+  })();
+  </script>
+</main>
+<div id="site-footer"></div>
+<script>window.SITE_REL='../';window.PAGE_CTX={entity:'miaohui',type:'product',title:'句子秒回 · 工作台'};</script>
+<script src="../assets/site.js"></script>
 </body>
 </html>

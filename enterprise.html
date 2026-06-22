@@ -1,371 +1,495 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>企业级能力 · 和 Anthropic 同判断 | 句子互动</title>
 <meta name="description" content="句子互动企业级 AI 能力：输出稳定、行为可审计、企业级可控。7 个 TO B 必过的门槛 + SaaS / 私有化 / 混合 / 一体机部署 + 等保三级合规。" />
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231659E5'/%3E%3Ctext x='16' y='22' font-family='system-ui' font-size='18' font-weight='800' fill='white' text-anchor='middle'%3E句%3C/text%3E%3C/svg%3E" />
-<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="assets/site.css" />
+<style>
+  /* scoped：仅补首页设计系统未覆盖的 3 个轻量结构（面包屑 / 引用块 / 双栏 split / 能力点清单 / KPI 带）
+     全部沿用 site.css 的 CSS 变量与节奏，无新配色、无新字号体系 */
+  .crumbs{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--ink-3);margin-bottom:18px}
+  .crumbs a{color:var(--ink-2)}
+  .crumbs a:hover{color:var(--blue)}
+  .crumbs .sep{color:var(--line)}
+  .crumbs .here{color:var(--ink);font-weight:700}
+  .ep-hero h1{font-size:clamp(34px,5vw,64px);font-weight:850;letter-spacing:-.035em;line-height:1.12;
+    text-wrap:balance;max-width:20ch;word-break:keep-all;margin:6px 0 clamp(16px,2vw,22px)}
+  .ep-hero .lede{font-size:clamp(16px,1.4vw,19px);color:var(--ink-2);line-height:1.7;max-width:54ch}
+  .ep-hero .lede strong{color:var(--ink);font-weight:700}
+  .ep-pills{display:flex;flex-wrap:wrap;gap:10px;margin-top:clamp(20px,2.6vw,28px)}
+  .ep-pill{display:inline-flex;align-items:center;gap:9px;font-size:13px;font-weight:600;color:var(--ink-2);
+    background:#fff;border:1px solid var(--line);padding:8px 15px;border-radius:999px;box-shadow:var(--shadow-soft)}
+  .ep-pill .dot{width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0}
+
+  /* 引用块（和 Anthropic 同判断） */
+  .ep-quote{position:relative;max-width:920px;background:linear-gradient(180deg,#FBFCFF,var(--blue-50));
+    border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:0 var(--radius) var(--radius) 0;
+    padding:clamp(26px,3vw,38px) clamp(26px,3vw,40px);display:flex;gap:20px;align-items:flex-start;box-shadow:var(--shadow-soft)}
+  .ep-quote .qmark{font-size:54px;font-weight:900;color:var(--blue);line-height:.7;flex:0 0 auto}
+  .ep-quote .qbody{font-size:clamp(16px,1.5vw,18px);color:var(--ink);font-weight:600;line-height:1.6}
+  .ep-quote .qcite{display:block;margin-top:10px;font-size:13.5px;color:var(--ink-3);font-weight:500}
+
+  /* 7 问展开：复用 .moat/.mcard 节奏，但每张卡含痛点 / 我们怎么做 / 可视化 */
+  .ep-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(14px,1.4vw,20px)}
+  .ep-card{position:relative;height:100%;background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+    padding:clamp(24px,2.4vw,30px) clamp(22px,2.2vw,28px);overflow:hidden;
+    box-shadow:var(--shadow-soft);transition:transform .4s var(--ease),box-shadow .4s var(--ease),border-color .4s var(--ease)}
+  .ep-card::after{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:var(--ac,var(--blue));
+    transform:scaleX(0);transform-origin:left;transition:transform .45s var(--ease)}
+  .ep-card:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:transparent}
+  .ep-card:hover::after{transform:scaleX(1)}
+  .ep-card .ec-head{display:flex;align-items:center;gap:13px;margin-bottom:18px}
+  .ep-card .ec-num{font-family:var(--mono);font-size:30px;font-weight:900;letter-spacing:-.03em;color:var(--ac,var(--blue));line-height:1}
+  .ep-card .ec-en{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--ac,var(--blue));background:color-mix(in srgb,var(--ac,#4338CA) 12%,#fff);padding:4px 10px;border-radius:999px}
+  .ep-card h3{font-size:clamp(19px,1.7vw,23px);font-weight:820;letter-spacing:-.02em;line-height:1.25;margin-left:auto;color:var(--ink)}
+  .ep-card .label{display:block;margin:16px 0 7px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);font-weight:700}
+  .ep-card .pain{font-size:14px;line-height:1.72;color:var(--ink-2)}
+  .ep-card .ours{font-size:14px;line-height:1.72;color:var(--ink-2)}
+  .ep-card .ours strong{color:var(--ink);font-weight:800}
+  .ep-card .ec-visual{margin-top:18px;padding:14px 16px;border-radius:var(--radius-sm);
+    background:linear-gradient(180deg,#FBFCFF,#F3F7FE);border:1px solid var(--line)}
+  .ev-cap{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);margin-bottom:9px}
+  .ev-line{display:flex;justify-content:space-between;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);
+    border-radius:8px;padding:8px 11px;font-size:12.5px;color:var(--ink-2);margin-top:6px}
+  .ev-line:first-of-type{margin-top:0}
+  .ev-ok{color:var(--orange-deep);font-weight:800}
+  .ev-no{color:#C0392B;font-weight:800}
+  .ev-tag-no{text-decoration:line-through;color:#C0392B;background:#FDECEC;border-radius:6px;padding:3px 8px;font-size:11.5px}
+  .ev-tag-ok{color:var(--orange-deep);background:var(--orange-lt);border-radius:6px;padding:3px 8px;font-size:11.5px;font-weight:700}
+  .ev-log{font-family:var(--mono);font-size:11px;line-height:1.7;color:var(--ink-2);background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+  .ev-note{font-size:11px;font-weight:800;color:var(--orange-deep);margin-top:9px}
+  .ev-grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+  .ev-chip{background:#fff;border:1px solid var(--line);border-radius:7px;padding:8px 4px;text-align:center;font-size:11.5px;font-weight:700;color:var(--ink-2)}
+  .ev-arrow{text-align:center;color:var(--orange-deep);font-size:14px;margin:6px 0}
+  .ev-hub{background:var(--orange-lt);color:var(--orange-deep);border-radius:8px;padding:9px 12px;text-align:center;font-weight:800;font-size:12.5px}
+  .ev-grid5{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}
+  .ev-mini{background:#fff;border:1px solid var(--line);border-radius:6px;padding:7px 2px;text-align:center;font-size:11px;font-weight:700;color:var(--ink-2)}
+  .ev-stat{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line);padding:7px 0;font-size:12.5px;color:var(--ink-2)}
+  .ev-stat:last-child{border-bottom:0}
+  .ev-stat b{font-size:17px;font-weight:850;color:var(--blue)}
+  .ev-stat b.g{color:var(--orange-deep)}
+  .ev-models{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .ev-model{display:flex;justify-content:space-between;align-items:center;background:#fff;border:1px solid var(--line);border-radius:7px;padding:8px 11px;font-size:12px;font-weight:700;color:var(--ink-2)}
+  .ev-model .on{color:var(--orange-deep)}
+  .ev-model.more{background:var(--orange-lt);color:var(--orange-deep);justify-content:center;font-weight:800}
+
+  /* 双栏 split（部署模式 / 安全合规） */
+  .ep-split{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(34px,5vw,68px);align-items:center}
+  .ep-split.rev .ep-split-text{order:2}
+  .ep-split h3{font-size:clamp(24px,2.6vw,34px);font-weight:840;letter-spacing:-.025em;line-height:1.25;margin:8px 0 16px}
+  .ep-split > .ep-split-text > p{font-size:15.5px;color:var(--ink-2);line-height:1.72;max-width:50ch}
+  .ep-list{list-style:none;margin:22px 0 0;display:flex;flex-direction:column;gap:13px}
+  .ep-list li{position:relative;padding-left:30px;font-size:14.5px;line-height:1.65;color:var(--ink-2)}
+  .ep-list li strong{color:var(--ink);font-weight:800}
+  .ep-list li::before{content:"";position:absolute;left:0;top:7px;width:17px;height:17px;border-radius:50%;
+    background:var(--green-lt);border:1px solid color-mix(in srgb,var(--green) 40%,#fff)}
+  .ep-list li::after{content:"";position:absolute;left:5.5px;top:11px;width:6px;height:3.5px;
+    border-left:2px solid var(--orange-deep);border-bottom:2px solid var(--orange-deep);transform:rotate(-45deg)}
+  .ep-panel{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-soft)}
+  .ep-panel .epp-cap{font-size:12px;font-weight:700;letter-spacing:.04em;color:var(--ink-3);margin-bottom:14px}
+  .ep-panel .epp-cap.g{color:var(--orange-deep)}
+  .ep-dep{display:grid;gap:9px}
+  .ep-dep-row{border-radius:10px;padding:13px 15px}
+  .ep-dep-row b{display:block;font-weight:750;font-size:13px;margin-bottom:3px}
+  .ep-dep-row span{font-size:11.5px;opacity:.92}
+  .ep-dep-row.b{background:var(--blue-50);color:var(--blue-deep)}
+  .ep-dep-row.o{background:var(--orange-lt);color:var(--orange-deep)}
+  .ep-dep-row.g{background:var(--green-lt);color:var(--orange-deep)}
+  .ep-dep-row.p{background:color-mix(in srgb,var(--purple) 12%,#fff);color:var(--purple)}
+  .ep-sec-list{display:flex;flex-direction:column;gap:9px}
+  .ep-sec-row{display:flex;align-items:center;gap:12px;padding:11px 14px;background:var(--line-2);border-radius:10px;font-size:13.5px;color:var(--ink)}
+  .ep-sec-row i{color:var(--orange-deep);width:18px;text-align:center;font-size:14px}
+
+  /* KPI 结果带（复用 hero-kpi 视觉，独立排布） */
+  .ep-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(16px,2vw,28px);
+    background:linear-gradient(180deg,#FBFCFF,var(--blue-50));border:1px solid var(--line);
+    border-radius:var(--radius-lg);padding:clamp(30px,4vw,46px) clamp(24px,3vw,40px);box-shadow:var(--shadow-soft)}
+  .ep-kpi{text-align:center}
+  .ep-kpi .v{font-size:clamp(28px,3.4vw,44px);font-weight:850;letter-spacing:-.03em;line-height:1;
+    background:linear-gradient(120deg,var(--blue),var(--blue-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .ep-kpi:nth-child(2) .v,.ep-kpi:nth-child(4) .v{background:linear-gradient(120deg,var(--orange-deep),var(--orange));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .ep-kpi .l{font-size:12.5px;color:var(--ink-3);margin-top:9px;font-weight:500}
+
+  /* 自研引擎 3 卡 */
+  .ep-eng{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,1.8vw,22px)}
+  .ep-eng-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:clamp(28px,3vw,36px) clamp(22px,2.4vw,28px);
+    text-align:center;box-shadow:var(--shadow-soft);transition:transform .4s var(--ease),box-shadow .4s var(--ease),border-color .4s var(--ease)}
+  .ep-eng-card:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:transparent}
+  .ep-eng-card .v{font-size:clamp(34px,4vw,46px);font-weight:900;letter-spacing:-.025em;line-height:1;color:var(--ac,var(--blue))}
+  .ep-eng-card h4{font-size:15px;font-weight:820;margin:16px 0 9px;color:var(--ink)}
+  .ep-eng-card p{font-size:13px;color:var(--ink-2);line-height:1.65}
+
+  @media(max-width:880px){
+    .ep-grid{grid-template-columns:1fr}
+    .ep-eng{grid-template-columns:1fr}
+    .ep-split,.ep-split.rev .ep-split-text{grid-template-columns:1fr;order:0}
+    .ep-kpis{grid-template-columns:repeat(2,1fr);row-gap:30px}
+  }
+
+  /* ── 平板档：双栏分栏面板上下叠，引用块换行 ── */
+  @media(max-width:900px){
+    .ep-quote{flex-direction:column;gap:8px}
+    .ep-quote .qmark{font-size:42px}
+  }
+
+  /* ── 移动端档：≤640px 全面塌缩 + 触控命中区 ── */
+  @media(max-width:640px){
+    /* 面包屑/胶囊：换行不溢出 + 命中区 ≥44px */
+    .crumbs{flex-wrap:wrap;row-gap:4px}
+    .crumbs a{display:inline-flex;align-items:center;min-height:44px}
+    .ep-pills{gap:8px}
+    .ep-pill{min-height:40px;padding:9px 14px}
+
+    /* hero 文字适度收 */
+    .ep-hero .lede{font-size:15.5px}
+
+    /* 引用块收边距 */
+    .ep-quote{padding:22px 20px}
+    .ep-quote .qbody{font-size:15.5px}
+
+    /* 7 问卡：表头换行、卡内可视化的多列栅格塌成更窄 */
+    .ep-card .ec-head{flex-wrap:wrap;gap:10px}
+    .ep-card h3{margin-left:0;flex-basis:100%}
+    /* 可视化里的长文本/日志：允许换行，杜绝横向溢出 */
+    .ev-line{flex-wrap:wrap;row-gap:4px}
+    .ev-log{overflow-wrap:anywhere;word-break:break-word}
+    .ev-grid5{grid-template-columns:repeat(5,1fr);gap:4px}
+    .ev-mini{padding:8px 1px;font-size:10.5px}
+    .ev-models{grid-template-columns:1fr 1fr;gap:5px}
+
+    /* 双栏面板内行：触控命中区 ≥44px */
+    .ep-sec-row{min-height:44px;padding:11px 14px}
+    .ep-list li{padding-top:2px;padding-bottom:2px}
+
+    /* KPI 带：缩内边距，数字不至溢出 */
+    .ep-kpis{padding:30px 22px;column-gap:18px}
+
+    /* 任何本页内输入框（防御性，≥16px 防 iOS 缩放） */
+    input,textarea,select{font-size:16px}
+  }
+
+  /* ── 极窄档：≤400px，KPI / 模型矩阵 / 系统对接进一步塌缩 ── */
+  @media(max-width:400px){
+    .ep-kpis{grid-template-columns:repeat(2,1fr);column-gap:14px;row-gap:24px;padding:26px 16px}
+    .ev-models{grid-template-columns:1fr}
+    .ev-grid3{grid-template-columns:1fr 1fr}
+    .ev-grid3 .ev-chip:nth-child(3){grid-column:1/-1}
+    .ev-grid5{gap:3px}
+    .ev-mini{padding:8px 0;font-size:10px}
+    .ep-quote{padding:20px 16px}
+    .ep-card{padding:22px 18px}
+  }
+</style>
 </head>
 <body>
+<div id="site-nav"></div>
+<main>
 
-<!-- ════════════ ANNOUNCEMENT BAR ════════════ -->
-<div class="ann-bar" role="marquee" aria-label="公告">
-  <div class="ann-track">
-    <span class="ann-item"><span class="dot"></span><span class="tag">在线教育</span>几百家头部公司已部署，AI 销售人均承接 5 倍以上</span>
-    <span class="ann-item"><span class="dot"></span><span class="tag">消费品电商</span>几百家头部品牌私域导购上线，长尾客户再不流失</span>
-    <span class="ann-item"><span class="dot"></span><span class="tag">金融</span>银行 · 证券 · 保险头部机构落地，合规边界提前写死</span>
-    <span class="ann-item"><span class="dot"></span>1000+ 大型企业已在用 · 扎在这 5 个行业 · 接入 10+ 主流 IM 渠道</span>
-    <span class="ann-item"><span class="dot"></span><span class="tag">在线教育</span>几百家头部公司已部署，AI 销售人均承接 5× 以上</span>
-    <span class="ann-item"><span class="dot"></span><span class="tag">消费品电商</span>几百家头部品牌私域导购上线，长尾客户再不流失</span>
-    <span class="ann-item"><span class="dot"></span><span class="tag">金融</span>银行 · 证券 · 保险头部机构落地，合规边界提前写死</span>
-    <span class="ann-item"><span class="dot"></span>1000+ 大型企业已在用 · 扎在这 5 个行业 · 接入 10+ 主流 IM 渠道</span>
-  </div>
-</div>
-
-<nav class="nav">
-  <div class="container nav-inner">
-    <a href="index.html" class="brand">
-      <span class="brand-mark">句</span>
-      句子互动 <small>JuziBot</small>
-    </a>
-    <div class="nav-links">
-      <div class="nav-item">
-        <button>产品 <span class="caret"></span></button>
-        <div class="dropdown wide">
-          <a href="products/miaodong.html"><div class="d-title">句子秒懂 · 大脑</div><div class="d-desc">业务人员不写代码也能搭 Agent</div></a>
-          <a href="products/shouhu.html"><div class="d-title">句子守护 · 主管</div><div class="d-desc">Agent 上线前测过、上线后管着</div></a>
-          <a href="products/canmou.html"><div class="d-title">句子问数 · 参谋</div><div class="d-desc">对话式数据洞察，一句话问数</div></a>
-          <a href="products/dongxing.html"><div class="d-title">句子懂行 · 记忆</div><div class="d-desc">知识工程，把散乱知识炼成可检索资产</div></a>
-          <a href="products/miaohui.html"><div class="d-title">句子秒回 · 工作台</div><div class="d-desc">Agent 和人协作的 IM 工作台</div></a>
-          <a href="products/cli.html"><div class="d-title">句子 CLI · 手</div><div class="d-desc">操作一切人用软件的执行层</div></a>
-          <a href="products/zhizao.html"><div class="d-title">句子制造 · 地基</div><div class="d-desc">补齐客户数字化基建，一客一环境</div></a>
-
+  <!-- ════════ 页头 · 企业级能力 ════════ -->
+  <section class="sec pad ep-hero" style="padding-top:clamp(112px,15vh,168px)">
+    <div class="wrap">
+      <div class="rv">
+        <nav class="crumbs" aria-label="面包屑">
+          <a href="index.html">首页</a><span class="sep">/</span><span class="here">企业级能力</span>
+        </nav>
+        <span class="sec-eyebrow">生来就是企业级</span>
+        <h1>企业要的 AI，<span class="hl"><span>不是更聪明，是更可控</span></span></h1>
+        <p class="lede">TO B 要的是<strong>输出稳定、行为可审计、企业级可控</strong>。这也是 Anthropic 在 2026 年走的路。我们服务企业客户多年，结论一致。</p>
+        <div class="ep-pills">
+          <span class="ep-pill"><span class="dot"></span>和 Anthropic 同判断</span>
+          <span class="ep-pill"><span class="dot"></span>1000+ 企业验证</span>
+          <span class="ep-pill"><span class="dot"></span>SaaS / 私有化 / 混合 / 一体机</span>
+          <span class="ep-pill"><span class="dot"></span>100% 决策可审计</span>
         </div>
       </div>
-      <div class="nav-item">
-        <button>AI 员工 <span class="caret"></span></button>
-        <div class="dropdown wide">
-          <a href="workforce/sales.html"><div class="d-title">AI 销售</div><div class="d-desc">直播搬家、私域承接、漏斗跟进——首单成交全程接管</div></a>
-          <a href="workforce/marketing.html"><div class="d-title">AI 导购</div><div class="d-desc">头部零售品牌的私域导购运营，长尾客户也覆盖</div></a>
-          <a href="workforce/service.html"><div class="d-title">AI 客服</div><div class="d-desc">从售前到售后都接得住 · 5 年 BadCase 积累</div></a>
-          <a href="workforce/government.html"><div class="d-title">AI 社工 / 调解员</div><div class="d-desc">政务高合规要求 + 全程可追溯 · 已稳步落地</div></a>
-          <a href="workforce/finance.html"><div class="d-title">AI 理财顾问</div><div class="d-desc">银行 / 证券 / 保险头部机构落地 · 多年风控话术</div></a>
-          <a href="workforce/hr.html"><div class="d-title">AI HR</div><div class="d-desc">简历初筛 + AI 语音面试，HR 只看 Top 20%</div></a>
+    </div>
+  </section>
+
+  <!-- ════════ 和 Anthropic 一个判断 ════════ -->
+  <section class="sec pad">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <span class="sec-eyebrow">和 Anthropic 一个判断</span>
+        <h2>企业上线 AI，先问的往往不是它能多聪明，而是敢不敢把活真交给它</h2>
+        <p class="sub">TO B 要的是输出稳定、行为可审计、企业级可控。这也是 Anthropic 在 2026 年走的路，更是我们 多年的判断。</p>
+      </div>
+      <div class="ep-quote rv rv-d1">
+        <div class="qmark">&ldquo;</div>
+        <div class="qbody">
+          客户问得最多的，不是「哪个模型最强」，而是「哪个能放心接入我的系统」。
+          <small class="qcite">—— 过去一年，几乎每位客户都会提出这个问题</small>
         </div>
       </div>
-      <div class="nav-item"><a href="industries.html">客户与行业</a></div>
-      <div class="nav-item"><a href="enterprise.html">企业级能力</a></div>
-      <div class="nav-item"><a href="fde.html">FDE 交付结果</a></div>
-      <div class="nav-item"><a href="about.html">AI 原生组织</a></div>
-      <div class="nav-item"><a href="careers/index.html">加入我们</a></div>
     </div>
-    <div class="nav-right">
-      <a class="nav-cta" style="cursor:pointer" onclick="openContact('导航·联系我们')">联系我们 →</a>
-      <a href="https://az-bg.juzibot.com/auth/register" class="nav-login">登录 / 注册</a>
-    </div>
-    <button class="nav-burger" aria-label="菜单" onclick="this.closest('.nav').classList.toggle('nav-open')">☰</button>
-  </div>
-</nav>
+  </section>
 
-<header class="page-hero">
-  <div class="container">
-    <div class="crumbs"><a href="index.html">首页</a> <span class="sep">/</span> <span class="here">企业级能力</span></div>
-    <div style="font-size:13px;font-weight:800;color:var(--orange);letter-spacing:.12em;text-transform:uppercase;margin-bottom:16px;">生来就是企业级</div>
-    <h1>企业要的 AI，<span class="accent">不是更聪明，是更可控</span></h1>
-    <p class="lede">TO B 要的是<strong>输出稳定、行为可审计、企业级可控</strong>。这也是 Anthropic 在 2026 年走的路。我们服务企业客户多年，结论一致。</p>
-    <div class="pill-row"><span class="pill"><span class="dot"></span>和 Anthropic 同判断</span><span class="pill"><span class="dot"></span>1000+ 企业验证</span><span class="pill"><span class="dot"></span>SaaS / 私有化 / 混合 / 一体机</span><span class="pill"><span class="dot"></span>100% 决策可审计</span></div>
-  </div>
-</header>
-
-<section class="section-block">
-  <div class="container">
-    <div class="block-head">
-      <div class="eyebrow">和 Anthropic 一个判断</div>
-      <h2>企业上线 AI，先问的往往不是它能多聪明，而是敢不敢把活真交给它</h2>
-      <div class="sub">TO B 要的是输出稳定、行为可审计、企业级可控。这也是 Anthropic 在 2026 年走的路，更是我们 多年的判断。</div>
-    </div>
-    <div style="background:var(--blue-light);border-left:4px solid var(--blue);border-radius:0 14px 14px 0;padding:24px 32px;max-width:920px;margin:0 auto;display:flex;gap:18px;align-items:center;"><div style="font-size:42px;font-weight:900;color:var(--blue);line-height:1;">&ldquo;</div><div style="font-size:17px;color:var(--black);font-weight:600;line-height:1.55;">客户问得最多的，不是「哪个模型最强」，而是「哪个能放心接入我的系统」。<small style="display:block;font-size:13.5px;color:var(--gray-text);font-weight:500;margin-top:6px;">—— 过去一年，几乎每位客户都会提出这个问题</small></div></div>
-  </div>
-</section><section class="section-block alt">
-  <div class="container">
-    <div class="block-head">
-      <div class="eyebrow">7 件事</div>
-      <h2>客户上线企业 AI 时，会问的 7 个问题——逐项有答案</h2>
-      <div class="sub">这些是客户在每个项目里真问过的问题，不是功能清单。每一项都讲清楚痛点，再讲我们怎么答。</div>
-    </div>
-    <div class="deep-list">
-<div class="deep-card bl">
-  <div class="dc-head">
-    <div class="dc-num">01</div>
-    <div class="dc-en">可预测</div>
-    <h3>输出可重复</h3>
-  </div>
-  <div class="dc-text">
-    <div class="label">企业的真实痛点</div>
-    <p class="pain">消费场景里偶尔答错影响有限，企业场景则不可接受。生成财务摘要、起草法律文书时，同一个问题三次给出三种答案，业务无法推进。</p>
-    <div class="label">句子互动怎么做</div>
-    <p class="ours">多年带结果标注的部署数据让 Agent 行为可标定、可回归。<strong>同一个问题，每次给的回答是一致的，不是重新掷一次骰子</strong>。Anthropic 走的是模型对齐这条路，我们靠的是这些行业结果数据。</p>
-  </div>
-  <div class="dc-visual"><div style="font-size:11px;color:var(--gray-text);font-weight:700;letter-spacing:.04em;margin-bottom:8px;">同一个 query × 3</div><div style="background:#fff;padding:9px 12px;border-radius:6px;border:1px solid var(--gray-line);font-size:12.5px;color:var(--blue);">→ 您的退款政策是 7 天无理由</div><div style="background:#fff;padding:9px 12px;border-radius:6px;border:1px solid var(--gray-line);font-size:12.5px;color:var(--blue);">→ 您的退款政策是 7 天无理由</div><div style="background:#fff;padding:9px 12px;border-radius:6px;border:1px solid var(--gray-line);font-size:12.5px;color:var(--blue);">→ 您的退款政策是 7 天无理由</div><div style="font-size:11px;color:var(--green);font-weight:800;text-align:right;margin-top:4px;">✓ 一致</div></div>
-</div>
-<div class="deep-card or">
-  <div class="dc-head">
-    <div class="dc-num">02</div>
-    <div class="dc-en">数据安全</div>
-    <h3>数据隔离</h3>
-  </div>
-  <div class="dc-text">
-    <div class="label">企业的真实痛点</div>
-    <p class="pain">内部文档、客户信息、专有数据，企业担心被模型留存并泄露给他人。企业 AI 落地，这往往是第一道门槛。</p>
-    <div class="label">句子互动怎么做</div>
-    <p class="ours"><strong>支持私有化 / 一体机部署，客户数据不出域</strong>。多租户严格隔离 + TLS 1.3 传输 + AES-256 存储 + 数据脱敏。客户数据不用于模型训练（合同里写明）。</p>
-  </div>
-  <div class="dc-visual"><div style="font-size:11px;color:var(--gray-text);font-weight:700;letter-spacing:.04em;margin-bottom:8px;">数据流向</div><div style="display:flex;align-items:center;gap:6px;font-size:12px;"><span style="background:#fff;padding:6px 10px;border-radius:6px;border:1px solid var(--gray-line);">企业内部</span><span>→</span><span style="background:var(--orange-lt);color:var(--orange);padding:6px 10px;border-radius:6px;font-weight:700;">私有化 Agent</span></div><div style="display:flex;align-items:center;gap:6px;font-size:12px;margin-top:8px;"><span style="background:#fff;padding:6px 10px;border-radius:6px;border:1px solid var(--gray-line);">企业内部</span><span>↛</span><span style="background:#fee;color:#c00;padding:6px 10px;border-radius:6px;text-decoration:line-through;">公网模型</span></div><div style="font-size:11px;color:var(--green);font-weight:800;margin-top:4px;">✓ 数据不出域</div></div>
-</div>
-<div class="deep-card gr">
-  <div class="dc-head">
-    <div class="dc-num">03</div>
-    <div class="dc-en">行为管控</div>
-    <h3>行为可管控</h3>
-  </div>
-  <div class="dc-text">
-    <div class="label">企业的真实痛点</div>
-    <p class="pain">要 AI 按公司政策回答：能说什么、不能说什么、出了事谁负责，都得事先划好红线。仅在 prompt 里写「请不要 xxx」并不可靠。</p>
-    <div class="label">句子互动怎么做</div>
-    <p class="ours">workflow 引擎里把<strong>能说什么、不能说什么</strong>提前写死，再配 5 个高合规行业策略库，不靠 prompt 软提示。金融的合规话术、政务的法规引用，AI 跨不出去。</p>
-  </div>
-  <div class="dc-visual"><div style="font-size:11px;color:var(--gray-text);font-weight:700;letter-spacing:.04em;margin-bottom:8px;">行为边界</div><div style="background:#fff;padding:8px 11px;border-radius:6px;border:1px solid var(--gray-line);font-size:12px;display:flex;justify-content:space-between;"><span>解读产品条款</span><span style="color:var(--green);font-weight:800;">✓ 允许</span></div><div style="background:#fff;padding:8px 11px;border-radius:6px;border:1px solid var(--gray-line);font-size:12px;display:flex;justify-content:space-between;"><span>引用合规话术库</span><span style="color:var(--green);font-weight:800;">✓ 允许</span></div><div style="background:#fff;padding:8px 11px;border-radius:6px;border:1px solid var(--gray-line);font-size:12px;display:flex;justify-content:space-between;"><span>给具体投资建议</span><span style="color:#c00;font-weight:800;">✗ 拒答</span></div><div style="background:#fff;padding:8px 11px;border-radius:6px;border:1px solid var(--gray-line);font-size:12px;display:flex;justify-content:space-between;"><span>承诺保本保收益</span><span style="color:#c00;font-weight:800;">✗ 拒答</span></div></div>
-</div>
-<div class="deep-card pu">
-  <div class="dc-head">
-    <div class="dc-num">04</div>
-    <div class="dc-en">可审计</div>
-    <h3>全程可审计</h3>
-  </div>
-  <div class="dc-text">
-    <div class="label">企业的真实痛点</div>
-    <p class="pain">银保监来检查、政务来巡检、客户起诉，AI 的每一次回答都得能回溯：用了哪个知识库、参考了什么 context、谁批准的版本上线。</p>
-    <div class="label">句子互动怎么做</div>
-    <p class="ours"><strong>每一次 Agent 决策可追溯</strong>：调用的知识库、用的模型、参考的上下文、决策路径、版本号，全量日志记录。金融、政务客户特别在意这一条，过得了等保三级。</p>
-  </div>
-  <div class="dc-visual"><div style="font-size:11px;color:var(--gray-text);font-weight:700;letter-spacing:.04em;margin-bottom:8px;">Agent 决策日志</div><div style="background:#fff;padding:9px 11px;border-radius:6px;border:1px solid var(--gray-line);font-size:11.5px;line-height:1.6;font-family:monospace;">[09:23:04] query → "退款 7 天"<br/>[09:23:04] kb_search → K3#FAQ#142<br/>[09:23:05] model → claude-3.5 v2.1<br/>[09:23:05] reply → "您可享 7 天无理由..."<br/>[09:23:05] log_id → AGT-2026050609234</div><div style="font-size:11px;color:var(--purple);font-weight:800;margin-top:4px;">✓ 全量日志归档 7 年</div></div>
-</div>
-<div class="deep-card te">
-  <div class="dc-head">
-    <div class="dc-num">05</div>
-    <div class="dc-en">能对接</div>
-    <h3>对接现有系统</h3>
-  </div>
-  <div class="dc-text">
-    <div class="label">企业的真实痛点</div>
-    <p class="pain">AI 不能孤立运行，得接客户已有的 CRM、工单、知识库、订单系统。Agent 上岗第一天就要能查到客户的真实数据，不然就是摆设。</p>
-    <div class="label">句子互动怎么做</div>
-    <p class="ours"><strong>多年 IM 通道适配 + 企业 CRM / 工单 / 知识库直连</strong>。11 个 IM 通道，加主流企业系统的对接经验。Agent 上岗即接管真实业务流，而非闲置空转。</p>
-  </div>
-  <div class="dc-visual"><div style="font-size:11px;color:var(--gray-text);font-weight:700;letter-spacing:.04em;margin-bottom:8px;">系统对接</div><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;font-size:11px;font-weight:700;text-align:center;"><div style="background:#fff;padding:8px 4px;border-radius:6px;border:1px solid var(--gray-line);">CRM</div><div style="background:#fff;padding:8px 4px;border-radius:6px;border:1px solid var(--gray-line);">工单</div><div style="background:#fff;padding:8px 4px;border-radius:6px;border:1px solid var(--gray-line);">订单</div></div><div style="text-align:center;color:var(--teal);font-size:14px;margin:4px 0;">↕</div><div style="background:var(--teal-lt);color:var(--teal);padding:9px 12px;border-radius:6px;text-align:center;font-weight:800;font-size:12.5px;">句子互动 Agent</div><div style="text-align:center;color:var(--teal);font-size:14px;margin:4px 0;">↕</div><div style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px;font-size:10.5px;font-weight:700;text-align:center;"><div style="background:#fff;padding:6px 2px;border-radius:5px;border:1px solid var(--gray-line);">微</div><div style="background:#fff;padding:6px 2px;border-radius:5px;border:1px solid var(--gray-line);">红</div><div style="background:#fff;padding:6px 2px;border-radius:5px;border:1px solid var(--gray-line);">抖</div><div style="background:#fff;padding:6px 2px;border-radius:5px;border:1px solid var(--gray-line);">飞</div><div style="background:#fff;padding:6px 2px;border-radius:5px;border:1px solid var(--gray-line);">+</div></div></div>
-</div>
-<div class="deep-card bl">
-  <div class="dc-head">
-    <div class="dc-num">06</div>
-    <div class="dc-en">可规模化</div>
-    <h3>规模化</h3>
-  </div>
-  <div class="dc-text">
-    <div class="label">企业的真实痛点</div>
-    <p class="pain">许多公司的 AI 止步于试点：demo 能跑通，扩到几千客户、几十种业务场景就崩溃。企业 AI 必须从第一天就规划稳定运行。</p>
-    <div class="label">句子互动怎么做</div>
-    <p class="ours"><strong>1000+ 大型企业客户验证过的部署能力</strong>，在生产环境深耕多年，不是 demo。从单一场景到多职能 Agent 矩阵，从一个客户的私域到集团央企的多租户隔离，都跑得通。</p>
-  </div>
-  <div class="dc-visual"><div style="font-size:11px;color:var(--gray-text);font-weight:700;letter-spacing:.04em;margin-bottom:8px;">部署规模</div><div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--gray-line);padding:6px 0;font-size:12.5px;"><span>大型企业客户</span><span style="color:var(--blue);font-weight:800;font-size:16px;">1000+</span></div><div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--gray-line);padding:6px 0;font-size:12.5px;"><span>覆盖高合规行业</span><span style="color:var(--blue);font-weight:800;font-size:16px;">5 大</span></div><div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--gray-line);padding:6px 0;font-size:12.5px;"><span>日均处理消息</span><span style="color:var(--blue);font-weight:800;font-size:16px;">200 万 +</span></div><div style="display:flex;justify-content:space-between;align-items:baseline;padding:6px 0;font-size:12.5px;"><span>SaaS 服务可用性</span><span style="color:var(--green);font-weight:800;font-size:16px;">99.9%</span></div></div>
-</div>
-<div class="deep-card or">
-  <div class="dc-head">
-    <div class="dc-num">07</div>
-    <div class="dc-en">不锁模型</div>
-    <h3>不绑死单一模型</h3>
-  </div>
-  <div class="dc-text">
-    <div class="label">企业的真实痛点</div>
-    <p class="pain">企业不愿绑定单一供应商。这个月用 GPT，下个月想切到智谱，年底可能改用 DeepSeek。模型涨价、出现故障、遭遇监管，任何一项都会让企业陷入被动。</p>
-    <div class="label">句子互动怎么做</div>
-    <p class="ours"><strong>底层不绑死任何一家模型</strong>：DeepSeek、智谱、Qwen、文心一言、GPT 都能换。客户可按场景选择模型，依据价格与性能随时切换。</p>
-  </div>
-  <div class="dc-visual"><div style="font-size:11px;color:var(--gray-text);font-weight:700;letter-spacing:.04em;margin-bottom:8px;">模型矩阵</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:12px;font-weight:700;"><div style="background:#fff;padding:8px 11px;border-radius:6px;border:1px solid var(--gray-line);display:flex;justify-content:space-between;align-items:center;"><span>DeepSeek-V3</span><span style="color:var(--green);">●</span></div><div style="background:#fff;padding:8px 11px;border-radius:6px;border:1px solid var(--gray-line);display:flex;justify-content:space-between;align-items:center;"><span>智谱 GLM-4</span><span style="color:var(--green);">●</span></div><div style="background:#fff;padding:8px 11px;border-radius:6px;border:1px solid var(--gray-line);display:flex;justify-content:space-between;align-items:center;"><span>Qwen 3</span><span style="color:var(--green);">●</span></div><div style="background:#fff;padding:8px 11px;border-radius:6px;border:1px solid var(--gray-line);display:flex;justify-content:space-between;align-items:center;"><span>文心 5.0</span><span style="color:var(--green);">●</span></div><div style="background:#fff;padding:8px 11px;border-radius:6px;border:1px solid var(--gray-line);display:flex;justify-content:space-between;align-items:center;"><span>GPT-5</span><span style="color:var(--green);">●</span></div><div style="background:var(--orange-lt);color:var(--orange);padding:8px 11px;border-radius:6px;display:flex;justify-content:center;align-items:center;font-weight:800;">+ 100 种</div></div></div>
-</div></div>
-  </div>
-</section><section class="section-block">
-  <div class="container">
-    <div class="block-head">
-      <div class="eyebrow">自研引擎</div>
-      <h2>成本和交付周期压下来，<span class="accent">才扩得起来</span></h2>
-      <div class="sub">AI 员工要能上岗、能复制、还得算得过账。自研 Token 成本控制引擎和 Agent 工厂 2.0，对的就是企业最担心的两件事：烧钱、上线慢。</div>
-    </div>
-    <div style="max-width:1000px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:22px;"><div style="background:#fff;border:1px solid var(--gray-line);border-radius:16px;padding:30px 24px;text-align:center;"><div style="font-size:40px;font-weight:900;color:var(--blue);letter-spacing:-.02em;line-height:1;">↓ 87%</div><div style="font-size:14px;font-weight:800;margin:14px 0 8px;">大模型调用成本</div><div style="font-size:13px;color:var(--gray-text);line-height:1.6;">自研 Token 成本控制引擎 + 按任务分层做模型路由，把大模型调用成本降低约 87%。</div></div><div style="background:#fff;border:1px solid var(--gray-line);border-radius:16px;padding:30px 24px;text-align:center;"><div style="font-size:40px;font-weight:900;color:var(--orange);letter-spacing:-.02em;line-height:1;">↓ 70%</div><div style="font-size:14px;font-weight:800;margin:14px 0 8px;">AI 员工定制交付周期</div><div style="font-size:13px;color:var(--gray-text);line-height:1.6;">Agent 工厂 2.0 的 SOP 模板化能力，让 AI 员工定制与交付周期缩短约 70%。</div></div><div style="background:#fff;border:1px solid var(--gray-line);border-radius:16px;padding:30px 24px;text-align:center;"><div style="font-size:40px;font-weight:900;color:var(--green);letter-spacing:-.02em;line-height:1;">↑ 30–40%</div><div style="font-size:14px;font-weight:800;margin:14px 0 8px;">客户转化率</div><div style="font-size:13px;color:var(--gray-text);line-height:1.6;">在销售与服务场景，AI 员工帮客户把转化率提升约 30%—40%。</div></div></div>
-  </div>
-</section><section class="section-block">
-  <div class="container">
-    <div class="split">
-      <div class="split-text">
-        <div class="eyebrow">部署模式</div>
-        <h3>四种部署模式，按合规要求任选</h3>
-        <p>不同行业对部署模式要求不同——电商客户用 SaaS 即可，金融政务客户要私有化或一体机交付。我们四种模式都跑得通，按客户合规要求选。</p>
-        <ul><li><strong>SaaS 公有云</strong>：开箱即用，按效果计价，适合电商 / 教育 / 互联网</li><li><strong>私有化部署</strong>：数据不出域，部署在客户自己的机房或专有云，适合金融 / 政务 / 大型央企</li><li><strong>混合部署</strong>：模型在客户私有云，控制台在 SaaS——兼顾合规和运维便利</li><li><strong>一体机交付</strong>：软硬件一体预装，离线即用——适合等保四级、央企总部、绝密场景</li><li><strong>多租户隔离</strong>：集团客户子公司之间数据严格隔离，权限按组织架构分发</li></ul>
-      </div>
-      <div class="split-visual">
-        
-<div style="background:#fff;border-radius:12px;padding:18px;border:1px solid var(--gray-line);">
-<div style="font-size:12px;font-weight:700;color:var(--gray-text);margin-bottom:14px;letter-spacing:.04em;">部署架构选项</div>
-<div style="display:grid;grid-template-columns:1fr;gap:8px;font-size:12.5px;">
-<div style="background:var(--blue-light);color:var(--blue);padding:12px 14px;border-radius:8px;"><div style="font-weight:700;margin-bottom:3px;">SaaS · 公有云</div><div style="font-size:11.5px;">5 分钟开通，按业务结果计价</div></div>
-<div style="background:var(--orange-lt);color:var(--orange);padding:12px 14px;border-radius:8px;"><div style="font-weight:700;margin-bottom:3px;">私有化 · 客户机房</div><div style="font-size:11.5px;">数据不出域，金融政务级合规</div></div>
-<div style="background:var(--green-lt);color:var(--green);padding:12px 14px;border-radius:8px;"><div style="font-weight:700;margin-bottom:3px;">混合 · 模型私有 + 平台 SaaS</div><div style="font-size:11.5px;">兼顾合规和运维便利</div></div>
-<div style="background:var(--purple-lt);color:var(--purple);padding:12px 14px;border-radius:8px;"><div style="font-weight:700;margin-bottom:3px;">一体机 · 软硬件一体交付</div><div style="font-size:11.5px;">离线即用，等保四级 / 绝密场景</div></div>
-</div>
-</div>
-
-      </div>
-    </div>
-  </div>
-</section><section class="section-block">
-  <div class="container">
-    <div class="split reverse">
-      <div class="split-text">
-        <div class="eyebrow">安全与合规</div>
-        <h3>从底层就为企业级合规设计</h3>
-        <p>合规不是上线之后再补，架构第一天就在做数据隔离、行为审计、权限分发。</p>
-        <ul><li>数据加密：传输 TLS 1.3 + 存储 AES-256</li><li>权限管理：RBAC + 细粒度数据权限</li><li>审计日志：每一次 Agent 决策可溯源</li><li>隐私保护：客户数据不用于模型训练（合同里写明）</li><li>合规认证：等保三级（部分客户已通过）</li></ul>
-      </div>
-      <div class="split-visual gr">
-        
-<div style="background:#fff;border-radius:12px;padding:18px;border:1px solid var(--gray-line);">
-<div style="font-size:13px;color:var(--green);font-weight:700;margin-bottom:14px;">企业安全控制</div>
-<div style="display:flex;flex-direction:column;gap:8px;font-size:13px;">
-<div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--gray-bg);border-radius:6px;"><span style="color:var(--green);">🔒</span><span>TLS 1.3 + AES-256 加密</span></div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--gray-bg);border-radius:6px;"><span style="color:var(--green);">🔐</span><span>RBAC 权限管理</span></div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--gray-bg);border-radius:6px;"><span style="color:var(--green);">📝</span><span>全量审计日志</span></div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--gray-bg);border-radius:6px;"><span style="color:var(--green);">🛡️</span><span>等保三级（已认证）</span></div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--gray-bg);border-radius:6px;"><span style="color:var(--green);">🚫</span><span>客户数据不用于模型训练</span></div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--gray-bg);border-radius:6px;"><span style="color:var(--green);">🔄</span><span>异地容灾 + 5 分钟 RPO</span></div>
-</div>
-</div>
-
-      </div>
-    </div>
-  </div>
-</section><section class="section-block alt">
-  <div class="container">
-    <div class="block-head">
-      <div class="eyebrow">结果</div>
-      <h2>已经验证过的企业级部署能力</h2>
-      <div class="sub">1000+ 大型企业 多年的部署积累，不是 demo。</div>
-    </div>
-    <div class="kpi-row"><div><div class="v">1000+</div><div class="l">大型企业客户</div></div><div><div class="v">5 个</div><div class="l">高合规高垂直行业</div></div><div><div class="v">100%</div><div class="l">Agent 决策可追溯</div></div><div><div class="v">99.9%</div><div class="l">SaaS 服务可用性</div></div></div>
-  </div>
-</section><section class="section-block">
-  <div class="container">
-    <div class="cta-band">
-  <div>
-    <h4>把 AI 员工装进你的合规边界内</h4>
-    <p>从一个 AI 角色起步，逐步扩展到多个 Agent。90 天内，第一个 AI 员工即在客户的 IM 中上岗。</p>
-  </div>
-  <button type="button" class="btn-primary" onclick="openContact('底部CTA·预约演示','预约演示')">预约演示 <span class="btn-arrow">→</span></button>
-</div>
-  </div>
-</section>
-
-<footer>
-  <div class="container">
-    <div class="footer-grid">
-      <div class="brand-block">
-        <div class="brand">
-          <span class="brand-mark">句</span>
-          句子互动 <small>JuziBot</small>
+  <!-- ════════ 7 件事 · 客户会问的 7 个问题 ════════ -->
+  <section class="sec pad">
+    <div class="wrap">
+      <div class="sec-top rv">
+        <div>
+          <span class="sec-eyebrow">7 件事</span>
+          <h2>客户上线企业 AI 时，会问的 7 个问题——<span class="hl"><span>逐项有答案</span></span></h2>
         </div>
-        <p>
-          为企业部署 AI 员工。<br/>
-          1000+ 家中国企业在用 · 覆盖 5 大高合规行业。
-        </p>
+        <p class="sub">这些是客户在每个项目里真问过的问题，不是功能清单。每一项都讲清楚痛点，再讲我们怎么答。</p>
       </div>
-      <div>
-        <h6>产品 · 7 个</h6>
-        <ul>
-          <li><a href="products/miaohui.html">句子秒回 · 工作台</a></li>
-          <li><a href="products/miaodong.html">句子秒懂 · 大脑</a></li>
-          <li><a href="products/shouhu.html">句子守护 · 主管</a></li>
-          <li><a href="products/canmou.html">句子问数 · 参谋</a></li>
-          <li><a href="products/dongxing.html">句子懂行 · 记忆</a></li>
-          <li><a href="products/cli.html">句子 CLI · 手</a></li>
-          <li><a href="products/zhizao.html">句子制造 · 地基</a></li>
-        </ul>
-      </div>
-      <div>
-        <h6>行业</h6>
-        <ul>
-          <li><a href="industries.html#education">在线教育</a></li>
-          <li><a href="industries.html#ecommerce">消费品电商</a></li>
-          <li><a href="industries.html#finance">金融</a></li>
-          <li><a href="industries.html#gov">政务 · 司法</a></li>
-          <li><a href="industries.html#internet">泛互联网</a></li>
-        </ul>
-      </div>
-      <div>
-        <h6>公司</h6>
-        <ul>
-          <li><a href="fde.html">FDE 交付结果</a></li>
-          <li><a href="industries.html">客户与行业</a></li>
-          <li><a href="about.html">AI 原生组织</a></li>
-          <li><a href="index.html#cta">联系我们</a></li>
-        </ul>
+
+      <div class="ep-grid">
+
+        <!-- 01 可预测 -->
+        <article class="ep-card rv" style="--ac:#4338CA">
+          <div class="ec-head"><span class="ec-num">01</span><span class="ec-en">可预测</span><h3>输出可重复</h3></div>
+          <span class="label">企业的真实痛点</span>
+          <p class="pain">消费场景里偶尔答错影响有限，企业场景则不可接受。生成财务摘要、起草法律文书时，同一个问题三次给出三种答案，业务无法推进。</p>
+          <span class="label">句子互动怎么做</span>
+          <p class="ours">多年带结果标注的部署数据让 Agent 行为可标定、可回归。<strong>同一个问题，每次给的回答是一致的，不是重新掷一次骰子</strong>。Anthropic 走的是模型对齐这条路，我们靠的是这些行业结果数据。</p>
+          <div class="ec-visual">
+            <div class="ev-cap">同一个 query × 3</div>
+            <div class="ev-line"><span>→ 您的退款政策是 7 天无理由</span></div>
+            <div class="ev-line"><span>→ 您的退款政策是 7 天无理由</span></div>
+            <div class="ev-line"><span>→ 您的退款政策是 7 天无理由</span></div>
+            <div class="ev-note" style="text-align:right">✓ 一致</div>
+          </div>
+        </article>
+
+        <!-- 02 数据安全 -->
+        <article class="ep-card rv rv-d1" style="--ac:#0D9488">
+          <div class="ec-head"><span class="ec-num">02</span><span class="ec-en">数据安全</span><h3>数据隔离</h3></div>
+          <span class="label">企业的真实痛点</span>
+          <p class="pain">内部文档、客户信息、专有数据，企业担心被模型留存并泄露给他人。企业 AI 落地，这往往是第一道门槛。</p>
+          <span class="label">句子互动怎么做</span>
+          <p class="ours"><strong>支持私有化 / 一体机部署，客户数据不出域</strong>。多租户严格隔离 + TLS 1.3 传输 + AES-256 存储 + 数据脱敏。客户数据不用于模型训练（合同里写明）。</p>
+          <div class="ec-visual">
+            <div class="ev-cap">数据流向</div>
+            <div class="ev-line"><span>企业内部&nbsp;&nbsp;→</span><span class="ev-tag-ok">私有化 Agent</span></div>
+            <div class="ev-line"><span>企业内部&nbsp;&nbsp;↛</span><span class="ev-tag-no">公网模型</span></div>
+            <div class="ev-note">✓ 数据不出域</div>
+          </div>
+        </article>
+
+        <!-- 03 行为管控 -->
+        <article class="ep-card rv" style="--ac:#14B8A6">
+          <div class="ec-head"><span class="ec-num">03</span><span class="ec-en">行为管控</span><h3>行为可管控</h3></div>
+          <span class="label">企业的真实痛点</span>
+          <p class="pain">要 AI 按公司政策回答：能说什么、不能说什么、出了事谁负责，都得事先划好红线。仅在 prompt 里写「请不要 xxx」并不可靠。</p>
+          <span class="label">句子互动怎么做</span>
+          <p class="ours">workflow 引擎里把<strong>能说什么、不能说什么</strong>提前写死，再配 5 个高合规行业策略库，不靠 prompt 软提示。金融的合规话术、政务的法规引用，AI 跨不出去。</p>
+          <div class="ec-visual">
+            <div class="ev-cap">行为边界</div>
+            <div class="ev-line"><span>解读产品条款</span><span class="ev-ok">✓ 允许</span></div>
+            <div class="ev-line"><span>引用合规话术库</span><span class="ev-ok">✓ 允许</span></div>
+            <div class="ev-line"><span>给具体投资建议</span><span class="ev-no">✗ 拒答</span></div>
+            <div class="ev-line"><span>承诺保本保收益</span><span class="ev-no">✗ 拒答</span></div>
+          </div>
+        </article>
+
+        <!-- 04 可审计 -->
+        <article class="ep-card rv rv-d1" style="--ac:#6366F1">
+          <div class="ec-head"><span class="ec-num">04</span><span class="ec-en">可审计</span><h3>全程可审计</h3></div>
+          <span class="label">企业的真实痛点</span>
+          <p class="pain">银保监来检查、政务来巡检、客户起诉，AI 的每一次回答都得能回溯：用了哪个知识库、参考了什么 context、谁批准的版本上线。</p>
+          <span class="label">句子互动怎么做</span>
+          <p class="ours"><strong>每一次 Agent 决策可追溯</strong>：调用的知识库、用的模型、参考的上下文、决策路径、版本号，全量日志记录。金融、政务客户特别在意这一条，过得了等保三级。</p>
+          <div class="ec-visual">
+            <div class="ev-cap">Agent 决策日志</div>
+            <div class="ev-log">[09:23:04] query → "退款 7 天"<br/>[09:23:04] kb_search → K3#FAQ#142<br/>[09:23:05] model → claude-3.5 v2.1<br/>[09:23:05] reply → "您可享 7 天无理由..."<br/>[09:23:05] log_id → AGT-2026050609234</div>
+            <div class="ev-note">✓ 全量日志归档 7 年</div>
+          </div>
+        </article>
+
+        <!-- 05 能对接 -->
+        <article class="ep-card rv" style="--ac:#14B8A6">
+          <div class="ec-head"><span class="ec-num">05</span><span class="ec-en">能对接</span><h3>对接现有系统</h3></div>
+          <span class="label">企业的真实痛点</span>
+          <p class="pain">AI 不能孤立运行，得接客户已有的 CRM、工单、知识库、订单系统。Agent 上岗第一天就要能查到客户的真实数据，不然就是摆设。</p>
+          <span class="label">句子互动怎么做</span>
+          <p class="ours"><strong>多年 IM 通道适配 + 企业 CRM / 工单 / 知识库直连</strong>。11 个 IM 通道，加主流企业系统的对接经验。Agent 上岗即接管真实业务流，而非闲置空转。</p>
+          <div class="ec-visual">
+            <div class="ev-cap">系统对接</div>
+            <div class="ev-grid3"><div class="ev-chip">CRM</div><div class="ev-chip">工单</div><div class="ev-chip">订单</div></div>
+            <div class="ev-arrow">↕</div>
+            <div class="ev-hub">句子互动 Agent</div>
+            <div class="ev-arrow">↕</div>
+            <div class="ev-grid5"><div class="ev-mini">微</div><div class="ev-mini">红</div><div class="ev-mini">抖</div><div class="ev-mini">飞</div><div class="ev-mini">+</div></div>
+          </div>
+        </article>
+
+        <!-- 06 可规模化 -->
+        <article class="ep-card rv rv-d1" style="--ac:#4338CA">
+          <div class="ec-head"><span class="ec-num">06</span><span class="ec-en">可规模化</span><h3>规模化</h3></div>
+          <span class="label">企业的真实痛点</span>
+          <p class="pain">许多公司的 AI 止步于试点：demo 能跑通，扩到几千客户、几十种业务场景就崩溃。企业 AI 必须从第一天就规划稳定运行。</p>
+          <span class="label">句子互动怎么做</span>
+          <p class="ours"><strong>1000+ 大型企业客户验证过的部署能力</strong>，在生产环境深耕多年，不是 demo。从单一场景到多职能 Agent 矩阵，从一个客户的私域到集团央企的多租户隔离，都跑得通。</p>
+          <div class="ec-visual">
+            <div class="ev-cap">部署规模</div>
+            <div class="ev-stat"><span>大型企业客户</span><b>1000+</b></div>
+            <div class="ev-stat"><span>覆盖高合规行业</span><b>5 大</b></div>
+            <div class="ev-stat"><span>日均处理消息</span><b>200 万 +</b></div>
+            <div class="ev-stat"><span>SaaS 服务可用性</span><b class="g">99.9%</b></div>
+          </div>
+        </article>
+
+        <!-- 07 不锁模型 -->
+        <article class="ep-card rv" style="--ac:#0D9488">
+          <div class="ec-head"><span class="ec-num">07</span><span class="ec-en">不锁模型</span><h3>不绑死单一模型</h3></div>
+          <span class="label">企业的真实痛点</span>
+          <p class="pain">企业不愿绑定单一供应商。这个月用 GPT，下个月想切到智谱，年底可能改用 DeepSeek。模型涨价、出现故障、遭遇监管，任何一项都会让企业陷入被动。</p>
+          <span class="label">句子互动怎么做</span>
+          <p class="ours"><strong>底层不绑死任何一家模型</strong>：DeepSeek、智谱、Qwen、文心一言、GPT 都能换。客户可按场景选择模型，依据价格与性能随时切换。</p>
+          <div class="ec-visual">
+            <div class="ev-cap">模型矩阵</div>
+            <div class="ev-models">
+              <div class="ev-model"><span>DeepSeek-V3</span><span class="on">●</span></div>
+              <div class="ev-model"><span>智谱 GLM-4</span><span class="on">●</span></div>
+              <div class="ev-model"><span>Qwen 3</span><span class="on">●</span></div>
+              <div class="ev-model"><span>文心 5.0</span><span class="on">●</span></div>
+              <div class="ev-model"><span>GPT-5</span><span class="on">●</span></div>
+              <div class="ev-model more">+ 100 种</div>
+            </div>
+          </div>
+        </article>
+
       </div>
     </div>
-    <div class="footer-bottom">
-      <div>Copyright © 2019 北京句子互动科技有限公司　京ICP备19049435号-1　京公网安备 11010802033527号</div>
-      <div>为企业部署 AI 员工</div>
+  </section>
+
+  <!-- ════════ 自研引擎 ════════ -->
+  <section class="sec pad">
+    <div class="wrap">
+      <div class="sec-top rv">
+        <div>
+          <span class="sec-eyebrow">自研引擎</span>
+          <h2>成本和交付周期压下来，<span class="hl"><span>才扩得起来</span></span></h2>
+        </div>
+        <p class="sub">AI 员工要能上岗、能复制、还得算得过账。自研 Token 成本控制引擎和 Agent 工厂 2.0，对的就是企业最担心的两件事：烧钱、上线慢。</p>
+      </div>
+      <div class="ep-eng">
+        <div class="ep-eng-card rv" style="--ac:#4338CA">
+          <div class="v">↓ 87%</div>
+          <h4>大模型调用成本</h4>
+          <p>自研 Token 成本控制引擎 + 按任务分层做模型路由，把大模型调用成本降低约 87%。</p>
+        </div>
+        <div class="ep-eng-card rv rv-d1" style="--ac:#0D9488">
+          <div class="v">↓ 70%</div>
+          <h4>AI 员工定制交付周期</h4>
+          <p>Agent 工厂 2.0 的 SOP 模板化能力，让 AI 员工定制与交付周期缩短约 70%。</p>
+        </div>
+        <div class="ep-eng-card rv rv-d2" style="--ac:#14B8A6">
+          <div class="v">↑ 30–40%</div>
+          <h4>客户转化率</h4>
+          <p>在销售与服务场景，AI 员工帮客户把转化率提升约 30%—40%。</p>
+        </div>
+      </div>
     </div>
-  </div>
-</footer>
+  </section>
 
-<!-- ════════════ RIGHT FLOAT PANEL ════════════ -->
-<div class="float-panel" id="floatPanel">
-  <button class="fp-btn" onclick="openContact('悬浮·在线咨询','在线咨询')">
-    <span class="fp-icon">💬</span>在线<br/>咨询
-    <span class="fp-tip">在线咨询</span>
-  </button>
-  <button class="fp-btn fp-orange" onclick="openContact('悬浮·预约演示','预约演示')">
-    <span class="fp-icon">📅</span>预约<br/>演示
-    <span class="fp-tip">预约 Demo 演示</span>
-  </button>
-  <button class="fp-btn fp-green" onclick="openContact('悬浮·获取方案','获取方案')">
-    <span class="fp-icon">📋</span>获取<br/>方案
-    <span class="fp-tip">获取行业解决方案</span>
-  </button>
-</div>
+  <!-- ════════ 部署模式 ════════ -->
+  <section class="sec pad">
+    <div class="wrap">
+      <div class="ep-split rv">
+        <div class="ep-split-text">
+          <span class="sec-eyebrow">部署模式</span>
+          <h3>四种部署模式，按合规要求任选</h3>
+          <p>不同行业对部署模式要求不同——电商客户用 SaaS 即可，金融政务客户要私有化或一体机交付。我们四种模式都跑得通，按客户合规要求选。</p>
+          <ul class="ep-list">
+            <li><strong>SaaS 公有云</strong>：开箱即用，按效果计价，适合电商 / 教育 / 互联网</li>
+            <li><strong>私有化部署</strong>：数据不出域，部署在客户自己的机房或专有云，适合金融 / 政务 / 大型央企</li>
+            <li><strong>混合部署</strong>：模型在客户私有云，控制台在 SaaS——兼顾合规和运维便利</li>
+            <li><strong>一体机交付</strong>：软硬件一体预装，离线即用——适合等保四级、央企总部、绝密场景</li>
+            <li><strong>多租户隔离</strong>：集团客户子公司之间数据严格隔离，权限按组织架构分发</li>
+          </ul>
+        </div>
+        <div class="ep-panel">
+          <div class="epp-cap">部署架构选项</div>
+          <div class="ep-dep">
+            <div class="ep-dep-row b"><b>SaaS · 公有云</b><span>5 分钟开通，按业务结果计价</span></div>
+            <div class="ep-dep-row o"><b>私有化 · 客户机房</b><span>数据不出域，金融政务级合规</span></div>
+            <div class="ep-dep-row g"><b>混合 · 模型私有 + 平台 SaaS</b><span>兼顾合规和运维便利</span></div>
+            <div class="ep-dep-row p"><b>一体机 · 软硬件一体交付</b><span>离线即用，等保四级 / 绝密场景</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<!-- ════════════ CONTACT MODAL ════════════ -->
-<div class="modal-overlay" id="contactModal">
-  <div class="modal modal-qr" role="dialog" aria-modal="true">
-    <button class="qr-close" onclick="closeModal('contactModal')" aria-label="关闭">×</button>
-    <div class="qr-eyebrow">联系我们</div>
-    <h3 class="qr-title">扫码加企业微信</h3>
-    <img class="qr-img" src="assets/brand/qr-qiwei.png" alt="企业微信二维码" width="200" height="200" />
-    <p class="qr-note">直接和我们聊，工作日当天回复</p>
-  </div>
-</div>
+  <!-- ════════ 安全与合规 ════════ -->
+  <section class="sec pad">
+    <div class="wrap">
+      <div class="ep-split rev rv">
+        <div class="ep-split-text">
+          <span class="sec-eyebrow">安全与合规</span>
+          <h3>从底层就为企业级合规设计</h3>
+          <p>合规不是上线之后再补，架构第一天就在做数据隔离、行为审计、权限分发。</p>
+          <ul class="ep-list">
+            <li>数据加密：传输 TLS 1.3 + 存储 AES-256</li>
+            <li>权限管理：RBAC + 细粒度数据权限</li>
+            <li>审计日志：每一次 Agent 决策可溯源</li>
+            <li>隐私保护：客户数据不用于模型训练（合同里写明）</li>
+            <li>合规认证：等保三级（部分客户已通过）</li>
+          </ul>
+        </div>
+        <div class="ep-panel">
+          <div class="epp-cap g">企业安全控制</div>
+          <div class="ep-sec-list">
+            <div class="ep-sec-row"><i class="fa-solid fa-lock"></i><span>TLS 1.3 + AES-256 加密</span></div>
+            <div class="ep-sec-row"><i class="fa-solid fa-user-lock"></i><span>RBAC 权限管理</span></div>
+            <div class="ep-sec-row"><i class="fa-solid fa-file-lines"></i><span>全量审计日志</span></div>
+            <div class="ep-sec-row"><i class="fa-solid fa-shield-halved"></i><span>等保三级（已认证）</span></div>
+            <div class="ep-sec-row"><i class="fa-solid fa-ban"></i><span>客户数据不用于模型训练</span></div>
+            <div class="ep-sec-row"><i class="fa-solid fa-rotate"></i><span>异地容灾 + 5 分钟 RPO</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<script>
-function openModal(id){var el=document.getElementById(id);if(!el)return;el.classList.add('open');document.body.style.overflow='hidden';}
-function closeModal(id){var el=document.getElementById(id);if(!el)return;el.classList.remove('open');document.body.style.overflow='';}
-document.querySelectorAll('.modal-overlay').forEach(function(o){o.addEventListener('click',function(e){if(e.target===o)closeModal(o.id);});});
-document.addEventListener('keydown',function(e){if(e.key==='Escape')document.querySelectorAll('.modal-overlay.open').forEach(function(m){closeModal(m.id);});});
-function openContact(){openModal('contactModal');}
-(function(){
-  var fp=document.getElementById('floatPanel');if(!fp)return;
-  fp.style.opacity='0';fp.style.transition='opacity .3s ease';
-  window.addEventListener('scroll',function(){fp.style.opacity=window.scrollY>200?'1':'0';fp.style.pointerEvents=window.scrollY>200?'':'none';},{passive:true});
-})();
-</script>
+  <!-- ════════ 结果 · 已验证的企业级部署 ════════ -->
+  <section class="sec pad">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <span class="sec-eyebrow">结果</span>
+        <h2>已经验证过的企业级部署能力</h2>
+        <p class="sub">1000+ 大型企业 多年的部署积累，不是 demo。</p>
+      </div>
+      <div class="ep-kpis rv rv-d1">
+        <div class="ep-kpi"><div class="v">1000+</div><div class="l">大型企业客户</div></div>
+        <div class="ep-kpi"><div class="v">5 个</div><div class="l">高合规高垂直行业</div></div>
+        <div class="ep-kpi"><div class="v">100%</div><div class="l">Agent 决策可追溯</div></div>
+        <div class="ep-kpi"><div class="v">99.9%</div><div class="l">SaaS 服务可用性</div></div>
+      </div>
+    </div>
+  </section>
 
+  <!-- ════════ 终极 CTA ════════ -->
+  <section class="cta" id="cta">
+    <div class="wrap cta-inner">
+      <div class="rv">
+        <h2>把 AI 员工<br/>装进你的<span class="acc">合规边界内</span>。</h2>
+        <p class="sub">从一个 AI 角色起步，逐步扩展到多个 Agent。90 天内，第一个 AI 员工即在客户的 IM 中上岗。</p>
+        <div class="cta-actions">
+          <button type="button" class="btn btn-blue btn-lg ar-host" onclick="openContact('企业级·底部CTA·预约演示')">
+            预约演示
+            <span class="ar"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h11M10 4l5 5-5 5"/></svg><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h11M10 4l5 5-5 5"/></svg></span>
+          </button>
+        </div>
+      </div>
+      <div class="cta-stats">
+        <div class="cta-stat rv" style="--ac:#4338CA"><div class="csv">1000+</div><div class="csl">大型企业客户验证过的部署能力</div></div>
+        <div class="cta-stat rv rv-d1" style="--ac:#14B8A6"><div class="csv">100%</div><div class="csl">Agent 决策可追溯，过得了等保三级</div></div>
+        <div class="cta-stat rv rv-d2" style="--ac:#6366F1"><div class="csv">99.9%</div><div class="csl">SaaS 服务可用性</div></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+<div id="site-footer"></div>
+<script>window.SITE_REL='';window.PAGE_CTX={entity:'enterprise',type:'page',title:'企业级能力'};</script>
+<script src="assets/site.js"></script>
 </body>
 </html>

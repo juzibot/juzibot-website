@@ -1,292 +1,592 @@
-<!doctype html>
-<html lang="zh-CN">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>句子问数 · 对话式数据洞察 | 句子互动</title>
 <meta name="description" content="句子问数是 AI 员工的「参谋」——把公司所有数据接进来，用对话方式问。一句话查、秒级出图表、异常主动预警、给老板用。1000+ 客户数据为样本。" />
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231659E5'/%3E%3Ctext x='16' y='22' font-family='system-ui' font-size='18' font-weight='800' fill='white' text-anchor='middle'%3E句%3C/text%3E%3C/svg%3E" />
-<link rel="stylesheet" href="../assets/style.css">
+<link rel="icon" href="../logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../assets/site.css" />
+<style>
+  /* scoped · 仅用 site.css 既有变量，承接首页 / 句子秒回 配色，不引入异色 */
+  /* —— 产品页头：沿用 .hero 的浅色径向底，承接面包屑 + KPI —— */
+  .ph{position:relative;overflow:hidden;padding:clamp(104px,13vh,150px) var(--gut) clamp(48px,6vw,76px);
+    background:radial-gradient(1100px 540px at 82% 4%,var(--blue-100),transparent 60%),
+               radial-gradient(680px 480px at 4% 10%,var(--orange-lt),transparent 56%),
+               linear-gradient(180deg,var(--blue-50),#fff 78%)}
+  .ph .wrap{position:relative}
+  .crumbs{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--ink-3);margin-bottom:clamp(16px,2.4vw,24px);flex-wrap:wrap}
+  .crumbs a{color:var(--ink-2)}
+  .crumbs a:hover{color:var(--blue)}
+  .crumbs .sep{color:var(--line)}
+  .crumbs .here{color:var(--ink-2);font-weight:650}
+  .ph-grid{display:grid;grid-template-columns:1.04fr .96fr;gap:clamp(34px,5vw,72px);align-items:center}
+  .ph h1{font-size:clamp(34px,5vw,64px);font-weight:850;letter-spacing:-.04em;line-height:1.12;
+    max-width:20ch;word-break:keep-all;text-wrap:balance;margin-bottom:clamp(14px,2vw,24px)}
+  .ph h1 .accent{color:var(--blue)}
+  .ph-lede{font-size:clamp(16px,1.4vw,18.5px);color:var(--ink-2);max-width:52ch;line-height:1.7}
+  .ph-lede strong{color:var(--ink);font-weight:700}
+  .ph-cta{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:clamp(20px,2.6vw,30px)}
+  @media(max-width:980px){
+    .ph-grid{grid-template-columns:1fr;gap:clamp(40px,7vw,56px)}
+    .ph-art{order:2}
+  }
+  /* —— 手机里的「问数对话」演示框（保留旧页全部对话文案） —— */
+  .askdemo{position:relative;border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;
+    background:linear-gradient(180deg,#FBFCFF,#F3F7FE);
+    box-shadow:0 1px 2px rgba(14,20,48,.05),0 40px 80px -30px rgba(67,56,202,.35),0 12px 24px -12px rgba(14,20,48,.12)}
+  .askdemo .win{display:flex;align-items:center;gap:8px;padding:11px 15px;background:rgba(255,255,255,.78);
+    backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .askdemo .win .d{width:9px;height:9px;border-radius:50%}
+  .askdemo .win .d.r{background:#FF5F57}.askdemo .win .d.y{background:#FEBC2E}.askdemo .win .d.g{background:#28C840}
+  .askdemo .win .t{margin-left:6px;font-family:var(--mono);font-size:11px;letter-spacing:.03em;color:var(--ink-3)}
+  .askdemo .win .live{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:750;
+    color:var(--green);background:var(--green-lt);padding:4px 10px;border-radius:999px}
+  .askdemo .win .live i{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green)}
+  .askbody{padding:clamp(16px,2vw,22px);display:flex;flex-direction:column;gap:11px;font-size:13.5px}
+  .askbody .when{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--blue);letter-spacing:.04em;margin-bottom:3px}
+  .ask-q{align-self:flex-end;max-width:82%;background:var(--blue);color:#fff;padding:11px 15px;border-radius:14px 4px 14px 14px;
+    font-weight:600;line-height:1.55;box-shadow:0 8px 18px -10px rgba(67,56,202,.6)}
+  .ask-a{align-self:flex-start;max-width:90%;background:#fff;border:1px solid var(--line);color:var(--ink);
+    padding:12px 15px;border-radius:4px 14px 14px 14px;line-height:1.62;box-shadow:var(--shadow-soft)}
+  .ask-a .hi{color:var(--blue);font-weight:750}
+  /* —— 结果数据带（承接句子秒回 .kpiband，同令牌同配色） —— */
+  .kpiband{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(14px,1.6vw,20px)}
+  .kpicard{position:relative;overflow:hidden;background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+    padding:clamp(26px,2.8vw,34px) clamp(22px,2.2vw,28px);--ac:var(--blue);
+    transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s}
+  .kpicard::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--ac);
+    transform:scaleY(0);transform-origin:bottom;transition:transform .45s var(--ease)}
+  .kpicard:hover{transform:translateY(-4px);border-color:transparent;
+    box-shadow:0 18px 44px -18px color-mix(in srgb,var(--ac) 50%,transparent)}
+  .kpicard:hover::before{transform:scaleY(1)}
+  .kpicard:nth-child(1){--ac:var(--blue)}.kpicard:nth-child(2){--ac:var(--orange-deep)}
+  .kpicard:nth-child(3){--ac:var(--green)}.kpicard:nth-child(4){--ac:var(--purple)}
+  .kpicard .v{font-size:clamp(28px,3.2vw,42px);font-weight:850;letter-spacing:-.03em;line-height:1;color:var(--ac)}
+  .kpicard .l{font-size:13.5px;color:var(--ink-2);margin-top:10px;line-height:1.5}
+  @media(max-width:760px){.kpiband{grid-template-columns:1fr 1fr}}
+
+  /* —— 现场演示「一句话出图」（scoped · qd- 前缀 · 仅用 site.css 变量） —— */
+  .qd{border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;background:#fff;
+    box-shadow:0 1px 2px rgba(14,20,48,.05),0 30px 64px -34px rgba(67,56,202,.26)}
+  /* 输入区 */
+  .qd-ask{padding:clamp(20px,2.6vw,30px) clamp(18px,2.4vw,30px);border-bottom:1px solid var(--line);
+    background:linear-gradient(180deg,#FBFCFF,#F4F7FE)}
+  .qd-chips{display:flex;flex-wrap:wrap;gap:10px}
+  .qd-chip{font:inherit;font-size:13.5px;font-weight:700;color:var(--blue);background:#fff;
+    border:1px solid var(--blue-100);border-radius:999px;padding:9px 16px;cursor:pointer;
+    transition:color .2s,background .2s,border-color .2s,transform .2s var(--ease),box-shadow .25s var(--ease)}
+  .qd-chip:hover{border-color:var(--blue-200);transform:translateY(-2px);
+    box-shadow:0 8px 18px -10px rgba(67,56,202,.45)}
+  .qd-chip.is-on{color:#fff;background:var(--blue);border-color:transparent;
+    box-shadow:0 8px 18px -8px rgba(67,56,202,.6)}
+  .qd-chip:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+  .qd-inputrow{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+  .qd-input{flex:1 1 240px;min-width:0;border:1px solid var(--line);border-radius:999px;padding:12px 18px;
+    font:inherit;font-size:14px;color:var(--ink);background:#fff;outline:none;
+    transition:border-color .2s,box-shadow .2s}
+  .qd-input::placeholder{color:var(--ink-3)}
+  .qd-input:focus{border-color:var(--blue-200);box-shadow:0 0 0 3px rgba(67,56,202,.12)}
+  .qd-go{flex:0 0 auto;padding:12px 22px;font-size:14px}
+  /* 结果区 */
+  .qd-stage{position:relative;padding:clamp(20px,2.8vw,34px) clamp(18px,2.4vw,30px) clamp(24px,3vw,38px);min-height:300px}
+  .qd-badge{position:absolute;top:14px;right:14px;z-index:2;display:inline-flex;align-items:center;gap:7px;
+    font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--ink-3);background:var(--blue-50);border:1px solid var(--line);border-radius:999px;padding:5px 11px}
+  .qd-badge i{color:var(--orange-deep)}
+  .qd-echo{display:flex;align-items:center;gap:11px;max-width:84%;margin-bottom:18px}
+  .qd-echo-av{flex:0 0 auto;width:30px;height:30px;border-radius:9px;display:grid;place-items:center;
+    color:#fff;font-size:13px;background:var(--ink-2)}
+  .qd-echo-q{background:var(--blue);color:#fff;padding:11px 16px;border-radius:14px 4px 14px 14px;
+    font-size:14px;font-weight:600;line-height:1.5;box-shadow:0 8px 18px -10px rgba(67,56,202,.6)}
+  .qd-loading{display:flex;align-items:center;gap:11px;font-size:13.5px;font-weight:650;color:var(--ink-2);
+    font-family:var(--mono);letter-spacing:.02em}
+  .qd-dots{display:inline-flex;gap:5px}
+  .qd-dots i{width:7px;height:7px;border-radius:50%;background:var(--blue);animation:qdThink 1.2s var(--ease) infinite}
+  .qd-dots i:nth-child(2){animation-delay:.18s}.qd-dots i:nth-child(3){animation-delay:.36s}
+  @keyframes qdThink{0%,100%{opacity:.22;transform:translateY(0)}50%{opacity:1;transform:translateY(-3px)}}
+  .qd-result{margin:0}
+  .qd-result[data-anim="in"]{animation:qdIn .45s var(--ease)}
+  @keyframes qdIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  .qd-chart{width:100%}
+  .qd-chart svg{width:100%;height:auto;display:block;overflow:visible}
+  /* 图表内联元素配色（由 JS 套用 class） */
+  .qd-chart .qd-axis{stroke:var(--line);stroke-width:1}
+  .qd-chart .qd-grid{stroke:var(--line-2);stroke-width:1}
+  .qd-chart .qd-lbl{fill:var(--ink-3);font-family:var(--sans);font-size:12px}
+  .qd-chart .qd-val{fill:var(--ink);font-family:var(--sans);font-size:12.5px;font-weight:800}
+  .qd-chart .qd-bar{fill:var(--blue);transition:fill .25s}
+  .qd-chart .qd-bar.alt{fill:var(--teal)}
+  .qd-chart .qd-bar.hot{fill:var(--orange-deep)}
+  .qd-chart .qd-line{fill:none;stroke:var(--blue);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+  .qd-chart .qd-area{fill:rgba(67,56,202,.10)}
+  .qd-chart .qd-dot{fill:#fff;stroke:var(--blue);stroke-width:2.4}
+  .qd-conc{margin-top:18px;display:flex;gap:12px;align-items:flex-start;
+    background:var(--green-lt);border:1px solid var(--line);border-radius:var(--radius-sm);
+    padding:14px 16px;font-size:14.5px;line-height:1.65;color:var(--ink)}
+  .qd-conc .qd-conc-ic{flex:0 0 auto;width:26px;height:26px;border-radius:8px;display:grid;place-items:center;
+    color:#fff;font-size:13px;background:linear-gradient(135deg,var(--green),#0D9488)}
+  .qd-conc b{color:var(--orange-deep);font-weight:800}
+  .qd-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:13px;
+    text-align:center;min-height:230px;color:var(--ink-3);font-size:14px;line-height:1.6}
+  .qd-empty i{font-size:26px;color:var(--blue-200)}
+  @media(max-width:560px){
+    .qd-go{flex:1 1 100%}
+    .qd-echo{max-width:100%}
+    .qd-chart .qd-lbl{font-size:10.5px}
+  }
+  /* —— 移动端适配（窄屏 ≤640px：scoped 版式塌列 / 收字号 / 触控区 / 防溢出） —— */
+  @media(max-width:640px){
+    /* 页头：标题 / 引言收一档 */
+    .ph h1{font-size:clamp(28px,8vw,40px)}
+    .ph-lede{font-size:15px;line-height:1.65}
+    .ph-cta{gap:12px}
+    .ph-cta .btn{flex:1 1 auto;justify-content:center}
+    /* 手机问数演示框：收内边距与字号，气泡更宽 */
+    .askbody{padding:16px;gap:9px;font-size:13px}
+    .ask-q,.ask-a{max-width:92%}
+    /* 结果数据带：四列 → 两列，收内边距与数值字号 */
+    .kpiband{grid-template-columns:1fr 1fr;gap:12px}
+    .kpicard{padding:22px 18px}
+    .kpicard .v{font-size:clamp(26px,7vw,34px)}
+    .kpicard .l{font-size:13px}
+    /* 现场演示「一句话出图」：输入 / chips / 图表防溢出 */
+    .qd-ask{padding:18px 16px}
+    .qd-chips{gap:9px}
+    .qd-chip{font-size:13px;padding:11px 15px;min-height:44px;display:inline-flex;align-items:center}
+    .qd-inputrow{gap:9px;margin-top:12px}
+    .qd-input{flex:1 1 100%;font-size:16px;padding:13px 18px;min-height:48px}  /* ≥16px 防 iOS 聚焦缩放 */
+    .qd-go{flex:1 1 100%;min-height:48px;justify-content:center;font-size:15px}
+    .qd-stage{padding:18px 16px 22px;min-height:auto}
+    /* 图表容器 / SVG 窄屏不溢出 */
+    .qd-chart{width:100%;max-width:100%;overflow:hidden}
+    .qd-chart svg{width:100%;max-width:100%;height:auto;overflow:hidden}
+    .qd-chart .qd-val{font-size:11px}
+    .qd-echo-q{font-size:13.5px}
+    .qd-conc{font-size:13.5px;padding:13px 14px;margin-top:16px}
+    .qd-badge{position:static;display:inline-flex;margin-bottom:12px}
+  }
+  /* —— 极窄屏 ≤400px：数据带塌单列，避免两列拥挤 —— */
+  @media(max-width:400px){
+    .kpiband{grid-template-columns:1fr}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .qd-dots i{animation:none}
+    .qd-result[data-anim="in"]{animation:none}
+  }
+</style>
 </head>
 <body>
+<div id="site-nav"></div>
+<main>
 
-<!-- ════════════ ANNOUNCEMENT BAR ════════════ -->
-<div class="ann-bar" role="marquee" aria-label="公告">
-  <div class="ann-track">
-    <span class="ann-item"><span class="dot"></span><span class="tag">在线教育</span>销售岗已跑通按结果付费——AI 带来的转化，是人工对照组的 3 倍</span>
-    <span class="ann-item"><span class="dot"></span><span class="tag">消费品电商</span>几百家品牌私域导购上线，长尾客户 24×7 接住</span>
-    <span class="ann-item"><span class="dot"></span><span class="tag">金融</span>银行 · 证券 · 保险头部机构落地，合规边界提前写死</span>
-    <span class="ann-item"><span class="dot"></span>1000+ 大型企业已在用 · 覆盖 5 大高合规行业 · 接入 10+ 主流 IM 渠道</span>
-    <span class="ann-item"><span class="dot"></span><span class="tag">在线教育</span>销售岗已跑通按结果付费——AI 带来的转化，是人工对照组的 3 倍</span>
-    <span class="ann-item"><span class="dot"></span><span class="tag">消费品电商</span>几百家品牌私域导购上线，长尾客户 24×7 接住</span>
-    <span class="ann-item"><span class="dot"></span><span class="tag">金融</span>银行 · 证券 · 保险头部机构落地，合规边界提前写死</span>
-    <span class="ann-item"><span class="dot"></span>1000+ 大型企业已在用 · 覆盖 5 大高合规行业 · 接入 10+ 主流 IM 渠道</span>
-  </div>
-</div>
-
-<nav class="nav">
-  <div class="container nav-inner">
-    <a href="../index.html" class="brand">
-      <span class="brand-mark">句</span>
-      句子互动 <small>JuziBot</small>
-    </a>
-    <div class="nav-links">
-      <div class="nav-item">
-        <button>产品 <span class="caret"></span></button>
-        <div class="dropdown wide">
-          <a href="../products/miaodong.html"><div class="d-title">句子秒懂 · 大脑</div><div class="d-desc">业务人员不写代码也能搭 Agent</div></a>
-          <a href="../products/shouhu.html"><div class="d-title">句子守护 · 主管</div><div class="d-desc">Agent 上线前测过、上线后管着</div></a>
-          <a href="../products/canmou.html"><div class="d-title">句子问数 · 参谋</div><div class="d-desc">一句话查所有业务数据</div></a>
-          <a href="../products/dongxing.html"><div class="d-title">句子懂行 · 记忆</div><div class="d-desc">知识工程，散乱知识炼成可检索资产</div></a>
-          <a href="../products/miaohui.html"><div class="d-title">句子秒回 · 工作台</div><div class="d-desc">11 个 IM 通道汇成一个工作台</div></a>
-          <a href="../products/cli.html"><div class="d-title">句子 CLI · 手</div><div class="d-desc">操作一切人用软件的执行层</div></a>
-          <a href="../products/zhizao.html"><div class="d-title">句子制造 · 地基</div><div class="d-desc">补齐客户数字化基建，一客一环境</div></a>
+  <!-- ════════════ 产品页头 · 面包屑 + 标题 + KPI + 手机问数演示 ════════════ -->
+  <header class="ph" id="top">
+    <div class="wrap">
+      <div class="crumbs">
+        <a href="../index.html">首页</a><span class="sep">/</span>
+        <span class="here">产品</span><span class="sep">/</span>
+        <span class="here">句子问数</span>
+      </div>
+      <div class="ph-grid">
+        <div class="ph-copy">
+          <span class="eyebrow"><span class="dot"></span>产品 · 问数 · 参谋</span>
+          <h1>句子问数 ·<br/><span class="accent">一句话问公司所有数据</span></h1>
+          <p class="ph-lede">它不是一块数据看板，而是一个<strong>能对话的运营参谋</strong>。把公司所有数据接入，用自然语言提问，秒级返回图表，并支持逐层追问。退费苗头、流失风险、合规偏差会主动预警，并附上可执行的建议。老板和运营都能直接使用。</p>
+          <div class="ph-cta">
+            <button type="button" class="btn btn-blue btn-lg ar-host" onclick="openContact('问数页·页头','预约演示')">
+              预约演示
+              <span class="ar"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h11M10 4l5 5-5 5"/></svg><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h11M10 4l5 5-5 5"/></svg></span>
+            </button>
+            <a href="#why" class="btn btn-ghost btn-lg">看它怎么工作</a>
+          </div>
+          <div class="hero-kpis">
+            <div class="hero-kpi"><div class="v">一句话</div><div class="l">查公司所有数据</div></div>
+            <div class="hero-kpi"><div class="v">秒级</div><div class="l">图表 / 表格 / 建议</div></div>
+            <div class="hero-kpi"><div class="v">主动</div><div class="l">异常预警 + 建议</div></div>
+            <div class="hero-kpi"><div class="v">1000+</div><div class="l">客户数据当样本</div></div>
+          </div>
         </div>
-      </div>
-      <div class="nav-item">
-        <button>AI 员工 <span class="caret"></span></button>
-        <div class="dropdown wide">
-          <a href="../workforce/sales.html"><div class="d-title">AI 销售</div><div class="d-desc">直播搬家、私域承接、漏斗跟进——首单成交全程接管</div></a>
-          <a href="../workforce/marketing.html"><div class="d-title">AI 导购</div><div class="d-desc">头部零售品牌的私域导购运营，长尾客户也覆盖</div></a>
-          <a href="../workforce/service.html"><div class="d-title">AI 客服</div><div class="d-desc">从售前到售后都接得住 · 5 年 BadCase 积累</div></a>
-          <a href="../workforce/government.html"><div class="d-title">AI 社工 / 调解员</div><div class="d-desc">政务高合规要求 + 全程可追溯 · 已稳步落地</div></a>
-          <a href="../workforce/finance.html"><div class="d-title">AI 理财顾问</div><div class="d-desc">银行 / 证券 / 保险头部机构落地 · 多年风控话术</div></a>
-          <a href="../workforce/hr.html"><div class="d-title">AI HR</div><div class="d-desc">简历初筛 + AI 语音面试，HR 只看 Top 20%</div></a>
-        </div>
-      </div>
-      <div class="nav-item"><a href="../industries.html">客户与行业</a></div>
-      <div class="nav-item"><a href="../enterprise.html">企业级能力</a></div><div class="nav-item"><a href="../fde.html">FDE 交付结果</a></div>
-      <div class="nav-item"><a href="../about.html">AI 原生组织</a></div>
-    </div>
-    <div class="nav-right">
-      <a class="nav-cta" style="cursor:pointer" onclick="openContact('导航·联系我们')">联系我们 →</a>
-      <a href="https://az-bg.juzibot.com/auth/register" class="nav-login">登录 / 注册</a>
-    </div>
-    <button class="nav-burger" aria-label="菜单" onclick="this.closest('.nav').classList.toggle('nav-open')">☰</button>
-  </div>
-</nav>
-
-<header class="page-hero">
-  <div class="container">
-    <div class="crumbs"><a href="../index.html">首页</a> <span class="sep">/</span> <span class="here">产品</span> <span class="sep">/</span> <span class="here">句子问数</span></div>
-    <div style="font-size:13px;font-weight:800;color:var(--purple);letter-spacing:.12em;text-transform:uppercase;margin-bottom:16px;">产品 · 问数 · 参谋</div>
-    <h1>句子问数 · <span class="accent">一句话问公司所有数据</span></h1>
-    <p class="lede">它不是一块数据看板，而是一个能对话的运营参谋。把公司所有数据接入，用自然语言提问，秒级返回图表，并支持逐层追问。退费苗头、流失风险、合规偏差会主动预警，并附上可执行的建议。老板和运营都能直接使用。</p>
-    <div class="pill-row"><span class="pill"><span class="dot"></span>一句话查公司所有数据</span><span class="pill"><span class="dot"></span>秒级图表 / 表格 / 建议</span><span class="pill"><span class="dot"></span>异常主动预警</span><span class="pill"><span class="dot"></span>1000+ 客户数据当样本</span></div>
-  </div>
-</header>
-
-<section class="section-block">
-  <div class="container">
-    <div class="block-head">
-      <div class="eyebrow">4 件事 · 一次性给你</div>
-      <h2>不写 SQL、不点报表，一句话就把数据问出来</h2>
-      <div class="sub">无需写 SQL、查报表、等周报或对接 BI，一句话提问即可获得秒级答案。</div>
-    </div>
-    <div class="feat-grid-2">
-      <div class="feat-block bl">
-        <div class="ic">💬</div>
-        <h3>对话即查询</h3>
-        <p>自然语言问数，秒级返回图表。无需写 SQL 或查报表，一句话即可获得结果，需要细看可继续追问。</p>
-      </div>
-      <div class="feat-block or">
-        <div class="ic">🔎</div>
-        <h3>越问越细</h3>
-        <p>漏斗在哪一环流失、谁的转化最高、哪段话术退费最低——问一句就有答案；想往深里看，接着追问就行。</p>
-      </div>
-      <div class="feat-block gr">
-        <div class="ic">🚨</div>
-        <h3>有问题主动提醒你</h3>
-        <p>退费苗头、客户要流失、话术踩了合规红线——不用你盯着，问数发现了主动提醒，还会告诉你该怎么处理。</p>
-      </div>
-      <div class="feat-block pu">
-        <div class="ic">📱</div>
-        <h3>老板手机就能用</h3>
-        <p>不用等周报、不用盯着看板，掏出手机问一句就有答案——老板、运营都能直接用。</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section-block">
-  <div class="container">
-    <div class="split">
-      <div class="split-text">
-        <div class="eyebrow">为什么需要它</div>
-        <h3>BI 得你自己打开才看得到，问数是它主动来找你</h3>
-        <p>以前看数据，得先让人搭好数据看板，你再定时打开看；发现不对劲，还得找懂 SQL 的人帮你查。慢，而且全靠你自己去翻。</p>
-        <p>问数反过来：你直接问一句「这周哪批客户流失了」，秒级就有答案，想细看接着问。真出了异常，不用你盯着，它自己会提醒你。</p>
-        <ul>
-          <li><strong>给老板</strong>：在手机上问一句「今天销售有什么问题」，马上就有答案和建议</li>
-          <li><strong>给运营</strong>：问一句「上周续费率为什么降了」，问数直接帮你定位到是哪个环节</li>
-          <li><strong>给业务团队</strong>：随时拉一份客户数据，秒级看 AI 干得怎么样，当天就能调</li>
-        </ul>
-      </div>
-      <div class="split-visual pu">
-        <div style="background:#fff;border-radius:12px;padding:18px;border:1px solid var(--gray-line);">
-          <div style="font-size:12px;font-weight:700;color:var(--purple);margin-bottom:14px;letter-spacing:.04em;">手机上问一句 · 周一早上</div>
-          <div style="display:flex;flex-direction:column;gap:10px;font-size:13px;">
-            <div style="background:var(--purple-lt);color:var(--purple);padding:10px 14px;border-radius:8px;font-weight:600;">"上周续费率为什么降了？"</div>
-            <div style="background:#f7f7f9;color:var(--black);padding:12px 14px;border-radius:8px;line-height:1.55;">
-              ↓ 续费率：78% → 71%（-7pp）<br/>
-              主要原因：A 校区课时延期、B 老师离职。<br/>
-              建议：A 校区先补偿 + B 老师班分流到 C 老师，预计回正 +5pp。
+        <div class="ph-art">
+          <div class="askdemo">
+            <div class="win">
+              <span class="d r"></span><span class="d y"></span><span class="d g"></span>
+              <span class="t">句子问数 · 对话式数据洞察</span>
+              <span class="live"><i></i>LIVE</span>
             </div>
-            <div style="background:var(--purple-lt);color:var(--purple);padding:10px 14px;border-radius:8px;font-weight:600;">"B 老师那班具体是哪些学生？"</div>
-            <div style="background:#f7f7f9;color:var(--black);padding:12px 14px;border-radius:8px;line-height:1.55;">
-              共 47 人。已生成名单 + 分流建议 → <span style="color:var(--purple);font-weight:700;">点这里发给招生</span>
+            <div class="askbody">
+              <div class="when">手机上问一句 · 周一早上</div>
+              <div class="ask-q">"上周续费率为什么降了？"</div>
+              <div class="ask-a">
+                ↓ 续费率：78% → 71%（-7pp）<br/>
+                主要原因：A 校区课时延期、B 老师离职。<br/>
+                建议：A 校区先补偿 + B 老师班分流到 C 老师，预计回正 +5pp。
+              </div>
+              <div class="ask-q">"B 老师那班具体是哪些学生？"</div>
+              <div class="ask-a">
+                共 47 人。已生成名单 + 分流建议 → <span class="hi">点这里发给招生</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </header>
 
-<section class="section-block alt">
-  <div class="container">
-    <div class="block-head">
-      <div class="eyebrow">AI 数据分析师</div>
-      <h2>问数就是一个随叫随到的数据分析师</h2>
-      <div class="sub">过去你得养一个数据分析师，或者排队等 BI 出报表。问数把这件事变简单：你用大白话问，它接好公司所有数据，秒级给你图表、给你结论，还告诉你下一步该怎么做。</div>
-    </div>
-    <div class="feat-grid-3">
-      <div class="feat-block pu">
-        <div class="ic">🔗</div>
-        <h3>先把你的数据接好</h3>
-        <p>销售、客服、订单、私域这些散在各处的数据，问数直接接进来，不用你搭数据管道——问什么都查得到。</p>
-      </div>
-      <div class="feat-block bl">
-        <div class="ic">💡</div>
-        <h3>不只出数，还给结论</h3>
-        <p>好的分析师不会只甩你一张图。问数会告诉你哪里出了问题、为什么，再给一条能直接干的建议。</p>
-      </div>
-      <div class="feat-block or">
-        <div class="ic">🔔</div>
-        <h3>主动盯着，发现就提醒</h3>
-        <p>退费苗头、客户要流失、话术踩了合规红线——不用你天天盯，问数发现了主动来找你。</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section-block">
-  <div class="container">
-    <div class="block-head">
-      <div class="eyebrow">结果</div>
-      <h2>问数上岗后，运营不用再等报表</h2>
-      <div class="sub">数据来自客户真实部署反馈。</div>
-    </div>
-    <div class="kpi-row">
-      <div><div class="v">一句话</div><div class="l">查公司所有数据</div></div>
-      <div><div class="v">秒级</div><div class="l">图表 / 表格 / 建议</div></div>
-      <div><div class="v">主动</div><div class="l">异常预警 + 建议</div></div>
-      <div><div class="v">1000+</div><div class="l">客户数据当样本</div></div>
-    </div>
-  </div>
-</section>
-
-<section class="section-block">
-  <div class="container">
-    <div class="cta-band">
-      <div>
-        <h4>让问数接上你的所有数据——一句话就能问</h4>
-        <p>从老板的一句话 demo 开始，到运营全员日常使用——90 天内，问数会接上你的 CRM / 业务系统 / 客服记录。</p>
-      </div>
-      <button type="button" class="btn-primary" onclick="openContact('问数页·底部CTA','预约演示')">预约演示 <span class="btn-arrow">→</span></button>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="container">
-    <div class="footer-grid">
-      <div class="brand-block">
-        <div class="brand">
-          <span class="brand-mark">句</span>
-          句子互动 <small>JuziBot</small>
+  <!-- ════════════ 4 件事 · 核心能力（4 卡） ════════════ -->
+  <section class="sec pad" id="capabilities">
+    <div class="wrap">
+      <div class="sec-top rv">
+        <div>
+          <span class="sec-eyebrow">4 件事 · 一次性给你</span>
+          <h2>不写 SQL、不点报表，<span class="hl"><span>一句话就把数据问出来</span></span>。</h2>
         </div>
-        <p>
-          为企业部署 AI 员工。<br/>
-          1000+ 家中国企业在用 · 覆盖 5 大高合规行业。
-        </p>
+        <p class="sub">无需写 SQL、查报表、等周报或对接 BI，一句话提问即可获得秒级答案。</p>
       </div>
-      <div>
-        <h6>产品 · 7 个</h6>
-        <ul>
-          <li><a href="../products/miaohui.html">句子秒回 · 工作台</a></li>
-          <li><a href="../products/miaodong.html">句子秒懂 · 大脑</a></li>
-          <li><a href="../products/shouhu.html">句子守护 · 主管</a></li>
-          <li><a href="../products/canmou.html">句子问数 · 参谋</a></li>
-          <li><a href="../products/dongxing.html">句子懂行 · 记忆</a></li>
-          <li><a href="../products/cli.html">句子 CLI · 手</a></li>
-          <li><a href="../products/zhizao.html">句子制造 · 地基</a></li>
-        </ul>
-      </div>
-      <div>
-        <h6>行业</h6>
-        <ul>
-          <li><a href="../industries.html#education">在线教育</a></li>
-          <li><a href="../industries.html#ecommerce">消费品电商</a></li>
-          <li><a href="../industries.html#finance">金融</a></li>
-          <li><a href="../industries.html#gov">政务 · 司法</a></li>
-          <li><a href="../industries.html#internet">泛互联网</a></li>
-        </ul>
-      </div>
-      <div>
-        <h6>公司</h6>
-        <ul>
-          <li><a href="../fde.html">FDE 交付结果</a></li>
-          <li><a href="../industries.html">客户与行业</a></li>
-          <li><a href="../about.html">AI 原生组织</a></li>
-          <li><a href="../index.html#cta">联系我们</a></li>
-        </ul>
+      <div class="arch rv" style="padding:clamp(18px,2.4vw,28px)">
+        <div class="tier-cards two">
+          <div class="pcard c-blue rv">
+            <span class="ptag"><i class="fa-solid fa-comments" style="margin-right:7px"></i>01 · 对话即查询</span>
+            <h3>对话即查询</h3>
+            <p>自然语言问数，秒级返回图表。无需写 SQL 或查报表，一句话即可获得结果，需要细看可继续追问。</p>
+          </div>
+          <div class="pcard c-orange rv rv-d1">
+            <span class="ptag"><i class="fa-solid fa-magnifying-glass-chart" style="margin-right:7px"></i>02 · 越问越细</span>
+            <h3>越问越细</h3>
+            <p>漏斗在哪一环流失、谁的转化最高、哪段话术退费最低——问一句就有答案；想往深里看，接着追问就行。</p>
+          </div>
+          <div class="pcard c-green rv rv-d1">
+            <span class="ptag"><i class="fa-solid fa-triangle-exclamation" style="margin-right:7px"></i>03 · 主动提醒</span>
+            <h3>有问题主动提醒你</h3>
+            <p>退费苗头、客户要流失、话术踩了合规红线——不用你盯着，问数发现了主动提醒，还会告诉你该怎么处理。</p>
+          </div>
+          <div class="pcard c-purple rv rv-d2">
+            <span class="ptag"><i class="fa-solid fa-mobile-screen-button" style="margin-right:7px"></i>04 · 老板手机就能用</span>
+            <h3>老板手机就能用</h3>
+            <p>不用等周报、不用盯着看板，掏出手机问一句就有答案——老板、运营都能直接用。</p>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="footer-bottom">
-      <div>Copyright © 2019 北京句子互动科技有限公司　京ICP备19049435号-1　京公网安备 11010802033527号</div>
-      <div>为企业部署 AI 员工</div>
+  </section>
+
+  <!-- ════════════ 现场演示 · 一句话当场出图（show not tell · 纯前端示例数据） ════════════ -->
+  <section class="sec pad" id="try">
+    <div class="wrap">
+      <div class="sec-top rv">
+        <div>
+          <span class="sec-eyebrow">现场演示</span>
+          <h2>别听我们说，<span class="hl"><span>你问一句，当场出图</span></span>。</h2>
+        </div>
+        <p class="sub">下面的图表全部由浏览器现画——点一个问题，看它怎么取数、出图、给结论。<strong>用的是演示用示例数据，不是真实客户实时数据。</strong></p>
+      </div>
+
+      <div class="qd rv">
+        <!-- 输入区：示例问题 chips + 自由输入 -->
+        <form class="qd-ask" id="qdForm" autocomplete="off">
+          <div class="qd-chips" role="group" aria-label="示例问题">
+            <button type="button" class="qd-chip" data-q="rate">这个月各渠道转化率对比</button>
+            <button type="button" class="qd-chip" data-q="gmv">最近 6 个月 GMV 走势</button>
+            <button type="button" class="qd-chip" data-q="refund">退费率最高的 3 个班型</button>
+            <button type="button" class="qd-chip" data-q="region">华东 vs 华南的客单价</button>
+          </div>
+          <div class="qd-inputrow">
+            <input class="qd-input" id="qdInput" type="text" inputmode="search"
+                   placeholder="也可以自己问一句，比如「各渠道转化率对比」…" aria-label="输入你想问的问题" />
+            <button type="submit" class="btn btn-blue qd-go">问一句</button>
+          </div>
+        </form>
+
+        <!-- 结果区：取数过程 → 图表 → 结论 -->
+        <div class="qd-stage">
+          <div class="qd-badge"><i class="fa-solid fa-flask"></i>示例数据 · 演示</div>
+
+          <!-- 用户问句回显 -->
+          <div class="qd-echo" id="qdEcho" hidden>
+            <span class="qd-echo-av"><i class="fa-solid fa-user"></i></span>
+            <span class="qd-echo-q" id="qdEchoQ"></span>
+          </div>
+
+          <!-- 取数中 -->
+          <div class="qd-loading" id="qdLoading" hidden>
+            <span class="qd-dots"><i></i><i></i><i></i></span>
+            <span id="qdLoadingTxt">正在取数 · 生成图表…</span>
+          </div>
+
+          <!-- 图表 + 结论 -->
+          <figure class="qd-result" id="qdResult" hidden>
+            <div class="qd-chart" id="qdChart" role="img" aria-label="数据图表"></div>
+            <figcaption class="qd-conc" id="qdConc"></figcaption>
+          </figure>
+
+          <!-- 初始空态 -->
+          <div class="qd-empty" id="qdEmpty">
+            <i class="fa-solid fa-hand-pointer"></i>
+            <span>点上面任一个问题，或自己输入一句——图表在这里现画给你看。</span>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-</footer>
+  </section>
 
-<div class="float-panel" id="floatPanel">
-  <button class="fp-btn" onclick="openContact('问数页·悬浮在线咨询','在线咨询')">
-    <span class="fp-icon">💬</span>在线<br/>咨询
-    <span class="fp-tip">在线咨询</span>
-  </button>
-  <button class="fp-btn fp-orange" onclick="openContact('问数页·悬浮预约演示','预约演示')">
-    <span class="fp-icon">📅</span>预约<br/>演示
-    <span class="fp-tip">预约 Demo 演示</span>
-  </button>
-  <button class="fp-btn fp-green" onclick="openContact('问数页·悬浮获取方案','获取方案')">
-    <span class="fp-icon">📋</span>获取<br/>方案
-    <span class="fp-tip">获取行业解决方案</span>
-  </button>
-</div>
+  <!-- ════════════ 为什么需要它 · BI vs 问数（图文对照） ════════════ -->
+  <section class="sec pad" id="why">
+    <div class="wrap">
+      <div class="sec-top rv">
+        <div>
+          <span class="sec-eyebrow">为什么需要它</span>
+          <h2>BI 得你自己打开才看得到，<span class="hl warm"><span>问数是它主动来找你</span></span>。</h2>
+        </div>
+        <p class="sub">以前看数据，得先让人搭好数据看板，你再定时打开看；发现不对劲，还得找懂 SQL 的人帮你查。慢，而且全靠你自己去翻。</p>
+      </div>
+      <div class="arch rv" style="grid-template-columns:1fr;display:grid;gap:0">
+        <div class="ind-why" style="margin-top:0;background:#fff">
+          <div>
+            <h4 style="max-width:24ch;margin-bottom:16px">问数反过来：你直接问一句，秒级就有答案，真出了异常它自己提醒你</h4>
+            <p style="font-size:14.5px;line-height:1.7;color:var(--ink-2);margin-bottom:0">问数反过来：你直接问一句「这周哪批客户流失了」，秒级就有答案，想细看接着问。真出了异常，不用你盯着，它自己会提醒你。</p>
+          </div>
+          <ul class="ap-feats" style="margin-top:0">
+            <li><strong>给老板</strong>：在手机上问一句「今天销售有什么问题」，马上就有答案和建议</li>
+            <li><strong>给运营</strong>：问一句「上周续费率为什么降了」，问数直接帮你定位到是哪个环节</li>
+            <li><strong>给业务团队</strong>：随时拉一份客户数据，秒级看 AI 干得怎么样，当天就能调</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<div class="modal-overlay" id="contactModal">
-  <div class="modal modal-qr" role="dialog" aria-modal="true">
-    <button class="qr-close" onclick="closeModal('contactModal')" aria-label="关闭">×</button>
-    <div class="qr-eyebrow">联系我们</div>
-    <h3 class="qr-title">扫码加企业微信</h3>
-    <img class="qr-img" src="../assets/brand/qr-qiwei.png" alt="企业微信二维码" width="200" height="200" />
-    <p class="qr-note">直接和我们聊，工作日当天回复</p>
-  </div>
-</div>
+  <!-- ════════════ AI 数据分析师 · 3 件事 ════════════ -->
+  <section class="sec pad" id="analyst">
+    <div class="wrap">
+      <div class="sec-top rv">
+        <div>
+          <span class="sec-eyebrow">AI 数据分析师</span>
+          <h2>问数就是一个<span class="hl"><span>随叫随到的数据分析师</span></span>。</h2>
+        </div>
+        <p class="sub">过去你得养一个数据分析师，或者排队等 BI 出报表。问数把这件事变简单：你用大白话问，它接好公司所有数据，秒级给你图表、给你结论，还告诉你下一步该怎么做。</p>
+      </div>
+      <div class="arch rv" style="padding:clamp(18px,2.4vw,28px)">
+        <div class="tier-cards three">
+          <div class="pcard c-purple rv">
+            <span class="ptag"><i class="fa-solid fa-link" style="margin-right:7px"></i>先把数据接好</span>
+            <h3>先把你的数据接好</h3>
+            <p>销售、客服、订单、私域这些散在各处的数据，问数直接接进来，不用你搭数据管道——问什么都查得到。</p>
+          </div>
+          <div class="pcard c-blue rv rv-d1">
+            <span class="ptag"><i class="fa-solid fa-lightbulb" style="margin-right:7px"></i>不只出数，还给结论</span>
+            <h3>不只出数，还给结论</h3>
+            <p>好的分析师不会只甩你一张图。问数会告诉你哪里出了问题、为什么，再给一条能直接干的建议。</p>
+          </div>
+          <div class="pcard c-orange rv rv-d2">
+            <span class="ptag"><i class="fa-solid fa-bell" style="margin-right:7px"></i>主动盯着，发现就提醒</span>
+            <h3>主动盯着，发现就提醒</h3>
+            <p>退费苗头、客户要流失、话术踩了合规红线——不用你天天盯，问数发现了主动来找你。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
+  <!-- ════════════ 结果 · 数据带 ════════════ -->
+  <section class="sec pad" id="results">
+    <div class="wrap">
+      <div class="sec-top rv">
+        <div>
+          <span class="sec-eyebrow">结果</span>
+          <h2>问数上岗后，<span class="hl"><span>运营不用再等报表</span></span>。</h2>
+        </div>
+        <p class="sub">数据来自客户真实部署反馈。</p>
+      </div>
+      <div class="kpiband rv">
+        <div class="kpicard"><div class="v">一句话</div><div class="l">查公司所有数据</div></div>
+        <div class="kpicard"><div class="v">秒级</div><div class="l">图表 / 表格 / 建议</div></div>
+        <div class="kpicard"><div class="v">主动</div><div class="l">异常预警 + 建议</div></div>
+        <div class="kpicard"><div class="v">1000+</div><div class="l">客户数据当样本</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════ 终极 CTA ════════════ -->
+  <section class="cta" id="cta">
+    <div class="wrap cta-inner">
+      <div class="rv">
+        <h2>让问数接上你的所有数据——<br/><span class="acc">一句话就能问</span>。</h2>
+        <p class="sub">从老板的一句话 demo 开始，到运营全员日常使用——90 天内，问数会接上你的 CRM / 业务系统 / 客服记录。</p>
+        <div class="cta-actions">
+          <button type="button" class="btn btn-blue btn-lg ar-host" onclick="openContact('问数页·底部CTA','预约演示')">
+            预约演示
+            <span class="ar"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h11M10 4l5 5-5 5"/></svg><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h11M10 4l5 5-5 5"/></svg></span>
+          </button>
+        </div>
+      </div>
+      <div class="cta-stats">
+        <div class="cta-stat rv" style="--ac:#4338CA"><div class="csv">一句话</div><div class="csl">查公司所有数据</div></div>
+        <div class="cta-stat rv rv-d1" style="--ac:#14B8A6"><div class="csv">秒级</div><div class="csl">图表 / 表格 / 建议</div></div>
+        <div class="cta-stat rv rv-d2" style="--ac:#6366F1"><div class="csv">1000+</div><div class="csl">客户数据当样本</div></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+<div id="site-footer"></div>
+
+<!-- 现场演示「一句话出图」· scoped · 零外部库 · 纯手写 SVG -->
 <script>
-function openModal(id){var el=document.getElementById(id);if(!el)return;el.classList.add('open');document.body.style.overflow='hidden';}
-function closeModal(id){var el=document.getElementById(id);if(!el)return;el.classList.remove('open');document.body.style.overflow='';}
-document.querySelectorAll('.modal-overlay').forEach(function(o){o.addEventListener('click',function(e){if(e.target===o)closeModal(o.id);});});
-document.addEventListener('keydown',function(e){if(e.key==='Escape')document.querySelectorAll('.modal-overlay.open').forEach(function(m){closeModal(m.id);});});
-function openContact(){openModal('contactModal');}
 (function(){
-  var fp=document.getElementById('floatPanel');if(!fp)return;
-  fp.style.opacity='0';fp.style.transition='opacity .3s ease';
-  window.addEventListener('scroll',function(){fp.style.opacity=window.scrollY>200?'1':'0';fp.style.pointerEvents=window.scrollY>200?'':'none';},{passive:true});
+  var root = document.getElementById('try');
+  if(!root) return;
+  var form    = document.getElementById('qdForm');
+  var input   = document.getElementById('qdInput');
+  var chips   = Array.prototype.slice.call(root.querySelectorAll('.qd-chip'));
+  var stage   = root.querySelector('.qd-stage');
+  var elEmpty = document.getElementById('qdEmpty');
+  var elEcho  = document.getElementById('qdEcho');
+  var elEchoQ = document.getElementById('qdEchoQ');
+  var elLoad  = document.getElementById('qdLoading');
+  var elRes   = document.getElementById('qdResult');
+  var elChart = document.getElementById('qdChart');
+  var elConc  = document.getElementById('qdConc');
+  var reduce  = window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var SVGNS   = 'http://www.w3.org/2000/svg';
+
+  // —— 演示用示例数据（非真实客户实时数据） ——
+  var DATA = {
+    rate: {
+      q:'这个月各渠道转化率对比', kind:'bar', unit:'%', aria:'各渠道转化率柱状图',
+      items:[{k:'抖音',v:5.2},{k:'视频号',v:6.8},{k:'小红书',v:4.1},{k:'微信私域',v:12.4},{k:'电话',v:9.0}],
+      hotIdx:3,
+      conc:'本月转化最高的是 <b>微信私域 12.4%</b>，是小红书（4.1%）的 3 倍——预算往私域倾斜更划算。'
+    },
+    gmv: {
+      q:'最近 6 个月 GMV 走势', kind:'line', unit:'万', aria:'近 6 个月 GMV 走势折线图',
+      items:[{k:'1月',v:182},{k:'2月',v:156},{k:'3月',v:201},{k:'4月',v:238},{k:'5月',v:276},{k:'6月',v:331}],
+      conc:'GMV 半年从 182 万涨到 <b>331 万（+82%）</b>，5→6 月单月环比 +20%，增速在加快。'
+    },
+    refund: {
+      q:'退费率最高的 3 个班型', kind:'bar', unit:'%', aria:'退费率最高班型柱状图',
+      items:[{k:'少儿口语',v:14.6},{k:'成人雅思',v:9.2},{k:'考研全程',v:7.8}],
+      hotIdx:0,
+      conc:'<b>少儿口语退费率 14.6%</b>，明显高于另外两个班型——建议优先排查它的交付与续费环节。'
+    },
+    region: {
+      q:'华东 vs 华南的客单价', kind:'bar', unit:'元', aria:'华东与华南客单价对比柱状图',
+      items:[{k:'华东',v:8600},{k:'华南',v:6990}],
+      altFrom:1,
+      conc:'<b>华东客单价比华南高 23%</b>（8600 vs 6990 元）——同样的获客投入，华东更值得加码。'
+    }
+  };
+
+  function clearChart(){ while(elChart.firstChild) elChart.removeChild(elChart.firstChild); }
+  function fmt(n){ return (Math.round(n*10)/10).toString(); }
+  function mk(tag, attrs){ var e=document.createElementNS(SVGNS,tag); if(attrs) for(var k in attrs) e.setAttribute(k,attrs[k]); return e; }
+
+  // —— 柱状图：按数据自己算坐标 ——
+  function drawBar(d){
+    var W=680, H=320, padL=40, padR=24, padT=24, padB=46;
+    var n=d.items.length, max=Math.max.apply(null,d.items.map(function(i){return i.v;}));
+    var niceMax=max*1.18;
+    var plotW=W-padL-padR, plotH=H-padT-padB;
+    var svg=mk('svg',{viewBox:'0 0 '+W+' '+H,role:'img','aria-label':d.aria});
+    // 网格 + Y 轴刻度（4 段）
+    for(var g=0; g<=4; g++){
+      var y=padT+plotH*(g/4), val=niceMax*(1-g/4);
+      svg.appendChild(mk('line',{class:'qd-grid',x1:padL,y1:y,x2:W-padR,y2:y}));
+      var t=mk('text',{class:'qd-lbl',x:padL-8,y:y+4,'text-anchor':'end'}); t.textContent=Math.round(val); svg.appendChild(t);
+    }
+    var slot=plotW/n, bw=Math.min(72, slot*0.52);
+    d.items.forEach(function(it,i){
+      var bh=plotH*(it.v/niceMax);
+      var x=padL+slot*i+(slot-bw)/2, y=padT+plotH-bh;
+      var cls='qd-bar';
+      if(typeof d.hotIdx==='number' && i===d.hotIdx) cls+=' hot';
+      else if(typeof d.altFrom==='number' && i>=d.altFrom) cls+=' alt';
+      var r=mk('rect',{class:cls,x:x,y:reduce?y:(padT+plotH),width:bw,height:reduce?bh:0,rx:6});
+      svg.appendChild(r);
+      if(!reduce){ requestAnimationFrame(function(){ r.style.transition='y .6s cubic-bezier(.19,1,.22,1) '+(i*0.08)+'s,height .6s cubic-bezier(.19,1,.22,1) '+(i*0.08)+'s'; r.setAttribute('y',y); r.setAttribute('height',bh); }); }
+      var v=mk('text',{class:'qd-val',x:x+bw/2,y:y-9,'text-anchor':'middle'}); v.textContent=fmt(it.v)+d.unit; svg.appendChild(v);
+      var lb=mk('text',{class:'qd-lbl',x:x+bw/2,y:H-padB+22,'text-anchor':'middle'}); lb.textContent=it.k; svg.appendChild(lb);
+    });
+    elChart.appendChild(svg);
+  }
+
+  // —— 折线图：按数据自己算坐标 ——
+  function drawLine(d){
+    var W=680, H=320, padL=44, padR=26, padT=26, padB=44;
+    var max=Math.max.apply(null,d.items.map(function(i){return i.v;}));
+    var min=Math.min.apply(null,d.items.map(function(i){return i.v;}));
+    var lo=Math.max(0,min-(max-min)*0.5), hi=max+(max-min)*0.35; if(hi===lo) hi=lo+1;
+    var plotW=W-padL-padR, plotH=H-padT-padB, n=d.items.length;
+    var svg=mk('svg',{viewBox:'0 0 '+W+' '+H,role:'img','aria-label':d.aria});
+    for(var g=0; g<=4; g++){
+      var y=padT+plotH*(g/4), val=hi-(hi-lo)*(g/4);
+      svg.appendChild(mk('line',{class:'qd-grid',x1:padL,y1:y,x2:W-padR,y2:y}));
+      var t=mk('text',{class:'qd-lbl',x:padL-8,y:y+4,'text-anchor':'end'}); t.textContent=Math.round(val); svg.appendChild(t);
+    }
+    var X=function(i){return padL+(n<=1?plotW/2:plotW*(i/(n-1)));};
+    var Y=function(v){return padT+plotH*(1-(v-lo)/(hi-lo));};
+    var dPath='', dArea='';
+    d.items.forEach(function(it,i){ var x=X(i),y=Y(it.v); dPath+=(i?'L':'M')+x+' '+y+' '; });
+    dArea='M'+X(0)+' '+(padT+plotH)+' '+dPath.replace(/^M/,'L')+'L'+X(n-1)+' '+(padT+plotH)+' Z';
+    svg.appendChild(mk('path',{class:'qd-area',d:dArea}));
+    var line=mk('path',{class:'qd-line',d:dPath});
+    svg.appendChild(line);
+    if(!reduce){ var len=line.getTotalLength?line.getTotalLength():800; line.style.strokeDasharray=len; line.style.strokeDashoffset=len; requestAnimationFrame(function(){ line.style.transition='stroke-dashoffset 1s cubic-bezier(.19,1,.22,1)'; line.style.strokeDashoffset=0; }); }
+    d.items.forEach(function(it,i){
+      var x=X(i),y=Y(it.v);
+      svg.appendChild(mk('circle',{class:'qd-dot',cx:x,cy:y,r:4.5}));
+      var v=mk('text',{class:'qd-val',x:x,y:y-12,'text-anchor':'middle'}); v.textContent=fmt(it.v)+d.unit; svg.appendChild(v);
+      var lb=mk('text',{class:'qd-lbl',x:x,y:H-padB+22,'text-anchor':'middle'}); lb.textContent=it.k; svg.appendChild(lb);
+    });
+    elChart.appendChild(svg);
+  }
+
+  var timers=[];
+  function clearTimers(){ timers.forEach(clearTimeout); timers=[]; }
+
+  function run(key, fallback){
+    var d=DATA[key]; if(!d) return;
+    clearTimers();
+    // chip 选中态
+    chips.forEach(function(c){ c.classList.toggle('is-on', c.getAttribute('data-q')===key); });
+    // 回显问句（命中示例用其标准问法；自由输入用用户原话）
+    elEmpty.hidden=true;
+    elEcho.hidden=false; elEchoQ.textContent=(fallback&&fallback.userText)?fallback.userText:d.q;
+    elRes.hidden=true; clearChart();
+    elLoad.hidden=false;
+    document.getElementById('qdLoadingTxt').textContent = fallback&&fallback.note ? '未命中示例，先用示例数据演示 · 正在取数…' : '正在取数 · 生成图表…';
+
+    var delay=reduce?60:760;
+    timers.push(setTimeout(function(){
+      elLoad.hidden=true;
+      if(d.kind==='line') drawLine(d); else drawBar(d);
+      elChart.setAttribute('aria-label', d.aria);
+      elConc.innerHTML='<span class="qd-conc-ic"><i class="fa-solid fa-lightbulb"></i></span><span>'+d.conc+'</span>';
+      elRes.hidden=false;
+      if(!reduce){ elRes.setAttribute('data-anim','in'); setTimeout(function(){ elRes.removeAttribute('data-anim'); },480); }
+    }, delay));
+  }
+
+  // 自由输入 → 关键词匹配；命中则跑对应示例，未命中回退到任一示例并提示
+  function matchKey(text){
+    var s=(text||'').toLowerCase();
+    if(/转化|渠道/.test(s)) return 'rate';
+    if(/gmv|走势|趋势|增长|销售额|营收/.test(s)) return 'gmv';
+    if(/退费|退款|流失/.test(s)) return 'refund';
+    if(/客单|华东|华南|地区|区域|城市/.test(s)) return 'region';
+    return null;
+  }
+
+  chips.forEach(function(c){ c.addEventListener('click', function(){ run(c.getAttribute('data-q')); }); });
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var text=input.value.trim();
+    if(!text){ run('rate'); return; }
+    var key=matchKey(text);
+    if(key) run(key, {userText:text});
+    else { var pool=['rate','gmv','refund','region']; run(pool[Math.floor(Math.random()*pool.length)], {userText:text, note:true}); }
+  });
 })();
 </script>
 
+<script>window.SITE_REL='../';window.PAGE_CTX={entity:'canmou',type:'product',title:'句子问数 · 参谋'};</script>
+<script src="../assets/site.js"></script>
 </body>
 </html>

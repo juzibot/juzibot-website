@@ -51,6 +51,28 @@
   .metric-card:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
   .metric-card.danger { background:#FEF2F2; border-color:#FECACA; }
   .metric-card.warn { background:#FFFBEB; border-color:#FDE68A; }
+  /* 顶部关键指标：等宽小卡，纵向数字+标签，大留白 */
+  .metric-pill { display:flex; flex-direction:column; align-items:flex-start; justify-content:center; min-width:88px; height:44px; padding:0 16px; border-radius:14px; background:transparent; transition:background .15s; cursor:default; }
+  button.metric-pill { cursor:pointer; }
+  button.metric-pill:hover { background:#F4F5FA; }
+  .metric-num { font-size:19px; font-weight:600; line-height:1.05; letter-spacing:-.01em; display:flex; align-items:baseline; gap:1px; }
+  .metric-num .pulse { align-self:center; margin-right:2px; }
+  .metric-lbl { font-size:11px; color:#9CA0AD; line-height:1.2; margin-top:1px; white-space:nowrap; }
+  button.metric-pill .metric-num { gap:6px; }
+  /* 待办分段 */
+  .todo-seg { display:flex; flex-direction:column; align-items:center; justify-content:center; line-height:1.05; cursor:pointer; min-width:48px; }
+  .todo-num { font-size:18px; font-weight:700; letter-spacing:-.01em; }
+  .todo-lbl { font-size:10.5px; margin-top:1px; white-space:nowrap; }
+  /* 苹果风分段控件（会话模式 / 四种介入模式） */
+  .segmented { display:inline-flex; padding:3px; border-radius:11px; background:#F0F1F6; gap:2px; }
+  .seg-pill { display:flex; align-items:center; justify-content:center; gap:5px; padding:6px 11px; border-radius:8px; font-size:13px; color:#6B7280; cursor:pointer; white-space:nowrap; transition:color .15s; line-height:1; }
+  .seg-pill:hover { color:#374151; }
+  .seg-pill.active { background:#FFFFFF; color:#1F2433; font-weight:500; box-shadow:0 1px 2px rgba(16,24,40,.06), 0 1px 3px rgba(16,24,40,.04); }
+  .seg-pill .seg-tag { font-size:10px; padding:1px 5px; border-radius:5px; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; letter-spacing:-.02em; }
+  /* 四种模式条：填满输入区一行、等宽分段、字号紧凑不竖排 */
+  .seg-tab-bar { width:100%; }
+  .seg-tab-bar .seg-pill { flex:1; padding:7px 6px; font-size:12.5px; gap:4px; }
+  .seg-tab-bar .seg-pill .seg-tag { font-size:9.5px; padding:1px 4px; }
   .drawer { position:fixed; top:0; right:-560px; width:540px; height:100vh; background:white; box-shadow:-8px 0 40px rgba(0,0,0,0.1); transition:right .25s ease; z-index:50; }
   .drawer.open { right:0; }
   .mask { position:fixed; inset:0; background:rgba(0,0,0,0.35); opacity:0; pointer-events:none; transition:opacity .25s; z-index:40; }
@@ -108,81 +130,101 @@
 <body class="h-screen overflow-hidden">
 
 <!-- ========== 顶部栏 ========== -->
-<header class="h-14 bg-white border-b border-gray-200 flex items-center px-4 gap-4 relative z-30">
-  <div class="flex items-center gap-2 pr-4 border-r border-gray-200">
-    <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-[#4C5BF0] to-[#8B79F0] flex items-center justify-center text-white font-bold text-sm">句</div>
-    <span class="font-semibold text-gray-800">Agent 协作工作台</span>
+<header class="h-16 bg-white border-b border-gray-100 flex items-center px-7 gap-6 relative z-30">
+  <!-- 品牌 + 组切换 -->
+  <div class="flex items-center gap-3.5 flex-shrink-0">
+    <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-[#4C5BF0] to-[#8B79F0] flex items-center justify-center text-white font-semibold text-sm shadow-sm shadow-indigo-200/60">句</div>
+    <div class="relative">
+      <button class="flex items-center gap-2.5 h-9 pl-1 pr-2.5 rounded-lg hover:bg-gray-50 transition group" onclick="togglePop(event, 'pop-group')">
+        <span class="text-left leading-tight">
+          <span class="block text-[15px] font-semibold text-gray-900 tracking-tight">Agent 协作工作台</span>
+          <span class="block text-[11px] text-gray-400 -mt-0.5" id="currentGroup">医助 1 组</span>
+        </span>
+        <svg class="w-3.5 h-3.5 text-gray-300 group-hover:text-gray-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </button>
+      <div id="pop-group" class="popover" style="top:46px; left:0; min-width:220px;">
+        <div class="popover-item" onclick="switchGroup('医助 1 组', '5 Agent · 247 并行')">医助 1 组 <span class="text-xs text-gray-400 ml-auto tabular-nums">247 并行</span></div>
+        <div class="popover-item" onclick="switchGroup('医助 2 组', '3 Agent · 118 并行')">医助 2 组 <span class="text-xs text-gray-400 ml-auto tabular-nums">118 并行</span></div>
+        <div class="popover-item" onclick="switchGroup('VIP 销售组', '4 Agent · 52 并行')">VIP 销售组 <span class="text-xs text-gray-400 ml-auto tabular-nums">52 并行</span></div>
+        <div class="border-t border-gray-100 my-1"></div>
+        <div class="popover-item text-[#4C5BF0]" onclick="closeAllPop(); openBatchReview()">⇆ 跨组批量审核（3 个组）</div>
+        <div class="popover-item text-[#4C5BF0]" onclick="toast('打开组管理','info'); closeAllPop()">＋ 新建组 / 管理</div>
+      </div>
+    </div>
   </div>
 
-  <!-- 组切换 -->
-  <div class="relative">
-    <button class="flex items-center gap-2 h-9 px-3 rounded-lg border border-gray-200 hover:border-gray-300 text-sm" onclick="togglePop(event, 'pop-group')">
-      <span class="text-gray-600">当前</span>
-      <span class="font-medium" id="currentGroup">医助 1 组</span>
-      <svg class="w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+  <!-- 集群状态：三枚关键指标 + 待办汇总，疏朗等宽 -->
+  <div class="flex-1 flex items-center justify-center">
+    <div class="flex items-center gap-1">
+      <!-- 在岗 -->
+      <button class="metric-pill" onclick="openBattleRoom()" title="打开 Agent 作战室">
+        <span class="metric-num text-gray-900"><span class="pulse text-emerald-500 bg-emerald-500 flex-shrink-0"></span>5</span>
+        <span class="metric-lbl">Agent 在岗</span>
+      </button>
+      <!-- 并行 -->
+      <div class="metric-pill">
+        <span class="metric-num text-gray-900 tabular-nums">247</span>
+        <span class="metric-lbl">并行处理</span>
+      </div>
+      <!-- 自动完成率 -->
+      <div class="metric-pill">
+        <span class="metric-num text-emerald-600 tabular-nums">89<span class="text-base">%</span></span>
+        <span class="metric-lbl">自动完成</span>
+      </div>
+
+      <span class="w-px h-7 bg-gray-150 mx-2.5" style="background:#ECEDF2"></span>
+
+      <!-- 待办汇总：单枚胶囊，三段语义色 -->
+      <div class="flex items-center h-11 px-3.5 rounded-2xl bg-gray-50/80 gap-3.5">
+        <button class="todo-seg" onclick="filterQueue('urgent')" title="急需你处理">
+          <span class="todo-num text-red-600 tabular-nums">3</span>
+          <span class="todo-lbl text-red-500">急需处理</span>
+        </button>
+        <span class="w-px h-4 bg-gray-200"></span>
+        <button class="todo-seg" onclick="openBatchReview()" title="跨 3 个组批量审核">
+          <span class="todo-num text-amber-600 tabular-nums">5</span>
+          <span class="todo-lbl text-amber-600">待审核</span>
+        </button>
+        <span class="w-px h-4 bg-gray-200"></span>
+        <button class="todo-seg" onclick="filterQueue('train')" title="训练机会">
+          <span class="todo-num text-violet-600 tabular-nums">4</span>
+          <span class="todo-lbl text-violet-500">训练机会</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 报告 + 用户 -->
+  <div class="flex items-center gap-4 flex-shrink-0">
+    <button id="openReport" class="h-9 px-4 rounded-lg bg-gradient-to-r from-[#4C5BF0] to-[#6D5CE5] text-white text-[13px] font-medium flex items-center gap-2 hover:opacity-90 transition shadow-sm shadow-indigo-200/50">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2a4 4 0 014-4h2m-6 6h6m-6 0v-6m0 0V7m0 0a4 4 0 00-4 4v2m4-6h4a4 4 0 014 4v2"/></svg>
+      今日交付报告
     </button>
-    <div id="pop-group" class="popover" style="top:40px; left:0; min-width:200px;">
-      <div class="popover-item" onclick="switchGroup('医助 1 组', '5 Agent · 247 并行')">医助 1 组 <span class="text-xs text-gray-400 ml-auto">247 并行</span></div>
-      <div class="popover-item" onclick="switchGroup('医助 2 组', '3 Agent · 118 并行')">医助 2 组 <span class="text-xs text-gray-400 ml-auto">118 并行</span></div>
-      <div class="popover-item" onclick="switchGroup('VIP 销售组', '4 Agent · 52 并行')">VIP 销售组 <span class="text-xs text-gray-400 ml-auto">52 并行</span></div>
-      <div class="border-t border-gray-100 my-1"></div>
-      <div class="popover-item text-[#4C5BF0]" onclick="closeAllPop(); openBatchReview()">⇆ 跨组批量审核（3 个组）</div>
-      <div class="popover-item text-[#4C5BF0]" onclick="toast('打开组管理','info'); closeAllPop()">＋ 新建组 / 管理</div>
-    </div>
-  </div>
 
-  <!-- 集群状态 -->
-  <div class="flex-1 flex items-center justify-center gap-2">
-    <div class="flex items-center gap-3 h-10 px-4 rounded-xl border border-gray-200 bg-gray-50 metric-card" onclick="openBattleRoom()" title="打开 Agent 作战室">
-      <div class="flex items-center gap-2">
-        <span class="pulse text-emerald-500 bg-emerald-500"></span>
-        <span class="text-xs text-gray-500">Agent 集群</span>
-        <span class="font-semibold text-gray-800">5 在岗</span>
+    <div class="relative">
+      <div class="flex items-center gap-2.5 pl-4 border-l border-gray-100 cursor-pointer" onclick="togglePop(event, 'pop-user')">
+        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-pink-300 to-pink-400 flex items-center justify-center text-white text-xs font-semibold">菲</div>
+        <div class="text-sm leading-tight">
+          <div class="font-medium text-gray-900">苏菲</div>
+          <div class="text-[11px] text-gray-400">主管</div>
+        </div>
       </div>
-      <div class="w-px h-5 bg-gray-200"></div>
-      <div class="text-xs"><span class="text-gray-500">并行处理</span> <span class="font-semibold text-gray-800">247</span></div>
-      <div class="w-px h-5 bg-gray-200"></div>
-      <div class="text-xs"><span class="text-gray-500">今日自动完成率</span> <span class="font-semibold text-emerald-600">89%</span></div>
-    </div>
-
-    <div class="flex items-center gap-3 h-10 px-4 rounded-xl border metric-card danger">
-      <div class="text-xs cursor-pointer" onclick="filterQueue('urgent')"><span class="text-red-600">急需你处理</span> <span class="font-bold text-red-600 text-base">3</span></div>
-      <div class="w-px h-5 bg-red-200"></div>
-      <div class="text-xs cursor-pointer" onclick="openBatchReview()" title="跨 3 个组批量审核"><span class="text-amber-700">等你审核</span> <span class="font-bold text-amber-700 text-base">5</span> <span class="text-[10px] text-amber-600">+8</span></div>
-      <div class="w-px h-5 bg-red-200"></div>
-      <div class="text-xs cursor-pointer" onclick="filterQueue('train')"><span class="text-violet-700">训练机会</span> <span class="font-bold text-violet-700 text-base">4</span></div>
-    </div>
-  </div>
-
-  <button id="openReport" class="h-9 px-3 rounded-lg bg-gradient-to-r from-[#4C5BF0] to-[#6D5CE5] text-white text-sm flex items-center gap-2 hover:opacity-90">
-    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2a4 4 0 014-4h2m-6 6h6m-6 0v-6m0 0V7m0 0a4 4 0 00-4 4v2m4-6h4a4 4 0 014 4v2"/></svg>
-    今日交付报告
-  </button>
-
-  <!-- 用户头像 -->
-  <div class="relative">
-    <div class="flex items-center gap-2 pl-3 border-l border-gray-200 cursor-pointer" onclick="togglePop(event, 'pop-user')">
-      <div class="w-8 h-8 rounded-full bg-gradient-to-br from-pink-300 to-pink-400 flex items-center justify-center text-white text-xs font-semibold">菲</div>
-      <div class="text-sm">
-        <div class="font-medium leading-tight">苏菲</div>
-        <div class="text-xs text-gray-500 leading-tight">主管 · 医助 1 组</div>
+      <div id="pop-user" class="popover" style="top:48px; right:0; min-width:180px;">
+        <div class="popover-item" onclick="toast('个人资料','info'); closeAllPop()">👤 个人资料</div>
+        <div class="popover-item" onclick="toast('我的话术库','info'); closeAllPop()">📚 我的话术库</div>
+        <div class="popover-item" onclick="toast('今日我的操作记录','info'); closeAllPop()">📋 我的操作记录</div>
+        <div class="border-t border-gray-100 my-1"></div>
+        <div class="popover-item" onclick="toast('切换主题','info'); closeAllPop()">🌓 外观</div>
+        <div class="popover-item text-red-600" onclick="toast('退出登录','warn'); closeAllPop()">退出</div>
       </div>
-    </div>
-    <div id="pop-user" class="popover" style="top:46px; right:0; min-width:180px;">
-      <div class="popover-item" onclick="toast('个人资料','info'); closeAllPop()">👤 个人资料</div>
-      <div class="popover-item" onclick="toast('我的话术库','info'); closeAllPop()">📚 我的话术库</div>
-      <div class="popover-item" onclick="toast('今日我的操作记录','info'); closeAllPop()">📋 我的操作记录</div>
-      <div class="border-t border-gray-100 my-1"></div>
-      <div class="popover-item" onclick="toast('切换主题','info'); closeAllPop()">🌓 外观</div>
-      <div class="popover-item text-red-600" onclick="toast('退出登录','warn'); closeAllPop()">退出</div>
     </div>
   </div>
 </header>
 
-<div class="flex" style="height: calc(100vh - 56px);">
+<div class="flex" style="height: calc(100vh - 64px);">
 
   <!-- 最左一级导航 -->
-  <nav class="w-14 bg-white border-r border-gray-200 flex flex-col items-center py-3 gap-1">
+  <nav class="w-14 flex-shrink-0 bg-white border-r border-gray-100 flex flex-col items-center py-3 gap-1">
     <div class="nav-item" data-tip="首页" onclick="notReady('首页')"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg></div>
     <div class="nav-item active" data-tip="聚合工作台"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg></div>
     <div class="nav-item" data-tip="Agent 工厂" onclick="notReady('Agent 工厂')"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div>
@@ -195,7 +237,7 @@
   </nav>
 
   <!-- 任务队列 -->
-  <aside class="w-80 bg-white border-r border-gray-200 flex flex-col">
+  <aside class="w-72 flex-shrink-0 bg-white border-r border-gray-100 flex flex-col">
     <div class="px-4 pt-4 pb-3">
       <div class="flex items-center bg-gray-100 rounded-lg p-1">
         <div class="seg-tab active flex-1 text-center" onclick="switchQueueView(this, 'mine')">我的队列</div>
@@ -351,29 +393,33 @@
     </div>
 
     <!-- 底部集群 -->
-    <div class="border-t border-gray-200 bg-gray-50 px-4 py-3 cursor-pointer hover:bg-gray-100 transition" onclick="openBattleRoom()">
-      <div class="text-xs text-gray-500 mb-2 flex items-center justify-between">
-        <span>Agent 集群 · 实时</span>
-        <span class="text-[10px] text-[#4C5BF0]">查看详情 →</span>
-      </div>
-      <div class="flex items-center gap-2">
-        <div class="flex -space-x-1.5">
-          <div class="w-6 h-6 rounded-full bg-gradient-to-br from-violet-400 to-violet-600 flex items-center justify-center text-white text-[10px] font-bold border-2 border-white">A1</div>
-          <div class="w-6 h-6 rounded-full bg-gradient-to-br from-indigo-400 to-indigo-600 flex items-center justify-center text-white text-[10px] font-bold border-2 border-white">A2</div>
-          <div class="w-6 h-6 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white text-[10px] font-bold border-2 border-white">A3</div>
-          <div class="w-6 h-6 rounded-full bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center text-white text-[10px] font-bold border-2 border-white">A4</div>
-          <div class="w-6 h-6 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-white text-[10px] font-bold border-2 border-white">A5</div>
+    <div class="border-t border-gray-100 px-4 py-4 cursor-pointer hover:bg-gray-50/70 transition" onclick="openBattleRoom()">
+      <div class="flex items-center justify-between mb-3">
+        <div class="flex items-center gap-2">
+          <span class="pulse text-emerald-500 bg-emerald-500"></span>
+          <span class="text-[11px] font-medium text-gray-500 tracking-wide">Agent 集群 · 实时</span>
         </div>
-        <div class="text-xs text-gray-600 leading-tight">
-          <div>5 个 Agent 在岗 · 平均响应 <b class="text-emerald-600">1.4s</b></div>
-          <div class="text-[10px] text-gray-400">会话分配：高价值优先 A1 · 新客 A2/A3</div>
+        <span class="text-[11px] text-[#4C5BF0]">详情 →</span>
+      </div>
+      <div class="flex items-center justify-between">
+        <div class="flex -space-x-2">
+          <div class="w-7 h-7 rounded-full bg-gradient-to-br from-violet-400 to-violet-600 flex items-center justify-center text-white text-[10px] font-bold border-2 border-white">A1</div>
+          <div class="w-7 h-7 rounded-full bg-gradient-to-br from-indigo-400 to-indigo-600 flex items-center justify-center text-white text-[10px] font-bold border-2 border-white">A2</div>
+          <div class="w-7 h-7 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white text-[10px] font-bold border-2 border-white">A3</div>
+          <div class="w-7 h-7 rounded-full bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center text-white text-[10px] font-bold border-2 border-white">A4</div>
+          <div class="w-7 h-7 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-white text-[10px] font-bold border-2 border-white">A5</div>
+        </div>
+        <div class="text-right leading-tight">
+          <div class="text-xs text-gray-600">5 在岗</div>
+          <div class="text-[11px] text-gray-400">均响应 <b class="text-emerald-600 tabular-nums">1.4s</b></div>
         </div>
       </div>
+      <div class="text-[11px] text-gray-400 mt-2.5">分配规则：高价值 → A1 · 新客 → A2 / A3</div>
     </div>
   </aside>
 
   <!-- 中间会话区 -->
-  <main class="flex-1 flex flex-col bg-white">
+  <main class="flex-1 min-w-0 flex flex-col bg-white">
     <div class="h-16 border-b border-gray-200 px-5 flex items-center gap-4">
       <div class="flex items-center gap-3">
         <img class="w-10 h-10 rounded-full object-cover" src="https://api.dicebear.com/9.x/notionists/svg?seed=liKe&backgroundColor=ffd1dc" alt="">
@@ -388,10 +434,10 @@
       </div>
       <div class="flex-1"></div>
 
-      <div class="flex items-center gap-2 h-9 px-2 bg-gray-100 rounded-lg">
-        <div class="seg-tab text-xs" onclick="switchMode(this, 'agent')">Agent 接管</div>
-        <div class="seg-tab active text-xs" onclick="switchMode(this, 'coop')">人机协作</div>
-        <div class="seg-tab text-xs" onclick="switchMode(this, 'human')">我接管</div>
+      <div class="segmented">
+        <div class="seg-pill seg-tab" onclick="switchMode(this, 'agent')">Agent 接管</div>
+        <div class="seg-pill seg-tab active" onclick="switchMode(this, 'coop')">人机协作</div>
+        <div class="seg-pill seg-tab" onclick="switchMode(this, 'human')">我接管</div>
       </div>
 
       <button class="h-9 w-9 rounded-lg hover:bg-gray-100 flex items-center justify-center text-gray-500" title="标记完成" onclick="markDone()">
@@ -519,30 +565,27 @@
     </div>
 
     <!-- 底部输入 -->
-    <div class="border-t border-gray-200 bg-white">
-      <div class="flex items-center px-5 pt-3 gap-1">
-        <div class="seg-tab flex items-center gap-1.5" onclick="switchInput(this, 'plan')" title="Plan · Agent 给 2-3 个思路让你选">
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
-          让 Agent 提方案
-          <span class="text-[10px] px-1 py-0.5 rounded bg-emerald-100 text-emerald-700 ml-0.5 font-mono">Plan</span>
+    <div class="border-t border-gray-100 bg-white">
+      <div class="px-6 pt-4">
+        <div class="segmented seg-tab-bar">
+          <div class="seg-pill seg-tab" onclick="switchInput(this, 'plan')" title="Plan · Agent 给 2-3 个思路让你选">
+            让 Agent 提方案
+            <span class="seg-tag bg-emerald-100 text-emerald-700">Plan</span>
+          </div>
+          <div class="seg-pill seg-tab active" onclick="switchInput(this, 'reply')" title="Manual · 你完全自己写">
+            我来写
+            <span class="seg-tag bg-gray-100 text-gray-500">Manual</span>
+          </div>
+          <div class="seg-pill seg-tab" onclick="switchInput(this, 'instruct')" title="Co-write · 你给方向，Agent 落字">
+            指令 Agent
+            <span class="seg-tag bg-blue-100 text-blue-700">Co-write</span>
+          </div>
+          <div class="seg-pill seg-tab" onclick="switchInput(this, 'train')" title="Teach · 写一次，未来 Agent 自己用">
+            训练成话术
+            <span class="seg-tag bg-violet-100 text-violet-700">Teach</span>
+          </div>
         </div>
-        <div class="seg-tab active flex items-center gap-1.5" onclick="switchInput(this, 'reply')" title="Manual · 你完全自己写">
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
-          我来写
-          <span class="text-[10px] px-1 py-0.5 rounded bg-gray-100 text-gray-600 ml-0.5 font-mono">Manual</span>
-        </div>
-        <div class="seg-tab flex items-center gap-1.5" onclick="switchInput(this, 'instruct')" title="Co-write · 你给方向，Agent 落字">
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-          指令 Agent
-          <span class="text-[10px] px-1 py-0.5 rounded bg-blue-100 text-blue-700 ml-0.5 font-mono">Co-write</span>
-        </div>
-        <div class="seg-tab flex items-center gap-1.5" onclick="switchInput(this, 'train')" title="Teach · 写一次，未来 Agent 自己用">
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
-          训练成话术
-          <span class="text-[10px] px-1 py-0.5 rounded bg-violet-100 text-violet-700 ml-0.5 font-mono">Teach</span>
-        </div>
-        <div class="flex-1"></div>
-        <div class="text-[11px] text-gray-400">类比 Claude Code 的四种模式 · 介入程度从左到右递增</div>
+        <div class="text-[10.5px] text-gray-300 mt-2 px-0.5">介入程度从左到右递增 · 对应 Claude Code 的四种协作模式</div>
       </div>
 
       <div class="px-5 pb-4">
@@ -572,9 +615,9 @@
         <div id="panel-reply" class="mt-2">
           <div class="rounded-xl border border-gray-200 bg-white focus-within:border-[#4C5BF0] transition">
             <textarea id="replyText" class="w-full px-4 pt-3 pb-2 text-sm outline-none resize-none" rows="3" placeholder="直接回复给客户 · Enter 发送，Shift+Enter 换行"></textarea>
-            <div class="flex items-center justify-between px-3 pb-2">
-              <div class="flex items-center gap-1 text-gray-400 relative">
-                <button class="w-7 h-7 rounded hover:bg-gray-100 flex items-center justify-center" onclick="togglePop(event, 'pop-emoji')">😊</button>
+            <div class="flex items-center justify-between gap-2 px-3 pb-2">
+              <div class="flex items-center gap-1 text-gray-400 relative flex-shrink min-w-0">
+                <button class="w-7 h-7 flex-shrink-0 rounded hover:bg-gray-100 flex items-center justify-center" onclick="togglePop(event, 'pop-emoji')">😊</button>
                 <div id="pop-emoji" class="popover" style="bottom:34px; left:0; width:240px;">
                   <div class="grid grid-cols-8 gap-1 p-1 text-lg">
                     <button class="hover:bg-gray-100 rounded w-8 h-8" onclick="insertEmoji('😊')">😊</button>
@@ -587,25 +630,25 @@
                     <button class="hover:bg-gray-100 rounded w-8 h-8" onclick="insertEmoji('🔥')">🔥</button>
                   </div>
                 </div>
-                <button class="w-7 h-7 rounded hover:bg-gray-100 flex items-center justify-center text-xs font-bold" onclick="toast('GIF 选择器','info')">GIF</button>
-                <button class="w-7 h-7 rounded hover:bg-gray-100 flex items-center justify-center" onclick="toast('附件上传','info')">
+                <button class="w-7 h-7 flex-shrink-0 rounded hover:bg-gray-100 flex items-center justify-center text-xs font-bold" onclick="toast('GIF 选择器','info')">GIF</button>
+                <button class="w-7 h-7 flex-shrink-0 rounded hover:bg-gray-100 flex items-center justify-center" onclick="toast('附件上传','info')">
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"/></svg>
                 </button>
-                <div class="w-px h-4 bg-gray-200 mx-1"></div>
-                <button class="h-7 px-2 rounded hover:bg-gray-100 text-xs text-violet-600 flex items-center gap-1" onclick="showScriptLib()">
+                <div class="w-px h-4 bg-gray-200 mx-1 flex-shrink-0"></div>
+                <button class="h-7 px-2 flex-shrink-0 whitespace-nowrap rounded hover:bg-gray-100 text-xs text-violet-600 flex items-center gap-1" onclick="showScriptLib()">
                   <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"/></svg>
                   话术库
                 </button>
-                <button class="h-7 px-2 rounded hover:bg-gray-100 text-xs text-violet-600 flex items-center gap-1" onclick="agentWriteFor()">
+                <button class="h-7 px-2 flex-shrink-0 whitespace-nowrap rounded hover:bg-gray-100 text-xs text-violet-600 flex items-center gap-1" onclick="agentWriteFor()">
                   <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                  让 Agent 帮我写
+                  Agent 帮写
                 </button>
               </div>
-              <div class="flex items-center gap-2">
-                <label class="h-8 px-3 rounded-lg border border-gray-200 text-xs text-gray-600 hover:bg-gray-50 flex items-center gap-1.5 cursor-pointer">
-                  <input type="checkbox" id="backToAgent" checked class="accent-[#4C5BF0]"> 发送后交还 Agent
+              <div class="flex items-center gap-2 flex-shrink-0">
+                <label class="h-8 px-3 rounded-lg border border-gray-200 text-xs text-gray-600 hover:bg-gray-50 flex items-center gap-1.5 cursor-pointer whitespace-nowrap">
+                  <input type="checkbox" id="backToAgent" checked class="accent-[#4C5BF0]"> 交还 Agent
                 </label>
-                <button class="h-8 px-4 rounded-lg bg-gradient-to-r from-[#4C5BF0] to-[#6D5CE5] text-white text-sm font-medium" onclick="sendReply()">发送</button>
+                <button class="h-8 px-5 rounded-lg bg-gradient-to-r from-[#4C5BF0] to-[#6D5CE5] text-white text-sm font-medium" onclick="sendReply()">发送</button>
               </div>
             </div>
           </div>
@@ -676,8 +719,8 @@
   </main>
 
   <!-- 右侧面板 -->
-  <aside class="w-[340px] bg-white border-l border-gray-200 flex flex-col">
-    <div class="flex items-center px-4 pt-4 gap-1 border-b border-gray-200">
+  <aside class="w-[316px] flex-shrink-0 bg-white border-l border-gray-100 flex flex-col">
+    <div class="flex items-center px-4 pt-4 gap-1 border-b border-gray-100">
       <div class="seg-tab pb-3 border-b-2 border-transparent" onclick="switchSide(this, 'profile')">客户画像</div>
       <div class="seg-tab pb-3 border-b-2 border-[#4C5BF0] text-[#4C5BF0] font-medium" onclick="switchSide(this, 'log')">Agent 工作日志</div>
       <div class="seg-tab pb-3 border-b-2 border-transparent" onclick="switchSide(this, 'similar')">同类对话</div>

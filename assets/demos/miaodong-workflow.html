@@ -2,341 +2,345 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=1440, initial-scale=1">
 <title>句子秒懂 · Agent Workflow Canvas</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
+:root{
+  --ink:#0E1525; --ink-2:#52607A; --ink-3:#8A97AD;
+  --line:#E8EDF5; --bg:#F6F8FC; --panel:#fff;
+  --blue:#1659E5; --blue-soft:#EAF1FF;
+  --orange:#FF7A00; --orange-deep:#E56A00;
+  --purple:#8B5CF6; --green:#00C28B; --teal:#00AFA5;
+}
 body {
   font-family: "PingFang SC", -apple-system, "Helvetica Neue", sans-serif;
-  background: #F4F8FF;
-  color: #1A1A2E;
+  background: var(--bg);
+  color: var(--ink);
   font-size: 14px;
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-}
-.app {
-  width: 1440px; height: 900px;
-  display: grid; grid-template-columns: 220px 1fr 320px;
-  background: #fff;
-}
-
-/* Sidebar */
-.sidebar {
-  background: #0E1A33; color: #fff;
-  padding: 20px 16px;
-}
-.brand {
-  font-size: 16px; font-weight: 800;
-  display: flex; align-items: center; gap: 8px;
-  margin-bottom: 24px;
-}
-.brand-mark {
-  width: 28px; height: 28px; border-radius: 7px;
-  background: #1659E5; color: #fff;
-  display: grid; place-items: center;
-  font-weight: 800; font-size: 14px;
-}
-.nav-section {
-  font-size: 11px; color: rgba(255,255,255,.5);
-  font-weight: 700; letter-spacing: .08em;
-  text-transform: uppercase;
-  margin: 18px 0 10px;
-}
-.nav-item {
-  display: flex; align-items: center; gap: 10px;
-  padding: 8px 12px; border-radius: 8px;
-  color: rgba(255,255,255,.85);
-  font-size: 13px; cursor: pointer;
-  margin-bottom: 2px;
-}
-.nav-item:hover { background: rgba(255,255,255,.06); }
-.nav-item.active { background: #1659E5; color: #fff; font-weight: 600; }
-.nav-item .icon { width: 16px; opacity: .8; font-size: 14px; }
-
-/* Canvas */
-.canvas {
-  position: relative;
-  background:
-    radial-gradient(circle, rgba(232, 240, 255, .8) 1px, transparent 1.5px) 0 0/24px 24px,
-    #FAFBFD;
-  overflow: hidden;
-}
-.canvas-toolbar {
-  position: absolute; top: 16px; left: 16px; right: 16px;
-  display: flex; align-items: center; gap: 12px;
-  background: #fff; padding: 10px 16px;
-  border-radius: 10px; box-shadow: 0 2px 8px rgba(15,23,42,.06);
-  z-index: 10;
-}
-.canvas-toolbar .crumb { color: #6B7A99; font-size: 13px; }
-.canvas-toolbar .crumb b { color: #1A1A2E; font-weight: 700; }
-.canvas-toolbar .badge {
-  background: #E0F7EC; color: #00C28B;
-  font-size: 11px; font-weight: 700;
-  padding: 3px 10px; border-radius: 999px;
-  margin-left: auto;
-}
-.canvas-toolbar .btn {
-  background: #1659E5; color: #fff;
-  font-size: 12.5px; font-weight: 600;
-  padding: 7px 14px; border-radius: 8px; border: 0;
-  cursor: pointer;
-}
-
-/* Workflow nodes */
-.node {
-  position: absolute;
-  background: #fff;
-  border: 1.5px solid #E2E8F0;
-  border-radius: 10px;
-  padding: 14px 18px;
-  min-width: 180px;
-  box-shadow: 0 4px 12px rgba(15,23,42,.06);
-}
-.node .ntype {
-  font-size: 10px; font-weight: 800; color: #6B7A99;
-  letter-spacing: .1em; text-transform: uppercase;
-  margin-bottom: 4px;
-}
-.node .ntitle {
-  font-size: 14px; font-weight: 700; color: #1A1A2E;
-}
-.node .nmeta {
-  font-size: 11.5px; color: #6B7A99;
-  margin-top: 4px;
-}
-.node.start { border-color: #1659E5; }
-.node.start .ntype { color: #1659E5; }
-.node.kb { border-color: #FF7A00; }
-.node.kb .ntype { color: #FF7A00; }
-.node.cond { border-color: #8B5CF6; transform: rotate(0deg); }
-.node.cond .ntype { color: #8B5CF6; }
-.node.action { border-color: #00C28B; }
-.node.action .ntype { color: #00C28B; }
-.node.tool { border-color: #00AFA5; }
-.node.tool .ntype { color: #00AFA5; }
-.node.output { border-color: #1A1A2E; background: #1A1A2E; color: #fff; }
-.node.output .ntype { color: #FFC78A; }
-.node.output .ntitle { color: #fff; }
-
-/* Position the nodes */
-.n1 { top: 100px; left: 60px; }
-.n2 { top: 100px; left: 320px; }
-.n3 { top: 100px; left: 580px; }
-.n4 { top: 240px; left: 320px; }
-.n5 { top: 240px; left: 580px; }
-.n6 { top: 380px; left: 580px; }
-.n7 { top: 380px; left: 320px; }
-.n8 { top: 510px; left: 320px; }
-.n9 { top: 510px; left: 580px; }
-
-/* SVG arrows */
-.flow-svg {
-  position: absolute; top: 0; left: 0;
-  width: 100%; height: 100%;
-  pointer-events: none;
-}
-.flow-svg path {
-  stroke: #C7D2FE; stroke-width: 2;
-  fill: none;
-}
-.flow-svg path.active { stroke: #1659E5; stroke-width: 2.5; }
-
-/* Right panel: model & test */
-.right {
-  background: #FAFBFD;
-  border-left: 1px solid #E2E8F0;
-  padding: 20px 18px;
-  overflow-y: hidden;
-}
-.right-section { margin-bottom: 22px; }
-.right-section h4 {
-  font-size: 12px; font-weight: 800; color: #6B7A99;
-  letter-spacing: .08em; text-transform: uppercase;
-  margin-bottom: 10px;
-}
-.model-card {
-  background: #fff; border: 1px solid #E2E8F0;
-  border-radius: 10px; padding: 14px;
-  margin-bottom: 8px;
-}
-.model-card .row {
-  display: flex; justify-content: space-between; align-items: center;
-  margin-bottom: 6px;
-}
-.model-card .row:last-child { margin-bottom: 0; }
-.model-card .name { font-weight: 700; font-size: 13.5px; }
-.model-card .name .dot {
-  display: inline-block; width: 6px; height: 6px;
-  border-radius: 50%; background: #00C28B; margin-right: 6px;
-}
-.model-card .meta { font-size: 11.5px; color: #6B7A99; }
-.model-card .price { color: #FF7A00; font-weight: 700; font-size: 12px; }
-
-.test-input {
-  background: #fff; border: 1px solid #E2E8F0;
-  border-radius: 10px; padding: 12px;
-  font-size: 13px; color: #1A1A2E;
-}
-.test-result {
-  margin-top: 8px;
-  background: #E8F0FF; border-left: 3px solid #1659E5;
-  padding: 10px 12px; border-radius: 0 8px 8px 0;
-  font-size: 12.5px; color: #1A1A2E;
   line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
-.test-result .label {
-  font-size: 10.5px; color: #1659E5; font-weight: 700;
-  margin-bottom: 4px;
+
+/* ───────── App shell ───────── */
+.app {
+  width: 1440px; height: 820px;
+  background: var(--bg);
+  display: flex; flex-direction: column;
 }
-.metrics {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
-  margin-top: 8px;
+
+/* ───────── Topbar (Canvas editor chrome) ───────── */
+.topbar {
+  height: 64px; flex: none;
+  display: flex; align-items: center; gap: 16px;
+  padding: 0 28px;
+  background: rgba(255,255,255,.86);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+  z-index: 20;
 }
-.metric {
-  background: #fff; border: 1px solid #E2E8F0;
-  border-radius: 8px; padding: 10px 12px;
+.tb-back {
+  width: 34px; height: 34px; border-radius: 10px;
+  display: grid; place-items: center;
+  color: var(--ink-3); font-size: 20px;
+  border: 1px solid var(--line); background: #fff;
 }
-.metric .v {
-  font-size: 18px; font-weight: 800; color: #1659E5;
-  line-height: 1.1;
+.tb-logo {
+  width: 34px; height: 34px; border-radius: 10px; flex: none;
+  background: var(--blue);
+  display: grid; place-items: center;
+  color: #fff; font-weight: 700; font-size: 17px;
+  box-shadow: 0 4px 12px -4px rgba(22,89,229,.5);
 }
-.metric .l { font-size: 10.5px; color: #6B7A99; margin-top: 2px; }
+.tb-ttl b { font-size: 15px; font-weight: 700; color: var(--ink); letter-spacing: -.01em; }
+.tb-ttl span { display: block; font-size: 11.5px; color: var(--ink-3); margin-top: 2px; }
+.tb-badge {
+  margin-left: 14px;
+  background: #E2F8EF; color: #00A878;
+  font-size: 11.5px; font-weight: 700;
+  padding: 5px 12px; border-radius: 999px;
+}
+.tb-badge i {
+  display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+  background: #00C28B; margin-right: 6px; vertical-align: middle;
+}
+.tb-btns { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.tb-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 8px 14px; border: 1px solid var(--line); border-radius: 9px;
+  font-size: 13px; color: var(--ink-2); background: #fff;
+}
+.tb-btn.pub {
+  background: var(--blue); color: #fff; border-color: var(--blue); font-weight: 600;
+  box-shadow: 0 4px 12px -4px rgba(22,89,229,.5);
+}
+
+/* ───────── Stage (dotted canvas) ───────── */
+.stage {
+  position: relative; flex: 1; overflow: hidden;
+  background:
+    radial-gradient(circle, rgba(178,194,224,.5) 1px, transparent 1.6px) 0 0 / 30px 30px,
+    radial-gradient(900px 600px at 60% 35%, #FBFCFE, var(--bg));
+}
+.scaler {
+  position: absolute; left: 50%; top: 52%;
+  transform: translate(-50%, -50%);
+  width: 1320px; height: 620px;
+}
+
+/* ───────── Links (SVG bezier) ───────── */
+.links { position: absolute; inset: 0; width: 1320px; height: 620px; pointer-events: none; overflow: visible; }
+.links path {
+  fill: none; stroke: var(--blue); stroke-width: 2;
+  stroke-dasharray: 7 8; stroke-linecap: round;
+  opacity: .9;
+}
+.links path.warm { stroke: var(--orange); }
+.links circle.port { fill: var(--blue); }
+.links circle.port.warm { fill: var(--orange); }
+/* flowing data dot */
+.links circle.flow { fill: #fff; stroke: var(--blue); stroke-width: 2; }
+.links circle.flow.warm { stroke: var(--orange); }
+
+/* ───────── Nodes ───────── */
+.node {
+  position: absolute; background: var(--panel);
+  border: 1px solid var(--line); border-radius: 16px;
+  box-shadow: 0 12px 30px -16px rgba(20,35,75,.28), 0 2px 6px -3px rgba(20,35,75,.10);
+  padding: 14px 16px;
+}
+.nhd { display: flex; align-items: center; gap: 9px; margin-bottom: 11px; }
+.nic {
+  width: 26px; height: 26px; border-radius: 8px; flex: none;
+  display: grid; place-items: center;
+  font-size: 13px; font-weight: 700; color: #fff;
+}
+.nhd b { font-size: 14px; font-weight: 700; color: var(--ink); flex: 1; white-space: nowrap; letter-spacing: -.01em; }
+.nplay, .nmore { color: #b4bdcd; font-size: 13px; }
+.nmore { letter-spacing: 1.5px; }
+.nrow { display: flex; align-items: center; gap: 9px; font-size: 12px; margin-top: 8px; }
+.nrow > span.k { width: 34px; flex: none; color: var(--ink-3); }
+.nrow .bar { height: 7px; border-radius: 4px; background: #EEF2F8; flex: 1; }
+.nrow .bar.s { flex: none; width: 56px; }
+.chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 11.5px; font-weight: 600; color: var(--ink);
+  background: var(--bg); border: 1px solid var(--line);
+  padding: 3px 9px; border-radius: 999px;
+}
+.chip .md { width: 13px; height: 13px; border-radius: 4px; flex: none; background: linear-gradient(135deg, var(--blue), var(--purple)); }
+.chip .dot { width: 7px; height: 7px; border-radius: 50%; flex: none; }
+
+.ic-llm   { background: #1A1A2E; }
+.ic-tool  { background: var(--blue); }
+.ic-kb    { background: var(--green); }
+.ic-mem   { background: var(--purple); }
+.ic-agent { background: var(--orange); }
+.ic-code  { background: var(--teal); }
+.ic-end   { background: #5B6B8C; }
+
+/* ───────── Bottom toolbar ───────── */
+.toolbar {
+  position: absolute; right: 28px; bottom: 24px; z-index: 10;
+  display: flex; align-items: center; gap: 4px;
+  background: rgba(255,255,255,.92); backdrop-filter: blur(8px);
+  border: 1px solid var(--line); border-radius: 12px;
+  padding: 7px; box-shadow: 0 10px 26px -12px rgba(20,35,75,.24);
+}
+.tool {
+  width: 32px; height: 32px; border-radius: 9px;
+  display: grid; place-items: center;
+  color: var(--ink-2); font-size: 15px;
+}
+.tool.zoom { font-size: 12px; font-weight: 700; color: var(--ink-2); width: auto; padding: 0 10px; }
+.tool.on { background: var(--blue-soft); color: var(--blue); }
+.tool.run { border: 1px solid var(--blue); color: var(--blue); }
+.divx { width: 1px; height: 18px; background: var(--line); margin: 0 4px; }
+
+/* ───────── Animations ───────── */
+@media (prefers-reduced-motion: no-preference) {
+  .node { animation: pop .55s cubic-bezier(.2,.85,.3,1) both; }
+  .node.d1 { animation-delay: .10s; }
+  .node.d2 { animation-delay: .35s; }
+  .node.d3 { animation-delay: .50s; }
+  .node.d4 { animation-delay: .65s; }
+  .node.d5 { animation-delay: .95s; }
+  .node.d6 { animation-delay: 1.10s; }
+  .node.d7 { animation-delay: 1.40s; }
+
+  /* the "active" node gets a running halo */
+  .node.d5 { animation: pop .55s cubic-bezier(.2,.85,.3,1) .95s both, halo 2.6s ease-in-out 1.7s infinite; }
+
+  .links path {
+    opacity: 0;
+    animation: linkIn .5s ease forwards, march 1.1s linear infinite;
+  }
+  .links path.l1 { animation-delay: .55s, 1.7s; }
+  .links path.l2 { animation-delay: .60s, 1.7s; }
+  .links path.l3 { animation-delay: .70s, 1.7s; }
+  .links path.l4 { animation-delay: 1.00s, 1.7s; }
+  .links path.l5 { animation-delay: 1.10s, 1.7s; }
+  .links path.l6 { animation-delay: 1.15s, 1.7s; }
+  .links path.l7 { animation-delay: 1.40s, 1.7s; }
+  .links path.l8 { animation-delay: 1.45s, 1.7s; }
+
+  .links circle.port { animation: dotPulse 2.4s ease-in-out infinite; }
+  .links circle.flow { opacity: 0; animation: flowFade .4s ease 1.7s forwards; }
+  .tool.run { animation: tabPulse 2.6s ease-in-out infinite; }
+}
+
+@keyframes pop {
+  0%   { opacity: 0; transform: translateY(12px) scale(.92); }
+  60%  { opacity: 1; transform: translateY(-2px) scale(1.02); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes linkIn { 0% { opacity: 0; } 100% { opacity: .9; } }
+@keyframes march { to { stroke-dashoffset: -15; } }
+@keyframes dotPulse {
+  0%, 100% { r: 4; opacity: 1; }
+  50%      { r: 6; opacity: .65; }
+}
+@keyframes tabPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(22,89,229,0); }
+  50%      { box-shadow: 0 0 0 5px rgba(22,89,229,.18); }
+}
+@keyframes halo {
+  0%, 100% { box-shadow: 0 12px 30px -16px rgba(20,35,75,.28), 0 0 0 0 rgba(255,122,0,0); }
+  50%      { box-shadow: 0 12px 30px -16px rgba(20,35,75,.28), 0 0 0 4px rgba(255,122,0,.20); }
+}
+@keyframes flowFade { to { opacity: 1; } }
 </style>
 </head>
 <body>
 <div class="app">
 
-  <aside class="sidebar">
-    <div class="brand">
-      <div class="brand-mark">句</div>
-      <div>句子秒懂</div>
-    </div>
-    <div class="nav-section">运营平台</div>
-    <div class="nav-item"><span class="icon">⌂</span>首页 Dashboard</div>
-    <div class="nav-item"><span class="icon">📚</span>知识库</div>
-    <div class="nav-item active"><span class="icon">🤖</span>智能体 / Workflow</div>
-    <div class="nav-item"><span class="icon">📊</span>知识分析</div>
-    <div class="nav-item"><span class="icon">📝</span>会话小结</div>
-    <div class="nav-item"><span class="icon">🔌</span>插件应用</div>
-    <div class="nav-section">调优</div>
-    <div class="nav-item"><span class="icon">🎯</span>测试中心</div>
-    <div class="nav-item"><span class="icon">📈</span>调优中心</div>
-    <div class="nav-section">企业</div>
-    <div class="nav-item"><span class="icon">⚙️</span>API & 集成</div>
-    <div class="nav-item"><span class="icon">🛡️</span>权限管理</div>
-  </aside>
+  <!-- Topbar -->
+  <div class="topbar">
+    <span class="tb-back">‹</span>
+    <span class="tb-logo">句</span>
+    <span class="tb-ttl"><b>售前咨询 · Agent 工作流</b><span>句子秒懂 · Canvas 编辑器</span></span>
+    <span class="tb-badge"><i></i>运行中</span>
+    <span class="tb-btns">
+      <span class="tb-btn">◷ 运行记录</span>
+      <span class="tb-btn">⧉ 复制</span>
+      <span class="tb-btn pub">➤ 发布</span>
+    </span>
+  </div>
 
-  <main class="canvas">
-    <div class="canvas-toolbar">
-      <div class="crumb">智能体 / Workflow / <b>售前咨询 Agent · v2.1</b></div>
-      <div class="badge">● 已发布 · 灰度 12%</div>
-      <button class="btn">保存版本</button>
-    </div>
+  <!-- Stage -->
+  <div class="stage">
+    <div class="scaler">
 
-    <svg class="flow-svg">
-      <!-- Start → KB -->
-      <path d="M 240 130 L 320 130" />
-      <!-- KB → Cond -->
-      <path class="active" d="M 500 130 L 580 130" />
-      <!-- Cond Yes → Model gen -->
-      <path class="active" d="M 670 175 L 670 240" />
-      <!-- Cond No → Tool -->
-      <path d="M 580 145 L 510 200 L 510 240" />
-      <!-- Model gen → Output -->
-      <path class="active" d="M 670 285 L 670 370" />
-      <!-- Tool → Action -->
-      <path d="M 410 285 L 410 380 L 320 425" />
-      <!-- Action → Output -->
-      <path d="M 500 425 L 580 425" />
-      <!-- Output → Done -->
-      <path class="active" d="M 670 425 L 670 510" />
-    </svg>
+      <svg class="links" viewBox="0 0 1320 620" preserveAspectRatio="none" aria-hidden="true">
+        <!-- 大模型(left) → 三个工具/输入节点 -->
+        <path class="l1" d="M252 300 C322 300 322 132 392 132"/>
+        <path class="l2" d="M252 300 C322 300 322 308 392 308"/>
+        <path class="l3" d="M252 300 C322 300 322 484 392 484"/>
+        <!-- 工具/知识/记忆 → Agent 推理 / 代码 -->
+        <path class="l4" d="M652 132 C702 132 702 224 752 224"/>
+        <path class="l5" d="M652 308 C702 308 702 224 752 224"/>
+        <path class="l6 warm" d="M652 484 C702 484 702 432 752 432"/>
+        <!-- Agent / 代码 → End -->
+        <path class="l7 warm" d="M1012 224 C1042 224 1042 432 1072 432"/>
+        <path class="l8" d="M1012 432 C1042 432 1042 432 1072 432"/>
 
-    <div class="node start n1">
-      <div class="ntype">▶ 起点</div>
-      <div class="ntitle">用户提问</div>
-      <div class="nmeta">来源：客户私信 / 群聊</div>
-    </div>
-    <div class="node kb n2">
-      <div class="ntype">📚 知识库</div>
-      <div class="ntitle">检索 FAQ</div>
-      <div class="nmeta">向量库 · 312 chunks</div>
-    </div>
-    <div class="node cond n3">
-      <div class="ntype">⚡ 条件</div>
-      <div class="ntitle">命中分数 ≥ 0.85?</div>
-      <div class="nmeta">是 / 否分支</div>
-    </div>
-    <div class="node action n5">
-      <div class="ntype">🤖 模型生成</div>
-      <div class="ntitle">基于知识答复</div>
-      <div class="nmeta">DeepSeek-V3 · temp 0.3</div>
-    </div>
-    <div class="node tool n4">
-      <div class="ntype">🔧 工具调用</div>
-      <div class="ntitle">查询 CRM</div>
-      <div class="nmeta">客户档案 + 订单</div>
-    </div>
-    <div class="node action n7">
-      <div class="ntype">✓ 动作</div>
-      <div class="ntitle">合规话术替换</div>
-      <div class="nmeta">话术库 #C-042</div>
-    </div>
-    <div class="node output n6">
-      <div class="ntype">✦ 输出</div>
-      <div class="ntitle">回复客户</div>
-      <div class="nmeta" style="color:rgba(255,255,255,.7);">+ 打标记 + 写日志</div>
-    </div>
-  </main>
+        <!-- 流动的数据亮点 -->
+        <circle class="flow" r="4">
+          <animateMotion dur="1.6s" begin="2.0s" repeatCount="indefinite"
+            path="M252 300 C322 300 322 308 392 308"/>
+        </circle>
+        <circle class="flow" r="4">
+          <animateMotion dur="1.7s" begin="2.3s" repeatCount="indefinite"
+            path="M652 308 C702 308 702 224 752 224"/>
+        </circle>
+        <circle class="flow warm" r="4">
+          <animateMotion dur="1.5s" begin="2.6s" repeatCount="indefinite"
+            path="M1012 224 C1042 224 1042 432 1072 432"/>
+        </circle>
+        <circle class="flow" r="4">
+          <animateMotion dur="1.8s" begin="2.1s" repeatCount="indefinite"
+            path="M252 300 C322 300 322 132 392 132"/>
+        </circle>
 
-  <aside class="right">
-    <div class="right-section">
-      <h4>模型选择</h4>
-      <div class="model-card">
-        <div class="row">
-          <div class="name"><span class="dot"></span>DeepSeek-V3</div>
-          <div class="price">¥0.001 / K</div>
-        </div>
-        <div class="row">
-          <div class="meta">中文场景 · 速度优先</div>
-          <div style="color:#00C28B;font-size:11px;font-weight:700;">推荐</div>
-        </div>
+        <!-- 端口圆点 -->
+        <circle class="port" cx="252" cy="300" r="4"/>
+        <circle class="port" cx="392" cy="132" r="4"/><circle class="port" cx="652" cy="132" r="4"/>
+        <circle class="port" cx="392" cy="308" r="4"/><circle class="port" cx="652" cy="308" r="4"/>
+        <circle class="port" cx="392" cy="484" r="4"/><circle class="port" cx="652" cy="484" r="4"/>
+        <circle class="port" cx="752" cy="224" r="4"/><circle class="port" cx="1012" cy="224" r="4"/>
+        <circle class="port warm" cx="752" cy="432" r="4"/><circle class="port warm" cx="1012" cy="432" r="4"/>
+        <circle class="port" cx="1072" cy="432" r="4"/>
+      </svg>
+
+      <!-- 大模型 -->
+      <div class="node d1" style="left:18px; top:248px; width:234px;">
+        <div class="nhd"><span class="nic ic-llm">✦</span><b>大模型</b><span class="nplay">▷</span><span class="nmore">···</span></div>
+        <div class="nrow"><span class="k">输入</span><i class="bar"></i></div>
+        <div class="nrow"><span class="k">输出</span><i class="bar"></i></div>
+        <div class="nrow"><span class="k">模型</span><span class="chip"><i class="md"></i>DeepSeek-V3</span></div>
       </div>
-      <div class="model-card">
-        <div class="row">
-          <div class="name">Claude 4.7</div>
-          <div class="price">¥0.024 / K</div>
-        </div>
-        <div class="row">
-          <div class="meta">复杂推理 · 高质量</div>
-          <div style="color:#6B7A99;font-size:11px;">备用</div>
-        </div>
+
+      <!-- MCP 工具 -->
+      <div class="node d2" style="left:392px; top:84px; width:260px;">
+        <div class="nhd"><span class="nic ic-tool">⚙</span><b>MCP 工具</b><span class="nplay">▷</span><span class="nmore">···</span></div>
+        <div class="nrow"><span class="k">输入</span><i class="bar"></i></div>
+        <div class="nrow"><span class="k">输出</span><i class="bar"></i><i class="bar s"></i></div>
+        <div class="nrow"><span class="k">已接</span><span class="chip">订单系统 · CRM</span></div>
       </div>
-      <div class="model-card">
-        <div class="row">
-          <div class="name">Qwen 3 Max</div>
-          <div class="price">¥0.004 / K</div>
-        </div>
-        <div class="row">
-          <div class="meta">国内私有化场景</div>
-          <div style="color:#6B7A99;font-size:11px;">可选</div>
-        </div>
+
+      <!-- 知识库 -->
+      <div class="node d3" style="left:392px; top:256px; width:260px;">
+        <div class="nhd"><span class="nic ic-kb">☰</span><b>知识库</b><span class="nplay">▷</span><span class="nmore">···</span></div>
+        <div class="nrow"><span class="k">输入</span><i class="bar"></i></div>
+        <div class="nrow"><span class="k">输出</span><i class="bar"></i></div>
+        <div class="nrow"><span class="k">来源</span><span class="chip"><i class="dot" style="background:var(--green)"></i>产品文档 · 247 篇</span></div>
       </div>
+
+      <!-- 记忆 -->
+      <div class="node d4" style="left:392px; top:432px; width:260px;">
+        <div class="nhd"><span class="nic ic-mem">◈</span><b>记忆</b><span class="nplay">▷</span><span class="nmore">···</span></div>
+        <div class="nrow"><span class="k">输入</span><i class="bar"></i></div>
+        <div class="nrow"><span class="k">输出</span><i class="bar"></i></div>
+        <div class="nrow"><span class="k">读取</span><span class="chip"><i class="dot" style="background:var(--purple)"></i>客户档案 · 长期</span></div>
+      </div>
+
+      <!-- Agent 推理 -->
+      <div class="node d5" style="left:752px; top:140px; width:260px;">
+        <div class="nhd"><span class="nic ic-agent">✺</span><b>Agent 推理</b><span class="nplay">▷</span><span class="nmore">···</span></div>
+        <div class="nrow"><span class="k">输入</span><i class="bar"></i></div>
+        <div class="nrow"><span class="k">输出</span><i class="bar"></i></div>
+        <div class="nrow"><span class="k">模型</span><span class="chip"><i class="md"></i>DeepSeek-V3</span></div>
+        <div class="nrow"><span class="k">工具</span><span class="chip"><i class="dot" style="background:var(--orange)"></i>自动调用 · 4</span></div>
+      </div>
+
+      <!-- 代码 -->
+      <div class="node d6" style="left:752px; top:380px; width:260px;">
+        <div class="nhd"><span class="nic ic-code">‹›</span><b>代码</b><span class="nplay">▷</span><span class="nmore">···</span></div>
+        <div class="nrow"><span class="k">输入</span><i class="bar"></i></div>
+        <div class="nrow"><span class="k">输出</span><i class="bar"></i><i class="bar s"></i></div>
+      </div>
+
+      <!-- End -->
+      <div class="node d7" style="left:1072px; top:380px; width:216px;">
+        <div class="nhd"><span class="nic ic-end">■</span><b>End</b><span class="nplay">▷</span><span class="nmore">···</span></div>
+        <div class="nrow"><span class="k">输出</span><i class="bar"></i></div>
+        <div class="nrow"><span class="k">回复</span><span class="chip"><i class="dot" style="background:var(--blue)"></i>流式输出</span></div>
+      </div>
+
     </div>
 
-    <div class="right-section">
-      <h4>实时测试</h4>
-      <div class="test-input">📝 您家这款风衣什么时候到货？我等了两周了...</div>
-      <div class="test-result">
-        <div class="label">→ Agent 输出</div>
-        王姐久等了！您订的米白色 M 码风衣预计明天送达，物流单号 SF1234567890，您可以随时查询。再次为延迟致歉，已申请 50 元补偿券到您账户。
-      </div>
-      <div class="metrics">
-        <div class="metric"><div class="v">182ms</div><div class="l">响应延迟</div></div>
-        <div class="metric"><div class="v" style="color:#00C28B;">0.94</div><div class="l">置信度</div></div>
-      </div>
+    <!-- Bottom-right toolbar -->
+    <div class="toolbar">
+      <span class="tool">⛶</span>
+      <span class="tool">−</span>
+      <span class="tool zoom">100%</span>
+      <span class="tool">+</span>
+      <span class="divx"></span>
+      <span class="tool on">⊞</span>
+      <span class="tool run">▷</span>
     </div>
-  </aside>
+  </div>
 
 </div>
 </body>
