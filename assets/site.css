@@ -380,6 +380,26 @@
     .flow-stat{padding:9px 12px}.flow-stat .fv{font-size:17px}
     .flow-stat.s1{left:-12px}.flow-stat.s2{right:-10px}
   }
+  /* ── 极窄屏（375/390/414）：hero 面板 / 对话 / 工作流进一步收紧 ── */
+  @media(max-width:414px){
+    .hero-seg .seg-btn{padding:8px 12px;font-size:12px}
+    .flow-stat.s1{left:0}.flow-stat.s2{right:0}
+    .flow-stat .fl{font-size:8.5px}.flow-stat .fv{font-size:15px}
+    .fnode .fn-t{font-size:10.5px}
+    .fnode.n-brain .fn-t{font-size:12px}
+    .fnode.n-brain{padding:10px 12px}
+    .fnode.n-brain .fn-ic{width:26px;height:26px;flex-basis:26px;border-radius:7px}
+    .fnode.n-brain .fn-ic svg{width:14px;height:14px}
+    .chat-body{height:min(42vh,300px)}
+    .chat-chips button{padding:6px 10px;font-size:11px}
+    .chat-input{padding:10px 12px;gap:8px}
+    .chat-input input{padding:10px 14px;font-size:16px}
+    .chat-input .c-send{padding:10px 16px;font-size:12px}
+    .hero-kpis{gap:16px}
+    .hero-kpi .v{font-size:clamp(22px,6.5vw,28px)}
+    .hero-kpi .l{font-size:11px}
+    .eyebrow{font-size:12px;padding:6px 12px;gap:8px}
+  }
 
   /* ---- Hero 信任墙 ---- */
   .trust{margin-top:clamp(56px,7vw,92px);text-align:center}
@@ -1223,6 +1243,23 @@
     .pl-fde .fde-badge{background:rgba(255,255,255,.16);box-shadow:none;padding:8px 14px}
     .pl-fde .fde-txt{color:rgba(255,255,255,.92)}
     .pl-fde .fde-txt em{background:none;-webkit-text-fill-color:#fff;color:#fff}
+  }
+  /* ── 极窄屏（375/390/414）：地铁线路图进一步收紧 ── */
+  @media(max-width:414px){
+    .pl-track{padding-left:24px;gap:20px}
+    .pl-track::before,.pl-track::after{left:7px}
+    .pl-node .pl-dot{left:-21px;width:11px;height:11px}
+    .pl-node.prod .pl-dot{left:-38px}
+    .pl-node.exit .pl-dot{left:-38px}
+    .pl-node.prod{padding:14px 14px 16px}
+    .pl-node.prod h3{font-size:clamp(19px,5.2vw,24px)}
+    .pl-node.prod p{font-size:13.5px}
+    .pl-node.exit{padding:14px 14px}
+    .pl-fde{padding:14px}
+    .pl-fde .fde-badge{padding:7px 12px}
+    .pl-fde .fde-badge b{font-size:clamp(17px,5vw,22px)}
+    .pl-fde .fde-badge i{font-size:11px}
+    .pl-fde .fde-txt{font-size:13px}
   }
 
   /* ============ harness 工程 ============ */

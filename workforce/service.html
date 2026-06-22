@@ -78,6 +78,12 @@
     .role-lede{max-width:none}
     .crumbs a{display:inline-flex;align-items:center;min-height:24px}
     .pill{padding:9px 14px}
+    /* 能力卡：3 列塌单列，避免窄屏文字挤压 */
+    .cap-list{grid-template-columns:1fr}
+    .cap-list .cap{padding:13px 14px;gap:11px}
+    .cap-list .cap .ci{flex:0 0 34px;width:34px;height:34px;font-size:14px}
+    .cap-list .cap .cb{font-size:14px}
+    .cap-list .cap .cd{font-size:13px}
     /* 工单进度卡：收窄留白、字号收，避免横向挤压 */
     .auto-card{padding:18px 16px}
     .auto-bar .ab-top{font-size:13px}
