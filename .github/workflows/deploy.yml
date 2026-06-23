@@ -11,6 +11,7 @@ jobs:
       BR: ${{ github.ref_name }}
     steps:
       - name: SSH and deploy
+        id: deploy
         uses: appleboy/ssh-action@v1
         with:
           host:     ${{ secrets.HOST }}
@@ -26,3 +27,33 @@ jobs:
             git checkout -f -B "$BR" "origin/$BR"
             git clean -fd
             echo "deployed $BR -> $DIR ($(git rev-parse --short HEAD))"
+
+      - name: Notify Lark
+        if: always()
+        env:
+          LARK_WEBHOOK: ${{ secrets.LARK_WEBHOOK }}
+          BR: ${{ github.ref_name }}
+          REPO: ${{ github.repository }}
+          ACTOR: ${{ github.actor }}
+          SHA: ${{ github.sha }}
+          COMMIT_MSG: ${{ github.event.head_commit.message }}
+          COMMIT_URL: ${{ github.event.head_commit.url }}
+          RESULT: ${{ steps.deploy.outcome }}
+          SERVER_URL: ${{ github.server_url }}
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          set -uo pipefail
+          if [ -z "${LARK_WEBHOOK:-}" ]; then echo "no LARK_WEBHOOK secret, skip"; exit 0; fi
+          if [ "$RESULT" = "success" ]; then ICON="🚀 预览部署成功"; else ICON="❌ 预览部署失败"; fi
+          MSG1=$(printf '%s' "$COMMIT_MSG" | head -n1)
+          PRNUM=$(printf '%s' "$COMMIT_MSG" | grep -oE '#[0-9]+' | head -n1 | tr -d '#')
+          if [ -n "$PRNUM" ]; then PRLINE="PR: $SERVER_URL/$REPO/pull/$PRNUM"; else PRLINE="commit: $COMMIT_URL"; fi
+          RUN_URL="$SERVER_URL/$REPO/actions/runs/$RUN_ID"
+          TEXT="$ICON  [$BR]
+仓库: $REPO
+push: $ACTOR
+commit: ${SHA:0:7} $MSG1
+$PRLINE
+日志: $RUN_URL"
+          jq -n --arg t "$TEXT" '{msg_type:"text",content:{text:$t}}' \
+            | curl -s -X POST -H 'Content-Type: application/json' -d @- "$LARK_WEBHOOK"
