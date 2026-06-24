@@ -1,7 +1,50 @@
+# robots.txt · 句子互动 juzibot.com
+# GEO 优化版：显式欢迎主流 AI 爬虫，放开图片资源以便多模态被引用，
+# 仅屏蔽私有 / 构建 / 配置目录。
+
+# ---------- 默认规则：所有爬虫 ----------
 User-agent: *
 Allow: /
-Disallow: /assets/
 Disallow: /.kiro/
 Disallow: /.agents/
+Disallow: /deploy/
 
+# ---------- OpenAI（ChatGPT / SearchGPT）----------
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# ---------- Google（Gemini / AI Overviews）----------
+User-agent: Google-Extended
+Allow: /
+
+# ---------- Anthropic（Claude）----------
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+# ---------- Perplexity ----------
+User-agent: PerplexityBot
+Allow: /
+
+# ---------- 字节 / 豆包 ----------
+User-agent: Bytespider
+Allow: /
+
+# ---------- 微软 Bing / Copilot ----------
+User-agent: bingbot
+Allow: /
+
+# ---------- 百度（文心一言）----------
+User-agent: Baiduspider
+Allow: /
+
+# ---------- 站点地图 ----------
 Sitemap: https://juzibot.com/sitemap.xml
