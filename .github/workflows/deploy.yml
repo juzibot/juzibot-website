@@ -11,6 +11,7 @@ jobs:
       BR: ${{ github.ref_name }}
     steps:
       - name: SSH and deploy
+        id: deploy
         uses: appleboy/ssh-action@v1
         with:
           host:     ${{ secrets.HOST }}
@@ -26,3 +27,31 @@ jobs:
             git checkout -f -B "$BR" "origin/$BR"
             git clean -fd
             echo "deployed $BR -> $DIR ($(git rev-parse --short HEAD))"
+
+      - name: Notify Lark (card)
+        if: always()
+        env:
+          LARK_WEBHOOK: ${{ secrets.LARK_WEBHOOK }}
+          BR: ${{ github.ref_name }}
+          REPO: ${{ github.repository }}
+          ACTOR: ${{ github.actor }}
+          SHA: ${{ github.sha }}
+          COMMIT_MSG: ${{ github.event.head_commit.message }}
+          COMMIT_URL: ${{ github.event.head_commit.url }}
+          RESULT: ${{ steps.deploy.outcome }}
+          SERVER_URL: ${{ github.server_url }}
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          set -uo pipefail
+          if [ -z "${LARK_WEBHOOK:-}" ]; then echo "no LARK_WEBHOOK secret, skip"; exit 0; fi
+          if [ "$RESULT" = "success" ]; then TITLE="🚀 预览部署成功 [$BR]"; COLOR="green"; else TITLE="❌ 预览部署失败 [$BR]"; COLOR="red"; fi
+          MSG1=$(printf '%s' "$COMMIT_MSG" | head -n1)
+          PRNUM=$(printf '%s' "$COMMIT_MSG" | grep -oE '#[0-9]+' | head -n1 | tr -d '#')
+          if [ -n "$PRNUM" ]; then LINK="$SERVER_URL/$REPO/pull/$PRNUM"; BTN="查看 PR"; else LINK="$COMMIT_URL"; BTN="查看提交"; fi
+          RUN_URL="$SERVER_URL/$REPO/actions/runs/$RUN_ID"
+          BODY="**$MSG1**
+环境: $BR 预览
+提交: ${SHA:0:7}
+push: $ACTOR"
+          jq -n --arg title "$TITLE" --arg color "$COLOR" --arg body "$BODY" --arg btn "$BTN" --arg url "$LINK" --arg run "$RUN_URL" '{msg_type:"interactive",card:{config:{wide_screen_mode:true},header:{template:$color,title:{tag:"plain_text",content:$title}},elements:[{tag:"div",text:{tag:"lark_md",content:$body}},{tag:"action",actions:[{tag:"button",text:{tag:"plain_text",content:$btn},url:$url,type:"primary"},{tag:"button",text:{tag:"plain_text",content:"Actions 日志"},url:$run,type:"default"}]}]}}' \
+            | curl -s -X POST -H 'Content-Type: application/json' -d @- "$LARK_WEBHOOK"
