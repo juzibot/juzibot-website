@@ -14,7 +14,7 @@ jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
-      - name: Notify Lark
+      - name: Notify Lark (card)
         env:
           LARK_WEBHOOK: ${{ secrets.LARK_WEBHOOK }}
           EVENT: ${{ github.event_name }}
@@ -24,6 +24,7 @@ jobs:
           ISSUE_NUM: ${{ github.event.issue.number }}
           ISSUE_TITLE: ${{ github.event.issue.title }}
           ISSUE_URL: ${{ github.event.issue.html_url }}
+          IS_PR_COMMENT: ${{ github.event.issue.pull_request.html_url }}
           COMMENT_URL: ${{ github.event.comment.html_url }}
           PR_NUM: ${{ github.event.pull_request.number }}
           PR_TITLE: ${{ github.event.pull_request.title }}
@@ -34,58 +35,48 @@ jobs:
           REVIEW_STATE: ${{ github.event.review.state }}
           REVIEW_URL: ${{ github.event.review.html_url }}
         run: |
-          set -euo pipefail
-          if [ -z "${LARK_WEBHOOK:-}" ]; then echo "LARK_WEBHOOK secret 未配置，跳过"; exit 0; fi
+          set -uo pipefail
+          if [ -z "${LARK_WEBHOOK:-}" ]; then echo "no LARK_WEBHOOK secret, skip"; exit 0; fi
+          TITLE=""; COLOR="grey"; SUBTITLE=""; NUM=""; LINK=""; BTN="查看"
           case "$EVENT" in
             issues)
+              NUM="$ISSUE_NUM"; SUBTITLE="$ISSUE_TITLE"; LINK="$ISSUE_URL"; BTN="查看 Issue"
               case "$ACTION" in
-                opened)   ICON="🐛 新 Issue" ;;
-                closed)   ICON="✅ Issue 关闭" ;;
-                reopened) ICON="♻️ Issue 重开" ;;
-                assigned) ICON="👤 Issue 指派" ;;
-                *)        ICON="Issue $ACTION" ;;
-              esac
-              TEXT="$ICON  #$ISSUE_NUM $ISSUE_TITLE
-仓库: $REPO
-操作人: $SENDER
-$ISSUE_URL"
-              ;;
+                opened)   TITLE="🆕 新需求 #$NUM";   COLOR="orange" ;;
+                closed)   TITLE="✅ Issue 关闭 #$NUM"; COLOR="grey" ;;
+                reopened) TITLE="♻️ Issue 重开 #$NUM"; COLOR="orange" ;;
+                assigned) TITLE="👤 Issue 指派 #$NUM"; COLOR="blue" ;;
+                *)        TITLE="Issue $ACTION #$NUM"; COLOR="grey" ;;
+              esac ;;
             issue_comment)
-              TEXT="💬 新评论  #$ISSUE_NUM $ISSUE_TITLE
-仓库: $REPO
-评论人: $SENDER
-$COMMENT_URL"
-              ;;
+              NUM="$ISSUE_NUM"; SUBTITLE="$ISSUE_TITLE"; LINK="$COMMENT_URL"; BTN="查看评论"
+              if [ -n "${IS_PR_COMMENT:-}" ]; then TITLE="💬 PR 评论 #$NUM"; else TITLE="💬 Issue 评论 #$NUM"; fi
+              COLOR="grey" ;;
             pull_request)
+              NUM="$PR_NUM"; SUBTITLE="$PR_TITLE"; LINK="$PR_URL"; BTN="查看 PR"
               case "$ACTION" in
-                opened)           ICON="🔀 新 PR" ;;
-                reopened)         ICON="♻️ PR 重开" ;;
-                ready_for_review) ICON="📣 PR 可评审" ;;
-                review_requested) ICON="🙋 请求评审" ;;
+                opened)           TITLE="🔀 新 PR #$NUM";       COLOR="blue" ;;
+                reopened)         TITLE="♻️ PR 重开 #$NUM";      COLOR="blue" ;;
+                ready_for_review) TITLE="📣 PR 可评审 #$NUM";    COLOR="blue" ;;
+                review_requested) TITLE="🙋 请求评审 #$NUM";     COLOR="blue" ;;
                 closed)
-                  if [ "${PR_MERGED:-}" = "true" ]; then ICON="🎉 PR 已合并"; else ICON="🚫 PR 关闭(未合)"; fi ;;
-                *)                ICON="PR $ACTION" ;;
-              esac
-              TEXT="$ICON  #$PR_NUM $PR_TITLE
-仓库: $REPO ($PR_HEAD → $PR_BASE)
-操作人: $SENDER
-$PR_URL"
-              ;;
+                  if [ "${PR_MERGED:-}" = "true" ]; then TITLE="🎉 PR 已合并 #$NUM"; COLOR="purple"; else TITLE="🚫 PR 关闭未合 #$NUM"; COLOR="red"; fi ;;
+                *)                TITLE="PR $ACTION #$NUM";     COLOR="grey" ;;
+              esac ;;
             pull_request_review)
+              NUM="$PR_NUM"; SUBTITLE="$PR_TITLE"; LINK="$REVIEW_URL"; BTN="查看评审"
               case "$REVIEW_STATE" in
-                approved)          ICON="👍 PR 评审通过" ;;
-                changes_requested) ICON="🔧 PR 要求修改" ;;
-                commented)         ICON="💬 PR 评审评论" ;;
-                *)                 ICON="PR 评审 $REVIEW_STATE" ;;
-              esac
-              TEXT="$ICON  #$PR_NUM $PR_TITLE
-仓库: $REPO
-评审人: $SENDER
-$REVIEW_URL"
-              ;;
-            *)
-              TEXT="GitHub 事件: $EVENT / $ACTION on $REPO"
-              ;;
+                approved)          TITLE="👍 PR 评审通过 #$NUM"; COLOR="green" ;;
+                changes_requested) TITLE="🔧 PR 要求修改 #$NUM"; COLOR="orange" ;;
+                commented)         TITLE="💬 PR 评审评论 #$NUM"; COLOR="grey" ;;
+                *)                 TITLE="PR 评审 #$NUM";        COLOR="grey" ;;
+              esac ;;
+            *) TITLE="GitHub: $EVENT"; COLOR="grey"; LINK="https://github.com/$REPO" ;;
           esac
-          jq -n --arg t "$TEXT" '{msg_type:"text",content:{text:$t}}' \
+          BODY="**$SUBTITLE**
+仓库: $REPO
+操作人: $SENDER"
+          if [ "$EVENT" = "pull_request" ] && [ -n "${PR_HEAD:-}" ]; then BODY="$BODY
+分支: $PR_HEAD → $PR_BASE"; fi
+          jq -n --arg title "$TITLE" --arg color "$COLOR" --arg body "$BODY" --arg btn "$BTN" --arg url "$LINK" '{msg_type:"interactive",card:{config:{wide_screen_mode:true},header:{template:$color,title:{tag:"plain_text",content:$title}},elements:[{tag:"div",text:{tag:"lark_md",content:$body}},{tag:"action",actions:[{tag:"button",text:{tag:"plain_text",content:$btn},url:$url,type:"primary"}]}]}}' \
             | curl -s -X POST -H 'Content-Type: application/json' -d @- "$LARK_WEBHOOK"
