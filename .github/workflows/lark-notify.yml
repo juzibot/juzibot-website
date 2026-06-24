@@ -73,10 +73,7 @@ jobs:
               esac ;;
             *) TITLE="GitHub: $EVENT"; COLOR="grey"; LINK="https://github.com/$REPO" ;;
           esac
-          BODY="**$SUBTITLE**
-仓库: $REPO
-操作人: $SENDER"
-          if [ "$EVENT" = "pull_request" ] && [ -n "${PR_HEAD:-}" ]; then BODY="$BODY
-分支: $PR_HEAD → $PR_BASE"; fi
+          BODY=$(printf '**%s**\n仓库: %s\n操作人: %s' "$SUBTITLE" "$REPO" "$SENDER")
+          if [ "$EVENT" = "pull_request" ] && [ -n "${PR_HEAD:-}" ]; then BODY=$(printf '%s\n分支: %s → %s' "$BODY" "$PR_HEAD" "$PR_BASE"); fi
           jq -n --arg title "$TITLE" --arg color "$COLOR" --arg body "$BODY" --arg btn "$BTN" --arg url "$LINK" '{msg_type:"interactive",card:{config:{wide_screen_mode:true},header:{template:$color,title:{tag:"plain_text",content:$title}},elements:[{tag:"div",text:{tag:"lark_md",content:$body}},{tag:"action",actions:[{tag:"button",text:{tag:"plain_text",content:$btn},url:$url,type:"primary"}]}]}}' \
             | curl -s -X POST -H 'Content-Type: application/json' -d @- "$LARK_WEBHOOK"
