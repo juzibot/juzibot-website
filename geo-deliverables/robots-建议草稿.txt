@@ -1,0 +1,59 @@
+# ======================================================================
+# robots.txt 建议草稿（GEO 优化版）
+# 用途：替换现有 c:\...\juzibot-website4\robots.txt 时参考
+# 说明：本文件是草稿，未自动覆盖你现有的 robots.txt。确认后再替换。
+# 关键变更：
+#   1) 显式放行主流 AI 爬虫（GPTBot / Google-Extended / PerplexityBot / ClaudeBot / Bytespider 等）
+#   2) 放开图片资源，避免挡住多模态被引用（原来的 Disallow: /assets/ 会屏蔽产品截图与信息图）
+#   3) 保留对私有/构建目录的屏蔽
+# ======================================================================
+
+# ---------- 默认规则：所有爬虫 ----------
+User-agent: *
+Allow: /
+Disallow: /.kiro/
+Disallow: /.agents/
+Disallow: /deploy/
+# 注意：不再整体 Disallow: /assets/，改为只屏蔽非内容资源（按需调整）
+# 若 /assets/ 下混有私有文件，请只屏蔽具体子目录，例如：
+# Disallow: /assets/private/
+
+# ---------- OpenAI（ChatGPT / SearchGPT）----------
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# ---------- Google（Gemini / AI Overviews）----------
+User-agent: Google-Extended
+Allow: /
+
+# ---------- Anthropic（Claude）----------
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+# ---------- Perplexity ----------
+User-agent: PerplexityBot
+Allow: /
+
+# ---------- 字节 / 豆包 ----------
+User-agent: Bytespider
+Allow: /
+
+# ---------- 微软 Bing / Copilot ----------
+User-agent: bingbot
+Allow: /
+
+# ---------- 百度（国内搜索 + 文心）----------
+User-agent: Baiduspider
+Allow: /
+
+# ---------- 站点地图 ----------
+Sitemap: https://juzibot.com/sitemap.xml
