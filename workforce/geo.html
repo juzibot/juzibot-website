@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>GEO 优化师 · AI 员工 · 全域营销岗 | 句子互动 AI 员工</title>
+<meta name="description" content="GEO 优化师——专管品牌在豆包、DeepSeek 等 AI 答案和公域流量里的位置。GEO 监测诊断、内容生产、渠道发布、公域承接，再把意向沉到企业微信接着跟进、复购。公域到私域跑完全域营销。" />
+<link rel="icon" href="../logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../assets/site.css" />
+<style>
+  /* —— 仅本页：页头 + pills + 全域监测台 + 全域营销链路，全部沿用 site.css 设计令牌 —— */
+  .role-hero{position:relative;overflow:hidden;padding:clamp(118px,15vh,168px) var(--gut) clamp(48px,7vw,86px);
+    background:radial-gradient(1100px 560px at 84% 0%,var(--blue-100),transparent 60%),
+               radial-gradient(720px 520px at 2% 8%,var(--orange-lt),transparent 56%),
+               linear-gradient(180deg,var(--blue-50),#fff 78%)}
+  .role-hero .wrap{position:relative;display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(34px,5vw,72px);align-items:center}
+  .crumbs{display:flex;flex-wrap:wrap;align-items:center;gap:9px;font-size:13px;color:var(--ink-3);
+    font-weight:600;margin-bottom:clamp(14px,2.2vw,22px)}
+  .crumbs a{color:var(--ink-2);transition:color .2s var(--ease)}
+  .crumbs a:hover{color:var(--blue)}
+  .crumbs .sep{color:var(--line-2);font-weight:400}
+  .crumbs .here{color:var(--ink)}
+  .role-hero h1{font-size:clamp(34px,5vw,64px);font-weight:850;letter-spacing:-.035em;line-height:1.12;
+    max-width:20ch;word-break:keep-all;text-wrap:balance;margin-bottom:clamp(14px,2.2vw,24px)}
+  .role-hero h1 .accent{color:var(--blue)}
+  .role-lede{font-size:clamp(16px,1.4vw,19px);color:var(--ink-2);max-width:48ch;line-height:1.66}
+  .role-lede strong{color:var(--ink);font-weight:700}
+  .pill-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:clamp(20px,2.8vw,30px)}
+  .pill{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--ink-2);
+    background:#fff;border:1px solid var(--line);padding:8px 16px;border-radius:999px;box-shadow:var(--shadow-soft)}
+  .pill .dot{width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0}
+  /* 右侧：GEO 优化师 · 全域监测台 */
+  .live-card{position:relative;background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);
+    padding:clamp(22px,2.6vw,30px);box-shadow:0 1px 2px rgba(14,20,48,.05),0 40px 80px -30px rgba(67,56,202,.32),0 12px 24px -12px rgba(14,20,48,.12)}
+  .live-card .lc-hd{display:flex;align-items:center;gap:9px;font-size:12.5px;font-weight:800;color:var(--blue);
+    letter-spacing:-.01em;margin-bottom:clamp(16px,2vw,22px)}
+  .live-card .lc-hd .pulse{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);
+    animation:ping 1.8s var(--ease) infinite}
+  .live-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,1.8vw,20px)}
+  .live-stat{padding:14px 16px;border:1px solid var(--line);border-radius:var(--radius-sm);background:#FBFCFF}
+  .live-stat .l{font-size:11px;color:var(--ink-3);font-weight:600}
+  .live-stat .v{font-size:clamp(22px,2.4vw,28px);font-weight:850;letter-spacing:-.02em;line-height:1.15;margin-top:6px}
+  .live-stat.s1 .v{color:var(--blue)}
+  .live-stat.s2 .v{color:var(--purple)}
+  .live-stat.s3 .v{color:var(--orange-deep)}
+  .live-stat.s4 .v{color:var(--green)}
+  /* 控制台状态流水（全域营销实时反馈） */
+  .lc-feed{margin-top:clamp(16px,2vw,20px);padding-top:clamp(14px,1.8vw,18px);border-top:1px solid var(--line);
+    display:flex;flex-direction:column;gap:9px}
+  .lc-feed .row{display:flex;align-items:flex-start;gap:9px;font-size:12px;line-height:1.5}
+  .lc-feed .row.ok{color:var(--green);font-weight:600}
+  .lc-feed .row.mute{color:var(--ink-3)}
+  .lc-feed .row i{flex:0 0 auto;margin-top:2px}
+  /* 角色画像：能力清单 */
+  .role-split{display:block}
+  .role-split>div:first-child{max-width:64ch}
+  .role-split p{font-size:15.5px;line-height:1.78;color:var(--ink-2);margin-bottom:16px}
+  .cap-list{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:clamp(22px,3vw,32px)}
+  .cap-list .cap{display:flex;gap:13px;background:#fff;border:1px solid var(--line);border-radius:var(--radius-sm);
+    padding:15px 17px;box-shadow:var(--shadow-soft);transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s}
+  .cap-list .cap:hover{transform:translateX(4px);box-shadow:var(--shadow);border-color:var(--blue-200)}
+  .cap-list .cap .ci{flex:0 0 36px;width:36px;height:36px;border-radius:10px;display:grid;place-items:center;
+    color:#fff;font-size:15px;background:linear-gradient(135deg,var(--blue),var(--blue-2))}
+  .cap-list .cap:nth-child(2) .ci{background:linear-gradient(135deg,#0D9488,var(--green))}
+  .cap-list .cap:nth-child(3) .ci{background:linear-gradient(135deg,var(--orange-deep),var(--orange))}
+  .cap-list .cap:nth-child(4) .ci{background:linear-gradient(135deg,var(--purple),var(--blue-2))}
+  .cap-list .cap:nth-child(5) .ci{background:linear-gradient(135deg,var(--teal),var(--green))}
+  .cap-list .cap .cb{font-weight:800;font-size:14.5px;letter-spacing:-.01em;color:var(--ink)}
+  .cap-list .cap .cd{font-size:13.5px;line-height:1.6;color:var(--ink-2);margin-top:3px}
+  @media(max-width:980px){
+    .role-hero .wrap{grid-template-columns:1fr;gap:clamp(40px,8vw,56px)}
+    .role-split{grid-template-columns:1fr;gap:clamp(28px,6vw,40px)}
+  }
+  @media(max-width:520px){
+    .live-grid{grid-template-columns:1fr}
+  }
+  /* —— 移动端适配：≤900px 监测台 2 列收窄；≤640px 全面塌缩+收字号间距 —— */
+  @media(max-width:900px){
+    .live-card{padding:clamp(20px,4.6vw,26px)}
+  }
+  @media(max-width:640px){
+    .live-card{padding:18px 16px}
+    .live-grid{grid-template-columns:1fr;gap:12px}
+    .live-stat{padding:13px 14px}
+    .live-stat .v{font-size:22px}
+    .lc-feed .row{font-size:12px}
+    .role-hero h1{max-width:18ch}
+    .role-lede{max-width:none}
+    .pill{padding:10px 15px;min-height:44px;box-sizing:border-box}
+    .role-split p{font-size:15px}
+    .cap-list .cap{padding:13px 14px;gap:11px}
+    .cap-list .cap .ci{flex:0 0 32px;width:32px;height:32px;font-size:14px}
+    .cap-list .cap .cb{font-size:14px}
+    .cap-list .cap .cd{font-size:13px}
+    #results .cta-stats{grid-template-columns:1fr 1fr!important;gap:12px}
+    .cta-stat .csv{font-size:23px}
+  }
+  @media(max-width:400px){
+    #results .cta-stats{grid-template-columns:1fr!important}
+  }
+  @media (prefers-reduced-motion:reduce){.live-card .lc-hd .pulse{animation:none}}
+
+.fleet-bar{position:relative;z-index:3;max-width:var(--max);margin:calc(-1 * clamp(28px,4vw,52px)) auto 0;
+    padding:0 var(--gut)}
+  .fleet-inner{display:flex;flex-wrap:wrap;align-items:center;gap:clamp(14px,2vw,26px);
+    background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+    padding:clamp(15px,1.8vw,20px) clamp(18px,2vw,26px);
+    box-shadow:0 1px 2px rgba(14,20,48,.05),0 22px 50px -26px rgba(67,56,202,.30),0 10px 22px -14px rgba(14,20,48,.12)}
+  .fleet-id{display:flex;align-items:center;gap:12px;flex:1 1 220px;min-width:0}
+  .fleet-badge{flex:0 0 auto;width:42px;height:42px;border-radius:12px;display:grid;place-items:center;color:#fff;
+    background:linear-gradient(135deg,var(--blue),var(--blue-2));box-shadow:0 8px 18px -8px rgba(67,56,202,.55)}
+  .fleet-badge i{font-size:18px}
+  .fleet-who{min-width:0}
+  .fleet-role{font-size:15px;font-weight:850;letter-spacing:-.01em;color:var(--ink);line-height:1.2}
+  .fleet-live{display:inline-flex;align-items:center;gap:7px;margin-top:4px;font-size:11.5px;font-weight:700;color:var(--green)}
+  .fleet-live .ld{position:relative;width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0}
+  .fleet-live .ld::after{content:"";position:absolute;inset:0;border-radius:50%;background:var(--green);animation:ping 1.8s var(--ease) infinite}
+  .fleet-metrics{position:relative;display:flex;flex-wrap:wrap;gap:clamp(16px,2.4vw,32px);flex:2 1 360px;
+    padding:0 clamp(8px,1.4vw,18px);border-left:1px solid var(--line);border-right:1px solid var(--line)}
+  .fleet-metric .fm-v{font-size:clamp(19px,2vw,24px);font-weight:850;letter-spacing:-.02em;line-height:1.1;
+    font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
+  .fleet-metric:nth-child(1) .fm-v{color:var(--blue)}
+  .fleet-metric:nth-child(2) .fm-v{color:var(--orange-deep)}
+  .fleet-metric:nth-child(3) .fm-v{color:var(--purple)}
+  .fleet-metric .fm-l{font-size:11px;color:var(--ink-3);font-weight:600;margin-top:4px}
+  .fleet-demo{position:absolute;right:0;bottom:-15px;font-size:9.5px;color:var(--ink-3);font-weight:600;letter-spacing:.02em}
+  .fleet-chat{flex:0 0 auto;display:inline-flex;align-items:center;gap:8px;border:0;border-radius:999px;
+    padding:13px 22px;font-size:14px;font-weight:750;color:#fff;background:var(--blue);
+    box-shadow:0 8px 18px -8px rgba(67,56,202,.6);
+    transition:transform .25s var(--ease),box-shadow .25s var(--ease),background .2s}
+  .fleet-chat:hover{background:var(--blue-deep);transform:translateY(-2px);box-shadow:0 14px 28px -8px rgba(67,56,202,.7)}
+  .fleet-chat:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+  @media(max-width:760px){
+    .fleet-inner{gap:14px}
+    .fleet-metrics{order:3;flex-basis:100%;border-left:0;border-right:0;padding:14px 0 0;margin-top:2px;border-top:1px solid var(--line)}
+    .fleet-demo{position:static;display:block;margin-top:10px;flex-basis:100%}
+    .fleet-chat{flex:1 1 100%;justify-content:center}
+  }
+  @media (prefers-reduced-motion:reduce){.fleet-live .ld::after{animation:none}}
+</style>
+</head>
+<body>
+<div id="site-nav"></div>
+<main>
+
+  <!-- ════════════ 页头 · 角色名片 ════════════ -->
+  <header class="role-hero">
+    <div class="wrap">
+      <div class="hero-copy">
+        <nav class="crumbs rv" aria-label="面包屑">
+          <a href="../index.html">首页</a>
+          <span class="sep">/</span>
+          <span class="here">AI 员工</span>
+          <span class="sep">/</span>
+          <span class="here">GEO 优化师</span>
+        </nav>
+        <span class="eyebrow rv"><span class="dot"></span>AI 员工 · GEO 优化岗</span>
+        <h1 class="rv rv-d1">GEO 优化师 · <span class="accent">让品牌出现在 AI 的答案里</span></h1>
+        <p class="role-lede rv rv-d2"><strong>GEO 是 AI 时代的 SEO</strong>：SEO 让你在百度被搜到，GEO 让你在豆包、DeepSeek 被推荐。用户越来越多直接问 AI「怎么选、哪家好」——GEO 优化师专管品牌在这些 AI 答案里的位置，再一路接到咨询、下单、复购。</p>
+        <div class="pill-row rv rv-d3">
+          <span class="pill"><span class="dot"></span>GEO · 被 AI 推荐</span>
+          <span class="pill"><span class="dot"></span>公域 → 私域全链路</span>
+          <span class="pill"><span class="dot"></span>24×7 监测承接</span>
+          <span class="pill"><span class="dot"></span>零售电商场景试点中</span>
+        </div>
+      </div>
+      <div class="hero-art rv rv-d2" style="display:block">
+        <div class="live-card">
+          <div class="lc-hd"><span class="pulse"></span><i class="fa-solid fa-bolt" aria-hidden="true"></i> GEO 优化师 · 全域监测台</div>
+          <div class="live-grid">
+            <div class="live-stat s1"><div class="l">今日监测问题</div><div class="v">1,280</div></div>
+            <div class="live-stat s2"><div class="l">品牌进入 AI 答案</div><div class="v">340</div></div>
+            <div class="live-stat s3"><div class="l">公域意向捕获</div><div class="v">86</div></div>
+            <div class="live-stat s4"><div class="l">沉淀到企微</div><div class="v">52</div></div>
+          </div>
+          <div class="lc-feed">
+            <div class="row ok"><i class="fa-solid fa-circle-check" aria-hidden="true"></i><span>豆包「这个品类怎么选」答案已收录品牌，推荐位 #2</span></div>
+            <div class="row ok"><i class="fa-solid fa-circle-check" aria-hidden="true"></i><span>小红书 12 条评论意向已自动引导到企业微信</span></div>
+            <div class="row mute"><i class="fa-solid fa-ellipsis" aria-hidden="true"></i><span>GEO 优化师 在岗中</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- 活体工牌条 -->
+  <div class="fleet-bar"><div class="fleet-inner"><div class="fleet-id"><span class="fleet-badge"><i class="fa-solid fa-bullhorn" aria-hidden="true"></i></span><div class="fleet-who"><div class="fleet-role">GEO 优化师 · 全域营销岗</div><span class="fleet-live"><span class="ld"></span>在岗 · 当班中</span></div></div><div class="fleet-metrics" aria-live="off"><div class="fleet-metric"><div class="fm-v" data-to="1280" data-suffix="">0</div><div class="fm-l">今日监测</div></div><div class="fleet-metric"><div class="fm-v" data-to="340" data-suffix="">0</div><div class="fm-l">进入答案</div></div><div class="fleet-metric"><div class="fm-v" data-to="52" data-suffix="">0</div><div class="fm-l">企微承接</div></div><span class="fleet-demo">示例数据 · 演示</span></div><button type="button" class="fleet-chat" onclick="window.openAskbar && window.openAskbar()"><span aria-hidden="true">💬</span> 和这位 AI 员工聊</button></div></div>
+<script>
+(function(){var nums=document.querySelectorAll('.fleet-metric .fm-v[data-to]');var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+function paint(el,val){var d=+(el.getAttribute('data-dec')||0);el.textContent=(d?val.toFixed(d):Math.round(val))+(el.getAttribute('data-suffix')||'');}
+function run(el){var to=+el.getAttribute('data-to');if(reduce){paint(el,to);return;}var t0=null,dur=1100;function step(t){if(!t0)t0=t;var p=Math.min((t-t0)/dur,1);paint(el,to*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(step);}requestAnimationFrame(step);}
+if(!('IntersectionObserver'in window)){nums.forEach(function(n){paint(n,+n.getAttribute('data-to'));});return;}
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){run(e.target);io.unobserve(e.target);}});},{threshold:.4});nums.forEach(function(n){io.observe(n);});})();
+</script>
+
+
+  <!-- ════════════ 角色画像 ════════════ -->
+  <section class="sec pad" id="role">
+    <div class="wrap">
+      <div class="sec-top rv">
+        <div>
+          <span class="sec-eyebrow">角色画像</span>
+          <h2>品牌在 AI 答案里排第几，<span class="hl"><span>过去没人专管</span></span>。</h2>
+        </div>
+        <p class="sub">GEO 优化师接管全域营销这条链路：监测诊断 → 内容生产 → 渠道发布 → 公域承接 → 私域复购。公域来的意向自动沉到企业微信，接着跟进、复购。</p>
+      </div>
+      <div class="role-split rv">
+        <div>
+          <p>用户问「XX 怎么选」「哪家好」，越来越多直接问豆包、DeepSeek。这里的推荐位决定品牌还在不在候选名单里——但大多数品牌不知道自己在 AI 答案里排第几，竞品凭什么排在前面，也没人专门盯。</p>
+          <p>GEO 优化师先摸清用户怎么问、AI 怎么答、品牌和竞品分别在哪；再把品牌资料做成 AI 愿意引用的内容铺出去；公域评论、私信、搜索里的意向，自动引导到商城和企业微信，由 AI 客服、销售接力跟进复购。</p>
+        </div>
+        <div class="cap-list">
+          <div class="cap">
+            <span class="ci"><i class="fa-solid fa-magnifying-glass-chart" aria-hidden="true"></i></span>
+            <div><div class="cb">监测诊断</div><div class="cd">生成城市、预算、场景、人群问题库，跑出提及率、推荐位、引用来源</div></div>
+          </div>
+          <div class="cap">
+            <span class="ci"><i class="fa-solid fa-pen-nib" aria-hidden="true"></i></span>
+            <div><div class="cb">内容生产</div><div class="cd">把品牌、商品、门店、政策加工成 AI 愿意引用的事实与推荐理由</div></div>
+          </div>
+          <div class="cap">
+            <span class="ci"><i class="fa-solid fa-tower-broadcast" aria-hidden="true"></i></span>
+            <div><div class="cb">渠道发布</div><div class="cd">官网、公众号、小红书、抖音、本地生活与问答多点铺设，形成证据链</div></div>
+          </div>
+          <div class="cap">
+            <span class="ci"><i class="fa-solid fa-hand-pointer" aria-hidden="true"></i></span>
+            <div><div class="cb">公域承接</div><div class="cd">识别评论、私信、搜索意向，自动引导到商城和企业微信，不漏线索</div></div>
+          </div>
+          <div class="cap">
+            <span class="ci"><i class="fa-solid fa-rotate" aria-hidden="true"></i></span>
+            <div><div class="cb">私域复购</div><div class="cd">企微自动打标记录来源、场景、预算，AI 客服 / 销售接力跟进</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════ 能力清单 · 6 项 ════════════ -->
+  <section class="sec pad" id="abilities">
+    <div class="wrap">
+      <div class="sec-top rv">
+        <div>
+          <span class="sec-eyebrow">能力清单</span>
+          <h2>GEO 优化师在岗后，<span class="hl warm"><span>做哪些事</span></span>。</h2>
+        </div>
+        <p class="sub">从被 AI 看见，一路接到被咨询、被下单、被复购。</p>
+      </div>
+      <div class="fde-grid">
+        <div class="fde-card rv">
+          <div class="fde-num">01</div>
+          <h4>GEO 监测</h4>
+          <p>跑清楚用户怎么问、AI 怎么答、品牌和竞品分别在哪个推荐位、引用了谁。</p>
+        </div>
+        <div class="fde-card rv rv-d1">
+          <div class="fde-num">02</div>
+          <h4>问题库构建</h4>
+          <p>按城市、预算、场景、时效、人群，生成贴近真实消费决策的问题库。</p>
+        </div>
+        <div class="fde-card rv rv-d2">
+          <div class="fde-num">03</div>
+          <h4>内容生产</h4>
+          <p>把品牌资料加工成 AI 愿意引用的事实、对比说明、适用人群和注意事项。</p>
+        </div>
+        <div class="fde-card rv rv-d3">
+          <div class="fde-num">04</div>
+          <h4>多渠道发布</h4>
+          <p>官网落地页、公众号、小红书、抖音、本地生活与问答，铺成可信证据链。</p>
+        </div>
+        <div class="fde-card rv">
+          <div class="fde-num">05</div>
+          <h4>公域承接</h4>
+          <p>识别小红书 / 抖音评论、私信、搜索意向，自动引导到商城和企业微信。</p>
+        </div>
+        <div class="fde-card rv rv-d1">
+          <div class="fde-num">06</div>
+          <h4>私域复购</h4>
+          <p>企微打标记录来源、场景、预算，AI 客服 / 销售 / 复购机器人接力跟进。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════ 结果 · 这套打法跑完拿到什么 ════════════ -->
+  <section class="sec pad" id="results">
+    <div class="wrap">
+      <div class="sec-top rv">
+        <div>
+          <span class="sec-eyebrow">结果</span>
+          <h2>这套全域营销跑完，<span class="hl"><span>品牌拿到什么</span></span>。</h2>
+        </div>
+        <p class="sub">零售电商场景试点验证中——下面是这套打法要交付的结果，不是已结案的客户数据。</p>
+      </div>
+      <div class="cta-stats rv" style="grid-template-columns:repeat(4,1fr)">
+        <div class="cta-stat rv" style="--ac:#4338CA"><div class="csv">全域闭环</div><div class="csl">公域被看见 → 私域可复购</div></div>
+        <div class="cta-stat rv rv-d1" style="--ac:#6366F1"><div class="csv">多 AI 入口</div><div class="csl">豆包 / DeepSeek 等消费决策问题</div></div>
+        <div class="cta-stat rv rv-d2" style="--ac:#F59E0B"><div class="csv">24×7</div><div class="csl">监测 · 承接 · 跟进不停</div></div>
+        <div class="cta-stat rv rv-d3" style="--ac:#0D9488"><div class="csv">FDE 三阶段</div><div class="csl">诊断 → 交付 → 产品化</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════ CTA ════════════ -->
+  <section class="cta" id="cta">
+    <div class="wrap cta-inner">
+      <div class="rv">
+        <h2>让 GEO 优化师帮你的品牌<span class="acc"> 进入 AI 的答案</span>。</h2>
+        <p class="sub">从一次 GEO 诊断起步，看看品牌在 AI 答案里的位置，再决定怎么补内容、怎么承接。</p>
+        <div class="cta-actions">
+          <button type="button" class="btn btn-blue btn-lg ar-host" onclick="openContact('AI市场·底部CTA·GEO诊断')">
+            预约一次 GEO 诊断
+            <span class="ar"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h11M10 4l5 5-5 5"/></svg><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h11M10 4l5 5-5 5"/></svg></span>
+          </button>
+        </div>
+      </div>
+      <div class="cta-stats">
+        <div class="cta-stat rv" style="--ac:#4338CA"><div class="csv">公域→私域</div><div class="csl">被看见一路接到被复购</div></div>
+        <div class="cta-stat rv rv-d1" style="--ac:#6366F1"><div class="csv">GEO 诊断</div><div class="csl">看品牌在 AI 答案里的位置</div></div>
+        <div class="cta-stat rv rv-d2" style="--ac:#14B8A6"><div class="csv">90 天</div><div class="csl">内第一个 AI 员工在 IM 上岗</div></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+<div id="site-footer"></div>
+<script>window.SITE_REL='../';window.PAGE_CTX={entity:'geo',type:'workforce',title:'GEO 优化师'};</script>
+<script src="../assets/site.js"></script>
+</body>
+</html>
