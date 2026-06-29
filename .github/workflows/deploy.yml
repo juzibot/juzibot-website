@@ -51,4 +51,4 @@ jobs:
           RUN_URL="$SERVER_URL/$REPO/actions/runs/$RUN_ID"
           BODY=$(printf '**%s**\n环境: %s 预览\n提交: %s\npush: %s' "$MSG1" "$BR" "${SHA:0:7}" "$ACTOR")
           jq -n --arg title "$TITLE" --arg color "$COLOR" --arg body "$BODY" --arg btn "$BTN" --arg url "$LINK" --arg run "$RUN_URL" '{msg_type:"interactive",card:{config:{wide_screen_mode:true},header:{template:$color,title:{tag:"plain_text",content:$title}},elements:[{tag:"div",text:{tag:"lark_md",content:$body}},{tag:"action",actions:[{tag:"button",text:{tag:"plain_text",content:$btn},url:$url,type:"primary"},{tag:"button",text:{tag:"plain_text",content:"Actions 日志"},url:$run,type:"default"}]}]}}' \
-            | curl -s -X POST -H 'Content-Type: application/json' -d @- "$LARK_WEBHOOK"
+            | curl -s --retry 3 --retry-delay 2 --max-time 20 -X POST -H 'Content-Type: application/json' -d @- "$LARK_WEBHOOK" || true
