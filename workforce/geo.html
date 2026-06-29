@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>AI HR · AI 员工 · 招聘岗 | 句子互动 AI 员工</title>
-<meta name="description" content="AI HR——简历获取、初筛与第一轮语音面试，全部由 Agent 自动完成。HR 只看 Top 20% 的候选人，把时间留给深度面试、团队沟通和人才策略。" />
+<title>GEO 优化师 · AI 员工 · 全域营销岗 | 句子互动 AI 员工</title>
+<meta name="description" content="GEO 优化师——专管品牌在豆包、DeepSeek 等 AI 答案和公域流量里的位置。GEO 监测诊断、内容生产、渠道发布、公域承接，再把意向沉到企业微信接着跟进、复购。公域到私域跑完全域营销。" />
 <link rel="icon" href="../logo.png" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="../assets/site.css" />
 <style>
-  /* —— 仅本页：页头 + pills + 招聘控制台面板 + 招聘流水线，全部沿用 site.css 设计令牌 —— */
+  /* —— 仅本页：页头 + pills + 全域监测台 + 全域营销链路，全部沿用 site.css 设计令牌 —— */
   .role-hero{position:relative;overflow:hidden;padding:clamp(118px,15vh,168px) var(--gut) clamp(48px,7vw,86px);
     background:radial-gradient(1100px 560px at 84% 0%,var(--blue-100),transparent 60%),
                radial-gradient(720px 520px at 2% 8%,var(--orange-lt),transparent 56%),
@@ -30,7 +30,7 @@
   .pill{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--ink-2);
     background:#fff;border:1px solid var(--line);padding:8px 16px;border-radius:999px;box-shadow:var(--shadow-soft)}
   .pill .dot{width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0}
-  /* 右侧：AI HR · 招聘控制台 */
+  /* 右侧：GEO 优化师 · 全域监测台 */
   .live-card{position:relative;background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);
     padding:clamp(22px,2.6vw,30px);box-shadow:0 1px 2px rgba(14,20,48,.05),0 40px 80px -30px rgba(67,56,202,.32),0 12px 24px -12px rgba(14,20,48,.12)}
   .live-card .lc-hd{display:flex;align-items:center;gap:9px;font-size:12.5px;font-weight:800;color:var(--blue);
@@ -45,7 +45,7 @@
   .live-stat.s2 .v{color:var(--purple)}
   .live-stat.s3 .v{color:var(--orange-deep)}
   .live-stat.s4 .v{color:var(--green)}
-  /* 控制台状态流水（招聘漏斗实时反馈） */
+  /* 控制台状态流水（全域营销实时反馈） */
   .lc-feed{margin-top:clamp(16px,2vw,20px);padding-top:clamp(14px,1.8vw,18px);border-top:1px solid var(--line);
     display:flex;flex-direction:column;gap:9px}
   .lc-feed .row{display:flex;align-items:flex-start;gap:9px;font-size:12px;line-height:1.5}
@@ -75,34 +75,28 @@
   @media(max-width:520px){
     .live-grid{grid-template-columns:1fr}
   }
-  /* —— 移动端适配：≤900px 招聘控制台 2 列收窄；≤640px 全面塌缩+收字号间距 —— */
+  /* —— 移动端适配：≤900px 监测台 2 列收窄；≤640px 全面塌缩+收字号间距 —— */
   @media(max-width:900px){
-    /* 控制台跨越全宽时面板偏大，先把 stat 数字与内边距略收 */
     .live-card{padding:clamp(20px,4.6vw,26px)}
   }
   @media(max-width:640px){
-    /* 招聘控制台：状态卡塌 1 列、内边距/数字收，避免窄屏溢出 */
     .live-card{padding:18px 16px}
     .live-grid{grid-template-columns:1fr;gap:12px}
     .live-stat{padding:13px 14px}
     .live-stat .v{font-size:22px}
     .lc-feed .row{font-size:12px}
-    /* 页头标题/导语字号与 pills 触控 */
     .role-hero h1{max-width:18ch}
     .role-lede{max-width:none}
     .pill{padding:10px 15px;min-height:44px;box-sizing:border-box}
-    /* 能力卡：内边距与图标略收，仍纵向单列 */
     .role-split p{font-size:15px}
     .cap-list .cap{padding:13px 14px;gap:11px}
     .cap-list .cap .ci{flex:0 0 32px;width:32px;height:32px;font-size:14px}
     .cap-list .cap .cb{font-size:14px}
     .cap-list .cap .cd{font-size:13px}
-    /* 结果区 KPI：内联 repeat(4,1fr) 强制塌成 2 列（用 !important 盖内联样式，防横向溢出） */
     #results .cta-stats{grid-template-columns:1fr 1fr!important;gap:12px}
     .cta-stat .csv{font-size:23px}
   }
   @media(max-width:400px){
-    /* 极窄屏：结果 KPI 收成单列，彻底消除溢出 */
     #results .cta-stats{grid-template-columns:1fr!important}
   }
   @media (prefers-reduced-motion:reduce){.live-card .lc-hd .pulse{animation:none}}
@@ -159,38 +153,38 @@
           <span class="sep">/</span>
           <span class="here">AI 员工</span>
           <span class="sep">/</span>
-          <span class="here">AI HR</span>
+          <span class="here">GEO 优化师</span>
         </nav>
-        <span class="eyebrow rv"><span class="dot"></span>AI 员工 · 招聘岗</span>
-        <h1 class="rv rv-d1">AI HR · <span class="accent">初筛到一面，Agent 全包</span></h1>
-        <p class="role-lede rv rv-d2">简历获取、初筛与第一轮语音面试，<strong>全部由 Agent 自动完成</strong>。HR 只看 Top 20% 的候选人，把时间留给深度面试、团队沟通和人才策略。</p>
+        <span class="eyebrow rv"><span class="dot"></span>AI 员工 · GEO 优化岗</span>
+        <h1 class="rv rv-d1">GEO 优化师 · <span class="accent">让品牌出现在 AI 的答案里</span></h1>
+        <p class="role-lede rv rv-d2"><strong>GEO 是 AI 时代的 SEO</strong>：SEO 让你在百度被搜到，GEO 让你在豆包、DeepSeek 被推荐。用户越来越多直接问 AI「怎么选、哪家好」——GEO 优化师专管品牌在这些 AI 答案里的位置，再一路接到咨询、下单、复购。</p>
         <div class="pill-row rv rv-d3">
-          <span class="pill"><span class="dot"></span>HR 只看 Top 20%</span>
-          <span class="pill"><span class="dot"></span>多渠道简历自动同步去重</span>
-          <span class="pill"><span class="dot"></span>AI 语音面试 7×24</span>
-          <span class="pill"><span class="dot"></span>统一题库 + 评分卡</span>
+          <span class="pill"><span class="dot"></span>GEO · 被 AI 推荐</span>
+          <span class="pill"><span class="dot"></span>公域 → 私域全链路</span>
+          <span class="pill"><span class="dot"></span>24×7 监测承接</span>
+          <span class="pill"><span class="dot"></span>零售电商场景试点中</span>
         </div>
       </div>
       <div class="hero-art rv rv-d2" style="display:block">
         <div class="live-card">
-          <div class="lc-hd"><span class="pulse"></span><i class="fa-solid fa-bolt" aria-hidden="true"></i> AI HR · 招聘控制台</div>
+          <div class="lc-hd"><span class="pulse"></span><i class="fa-solid fa-bolt" aria-hidden="true"></i> GEO 优化师 · 全域监测台</div>
           <div class="live-grid">
-            <div class="live-stat s1"><div class="l">今日简历接入</div><div class="v">612</div></div>
-            <div class="live-stat s2"><div class="l">AI 初筛通过</div><div class="v">118</div></div>
-            <div class="live-stat s3"><div class="l">今日 AI 面试</div><div class="v">56</div></div>
-            <div class="live-stat s4"><div class="l">待 HR 决策</div><div class="v">14</div></div>
+            <div class="live-stat s1"><div class="l">今日监测问题</div><div class="v">1,280</div></div>
+            <div class="live-stat s2"><div class="l">品牌进入 AI 答案</div><div class="v">340</div></div>
+            <div class="live-stat s3"><div class="l">公域意向捕获</div><div class="v">86</div></div>
+            <div class="live-stat s4"><div class="l">沉淀到企微</div><div class="v">52</div></div>
           </div>
           <div class="lc-feed">
-            <div class="row ok"><i class="fa-solid fa-circle-check" aria-hidden="true"></i><span>候选人 92 分，AI 一面已完成，待 HR 决策</span></div>
-            <div class="row ok"><i class="fa-solid fa-circle-check" aria-hidden="true"></i><span>已自动向 8 位候选人发出面试邀约</span></div>
-            <div class="row mute"><i class="fa-solid fa-ellipsis" aria-hidden="true"></i><span>AI HR 在岗中</span></div>
+            <div class="row ok"><i class="fa-solid fa-circle-check" aria-hidden="true"></i><span>豆包「这个品类怎么选」答案已收录品牌，推荐位 #2</span></div>
+            <div class="row ok"><i class="fa-solid fa-circle-check" aria-hidden="true"></i><span>小红书 12 条评论意向已自动引导到企业微信</span></div>
+            <div class="row mute"><i class="fa-solid fa-ellipsis" aria-hidden="true"></i><span>GEO 优化师 在岗中</span></div>
           </div>
         </div>
       </div>
     </div>
   </header>
   <!-- 活体工牌条 -->
-  <div class="fleet-bar"><div class="fleet-inner"><div class="fleet-id"><span class="fleet-badge"><i class="fa-solid fa-id-badge" aria-hidden="true"></i></span><div class="fleet-who"><div class="fleet-role">AI HR · 人事岗</div><span class="fleet-live"><span class="ld"></span>在岗 · 当班中</span></div></div><div class="fleet-metrics" aria-live="off"><div class="fleet-metric"><div class="fm-v" data-to="612" data-suffix="">0</div><div class="fm-l">今日初筛</div></div><div class="fleet-metric"><div class="fm-v" data-to="56" data-suffix="">0</div><div class="fm-l">进面</div></div><div class="fleet-metric"><div class="fm-v" data-to="14" data-suffix="">0</div><div class="fm-l">AI 面试</div></div><span class="fleet-demo">示例数据 · 演示</span></div><button type="button" class="fleet-chat" onclick="window.openAskbar && window.openAskbar()"><span aria-hidden="true">💬</span> 和这位 AI 员工聊</button></div></div>
+  <div class="fleet-bar"><div class="fleet-inner"><div class="fleet-id"><span class="fleet-badge"><i class="fa-solid fa-bullhorn" aria-hidden="true"></i></span><div class="fleet-who"><div class="fleet-role">GEO 优化师 · 全域营销岗</div><span class="fleet-live"><span class="ld"></span>在岗 · 当班中</span></div></div><div class="fleet-metrics" aria-live="off"><div class="fleet-metric"><div class="fm-v" data-to="1280" data-suffix="">0</div><div class="fm-l">今日监测</div></div><div class="fleet-metric"><div class="fm-v" data-to="340" data-suffix="">0</div><div class="fm-l">进入答案</div></div><div class="fleet-metric"><div class="fm-v" data-to="52" data-suffix="">0</div><div class="fm-l">企微承接</div></div><span class="fleet-demo">示例数据 · 演示</span></div><button type="button" class="fleet-chat" onclick="window.openAskbar && window.openAskbar()"><span aria-hidden="true">💬</span> 和这位 AI 员工聊</button></div></div>
 <script>
 (function(){var nums=document.querySelectorAll('.fleet-metric .fm-v[data-to]');var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
 function paint(el,val){var d=+(el.getAttribute('data-dec')||0);el.textContent=(d?val.toFixed(d):Math.round(val))+(el.getAttribute('data-suffix')||'');}
@@ -206,34 +200,35 @@ var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isInter
       <div class="sec-top rv">
         <div>
           <span class="sec-eyebrow">角色画像</span>
-          <h2>HR 一大半时间，耗在<span class="hl"><span>重复的简历筛选和初面上</span></span>。</h2>
+          <h2>品牌在 AI 答案里排第几，<span class="hl"><span>过去没人专管</span></span>。</h2>
         </div>
-        <p class="sub">AI HR 把这条流水线交给 Agent：简历自动同步去重、解析评分、按岗位匹配；AI 语音面试自动邀约、追问、评分；结果汇到一个控制台，HR 只做最后的录用决策。</p>
+        <p class="sub">GEO 优化师接管全域营销这条链路：监测诊断 → 内容生产 → 渠道发布 → 公域承接 → 私域复购。公域来的意向自动沉到企业微信，接着跟进、复购。</p>
       </div>
       <div class="role-split rv">
         <div>
-          <p>招聘的时间大量花在重复劳动上：每天在三五个平台下载、去重简历，逐份扫读 80% 会被淘汰的候选人，第一轮面试反复问同样几个标准化问题。响应一慢，候选人就流失了。</p>
+          <p>用户问「XX 怎么选」「哪家好」，越来越多直接问豆包、DeepSeek。这里的推荐位决定品牌还在不在候选名单里——但大多数品牌不知道自己在 AI 答案里排第几，竞品凭什么排在前面，也没人专门盯。</p>
+          <p>GEO 优化师先摸清用户怎么问、AI 怎么答、品牌和竞品分别在哪；再把品牌资料做成 AI 愿意引用的内容铺出去；公域评论、私信、搜索里的意向，自动引导到商城和企业微信，由 AI 客服、销售接力跟进复购。</p>
         </div>
         <div class="cap-list">
           <div class="cap">
-            <span class="ci"><i class="fa-solid fa-inbox" aria-hidden="true"></i></span>
-            <div><div class="cb">简历接入</div><div class="cd">对接主流招聘渠道，职位与简历自动同步、自动去重</div></div>
+            <span class="ci"><i class="fa-solid fa-magnifying-glass-chart" aria-hidden="true"></i></span>
+            <div><div class="cb">监测诊断</div><div class="cd">生成城市、预算、场景、人群问题库，跑出提及率、推荐位、引用来源</div></div>
           </div>
           <div class="cap">
-            <span class="ci"><i class="fa-solid fa-filter" aria-hidden="true"></i></span>
-            <div><div class="cb">自动初筛</div><div class="cd">解析 30+ 字段，按 JD 算匹配度排序，硬性条件自动过滤</div></div>
+            <span class="ci"><i class="fa-solid fa-pen-nib" aria-hidden="true"></i></span>
+            <div><div class="cb">内容生产</div><div class="cd">把品牌、商品、门店、政策加工成 AI 愿意引用的事实与推荐理由</div></div>
           </div>
           <div class="cap">
-            <span class="ci"><i class="fa-solid fa-star-half-stroke" aria-hidden="true"></i></span>
-            <div><div class="cb">多维评分</div><div class="cd">专业技能、项目经验、学习潜力多维度综合评分，权重可调</div></div>
+            <span class="ci"><i class="fa-solid fa-tower-broadcast" aria-hidden="true"></i></span>
+            <div><div class="cb">渠道发布</div><div class="cd">官网、公众号、小红书、抖音、本地生活与问答多点铺设，形成证据链</div></div>
           </div>
           <div class="cap">
-            <span class="ci"><i class="fa-solid fa-microphone-lines" aria-hidden="true"></i></span>
-            <div><div class="cb">AI 语音面试</div><div class="cd">自动邀约、动态追问、实时转写、自动评分，可 200+ 场并发</div></div>
+            <span class="ci"><i class="fa-solid fa-hand-pointer" aria-hidden="true"></i></span>
+            <div><div class="cb">公域承接</div><div class="cd">识别评论、私信、搜索意向，自动引导到商城和企业微信，不漏线索</div></div>
           </div>
           <div class="cap">
-            <span class="ci"><i class="fa-solid fa-circle-check" aria-hidden="true"></i></span>
-            <div><div class="cb">录用决策</div><div class="cd">评估、报告、漏斗汇到一处，HR 一键定夺</div></div>
+            <span class="ci"><i class="fa-solid fa-rotate" aria-hidden="true"></i></span>
+            <div><div class="cb">私域复购</div><div class="cd">企微自动打标记录来源、场景、预算，AI 客服 / 销售接力跟进</div></div>
           </div>
         </div>
       </div>
@@ -246,60 +241,60 @@ var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isInter
       <div class="sec-top rv">
         <div>
           <span class="sec-eyebrow">能力清单</span>
-          <h2>AI HR 在岗后，<span class="hl warm"><span>做哪些事</span></span>。</h2>
+          <h2>GEO 优化师在岗后，<span class="hl warm"><span>做哪些事</span></span>。</h2>
         </div>
-        <p class="sub">每一项都来自头部客户的真实部署。</p>
+        <p class="sub">从被 AI 看见，一路接到被咨询、被下单、被复购。</p>
       </div>
       <div class="fde-grid">
         <div class="fde-card rv">
           <div class="fde-num">01</div>
-          <h4>简历自动接入</h4>
-          <p>对接 BOSS 直聘 / LinkedIn / Indeed，职位与简历自动同步，多渠道自动去重。</p>
+          <h4>GEO 监测</h4>
+          <p>跑清楚用户怎么问、AI 怎么答、品牌和竞品分别在哪个推荐位、引用了谁。</p>
         </div>
         <div class="fde-card rv rv-d1">
           <div class="fde-num">02</div>
-          <h4>AI 初筛</h4>
-          <p>解析 30+ 字段，按 JD 算匹配度排序，不合格简历止步第一关。</p>
+          <h4>问题库构建</h4>
+          <p>按城市、预算、场景、时效、人群，生成贴近真实消费决策的问题库。</p>
         </div>
         <div class="fde-card rv rv-d2">
           <div class="fde-num">03</div>
-          <h4>多维评分</h4>
-          <p>专业技能、项目经验、学习潜力多维度综合评分，权重可自定义。</p>
+          <h4>内容生产</h4>
+          <p>把品牌资料加工成 AI 愿意引用的事实、对比说明、适用人群和注意事项。</p>
         </div>
         <div class="fde-card rv rv-d3">
           <div class="fde-num">04</div>
-          <h4>AI 语音面试</h4>
-          <p>7×24 自动邀约、提问、追问、记录、评分，单场约 10 分钟。</p>
+          <h4>多渠道发布</h4>
+          <p>官网落地页、公众号、小红书、抖音、本地生活与问答，铺成可信证据链。</p>
         </div>
         <div class="fde-card rv">
           <div class="fde-num">05</div>
-          <h4>统一题库</h4>
-          <p>八股题 + 场景题统一题库与评分卡，所有候选人同一把尺子。</p>
+          <h4>公域承接</h4>
+          <p>识别小红书 / 抖音评论、私信、搜索意向，自动引导到商城和企业微信。</p>
         </div>
         <div class="fde-card rv rv-d1">
           <div class="fde-num">06</div>
-          <h4>一键录用决策</h4>
-          <p>评估、报告、漏斗汇到一处，HR 勾选即进下一轮或发感谢信。</p>
+          <h4>私域复购</h4>
+          <p>企微打标记录来源、场景、预算，AI 客服 / 销售 / 复购机器人接力跟进。</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ════════════ 结果 · KPI ════════════ -->
+  <!-- ════════════ 结果 · 这套打法跑完拿到什么 ════════════ -->
   <section class="sec pad" id="results">
     <div class="wrap">
       <div class="sec-top rv">
         <div>
           <span class="sec-eyebrow">结果</span>
-          <h2>AI HR 上岗后，<span class="hl"><span>客户拿到的实际效果</span></span>。</h2>
+          <h2>这套全域营销跑完，<span class="hl"><span>品牌拿到什么</span></span>。</h2>
         </div>
-        <p class="sub">数据来自真实客户案例。</p>
+        <p class="sub">零售电商场景试点验证中——下面是这套打法要交付的结果，不是已结案的客户数据。</p>
       </div>
       <div class="cta-stats rv" style="grid-template-columns:repeat(4,1fr)">
-        <div class="cta-stat rv" style="--ac:#4338CA"><div class="csv">5×</div><div class="csl">简历处理效率</div></div>
-        <div class="cta-stat rv rv-d1" style="--ac:#6366F1"><div class="csv">200+</div><div class="csl">面试并发场次</div></div>
-        <div class="cta-stat rv rv-d2" style="--ac:#0D9488"><div class="csv">38→19 天</div><div class="csl">招聘周期</div></div>
-        <div class="cta-stat rv rv-d3" style="--ac:#14B8A6"><div class="csv">Top 20%</div><div class="csl">HR 只看这部分</div></div>
+        <div class="cta-stat rv" style="--ac:#4338CA"><div class="csv">全域闭环</div><div class="csl">公域被看见 → 私域可复购</div></div>
+        <div class="cta-stat rv rv-d1" style="--ac:#6366F1"><div class="csv">多 AI 入口</div><div class="csl">豆包 / DeepSeek 等消费决策问题</div></div>
+        <div class="cta-stat rv rv-d2" style="--ac:#F59E0B"><div class="csv">24×7</div><div class="csl">监测 · 承接 · 跟进不停</div></div>
+        <div class="cta-stat rv rv-d3" style="--ac:#0D9488"><div class="csv">FDE 三阶段</div><div class="csl">诊断 → 交付 → 产品化</div></div>
       </div>
     </div>
   </section>
@@ -308,18 +303,18 @@ var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isInter
   <section class="cta" id="cta">
     <div class="wrap cta-inner">
       <div class="rv">
-        <h2>让 AI HR 接住你的<span class="acc"> 招聘初筛与初面</span>。</h2>
-        <p class="sub">从一个 AI 角色起步，逐步扩展到多个 Agent。90 天内，第一个 AI 员工即在客户的 IM 中上岗。</p>
+        <h2>让 GEO 优化师帮你的品牌<span class="acc"> 进入 AI 的答案</span>。</h2>
+        <p class="sub">从一次 GEO 诊断起步，看看品牌在 AI 答案里的位置，再决定怎么补内容、怎么承接。</p>
         <div class="cta-actions">
-          <button type="button" class="btn btn-blue btn-lg ar-host" onclick="openContact('AIHR·底部CTA·预约演示')">
-            预约演示
+          <button type="button" class="btn btn-blue btn-lg ar-host" onclick="openContact('AI市场·底部CTA·GEO诊断')">
+            预约一次 GEO 诊断
             <span class="ar"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h11M10 4l5 5-5 5"/></svg><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h11M10 4l5 5-5 5"/></svg></span>
           </button>
         </div>
       </div>
       <div class="cta-stats">
-        <div class="cta-stat rv" style="--ac:#4338CA"><div class="csv">5×</div><div class="csl">简历处理效率</div></div>
-        <div class="cta-stat rv rv-d1" style="--ac:#6366F1"><div class="csv">200+</div><div class="csl">面试并发场次</div></div>
+        <div class="cta-stat rv" style="--ac:#4338CA"><div class="csv">公域→私域</div><div class="csl">被看见一路接到被复购</div></div>
+        <div class="cta-stat rv rv-d1" style="--ac:#6366F1"><div class="csv">GEO 诊断</div><div class="csl">看品牌在 AI 答案里的位置</div></div>
         <div class="cta-stat rv rv-d2" style="--ac:#14B8A6"><div class="csv">90 天</div><div class="csl">内第一个 AI 员工在 IM 上岗</div></div>
       </div>
     </div>
@@ -327,7 +322,7 @@ var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isInter
 
 </main>
 <div id="site-footer"></div>
-<script>window.SITE_REL='../';window.PAGE_CTX={entity:'hr',type:'workforce',title:'AI HR'};</script>
+<script>window.SITE_REL='../';window.PAGE_CTX={entity:'geo',type:'workforce',title:'GEO 优化师'};</script>
 <script src="../assets/site.js"></script>
 </body>
 </html>

@@ -184,40 +184,10 @@ function openContact(){{openModal('contactModal');}}
     return f"""<!doctype html>
 <html lang="zh-CN">
 <head>
-<!-- ========== 基础必需标签 ========== -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
-<!-- ========== 核心 SEO 标签 ========== -->
 <title>{title}</title>
 <meta name="description" content="{description}" />
-<meta name="keywords" content="AI员工,AI原生组织,FDE,句子互动" />
-
-<!-- ========== Open Graph 标签 ========== -->
-<meta property="og:type" content="website" />
-<meta property="og:title" content="{title}" />
-<meta property="og:description" content="{description}" />
-<meta property="og:image" content="https://juzibot.com/logo.png" />
-<meta property="og:locale" content="zh_CN" />
-<meta property="og:site_name" content="句子互动" />
-
-<!-- ========== Twitter Card 标签 ========== -->
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="{title}" />
-<meta name="twitter:description" content="{description}" />
-<meta name="twitter:image" content="https://juzibot.com/logo.png" />
-
-<!-- ========== Schema.org 标签 ========== -->
-<meta itemprop="name" content="{title}" />
-<meta itemprop="description" content="{description}" />
-<meta itemprop="image" content="https://juzibot.com/logo.png" />
-
-<!-- ========== 爬虫控制 ========== -->
-<meta name="robots" content="index, follow" />
-
-<!-- ========== 其他优化标签 ========== -->
-<meta name="format-detection" content="telephone=no" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231659E5'/%3E%3Ctext x='16' y='22' font-family='system-ui' font-size='18' font-weight='800' fill='white' text-anchor='middle'%3E句%3C/text%3E%3C/svg%3E" />
 <link rel="stylesheet" href="{rel}assets/style.css">
 </head>

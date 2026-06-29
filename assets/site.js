@@ -39,6 +39,7 @@
     '        <a href="' + REL + 'workforce/government.html"><div class="d-title">AI 社工 / 调解员</div><div class="d-desc">政务高合规要求 + 全程可追溯 · 已稳步落地</div></a>' +
     '        <a href="' + REL + 'workforce/finance.html"><div class="d-title">AI 理财顾问</div><div class="d-desc">银行 / 证券 / 保险头部机构落地 · 多年风控话术</div></a>' +
     '        <a href="' + REL + 'workforce/hr.html"><div class="d-title">AI HR</div><div class="d-desc">简历初筛 + AI 语音面试，HR 只看 Top 20%</div></a>' +
+    '        <a href="' + REL + 'workforce/geo.html"><div class="d-title">GEO 优化师</div><div class="d-desc">GEO 让品牌被 AI 推荐，公域到私域跑完全域营销</div></a>' +
     '      </div>' +
     '    </div>' +
     '    <div class="nav-item"><a href="' + REL + 'industries.html">客户与行业</a></div>' +
@@ -81,6 +82,7 @@
     '        <li><a href="' + REL + 'workforce/government.html">AI 社工 / 调解员</a></li>' +
     '        <li><a href="' + REL + 'workforce/finance.html">AI 理财顾问</a></li>' +
     '        <li><a href="' + REL + 'workforce/hr.html">AI HR</a></li>' +
+    '        <li><a href="' + REL + 'workforce/geo.html">GEO 优化师</a></li>' +
     '      </ul></div>' +
     '      <div><h6>行业</h6><ul>' +
     '        <li><a href="' + REL + 'industries.html#education">在线教育</a></li>' +

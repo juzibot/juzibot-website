@@ -29,6 +29,7 @@
     finance:  { nm: 'AI 理财顾问', ds: '银行/证券/保险落地·多年风控话术', ic: 'fa-landmark', href: W('finance.html') },
     government:{ nm: 'AI 社工/调解员', ds: '政务高合规·全程可追溯', ic: 'fa-scale-balanced', href: W('government.html') },
     hr:       { nm: 'AI HR', ds: '简历初筛 + AI 语音面试', ic: 'fa-user-tie', href: W('hr.html') },
+    geo:      { nm: 'GEO 优化师', ds: 'GEO 让品牌被 AI 推荐·公域到私域', ic: 'fa-bullhorn', href: W('geo.html') },
     enterprise:{ nm: '企业级能力', ds: '和 Anthropic 同判断', ic: 'fa-building-shield', href: REL + 'enterprise.html' },
     industries:{ nm: '客户与行业', ds: '5 大高合规行业落地', ic: 'fa-globe', href: REL + 'industries.html' },
     fde:      { nm: 'FDE 交付', ds: '陪跑落地、交付结果', ic: 'fa-people-carry-box', href: REL + 'fde.html' },
@@ -40,6 +41,7 @@
     { re: /(安全|隐私|私有|合规|数据|审计|等保)/i, a: '支持私有化/专属部署，数据不出域、全程加密可审计，已服务金融、政务等高合规行业。能说什么可提前写死，每句决策可追溯。', cards: ['enterprise', 'government'] },
     { re: /(价格|报价|多少钱|收费|计价|预算|成本)/i, a: '按结果/按效果交付——价格随席位与 AI 员工数量、是否私有化而定。把你的场景告诉我，或直接预约演示，我们给一版贴合你行业的方案。', cards: ['fde'], lead: true },
     { re: /(渠道|微信|抖音|飞书|小红书|whatsapp|平台|通道)/i, a: '微信客服、小程序、公众号、抖音、小红书、飞书、WhatsApp 等 10+ 主流 IM，全部收进一个工作台统一接待。', cards: ['miaohui'] },
+    { re: /(geo|全域营销|被\s*ai\s*推荐|豆包|deepseek|ai\s*答案|种草)/i, a: 'GEO 优化师专管品牌在豆包/DeepSeek 等 AI 答案里的位置：GEO 监测诊断、内容生产、渠道发布，公域意向自动沉到企微接着复购。', cards: ['geo'] },
     { re: /(销售|获客|线索|成交|转化|直播)/i, a: 'AI 销售从直播搬家、私域承接到漏斗跟进，建联到首单成交全程接管，按置信度三档执行。', cards: ['sales'] },
     { re: /(客服|售后|投诉|工单|接待)/i, a: 'AI 客服售前到售后全链路接得住，5 年 BadCase 沉淀，意图+情绪识别，必要时无缝转人工。', cards: ['service'] },
     { re: /(数据|报表|图表|问数|分析|看板|bi)/i, a: '句子问数：一句话查公司所有数据，秒级出图表，可逐层追问钻取，异常主动预警——不写 SQL、不约 BI。', cards: ['canmou'] },
@@ -54,7 +56,7 @@
     '.jzab-trigger{display:inline-flex;align-items:center;gap:7px;font:inherit;font-size:13px;font-weight:650;color:var(--ink,#0b1020);background:var(--bg-2,#fff);border:1px solid var(--line,#e6e8ef);border-radius:999px;padding:7px 13px;cursor:pointer;transition:border-color .2s,box-shadow .2s,transform .2s}' +
     '.jzab-trigger:hover{border-color:var(--blue,#4338CA);box-shadow:0 6px 18px rgba(67,56,202,.12);transform:translateY(-1px)}' +
     '.jzab-trigger .jzab-kbd{font:600 11px/1 ui-monospace,monospace;color:var(--ink-3,#8a92a6);border:1px solid var(--line-2,#d7dae3);border-radius:5px;padding:2px 5px}' +
-    '@media(max-width:1400px){.jzab-trigger{display:none}}' + /* 笔记本及以下：导航 pill 隐藏，右下角浮动按钮兜底，避免与「联系我们/登录」挤爆导航 */
+    '@media(max-width:1080px){.jzab-trigger{display:none}}' + /* 手机/平板：导航 pill 隐藏，右下角浮动按钮兜底，避免撑爆导航 */
     '.jzab-fab{position:fixed;right:max(18px,env(safe-area-inset-right));bottom:max(18px,env(safe-area-inset-bottom));z-index:940;display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:#fff;background:linear-gradient(135deg,var(--blue,#4338CA),#6366F1);border:none;border-radius:999px;padding:13px 18px;cursor:pointer;box-shadow:0 12px 34px rgba(67,56,202,.34);transition:transform .2s,box-shadow .2s}' +
     '.jzab-fab:hover{transform:translateY(-2px);box-shadow:0 18px 44px rgba(67,56,202,.42)}' +
     '.jzab-fab i{font-size:15px}' +
