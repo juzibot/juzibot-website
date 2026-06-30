@@ -40,17 +40,17 @@
   .crumbs a:hover{color:var(--blue)}
   .crumbs .sep{color:var(--line)}
   .crumbs .here{color:var(--ink-2);font-weight:650}
-  .ph-grid{display:grid;grid-template-columns:1.04fr .96fr;gap:clamp(34px,5vw,72px);align-items:center}
+  .ph-grid{display:grid;grid-template-columns:1.04fr .96fr;gap:clamp(34px,5vw,72px);align-items:start}
   .ph h1{font-size:clamp(34px,5vw,64px);font-weight:850;letter-spacing:-.04em;line-height:1.12;
     max-width:20ch;word-break:keep-all;text-wrap:balance;margin-bottom:clamp(14px,2vw,24px)}
-  .ph h1 .accent{color:var(--blue)}
+  .ph h1 .accent{color:var(--blue);display:inline-block;white-space:nowrap}
   .ph-lede{font-size:clamp(16px,1.4vw,18.5px);color:var(--ink-2);max-width:50ch;line-height:1.7}
   .ph-lede strong{color:var(--ink);font-weight:700}
   .ph-cta{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:clamp(20px,2.6vw,30px)}
   /* 页头小标签行（承接旧页 pill-row 的事实点） */
-  .ph-pills{display:flex;flex-wrap:wrap;gap:10px;margin-top:clamp(18px,2.4vw,26px)}
-  .ph-pills span{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--ink-2);
-    background:#fff;border:1px solid var(--line);padding:8px 15px;border-radius:999px;box-shadow:var(--shadow-soft)}
+  .ph-pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:clamp(18px,2.4vw,26px)}
+  .ph-pills span{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:650;color:var(--ink-2);white-space:nowrap;
+    background:#fff;border:1px solid var(--line);padding:7px 12px;border-radius:999px;box-shadow:var(--shadow-soft)}
   .ph-pills span i{width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0}
   /* hero 内嵌真实 Canvas 工作流演示（iframe） */
   .ph-demo{position:relative;border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;
@@ -96,21 +96,26 @@
     .ph-art{order:2}
   }
   /* —— 产品截图陈列（应用窗口框）—— */
-  .shotwrap{display:grid;grid-template-columns:1fr 1fr;gap:clamp(18px,2.4vw,28px)}
-  @media(min-width:1080px){.shotwrap{grid-template-columns:repeat(3,1fr)}.shotcard.span2{grid-column:span 2}}
-  .shotcard{border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;background:#fff;
-    box-shadow:0 1px 2px rgba(14,20,48,.05),0 26px 54px -28px rgba(67,56,202,.28);
-    transition:transform .4s var(--ease),box-shadow .4s var(--ease),border-color .4s}
-  .shotcard:hover{transform:translateY(-5px);border-color:transparent;
-    box-shadow:0 2px 6px rgba(14,20,48,.06),0 40px 80px -30px rgba(67,56,202,.4)}
-  .shotcard .win{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--line);
+  .shotstack{display:flex;flex-direction:column;gap:clamp(26px,3vw,40px)}
+  .shotrow{display:grid;grid-template-columns:minmax(0,1.28fr) minmax(280px,.72fr);gap:clamp(22px,3vw,40px);align-items:start}
+  .shotmedia{border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;background:#fff;
+    box-shadow:0 1px 2px rgba(14,20,48,.05),0 26px 54px -28px rgba(67,56,202,.28)}
+  .shotmedia .win{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--line);
     background:linear-gradient(180deg,#FCFDFF,#F6F9FE)}
-  .shotcard .win .d{width:9px;height:9px;border-radius:50%}
-  .shotcard .win .d.r{background:#FF5F57}.shotcard .win .d.y{background:#FEBC2E}.shotcard .win .d.g{background:#28C840}
-  .shotcard .win .t{margin-left:6px;font-family:var(--mono);font-size:11px;letter-spacing:.03em;color:var(--ink-3)}
-  .shotcard img{width:100%;height:auto;display:block;object-fit:cover;object-position:top center}
-  .shotcard .cap{padding:14px 18px;font-size:13px;color:var(--ink-2);line-height:1.6;border-top:1px solid var(--line)}
-  @media(max-width:760px){.shotwrap{grid-template-columns:1fr}}
+  .shotmedia .win .d{width:9px;height:9px;border-radius:50%}
+  .shotmedia .win .d.r{background:#FF5F57}.shotmedia .win .d.y{background:#FEBC2E}.shotmedia .win .d.g{background:#28C840}
+  .shotmedia .win .t{margin-left:6px;font-family:var(--mono);font-size:11px;letter-spacing:.03em;color:var(--ink-3)}
+  .shotmedia img{width:100%;height:auto;display:block;object-fit:cover;object-position:top center}
+  .shotcopy{min-width:0; margin-top:-6px;}
+  .shotidx{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--blue);font-weight:700;text-transform:uppercase}
+  .shotidx::before{content:"";width:22px;height:1px;background:var(--blue-200)}
+  .shotcopy h3{margin-top:6px;font-size:clamp(24px,2.6vw,34px);line-height:1.08;letter-spacing:-.03em;color:var(--ink);font-weight:860}
+  .shotcopy p{margin-top:10px;font-size:14.5px;line-height:1.6;color:var(--ink-2)}
+  .shotfacts{display:grid;gap:8px;margin-top:14px}
+  .shotfact{padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:#fff;box-shadow:var(--shadow-soft)}
+  .shotfact strong{display:block;font-size:12px;line-height:1.4;color:var(--ink);font-weight:760}
+  .shotfact span{display:block;margin-top:4px;font-size:12.5px;line-height:1.65;color:var(--ink-2)}
+  @media(max-width:980px){.shotrow{grid-template-columns:1fr}.shotcopy h3{font-size:clamp(24px,5vw,32px)}}
 
   .casegrid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(12px,1.6vw,18px)}
   .casegrid img{width:100%;height:auto;display:block;border-radius:14px;border:1px solid var(--line);background:#fff;box-shadow:var(--shadow-soft)}
@@ -146,7 +151,10 @@
   .wf-step.w-purple{background:#EEF0FF;color:var(--purple)}.wf-step.w-purple i.wf-ic{background:var(--purple)}
   .wf-step.w-teal{background:var(--orange-lt);color:var(--teal)}.wf-step.w-teal i.wf-ic{background:var(--teal)}
   .wf-arrow{display:flex;align-items:center;gap:7px;padding-left:12px;font-size:11.5px;color:var(--ink-3);font-family:var(--mono)}
-  .wf-branch{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .wf-branch{display:grid;grid-template-columns:1fr;gap:8px}
+  .wf-note{margin-top:18px;padding:14px 16px;border:1px solid var(--blue-100);border-radius:14px;background:var(--blue-50)}
+  .wf-note strong{display:block;font-size:14.5px;line-height:1.45;color:var(--ink);font-weight:760}
+  .wf-note span{display:block;margin-top:6px;font-size:13px;line-height:1.65;color:var(--ink-2)}
   /* —— 5 行业策略库卡片 —— */
   .indgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:clamp(12px,1.4vw,16px)}
   .indcard{position:relative;background:#fff;border:1px solid var(--line);border-radius:var(--radius);
@@ -227,6 +235,7 @@
 
   /* —— 极窄屏（≤400，覆盖 390/360）：进一步压间距、KPI 可考虑单列防挤 —— */
   @media(max-width:400px){
+    .ph h1 .accent{white-space:normal}
     .indcard .sc{font-size:11px}
     .kb-row .kb-meta,.kb-row .kb-sync{font-size:10.5px}
   }
@@ -257,10 +266,10 @@
             <a href="#capabilities" class="btn btn-ghost btn-lg">看核心能力</a>
           </div>
           <div class="ph-pills">
-            <span><i></i>100+ 大模型支持</span>
-            <span><i></i>Canvas 可视化工作流</span>
-            <span><i></i>5 个高合规行业策略库</span>
-            <span><i></i>多年行业数据沉淀</span>
+            <span><i></i>100+ 模型</span>
+            <span><i></i>Canvas 工作流</span>
+            <span><i></i>合规策略库</span>
+            <span><i></i>行业沉淀</span>
           </div>
         </div>
         <div class="ph-art">
@@ -286,30 +295,55 @@
       <div class="sec-top rv">
         <div>
           <span class="sec-eyebrow">真实界面</span>
-          <h2>按真实功能拆成三块：<span class="hl"><span>流程引擎 / 调优中心 / 模型选择</span></span>。</h2>
+          <h2>按真实功能拆成三块：<span class="hl"><span>流程引擎 / 调优中心 / 模型选择</span></span></h2>
         </div>
-        <p class="sub">不是换一张 hero 图，而是按产品里的真实模块系统化呈现：可视化编排流程、逐节点回放调优、以及 100+ 大模型按需切换。</p>
+        <p class="sub">企业需要的不是一个“开盲盒”的聊天框，而是一套可控的系统。通过可视化编排、逐节点调优与模型灵活切换，让 AI 真正落地到生产环节。</p>
       </div>
-      <div class="shotwrap">
-        <div class="shotcard span2 rv">
-          <div class="win"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="t">句子秒懂 · Canvas 工作流编辑器</span></div>
-          <img src="../assets/product-shots/miaodong-flow-engine.png" alt="句子秒懂 流程引擎（Canvas）可视化编排界面" loading="lazy" decoding="async" />
-          <div class="cap">流程引擎：在 Canvas 上拖拽节点拼装业务流程——条件判断、分支、循环、并行、转人工，每一步的输入输出都可追溯。</div>
+      <div class="shotstack">
+        <div class="shotrow rv">
+          <div class="shotmedia">
+            <div class="win"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="t">句子秒懂 · 流程引擎</span></div>
+            <img src="../assets/product-shots/miaodong-flow-engine.png" alt="句子秒懂 流程引擎（Canvas）可视化编排界面" loading="lazy" decoding="async" />
+          </div>
+          <div class="shotcopy">
+            <span class="shotidx">01 · 流程引擎</span>
+            <h3>把业务规则直接写进 AI 工作流</h3>
+            <p>基于 Canvas 做可视化编排，把条件判断、分支、循环、并行、转人工等规则直接写进流程。企业方一眼就能看明白：这不是提示词试玩，而是可维护的业务流程系统。</p>
+            <div class="shotfacts">
+              <div class="shotfact"><strong>看懂什么</strong><span>从用户提问到节点执行，再到结果输出，整条链路都在同一张图里。</span></div>
+              <div class="shotfact"><strong>业务价值</strong><span>复杂业务不再靠人记规则，流程可以标准化沉淀，后续扩展也更稳。</span></div>
+            </div>
+          </div>
         </div>
-        <div class="shotcard rv rv-d1">
-          <div class="win"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="t">句子秒懂 · 流程引擎 · 转人工</span></div>
-          <img src="../assets/product-shots/miaodong-flow-transfer.png" alt="句子秒懂 流程引擎 转人工节点界面" loading="lazy" decoding="async" />
-          <div class="cap">转人工：当知识未命中、用户强烈诉求或命中风险策略时，流程可自动转接人工坐席，保证体验与合规。</div>
+        <div class="shotrow rv rv-d1">
+          <div class="shotmedia">
+            <div class="win"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="t">句子秒懂 · 调优中心</span></div>
+            <img src="../assets/product-shots/miaodong-tuning-center.png" alt="句子秒懂 调优中心 运行回放与节点结果查看" loading="lazy" decoding="async" />
+          </div>
+          <div class="shotcopy">
+            <span class="shotidx">02 · 调优中心</span>
+            <h3>出问题时，不用靠猜，直接回放定位</h3>
+            <p>一次对话或一次任务都能按节点回放，查看每一步的输入输出、耗时和命中情况。企业侧最关心的不是“能不能跑”，而是“跑偏了怎么查”，这一块就是用来解决这个问题。</p>
+            <div class="shotfacts">
+              <div class="shotfact"><strong>看懂什么</strong><span>每个节点做了什么、在哪一步失真、该改知识还是改流程，都能快速定位。</span></div>
+              <div class="shotfact"><strong>业务价值</strong><span>调优从反复试错，变成有证据的迭代，交付和运营效率都会更高。</span></div>
+            </div>
+          </div>
         </div>
-        <div class="shotcard span2 rv">
-          <div class="win"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="t">句子秒懂 · 调优中心</span></div>
-          <img src="../assets/product-shots/miaodong-tuning-center.png" alt="句子秒懂 调优中心 运行回放与节点结果查看" loading="lazy" decoding="async" />
-          <div class="cap">调优中心：一次对话/一次任务可按节点回放，查看每一步的输入输出、耗时与命中情况，快速定位问题并迭代版本。</div>
-        </div>
-        <div class="shotcard rv rv-d1">
-          <div class="win"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="t">句子秒懂 · 选择大模型</span></div>
-          <img src="../assets/product-shots/miaodong-model-select.png" alt="句子秒懂 选择大模型界面" loading="lazy" decoding="async" />
-          <div class="cap">模型选择：按场景与预算随时切换。文本、图片、语音、多模态能力清晰标注，避免“选错模型”带来的成本与效果波动。</div>
+        <div class="shotrow rv rv-d2">
+          <div class="shotmedia">
+            <div class="win"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="t">句子秒懂 · 选择大模型</span></div>
+            <img src="../assets/product-shots/miaodong-model-select.png" alt="句子秒懂 选择大模型界面" loading="lazy" decoding="async" />
+          </div>
+          <div class="shotcopy">
+            <span class="shotidx">03 · 模型选择</span>
+            <h3>按任务选模型，而不是被单一模型绑死</h3>
+            <p>文本、图片、语音、多模态能力清晰标注，按场景和预算灵活切换。企业采购和交付团队会更容易理解：模型不是黑盒，而是可以按成本、效果、稳定性来做选择。</p>
+            <div class="shotfacts">
+              <div class="shotfact"><strong>看懂什么</strong><span>不同模型的能力边界和适用场景清晰可见，不需要靠经验拍脑袋选型。</span></div>
+              <div class="shotfact"><strong>业务价值</strong><span>既能控制成本，也能避免因为模型选错导致效果波动或上线风险。</span></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -415,7 +449,7 @@
         <p class="sub">流程不是一句提示词就能跑通的。用 Canvas 把“问答→校验→查询→执行→兜底转人工”串起来，才能稳定承接真实业务。</p>
       </div>
       <div class="arch rv" style="padding:clamp(20px,2.6vw,32px)">
-        <div class="ind-why" style="margin-top:0;background:#fff">
+        <div class="ind-why" style="margin-top:0;background:#fff;grid-template-columns:1.12fr .88fr;align-items:start">
           <div>
             <h4 style="max-width:none;margin-bottom:16px">把“业务规则”变成可维护的流程，而不是堆提示词</h4>
             <p style="font-size:14.5px;line-height:1.75;color:var(--ink-2);margin-bottom:18px">真实业务常见“合规边界”“人工介入”“多轮澄清”等复杂情况。流程引擎让你把这些规则显式写进工作流，稳定运行、便于交接。</p>
@@ -425,6 +459,10 @@
               <li>版本管理与灰度：新流程可控上线，回滚有据可查</li>
               <li>模板起跑：行业与业务模板直接复用，改成你自己的流程即可上线</li>
             </ul>
+            <div class="wf-note">
+              <strong>把复杂业务写成流程，AI 才能真正接业务。</strong>
+              <span>命中规则就执行，踩到边界就兜底，必要时自动转人工。</span>
+            </div>
           </div>
           <div>
             <div class="demo-panel">
