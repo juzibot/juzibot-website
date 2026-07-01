@@ -47,8 +47,11 @@
   .role-lede strong{color:var(--ink);font-weight:700}
   .pill-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:clamp(20px,2.8vw,30px)}
   .pill{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--ink-2);
-    background:#fff;border:1px solid var(--line);padding:8px 16px;border-radius:999px;box-shadow:var(--shadow-soft)}
+    white-space:nowrap;background:#fff;border:1px solid var(--line);padding:8px 16px;border-radius:999px;box-shadow:var(--shadow-soft)}
   .pill .dot{width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0}
+  @media(min-width:900px){
+    .pill-row{flex-wrap:nowrap}
+  }
   /* 右侧：AI 导购 · 给客户王女士的推送（IM 卡片） */
   .push-card{position:relative;background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);
     padding:clamp(20px,2.4vw,28px);box-shadow:0 1px 2px rgba(14,20,48,.05),0 40px 80px -30px rgba(67,56,202,.32),0 12px 24px -12px rgba(14,20,48,.12)}
