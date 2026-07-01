@@ -12,6 +12,7 @@
   var API = (window.JZAB_API) || (REL + 'api/hero-chat');
   var SID = 'ab-' + Math.random().toString(36).slice(2, 9);
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var coarse = window.matchMedia && window.matchMedia('(hover:none) and (pointer:coarse)').matches;
 
   // ---- 实体库：对话即导航 ----
   var P = function (s) { return REL + 'products/' + s; }, W = function (s) { return REL + 'workforce/' + s; };
@@ -53,9 +54,10 @@
 
   // ---- 样式（用 site.css 变量，带兜底）----
   var css = '' +
-    '.jzab-trigger{display:inline-flex;align-items:center;gap:7px;font:inherit;font-size:13px;font-weight:650;color:var(--ink,#0b1020);background:var(--bg-2,#fff);border:1px solid var(--line,#e6e8ef);border-radius:999px;padding:7px 13px;cursor:pointer;transition:border-color .2s,box-shadow .2s,transform .2s}' +
+    '.jzab-trigger{display:inline-flex;align-items:center;gap:7px;font:inherit;font-size:13px;font-weight:650;color:var(--ink,#0b1020);background:var(--bg-2,#fff);border:1px solid var(--line,#e6e8ef);border-radius:999px;padding:7px 13px;white-space:nowrap;cursor:pointer;transition:border-color .2s,box-shadow .2s,transform .2s}' +
     '.jzab-trigger:hover{border-color:var(--blue,#4338CA);box-shadow:0 6px 18px rgba(67,56,202,.12);transform:translateY(-1px)}' +
     '.jzab-trigger .jzab-kbd{font:600 11px/1 ui-monospace,monospace;color:var(--ink-3,#8a92a6);border:1px solid var(--line-2,#d7dae3);border-radius:5px;padding:2px 5px}' +
+    '@media(max-width:1440px){.jzab-trigger{padding:7px 11px;font-size:12px}.jzab-trigger .jzab-kbd{display:none}}' +
     '@media(max-width:1080px){.jzab-trigger{display:none}}' + /* 手机/平板：导航 pill 隐藏，右下角浮动按钮兜底，避免撑爆导航 */
     '.jzab-fab{position:fixed;right:max(18px,env(safe-area-inset-right));bottom:max(18px,env(safe-area-inset-bottom));z-index:940;display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:#fff;background:linear-gradient(135deg,var(--blue,#4338CA),#6366F1);border:none;border-radius:999px;padding:13px 18px;cursor:pointer;box-shadow:0 12px 34px rgba(67,56,202,.34);transition:transform .2s,box-shadow .2s}' +
     '.jzab-fab:hover{transform:translateY(-2px);box-shadow:0 18px 44px rgba(67,56,202,.42)}' +
@@ -71,6 +73,7 @@
     '.jzab-in{flex:1;min-width:0;border:none;outline:none;background:transparent;font:inherit;font-size:16px;color:var(--ink,#0b1020)}' +
     '.jzab-in::placeholder{color:var(--ink-3,#8a92a6)}' +
     '.jzab-x{border:none;background:transparent;color:var(--ink-3,#8a92a6);font-size:13px;cursor:pointer;border:1px solid var(--line-2,#d7dae3);border-radius:6px;padding:3px 7px}' +
+    '@media(max-width:520px){.jzab-x{min-width:44px;min-height:44px;display:grid;place-items:center;padding:0 10px;font-size:22px;border-radius:999px}}' +
     '.jzab-ctx{padding:8px 16px;font-size:12px;color:var(--ink-3,#8a92a6);border-bottom:1px solid var(--line-2,#eef0f5);display:flex;align-items:center;gap:7px}' +
     '.jzab-ctx b{color:var(--ink-2,#5A6478);font-weight:650}' +
     '.jzab-body{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:14px;scroll-behavior:smooth}' +
@@ -116,12 +119,14 @@
   function el(tag, cls, html) { var d = document.createElement(tag); if (cls) d.className = cls; if (html != null) d.innerHTML = html; return d; }
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
 
+  var closeText = coarse ? '×' : 'Esc';
+  var closeAria = coarse ? '关闭' : '关闭 (Esc)';
   var ov = el('div', 'jzab-ov'); ov.setAttribute('role', 'dialog'); ov.setAttribute('aria-modal', 'true'); ov.setAttribute('aria-label', '问句子 · AI 对话');
   ov.innerHTML =
     '<div class="jzab-panel">' +
     '  <div class="jzab-head"><span class="jzab-sp"><i class="fa-solid fa-wand-magic-sparkles"></i></span>' +
     '    <input class="jzab-in" type="text" placeholder="问句子的 AI 员工任何事，或试试下面…" aria-label="输入你的问题" autocomplete="off" />' +
-    '    <button class="jzab-x" aria-label="关闭 (Esc)">Esc</button></div>' +
+    '    <button class="jzab-x" aria-label="' + closeAria + '">' + closeText + '</button></div>' +
     '  <div class="jzab-ctx" hidden></div>' +
     '  <div class="jzab-body" role="log" aria-live="polite" aria-relevant="additions" data-lenis-prevent></div>' +
     '  <div class="jzab-foot">命中常见问题秒答 · 其余实时问真 AI 客服（可能十几秒）</div>' +

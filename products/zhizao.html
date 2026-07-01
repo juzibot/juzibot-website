@@ -2,12 +2,31 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>句子制造 · 补齐客户数字化基建 | 句子互动</title>
-<meta name="description" content="句子制造给每个大客户补齐数字化基建——AI 要在客户系统里跑，先得有独立环境、接得通的数据、过得了的合规。一客一环境，算力 / 数据库 / Agent 全部隔离。私有化 / 一体机 / 混合云，原有 CRM / 工单 / 知识库直连。" />
+<title>句子制造 - 句子互动 | AI员工部署基建</title>
+<meta name="description" content="句子制造是句子互动的 AI 员工部署基建，为大客户提供独立环境、数据连通、算力隔离与私有化能力，帮助企业在原有 CRM、工单和知识库之上安全落地 AI。" />
+<meta name="keywords" content="AI员工,FDE,AI原生组织,私有化部署,数字化基建,混合云,句子制造,句子互动" />
+<meta name="robots" content="index,follow" />
+<meta name="format-detection" content="telephone=no,email=no,address=no" />
+<link rel="canonical" href="https://juzibot.com/products/zhizao.html" />
 <link rel="icon" href="../logo.png" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="句子制造 - 句子互动 | AI员工部署基建" />
+<meta property="og:description" content="句子制造是句子互动的 AI 员工部署基建，为大客户提供独立环境、数据连通、算力隔离与私有化能力，帮助企业在原有 CRM、工单和知识库之上安全落地 AI。" />
+<meta property="og:image" content="https://juzibot.com/assets/product-shots/both-products.png" />
+<meta property="og:url" content="https://juzibot.com/products/zhizao.html" />
+<meta property="og:locale" content="zh_CN" />
+<meta property="og:site_name" content="句子互动" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="句子制造 - 句子互动 | AI员工部署基建" />
+<meta name="twitter:description" content="句子制造是句子互动的 AI 员工部署基建，为大客户提供独立环境、数据连通、算力隔离与私有化能力，帮助企业在原有 CRM、工单和知识库之上安全落地 AI。" />
+<meta name="twitter:image" content="https://juzibot.com/assets/product-shots/both-products.png" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="../assets/site.css" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","name":"句子制造 - 句子互动 | AI员工部署基建","description":"句子制造是句子互动的 AI 员工部署基建，为大客户提供独立环境、数据连通、算力隔离与私有化能力，帮助企业在原有 CRM、工单和知识库之上安全落地 AI。","url":"https://juzibot.com/products/zhizao.html","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"句子互动","url":"https://juzibot.com/"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://juzibot.com/assets/product-shots/both-products.png"}}
+</script>
 <style>
   /* scoped · 仅用 site.css 既有变量，承接首页配色，不引入异色 */
   /* —— 产品页头：沿用 .hero 的浅色径向底，承接面包屑 + KPI —— */
@@ -22,14 +41,15 @@
   .crumbs .sep{color:var(--line)}
   .crumbs .here{color:var(--ink-2);font-weight:650}
   .ph-grid{display:grid;grid-template-columns:1.04fr .96fr;gap:clamp(34px,5vw,72px);align-items:center}
+  .ph-art{align-self:start}
   .ph h1{font-size:clamp(34px,5vw,64px);font-weight:850;letter-spacing:-.04em;line-height:1.12;
     max-width:20ch;word-break:keep-all;text-wrap:balance;margin-bottom:clamp(14px,2vw,24px)}
-  .ph h1 .accent{color:var(--blue)}
+  .ph h1 .accent{color:var(--blue);white-space:nowrap;display:inline-block}
   .ph-lede{font-size:clamp(16px,1.4vw,18.5px);color:var(--ink-2);max-width:52ch;line-height:1.7}
   .ph-lede strong{color:var(--ink);font-weight:700}
-  .ph-pills{display:flex;flex-wrap:wrap;gap:10px;margin-top:clamp(20px,2.6vw,28px)}
+  .ph-pills{display:flex;flex-wrap:nowrap;gap:10px;margin-top:clamp(20px,2.6vw,28px)}
   .ph-pill{display:inline-flex;align-items:center;gap:9px;font-size:13px;font-weight:650;color:var(--ink-2);
-    background:#fff;border:1px solid var(--line);padding:8px 15px;border-radius:999px;box-shadow:var(--shadow-soft)}
+    background:#fff;border:1px solid var(--line);padding:8px 15px;border-radius:999px;box-shadow:var(--shadow-soft);white-space:nowrap}
   .ph-pill i{color:var(--green);font-size:11px}
   @media(max-width:980px){.ph-grid{grid-template-columns:1fr;gap:clamp(40px,7vw,56px)}.ph-art{order:2}}
 
@@ -66,7 +86,7 @@
   @media(max-width:560px){.zfeat{grid-template-columns:1fr}}
 
   /* —— 为什么需要这一层：图文左右 —— */
-  .zsplit{display:grid;grid-template-columns:1.02fr .98fr;gap:clamp(34px,5vw,64px);align-items:center}
+  .zsplit{display:grid;grid-template-columns:.96fr 1.04fr;gap:clamp(34px,5vw,64px);align-items:center}
   @media(max-width:900px){.zsplit{grid-template-columns:1fr;gap:clamp(34px,6vw,48px)}}
   .zlist{list-style:none;display:grid;gap:13px;margin-top:clamp(18px,2.4vw,26px)}
   .zlist li{position:relative;padding-left:28px;font-size:14.5px;line-height:1.7;color:var(--ink-2)}
@@ -75,6 +95,16 @@
   .zlist li::after{content:"";position:absolute;left:5.5px;top:6px;width:6px;height:3px;
     border-left:2px solid var(--teal);border-bottom:2px solid var(--teal);transform:rotate(-45deg)}
   .zlist li strong{color:var(--ink);font-weight:750}
+
+  #why .sec-top>div{flex:1;min-width:0}
+  @media(min-width:761px){#why .sec-top{align-items:flex-start}#why .sec-top .sub{margin-left:auto;text-align:left}}
+  @media(max-width:760px){#why .sec-top .sub{align-self:flex-end;text-align:left}}
+  @media(max-width:1200px){#why .tier-cards.three{grid-template-columns:1fr 1fr}}
+  #why .tier-cards.three .pcard h3{white-space:nowrap}
+
+  #vow .sec-top>div{flex:1;min-width:0}
+  @media(min-width:761px){#vow .sec-top{align-items:flex-start}#vow .sec-top .sub{margin-left:auto;text-align:left}}
+  @media(max-width:760px){#vow .sec-top .sub{text-align:left}}
 
   /* —— 承诺：4 联保数据带 —— */
   .vowband{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(14px,1.6vw,20px)}
@@ -110,7 +140,7 @@
     /* 页头：标题/正文/pills 收字号、间距 */
     .ph h1{font-size:clamp(28px,8vw,38px);max-width:none}
     .ph-lede{font-size:15px;max-width:none}
-    .ph-pills{gap:8px}
+    .ph-pills{flex-wrap:wrap;gap:8px}
     .ph-pill{padding:10px 14px;min-height:40px}          /* 触控区 ≥40px(含间距≥44) */
     .crumbs a,.crumbs .here{display:inline-flex;align-items:center;min-height:32px}
 
@@ -158,10 +188,10 @@
           <h1>句子制造 ·<br/><span class="accent">AI 落地的数字化地基</span></h1>
           <p class="ph-lede">AI 员工要在客户系统里真正跑起来，先得有数字化基建：一套独立环境、数据能打通、合规能过关。很多大客户恰好缺这一层。<strong>句子制造把这层地基补上</strong>：一客一环境，算力 / 数据库 / Agent 全隔离，支持私有化 / 一体机 / 混合云，原有 CRM / 工单 / 知识库直连。</p>
           <div class="ph-pills">
-            <span class="ph-pill"><i class="fa-solid fa-circle"></i>补齐数字化基建</span>
-            <span class="ph-pill"><i class="fa-solid fa-circle"></i>一客一环境 · 数据隔离</span>
-            <span class="ph-pill"><i class="fa-solid fa-circle"></i>私有化 / 一体机 / 混合云</span>
-            <span class="ph-pill"><i class="fa-solid fa-circle"></i>原系统直连</span>
+            <span class="ph-pill"><i class="fa-solid fa-circle"></i>数字化地基</span>
+            <span class="ph-pill"><i class="fa-solid fa-circle"></i>一客一环境</span>
+            <span class="ph-pill"><i class="fa-solid fa-circle"></i>私有化/混合云</span>
+            <span class="ph-pill"><i class="fa-solid fa-circle"></i>系统直连</span>
           </div>
         </div>
         <div class="ph-art rv">

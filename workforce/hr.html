@@ -2,12 +2,31 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>AI HR · AI 员工 · 招聘岗 | 句子互动 AI 员工</title>
-<meta name="description" content="AI HR——简历获取、初筛与第一轮语音面试，全部由 Agent 自动完成。HR 只看 Top 20% 的候选人，把时间留给深度面试、团队沟通和人才策略。" />
+<title>AI HR - 句子互动 | AI员工招聘岗</title>
+<meta name="description" content="AI HR 是句子互动面向招聘场景的 AI 员工，覆盖简历获取、自动初筛、语音面试与候选人排序，让 HR 把精力集中在高价值面试和人才决策上。" />
+<meta name="keywords" content="AI员工,FDE,AI原生组织,AI HR,招聘自动化,简历初筛,句子互动" />
+<meta name="robots" content="index,follow" />
+<meta name="format-detection" content="telephone=no,email=no,address=no" />
+<link rel="canonical" href="https://juzibot.com/workforce/hr.html" />
 <link rel="icon" href="../logo.png" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="AI HR - 句子互动 | AI员工招聘岗" />
+<meta property="og:description" content="AI HR 是句子互动面向招聘场景的 AI 员工，覆盖简历获取、自动初筛、语音面试与候选人排序，让 HR 把精力集中在高价值面试和人才决策上。" />
+<meta property="og:image" content="https://juzibot.com/assets/product-shots/both-products.png" />
+<meta property="og:url" content="https://juzibot.com/workforce/hr.html" />
+<meta property="og:locale" content="zh_CN" />
+<meta property="og:site_name" content="句子互动" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="AI HR - 句子互动 | AI员工招聘岗" />
+<meta name="twitter:description" content="AI HR 是句子互动面向招聘场景的 AI 员工，覆盖简历获取、自动初筛、语音面试与候选人排序，让 HR 把精力集中在高价值面试和人才决策上。" />
+<meta name="twitter:image" content="https://juzibot.com/assets/product-shots/both-products.png" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="../assets/site.css" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","name":"AI HR - 句子互动 | AI员工招聘岗","description":"AI HR 是句子互动面向招聘场景的 AI 员工，覆盖简历获取、自动初筛、语音面试与候选人排序，让 HR 把精力集中在高价值面试和人才决策上。","url":"https://juzibot.com/workforce/hr.html","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"句子互动","url":"https://juzibot.com/"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://juzibot.com/assets/product-shots/both-products.png"}}
+</script>
 <style>
   /* —— 仅本页：页头 + pills + 招聘控制台面板 + 招聘流水线，全部沿用 site.css 设计令牌 —— */
   .role-hero{position:relative;overflow:hidden;padding:clamp(118px,15vh,168px) var(--gut) clamp(48px,7vw,86px);
@@ -26,10 +45,11 @@
   .role-hero h1 .accent{color:var(--blue)}
   .role-lede{font-size:clamp(16px,1.4vw,19px);color:var(--ink-2);max-width:48ch;line-height:1.66}
   .role-lede strong{color:var(--ink);font-weight:700}
-  .pill-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:clamp(20px,2.8vw,30px)}
-  .pill{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--ink-2);
-    background:#fff;border:1px solid var(--line);padding:8px 16px;border-radius:999px;box-shadow:var(--shadow-soft)}
+  .pill-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:clamp(20px,2.8vw,30px)}
+  .pill{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:650;color:var(--ink-2);white-space:nowrap;
+    background:#fff;border:1px solid var(--line);padding:7px 12px;border-radius:999px;box-shadow:var(--shadow-soft)}
   .pill .dot{width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0}
+  @media(min-width:900px){.pill-row{flex-wrap:nowrap}}
   /* 右侧：AI HR · 招聘控制台 */
   .live-card{position:relative;background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);
     padding:clamp(22px,2.6vw,30px);box-shadow:0 1px 2px rgba(14,20,48,.05),0 40px 80px -30px rgba(67,56,202,.32),0 12px 24px -12px rgba(14,20,48,.12)}
@@ -90,7 +110,9 @@
     /* 页头标题/导语字号与 pills 触控 */
     .role-hero h1{max-width:18ch}
     .role-lede{max-width:none}
-    .pill{padding:10px 15px;min-height:44px;box-sizing:border-box}
+    .pill-row{overflow-x:auto;scrollbar-width:none}
+    .pill-row::-webkit-scrollbar{display:none}
+    .pill{flex:0 0 auto;min-width:max-content;padding:10px 15px;min-height:44px;box-sizing:border-box;overflow:visible;text-overflow:clip}
     /* 能力卡：内边距与图标略收，仍纵向单列 */
     .role-split p{font-size:15px}
     .cap-list .cap{padding:13px 14px;gap:11px}
@@ -165,10 +187,10 @@
         <h1 class="rv rv-d1">AI HR · <span class="accent">初筛到一面，Agent 全包</span></h1>
         <p class="role-lede rv rv-d2">简历获取、初筛与第一轮语音面试，<strong>全部由 Agent 自动完成</strong>。HR 只看 Top 20% 的候选人，把时间留给深度面试、团队沟通和人才策略。</p>
         <div class="pill-row rv rv-d3">
-          <span class="pill"><span class="dot"></span>HR 只看 Top 20%</span>
-          <span class="pill"><span class="dot"></span>多渠道简历自动同步去重</span>
-          <span class="pill"><span class="dot"></span>AI 语音面试 7×24</span>
-          <span class="pill"><span class="dot"></span>统一题库 + 评分卡</span>
+          <span class="pill"><span class="dot"></span>只看 Top 20%</span>
+          <span class="pill"><span class="dot"></span>多渠道同步</span>
+          <span class="pill"><span class="dot"></span>7×24 初面</span>
+          <span class="pill"><span class="dot"></span>题库 + 评分</span>
         </div>
       </div>
       <div class="hero-art rv rv-d2" style="display:block">
