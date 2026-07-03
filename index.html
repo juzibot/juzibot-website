@@ -3351,6 +3351,36 @@ if(!sessionStorage.getItem('intro_shown')){
   var scrollRange=null;
   var rafId=0;
 
+  function getIndexFromHash(hash){
+    var raw=typeof hash==='string'?hash:window.location.hash;
+    if(!raw||raw.charAt(0)!=='#')return -1;
+    var id=raw.slice(1);
+    for(var i=0;i<panels.length;i++){
+      if(panels[i].id===id)return i;
+    }
+    return -1;
+  }
+
+  function syncHashToIndex(index){
+    if(!panels[index]||!panels[index].id)return;
+    var nextHash='#'+panels[index].id;
+    if(window.location.hash===nextHash)return;
+    if(window.history&&window.history.replaceState){
+      window.history.replaceState(null,'',nextHash);
+      return;
+    }
+    window.location.hash=nextHash;
+  }
+
+  function scrollViewportTo(target,behavior){
+    var mode=behavior||'smooth';
+    if(window.__lenis){
+      window.__lenis.scrollTo(target,mode==='auto'?{immediate:true}:{});
+      return;
+    }
+    window.scrollTo({top:target,behavior:mode});
+  }
+
   function syncActiveItemIntoView(behavior){
     if(!mobileMq.matches||!sidebar||lastActive<0||!items[lastActive])return;
     items[lastActive].scrollIntoView({
@@ -3360,21 +3390,25 @@ if(!sessionStorage.getItem('intro_shown')){
     });
   }
 
-  function setActive(index){
+  function setActive(index,options){
+    options=options||{};
     var safeIndex=Math.max(0,Math.min(index,items.length-1));
-    if(safeIndex===lastActive)return;
-    lastActive=safeIndex;
-    items.forEach(function(item,i){
-      item.classList.toggle('active',i===safeIndex);
-    });
-    panels.forEach(function(panel,i){
-      panel.classList.toggle('active',i===safeIndex);
-    });
-    if(panels[safeIndex]){
-      var ac=panels[safeIndex].style.getPropertyValue('--ac');
-      if(ac)contentArea.style.setProperty('--ac',ac);
+    var changed=safeIndex!==lastActive;
+    if(changed){
+      lastActive=safeIndex;
+      items.forEach(function(item,i){
+        item.classList.toggle('active',i===safeIndex);
+      });
+      panels.forEach(function(panel,i){
+        panel.classList.toggle('active',i===safeIndex);
+      });
+      if(panels[safeIndex]){
+        var ac=panels[safeIndex].style.getPropertyValue('--ac');
+        if(ac)contentArea.style.setProperty('--ac',ac);
+      }
     }
-    syncActiveItemIntoView('smooth');
+    if(options.syncHash!==false)syncHashToIndex(safeIndex);
+    if(changed||options.forceNavSync)syncActiveItemIntoView(options.navBehavior||'smooth');
   }
 
   function measureScrollRange(){
@@ -3388,6 +3422,11 @@ if(!sessionStorage.getItem('intro_shown')){
     var end=docTop+cmdCenter.offsetHeight-stickyTop-stickyHeight;
     if(end<start)end=start;
     scrollRange={start:start,end:end};
+  }
+
+  function isWithinScrollRange(){
+    if(!scrollRange)measureScrollRange();
+    return window.scrollY>=scrollRange.start&&window.scrollY<=scrollRange.end;
   }
 
   function updateByScroll(){
@@ -3405,7 +3444,10 @@ if(!sessionStorage.getItem('intro_shown')){
       progress=1;
     }
     var index=Math.round(progress*(items.length-1));
-    setActive(index);
+    setActive(index,{
+      syncHash:isWithinScrollRange(),
+      navBehavior:'auto'
+    });
   }
 
   function requestScrollUpdate(){
@@ -3413,39 +3455,82 @@ if(!sessionStorage.getItem('intro_shown')){
     rafId=requestAnimationFrame(updateByScroll);
   }
 
+  function scrollToIndex(index,behavior){
+    var safeIndex=Math.max(0,Math.min(index,items.length-1));
+    if(mobileMq.matches){
+      var mobileTop=Math.max(0,window.scrollY+cmdCenter.getBoundingClientRect().top-88);
+      scrollViewportTo(mobileTop,behavior||'smooth');
+      return;
+    }
+    if(!scrollRange)measureScrollRange();
+    var range=scrollRange;
+    var ratio=items.length===1?0:safeIndex/(items.length-1);
+    var target=range.start+(range.end-range.start)*ratio;
+    scrollViewportTo(target,behavior||'smooth');
+  }
+
+  function applyHashState(options){
+    options=options||{};
+    var index=getIndexFromHash(options.hash);
+    if(index<0)return false;
+    setActive(index,{
+      syncHash:true,
+      forceNavSync:true,
+      navBehavior:options.navBehavior||'auto'
+    });
+    if(options.scroll){
+      scrollToIndex(index,options.behavior||'smooth');
+    }
+    return true;
+  }
+
   items.forEach(function(item,index){
     item.addEventListener('click',function(e){
       e.preventDefault();
+      setActive(index,{
+        syncHash:true,
+        forceNavSync:true,
+        navBehavior:'smooth'
+      });
       if(mobileMq.matches){
-        setActive(index);
         return;
       }
-      if(!scrollRange)measureScrollRange();
-      var range=scrollRange;
-      var ratio=items.length===1?0:index/(items.length-1);
-      var target=range.start+(range.end-range.start)*ratio;
-      if(window.__lenis){
-        window.__lenis.scrollTo(target);
-      }else{
-        window.scrollTo({top:target,behavior:'smooth'});
-      }
+      scrollToIndex(index,'smooth');
     });
   });
 
   window.addEventListener('scroll',requestScrollUpdate,{passive:true});
   window.addEventListener('resize',function(){
     scrollRange=null;
-    syncActiveItemIntoView('auto');
-    requestScrollUpdate();
+    if(!applyHashState({navBehavior:'auto'})){
+      syncActiveItemIntoView('auto');
+      requestScrollUpdate();
+    }
   });
   window.addEventListener('load',function(){
     scrollRange=null;
-    syncActiveItemIntoView('auto');
-    requestScrollUpdate();
+    measureScrollRange();
+    if(!applyHashState({scroll:true,behavior:'auto',navBehavior:'auto'})){
+      syncActiveItemIntoView('auto');
+      requestScrollUpdate();
+    }
   });
-  setActive(0);
+  window.addEventListener('hashchange',function(){
+    scrollRange=null;
+    measureScrollRange();
+    if(!applyHashState({scroll:true,behavior:'smooth',navBehavior:'smooth'})){
+      requestScrollUpdate();
+    }
+  });
+  var initialHashIndex=getIndexFromHash();
+  setActive(initialHashIndex>=0?initialHashIndex:0,{
+    syncHash:false,
+    navBehavior:'auto'
+  });
   measureScrollRange();
-  updateByScroll();
+  if(!applyHashState({scroll:false,navBehavior:'auto'})){
+    updateByScroll();
+  }
 })();
 
 /* ── 行业「看客户墙」次级入口：切到对应行业 + 滚到顶部客户墙；主卡片点击则进入行业详情页 ── */
