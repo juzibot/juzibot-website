@@ -2,12 +2,31 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>句子懂行 · AI 员工的记忆 | 句子互动</title>
-<meta name="description" content="句子懂行——AI 员工的记忆。把客户散乱的知识炼成 AI 能查、能用、越用越准的可检索资产。知识工程是 Agent 上岗的前提：先把知识做对，再上产品。" />
+<title>句子懂行 - 句子互动 | AI员工知识引擎</title>
+<meta name="description" content="句子懂行是句子互动面向 AI 员工的知识引擎，把企业散落的文档、FAQ 与业务经验整理成可检索、可引用、可持续优化的知识资产，支撑 Agent 稳定回答。" />
+<meta name="keywords" content="AI员工,FDE,AI原生组织,知识引擎,RAG,企业知识库,句子懂行,句子互动" />
+<meta name="robots" content="index,follow" />
+<meta name="format-detection" content="telephone=no,email=no,address=no" />
+<link rel="canonical" href="https://juzibot.com/products/dongxing.html" />
 <link rel="icon" href="../logo.png" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="句子懂行 - 句子互动 | AI员工知识引擎" />
+<meta property="og:description" content="句子懂行是句子互动面向 AI 员工的知识引擎，把企业散落的文档、FAQ 与业务经验整理成可检索、可引用、可持续优化的知识资产，支撑 Agent 稳定回答。" />
+<meta property="og:image" content="https://juzibot.com/assets/product-shots/both-products.png" />
+<meta property="og:url" content="https://juzibot.com/products/dongxing.html" />
+<meta property="og:locale" content="zh_CN" />
+<meta property="og:site_name" content="句子互动" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="句子懂行 - 句子互动 | AI员工知识引擎" />
+<meta name="twitter:description" content="句子懂行是句子互动面向 AI 员工的知识引擎，把企业散落的文档、FAQ 与业务经验整理成可检索、可引用、可持续优化的知识资产，支撑 Agent 稳定回答。" />
+<meta name="twitter:image" content="https://juzibot.com/assets/product-shots/both-products.png" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="../assets/site.css" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","name":"句子懂行 - 句子互动 | AI员工知识引擎","description":"句子懂行是句子互动面向 AI 员工的知识引擎，把企业散落的文档、FAQ 与业务经验整理成可检索、可引用、可持续优化的知识资产，支撑 Agent 稳定回答。","url":"https://juzibot.com/products/dongxing.html","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"句子互动","url":"https://juzibot.com/"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://juzibot.com/assets/product-shots/both-products.png"}}
+</script>
 <style>
   /* scoped · 仅用 site.css 既有变量，承接首页配色，不引入异色 */
   /* —— 产品页头：沿用 .hero 的浅色径向底，承接面包屑 + KPI —— */
@@ -29,13 +48,15 @@
   .ph-lede strong{color:var(--ink);font-weight:700}
   .ph-cta{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:clamp(20px,2.6vw,30px)}
   /* 页头要点 pills */
-  .ph-pills{display:flex;flex-wrap:wrap;gap:10px;margin-top:clamp(20px,2.6vw,28px)}
+  .ph-pills{display:flex;flex-wrap:wrap;gap:10px;margin-top:clamp(8px,1.4vw,16px);grid-column:1 / -1;min-width:0}
   .ph-pill{display:inline-flex;align-items:center;gap:9px;font-size:13px;font-weight:600;color:var(--ink-2);
-    background:#fff;border:1px solid var(--line);padding:8px 16px;border-radius:999px;box-shadow:var(--shadow-soft)}
+    background:#fff;border:1px solid var(--line);padding:8px 16px;border-radius:999px;box-shadow:var(--shadow-soft);white-space:nowrap}
   .ph-pill .dot{width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0}
   @media(max-width:980px){
     .ph-grid{grid-template-columns:1fr;gap:clamp(40px,7vw,56px)}
-    .ph-art{order:2}
+    .ph-pills{flex-wrap:wrap;margin-top:clamp(20px,2.6vw,28px)}
+    .ph-art{order:3}
+    .ph-pills{order:2;grid-column:auto}
   }
   /* —— 知识炼化：原始资料 → 知识资产 转化图 —— */
   .refine{position:relative;border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;
@@ -99,12 +120,6 @@
             </button>
             <a href="#engineering" class="btn btn-ghost btn-lg">看知识工程四步</a>
           </div>
-          <div class="ph-pills">
-            <span class="ph-pill"><span class="dot"></span>知识工程进场第一步</span>
-            <span class="ph-pill"><span class="dot"></span>散乱知识 → 可检索资产</span>
-            <span class="ph-pill"><span class="dot"></span>每条回答可追溯出处</span>
-            <span class="ph-pill"><span class="dot"></span>Agent 上岗的前提</span>
-          </div>
         </div>
         <div class="ph-art">
           <div class="refine">
@@ -129,6 +144,12 @@
               <div class="refine-note"><i class="fa-solid fa-circle-info"></i>先把这层做对，AI 才查得准。知识工程是 Agent 上岗的前提，不是上线后再补的活。</div>
             </div>
           </div>
+        </div>
+        <div class="ph-pills">
+          <span class="ph-pill"><span class="dot"></span>知识工程进场第一步</span>
+          <span class="ph-pill"><span class="dot"></span>散乱知识 → 可检索资产</span>
+          <span class="ph-pill"><span class="dot"></span>每条回答可追溯出处</span>
+          <span class="ph-pill"><span class="dot"></span>Agent 上岗的前提</span>
         </div>
       </div>
     </div>
@@ -479,6 +500,112 @@
       if(!v)return;
       run(v);
     });
+  })();
+  </script>
+
+  <!-- ════════════ 真实界面 · 轻量高保真演示 ════════════ -->
+  <section class="sec pad" id="realui">
+    <div class="wrap">
+      <div class="sec-top rv">
+        <div>
+          <span class="sec-eyebrow">真实界面</span>
+          <h2>把「知识工程」做成 <span class="hl"><span>可见、可用的工作台</span></span>。</h2>
+        </div>
+        <p class="sub">下面的界面与动效来自你提供的素材：可直接在浏览器里运行（含视频）。用于说明句子懂行从「无脑上传」到「体检修正」再到「范围内检索」的完整闭环。</p>
+      </div>
+
+      <div class="dh-demo rv">
+        <div class="win">
+          <span class="d r"></span><span class="d y"></span><span class="d g"></span>
+          <span class="t">句子懂行 · 工作台（高保真 HTML 示意）</span>
+          <span class="live" title="来自飞书素材文件夹，可离线运行"><i></i>可运行</span>
+        </div>
+        <div class="dh-stage" id="dhStage">
+          <iframe id="dhFrame" data-d="../_feishu/juzi-donghang/句子懂行.html" title="句子懂行 · 工作台高保真 HTML 示意" loading="lazy"></iframe>
+          <button class="dh-zoom" type="button" onclick="dhOpen()" aria-label="放大查看工作台">放大查看</button>
+        </div>
+      </div>
+
+      <div class="vidcard rv">
+        <div class="win">
+          <span class="d r"></span><span class="d y"></span><span class="d g"></span>
+          <span class="t">句子懂行 · 演示视频</span>
+        </div>
+        <video class="vid" controls playsinline preload="metadata" src="../_feishu/juzi-donghang/句子懂行.mp4"></video>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .dh-demo{position:relative;border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;
+      background:linear-gradient(180deg,#FBFCFF,#F3F7FE);
+      box-shadow:0 1px 2px rgba(14,20,48,.05),0 40px 80px -30px rgba(67,56,202,.35),0 12px 24px -12px rgba(14,20,48,.12)}
+    .dh-demo .win,.vidcard .win{display:flex;align-items:center;gap:8px;padding:11px 15px;background:rgba(255,255,255,.78);
+      backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+    .dh-demo .win .d,.vidcard .win .d{width:9px;height:9px;border-radius:50%}
+    .dh-demo .win .d.r,.vidcard .win .d.r{background:#FF5F57}
+    .dh-demo .win .d.y,.vidcard .win .d.y{background:#FEBC2E}
+    .dh-demo .win .d.g,.vidcard .win .d.g{background:#28C840}
+    .dh-demo .win .t,.vidcard .win .t{margin-left:6px;font-family:var(--mono);font-size:11px;letter-spacing:.03em;color:var(--ink-3)}
+    .dh-demo .win .live{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:750;
+      color:var(--green);background:var(--green-lt);padding:4px 10px;border-radius:999px}
+    .dh-demo .win .live i{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green)}
+    .dh-stage{position:relative;width:100%;overflow:hidden;background:#fff}
+    .dh-stage iframe{position:absolute;top:0;left:0;border:0;background:#fff;transform-origin:top left}
+    .dh-zoom{position:absolute;right:12px;bottom:12px;z-index:3;display:inline-flex;align-items:center;gap:7px;
+      font-size:12.5px;font-weight:700;color:#fff;background:rgba(11,16,32,.6);backdrop-filter:blur(4px);
+      border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:8px 14px;cursor:pointer;transition:background .2s,transform .2s}
+    .dh-zoom:hover{background:var(--blue);transform:translateY(-1px)}
+    .dhm{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;
+      padding:clamp(12px,3vw,34px);background:rgba(11,16,32,.5);backdrop-filter:blur(13px);-webkit-backdrop-filter:blur(13px)}
+    .dhm.open{display:flex;animation:dhm-bg .34s ease both}
+    .dhm.closing{animation:dhm-bg-out .24s ease both}
+    @keyframes dhm-bg{from{opacity:0}to{opacity:1}}
+    @keyframes dhm-bg-out{from{opacity:1}to{opacity:0}}
+    .dhm-panel{position:relative;background:#fff;border-radius:18px;overflow:hidden;
+      box-shadow:0 50px 140px rgba(11,16,32,.55),0 0 0 1px rgba(255,255,255,.05)}
+    .dhm.open .dhm-panel{animation:dhm-pop .46s cubic-bezier(.22,1,.36,1) both}
+    .dhm.closing .dhm-panel{animation:dhm-pop-out .24s cubic-bezier(.4,0,1,1) both}
+    @keyframes dhm-pop{from{opacity:0;transform:scale(.9) translateY(16px)}to{opacity:1;transform:none}}
+    @keyframes dhm-pop-out{from{opacity:1;transform:none}to{opacity:0;transform:scale(.96) translateY(8px)}}
+    .dhm-stage{position:relative;overflow:hidden;background:#fff}
+    .dhm-stage iframe{position:absolute;top:0;left:0;border:0;background:#fff;transform-origin:top left}
+    .dhm-x{position:absolute;right:14px;top:14px;z-index:3;width:36px;height:36px;border-radius:50%;border:none;
+      background:rgba(11,16,32,.55);backdrop-filter:blur(6px);color:#fff;font-size:19px;line-height:1;cursor:pointer;
+      display:grid;place-items:center;transition:background .2s,transform .2s}
+    .dhm-x:hover{background:var(--blue);transform:scale(1.06)}
+    @media(prefers-reduced-motion:reduce){.dhm.open,.dhm.closing,.dhm.open .dhm-panel,.dhm.closing .dhm-panel{animation:none}}
+
+    .vidcard{margin-top:clamp(18px,2.6vw,26px);border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;background:#fff;
+      box-shadow:0 1px 2px rgba(14,20,48,.05),0 26px 54px -28px rgba(67,56,202,.28)}
+    .vid{width:100%;height:auto;display:block;background:#000;aspect-ratio:16/9}
+
+  </style>
+
+  <div class="dhm" id="dhModal" role="dialog" aria-modal="true" aria-label="句子懂行 · 工作台放大演示">
+    <div class="dhm-panel">
+      <button class="dhm-x" type="button" onclick="dhClose()" aria-label="关闭放大">&times;</button>
+      <div class="dhm-stage" id="dhBigStage"><iframe id="dhFrameBig" title="句子懂行 · 工作台放大演示"></iframe></div>
+    </div>
+  </div>
+  <script>
+  (function(){
+    var fr=document.getElementById('dhFrame'),stg=document.getElementById('dhStage');
+    if(!fr||!stg)return;
+    var big=document.getElementById('dhFrameBig'),bstg=document.getElementById('dhBigStage'),modal=document.getElementById('dhModal');
+    function mode(){return {src:fr.getAttribute('data-d'),w:1440,h:900};}
+    function place(frame,host,m,s){frame.style.width=m.w+'px';frame.style.height=m.h+'px';frame.style.transform=(s>=.999?'none':'scale('+s+')');host.style.height=Math.round(m.h*s)+'px';}
+    function fitPrev(){var m=mode();if(fr.getAttribute('src')!==m.src)fr.setAttribute('src',m.src);var w=stg.clientWidth||520;place(fr,stg,m,w/m.w);}
+    function fitBig(){var m=mode();var availW=Math.min(window.innerWidth*0.96,m.w),availH=window.innerHeight*0.9;var s=Math.min(availW/m.w,availH/m.h,1);
+      if(!big.getAttribute('src'))big.setAttribute('src',m.src);
+      big.style.width=m.w+'px';big.style.height=m.h+'px';big.style.transform=(s>=.999?'none':'scale('+s+')');
+      bstg.style.width=Math.round(m.w*s)+'px';bstg.style.height=Math.round(m.h*s)+'px';}
+    fitPrev();
+    window.dhOpen=function(){modal.classList.remove('closing');modal.classList.add('open');document.body.style.overflow='hidden';fitBig();};
+    window.dhClose=function(){if(!modal.classList.contains('open')||modal.classList.contains('closing'))return;modal.classList.add('closing');document.body.style.overflow='';setTimeout(function(){modal.classList.remove('open');modal.classList.remove('closing');},250);};
+    modal.addEventListener('click',function(e){if(e.target===modal)window.dhClose();});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&modal.classList.contains('open'))window.dhClose();});
+    var rt;window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){fitPrev();if(modal.classList.contains('open'))fitBig();},120);});
   })();
   </script>
 

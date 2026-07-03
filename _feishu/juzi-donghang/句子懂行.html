@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>秒懂 · Agentic 知识库 · 交互 Demo</title>
+<style>
+  :root{
+    --ink:#1d2433; --muted:#5b6473; --faint:#8a93a3;
+    --line:#e8eaf0; --line2:#f1f3f8;
+    --bg:#f5f6fa; --card:#ffffff;
+    --blue:#2f5fd0; --blue-soft:#eef2fc; --blue-line:#d6e0f7;
+    --teal:#0f9488; --teal-soft:#e7f6f4; --teal-line:#cdeae6;
+    --amber:#b8791a; --amber-soft:#fbf2e2; --amber-line:#eedfbf;
+    --red:#cf3b3b; --red-soft:#fbeded; --red-line:#f2d4d4;
+    --green:#2f8f5b; --green-soft:#eaf6ef; --green-line:#cfe6da;
+    --violet:#6248c4; --violet-soft:#efecfb; --violet-line:#ddd6f6;
+    --radius:12px; --radius-s:8px;
+    --shadow:0 1px 2px rgba(20,28,50,.04), 0 8px 24px rgba(20,28,50,.06);
+    --shadow-lg:0 12px 40px rgba(20,28,50,.16);
+    --sidebar:236px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    line-height:1.6;font-size:14px;-webkit-font-smoothing:antialiased;}
+  button{font-family:inherit;cursor:pointer}
+  ::-webkit-scrollbar{width:9px;height:9px}
+  ::-webkit-scrollbar-thumb{background:#d4d9e4;border-radius:6px;border:2px solid var(--bg)}
+  ::-webkit-scrollbar-thumb:hover{background:#c2c9d8}
+
+  /* ============ APP SHELL ============ */
+  .app{display:flex;min-height:100vh}
+
+  /* sidebar */
+  .sidebar{width:var(--sidebar);flex:0 0 var(--sidebar);background:#13182a;color:#c7cdda;
+    display:flex;flex-direction:column;position:fixed;top:0;bottom:0;left:0;z-index:30}
+  .brand{padding:20px 20px 16px;display:flex;align-items:center;gap:11px}
+  .brand .logo{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--blue),var(--violet));
+    display:grid;place-items:center;font-weight:800;color:#fff;font-size:16px;letter-spacing:-.04em;box-shadow:0 4px 14px rgba(98,72,196,.4)}
+  .brand .bt{font-size:14.5px;font-weight:700;color:#fff;line-height:1.25}
+  .brand .bt small{display:block;font-size:10.5px;font-weight:500;color:#7e879c;letter-spacing:.14em;text-transform:uppercase;margin-top:1px}
+  .nav{padding:8px 12px;flex:1;overflow-y:auto}
+  .nav .grp{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#5b647c;padding:14px 12px 6px;font-weight:700}
+  .nav a{display:flex;align-items:center;gap:11px;padding:9px 12px;border-radius:9px;color:#aeb6c7;
+    font-size:13.5px;font-weight:500;margin:2px 0;transition:background .15s,color .15s;cursor:pointer;position:relative}
+  .nav a .ic{width:18px;height:18px;flex:0 0 18px;opacity:.85}
+  .nav a:hover{background:rgba(255,255,255,.05);color:#e6e9f0}
+  .nav a.on{background:rgba(98,109,224,.18);color:#fff}
+  .nav a.on::before{content:"";position:absolute;left:-12px;top:8px;bottom:8px;width:3px;border-radius:0 3px 3px 0;background:var(--blue)}
+  .nav a .badge{margin-left:auto;font-size:11px;font-weight:700;background:var(--red);color:#fff;border-radius:999px;padding:1px 7px;min-width:18px;text-align:center}
+  .nav a .badge.v{background:var(--violet)}
+  .side-foot{padding:14px 18px;border-top:1px solid rgba(255,255,255,.07);font-size:11.5px;color:#6c768d}
+  .side-foot .who{display:flex;align-items:center;gap:9px}
+  .side-foot .av{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#3b7,#2a9d8f);display:grid;place-items:center;color:#fff;font-size:12px;font-weight:700}
+  .side-foot .who b{color:#dfe3ec;font-weight:600;font-size:12.5px}
+
+  /* main */
+  .main{margin-left:var(--sidebar);flex:1;min-width:0;display:flex;flex-direction:column}
+  .topbar{height:60px;background:rgba(255,255,255,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);
+    display:flex;align-items:center;gap:16px;padding:0 28px;position:sticky;top:0;z-index:20}
+  .topbar .pt{font-size:17px;font-weight:700;letter-spacing:-.01em}
+  .topbar .ps{font-size:12.5px;color:var(--faint);margin-left:2px}
+  .topbar .spacer{flex:1}
+  .demo-badge{font-size:11px;font-weight:700;letter-spacing:.05em;color:var(--amber);background:var(--amber-soft);
+    border:1px solid var(--amber-line);border-radius:999px;padding:4px 12px}
+  .org-chip{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);background:var(--card);
+    border:1px solid var(--line);border-radius:999px;padding:5px 13px 5px 6px;font-weight:500}
+  .org-chip .od{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#f0a,#f63);display:grid;place-items:center;color:#fff;font-size:11px;font-weight:700}
+  .content{padding:26px 28px 80px;max-width:1280px;width:100%}
+
+  /* ============ SHARED ============ */
+  .page{display:none;animation:fadeUp .4s ease both}
+  .page.on{display:block}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  @keyframes pop{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .row{display:flex;gap:16px}
+  .btn{font-size:13px;border-radius:8px;padding:8px 15px;font-weight:600;border:1px solid transparent;transition:all .15s;display:inline-flex;align-items:center;gap:7px}
+  .btn:active{transform:translateY(1px)}
+  .btn.pri{background:var(--blue);color:#fff}
+  .btn.pri:hover{background:#2750b8;box-shadow:0 4px 14px rgba(47,95,208,.3)}
+  .btn.violet{background:var(--violet);color:#fff}.btn.violet:hover{background:#5339b3}
+  .btn.teal{background:var(--teal);color:#fff}.btn.teal:hover{background:#0c7d73}
+  .btn.ghost{background:var(--card);border-color:var(--line);color:var(--muted)}
+  .btn.ghost:hover{border-color:#c7cee0;color:var(--ink);background:#fafbfd}
+  .btn.sm{padding:5px 11px;font-size:12px}
+  .btn.danger{background:var(--red-soft);color:var(--red);border-color:var(--red-line)}
+  .btn.danger:hover{background:#f7dede}
+
+  .chip{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;border-radius:6px;padding:2px 9px;white-space:nowrap;line-height:1.7}
+  .chip .dot{width:6px;height:6px;border-radius:50%}
+  .chip.blue{background:var(--blue-soft);color:var(--blue);border:1px solid var(--blue-line)}
+  .chip.teal{background:var(--teal-soft);color:var(--teal);border:1px solid var(--teal-line)}
+  .chip.amber{background:var(--amber-soft);color:var(--amber);border:1px solid var(--amber-line)}
+  .chip.red{background:var(--red-soft);color:var(--red);border:1px solid var(--red-line)}
+  .chip.green{background:var(--green-soft);color:var(--green);border:1px solid var(--green-line)}
+  .chip.violet{background:var(--violet-soft);color:var(--violet);border:1px solid var(--violet-line)}
+  .chip.grey{background:var(--line2);color:var(--muted);border:1px solid var(--line)}
+
+  .sec-title{font-size:15px;font-weight:700;margin:0 0 3px}
+  .sec-sub{font-size:12.5px;color:var(--faint);margin:0 0 16px}
+
+  /* ============ OVERVIEW ============ */
+  .hero{background:linear-gradient(120deg,#1b2240 0%,#23305c 58%,#3a2d6b 100%);
+    border-radius:16px;padding:28px 30px;color:#fff;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+  .hero::after{content:"";position:absolute;right:-60px;top:-60px;width:280px;height:280px;border-radius:50%;
+    background:radial-gradient(circle,rgba(98,72,196,.5),transparent 70%);pointer-events:none}
+  .hero::before{content:"";position:absolute;right:80px;bottom:-90px;width:220px;height:220px;border-radius:50%;
+    background:radial-gradient(circle,rgba(15,148,136,.4),transparent 70%);pointer-events:none}
+  .hero h2{margin:0 0 8px;font-size:23px;letter-spacing:-.01em;position:relative}
+  .hero p{margin:0;color:#c2cae0;font-size:14px;max-width:60ch;position:relative}
+  .hero .flow{display:flex;align-items:center;gap:6px;margin-top:20px;flex-wrap:wrap;position:relative}
+  .hero .fl{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16);border-radius:8px;padding:7px 13px;font-size:12.5px;font-weight:600}
+  .hero .fl b{color:#fff}.hero .fl span{color:#aab4cf;font-weight:500}
+  .hero .fa{color:#7e88a6;font-size:15px}
+
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:16px 0}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:17px 18px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+  .stat .k{font-size:12px;color:var(--faint);font-weight:600;display:flex;align-items:center;gap:7px}
+  .stat .v{font-size:30px;font-weight:800;letter-spacing:-.02em;margin-top:6px;font-variant-numeric:tabular-nums}
+  .stat .d{font-size:11.5px;color:var(--muted);margin-top:2px}
+  .stat .bar{position:absolute;left:0;top:0;bottom:0;width:4px}
+  .stat.s1 .bar{background:var(--blue)} .stat.s1 .v{color:var(--blue)}
+  .stat.s2 .bar{background:var(--violet)} .stat.s2 .v{color:var(--violet)}
+  .stat.s3 .bar{background:var(--teal)} .stat.s3 .v{color:var(--teal)}
+  .stat.s4 .bar{background:var(--green)} .stat.s4 .v{color:var(--green)}
+
+  .ov-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:16px;margin-top:16px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+  .panel .ph{padding:14px 18px;border-bottom:1px solid var(--line2);display:flex;align-items:center;gap:9px}
+  .panel .ph .pn{font-weight:700;font-size:14px}
+  .panel .ph .more{margin-left:auto;font-size:12px;color:var(--blue);font-weight:600;cursor:pointer}
+  .panel .pb{padding:8px 18px 14px}
+  .feed{list-style:none;margin:0;padding:0}
+  .feed li{display:flex;gap:11px;padding:11px 0;border-bottom:1px solid var(--line2);align-items:flex-start}
+  .feed li:last-child{border-bottom:none}
+  .feed .fi{width:30px;height:30px;border-radius:8px;flex:0 0 30px;display:grid;place-items:center;font-size:14px}
+  .feed .ft{font-size:13px}.feed .ft b{font-weight:650}
+  .feed .fm{font-size:11.5px;color:var(--faint);margin-top:1px}
+  .feed .fx{margin-left:auto;font-size:11px;color:var(--faint);white-space:nowrap}
+  .agent-mini{display:flex;flex-direction:column;gap:10px}
+  .am{display:flex;gap:12px;padding:12px;border:1px solid var(--line);border-radius:10px;align-items:center}
+  .am .ai{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;font-size:18px;flex:0 0 38px}
+  .am.a1 .ai{background:var(--blue-soft)} .am.a2 .ai{background:var(--violet-soft)} .am.a3 .ai{background:var(--teal-soft)}
+  .am .an{font-weight:700;font-size:13.5px}
+  .am .ad{font-size:11.5px;color:var(--muted)}
+  .am .as{margin-left:auto;text-align:right}
+  .am .as .asv{font-weight:800;font-size:15px}.am.a1 .asv{color:var(--blue)}.am.a2 .asv{color:var(--violet)}.am.a3 .asv{color:var(--teal)}
+  .am .as .asl{font-size:10.5px;color:var(--faint)}
+
+  /* ============ FILE MANAGER ============ */
+  .fm{display:grid;grid-template-columns:248px 1fr;gap:16px;align-items:start}
+  .tree{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:10px;position:sticky;top:80px}
+  .tree .th{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);font-weight:700;padding:6px 10px 8px}
+  .tnode{display:flex;align-items:center;gap:7px;padding:7px 10px;border-radius:8px;font-size:13px;cursor:pointer;color:var(--ink);transition:background .12s}
+  .tnode:hover{background:var(--bg)}
+  .tnode.on{background:var(--blue-soft);color:var(--blue);font-weight:650}
+  .tnode .tic{font-size:14px;width:16px;text-align:center}
+  .tnode .cnt{margin-left:auto;font-size:11px;color:var(--faint);font-variant-numeric:tabular-nums}
+  .tnode.on .cnt{color:var(--blue)}
+  .tnode.child{margin-left:18px;font-size:12.5px}
+  .tnode.special{color:var(--violet)}
+  .tnode.special .tic{color:var(--violet)}
+
+  .fm-main{min-width:0}
+  .fm-toolbar{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+  .crumb{font-size:13px;color:var(--muted)}.crumb b{color:var(--ink);font-weight:650}
+  .search{flex:1;max-width:280px;position:relative}
+  .search input{width:100%;border:1px solid var(--line);border-radius:8px;padding:8px 12px 8px 32px;font-size:13px;background:var(--card);outline:none;transition:border .15s}
+  .search input:focus{border-color:var(--blue-line)}
+  .search .si{position:absolute;left:11px;top:8px;color:var(--faint);font-size:14px}
+
+  table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+  thead th{background:#f7f8fb;text-align:left;padding:11px 16px;font-size:12px;color:var(--muted);font-weight:600;border-bottom:1px solid var(--line);white-space:nowrap}
+  tbody td{padding:13px 16px;border-bottom:1px solid var(--line2);font-size:13px;vertical-align:middle}
+  tbody tr{cursor:pointer;transition:background .12s}
+  tbody tr:hover{background:#fafbfe}
+  tbody tr:last-child td{border-bottom:none}
+  .ftype{display:inline-flex;align-items:center;gap:9px}
+  .ftype .fic{width:32px;height:32px;border-radius:8px;display:grid;place-items:center;font-size:13px;font-weight:800;color:#fff;flex:0 0 32px;letter-spacing:-.02em}
+  .fic.xls{background:#1d8a52}.fic.doc{background:#2b5fc0}.fic.pdf{background:#c0392b}.fic.ppt{background:#d35400}.fic.aud{background:#7d54c0}
+  .fname{font-weight:600}.fmeta{font-size:11px;color:var(--faint)}
+  .units-cell{font-variant-numeric:tabular-nums;font-weight:650;color:var(--violet)}
+  .units-cell small{color:var(--faint);font-weight:500;margin-left:2px}
+
+  /* ============ DRAWER ============ */
+  .scrim{position:fixed;inset:0;background:rgba(20,26,46,.42);backdrop-filter:blur(2px);z-index:40;opacity:0;pointer-events:none;transition:opacity .25s}
+  .scrim.on{opacity:1;pointer-events:auto}
+  .drawer{position:fixed;top:0;right:0;bottom:0;width:560px;max-width:94vw;background:var(--bg);z-index:50;
+    transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;box-shadow:var(--shadow-lg)}
+  .drawer.on{transform:none}
+  .dh{padding:18px 22px;background:var(--card);border-bottom:1px solid var(--line);display:flex;align-items:flex-start;gap:12px}
+  .dh .dx{margin-left:auto;font-size:20px;color:var(--faint);cursor:pointer;line-height:1;background:none;border:none;padding:4px}
+  .dh .dx:hover{color:var(--ink)}
+  .db{flex:1;overflow-y:auto;padding:20px 22px}
+  .df-foot{padding:14px 22px;background:var(--card);border-top:1px solid var(--line);display:flex;gap:10px;justify-content:flex-end}
+
+  .kv{display:grid;grid-template-columns:88px 1fr;gap:6px 14px;font-size:13px;margin:4px 0 18px}
+  .kv .k{color:var(--faint)}
+  .kv .v{color:var(--ink);font-weight:500}
+
+  .lineage{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:12px 0}
+  .lineage .ll{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);font-weight:700;margin-bottom:10px}
+  .lin-flow{display:flex;align-items:center;gap:8px;font-size:12px}
+  .lin-flow .ln{flex:1;text-align:center;border-radius:8px;padding:9px 6px;font-weight:600;line-height:1.4}
+  .lin-flow .ln.raw{background:var(--blue-soft);color:var(--blue);border:1px solid var(--blue-line)}
+  .lin-flow .ln.unit{background:var(--violet-soft);color:var(--violet);border:1px dashed var(--violet-line)}
+  .lin-flow .ln.kb{background:var(--teal-soft);color:var(--teal);border:1px dashed var(--teal-line)}
+  .lin-flow .ln small{display:block;font-weight:500;font-size:10.5px;opacity:.8;margin-top:1px}
+  .lin-flow .la{color:var(--faint);font-size:14px}
+
+  .unit-list{margin:6px 0 0}
+  .unit{background:var(--card);border:1px solid var(--line);border-radius:9px;padding:11px 13px;margin:8px 0;transition:border .15s}
+  .unit:hover{border-color:var(--violet-line)}
+  .unit .uh{display:flex;align-items:center;gap:8px;margin-bottom:3px}
+  .unit .uid{font-size:11px;font-family:"SF Mono",Menlo,monospace;color:var(--faint);font-weight:600}
+  .unit .utxt{font-size:13px;color:var(--ink)}
+  .unit .uq{font-size:12px;color:var(--muted);margin-top:3px}
+  .unit.derived{border-style:dashed;border-color:var(--violet-line);background:#faf9fe}
+  .filter-tabs{display:flex;gap:6px;margin:6px 0 4px;flex-wrap:wrap}
+  .ftab{font-size:12px;padding:5px 12px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--muted);font-weight:600;cursor:pointer}
+  .ftab.on{background:var(--violet);color:#fff;border-color:var(--violet)}
+
+  /* upload */
+  .dropzone{border:2px dashed #c7cee0;border-radius:12px;padding:30px 20px;text-align:center;background:var(--card);transition:all .2s;cursor:pointer}
+  .dropzone:hover{border-color:var(--blue);background:var(--blue-soft)}
+  .dropzone .dzi{font-size:34px;margin-bottom:6px}
+  .dropzone .dzt{font-weight:650;font-size:14px}
+  .dropzone .dzs{font-size:12px;color:var(--faint);margin-top:3px}
+  .up-file{display:flex;align-items:center;gap:11px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:11px 13px;margin:10px 0}
+  .ai-suggest{background:linear-gradient(180deg,var(--violet-soft),#fbfaff);border:1px solid var(--violet-line);border-radius:10px;padding:13px 15px;margin:8px 0;animation:pop .4s ease both}
+  .ai-suggest .ash{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;color:var(--violet);margin-bottom:8px}
+  .ai-suggest .asbody{font-size:13px;color:var(--ink)}
+  .ai-suggest .path{display:inline-flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--violet-line);border-radius:7px;padding:4px 10px;font-weight:650;color:var(--violet);margin:6px 8px 6px 0;font-size:12.5px}
+  .ai-suggest .why{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.6}
+  .ai-suggest .tagrow{margin-top:8px;display:flex;gap:6px;flex-wrap:wrap}
+  .thinking{display:flex;align-items:center;gap:10px;color:var(--violet);font-size:13px;font-weight:600;padding:10px 0}
+  .spinner{width:16px;height:16px;border:2.5px solid var(--violet-line);border-top-color:var(--violet);border-radius:50%;animation:spin .7s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* ============ HEALTH / TASKS ============ */
+  .health-top{display:grid;grid-template-columns:260px 1fr;gap:16px;margin-bottom:18px}
+  .score-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;text-align:center;position:relative}
+  .gauge{width:150px;height:150px;margin:6px auto 4px;position:relative}
+  .gauge svg{transform:rotate(-90deg)}
+  .gauge .gv{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .gauge .gv b{font-size:38px;font-weight:800;line-height:1;color:var(--amber);font-variant-numeric:tabular-nums}
+  .gauge .gv span{font-size:11.5px;color:var(--faint);margin-top:3px}
+  .score-card .sct{font-size:13px;color:var(--muted)}
+  .score-card .sct b{color:var(--green)}
+  .issue-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .issue{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:13px 15px;box-shadow:var(--shadow);cursor:pointer;transition:all .15s;position:relative;overflow:hidden}
+  .issue:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg);border-color:#d4dae8}
+  .issue .iv{font-size:26px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+  .issue .il{font-size:12.5px;color:var(--muted);font-weight:600;margin-top:1px}
+  .issue .id{font-size:11px;color:var(--faint);margin-top:3px}
+  .issue .ibar{position:absolute;right:-10px;top:-10px;font-size:46px;opacity:.07}
+  .issue.red .iv{color:var(--red)} .issue.amber .iv{color:var(--amber)} .issue.violet .iv{color:var(--violet)}
+  .issue.blue .iv{color:var(--blue)} .issue.grey .iv{color:var(--muted)} .issue.teal .iv{color:var(--teal)}
+
+  .task-toolbar{display:flex;align-items:center;gap:10px;margin:6px 0 14px}
+  .seg{display:inline-flex;background:var(--line2);border-radius:9px;padding:3px}
+  .seg button{border:none;background:none;padding:6px 14px;border-radius:7px;font-size:12.5px;font-weight:600;color:var(--muted)}
+  .seg button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+
+  .sev-group{margin:18px 0}
+  .sev-h{display:flex;align-items:center;gap:9px;margin-bottom:9px;font-size:13px;font-weight:700}
+  .sev-h .sd{width:9px;height:9px;border-radius:50%}
+  .sev-h.high .sd{background:var(--red)} .sev-h.mid .sd{background:var(--amber)} .sev-h.low .sd{background:var(--faint)}
+  .sev-h .cn{font-weight:500;color:var(--faint);font-size:12px}
+  .task{background:var(--card);border:1px solid var(--line);border-radius:11px;box-shadow:var(--shadow);padding:15px 17px;margin:9px 0;display:flex;gap:14px;align-items:flex-start;transition:all .18s}
+  .task:hover{border-color:#d4dae8;box-shadow:var(--shadow-lg)}
+  .task.resolving{opacity:.5;transform:scale(.99)}
+  .task.resolved{opacity:0;height:0;padding:0;margin:0;border:none;overflow:hidden;transition:all .5s}
+  .task .tk-ic{width:40px;height:40px;border-radius:10px;flex:0 0 40px;display:grid;place-items:center;font-size:19px}
+  .task .tk-body{flex:1;min-width:0}
+  .task .tk-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px}
+  .task .tk-title{font-size:14px;font-weight:650}
+  .task .tk-desc{font-size:12.5px;color:var(--muted);line-height:1.6}
+  .task .tk-affected{font-size:11.5px;color:var(--faint);margin-top:6px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+  .task .tk-affected .pile{background:var(--line2);border:1px solid var(--line);border-radius:6px;padding:1px 8px;color:var(--muted);font-weight:500}
+  .task .tk-actions{display:flex;flex-direction:column;gap:7px;flex:0 0 auto;align-items:stretch}
+  .suggested{background:var(--green-soft);border:1px solid var(--green-line);border-radius:8px;padding:7px 11px;font-size:12px;color:#23663f;margin-top:8px}
+  .suggested b{color:var(--green)}
+
+  /* ============ MODAL ============ */
+  .modal-scrim{position:fixed;inset:0;background:rgba(20,26,46,.5);backdrop-filter:blur(3px);z-index:60;display:none;align-items:center;justify-content:center;padding:30px}
+  .modal-scrim.on{display:flex;animation:fadeUp .25s ease}
+  .modal{background:var(--bg);border-radius:16px;max-width:720px;width:100%;max-height:88vh;overflow:hidden;box-shadow:var(--shadow-lg);display:flex;flex-direction:column;animation:pop .3s ease}
+  .modal .mh{padding:18px 24px;background:var(--card);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:11px}
+  .modal .mh .mx{margin-left:auto;font-size:20px;color:var(--faint);cursor:pointer;background:none;border:none}
+  .modal .mb{padding:22px 24px;overflow-y:auto}
+  .modal .mf{padding:14px 24px;background:var(--card);border-top:1px solid var(--line);display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+
+  .conflict-pair{display:grid;grid-template-columns:1fr 44px 1fr;gap:0;align-items:stretch;margin:6px 0 4px}
+  .cf-side{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:15px 16px}
+  .cf-side.a{border-color:var(--blue-line)}
+  .cf-side.b{border-color:var(--amber-line)}
+  .cf-side .cfsrc{font-size:11px;font-weight:700;display:flex;align-items:center;gap:6px;margin-bottom:8px}
+  .cf-side.a .cfsrc{color:var(--blue)} .cf-side.b .cfsrc{color:var(--amber)}
+  .cf-side .cfval{font-size:18px;font-weight:800;letter-spacing:-.01em;margin:6px 0}
+  .cf-side .cfu{font-size:11px;font-family:"SF Mono",Menlo,monospace;color:var(--faint);margin-top:8px}
+  .cf-side .cfmeta{font-size:11.5px;color:var(--muted);margin-top:4px}
+  .cf-vs{display:grid;place-items:center}
+  .cf-vs span{width:38px;height:38px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;font-weight:800;font-size:13px;box-shadow:0 4px 12px rgba(207,59,59,.35)}
+
+  .statemachine{display:flex;align-items:center;gap:5px;margin:18px 0 6px;flex-wrap:wrap}
+  .sm{flex:1;min-width:70px;text-align:center;padding:8px 4px;border-radius:8px;font-size:11px;font-weight:600;background:var(--line2);color:var(--faint);position:relative}
+  .sm.done{background:var(--green-soft);color:var(--green)}
+  .sm.now{background:var(--violet);color:#fff;box-shadow:0 3px 10px rgba(98,72,196,.3)}
+  .sm .smi{font-size:13px;display:block;margin-bottom:1px}
+  .sma{color:#c7cee0;font-size:12px}
+
+  .res-opts{display:flex;flex-direction:column;gap:9px;margin:6px 0}
+  .res-opt{display:flex;align-items:center;gap:12px;border:1.5px solid var(--line);border-radius:10px;padding:12px 15px;cursor:pointer;transition:all .15s;background:var(--card)}
+  .res-opt:hover{border-color:var(--violet-line);background:#faf9fe}
+  .res-opt.sel{border-color:var(--violet);background:var(--violet-soft)}
+  .res-opt .ro-radio{width:18px;height:18px;border-radius:50%;border:2px solid #c7cee0;flex:0 0 18px;display:grid;place-items:center}
+  .res-opt.sel .ro-radio{border-color:var(--violet)}
+  .res-opt.sel .ro-radio::after{content:"";width:9px;height:9px;border-radius:50%;background:var(--violet)}
+  .res-opt .ro-t{font-weight:650;font-size:13px}
+  .res-opt .ro-d{font-size:11.5px;color:var(--muted)}
+  .res-opt .ro-tag{margin-left:auto}
+
+  /* ============ RETRIEVAL CONSOLE ============ */
+  .rc-grid{display:grid;grid-template-columns:300px 1fr;gap:16px;align-items:start}
+  .rc-panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px;position:sticky;top:80px}
+  .rc-label{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);font-weight:700;margin:14px 0 8px}
+  .rc-label:first-child{margin-top:0}
+  .scope-opt{display:flex;align-items:center;gap:10px;border:1.5px solid var(--line);border-radius:9px;padding:10px 12px;margin:7px 0;cursor:pointer;transition:all .15s}
+  .scope-opt:hover{border-color:var(--teal-line)}
+  .scope-opt.sel{border-color:var(--teal);background:var(--teal-soft)}
+  .scope-opt .so-ic{font-size:15px}
+  .scope-opt .so-t{font-weight:650;font-size:13px}
+  .scope-opt .so-d{font-size:11px;color:var(--faint)}
+  .scope-opt .so-check{margin-left:auto;color:var(--teal);font-weight:800;opacity:0}
+  .scope-opt.sel .so-check{opacity:1}
+  .preset-q{font-size:12.5px;color:var(--blue);background:var(--blue-soft);border:1px solid var(--blue-line);border-radius:8px;padding:8px 11px;margin:6px 0;cursor:pointer;line-height:1.5}
+  .preset-q:hover{background:#e4ecfb}
+
+  .rc-main{min-width:0}
+  .ask-bar{display:flex;gap:10px;margin-bottom:16px}
+  .ask-bar input{flex:1;border:1.5px solid var(--line);border-radius:10px;padding:12px 16px;font-size:14px;outline:none;background:var(--card);transition:border .15s}
+  .ask-bar input:focus{border-color:var(--teal)}
+  .scope-banner{display:flex;align-items:center;gap:9px;font-size:12.5px;padding:9px 14px;border-radius:9px;margin-bottom:14px;font-weight:500}
+  .scope-banner.wide{background:var(--red-soft);border:1px solid var(--red-line);color:#8f2f2f}
+  .scope-banner.narrow{background:var(--teal-soft);border:1px solid var(--teal-line);color:#0c5d56}
+  .scope-banner b{font-weight:700}
+
+  .answer-card{background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);overflow:hidden;margin-bottom:16px;animation:fadeUp .4s ease}
+  .answer-card .ac-h{padding:13px 18px;border-bottom:1px solid var(--line2);display:flex;align-items:center;gap:9px;font-weight:700;font-size:13px}
+  .answer-card .ac-b{padding:17px 18px;font-size:14px;line-height:1.75}
+  .answer-card.bad .ac-h{background:var(--red-soft);color:var(--red)}
+  .answer-card.good .ac-h{background:var(--teal-soft);color:var(--teal)}
+  .cite{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;background:var(--teal-soft);color:var(--teal);border:1px solid var(--teal-line);border-radius:5px;padding:0 6px;margin:0 2px;vertical-align:1px;cursor:help}
+  .cite.bad{background:var(--red-soft);color:var(--red);border-color:var(--red-line)}
+  .verdict-line{margin-top:12px;padding-top:12px;border-top:1px dashed var(--line);font-size:12.5px}
+  .verdict-line.bad{color:#8f2f2f}.verdict-line.good{color:#0c5d56}
+  .verdict-line b{font-weight:700}
+
+  .trace{background:#13182a;border-radius:12px;padding:16px 18px;color:#c7cdda;font-size:12.5px;box-shadow:var(--shadow);animation:fadeUp .4s ease}
+  .trace .tch{display:flex;align-items:center;gap:8px;font-weight:700;color:#fff;font-size:13px;margin-bottom:14px}
+  .trace .tch .tcd{margin-left:auto;font-size:11px;color:#7e879c;font-weight:500}
+  .tstep{display:flex;gap:12px;padding:0 0 16px;position:relative}
+  .tstep::before{content:"";position:absolute;left:13px;top:26px;bottom:-2px;width:2px;background:rgba(255,255,255,.1)}
+  .tstep:last-child{padding-bottom:0}
+  .tstep:last-child::before{display:none}
+  .tstep .tsn{width:28px;height:28px;border-radius:8px;flex:0 0 28px;display:grid;place-items:center;font-size:13px;font-weight:700;z-index:1}
+  .tstep.s-scope .tsn{background:rgba(47,95,208,.25);color:#9cc0ff}
+  .tstep.s-search .tsn{background:rgba(15,148,136,.25);color:#7fe0d4}
+  .tstep.s-expand .tsn{background:rgba(98,72,196,.25);color:#c3b4ff}
+  .tstep.s-answer .tsn{background:rgba(47,143,91,.3);color:#8fe3b1}
+  .tstep .tsb{flex:1;padding-top:3px}
+  .tstep .tst{font-weight:650;color:#eef0f5;font-size:12.5px}
+  .tstep .tsd{color:#99a1b5;font-size:11.5px;margin-top:2px;line-height:1.6}
+  .tstep .hitpill{display:inline-block;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:5px;padding:1px 7px;margin:3px 4px 0 0;font-size:10.5px;font-family:"SF Mono",Menlo,monospace;color:#aeb6c7}
+  .tstep .hitpill.drop{text-decoration:line-through;opacity:.5}
+  .tstep .hitpill.keep{background:rgba(47,143,91,.2);border-color:rgba(47,143,91,.4);color:#8fe3b1}
+
+  .rc-empty{text-align:center;padding:60px 20px;color:var(--faint)}
+  .rc-empty .ei{font-size:42px;margin-bottom:10px;opacity:.6}
+
+  /* ============ HEATMAP ============ */
+  .hm-wrap{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;overflow-x:auto}
+  .hm{border-collapse:separate;border-spacing:5px;width:100%;background:none;border:none;box-shadow:none}
+  .hm th{background:none;border:none;color:var(--muted);font-size:12px;font-weight:600;padding:6px 8px;text-align:center}
+  .hm th.rowh{text-align:left;min-width:130px}
+  .hm td{border:none;padding:0}
+  .hm .cell{border-radius:9px;height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;cursor:default;transition:transform .12s;position:relative}
+  .hm .cell:hover{transform:scale(1.06);z-index:2;box-shadow:var(--shadow-lg)}
+  .hm .cell small{font-size:9.5px;font-weight:500;opacity:.85}
+  .hm .cell.gap{cursor:pointer;border:2px solid #fff;box-shadow:0 0 0 2px var(--red)}
+  .hm .rowlabel{font-size:13px;font-weight:600;color:var(--ink);padding:0 8px}
+  .hm .rowlabel small{display:block;font-size:11px;color:var(--faint);font-weight:400}
+  .hm-legend{display:flex;align-items:center;gap:16px;margin-top:16px;font-size:11.5px;color:var(--muted);flex-wrap:wrap}
+  .hm-legend .lg{display:flex;align-items:center;gap:6px}
+  .hm-legend .sw{width:14px;height:14px;border-radius:4px}
+
+  /* ============ TOAST ============ */
+  .toast-wrap{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:80;display:flex;flex-direction:column;gap:10px;align-items:center}
+  .toast{background:#13182a;color:#fff;border-radius:10px;padding:12px 18px;font-size:13px;box-shadow:var(--shadow-lg);display:flex;align-items:center;gap:10px;animation:toastIn .3s ease both;max-width:90vw}
+  .toast .tk{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:13px;flex:0 0 22px}
+  .toast.ok .tk{background:var(--green)}
+  .toast.info .tk{background:var(--blue)}
+  .toast.violet .tk{background:var(--violet)}
+  .toast b{font-weight:700}
+  @keyframes toastIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+  .empty-note{text-align:center;color:var(--faint);font-size:13px;padding:40px}
+
+  @media (max-width:960px){
+    .stats,.issue-grid{grid-template-columns:repeat(2,1fr)}
+    .ov-grid,.fm,.rc-grid,.health-top{grid-template-columns:1fr}
+    .tree,.rc-panel{position:static}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">懂</div>
+      <div class="bt">Agentic 知识库<small>秒懂 · 知识中枢</small></div>
+    </div>
+    <nav class="nav" id="nav">
+      <div class="grp">工作台</div>
+      <a data-page="overview" class="on"><span class="ic">▤</span>概览</a>
+      <div class="grp">知识闭环</div>
+      <a data-page="store"><span class="ic">▦</span>原始素材库<span class="badge v">7</span></a>
+      <a data-page="health"><span class="ic">◈</span>知识体检 · 任务中心<span class="badge">15</span></a>
+      <a data-page="retrieval"><span class="ic">⌕</span>检索调试台</a>
+      <a data-page="heatmap"><span class="ic">▩</span>结构 · 覆盖热力图</a>
+    </nav>
+    <div class="side-foot">
+      <div class="who">
+        <div class="av">FD</div>
+        <div><b>FDE · 林越</b><br><span style="font-size:11px;color:#6c768d">交付工程团队</span></div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ===== MAIN ===== -->
+  <div class="main">
+    <header class="topbar">
+      <div><span class="pt" id="topTitle">概览</span> <span class="ps" id="topSub">知识中枢工作台</span></div>
+      <div class="spacer" style="flex:1"></div>
+      <div class="org-chip"><span class="od">云</span>云策科技</div>
+      <span class="demo-badge">● DEMO · 示意数据</span>
+    </header>
+
+    <div class="content">
+
+      <!-- ========== PAGE: OVERVIEW ========== -->
+      <section class="page on" id="page-overview">
+        <div class="hero">
+          <h2>无脑上传,自动成库,精准可查</h2>
+          <p>客户把五花八门的资料丢进来,归档 Agent 自动分门别类、拆成知识单元;体检 Agent 持续找出冲突与缺口、给出任务清单;检索 Agent 在指定范围内精准作答——彻底解决"知识维护难"和"流程引擎查不准(张冠李戴)"两件事。</p>
+          <div class="flow">
+            <div class="fl"><b>原件</b> <span>客户上传</span></div>
+            <span class="fa">→</span>
+            <div class="fl"><b>知识单元</b> <span>归档 Agent</span></div>
+            <span class="fa">→</span>
+            <div class="fl"><b>知识库投影</b> <span>范围 × 配方</span></div>
+            <span class="fa">→</span>
+            <div class="fl"><b>流程引擎</b> <span>范围内精准检索</span></div>
+          </div>
+        </div>
+
+        <div class="stats">
+          <div class="stat s1"><div class="bar"></div><div class="k">▦ 原始素材</div><div class="v" data-count="142">142</div><div class="d">7 类文件 · 12 个文件夹</div></div>
+          <div class="stat s2"><div class="bar"></div><div class="k">◇ 知识单元</div><div class="v" data-count="2380">2380</div><div class="d">提取 2106 · 派生 274</div></div>
+          <div class="stat s3"><div class="bar"></div><div class="k">⌗ 知识库投影</div><div class="v" data-count="6">6</div><div class="d">绑定 6 个智能体</div></div>
+          <div class="stat s4"><div class="bar"></div><div class="k">◈ 知识健康分</div><div class="v" data-count="78">78</div><div class="d">较上周 <b style="color:var(--green)">↑6</b></div></div>
+        </div>
+
+        <div class="ov-grid">
+          <div class="panel">
+            <div class="ph"><span class="pn">最近动态</span><span class="more" onclick="go('health')">查看体检 →</span></div>
+            <div class="pb">
+              <ul class="feed">
+                <li><div class="fi" style="background:var(--red-soft)">⚠</div><div><div class="ft"><b>发现真冲突</b> · 标准版坐席数:FAQ 说 10 个,报价表说 5 个</div><div class="fm">体检 Agent · 影响 2 个单元 · 待裁决</div></div><div class="fx">12 分钟前</div></li>
+                <li><div class="fi" style="background:var(--violet-soft)">◇</div><div><div class="ft"><b>归档完成</b> · 「云策CRM-产品FAQ.xlsx」拆出 47 个 FAQ 单元</div><div class="fm">归档 Agent · 已建索引并投影到 2 个知识库</div></div><div class="fx">1 小时前</div></li>
+                <li><div class="fi" style="background:var(--amber-soft)">◷</div><div><div class="ft"><b>缺口检出</b> · 流程引擎查询"高级版是否支持私有化部署"无结果</div><div class="fm">体检 Agent · 来自真实 badcase · 建议补料</div></div><div class="fx">3 小时前</div></li>
+                <li><div class="fi" style="background:var(--teal-soft)">⌕</div><div><div class="ft"><b>检索准确率提升</b> · 售前智能体绑定范围收窄到 /云策CRM 后,准确率 73% → 94%</div><div class="fm">检索调试台 · 解决张冠李戴</div></div><div class="fx">昨天</div></li>
+              </ul>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="ph"><span class="pn">三个 Agent</span></div>
+            <div class="pb">
+              <div class="agent-mini">
+                <div class="am a1"><div class="ai">📥</div><div><div class="an">归档 Agent</div><div class="ad">解析 · 拆单元 · 建议归档 · 多标签 · 建索引</div></div><div class="as"><div class="asv">142</div><div class="asl">本周入库</div></div></div>
+                <div class="am a2"><div class="ai">🩺</div><div><div class="an">体检 Agent</div><div class="ad">扫冲突/缺口/过时 · 按根因路由成任务</div></div><div class="as"><div class="asv">15</div><div class="asl">待处理任务</div></div></div>
+                <div class="am a3"><div class="ai">🔍</div><div><div class="an">检索 Agent</div><div class="ad">范围内多步检索 · 多表示召回 · 带引用作答</div></div><div class="as"><div class="asv">94%</div><div class="asl">回答准确率</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== PAGE: STORE ========== -->
+      <section class="page" id="page-store">
+        <div class="sec-title">原始素材库 <span class="chip blue" style="margin-left:6px">唯一写入端</span></div>
+        <div class="sec-sub">客户上传的原件无损保存、永不直接投影;归档 Agent 把每个文件拆成知识单元(IR),再按范围×配方投影成知识库。</div>
+
+        <div class="fm">
+          <div class="tree" id="tree">
+            <div class="th">文件夹</div>
+            <div id="treeHint" style="padding:10px;color:var(--faint);font-size:12.5px;line-height:1.7">上传素材后<br>这里自动生成目录结构</div>
+            <div class="tnode on" data-folder="all"><span class="tic">▤</span>全部素材<span class="cnt">7</span></div>
+            <div class="tnode" data-folder="crm"><span class="tic">▾</span>云策CRM<span class="cnt">3</span></div>
+            <div class="tnode child" data-folder="crm-faq"><span class="tic">▦</span>FAQ<span class="cnt">1</span></div>
+            <div class="tnode child" data-folder="crm-policy"><span class="tic">▦</span>售卖政策<span class="cnt">1</span></div>
+            <div class="tnode child" data-folder="crm-price"><span class="tic">▦</span>报价<span class="cnt">1</span></div>
+            <div class="tnode" data-folder="scrm"><span class="tic">▾</span>云策SCRM<span class="cnt">2</span></div>
+            <div class="tnode child" data-folder="scrm-faq"><span class="tic">▦</span>FAQ<span class="cnt">1</span></div>
+            <div class="tnode child" data-folder="scrm-price"><span class="tic">▦</span>报价<span class="cnt">1</span></div>
+            <div class="tnode" data-folder="common"><span class="tic">▾</span>通用政策<span class="cnt">1</span></div>
+            <div class="tnode special" data-folder="fix"><span class="tic">✎</span>运营修正<span class="cnt">0</span></div>
+            <div class="tnode special" data-folder="migrated"><span class="tic">⇄</span>从知识库迁移<span class="cnt">0</span></div>
+            <div class="tnode" data-folder="inbox"><span class="tic">⊕</span>未归档<span class="cnt">1</span></div>
+          </div>
+
+          <div class="fm-main">
+            <div class="fm-toolbar">
+              <span class="crumb" id="crumb">全部素材</span>
+              <div class="search"><span class="si">⌕</span><input placeholder="搜索素材…" oninput="filterRows(this.value)"></div>
+              <div style="flex:1"></div>
+              <button class="btn pri" onclick="openUpload()">＋ 上传素材</button>
+            </div>
+            <table>
+              <thead><tr><th>素材</th><th>类型</th><th>知识单元</th><th>健康</th><th>版本</th><th>更新</th></tr></thead>
+              <tbody id="itemRows"></tbody>
+            </table>
+            <div class="empty-note" id="itemEmpty" style="display:none">该文件夹下暂无素材</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== PAGE: HEALTH ========== -->
+      <section class="page" id="page-health">
+        <div class="sec-title">知识体检 · 任务中心 <span class="chip violet" style="margin-left:6px">产品核心</span></div>
+        <div class="sec-sub">体检 Agent 持续扫描,把问题变成可执行的任务清单——能自动修的自动修,需要判断的升级给 FDE,需要客户确认的退回客户。</div>
+
+        <div class="health-top">
+          <div class="score-card">
+            <div class="gauge">
+              <svg width="150" height="150" viewBox="0 0 150 150">
+                <circle cx="75" cy="75" r="64" fill="none" stroke="#eef0f5" stroke-width="13"/>
+                <circle id="gaugeArc" cx="75" cy="75" r="64" fill="none" stroke="var(--amber)" stroke-width="13" stroke-linecap="round"
+                  stroke-dasharray="402" stroke-dashoffset="88" style="transition:stroke-dashoffset 1s ease"/>
+              </svg>
+              <div class="gv"><b id="scoreNum">78</b><span>知识健康分</span></div>
+            </div>
+            <div class="sct">本周 <b>↑6</b> · 解决 3 个高危后可达 <b>85</b></div>
+          </div>
+          <div>
+            <div class="issue-grid">
+              <div class="issue red" onclick="filterTasks('冲突')"><div class="ibar">⚠</div><div class="iv">3</div><div class="il">内容冲突</div><div class="id">单元级矛盾 · 2 个待裁决</div></div>
+              <div class="issue amber" onclick="filterTasks('缺失')"><div class="ibar">◷</div><div class="iv">5</div><div class="il">知识缺口</div><div class="id">来自流程引擎 badcase</div></div>
+              <div class="issue blue" onclick="filterTasks('过时')"><div class="ibar">⟳</div><div class="iv">2</div><div class="il">内容过时</div><div class="id">90 天未更新</div></div>
+              <div class="issue violet" onclick="filterTasks('重复')"><div class="ibar">⿻</div><div class="iv">4</div><div class="il">重复冗余</div><div class="id">可合并去重</div></div>
+              <div class="issue teal" onclick="filterTasks('歧义')"><div class="ibar">？</div><div class="iv">1</div><div class="il">表述歧义</div><div class="id">需澄清口径</div></div>
+              <div class="issue grey" onclick="filterTasks('未归档')"><div class="ibar">⊕</div><div class="iv">1</div><div class="il">待归档</div><div class="id">AI 已给建议</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="task-toolbar">
+          <div class="seg" id="taskSeg">
+            <button class="on" onclick="filterTasks('all',this)">全部</button>
+            <button onclick="filterTasks('冲突',this)">冲突</button>
+            <button onclick="filterTasks('缺失',this)">缺口</button>
+            <button onclick="filterTasks('过时',this)">过时</button>
+            <button onclick="filterTasks('重复',this)">重复</button>
+          </div>
+          <div style="flex:1"></div>
+          <span style="font-size:12px;color:var(--faint)" id="taskCount"></span>
+        </div>
+
+        <div id="taskList"></div>
+      </section>
+
+      <!-- ========== PAGE: RETRIEVAL ========== -->
+      <section class="page" id="page-retrieval">
+        <div class="sec-title">检索调试台</div>
+        <div class="sec-sub">上线前在这里调准确率:选定范围 → 提问 → 看带引用的答案 + 完整的 Agent 检索轨迹。试试同一个问题在"全部范围"和"指定产品线"下的差别。</div>
+
+        <div class="rc-grid">
+          <div class="rc-panel">
+            <div class="rc-label">检索范围(范围内查准的关键)</div>
+            <div class="scope-opt" data-scope="all" onclick="setScope('all',this)">
+              <span class="so-ic">🌐</span><div><div class="so-t">全部知识库</div><div class="so-d">不限定范围</div></div><span class="so-check">✓</span>
+            </div>
+            <div class="scope-opt sel" data-scope="crm" onclick="setScope('crm',this)">
+              <span class="so-ic">📂</span><div><div class="so-t">/云策CRM 子树</div><div class="so-d">文件夹范围</div></div><span class="so-check">✓</span>
+            </div>
+            <div class="scope-opt" data-scope="scrm" onclick="setScope('scrm',this)">
+              <span class="so-ic">📂</span><div><div class="so-t">/云策SCRM 子树</div><div class="so-d">文件夹范围</div></div><span class="so-check">✓</span>
+            </div>
+
+            <div class="rc-label">试试这些问题</div>
+            <div class="preset-q" onclick="askPreset('高级版多少钱一年？')">高级版多少钱一年？<br><span style="font-size:11px;color:var(--faint)">事实题 · 演示张冠李戴</span></div>
+            <div class="preset-q" onclick="askPreset('整体介绍下云策CRM的售卖政策')">整体介绍下云策CRM的售卖政策<br><span style="font-size:11px;color:var(--faint)">综述题 · 演示摘要金字塔</span></div>
+
+            <div class="rc-label">绑定智能体</div>
+            <div style="font-size:12.5px;color:var(--muted);line-height:1.7">
+              当前范围已绑定到 <b style="color:var(--ink)">售前智能体</b>,在 Canvas 流程引擎的「范围内查知识」节点生效。
+            </div>
+          </div>
+
+          <div class="rc-main">
+            <div class="ask-bar">
+              <input id="askInput" placeholder="输入一个问题…" value="高级版多少钱一年？" onkeydown="if(event.key==='Enter')runAsk()">
+              <button class="btn teal" onclick="runAsk()">🔍 检索</button>
+            </div>
+            <div id="rcResult">
+              <div class="rc-empty"><div class="ei">⌕</div>选择范围、输入问题,点击「检索」<br><span style="font-size:12px">或点左侧预设问题快速演示</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== PAGE: HEATMAP ========== -->
+      <section class="page" id="page-heatmap">
+        <div class="sec-title">结构 · 覆盖热力图</div>
+        <div class="sec-sub">一眼看清:每个主题的素材覆盖、检索命中、回答准确率,以及红框标出的知识缺口。点红框缺口可一键派发补料任务。</div>
+
+        <div class="hm-wrap">
+          <table class="hm">
+            <thead><tr><th class="rowh">主题 \ 维度</th><th>素材覆盖</th><th>检索命中率</th><th>回答准确率</th><th>缺口</th></tr></thead>
+            <tbody id="hmBody"></tbody>
+          </table>
+          <div class="hm-legend">
+            <div class="lg"><span class="sw" style="background:#2f8f5b"></span>优(≥90)</div>
+            <div class="lg"><span class="sw" style="background:#8bbf5a"></span>良(75–89)</div>
+            <div class="lg"><span class="sw" style="background:#d9a13a"></span>中(60–74)</div>
+            <div class="lg"><span class="sw" style="background:#cf3b3b"></span>差(<60)</div>
+            <div class="lg"><span class="sw" style="background:#fff;border:2px solid var(--red)"></span>缺口(可点击派发补料任务)</div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===== DRAWER (item detail / upload) ===== -->
+<div class="scrim" id="scrim" onclick="closeDrawer()"></div>
+<div class="drawer" id="drawer">
+  <div class="dh" id="drawerHead"></div>
+  <div class="db" id="drawerBody"></div>
+  <div class="df-foot" id="drawerFoot"></div>
+</div>
+
+<!-- ===== MODAL (conflict) ===== -->
+<div class="modal-scrim" id="modalScrim" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="mh" id="modalHead"></div>
+    <div class="mb" id="modalBody"></div>
+    <div class="mf" id="modalFoot"></div>
+  </div>
+</div>
+
+<div class="toast-wrap" id="toastWrap"></div>
+
+<script>
+/* ============================================================
+   MOCK DATA — 云策科技 的知识中枢
+   ============================================================ */
+const SEED_ITEMS = [
+  { id:'m1', name:'云策CRM-产品FAQ.xlsx', type:'xls', folder:'crm-faq', folderName:'云策CRM / FAQ',
+    units:47, unitBreak:'47 FAQ 单元', health:{cls:'red',t:'存在冲突'}, ver:'v2', updated:'06-14',
+    desc:'客户提供的产品常见问题表格,一个文件里装了 47 条 FAQ。',
+    derived:'1 条文档摘要(派生)',
+    sampleUnits:[
+      {kind:'faq',id:'faq#21',q:'标准版支持多少坐席?',a:'标准版支持 10 个坐席。',conflict:true},
+      {kind:'faq',id:'faq#22',q:'高级版有哪些增值功能?',a:'高级版含智能分析、API 开放、专属客服。'},
+      {kind:'faq',id:'faq#23',q:'高级版价格是多少?',a:'高级版 ¥1980 / 坐席 / 年。'},
+      {kind:'faq',id:'faq#24',q:'是否支持私有化部署?',a:'(未覆盖 — 知识缺口)',gap:true},
+    ]},
+  { id:'m2', name:'云策CRM-售卖政策V3.docx', type:'doc', folder:'crm-policy', folderName:'云策CRM / 售卖政策',
+    units:9, unitBreak:'8 章节单元 + 1 摘要', health:{cls:'green',t:'良好'}, ver:'v3', updated:'06-12',
+    desc:'长文档,按章节拆成 8 个 section 单元,并派生 1 条文档摘要供综述类查询。',
+    derived:'1 条文档摘要(派生)',
+    sampleUnits:[
+      {kind:'summary',id:'sum#1',q:'文档摘要(派生)',a:'云策CRM 售卖政策 V3:含分版定价、折扣阶梯、退款规则、续费优惠四部分,适用于 2026 财年。',derived:true},
+      {kind:'section',id:'sec#1',q:'§1 版本与定价',a:'标准版 ¥980/坐席/年,高级版 ¥1980/坐席/年,旗舰版面议。'},
+      {kind:'section',id:'sec#3',q:'§3 退款规则',a:'开通 7 日内未使用可全额退款,超过按比例。'},
+      {kind:'section',id:'sec#5',q:'§5 续费优惠',a:'提前 30 天续费享 9 折。'},
+    ]},
+  { id:'m3', name:'云策CRM-报价表2026.xlsx', type:'xls', folder:'crm-price', folderName:'云策CRM / 报价',
+    units:24, unitBreak:'23 表格行单元 + 1 描述', health:{cls:'red',t:'存在冲突'}, ver:'v1', updated:'06-10',
+    desc:'报价表格,每一行是一个 table_row 单元,并派生一条口语化的表格描述。',
+    derived:'1 条表格描述(派生)',
+    sampleUnits:[
+      {kind:'table',id:'row#3',q:'标准版 / 坐席数',a:'标准版:5 坐席起售。',conflict:true},
+      {kind:'table',id:'row#11',q:'高级版 / 年费',a:'高级版 ¥1980 / 坐席 / 年。'},
+      {kind:'summary',id:'desc#1',q:'表格描述(派生)',a:'这张表给出了云策CRM各版本在不同坐席规模下的年费与起售坐席数。',derived:true},
+    ]},
+  { id:'m4', name:'云策SCRM-产品FAQ.xlsx', type:'xls', folder:'scrm-faq', folderName:'云策SCRM / FAQ',
+    units:38, unitBreak:'38 FAQ 单元', health:{cls:'green',t:'良好'}, ver:'v1', updated:'06-09',
+    desc:'SCRM 产品线的 FAQ,与 CRM 是不同产品——这正是检索必须按范围隔离的原因。',
+    derived:'1 条文档摘要(派生)',
+    sampleUnits:[
+      {kind:'faq',id:'faq#5',q:'高级版价格是多少?',a:'云策SCRM 高级版 ¥2680 / 坐席 / 年。'},
+      {kind:'faq',id:'faq#6',q:'支持哪些社交渠道?',a:'微信、企微、抖音、小红书。'},
+    ]},
+  { id:'m5', name:'云策SCRM-报价表.pdf', type:'pdf', folder:'scrm-price', folderName:'云策SCRM / 报价',
+    units:12, unitBreak:'12 表格行单元', health:{cls:'amber',t:'已过时'}, ver:'v1', updated:'03-20',
+    desc:'90 天未更新,仍引用已下线的"入门版",体检已标记为过时。',
+    derived:'—',
+    sampleUnits:[
+      {kind:'table',id:'row#1',q:'入门版(已下线)',a:'入门版 ¥680/坐席/年。',stale:true},
+    ]},
+  { id:'m6', name:'数据安全白皮书.pdf', type:'pdf', folder:'common', folderName:'通用政策',
+    units:15, unitBreak:'15 章节单元', health:{cls:'green',t:'良好'}, ver:'v1', updated:'06-13',
+    desc:'通用合规材料,两条产品线共享。',
+    derived:'1 条文档摘要(派生)',
+    sampleUnits:[
+      {kind:'section',id:'sec#2',q:'§2 数据加密',a:'传输 TLS1.3,存储 AES-256。'},
+    ]},
+  { id:'m7', name:'客户访谈录音-0605.mp3', type:'aud', folder:'inbox', folderName:'未归档',
+    units:0, unitBreak:'转写中…', health:{cls:'grey',t:'处理中'}, ver:'v1', updated:'06-05',
+    desc:'音频素材,归档 Agent 正在转写,稍后拆成单元并建议归档位置。',
+    derived:'—', sampleUnits:[]},
+];
+// 上传前素材库为空,采纳入库后才把整理好的素材加载进来
+let ITEMS = [];
+let kbLoaded = false;
+
+const TASKS = [
+  { id:'t1', sev:'high', type:'冲突', icon:'⚠', iconBg:'var(--red-soft)',
+    title:'「标准版坐席数」存在真冲突', chip:{cls:'red',t:'真冲突'},
+    desc:'FAQ 单元说"标准版支持 10 个坐席",报价表单元说"标准版 5 坐席起售"——同范围矛盾,需裁决。',
+    affected:['faq#21 · 产品FAQ.xlsx','row#3 · 报价表2026.xlsx'],
+    suggested:'建议:报价表为更权威来源,以"5 坐席"为准,并退回客户确认 FAQ 表述。',
+    actions:[{t:'查看冲突并裁决',cls:'violet',fn:"openConflict('t1')"}] },
+  { id:'t2', sev:'high', type:'缺失', icon:'◷', iconBg:'var(--amber-soft)',
+    title:'知识缺口:高级版是否支持私有化部署', chip:{cls:'amber',t:'来自 badcase'},
+    desc:'流程引擎近 7 天有 4 次查询"云策CRM 高级版支持私有化部署吗",检索均无结果。素材库缺少该主题原料。',
+    affected:['主题:私有化部署','命中:0 个单元'],
+    suggested:'建议:退回客户索取私有化部署说明,或由 FDE 补充材料后归档到 /云策CRM。',
+    actions:[{t:'退回客户补料',cls:'ghost',fn:"toast('已生成补料请求,将通过企微推送给客户对接人','violet','✓')"},{t:'我来补料',cls:'pri',fn:"toast('已创建补料任务,归档后自动重投影','ok','✓')"}] },
+  { id:'t3', sev:'high', type:'冲突', icon:'⚠', iconBg:'var(--red-soft)',
+    title:'「退款时限」口径不一致', chip:{cls:'red',t:'真冲突'},
+    desc:'售卖政策 §3 写"7 日内全额退款",另一份旧版 FAQ 写"3 日内",疑似版本未取代。',
+    affected:['sec#3 · 售卖政策V3','faq#31 · 旧版FAQ'],
+    suggested:'建议:识别为版本取代,旧版 FAQ 自动失效,以 V3 为准。',
+    actions:[{t:'查看冲突并裁决',cls:'violet',fn:"openConflict('t3')"}] },
+  { id:'t4', sev:'mid', type:'过时', icon:'⟳', iconBg:'var(--blue-soft)',
+    title:'云策SCRM-报价表.pdf 已过时', chip:{cls:'blue',t:'90 天未更新'},
+    desc:'仍引用已下线的"入门版",可能导致检索返回失效价格。',
+    affected:['云策SCRM-报价表.pdf','row#1 入门版'],
+    suggested:'建议:标记 row#1 为已取代,或上传新版报价表触发重投影。',
+    actions:[{t:'标记取代',cls:'ghost',fn:"resolveTask('t4','已标记取代,相关单元已从投影中下线')"},{t:'上传新版',cls:'pri',fn:"go('store');openUpload()"}] },
+  { id:'t5', sev:'mid', type:'重复', icon:'⿻', iconBg:'var(--violet-soft)',
+    title:'「退款政策」在 3 个文档中重复', chip:{cls:'violet',t:'可合并'},
+    desc:'相同退款条款分散在售卖政策、FAQ、白皮书中,检索易返回冗余片段。',
+    affected:['3 个文档 · 5 个单元'],
+    suggested:'建议:以售卖政策 §3 为权威源,其余标记为引用,投影时去重。',
+    actions:[{t:'一键合并去重',cls:'pri',fn:"resolveTask('t5','已合并:保留权威源,其余 4 个单元标记为引用')"}] },
+  { id:'t6', sev:'low', type:'未归档', icon:'⊕', iconBg:'var(--line2)',
+    title:'数据安全白皮书.pdf 建议归档', chip:{cls:'grey',t:'AI 建议'},
+    desc:'归档 Agent 建议归入 /通用政策/合规,置信度 92%。',
+    affected:['数据安全白皮书.pdf'],
+    suggested:'建议:采纳 AI 归档建议,一键归位。',
+    actions:[{t:'采纳建议归档',cls:'pri',fn:"resolveTask('t6','已归档到 /通用政策/合规')"},{t:'手动选择',cls:'ghost',fn:"go('store')"}] },
+  { id:'t7', sev:'low', type:'歧义', icon:'？', iconBg:'var(--teal-soft)',
+    title:'「企业版」指代不明', chip:{cls:'teal',t:'需澄清'},
+    desc:'部分材料用"企业版"指高级版,部分指旗舰版,口径不一致。',
+    affected:['2 个文档'],
+    suggested:'建议:退回客户澄清"企业版"的准确指代。',
+    actions:[{t:'退回客户澄清',cls:'ghost',fn:"toast('已生成澄清请求','violet','✓')"}] },
+];
+
+const CONFLICTS = {
+  t1:{ title:'内容冲突 · 标准版坐席数', type:'真冲突(同范围矛盾)',
+    a:{src:'产品FAQ.xlsx · faq#21',val:'10 个坐席',meta:'客户 06-14 上传 · v2',unit:'faq#21'},
+    b:{src:'报价表2026.xlsx · row#3',val:'5 坐席起售',meta:'客户 06-10 上传 · v1 · 销售口径',unit:'row#3'},
+    now:2 },
+  t3:{ title:'内容冲突 · 退款时限', type:'疑似版本取代',
+    a:{src:'售卖政策V3.docx · sec#3',val:'7 日内全额退款',meta:'06-12 · 最新版 V3',unit:'sec#3'},
+    b:{src:'旧版FAQ.xlsx · faq#31',val:'3 日内全额退款',meta:'03-01 · 旧版',unit:'faq#31'},
+    now:3 },
+};
+
+const HEATMAP = [
+  { topic:'产品功能', sub:'云策CRM', cells:[95,93,96], gap:false },
+  { topic:'报价 / 定价', sub:'云策CRM', cells:[88,76,68], gap:false, note:'报价表与FAQ存在冲突,准确率受影响' },
+  { topic:'售卖政策', sub:'云策CRM', cells:[92,90,91], gap:false },
+  { topic:'退款规则', sub:'通用', cells:[78,72,70], gap:false, note:'多处重复,建议去重' },
+  { topic:'私有化部署', sub:'云策CRM', cells:[8,5,0], gap:true, note:'素材几乎为空,流程引擎多次查询无结果' },
+  { topic:'数据安全', sub:'通用', cells:[90,88,92], gap:false },
+  { topic:'集成 / API', sub:'云策CRM', cells:[55,48,52], gap:false, note:'覆盖偏低,建议补充' },
+];
+
+/* ============================================================
+   ROUTER + SHELL
+   ============================================================ */
+const PAGE_META = {
+  overview:['概览','知识中枢工作台'],
+  store:['原始素材库','原件 · 知识单元 · 投影'],
+  health:['知识体检 · 任务中心','发现问题 → 任务清单 → 一键处理'],
+  retrieval:['检索调试台','范围内精准检索 · Agent 轨迹'],
+  heatmap:['结构 · 覆盖热力图','主题覆盖与缺口一览'],
+};
+function go(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+  document.getElementById('page-'+page).classList.add('on');
+  document.querySelectorAll('#nav a').forEach(a=>a.classList.toggle('on',a.dataset.page===page));
+  document.getElementById('topTitle').textContent=PAGE_META[page][0];
+  document.getElementById('topSub').textContent=PAGE_META[page][1];
+  document.querySelector('.content').scrollTo?.(0,0);
+  window.scrollTo(0,0);
+  if(page==='overview') animateCounts();
+  if(page==='health') animateGauge();
+}
+document.querySelectorAll('#nav a').forEach(a=>a.addEventListener('click',()=>go(a.dataset.page)));
+
+/* ============================================================
+   OVERVIEW — count up + gauge
+   ============================================================ */
+function animateCounts(){
+  document.querySelectorAll('#page-overview .stat .v').forEach(el=>{
+    const target=+el.dataset.count; let cur=0; const steps=34; const inc=target/steps;
+    el.textContent='0';
+    const timer=setInterval(()=>{cur+=inc; if(cur>=target){cur=target;clearInterval(timer);} el.textContent=Math.round(cur).toLocaleString();},16);
+  });
+}
+function animateGauge(){
+  const arc=document.getElementById('gaugeArc');
+  const score=78, circ=402;
+  arc.style.strokeDashoffset=circ;
+  setTimeout(()=>{arc.style.strokeDashoffset=circ*(1-score/100);},120);
+}
+
+/* ============================================================
+   STORE — tree + table + drawers
+   ============================================================ */
+const FOLDER_NAMES={all:'全部素材',crm:'云策CRM',
+  'crm-faq':'云策CRM / FAQ','crm-policy':'云策CRM / 售卖政策','crm-price':'云策CRM / 报价',
+  scrm:'云策SCRM','scrm-faq':'云策SCRM / FAQ','scrm-price':'云策SCRM / 报价',
+  common:'通用政策',fix:'运营修正',migrated:'从知识库迁移',inbox:'未归档'};
+let curFolder='all', searchKw='';
+
+function matchFolder(it,f){
+  if(f==='all')return true;
+  if(f==='crm')return it.folder.startsWith('crm');
+  if(f==='scrm')return it.folder.startsWith('scrm');
+  return it.folder===f;
+}
+function updateTreeCounts(){
+  document.querySelectorAll('#tree .tnode').forEach(n=>{
+    n.style.display = kbLoaded ? '' : 'none';   // 上传前清空目录列表
+    const cnt=n.querySelector('.cnt');
+    if(cnt) cnt.textContent=ITEMS.filter(it=>matchFolder(it,n.dataset.folder)).length;
+  });
+  const hint=document.getElementById('treeHint');
+  if(hint) hint.style.display = kbLoaded ? 'none' : '';
+  const nb=document.querySelector('#nav a[data-page="store"] .badge');
+  if(nb){ nb.textContent=ITEMS.length; nb.style.display=ITEMS.length?'':'none'; }
+}
+function renderItems(){
+  const tb=document.getElementById('itemRows');
+  const emptyEl=document.getElementById('itemEmpty');
+  if(!ITEMS.length){
+    tb.innerHTML='';
+    emptyEl.style.display='block';
+    emptyEl.innerHTML='素材库还是空的 — 点右上角 <b>＋ 上传素材</b> 把多格式文件丢进来,归档 Agent 会自动拆单元、整理成目录。';
+    return;
+  }
+  const list=ITEMS.filter(it=>matchFolder(it,curFolder) && (!searchKw||it.name.includes(searchKw)));
+  emptyEl.textContent='该文件夹下暂无素材';
+  emptyEl.style.display=list.length?'none':'block';
+  tb.innerHTML=list.map(it=>`
+    <tr onclick="openItem('${it.id}')">
+      <td><div class="ftype"><div class="fic ${it.type}">${({xls:'XLS',doc:'DOC',pdf:'PDF',ppt:'PPT',aud:'♪'})[it.type]}</div>
+        <div><div class="fname">${it.name}</div><div class="fmeta">${it.folderName}</div></div></div></td>
+      <td><span class="chip grey">${({xls:'表格',doc:'文档',pdf:'PDF',ppt:'幻灯片',aud:'音频'})[it.type]}</span></td>
+      <td>${it.units?`<span class="units-cell">${it.units}<small>个单元</small></span>`:'<span style="color:var(--faint);font-size:12px">'+it.unitBreak+'</span>'}</td>
+      <td><span class="chip ${it.health.cls}"><span class="dot" style="background:currentColor"></span>${it.health.t}</span></td>
+      <td style="color:var(--muted)">${it.ver}</td>
+      <td style="color:var(--faint)">${it.updated}</td>
+    </tr>`).join('');
+}
+document.querySelectorAll('#tree .tnode').forEach(n=>n.addEventListener('click',()=>{
+  document.querySelectorAll('#tree .tnode').forEach(x=>x.classList.remove('on'));
+  n.classList.add('on'); curFolder=n.dataset.folder;
+  document.getElementById('crumb').innerHTML='<b>'+FOLDER_NAMES[curFolder]+'</b>';
+  renderItems();
+}));
+function filterRows(v){searchKw=v.trim();renderItems();}
+
+let unitFilter='all';
+function openItem(id){
+  const it=ITEMS.find(x=>x.id===id); if(!it)return;
+  document.getElementById('drawerHead').innerHTML=`
+    <div class="fic ${it.type}" style="width:40px;height:40px;font-size:14px">${({xls:'XLS',doc:'DOC',pdf:'PDF',ppt:'PPT',aud:'♪'})[it.type]}</div>
+    <div><div style="font-weight:700;font-size:15px">${it.name}</div>
+    <div style="font-size:12px;color:var(--faint);margin-top:2px">${it.folderName} · ${it.ver} · 更新 ${it.updated}</div></div>
+    <button class="dx" onclick="closeDrawer()">✕</button>`;
+  unitFilter='all';
+  document.getElementById('drawerBody').innerHTML=renderItemBody(it);
+  document.getElementById('drawerFoot').innerHTML=`
+    <button class="btn ghost" onclick="closeDrawer()">关闭</button>
+    <button class="btn ghost" onclick="toast('已触发重新解析,单元将按最新解析器重算','info','⟳')">重新解析</button>
+    <button class="btn teal" onclick="toast('已重新投影到 2 个知识库(按单元幂等更新)','ok','✓')">重新投影</button>`;
+  openDrawer();
+}
+function renderItemBody(it){
+  return `
+    <div class="kv">
+      <div class="k">原件</div><div class="v">${it.name} · 无损保存</div>
+      <div class="k">说明</div><div class="v" style="font-weight:400;color:var(--muted)">${it.desc}</div>
+      <div class="k">拆解</div><div class="v">${it.unitBreak}${it.derived&&it.derived!=='—'?' · '+it.derived:''}</div>
+    </div>
+    <div class="lineage">
+      <div class="ll">血缘 · 原件 → 知识单元(IR) → 知识库投影</div>
+      <div class="lin-flow">
+        <div class="ln raw">原件<small>${it.name}</small></div>
+        <span class="la">→</span>
+        <div class="ln unit">知识单元<small>${it.units||'—'} 个</small></div>
+        <span class="la">→</span>
+        <div class="ln kb">KB 投影<small>${it.units?'embedding / QA':'待处理'}</small></div>
+      </div>
+    </div>
+    ${it.sampleUnits.length?`
+    <div style="font-size:13px;font-weight:700;margin:18px 0 4px">知识单元 <span style="color:var(--faint);font-weight:500;font-size:12px">(示例 · 共 ${it.units} 个)</span></div>
+    <div class="filter-tabs">
+      <span class="ftab ${unitFilter==='all'?'on':''}" onclick="setUnitFilter('${it.id}','all')">全部</span>
+      <span class="ftab ${unitFilter==='extracted'?'on':''}" onclick="setUnitFilter('${it.id}','extracted')">提取单元</span>
+      <span class="ftab ${unitFilter==='derived'?'on':''}" onclick="setUnitFilter('${it.id}','derived')">派生单元</span>
+    </div>
+    <div class="unit-list">${renderUnits(it)}</div>
+    `:'<div class="empty-note">单元处理中,稍后可见</div>'}
+  `;
+}
+function renderUnits(it){
+  let us=it.sampleUnits;
+  if(unitFilter==='extracted')us=us.filter(u=>!u.derived);
+  if(unitFilter==='derived')us=us.filter(u=>u.derived);
+  if(!us.length)return '<div class="empty-note" style="padding:18px">该类型暂无示例单元</div>';
+  return us.map(u=>`
+    <div class="unit ${u.derived?'derived':''}">
+      <div class="uh">
+        <span class="uid">${u.id}</span>
+        ${u.derived?'<span class="chip violet">派生 · 摘要</span>':'<span class="chip grey">提取 · '+({faq:'FAQ',section:'章节',table:'表格行'})[u.kind]+'</span>'}
+        ${u.conflict?'<span class="chip red">⚠ 冲突</span>':''}
+        ${u.gap?'<span class="chip amber">缺口</span>':''}
+        ${u.stale?'<span class="chip blue">过时</span>':''}
+      </div>
+      <div class="utxt"><b>${u.q}</b></div>
+      <div class="uq">${u.a}</div>
+    </div>`).join('');
+}
+function setUnitFilter(id,f){unitFilter=f;const it=ITEMS.find(x=>x.id===id);document.getElementById('drawerBody').innerHTML=renderItemBody(it);}
+
+/* ---------- UPLOAD flow（支持手动多格式、多文件上传）---------- */
+function openUpload(){
+  document.getElementById('drawerHead').innerHTML=`
+    <div style="font-weight:700;font-size:15px">上传素材</div>
+    <button class="dx" onclick="closeDrawer()">✕</button>`;
+  document.getElementById('drawerBody').innerHTML=`
+    <input id="fileInput" type="file" multiple
+      accept=".doc,.docx,.xls,.xlsx,.csv,.pdf,.ppt,.pptx,.txt,.md,.mp3,.wav,.m4a,.mp4,.mov,.png,.jpg,.jpeg"
+      style="display:none" onchange="handleFiles(this.files)">
+    <div class="dropzone" id="upDz"
+      onclick="document.getElementById('fileInput').click()"
+      ondragover="event.preventDefault();this.classList.add('hot')"
+      ondragleave="this.classList.remove('hot')"
+      ondrop="event.preventDefault();this.classList.remove('hot');handleFiles(event.dataTransfer.files)">
+      <div class="dzi">⬆️</div>
+      <div class="dzt">把文件拖到这里,或点击选择(可多选)</div>
+      <div class="dzs">支持 Word / Excel / PDF / PPT / 文本 / 音视频 / 图片 — 无脑上传即可</div>
+    </div>
+    <div id="uploadResult"></div>`;
+  document.getElementById('drawerFoot').innerHTML=`<button class="btn ghost" onclick="closeDrawer()">关闭</button>`;
+  openDrawer();
+}
+
+const FIC_LABEL={xls:'XLS',doc:'DOC',pdf:'PDF',ppt:'PPT',aud:'♪'};
+function ficType(name){
+  const ext=(name.split('.').pop()||'').toLowerCase();
+  if(['xls','xlsx','csv'].includes(ext))return 'xls';
+  if(['doc','docx','txt','md'].includes(ext))return 'doc';
+  if(ext==='pdf')return 'pdf';
+  if(['ppt','pptx'].includes(ext))return 'ppt';
+  if(['mp3','wav','m4a','mp4','mov','avi','png','jpg','jpeg','gif','webp'].includes(ext))return 'aud';
+  return 'doc';
+}
+function fmtSize(b){ if(b<1024)return b+' B'; if(b<1048576)return Math.round(b/1024)+' KB'; return (b/1048576).toFixed(1)+' MB'; }
+function fileRowsHTML(files){
+  return files.map(f=>{
+    const t=ficType(f.name);
+    const meta = '已上传';
+    return `<div class="up-file"><div class="ftype"><div class="fic ${t}">${FIC_LABEL[t]}</div></div>`
+      +`<div style="flex:1;min-width:0"><div class="fname">${f.name}</div><div class="fmeta">${meta}</div></div>`
+      +`<span class="chip green">✓ 已存原件</span></div>`;
+  }).join('');
+}
+
+let uploadedCount=0;
+function handleFiles(fileList){
+  const files=[...(fileList||[])];
+  if(!files.length)return;
+  uploadedCount=files.length;
+  const box=document.getElementById('uploadResult');
+  const rows=fileRowsHTML(files);
+  // 1) 先列出真实上传的文件
+  box.innerHTML=rows+`<div class="thinking"><span class="spinner"></span>归档 Agent 正在解析 ${files.length} 个文件、判断归类…</div>`;
+  // 2) 分析（内容沿用原有示意）
+  setTimeout(()=>{ box.innerHTML=rows+analysisHTML(); },1500);
+}
+function analysisHTML(){
+  return `
+    <div class="ai-suggest">
+      <div class="ash">✦ 归档 Agent 建议</div>
+      <div class="asbody">
+        建议归档到
+        <span class="path">📂 云策CRM / 售卖政策</span>
+        <span style="font-size:12px;color:var(--faint)">置信度 94%</span>
+        <div class="why"><b>判断依据:</b>表头含"渠道/返点/阶梯",正文多次出现"云策CRM 标准版/高级版";与 /云策CRM/售卖政策 下既有素材主题高度一致,且不属于 SCRM 产品线。</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:8px"><b>预拆:</b>18 个表格行单元 + 1 条表格描述(派生)</div>
+        <div class="tagrow">
+          <span class="chip violet">建议标签:渠道政策</span>
+          <span class="chip violet">返点</span>
+          <span class="chip violet">云策CRM</span>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;gap:9px;margin-top:12px">
+      <button class="btn pri" style="flex:1" onclick="confirmFile()">✓ 采纳建议并入库</button>
+      <button class="btn ghost" onclick="toast('已展开文件夹树,可手动选择归档位置','info','📂')">手动选择</button>
+    </div>`;
+}
+function confirmFile(){
+  closeDrawer();
+  if(!kbLoaded){
+    // 首次入库:把整理好的素材(含报价/价格)加载进来,并按目录归类展示
+    ITEMS=SEED_ITEMS.slice();
+    kbLoaded=true;
+    curFolder='all'; searchKw='';
+    document.querySelectorAll('#tree .tnode').forEach(x=>x.classList.toggle('on',x.dataset.folder==='all'));
+    document.getElementById('crumb').innerHTML='<b>全部素材</b>';
+    updateTreeCounts();
+    renderItems();
+    go('store');
+    toast('已入库 '+uploadedCount+' 个文件 · 已自动拆单元并整理成目录结构','ok','✓');
+  } else {
+    toast('已入库 '+uploadedCount+' 个文件 → 正在按单元拆解、建索引并投影','ok','✓');
+  }
+}
+
+/* drawer open/close */
+function openDrawer(){document.getElementById('scrim').classList.add('on');document.getElementById('drawer').classList.add('on');}
+function closeDrawer(){document.getElementById('scrim').classList.remove('on');document.getElementById('drawer').classList.remove('on');}
+
+/* ============================================================
+   HEALTH — tasks + conflict modal
+   ============================================================ */
+let taskFilter='all';
+function renderTasks(){
+  const groups={high:[],mid:[],low:[]};
+  TASKS.filter(t=>taskFilter==='all'||t.type===taskFilter).forEach(t=>groups[t.sev].push(t));
+  const labels={high:['高优先级','需尽快处理'],mid:['中优先级','建议本周处理'],low:['低优先级','可批量处理']};
+  let html='';
+  let total=0;
+  ['high','mid','low'].forEach(sev=>{
+    if(!groups[sev].length)return;
+    total+=groups[sev].length;
+    html+=`<div class="sev-group"><div class="sev-h ${sev}"><span class="sd"></span>${labels[sev][0]} <span class="cn">· ${groups[sev].length} 项 · ${labels[sev][1]}</span></div>`;
+    groups[sev].forEach(t=>{ html+=taskCard(t); });
+    html+='</div>';
+  });
+  document.getElementById('taskList').innerHTML=html||'<div class="empty-note">该类别下暂无任务 🎉</div>';
+  document.getElementById('taskCount').textContent='共 '+total+' 项任务';
+}
+function taskCard(t){
+  return `<div class="task" id="task-${t.id}">
+    <div class="tk-ic" style="background:${t.iconBg}">${t.icon}</div>
+    <div class="tk-body">
+      <div class="tk-top"><span class="tk-title">${t.title}</span><span class="chip ${t.chip.cls}">${t.chip.t}</span></div>
+      <div class="tk-desc">${t.desc}</div>
+      <div class="tk-affected">影响:${t.affected.map(a=>'<span class="pile">'+a+'</span>').join('')}</div>
+      <div class="suggested">💡 <b>体检建议</b> · ${t.suggested.replace('建议:','')}</div>
+    </div>
+    <div class="tk-actions">${t.actions.map(a=>`<button class="btn ${a.cls} sm" onclick="${a.fn}">${a.t}</button>`).join('')}</div>
+  </div>`;
+}
+function filterTasks(type,btn){
+  taskFilter=type;
+  document.querySelectorAll('#taskSeg button').forEach(b=>b.classList.remove('on'));
+  if(btn)btn.classList.add('on');
+  else{ // came from issue card click — sync segment
+    const map={'冲突':1,'缺失':2,'过时':3,'重复':4};
+    const idx=map[type];
+    const btns=document.querySelectorAll('#taskSeg button');
+    btns.forEach(b=>b.classList.remove('on'));
+    if(idx!==undefined)btns[idx]?.classList.add('on'); else btns[0].classList.add('on');
+    go('health');
+  }
+  renderTasks();
+}
+function resolveTask(id,msg){
+  const el=document.getElementById('task-'+id);
+  if(el){el.classList.add('resolving');setTimeout(()=>{el.classList.add('resolved');},350);}
+  toast(msg,'ok','✓');
+  bumpScore();
+}
+let curScore=78;
+function bumpScore(){
+  curScore=Math.min(85,curScore+2);
+  const n=document.getElementById('scoreNum'); if(n)n.textContent=curScore;
+  const arc=document.getElementById('gaugeArc'); if(arc)arc.style.strokeDashoffset=402*(1-curScore/100);
+}
+
+function openConflict(tid){
+  const c=CONFLICTS[tid]; if(!c)return;
+  document.getElementById('modalHead').innerHTML=`
+    <div class="tk-ic" style="background:var(--red-soft);width:36px;height:36px;border-radius:9px;display:grid;place-items:center;font-size:17px">⚠</div>
+    <div><div style="font-weight:700;font-size:15px">${c.title}</div><div style="font-size:12px;color:var(--faint)">冲突类型:${c.type}</div></div>
+    <button class="mx" onclick="closeModal()">✕</button>`;
+  const states=['发现','定类','待裁决','已裁决','失效复核'];
+  const smIcons=['◉','◈','⚖','✓','⟳'];
+  document.getElementById('modalBody').innerHTML=`
+    <div style="font-size:12.5px;color:var(--muted);margin-bottom:14px">冲突下沉到<b style="color:var(--ink)">单元 × 单元</b>粒度——只压制矛盾的那两个单元,不影响同文件其余单元。</div>
+    <div class="conflict-pair">
+      <div class="cf-side a">
+        <div class="cfsrc">🅰 ${c.a.src}</div>
+        <div class="cfval">${c.a.val}</div>
+        <div class="cfmeta">${c.a.meta}</div>
+        <div class="cfu">单元 ${c.a.unit}</div>
+      </div>
+      <div class="cf-vs"><span>VS</span></div>
+      <div class="cf-side b">
+        <div class="cfsrc">🅱 ${c.b.src}</div>
+        <div class="cfval">${c.b.val}</div>
+        <div class="cfmeta">${c.b.meta}</div>
+        <div class="cfu">单元 ${c.b.unit}</div>
+      </div>
+    </div>
+    <div class="statemachine">
+      ${states.map((s,i)=>`<div class="sm ${i<c.now?'done':''} ${i===c.now?'now':''}"><span class="smi">${smIcons[i]}</span>${s}</div>${i<states.length-1?'<span class="sma">›</span>':''}`).join('')}
+    </div>
+    <div style="font-size:13px;font-weight:700;margin:16px 0 4px">选择裁决方式</div>
+    <div class="res-opts" id="resOpts">
+      <div class="res-opt sel" onclick="selRes(this)"><div class="ro-radio"></div><div><div class="ro-t">以 🅱 为准</div><div class="ro-d">报价表为销售权威口径;🅰 单元标记为被取代</div></div><span class="ro-tag chip green">推荐</span></div>
+      <div class="res-opt" onclick="selRes(this)"><div class="ro-radio"></div><div><div class="ro-t">以 🅰 为准</div><div class="ro-d">以 FAQ 表述为准;🅱 单元标记为被取代</div></div></div>
+      <div class="res-opt" onclick="selRes(this)"><div class="ro-radio"></div><div><div class="ro-t">按条件共存</div><div class="ro-d">两者适用不同场景(如新老客户),保留并标注适用范围</div></div></div>
+      <div class="res-opt" onclick="selRes(this)"><div class="ro-radio"></div><div><div class="ro-t">退回客户澄清</div><div class="ro-d">进入"待客户"状态,经企微推送对接人确认</div></div></div>
+    </div>`;
+  document.getElementById('modalFoot').innerHTML=`
+    <button class="btn ghost" onclick="closeModal()">取消</button>
+    <button class="btn violet" onclick="applyRes('${tid}')">应用裁决并重投影</button>`;
+  document.getElementById('modalScrim').classList.add('on');
+}
+function selRes(el){document.querySelectorAll('#resOpts .res-opt').forEach(o=>o.classList.remove('sel'));el.classList.add('sel');}
+function applyRes(tid){
+  closeModal();
+  resolveTask(tid,'裁决已记录在单元上 · 相关知识库已按裁决重投影 · 后续若被新版本顶替将自动触发复核');
+}
+function closeModal(){document.getElementById('modalScrim').classList.remove('on');}
+
+/* ============================================================
+   RETRIEVAL CONSOLE
+   ============================================================ */
+let curScope='crm';
+function setScope(s,el){curScope=s;document.querySelectorAll('.scope-opt').forEach(o=>o.classList.remove('sel'));el.classList.add('sel');}
+function askPreset(q){document.getElementById('askInput').value=q;runAsk();}
+
+const ANSWERS={
+  '高级版多少钱一年？':{
+    all:{cls:'bad',head:'⚠ 范围过宽 · 答案有歧义(张冠李戴)',
+      body:`检索到两条不同产品线的"高级版"价格,无法确定客户指哪个:<br><br>
+        • 云策CRM 高级版 ¥1980/坐席/年 <span class="cite bad" title="faq#23 / 报价表row#11">CRM·报价</span><br>
+        • 云策SCRM 高级版 ¥2680/坐席/年 <span class="cite bad" title="SCRM·faq#5">SCRM·FAQ</span><br>`,
+      verdict:'未限定范围时,跨产品线材料被混在一起召回 → 这正是流程引擎"张冠李戴"的根因。',vc:'bad',
+      banner:{cls:'wide',html:'当前范围:<b>全部知识库</b> — 不同产品线材料混在一起'},
+      trace:[
+        {c:'s-scope',n:'1',t:'确定范围',d:'范围 = 全部知识库(未过滤)→ 候选单元 2380 个'},
+        {c:'s-search',n:'2',t:'向量 + 关键词混合检索',d:'命中"高级版/价格"相关单元:',hits:[['faq#23 CRM ¥1980','keep'],['row#11 CRM ¥1980','keep'],['faq#5 SCRM ¥2680','keep']]},
+        {c:'s-expand',n:'3',t:'扩展上下文',d:'两条产品线证据均被纳入,语义同样相关,无法区分'},
+        {c:'s-answer',n:'4',t:'生成答案',d:'存在并列冲突证据 → 只能给出有歧义的回答 ⚠'},
+      ]},
+    crm:{cls:'good',head:'✓ 范围内精准作答',
+      body:`<b>云策CRM 高级版:¥1980 / 坐席 / 年。</b><br><br>
+        含智能分析、API 开放、专属客服等增值功能;提前 30 天续费享 9 折。`,
+      cites:'引用:<span class="cite" title="报价表2026.xlsx · row#11">CRM·报价 row#11</span> <span class="cite" title="产品FAQ.xlsx · faq#23">CRM·FAQ faq#23</span> <span class="cite" title="售卖政策V3 · §5">政策 §5</span>',
+      verdict:'范围收窄到 /云策CRM 后,SCRM 的材料被排除在外,答案唯一且可溯源。',vc:'good',
+      banner:{cls:'narrow',html:'当前范围:<b>/云策CRM 子树</b> — 已隔离其他产品线'},
+      trace:[
+        {c:'s-scope',n:'1',t:'确定范围',d:'范围 = /云策CRM 子树 → 候选单元 71 个(SCRM 已排除)'},
+        {c:'s-search',n:'2',t:'向量 + 关键词混合检索',d:'命中价格相关单元:',hits:[['faq#23 ¥1980','keep'],['row#11 ¥1980','keep'],['faq#5 SCRM','drop']]},
+        {c:'s-expand',n:'3',t:'扩展上下文',d:'沿单元金字塔补充:续费优惠(§5)、含哪些功能(faq#22)'},
+        {c:'s-answer',n:'4',t:'生成答案',d:'证据一致(两源互相印证 ¥1980)→ 高置信作答 ✓'},
+      ]},
+    scrm:{cls:'good',head:'✓ 范围内精准作答',
+      body:`<b>云策SCRM 高级版:¥2680 / 坐席 / 年。</b><br><br>支持微信、企微、抖音、小红书多渠道运营。`,
+      cites:'引用:<span class="cite" title="SCRM 产品FAQ · faq#5">SCRM·FAQ faq#5</span>',
+      verdict:'范围限定到 /云策SCRM,只返回该产品线价格。',vc:'good',
+      banner:{cls:'narrow',html:'当前范围:<b>/云策SCRM 子树</b>'},
+      trace:[
+        {c:'s-scope',n:'1',t:'确定范围',d:'范围 = /云策SCRM 子树 → 候选单元 50 个'},
+        {c:'s-search',n:'2',t:'混合检索',d:'命中:',hits:[['faq#5 ¥2680','keep']]},
+        {c:'s-expand',n:'3',t:'扩展上下文',d:'补充渠道支持范围'},
+        {c:'s-answer',n:'4',t:'生成答案',d:'证据唯一 → 高置信作答 ✓'},
+      ]},
+  },
+  '整体介绍下云策CRM的售卖政策':{
+    crm:{cls:'good',head:'✓ 综述题 · 命中摘要后下钻',
+      body:`<b>云策CRM 售卖政策 V3 概览:</b><br><br>
+        ① <b>分版定价</b>:标准版 ¥980、高级版 ¥1980、旗舰版面议(均按坐席/年)<br>
+        ② <b>退款</b>:开通 7 日内未使用全额退款,超期按比例<br>
+        ③ <b>续费</b>:提前 30 天续费享 9 折<br>
+        ④ <b>渠道返点</b>:按签约金额阶梯返点`,
+      cites:'引用:<span class="cite" title="售卖政策V3 文档摘要(派生单元)">摘要 sum#1</span> 下钻 → <span class="cite" title="§1 定价">§1</span> <span class="cite" title="§3 退款">§3</span> <span class="cite" title="§5 续费">§5</span>',
+      verdict:'综述类问题先命中"文档摘要"派生单元导航,再沿 parentUnitId 下钻到章节取细节——摘要负责召回,引用落到章节单元。',vc:'good',
+      banner:{cls:'narrow',html:'当前范围:<b>/云策CRM 子树</b> · 多表示检索'},
+      trace:[
+        {c:'s-scope',n:'1',t:'确定范围',d:'范围 = /云策CRM 子树 · 问题意图 = 综述'},
+        {c:'s-search',n:'2',t:'按意图选表示',d:'综述题优先匹配摘要类单元:',hits:[['sum#1 售卖政策摘要','keep'],['desc#1 报价表描述','keep']]},
+        {c:'s-expand',n:'3',t:'沿金字塔下钻',d:'摘要 → 子单元:',hits:[['§1 定价','keep'],['§3 退款','keep'],['§5 续费','keep']]},
+        {c:'s-answer',n:'4',t:'结构化作答',d:'摘要给框架,章节单元填细节 + 引用 ✓'},
+      ]},
+    all:{cls:'good',head:'✓ 综述题(建议收窄范围)',
+      body:`命中云策CRM 售卖政策摘要,但范围含其他产品线,可能混入 SCRM 政策。建议把范围收窄到 /云策CRM 获得更干净的综述。`,
+      cites:'引用:<span class="cite" title="售卖政策V3 摘要">摘要 sum#1</span>',
+      verdict:'综述题在全局范围下仍可用,但收窄范围能避免跨产品线串味。',vc:'good',
+      banner:{cls:'wide',html:'当前范围:<b>全部知识库</b> — 建议收窄'},
+      trace:[
+        {c:'s-scope',n:'1',t:'确定范围',d:'范围 = 全部 · 意图 = 综述'},
+        {c:'s-search',n:'2',t:'按意图选表示',d:'命中多个产品线摘要单元',hits:[['CRM sum#1','keep'],['SCRM 摘要','drop']]},
+        {c:'s-answer',n:'3',t:'作答 + 提示收窄',d:'给出 CRM 政策并提示限定范围'},
+      ]},
+    scrm:{cls:'bad',head:'⚠ 范围内无对应素材',
+      body:`/云策SCRM 范围内没有"售卖政策"相关素材(该主题材料归在 CRM 与通用政策下)。`,
+      verdict:'范围选择不当导致查无结果——应切换到 /云策CRM。',vc:'bad',
+      banner:{cls:'wide',html:'当前范围:<b>/云策SCRM 子树</b> — 范围内无此主题'},
+      trace:[
+        {c:'s-scope',n:'1',t:'确定范围',d:'范围 = /云策SCRM 子树'},
+        {c:'s-search',n:'2',t:'混合检索',d:'命中 0 个相关单元'},
+        {c:'s-answer',n:'3',t:'返回空',d:'建议切换范围或补料'},
+      ]},
+  },
+};
+
+function runAsk(){
+  const q=document.getElementById('askInput').value.trim();
+  const box=document.getElementById('rcResult');
+  const entry=ANSWERS[q];
+  if(!entry){
+    box.innerHTML=`<div class="rc-empty"><div class="ei">🤔</div>这是个示意 Demo,试试左侧的两个预设问题<br><span style="font-size:12px">(它们演示了"张冠李戴"和"摘要金字塔"两个核心能力)</span></div>`;
+    return;
+  }
+  const a=entry[curScope]||entry.all||Object.values(entry)[0];
+  // loading
+  box.innerHTML=`<div class="trace"><div class="tch"><span class="spinner" style="border-color:rgba(255,255,255,.2);border-top-color:#fff"></span> 检索 Agent 运行中…</div></div>`;
+  setTimeout(()=>{
+    box.innerHTML=`
+      <div class="scope-banner ${a.banner.cls}">${a.banner.cls==='wide'?'⚠':'🎯'} ${a.banner.html}</div>
+      <div class="answer-card ${a.cls}">
+        <div class="ac-h">${a.head}</div>
+        <div class="ac-b">${a.body}
+          ${a.cites?'<div style="margin-top:12px;font-size:12px;color:var(--muted)">'+a.cites+'</div>':''}
+          <div class="verdict-line ${a.vc}"><b>${a.vc==='bad'?'问题':'结论'}:</b> ${a.verdict}</div>
+        </div>
+      </div>
+      <div class="trace">
+        <div class="tch">⚙ Agent 检索轨迹<span class="tcd">${a.trace.length} 步 · ${curScope==='all'?'全部范围':curScope==='crm'?'/云策CRM':'/云策SCRM'}</span></div>
+        ${a.trace.map(s=>`
+          <div class="tstep ${s.c}">
+            <div class="tsn">${s.n}</div>
+            <div class="tsb"><div class="tst">${s.t}</div><div class="tsd">${s.d}
+              ${s.hits?'<div style="margin-top:5px">'+s.hits.map(h=>'<span class="hitpill '+h[1]+'">'+(h[1]==='drop'?'✕ ':'✓ ')+h[0]+'</span>').join('')+'</div>':''}
+            </div></div>
+          </div>`).join('')}
+      </div>`;
+  },700);
+}
+
+/* ============================================================
+   HEATMAP
+   ============================================================ */
+function hmColor(v){
+  if(v>=90)return '#2f8f5b';
+  if(v>=75)return '#8bbf5a';
+  if(v>=60)return '#d9a13a';
+  return '#cf3b3b';
+}
+function renderHeatmap(){
+  const tb=document.getElementById('hmBody');
+  tb.innerHTML=HEATMAP.map((r,ri)=>`
+    <tr>
+      <td class="rowh"><div class="rowlabel">${r.topic}<small>${r.sub}</small></div></td>
+      ${r.cells.map(v=>`<td><div class="cell" style="background:${hmColor(v)}">${v}<small>${v<10?'≈ 空':''}</small></div></td>`).join('')}
+      <td><div class="cell ${r.gap?'gap':''}" style="background:${r.gap?'#fff':'#eef0f5'};color:${r.gap?'var(--red)':'var(--faint)'}"
+        ${r.gap?`onclick="createGapTask('${r.topic}')"`:''}>${r.gap?'缺口':'—'}<small>${r.gap?'点击补料':''}</small></div></td>
+    </tr>
+    ${r.note?`<tr><td colspan="5" style="padding:0 8px 8px"><div style="font-size:11.5px;color:var(--faint)">↳ ${r.note}</div></td></tr>`:''}
+  `).join('');
+}
+function createGapTask(topic){
+  toast('已派发补料任务:「'+topic+'」→ 退回客户索取材料,归档后自动重投影','violet','◷');
+}
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+function toast(msg,cls='ok',icon='✓'){
+  const w=document.getElementById('toastWrap');
+  const el=document.createElement('div');
+  el.className='toast '+cls;
+  el.innerHTML=`<span class="tk">${icon}</span><div>${msg}</div>`;
+  w.appendChild(el);
+  setTimeout(()=>{el.style.transition='opacity .4s,transform .4s';el.style.opacity='0';el.style.transform='translateY(10px)';setTimeout(()=>el.remove(),400);},3400);
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+updateTreeCounts();
+renderItems();
+renderTasks();
+renderHeatmap();
+animateCounts();
+window.addEventListener('keydown',e=>{if(e.key==='Escape'){closeDrawer();closeModal();}});
+</script>
+</body>
+</html>

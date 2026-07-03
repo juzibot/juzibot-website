@@ -2,9 +2,29 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>句子守护 · Agent 舰队 (Fleet) | 产品原型</title>
+<title>句子守护 Fleet - 句子互动 | AI员工测试原型</title>
+<meta name="description" content="句子守护 Fleet 原型展示了 AI 员工从测试、验收、灰度、Badcase 到质检的完整治理链路，帮助团队理解 Agent 上线前后的风险控制与运营方式。" />
+<meta name="keywords" content="AI员工,FDE,AI原生组织,Agent治理,AI测试,AI质检,灰度发布,句子守护" />
+<meta name="robots" content="index,follow" />
+<meta name="format-detection" content="telephone=no,email=no,address=no" />
+<link rel="canonical" href="https://juzibot.com/products/shouhu-app/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="句子守护 Fleet - 句子互动 | AI员工测试原型" />
+<meta property="og:description" content="句子守护 Fleet 原型展示了 AI 员工从测试、验收、灰度、Badcase 到质检的完整治理链路，帮助团队理解 Agent 上线前后的风险控制与运营方式。" />
+<meta property="og:image" content="https://juzibot.com/assets/product-shots/shouhu-center.png" />
+<meta property="og:url" content="https://juzibot.com/products/shouhu-app/" />
+<meta property="og:locale" content="zh_CN" />
+<meta property="og:site_name" content="句子互动" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="句子守护 Fleet - 句子互动 | AI员工测试原型" />
+<meta name="twitter:description" content="句子守护 Fleet 原型展示了 AI 员工从测试、验收、灰度、Badcase 到质检的完整治理链路，帮助团队理解 Agent 上线前后的风险控制与运营方式。" />
+<meta name="twitter:image" content="https://juzibot.com/assets/product-shots/shouhu-center.png" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231659E5'/%3E%3Ctext x='16' y='22' font-family='system-ui' font-size='18' font-weight='800' fill='white' text-anchor='middle'%3E句%3C/text%3E%3C/svg%3E" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","name":"句子守护 Fleet - 句子互动 | AI员工测试原型","description":"句子守护 Fleet 原型展示了 AI 员工从测试、验收、灰度、Badcase 到质检的完整治理链路，帮助团队理解 Agent 上线前后的风险控制与运营方式。","url":"https://juzibot.com/products/shouhu-app/","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"句子互动","url":"https://juzibot.com/"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://juzibot.com/assets/product-shots/shouhu-center.png"}}
+</script>
 <style>
 :root{
   --blue:#1659E5; --blue-mid:#3D7FFF; --blue-light:#E8F0FF; --blue-bg:#F4F8FF;
@@ -83,7 +103,7 @@ button{font-family:inherit;cursor:pointer;border:0;background:transparent}
 .view{display:none}
 .view.active{display:block}
 .page-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:18px;gap:24px;flex-wrap:wrap}
-.page-head h1{font-size:22px;font-weight:800;margin:0 0 4px;letter-spacing:-.01em}
+.page-head h1,.page-head h2{font-size:22px;font-weight:800;margin:0 0 4px;letter-spacing:-.01em}
 .page-head .desc{color:var(--gray-text);font-size:13.5px;margin:0;max-width:720px}
 .page-head .head-actions{display:flex;gap:8px;flex-shrink:0}
 /* Buttons */
@@ -503,7 +523,7 @@ button{font-family:inherit;cursor:pointer;border:0;background:transparent}
 <section class="view" id="view-overview">
   <div class="page-head">
     <div>
-      <h1>售前咨询 Agent</h1>
+      <h2>售前咨询 Agent</h2>
       <p class="desc">v1.3 上线 14 天，v1.4 候发被 2 条回归卡住。</p>
     </div>
     <div class="head-actions">
@@ -664,7 +684,7 @@ button{font-family:inherit;cursor:pointer;border:0;background:transparent}
 <!-- ═════════════════ VIEW: AI 测试 ═════════════════ -->
 <section class="view" id="view-testing">
   <div class="page-head">
-    <div><h1>AI 测试</h1><p class="desc">AI 看 Agent 的流程图，每个分支生成一组用例。每条单独采纳或拒绝。</p></div>
+    <div><h2>AI 测试</h2><p class="desc">AI 看 Agent 的流程图，每个分支生成一组用例。每条单独采纳或拒绝。</p></div>
     <div class="head-actions">
       <button class="btn btn-ghost" data-route="agent:pre-sales">← 返回</button>
       <button class="btn btn-primary">＋ 给「竞品对比」生成 20 条</button>
@@ -722,7 +742,7 @@ button{font-family:inherit;cursor:pointer;border:0;background:transparent}
 <!-- ═════════════════ VIEW: 批量验收 ═════════════════ -->
 <section class="view" id="view-acceptance">
   <div class="page-head">
-    <div><h1>批量验收</h1><p class="desc">把测试集跑一遍，看通过率、失败用例、各分支覆盖。</p></div>
+    <div><h2>批量验收</h2><p class="desc">把测试集跑一遍，看通过率、失败用例、各分支覆盖。</p></div>
     <div class="head-actions">
       <button class="btn btn-ghost" data-route="agent:pre-sales">← 返回</button>
       <button class="btn btn-primary">▶ 重跑全场景</button>
@@ -789,7 +809,7 @@ button{font-family:inherit;cursor:pointer;border:0;background:transparent}
 <!-- ═════════════════ VIEW: 灰度发布 ═════════════════ -->
 <section class="view" id="view-gray">
   <div class="page-head">
-    <div><h1>灰度发布</h1><p class="desc">带激活密钥的会话进新版本，其他会话还在旧版。出问题随时关掉，灰度会话立刻回到旧版。</p></div>
+    <div><h2>灰度发布</h2><p class="desc">带激活密钥的会话进新版本，其他会话还在旧版。出问题随时关掉，灰度会话立刻回到旧版。</p></div>
     <div class="head-actions">
       <button class="btn btn-ghost" data-route="agent:pre-sales">← 返回</button>
       <button class="btn btn-primary" disabled style="opacity:.4;cursor:not-allowed">开 v1.4 灰度（回归先过了再来）</button>
@@ -851,7 +871,7 @@ button{font-family:inherit;cursor:pointer;border:0;background:transparent}
 <!-- ═════════════════ VIEW: Badcase ═════════════════ -->
 <section class="view" id="view-badcase">
   <div class="page-head">
-    <div><h1>Badcase</h1><p class="desc">客户点踩、质检命中、验收失败的对话都进这里。修完会自动加进回归集，下次发版必跑。</p></div>
+    <div><h2>Badcase</h2><p class="desc">客户点踩、质检命中、验收失败的对话都进这里。修完会自动加进回归集，下次发版必跑。</p></div>
     <div class="head-actions"><button class="btn btn-ghost" data-route="agent:pre-sales">← 返回</button><button class="btn btn-primary">+ 手动新增</button></div>
   </div>
   <div class="kpi-row k4">
@@ -887,7 +907,7 @@ button{font-family:inherit;cursor:pointer;border:0;background:transparent}
 <!-- ═════════════════ VIEW: 回归测试 ═════════════════ -->
 <section class="view" id="view-regression">
   <div class="page-head">
-    <div><h1>回归测试</h1><p class="desc">新版本上线前跑一遍历史用例。同一个错不犯第二次。</p></div>
+    <div><h2>回归测试</h2><p class="desc">新版本上线前跑一遍历史用例。同一个错不犯第二次。</p></div>
     <div class="head-actions"><button class="btn btn-ghost" data-route="agent:pre-sales">← 返回</button><button class="btn btn-primary">▶ 重跑 v1.4</button></div>
   </div>
   <div class="banner">
@@ -942,7 +962,7 @@ button{font-family:inherit;cursor:pointer;border:0;background:transparent}
 <!-- ═════════════════ VIEW: AI 质检 ═════════════════ -->
 <section class="view" id="view-qa">
   <div class="page-head">
-    <div><h1>AI 质检</h1><p class="desc">所有对话都过一遍质检，AI 客服和人工客服一套规则。命中规则的会话直接转 Badcase。</p></div>
+    <div><h2>AI 质检</h2><p class="desc">所有对话都过一遍质检，AI 客服和人工客服一套规则。命中规则的会话直接转 Badcase。</p></div>
     <div class="head-actions"><button class="btn btn-ghost" data-route="agent:pre-sales">← 返回</button><button class="btn btn-primary">+ 新建质检任务</button></div>
   </div>
   <div class="kpi-row k4">
@@ -990,7 +1010,7 @@ button{font-family:inherit;cursor:pointer;border:0;background:transparent}
 <section class="view" id="view-agent-generic">
   <div class="page-head">
     <div>
-      <h1 id="ga-name">Agent</h1>
+      <h2 id="ga-name">Agent</h2>
       <p class="desc" id="ga-desc"></p>
     </div>
     <div class="head-actions">

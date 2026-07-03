@@ -2,12 +2,31 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>句子守护 · 守护你的 AI 员工 | 句子互动</title>
-<meta name="description" content="句子守护——守护你的 AI 员工，Agent 健康度看得见。Agent 上线前测过、上线后管着：AI 生成测试用例、批量验收、灰度测试、回归测试、AI 工单、AI 质检。没人点头就不上线，每一步都留痕、能查。" />
+<title>句子守护 - 句子互动 | AI员工测试与质检</title>
+<meta name="description" content="句子守护是句子互动的 AI 员工测试与质检平台，覆盖 AI 测试用例生成、批量验收、灰度发布、回归测试、工单与质检，帮助企业把 Agent 上线风险前移。" />
+<meta name="keywords" content="AI员工,FDE,AI原生组织,Agent测试,AI质检,灰度发布,句子守护,句子互动" />
+<meta name="robots" content="index,follow" />
+<meta name="format-detection" content="telephone=no,email=no,address=no" />
+<link rel="canonical" href="https://juzibot.com/products/shouhu.html" />
 <link rel="icon" href="../logo.png" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="句子守护 - 句子互动 | AI员工测试与质检" />
+<meta property="og:description" content="句子守护是句子互动的 AI 员工测试与质检平台，覆盖 AI 测试用例生成、批量验收、灰度发布、回归测试、工单与质检，帮助企业把 Agent 上线风险前移。" />
+<meta property="og:image" content="https://juzibot.com/assets/product-shots/shouhu-quality.png" />
+<meta property="og:url" content="https://juzibot.com/products/shouhu.html" />
+<meta property="og:locale" content="zh_CN" />
+<meta property="og:site_name" content="句子互动" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="句子守护 - 句子互动 | AI员工测试与质检" />
+<meta name="twitter:description" content="句子守护是句子互动的 AI 员工测试与质检平台，覆盖 AI 测试用例生成、批量验收、灰度发布、回归测试、工单与质检，帮助企业把 Agent 上线风险前移。" />
+<meta name="twitter:image" content="https://juzibot.com/assets/product-shots/shouhu-quality.png" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="../assets/site.css" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","name":"句子守护 - 句子互动 | AI员工测试与质检","description":"句子守护是句子互动的 AI 员工测试与质检平台，覆盖 AI 测试用例生成、批量验收、灰度发布、回归测试、工单与质检，帮助企业把 Agent 上线风险前移。","url":"https://juzibot.com/products/shouhu.html","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"句子互动","url":"https://juzibot.com/"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://juzibot.com/assets/product-shots/shouhu-quality.png"}}
+</script>
 <style>
   /* scoped · 仅用 site.css 既有变量，承接首页配色，不引入异色 */
   /* —— 产品页头：沿用 .hero 的浅色径向底，承接面包屑 + KPI —— */
@@ -41,8 +60,8 @@
     color:var(--green);background:var(--green-lt);padding:4px 10px;border-radius:999px}
   .ph-demo .win .live i{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green)}
   /* 质量中心预览：按真实宽度渲染再等比缩放（布局正确、不挤叠），角上「放大查看」 */
-  .ph-stage{position:relative;width:100%;overflow:hidden;background:#fff}
-  .ph-stage iframe{position:absolute;top:0;left:0;border:0;background:#fff;transform-origin:top left}
+  .ph-stage{position:relative;width:100%;overflow:hidden;background:#fff;height:clamp(360px,40vw,520px)}
+  .ph-stage iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#fff}
   .ph-zoom{position:absolute;right:12px;bottom:12px;z-index:3;display:inline-flex;align-items:center;gap:7px;
     font-size:12.5px;font-weight:700;color:#fff;background:rgba(11,16,32,.6);backdrop-filter:blur(4px);
     border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:8px 14px;cursor:pointer;transition:background .2s,transform .2s}
@@ -55,13 +74,13 @@
   @keyframes wbm-bg{from{opacity:0}to{opacity:1}}
   @keyframes wbm-bg-out{from{opacity:1}to{opacity:0}}
   .wbm-panel{position:relative;background:#fff;border-radius:18px;overflow:hidden;
-    box-shadow:0 50px 140px rgba(11,16,32,.55),0 0 0 1px rgba(255,255,255,.05)}
+    box-shadow:0 50px 140px rgba(11,16,32,.55),0 0 0 1px rgba(255,255,255,.05);width:min(1240px,96vw)}
   .wbm.open .wbm-panel{animation:wbm-pop .46s cubic-bezier(.22,1,.36,1) both}
   .wbm.closing .wbm-panel{animation:wbm-pop-out .24s cubic-bezier(.4,0,1,1) both}
   @keyframes wbm-pop{from{opacity:0;transform:scale(.9) translateY(16px)}to{opacity:1;transform:none}}
   @keyframes wbm-pop-out{from{opacity:1;transform:none}to{opacity:0;transform:scale(.96) translateY(8px)}}
-  .wbm-stage{position:relative;overflow:hidden;background:#fff}
-  .wbm-stage iframe{position:absolute;top:0;left:0;border:0;background:#fff;transform-origin:top left}
+  .wbm-stage{position:relative;overflow:hidden;background:#fff;width:100%;height:min(80vh,760px)}
+  .wbm-stage iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#fff}
   .wbm-x{position:absolute;right:14px;top:14px;z-index:3;width:36px;height:36px;border-radius:50%;border:none;
     background:rgba(11,16,32,.55);backdrop-filter:blur(6px);color:#fff;font-size:19px;line-height:1;cursor:pointer;
     display:grid;place-items:center;transition:background .2s,transform .2s}
@@ -181,10 +200,11 @@
             <div class="hero-kpi"><div class="v">六道</div><div class="l">关口上线把关</div></div>
             <div class="hero-kpi"><div class="v">AI 自动</div><div class="l">生成用例</div></div>
             <div class="hero-kpi"><div class="v">持续</div><div class="l">健康度监控</div></div>
-            <div class="hero-kpi"><div class="v">金融政务</div><div class="l">必过的一关</div></div>
+              <div class="hero-kpi"><div class="v">可追溯</div><div class="l">留痕可审计</div></div>
           </div>
         </div>
         <div class="ph-art">
+          <div class="ph-demo">
           <div class="ph-demo">
             <div class="win">
               <span class="d r"></span><span class="d y"></span><span class="d g"></span>
@@ -192,7 +212,7 @@
               <span class="live"><i></i>LIVE</span>
             </div>
             <div class="ph-stage" id="wbStage">
-              <iframe id="wbFrame" data-d="../assets/demos/shouhu-quality.html" title="句子守护 · Agent 质量中心 实时演示" loading="lazy"></iframe>
+              <iframe id="wbFrame" data-d="../assets/demos/shouhu-quality-feishu.html" title="句子守护 · Agent 质量中心 实时演示" loading="lazy"></iframe>
             </div>
             <button class="ph-zoom" type="button" onclick="wbOpen()" aria-label="放大查看质量中心演示"><i class="fa-solid fa-up-right-and-down-left-from-center" aria-hidden="true"></i> 放大查看</button>
           </div>
@@ -383,7 +403,7 @@
       <div class="cta-stats">
         <div class="cta-stat rv" style="--ac:#4338CA"><div class="csv">六道</div><div class="csl">关口逐关把关，不达标不上线</div></div>
         <div class="cta-stat rv rv-d1" style="--ac:#14B8A6"><div class="csv">健康度</div><div class="csl">看板，做了什么客户一眼看见</div></div>
-        <div class="cta-stat rv rv-d2" style="--ac:#6366F1"><div class="csv">可追溯</div><div class="csl">金融政务必过的一关，留痕可审计</div></div>
+        <div class="cta-stat rv rv-d2" style="--ac:#6366F1"><div class="csv">可追溯</div><div class="csl">质量底线必过的一关，留痕可审计</div></div>
       </div>
     </div>
   </section>
@@ -397,22 +417,15 @@
   </div>
   <script>
   (function(){
-    var fr=document.getElementById('wbFrame'),stg=document.getElementById('wbStage');
-    if(!fr||!stg)return;
-    var big=document.getElementById('wbFrameBig'),bstg=document.getElementById('wbBigStage'),modal=document.getElementById('wbModal');
-    function mode(){return {src:fr.getAttribute('data-d'),w:1440,h:880};}
-    function place(frame,host,m,s){frame.style.width=m.w+'px';frame.style.height=m.h+'px';frame.style.transform=(s>=.999?'none':'scale('+s+')');host.style.height=Math.round(m.h*s)+'px';}
-    function fitPrev(){var m=mode();if(fr.getAttribute('src')!==m.src)fr.setAttribute('src',m.src);var w=stg.clientWidth||520;place(fr,stg,m,w/m.w);}
-    function fitBig(){var m=mode();var availW=Math.min(window.innerWidth*0.96,m.w),availH=window.innerHeight*0.9;var s=Math.min(availW/m.w,availH/m.h,1);
-      if(big.getAttribute('src')!==m.src)big.setAttribute('src',m.src);
-      big.style.width=m.w+'px';big.style.height=m.h+'px';big.style.transform=(s>=.999?'none':'scale('+s+')');
-      bstg.style.width=Math.round(m.w*s)+'px';bstg.style.height=Math.round(m.h*s)+'px';}
-    fitPrev();
-    window.wbOpen=function(){modal.classList.remove('closing');modal.classList.add('open');document.body.style.overflow='hidden';fitBig();};
+    var fr=document.getElementById('wbFrame'),modal=document.getElementById('wbModal');
+    if(!fr||!modal)return;
+    var big=document.getElementById('wbFrameBig');
+    function src(){return fr.getAttribute('data-d');}
+    if(src() && fr.getAttribute('src')!==src()) fr.setAttribute('src',src());
+    window.wbOpen=function(){modal.classList.remove('closing');modal.classList.add('open');document.body.style.overflow='hidden';if(big&&src()&&big.getAttribute('src')!==src())big.setAttribute('src',src());};
     window.wbClose=function(){if(!modal.classList.contains('open')||modal.classList.contains('closing'))return;modal.classList.add('closing');document.body.style.overflow='';setTimeout(function(){modal.classList.remove('open');modal.classList.remove('closing');},250);};
     modal.addEventListener('click',function(e){if(e.target===modal)window.wbClose();});
     document.addEventListener('keydown',function(e){if(e.key==='Escape'&&modal.classList.contains('open'))window.wbClose();});
-    var rt;window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){fitPrev();if(modal.classList.contains('open'))fitBig();},120);});
   })();
   </script>
 </main>
