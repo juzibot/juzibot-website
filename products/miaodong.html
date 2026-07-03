@@ -118,7 +118,8 @@
   @media(max-width:980px){.shotrow{grid-template-columns:1fr}.shotcopy h3{font-size:clamp(24px,5vw,32px)}}
 
   .casegrid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(12px,1.6vw,18px)}
-  .casegrid img{width:100%;height:auto;display:block;border-radius:14px;border:1px solid var(--line);background:#fff;box-shadow:var(--shadow-soft)}
+  .casegrid img{width:100%;height:auto;display:block;border-radius:14px;border:1px solid var(--line);background:#fff;box-shadow:var(--shadow-soft);cursor:pointer;transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
+  .casegrid img:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
   @media(max-width:980px){.casegrid{grid-template-columns:repeat(2,1fr)}}
   /* —— 知识库 / 工作流图解面板（沿用 site.css 变量，承接旧页两个动效面板） —— */
   .demo-panel{border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;background:#fff;
@@ -551,10 +552,10 @@
       </div>
       <div class="arch rv" style="padding:clamp(20px,2.6vw,32px)">
         <div class="casegrid">
-          <img src="../assets/product-shots/miaodong-case-iia-1.png" alt="中国保险行业协会官网界面截图 1" loading="lazy" decoding="async" />
-          <img src="../assets/product-shots/miaodong-case-iia-2.png" alt="中国保险行业协会官网界面截图 2" loading="lazy" decoding="async" />
-          <img src="../assets/product-shots/miaodong-case-iia-3.png" alt="中国保险行业协会官网界面截图 3" loading="lazy" decoding="async" />
-          <img src="../assets/product-shots/miaodong-case-iia-4.png" alt="中国保险行业协会官网界面截图 4" loading="lazy" decoding="async" />
+          <img src="../assets/product-shots/miaodong-case-iia-1.png" alt="中国保险行业协会官网界面截图 1" loading="lazy" decoding="async" onclick="imgOpen(this.src)" />
+          <img src="../assets/product-shots/miaodong-case-iia-2.png" alt="中国保险行业协会官网界面截图 2" loading="lazy" decoding="async" onclick="imgOpen(this.src)" />
+          <img src="../assets/product-shots/miaodong-case-iia-3.png" alt="中国保险行业协会官网界面截图 3" loading="lazy" decoding="async" onclick="imgOpen(this.src)" />
+          <img src="../assets/product-shots/miaodong-case-iia-4.png" alt="中国保险行业协会官网界面截图 4" loading="lazy" decoding="async" onclick="imgOpen(this.src)" />
         </div>
       </div>
     </div>
@@ -607,6 +608,14 @@
       <div class="wbm-stage" id="wbBigStage"><iframe id="wbFrameBig" title="句子秒懂 Agent 工作流 Canvas · 放大演示"></iframe></div>
     </div>
   </div>
+
+  <!-- 图片放大模态 -->
+  <div class="wbm" id="imgModal" role="dialog" aria-modal="true" aria-label="查看大图">
+    <div class="wbm-panel" style="background:transparent;box-shadow:none;border:none;overflow:visible;">
+      <button class="wbm-x" type="button" onclick="imgClose()" aria-label="关闭放大" style="right:-12px;top:-46px;background:rgba(255,255,255,0.2);">&times;</button>
+      <img id="imgBig" src="" alt="" style="max-width:90vw;max-height:85vh;border-radius:8px;display:block;margin:0 auto;box-shadow:0 30px 80px rgba(11,16,32,.4);" />
+    </div>
+  </div>
   <script>
   (function(){
     var fr=document.getElementById('wbFrame'),stg=document.getElementById('wbStage');
@@ -625,6 +634,28 @@
     modal.addEventListener('click',function(e){if(e.target===modal)window.wbClose();});
     document.addEventListener('keydown',function(e){if(e.key==='Escape'&&modal.classList.contains('open'))window.wbClose();});
     var rt;window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){fitPrev();if(modal.classList.contains('open'))fitBig();},120);});
+
+    // 图片放大逻辑
+    var imgModal = document.getElementById('imgModal');
+    var imgBig = document.getElementById('imgBig');
+    window.imgOpen = function(src) {
+      imgBig.src = src;
+      imgModal.classList.remove('closing');
+      imgModal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    };
+    window.imgClose = function() {
+      if(!imgModal.classList.contains('open') || imgModal.classList.contains('closing')) return;
+      imgModal.classList.add('closing');
+      document.body.style.overflow = '';
+      setTimeout(function(){
+        imgModal.classList.remove('open');
+        imgModal.classList.remove('closing');
+        imgBig.src = '';
+      },250);
+    };
+    imgModal.addEventListener('click', function(e){ if(e.target === imgModal) window.imgClose(); });
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && imgModal.classList.contains('open')) window.imgClose(); });
   })();
   </script>
 </main>
