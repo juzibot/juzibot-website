@@ -2209,31 +2209,31 @@ html{overflow-x:clip}
     
     <div class="cmd-center rv" id="enterpriseCmd">
       <div class="cmd-sidebar" id="cmdSidebar">
-        <a href="#cmd-0" class="cmd-item active" data-target="cmd-0">
+        <a href="#cmd-0" class="cmd-item active" data-target="cmd-0" data-no-lenis-anchor>
           <i class="fa-solid fa-circle-question"></i> 真问题
         </a>
-        <a href="#cmd-1" class="cmd-item" data-target="cmd-1">
+        <a href="#cmd-1" class="cmd-item" data-target="cmd-1" data-no-lenis-anchor>
           <i class="fa-solid fa-anchor"></i> 01 输出稳
         </a>
-        <a href="#cmd-2" class="cmd-item" data-target="cmd-2">
+        <a href="#cmd-2" class="cmd-item" data-target="cmd-2" data-no-lenis-anchor>
           <i class="fa-solid fa-shield-halved"></i> 02 数据稳
         </a>
-        <a href="#cmd-3" class="cmd-item" data-target="cmd-3">
+        <a href="#cmd-3" class="cmd-item" data-target="cmd-3" data-no-lenis-anchor>
           <i class="fa-solid fa-lock"></i> 03 管得住
         </a>
-        <a href="#cmd-4" class="cmd-item" data-target="cmd-4">
+        <a href="#cmd-4" class="cmd-item" data-target="cmd-4" data-no-lenis-anchor>
           <i class="fa-solid fa-magnifying-glass"></i> 04 查得到
         </a>
-        <a href="#cmd-5" class="cmd-item" data-target="cmd-5">
+        <a href="#cmd-5" class="cmd-item" data-target="cmd-5" data-no-lenis-anchor>
           <i class="fa-solid fa-plug"></i> 05 接得进
         </a>
-        <a href="#cmd-6" class="cmd-item" data-target="cmd-6">
+        <a href="#cmd-6" class="cmd-item" data-target="cmd-6" data-no-lenis-anchor>
           <i class="fa-solid fa-chart-line"></i> 06 上得了量
         </a>
-        <a href="#cmd-7" class="cmd-item" data-target="cmd-7">
+        <a href="#cmd-7" class="cmd-item" data-target="cmd-7" data-no-lenis-anchor>
           <i class="fa-solid fa-rotate"></i> 07 换得了
         </a>
-        <a href="#cmd-8" class="cmd-item" data-target="cmd-8">
+        <a href="#cmd-8" class="cmd-item" data-target="cmd-8" data-no-lenis-anchor>
           <i class="fa-solid fa-check-circle"></i> 答案
         </a>
       </div>
@@ -3299,7 +3299,7 @@ function openContact(){openModal('contactModal');}
   function raf(time){lenis.raf(time);requestAnimationFrame(raf);}
   requestAnimationFrame(raf);
   /* 锚点跳转交给 Lenis */
-  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+  document.querySelectorAll('a[href^="#"]:not([data-no-lenis-anchor])').forEach(function(a){
     a.addEventListener('click',function(e){
       var id=a.getAttribute('href');if(id.length<2)return;
       var t=document.querySelector(id);if(!t)return;
@@ -3424,7 +3424,11 @@ if(!sessionStorage.getItem('intro_shown')){
       var range=scrollRange;
       var ratio=items.length===1?0:index/(items.length-1);
       var target=range.start+(range.end-range.start)*ratio;
-      window.scrollTo({top:target,behavior:'smooth'});
+      if(window.__lenis){
+        window.__lenis.scrollTo(target);
+      }else{
+        window.scrollTo({top:target,behavior:'smooth'});
+      }
     });
   });
 
