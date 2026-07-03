@@ -1056,6 +1056,7 @@
   section#enterprise{padding-top:clamp(54px,6.5vw,92px)}
   .cmd-center{
     display:flex;
+    align-items:flex-start;
     gap:24px;
     margin-top:clamp(28px,4vw,40px);
     background:#fff;
@@ -1063,9 +1064,13 @@
     border-radius:16px;
     padding:8px;
     box-shadow:0 12px 34px -16px rgba(14,20,48,.08), 0 2px 6px rgba(14,20,48,.04);
+    min-height:clamp(860px,145vh,1180px);
   }
   .cmd-sidebar{
     flex:0 0 240px;
+    position:sticky;
+    top:120px;
+    height:fit-content;
     display:flex;
     flex-direction:column;
     gap:4px;
@@ -1087,7 +1092,14 @@
     font-weight:600;
     color:var(--ink-2);
     cursor:pointer;
+    text-decoration:none;
     transition:background .2s, color .2s;
+  }
+  .cmd-content-wrap{
+    flex:1;
+    position:sticky;
+    top:120px;
+    align-self:flex-start;
   }
   .cmd-item i{
     width:16px;
@@ -1117,10 +1129,9 @@
     background:#fff;
     border-radius:12px;
     padding:clamp(24px,3.5vw,40px) clamp(28px,4vw,48px);
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
+    display:grid;
     overflow:hidden;
+    min-height:300px;
   }
   .cmd-content::before{
     content:"";
@@ -1135,17 +1146,20 @@
     transition:background .3s;
   }
   .cmd-panel{
-    display:none;
-    animation:cmdFadeIn .3s ease-out;
-    position:relative;
+    grid-area:1 / 1;
+    align-self:start;
     z-index:1;
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+    transform:translateY(10px);
+    transition:opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
   }
   .cmd-panel.active{
-    display:block;
-  }
-  @keyframes cmdFadeIn{
-    0%{opacity:0;transform:translateX(10px)}
-    100%{opacity:1;transform:translateX(0)}
+    opacity:1;
+    visibility:visible;
+    pointer-events:auto;
+    transform:translateY(0);
   }
   .cmd-panel .pl-meta{
     display:inline-flex;
@@ -1208,6 +1222,7 @@
   @media(max-width:820px){
     .cmd-center{
       flex-direction:column;
+      min-height:0;
       padding:0;
       border:none;
       box-shadow:none;
@@ -1215,6 +1230,7 @@
     }
     .cmd-sidebar{
       flex:none;
+      position:static;
       flex-direction:row;
       overflow-x:auto;
       padding:6px;
@@ -1232,7 +1248,13 @@
       padding:8px 14px;
       white-space:nowrap;
     }
+    .cmd-content-wrap{
+      position:static;
+      top:auto;
+      width:100%;
+    }
     .cmd-content{
+      min-height:260px;
       padding:24px 20px;
       border:1px solid var(--line);
       box-shadow:var(--shadow-soft);
@@ -2186,81 +2208,83 @@ html{overflow-x:clip}
     </div>
     
     <div class="cmd-center rv" id="enterpriseCmd">
-      <div class="cmd-sidebar" id="cmdSidebar" role="tablist">
-        <button class="cmd-item active" data-target="cmd-0" role="tab" aria-selected="true">
+      <div class="cmd-sidebar" id="cmdSidebar">
+        <a href="#cmd-0" class="cmd-item active" data-target="cmd-0" data-no-lenis-anchor>
           <i class="fa-solid fa-circle-question"></i> 真问题
-        </button>
-        <button class="cmd-item" data-target="cmd-1" role="tab" aria-selected="false">
+        </a>
+        <a href="#cmd-1" class="cmd-item" data-target="cmd-1" data-no-lenis-anchor>
           <i class="fa-solid fa-anchor"></i> 01 输出稳
-        </button>
-        <button class="cmd-item" data-target="cmd-2" role="tab" aria-selected="false">
+        </a>
+        <a href="#cmd-2" class="cmd-item" data-target="cmd-2" data-no-lenis-anchor>
           <i class="fa-solid fa-shield-halved"></i> 02 数据稳
-        </button>
-        <button class="cmd-item" data-target="cmd-3" role="tab" aria-selected="false">
+        </a>
+        <a href="#cmd-3" class="cmd-item" data-target="cmd-3" data-no-lenis-anchor>
           <i class="fa-solid fa-lock"></i> 03 管得住
-        </button>
-        <button class="cmd-item" data-target="cmd-4" role="tab" aria-selected="false">
+        </a>
+        <a href="#cmd-4" class="cmd-item" data-target="cmd-4" data-no-lenis-anchor>
           <i class="fa-solid fa-magnifying-glass"></i> 04 查得到
-        </button>
-        <button class="cmd-item" data-target="cmd-5" role="tab" aria-selected="false">
+        </a>
+        <a href="#cmd-5" class="cmd-item" data-target="cmd-5" data-no-lenis-anchor>
           <i class="fa-solid fa-plug"></i> 05 接得进
-        </button>
-        <button class="cmd-item" data-target="cmd-6" role="tab" aria-selected="false">
+        </a>
+        <a href="#cmd-6" class="cmd-item" data-target="cmd-6" data-no-lenis-anchor>
           <i class="fa-solid fa-chart-line"></i> 06 上得了量
-        </button>
-        <button class="cmd-item" data-target="cmd-7" role="tab" aria-selected="false">
+        </a>
+        <a href="#cmd-7" class="cmd-item" data-target="cmd-7" data-no-lenis-anchor>
           <i class="fa-solid fa-rotate"></i> 07 换得了
-        </button>
-        <button class="cmd-item" data-target="cmd-8" role="tab" aria-selected="false">
+        </a>
+        <a href="#cmd-8" class="cmd-item" data-target="cmd-8" data-no-lenis-anchor>
           <i class="fa-solid fa-check-circle"></i> 答案
-        </button>
+        </a>
       </div>
       
-      <div class="cmd-content">
-        <div class="cmd-panel active" id="cmd-0" style="--ac:#4338CA" role="tabpanel">
-          <span class="pl-meta"><i class="pl-dot"></i><b>真问题</b></span>
-          <h3>客户最常问的，<br>不是「哪个模型最强」</h3>
-          <p>而是「哪个能放心装进我的系统」。过去一年，这句话我们听了无数遍。</p>
-        </div>
-        <div class="cmd-panel" id="cmd-1" style="--ac:#4F46E5" role="tabpanel">
-          <span class="pl-meta"><i class="pl-dot"></i><b>01</b><span class="pl-tag">输出稳</span></span>
-          <h3>可预测</h3>
-          <p>多年真实业务数据沉淀，Agent 每次输出都能对照、复盘。</p>
-        </div>
-        <div class="cmd-panel" id="cmd-2" style="--ac:#6366F1" role="tabpanel">
-          <span class="pl-meta"><i class="pl-dot"></i><b>02</b><span class="pl-tag">数据稳</span></span>
-          <h3>数据安全</h3>
-          <p>支持私有化 / 私域部署，客户数据不出域。</p>
-        </div>
-        <div class="cmd-panel" id="cmd-3" style="--ac:#14B8A6" role="tabpanel">
-          <span class="pl-meta"><i class="pl-dot"></i><b>03</b><span class="pl-tag">管得住</span></span>
-          <h3>可管控</h3>
-          <p>workflow 引擎里把能说什么提前写死 + 5 个高合规行业策略库。</p>
-        </div>
-        <div class="cmd-panel" id="cmd-4" style="--ac:#14B8A6" role="tabpanel">
-          <span class="pl-meta"><i class="pl-dot"></i><b>04</b><span class="pl-tag">查得到</span></span>
-          <h3>可审计</h3>
-          <p>每一次 Agent 决策可追溯，金融、政务客户特别在意这一条。</p>
-        </div>
-        <div class="cmd-panel" id="cmd-5" style="--ac:#14B8A6" role="tabpanel">
-          <span class="pl-meta"><i class="pl-dot"></i><b>05</b><span class="pl-tag">接得进</span></span>
-          <h3>能对接</h3>
-          <p>多年 IM 通道适配 + 企业 CRM / 工单 / 知识库直连。</p>
-        </div>
-        <div class="cmd-panel" id="cmd-6" style="--ac:#14B8A6" role="tabpanel">
-          <span class="pl-meta"><i class="pl-dot"></i><b>06</b><span class="pl-tag">上得了量</span></span>
-          <h3>能规模化</h3>
-          <p>1000+ 客户验证过的部署能力，不是只能跑 demo。</p>
-        </div>
-        <div class="cmd-panel" id="cmd-7" style="--ac:#6366F1" role="tabpanel">
-          <span class="pl-meta"><i class="pl-dot"></i><b>07</b><span class="pl-tag">换得了</span></span>
-          <h3>不锁模型</h3>
-          <p>底层不绑死任何一家模型，智谱 / DeepSeek / Qwen 想换就换。</p>
-        </div>
-        <div class="cmd-panel" id="cmd-8" style="--ac:#4338CA" role="tabpanel">
-          <span class="pl-meta"><i class="pl-dot"></i><b>答案</b></span>
-          <h3>于是，<br>能放心交给它</h3>
-          <p>输出稳、行为查得到、企业管得住——这正是 TO B 要的，也是我们干了这些年的事。</p>
+      <div class="cmd-content-wrap">
+        <div class="cmd-content">
+          <div class="cmd-panel active" id="cmd-0" style="--ac:#4338CA">
+            <span class="pl-meta"><i class="pl-dot"></i><b>真问题</b></span>
+            <h3>客户最常问的，<br>不是「哪个模型最强」</h3>
+            <p>而是「哪个能放心装进我的系统」。过去一年，这句话我们听了无数遍。</p>
+          </div>
+          <div class="cmd-panel" id="cmd-1" style="--ac:#4F46E5">
+            <span class="pl-meta"><i class="pl-dot"></i><b>01</b><span class="pl-tag">输出稳</span></span>
+            <h3>可预测</h3>
+            <p>多年真实业务数据沉淀，Agent 每次输出都能对照、复盘。</p>
+          </div>
+          <div class="cmd-panel" id="cmd-2" style="--ac:#6366F1">
+            <span class="pl-meta"><i class="pl-dot"></i><b>02</b><span class="pl-tag">数据稳</span></span>
+            <h3>数据安全</h3>
+            <p>支持私有化 / 私域部署，客户数据不出域。</p>
+          </div>
+          <div class="cmd-panel" id="cmd-3" style="--ac:#14B8A6">
+            <span class="pl-meta"><i class="pl-dot"></i><b>03</b><span class="pl-tag">管得住</span></span>
+            <h3>可管控</h3>
+            <p>workflow 引擎里把能说什么提前写死 + 5 个高合规行业策略库。</p>
+          </div>
+          <div class="cmd-panel" id="cmd-4" style="--ac:#14B8A6">
+            <span class="pl-meta"><i class="pl-dot"></i><b>04</b><span class="pl-tag">查得到</span></span>
+            <h3>可审计</h3>
+            <p>每一次 Agent 决策可追溯，金融、政务客户特别在意这一条。</p>
+          </div>
+          <div class="cmd-panel" id="cmd-5" style="--ac:#14B8A6">
+            <span class="pl-meta"><i class="pl-dot"></i><b>05</b><span class="pl-tag">接得进</span></span>
+            <h3>能对接</h3>
+            <p>多年 IM 通道适配 + 企业 CRM / 工单 / 知识库直连。</p>
+          </div>
+          <div class="cmd-panel" id="cmd-6" style="--ac:#14B8A6">
+            <span class="pl-meta"><i class="pl-dot"></i><b>06</b><span class="pl-tag">上得了量</span></span>
+            <h3>能规模化</h3>
+            <p>1000+ 客户验证过的部署能力，不是只能跑 demo。</p>
+          </div>
+          <div class="cmd-panel" id="cmd-7" style="--ac:#6366F1">
+            <span class="pl-meta"><i class="pl-dot"></i><b>07</b><span class="pl-tag">换得了</span></span>
+            <h3>不锁模型</h3>
+            <p>底层不绑死任何一家模型，智谱 / DeepSeek / Qwen 想换就换。</p>
+          </div>
+          <div class="cmd-panel" id="cmd-8" style="--ac:#4338CA">
+            <span class="pl-meta"><i class="pl-dot"></i><b>答案</b></span>
+            <h3>于是，<br>能放心交给它</h3>
+            <p>输出稳、行为查得到、企业管得住——这正是 TO B 要的，也是我们干了这些年的事。</p>
+          </div>
         </div>
       </div>
     </div>
@@ -3275,7 +3299,7 @@ function openContact(){openModal('contactModal');}
   function raf(time){lenis.raf(time);requestAnimationFrame(raf);}
   requestAnimationFrame(raf);
   /* 锚点跳转交给 Lenis */
-  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+  document.querySelectorAll('a[href^="#"]:not([data-no-lenis-anchor])').forEach(function(a){
     a.addEventListener('click',function(e){
       var id=a.getAttribute('href');if(id.length<2)return;
       var t=document.querySelector(id);if(!t)return;
@@ -3312,53 +3336,200 @@ if(!sessionStorage.getItem('intro_shown')){
   },{passive:true});
 })();
 
-/* ── 企业级横向流水线：scroll 驱动镜头横移 + 可点跳站导航（窄屏降级为竖向地铁线） ── */
+/* ── 企业级侧边栏：滚动联动 (Scroll Spy) ── */
 (function(){
-  var cmdCenter = document.getElementById('enterpriseCmd');
-  if(!cmdCenter) return;
-  var items = cmdCenter.querySelectorAll('.cmd-item');
-  var panels = cmdCenter.querySelectorAll('.cmd-panel');
-  var contentArea = cmdCenter.querySelector('.cmd-content');
-  
-  items.forEach(function(item) {
-    item.addEventListener('mouseenter', function() {
-      if(window.innerWidth <= 820) return; // Disable hover on mobile, rely on click
-      activate(item);
+  var cmdCenter=document.getElementById('enterpriseCmd');
+  if(!cmdCenter)return;
+  var items=[].slice.call(cmdCenter.querySelectorAll('.cmd-item'));
+  var panels=[].slice.call(cmdCenter.querySelectorAll('.cmd-panel'));
+  var sidebar=cmdCenter.querySelector('.cmd-sidebar');
+  var contentWrap=cmdCenter.querySelector('.cmd-content-wrap');
+  var contentArea=cmdCenter.querySelector('.cmd-content');
+  var mobileMq=window.matchMedia('(max-width: 820px)');
+  var stickyTop=120;
+  var lastActive=-1;
+  var scrollRange=null;
+  var rafId=0;
+
+  function getIndexFromHash(hash){
+    var raw=typeof hash==='string'?hash:window.location.hash;
+    if(!raw||raw.charAt(0)!=='#')return -1;
+    var id=raw.slice(1);
+    for(var i=0;i<panels.length;i++){
+      if(panels[i].id===id)return i;
+    }
+    return -1;
+  }
+
+  function syncHashToIndex(index){
+    if(!panels[index]||!panels[index].id)return;
+    var nextHash='#'+panels[index].id;
+    if(window.location.hash===nextHash)return;
+    if(window.history&&window.history.replaceState){
+      window.history.replaceState(null,'',nextHash);
+      return;
+    }
+    window.location.hash=nextHash;
+  }
+
+  function scrollViewportTo(target,behavior){
+    var mode=behavior||'smooth';
+    if(window.__lenis){
+      window.__lenis.scrollTo(target,mode==='auto'?{immediate:true}:{});
+      return;
+    }
+    window.scrollTo({top:target,behavior:mode});
+  }
+
+  function syncActiveItemIntoView(behavior){
+    if(!mobileMq.matches||!sidebar||lastActive<0||!items[lastActive])return;
+    items[lastActive].scrollIntoView({
+      behavior:behavior||'auto',
+      inline:'center',
+      block:'nearest'
     });
-    item.addEventListener('click', function() {
-      activate(item);
-      if(window.innerWidth <= 820) {
-        item.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
+  }
+
+  function setActive(index,options){
+    options=options||{};
+    var safeIndex=Math.max(0,Math.min(index,items.length-1));
+    var changed=safeIndex!==lastActive;
+    if(changed){
+      lastActive=safeIndex;
+      items.forEach(function(item,i){
+        item.classList.toggle('active',i===safeIndex);
+      });
+      panels.forEach(function(panel,i){
+        panel.classList.toggle('active',i===safeIndex);
+      });
+      if(panels[safeIndex]){
+        var ac=panels[safeIndex].style.getPropertyValue('--ac');
+        if(ac)contentArea.style.setProperty('--ac',ac);
       }
+    }
+    if(options.syncHash!==false)syncHashToIndex(safeIndex);
+    if(changed||options.forceNavSync)syncActiveItemIntoView(options.navBehavior||'smooth');
+  }
+
+  function measureScrollRange(){
+    var rect=cmdCenter.getBoundingClientRect();
+    var docTop=window.scrollY+rect.top;
+    var start=docTop-stickyTop;
+    var stickyHeight=Math.max(
+      sidebar?sidebar.offsetHeight:0,
+      contentWrap?contentWrap.offsetHeight:0
+    );
+    var end=docTop+cmdCenter.offsetHeight-stickyTop-stickyHeight;
+    if(end<start)end=start;
+    scrollRange={start:start,end:end};
+  }
+
+  function isWithinScrollRange(){
+    if(!scrollRange)measureScrollRange();
+    return window.scrollY>=scrollRange.start&&window.scrollY<=scrollRange.end;
+  }
+
+  function updateByScroll(){
+    rafId=0;
+    if(mobileMq.matches){
+      return;
+    }
+    if(!scrollRange)measureScrollRange();
+    var range=scrollRange;
+    var progress=0;
+    if(range.end>range.start){
+      progress=(window.scrollY-range.start)/(range.end-range.start);
+      progress=Math.max(0,Math.min(1,progress));
+    }else if(window.scrollY>=range.start){
+      progress=1;
+    }
+    var index=Math.round(progress*(items.length-1));
+    setActive(index,{
+      syncHash:isWithinScrollRange(),
+      navBehavior:'auto'
+    });
+  }
+
+  function requestScrollUpdate(){
+    if(rafId)return;
+    rafId=requestAnimationFrame(updateByScroll);
+  }
+
+  function scrollToIndex(index,behavior){
+    var safeIndex=Math.max(0,Math.min(index,items.length-1));
+    if(mobileMq.matches){
+      var mobileTop=Math.max(0,window.scrollY+cmdCenter.getBoundingClientRect().top-88);
+      scrollViewportTo(mobileTop,behavior||'smooth');
+      return;
+    }
+    if(!scrollRange)measureScrollRange();
+    var range=scrollRange;
+    var ratio=items.length===1?0:safeIndex/(items.length-1);
+    var target=range.start+(range.end-range.start)*ratio;
+    scrollViewportTo(target,behavior||'smooth');
+  }
+
+  function applyHashState(options){
+    options=options||{};
+    var index=getIndexFromHash(options.hash);
+    if(index<0)return false;
+    setActive(index,{
+      syncHash:true,
+      forceNavSync:true,
+      navBehavior:options.navBehavior||'auto'
+    });
+    if(options.scroll){
+      scrollToIndex(index,options.behavior||'smooth');
+    }
+    return true;
+  }
+
+  items.forEach(function(item,index){
+    item.addEventListener('click',function(e){
+      e.preventDefault();
+      setActive(index,{
+        syncHash:true,
+        forceNavSync:true,
+        navBehavior:'smooth'
+      });
+      if(mobileMq.matches){
+        return;
+      }
+      scrollToIndex(index,'smooth');
     });
   });
 
-  function activate(item) {
-    var targetId = item.getAttribute('data-target');
-    items.forEach(function(i){
-      i.classList.remove('active');
-      i.setAttribute('aria-selected', 'false');
-    });
-    panels.forEach(function(p){
-      p.classList.remove('active');
-    });
-    
-    item.classList.add('active');
-    item.setAttribute('aria-selected', 'true');
-    var panel = document.getElementById(targetId);
-    if(panel) {
-      panel.classList.add('active');
-      // Update background gradient color based on panel's --ac
-      var ac = panel.style.getPropertyValue('--ac');
-      if(ac) {
-        contentArea.style.setProperty('--ac', ac);
-      }
+  window.addEventListener('scroll',requestScrollUpdate,{passive:true});
+  window.addEventListener('resize',function(){
+    scrollRange=null;
+    if(!applyHashState({navBehavior:'auto'})){
+      syncActiveItemIntoView('auto');
+      requestScrollUpdate();
     }
-  }
-  
-  // Init
-  if(items.length > 0) {
-    activate(items[0]);
+  });
+  window.addEventListener('load',function(){
+    scrollRange=null;
+    measureScrollRange();
+    if(!applyHashState({scroll:true,behavior:'auto',navBehavior:'auto'})){
+      syncActiveItemIntoView('auto');
+      requestScrollUpdate();
+    }
+  });
+  window.addEventListener('hashchange',function(){
+    scrollRange=null;
+    measureScrollRange();
+    if(!applyHashState({scroll:true,behavior:'smooth',navBehavior:'smooth'})){
+      requestScrollUpdate();
+    }
+  });
+  var initialHashIndex=getIndexFromHash();
+  setActive(initialHashIndex>=0?initialHashIndex:0,{
+    syncHash:false,
+    navBehavior:'auto'
+  });
+  measureScrollRange();
+  if(!applyHashState({scroll:false,navBehavior:'auto'})){
+    updateByScroll();
   }
 })();
 
