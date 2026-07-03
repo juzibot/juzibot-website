@@ -618,6 +618,31 @@
   </div>
   <script>
   (function(){
+    var imgModal=document.getElementById('imgModal');
+    var imgBig=document.getElementById('imgBig');
+    window.imgOpen=function(src){
+      if(!imgModal||!imgBig)return;
+      imgBig.src=src;
+      imgModal.classList.remove('closing');
+      imgModal.classList.add('open');
+      document.body.style.overflow='hidden';
+    };
+    window.imgClose=function(){
+      if(!imgModal||!imgBig)return;
+      if(!imgModal.classList.contains('open')||imgModal.classList.contains('closing'))return;
+      imgModal.classList.add('closing');
+      document.body.style.overflow='';
+      setTimeout(function(){
+        imgModal.classList.remove('open');
+        imgModal.classList.remove('closing');
+        imgBig.src='';
+      },250);
+    };
+    if(imgModal){
+      imgModal.addEventListener('click',function(e){ if(e.target===imgModal)window.imgClose(); });
+    }
+    document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&imgModal&&imgModal.classList.contains('open'))window.imgClose(); });
+
     var fr=document.getElementById('wbFrame'),stg=document.getElementById('wbStage');
     if(!fr||!stg)return;
     var big=document.getElementById('wbFrameBig'),bstg=document.getElementById('wbBigStage'),modal=document.getElementById('wbModal');
@@ -634,28 +659,6 @@
     modal.addEventListener('click',function(e){if(e.target===modal)window.wbClose();});
     document.addEventListener('keydown',function(e){if(e.key==='Escape'&&modal.classList.contains('open'))window.wbClose();});
     var rt;window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){fitPrev();if(modal.classList.contains('open'))fitBig();},120);});
-
-    // 图片放大逻辑
-    var imgModal = document.getElementById('imgModal');
-    var imgBig = document.getElementById('imgBig');
-    window.imgOpen = function(src) {
-      imgBig.src = src;
-      imgModal.classList.remove('closing');
-      imgModal.classList.add('open');
-      document.body.style.overflow = 'hidden';
-    };
-    window.imgClose = function() {
-      if(!imgModal.classList.contains('open') || imgModal.classList.contains('closing')) return;
-      imgModal.classList.add('closing');
-      document.body.style.overflow = '';
-      setTimeout(function(){
-        imgModal.classList.remove('open');
-        imgModal.classList.remove('closing');
-        imgBig.src = '';
-      },250);
-    };
-    imgModal.addEventListener('click', function(e){ if(e.target === imgModal) window.imgClose(); });
-    document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && imgModal.classList.contains('open')) window.imgClose(); });
   })();
   </script>
 </main>
