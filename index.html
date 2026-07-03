@@ -3383,7 +3383,6 @@ if(!sessionStorage.getItem('intro_shown')){
   function updateByScroll(){
     rafId=0;
     if(mobileMq.matches){
-      setActive(0);
       return;
     }
     if(!scrollRange)measureScrollRange();
