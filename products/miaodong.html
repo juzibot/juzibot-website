@@ -637,18 +637,40 @@
   (function(){
     var imgModal=document.getElementById('imgModal');
     var imgBig=document.getElementById('imgBig');
+    var bodyScrollLocks=0;
+    function lockBodyScroll(){
+      bodyScrollLocks+=1;
+      if(bodyScrollLocks===1)document.body.style.overflow='hidden';
+    }
+    function unlockBodyScroll(){
+      bodyScrollLocks=Math.max(0,bodyScrollLocks-1);
+      if(!bodyScrollLocks)document.body.style.overflow='';
+    }
+    function syncModalLock(modal,shouldLock){
+      if(!modal)return;
+      var locked=modal.getAttribute('data-lock-scroll')==='true';
+      if(shouldLock){
+        if(locked)return;
+        modal.setAttribute('data-lock-scroll','true');
+        lockBodyScroll();
+        return;
+      }
+      if(!locked)return;
+      modal.setAttribute('data-lock-scroll','false');
+      unlockBodyScroll();
+    }
     window.imgOpen=function(src){
       if(!imgModal||!imgBig)return;
       imgBig.src=src;
       imgModal.classList.remove('closing');
       imgModal.classList.add('open');
-      document.body.style.overflow='hidden';
+      syncModalLock(imgModal,true);
     };
     window.imgClose=function(){
       if(!imgModal||!imgBig)return;
       if(!imgModal.classList.contains('open')||imgModal.classList.contains('closing'))return;
       imgModal.classList.add('closing');
-      document.body.style.overflow='';
+      syncModalLock(imgModal,false);
       setTimeout(function(){
         imgModal.classList.remove('open');
         imgModal.classList.remove('closing');
@@ -664,6 +686,8 @@
       var frame=document.getElementById(opts.frameId),stage=document.getElementById(opts.stageId);
       if(!frame||!stage)return null;
       var big=document.getElementById(opts.bigFrameId),bigStage=document.getElementById(opts.bigStageId),modal=document.getElementById(opts.modalId);
+      var mountedInModal=false;
+      if(big&&big.parentNode===bigStage)big.parentNode.removeChild(big);
       function mode(){return {src:frame.getAttribute('data-d'),w:opts.width,h:opts.height};}
       function place(frameNode,hostNode,m,scale){
         frameNode.style.width=m.w+'px';
@@ -674,35 +698,44 @@
       function fitPrev(){
         var m=mode();
         if(frame.getAttribute('src')!==m.src)frame.setAttribute('src',m.src);
+        if(mountedInModal)return;
         var w=stage.clientWidth||520;
         place(frame,stage,m,w/m.w);
       }
       function fitBig(){
-        if(!modal||!big||!bigStage)return;
+        if(!modal||!bigStage)return;
         var m=mode();
         var availW=Math.min(window.innerWidth*0.96,m.w),availH=window.innerHeight*0.9;
         var scale=Math.min(availW/m.w,availH/m.h,1);
-        if(!big.getAttribute('src'))big.setAttribute('src',m.src);
-        big.style.width=m.w+'px';
-        big.style.height=m.h+'px';
-        big.style.transform=(scale>=.999?'none':'scale('+scale+')');
+        if(frame.parentNode!==bigStage)bigStage.appendChild(frame);
+        mountedInModal=true;
+        frame.style.transform=(scale>=.999?'none':'scale('+scale+')');
         bigStage.style.width=Math.round(m.w*scale)+'px';
         bigStage.style.height=Math.round(m.h*scale)+'px';
+        frame.style.width=m.w+'px';
+        frame.style.height=m.h+'px';
       }
       function open(){
         if(!modal)return;
+        if(modal.classList.contains('open')&&!modal.classList.contains('closing')){
+          fitBig();
+          return;
+        }
         modal.classList.remove('closing');
         modal.classList.add('open');
-        document.body.style.overflow='hidden';
+        syncModalLock(modal,true);
         fitBig();
       }
       function close(){
         if(!modal||!modal.classList.contains('open')||modal.classList.contains('closing'))return;
         modal.classList.add('closing');
-        document.body.style.overflow='';
+        syncModalLock(modal,false);
         setTimeout(function(){
           modal.classList.remove('open');
           modal.classList.remove('closing');
+          if(frame.parentNode!==stage)stage.appendChild(frame);
+          mountedInModal=false;
+          fitPrev();
         },250);
       }
       fitPrev();

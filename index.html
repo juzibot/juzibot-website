@@ -1196,10 +1196,12 @@
     border:1px solid rgba(219,224,238,.92);
     padding:18px 18px 16px;
     backface-visibility:hidden;
+    -webkit-backface-visibility:hidden;
     background:linear-gradient(180deg,#FFFFFF,#FAFBFF);
     box-shadow:0 18px 36px -30px rgba(35,52,103,.16),0 6px 14px -10px rgba(35,52,103,.08);
     text-align:left;
   }
+  .fc-front{transform:translateZ(1px)}
   .fc-front::before,
   .fc-back::before{
     content:"";
@@ -1212,8 +1214,28 @@
     pointer-events:none;
   }
   .fc-back{
-    transform:rotateY(180deg);
+    transform:rotateY(180deg) translateZ(1px);
     background:linear-gradient(180deg,color-mix(in srgb,var(--ac) 12%,#fff),#fff 70%);
+  }
+  .pl-node.is-flipped .fc-back{
+    border-color:transparent;
+    background:
+      linear-gradient(145deg,color-mix(in srgb,var(--ac) 86%,#5B8DEF) 0%,color-mix(in srgb,var(--ac) 80%,#25B7D3) 54%,color-mix(in srgb,var(--ac) 72%,#13B69C) 100%);
+    box-shadow:0 28px 44px -28px color-mix(in srgb,var(--ac) 48%,transparent),0 14px 26px -18px rgba(67,56,202,.26);
+  }
+  .pl-node.is-flipped .fc-back,
+  .pl-node.is-flipped .fc-back h3,
+  .pl-node.is-flipped .fc-back p,
+  .pl-node.is-flipped .fc-back .fc-num{
+    color:#F7FBFF;
+  }
+  .pl-node.is-flipped .fc-back .fc-metric span{
+    color:#F7FBFF;
+    background:rgba(255,255,255,.14);
+    border-color:rgba(255,255,255,.18);
+  }
+  .pl-node.is-flipped .fc-back::before{
+    background:radial-gradient(circle, rgba(255,255,255,.22), transparent 70%);
   }
   .pl-node.prod .fc-front{
     border-color:color-mix(in srgb,var(--ac) 20%,rgba(219,224,238,.92));
@@ -1234,26 +1256,10 @@
   .pl-node.prod .fc-front .fc-ghost{
     color:color-mix(in srgb,var(--ac) 10%,rgba(16,24,40,.05));
   }
-  .pl-node.is-featured .fc-front{
-    border-color:transparent;
-    background:linear-gradient(135deg,#5B8DEF 0%,#25B7D3 52%,#13B69C 100%);
-    box-shadow:0 26px 40px -28px rgba(37,183,211,.54),0 12px 24px -16px rgba(67,56,202,.24);
-  }
-  .pl-node.is-featured .fc-front,
-  .pl-node.is-featured .fc-front .fc-tag,
-  .pl-node.is-featured .fc-front .fc-subtitle,
-  .pl-node.is-featured .fc-front .fc-hint,
-  .pl-node.is-featured .fc-front .fc-num{
-    color:#F7FBFF;
-  }
-  .pl-node.is-featured .fc-front .fc-tag{
-    background:rgba(255,255,255,.16);
-    border-color:rgba(255,255,255,.18);
-  }
   .fc-top{
     display:flex;
     align-items:center;
-    gap:8px;
+    gap:0;
     flex-wrap:wrap;
   }
   .fc-num{
@@ -1262,18 +1268,6 @@
     font-weight:700;
     letter-spacing:.08em;
     color:#8D95AF;
-  }
-  .fc-tag{
-    display:inline-flex;
-    align-items:center;
-    min-height:24px;
-    padding:0 10px;
-    border-radius:999px;
-    border:1px solid color-mix(in srgb,var(--ac) 18%,#DADFED);
-    background:color-mix(in srgb,var(--ac) 10%,#fff);
-    color:color-mix(in srgb,var(--ac) 74%,#273047);
-    font-size:11px;
-    font-weight:700;
   }
   .fc-body{position:relative;z-index:1}
   .fc-body h3{
@@ -1303,7 +1297,6 @@
     color:rgba(16,24,40,.05);
     pointer-events:none;
   }
-  .pl-node.is-featured .fc-ghost{color:rgba(255,255,255,.12)}
   .fc-hint{
     position:relative;
     z-index:1;
@@ -2373,155 +2366,155 @@ html{overflow-x:clip}
         <div class="pl-grid">
           <article class="pl-node prod rv rv-d1" id="cmd-1" style="--ac:#595DEB">
             <button class="fc-card" type="button" data-flip-card aria-pressed="false" aria-label="翻转 01 输出稳 卡片">
-              <span class="fc-face fc-front">
+              <div class="fc-face fc-front">
                 <span class="fc-ghost">01</span>
-                <span class="fc-body">
-                  <span class="fc-top"><span class="fc-num">01</span><span class="fc-tag">输出稳</span></span>
+                <div class="fc-body">
+                  <div class="fc-top"><span class="fc-num">01</span></div>
                   <h3>可预测</h3>
                   <p class="fc-subtitle">每次输出可对照、可复盘，不靠玄学。</p>
-                </span>
+                </div>
                 <span class="fc-hint">点击翻转 <i>→</i></span>
-              </span>
-              <span class="fc-face fc-back">
-                <span class="fc-top"><span class="fc-num">01</span><span class="fc-tag">输出稳</span></span>
+              </div>
+              <div class="fc-face fc-back">
+                <div class="fc-top"><span class="fc-num">01</span></div>
                 <div class="fc-body">
                   <h3>可预测</h3>
                   <p>多年真实业务数据沉淀，Agent 每次输出都能对照、复盘。行为可预测，结果可预期。</p>
                 </div>
-                <span class="fc-metric"><span>可对照</span><span>可复盘</span><span>可预期</span></span>
-              </span>
+                <div class="fc-metric"><span>可对照</span><span>可复盘</span><span>可预期</span></div>
+              </div>
             </button>
           </article>
 
           <article class="pl-node prod rv rv-d2" id="cmd-2" style="--ac:#6E73F5">
             <button class="fc-card" type="button" data-flip-card aria-pressed="false" aria-label="翻转 02 数据稳 卡片">
-              <span class="fc-face fc-front">
+              <div class="fc-face fc-front">
                 <span class="fc-ghost">02</span>
-                <span class="fc-body">
-                  <span class="fc-top"><span class="fc-num">02</span><span class="fc-tag">数据稳</span></span>
+                <div class="fc-body">
+                  <div class="fc-top"><span class="fc-num">02</span></div>
                   <h3>数据安全</h3>
                   <p class="fc-subtitle">客户数据不出域，私有化部署一键起。</p>
-                </span>
+                </div>
                 <span class="fc-hint">点击翻转 <i>→</i></span>
-              </span>
-              <span class="fc-face fc-back">
-                <span class="fc-top"><span class="fc-num">02</span><span class="fc-tag">数据稳</span></span>
+              </div>
+              <div class="fc-face fc-back">
+                <div class="fc-top"><span class="fc-num">02</span></div>
                 <div class="fc-body">
                   <h3>数据安全</h3>
                   <p>支持私有化 / 私域部署，客户数据不出域。等保三级合规，金融政务放心用。</p>
                 </div>
-                <span class="fc-metric"><span>私有化</span><span>等保三级</span><span>数据不出域</span></span>
-              </span>
+                <div class="fc-metric"><span>私有化</span><span>等保三级</span><span>数据不出域</span></div>
+              </div>
             </button>
           </article>
 
-          <article class="pl-node prod is-featured rv rv-d3" id="cmd-3" style="--ac:#17AFC8">
+          <article class="pl-node prod rv rv-d3" id="cmd-3" style="--ac:#17AFC8">
             <button class="fc-card" type="button" data-flip-card aria-pressed="false" aria-label="翻转 03 管得住 卡片">
-              <span class="fc-face fc-front">
+              <div class="fc-face fc-front">
                 <span class="fc-ghost">03</span>
-                <span class="fc-body">
-                  <span class="fc-top"><span class="fc-num">03</span><span class="fc-tag">管得住</span></span>
+                <div class="fc-body">
+                  <div class="fc-top"><span class="fc-num">03</span></div>
                   <h3>可管控</h3>
                   <p class="fc-subtitle">workflow 引擎里把能说什么提前写死 + 5 个高合规行业策略库。</p>
-                </span>
+                </div>
                 <span class="fc-hint">点击翻转 <i>→</i></span>
-              </span>
-              <span class="fc-face fc-back">
-                <span class="fc-top"><span class="fc-num">03</span><span class="fc-tag">管得住</span></span>
+              </div>
+              <div class="fc-face fc-back">
+                <div class="fc-top"><span class="fc-num">03</span></div>
                 <div class="fc-body">
                   <h3>可管控</h3>
                   <p>workflow 引擎里把能说什么提前写死 + 5 个高合规行业策略库。AI 说什么，你说了算。</p>
                 </div>
-                <span class="fc-metric"><span>话术锁定</span><span>5 行业策略</span><span>实时拦截</span></span>
-              </span>
+                <div class="fc-metric"><span>话术锁定</span><span>5 行业策略</span><span>实时拦截</span></div>
+              </div>
             </button>
           </article>
 
           <article class="pl-node prod rv rv-d4" id="cmd-4" style="--ac:#5DB7AB">
             <button class="fc-card" type="button" data-flip-card aria-pressed="false" aria-label="翻转 04 查得到 卡片">
-              <span class="fc-face fc-front">
+              <div class="fc-face fc-front">
                 <span class="fc-ghost">04</span>
-                <span class="fc-body">
-                  <span class="fc-top"><span class="fc-num">04</span><span class="fc-tag">查得到</span></span>
+                <div class="fc-body">
+                  <div class="fc-top"><span class="fc-num">04</span></div>
                   <h3>可审计</h3>
                   <p class="fc-subtitle">每句 AI 输出可追溯，合规无忧。</p>
-                </span>
+                </div>
                 <span class="fc-hint">点击翻转 <i>→</i></span>
-              </span>
-              <span class="fc-face fc-back">
-                <span class="fc-top"><span class="fc-num">04</span><span class="fc-tag">查得到</span></span>
+              </div>
+              <div class="fc-face fc-back">
+                <div class="fc-top"><span class="fc-num">04</span></div>
                 <div class="fc-body">
                   <h3>可审计</h3>
                   <p>每一次 Agent 决策可追溯，金融、政务客户特别在意这一条。全链路日志，随时审计。</p>
                 </div>
-                <span class="fc-metric"><span>决策追溯</span><span>全链路日志</span><span>合规审计</span></span>
-              </span>
+                <div class="fc-metric"><span>决策追溯</span><span>全链路日志</span><span>合规审计</span></div>
+              </div>
             </button>
           </article>
 
           <article class="pl-node prod rv rv-d1" id="cmd-5" style="--ac:#49B69C">
             <button class="fc-card" type="button" data-flip-card aria-pressed="false" aria-label="翻转 05 接得进 卡片">
-              <span class="fc-face fc-front">
+              <div class="fc-face fc-front">
                 <span class="fc-ghost">05</span>
-                <span class="fc-body">
-                  <span class="fc-top"><span class="fc-num">05</span><span class="fc-tag">接得进</span></span>
+                <div class="fc-body">
+                  <div class="fc-top"><span class="fc-num">05</span></div>
                   <h3>能对接</h3>
                   <p class="fc-subtitle">11 个 IM 通道 + CRM / 工单直连。</p>
-                </span>
+                </div>
                 <span class="fc-hint">点击翻转 <i>→</i></span>
-              </span>
-              <span class="fc-face fc-back">
-                <span class="fc-top"><span class="fc-num">05</span><span class="fc-tag">接得进</span></span>
+              </div>
+              <div class="fc-face fc-back">
+                <div class="fc-top"><span class="fc-num">05</span></div>
                 <div class="fc-body">
                   <h3>能对接</h3>
                   <p>多年 IM 通道适配 + 企业 CRM / 工单 / 知识库直连。不是另起一套，是融进你现有的。</p>
                 </div>
-                <span class="fc-metric"><span>11 IM 通道</span><span>CRM 直连</span><span>知识库对接</span></span>
-              </span>
+                <div class="fc-metric"><span>11 IM 通道</span><span>CRM 直连</span><span>知识库对接</span></div>
+              </div>
             </button>
           </article>
 
           <article class="pl-node prod rv rv-d2" id="cmd-6" style="--ac:#8B70F3">
             <button class="fc-card" type="button" data-flip-card aria-pressed="false" aria-label="翻转 06 上得了量 卡片">
-              <span class="fc-face fc-front">
+              <div class="fc-face fc-front">
                 <span class="fc-ghost">06</span>
-                <span class="fc-body">
-                  <span class="fc-top"><span class="fc-num">06</span><span class="fc-tag">上得了量</span></span>
+                <div class="fc-body">
+                  <div class="fc-top"><span class="fc-num">06</span></div>
                   <h3>能规模化</h3>
                   <p class="fc-subtitle">1000+ 客户验证，不是只能跑 demo。</p>
-                </span>
+                </div>
                 <span class="fc-hint">点击翻转 <i>→</i></span>
-              </span>
-              <span class="fc-face fc-back">
-                <span class="fc-top"><span class="fc-num">06</span><span class="fc-tag">上得了量</span></span>
+              </div>
+              <div class="fc-face fc-back">
+                <div class="fc-top"><span class="fc-num">06</span></div>
                 <div class="fc-body">
                   <h3>能规模化</h3>
                   <p>1000+ 客户验证过的部署能力，不是只能跑 demo。扛过双十一，扛过开学季。</p>
                 </div>
-                <span class="fc-metric"><span>1000+ 客户</span><span>高并发验证</span><span>生产级 SLA</span></span>
-              </span>
+                <div class="fc-metric"><span>1000+ 客户</span><span>高并发验证</span><span>生产级 SLA</span></div>
+              </div>
             </button>
           </article>
 
           <article class="pl-node prod rv rv-d3" id="cmd-7" style="--ac:#7A76F6">
             <button class="fc-card" type="button" data-flip-card aria-pressed="false" aria-label="翻转 07 换得了 卡片">
-              <span class="fc-face fc-front">
+              <div class="fc-face fc-front">
                 <span class="fc-ghost">07</span>
-                <span class="fc-body">
-                  <span class="fc-top"><span class="fc-num">07</span><span class="fc-tag">换得了</span></span>
+                <div class="fc-body">
+                  <div class="fc-top"><span class="fc-num">07</span></div>
                   <h3>不锁模型</h3>
                   <p class="fc-subtitle">底层不绑死，想换哪个模型就换。</p>
-                </span>
+                </div>
                 <span class="fc-hint">点击翻转 <i>→</i></span>
-              </span>
-              <span class="fc-face fc-back">
-                <span class="fc-top"><span class="fc-num">07</span><span class="fc-tag">换得了</span></span>
+              </div>
+              <div class="fc-face fc-back">
+                <div class="fc-top"><span class="fc-num">07</span></div>
                 <div class="fc-body">
                   <h3>不锁模型</h3>
                   <p>底层不绑死任何一家模型，智谱 / DeepSeek / Qwen 想换就换。模型是工具，不是锁链。</p>
                 </div>
-                <span class="fc-metric"><span>多模型兼容</span><span>热切换</span><span>无厂商锁定</span></span>
-              </span>
+                <div class="fc-metric"><span>多模型兼容</span><span>热切换</span><span>无厂商锁定</span></div>
+              </div>
             </button>
           </article>
         </div>
@@ -3619,11 +3612,6 @@ if(!sessionStorage.getItem('intro_shown')){
 
   cards.forEach(function(card){
     card.addEventListener('click',function(){
-      toggleCard(card);
-    });
-    card.addEventListener('keydown',function(e){
-      if(e.key!=='Enter'&&e.key!==' ')return;
-      e.preventDefault();
       toggleCard(card);
     });
   });

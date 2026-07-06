@@ -1580,7 +1580,9 @@ function renderHero(provider) {
   `;
 }
 
-function renderModels() {
+function renderModels(options = {}) {
+  const preserveScroll = !!options.preserveScroll;
+  const previousScrollTop = preserveScroll ? modelList.scrollTop : 0;
   const provider = currentProvider();
   const models = currentModels();
   ensureModelVisible(models);
@@ -1636,6 +1638,10 @@ function renderModels() {
       <span>可以切换到其他能力标签，或切回“全部模型”查看该供应商当前接入的版本。</span>
     </div>
   `;
+  if (preserveScroll) {
+    const maxScrollTop = Math.max(0, modelList.scrollHeight - modelList.clientHeight);
+    modelList.scrollTop = Math.min(previousScrollTop, maxScrollTop);
+  }
   renderDetail(provider, models.find((item) => item.name === activeModel) || null);
 }
 
@@ -1726,7 +1732,7 @@ modelList.addEventListener("click", (event) => {
   const button = event.target.closest("[data-model]");
   if (!button) return;
   activeModel = button.dataset.model;
-  renderModels();
+  renderModels({ preserveScroll: true });
 });
 
 document.querySelectorAll(".filter").forEach((button) => {
