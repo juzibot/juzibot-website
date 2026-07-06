@@ -687,6 +687,8 @@
       if(!frame||!stage)return null;
       var big=document.getElementById(opts.bigFrameId),bigStage=document.getElementById(opts.bigStageId),modal=document.getElementById(opts.modalId);
       var mountedInModal=false;
+      var closeTimer=null;
+      var hasLoaded=false;
       if(big&&big.parentNode===bigStage)big.parentNode.removeChild(big);
       function mode(){return {src:frame.getAttribute('data-d'),w:opts.width,h:opts.height};}
       function place(frameNode,hostNode,m,scale){
@@ -697,7 +699,7 @@
       }
       function fitPrev(){
         var m=mode();
-        if(frame.getAttribute('src')!==m.src)frame.setAttribute('src',m.src);
+        if(hasLoaded && frame.getAttribute('src')!==m.src)frame.setAttribute('src',m.src);
         if(mountedInModal)return;
         var w=stage.clientWidth||520;
         place(frame,stage,m,w/m.w);
@@ -717,9 +719,14 @@
       }
       function open(){
         if(!modal)return;
+        if(closeTimer){clearTimeout(closeTimer);closeTimer=null;}
         if(modal.classList.contains('open')&&!modal.classList.contains('closing')){
           fitBig();
           return;
+        }
+        if(!hasLoaded){
+          hasLoaded=true;
+          fitPrev();
         }
         modal.classList.remove('closing');
         modal.classList.add('open');
@@ -730,14 +737,26 @@
         if(!modal||!modal.classList.contains('open')||modal.classList.contains('closing'))return;
         modal.classList.add('closing');
         syncModalLock(modal,false);
-        setTimeout(function(){
+        if(closeTimer)clearTimeout(closeTimer);
+        closeTimer=setTimeout(function(){
           modal.classList.remove('open');
           modal.classList.remove('closing');
           if(frame.parentNode!==stage)stage.appendChild(frame);
           mountedInModal=false;
           fitPrev();
+          closeTimer=null;
         },250);
       }
+      
+      var io=new IntersectionObserver(function(entries){
+        if(entries[0].isIntersecting){
+          hasLoaded=true;
+          fitPrev();
+          io.disconnect();
+        }
+      });
+      io.observe(stage);
+      
       fitPrev();
       if(modal){
         modal.addEventListener('click',function(e){if(e.target===modal)close();});
