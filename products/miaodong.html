@@ -98,7 +98,7 @@
   /* —— 产品截图陈列（应用窗口框）—— */
   .shotstack{display:flex;flex-direction:column;gap:clamp(26px,3vw,40px)}
   .shotrow{display:grid;grid-template-columns:minmax(0,1.28fr) minmax(280px,.72fr);gap:clamp(22px,3vw,40px);align-items:start}
-  .shotmedia{border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;background:#fff;
+  .shotmedia{position:relative;border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;background:#fff;
     box-shadow:0 1px 2px rgba(14,20,48,.05),0 26px 54px -28px rgba(67,56,202,.28)}
   .shotmedia .win{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--line);
     background:linear-gradient(180deg,#FCFDFF,#F6F9FE)}
@@ -106,6 +106,12 @@
   .shotmedia .win .d.r{background:#FF5F57}.shotmedia .win .d.y{background:#FEBC2E}.shotmedia .win .d.g{background:#28C840}
   .shotmedia .win .t{margin-left:6px;font-family:var(--mono);font-size:11px;letter-spacing:.03em;color:var(--ink-3)}
   .shotmedia img{width:100%;height:auto;display:block;object-fit:cover;object-position:top center}
+  .shotstage{position:relative;width:100%;overflow:hidden;background:#fff}
+  .shotstage iframe{position:absolute;top:0;left:0;border:0;background:#fff;transform-origin:top left}
+  .shotzoom{position:absolute;right:12px;bottom:12px;z-index:3;display:inline-flex;align-items:center;gap:7px;
+    font-size:12.5px;font-weight:700;color:#fff;background:rgba(11,16,32,.6);backdrop-filter:blur(4px);
+    border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:8px 14px;cursor:pointer;transition:background .2s,transform .2s}
+  .shotzoom:hover{background:var(--blue);transform:translateY(-1px)}
   .shotcopy{min-width:0; margin-top:-6px;}
   .shotidx{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--blue);font-weight:700;text-transform:uppercase}
   .shotidx::before{content:"";width:22px;height:1px;background:var(--blue-200)}
@@ -231,7 +237,7 @@
     .ph-pills span{font-size:12.5px;padding:8px 13px}
 
     /* hero「放大查看」按钮：抬高到 ≥44px 触控区（不触碰缩放逻辑/位置/JS） */
-    .ph-zoom{padding:11px 15px;min-height:44px}
+    .ph-zoom,.shotzoom{padding:11px 15px;min-height:44px}
   }
 
   /* —— 极窄屏（≤400，覆盖 390/360）：进一步压间距、KPI 可考虑单列防挤 —— */
@@ -334,7 +340,10 @@
         <div class="shotrow rv rv-d2">
           <div class="shotmedia">
             <div class="win"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="t">句子秒懂 · 选择大模型</span></div>
-            <img src="../assets/product-shots/miaodong-model-select.png" alt="句子秒懂 选择大模型界面" loading="lazy" decoding="async" />
+            <div class="shotstage" id="modelSelectStage">
+              <iframe id="modelSelectFrame" data-d="../assets/demos/miaodong-model-select.html" title="句子秒懂 · 模型选择中心 实时演示" loading="lazy"></iframe>
+              <button class="shotzoom" type="button" onclick="modelDemoOpen()" aria-label="放大查看模型选择演示"><i class="fa-solid fa-up-right-and-down-left-from-center" aria-hidden="true"></i> 放大查看</button>
+            </div>
           </div>
           <div class="shotcopy">
             <span class="shotidx">03 · 模型选择</span>
@@ -609,6 +618,14 @@
     </div>
   </div>
 
+  <!-- 模型选择放大模态（虚化背景 + 大窗） -->
+  <div class="wbm" id="modelSelectModal" role="dialog" aria-modal="true" aria-label="句子秒懂 模型选择中心 · 放大演示">
+    <div class="wbm-panel">
+      <button class="wbm-x" type="button" onclick="modelDemoClose()" aria-label="关闭放大">&times;</button>
+      <div class="wbm-stage" id="modelSelectBigStage"><iframe id="modelSelectFrameBig" title="句子秒懂 模型选择中心 · 放大演示"></iframe></div>
+    </div>
+  </div>
+
   <!-- 图片放大模态 -->
   <div class="wbm" id="imgModal" role="dialog" aria-modal="true" aria-label="查看大图">
     <div class="wbm-panel" style="background:transparent;box-shadow:none;border:none;overflow:visible;">
@@ -643,22 +660,104 @@
     }
     document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&imgModal&&imgModal.classList.contains('open'))window.imgClose(); });
 
-    var fr=document.getElementById('wbFrame'),stg=document.getElementById('wbStage');
-    if(!fr||!stg)return;
-    var big=document.getElementById('wbFrameBig'),bstg=document.getElementById('wbBigStage'),modal=document.getElementById('wbModal');
-    function mode(){return {src:fr.getAttribute('data-d'),w:1440,h:820};}
-    function place(frame,host,m,s){frame.style.width=m.w+'px';frame.style.height=m.h+'px';frame.style.transform=(s>=.999?'none':'scale('+s+')');host.style.height=Math.round(m.h*s)+'px';}
-    function fitPrev(){var m=mode();if(fr.getAttribute('src')!==m.src)fr.setAttribute('src',m.src);var w=stg.clientWidth||520;place(fr,stg,m,w/m.w);}
-    function fitBig(){var m=mode();var availW=Math.min(window.innerWidth*0.96,m.w),availH=window.innerHeight*0.9;var s=Math.min(availW/m.w,availH/m.h,1);
-      if(!big.getAttribute('src'))big.setAttribute('src',m.src);
-      big.style.width=m.w+'px';big.style.height=m.h+'px';big.style.transform=(s>=.999?'none':'scale('+s+')');
-      bstg.style.width=Math.round(m.w*s)+'px';bstg.style.height=Math.round(m.h*s)+'px';}
-    fitPrev();
-    window.wbOpen=function(){modal.classList.remove('closing');modal.classList.add('open');document.body.style.overflow='hidden';fitBig();};
-    window.wbClose=function(){if(!modal.classList.contains('open')||modal.classList.contains('closing'))return;modal.classList.add('closing');document.body.style.overflow='';setTimeout(function(){modal.classList.remove('open');modal.classList.remove('closing');},250);};
-    modal.addEventListener('click',function(e){if(e.target===modal)window.wbClose();});
-    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&modal.classList.contains('open'))window.wbClose();});
-    var rt;window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){fitPrev();if(modal.classList.contains('open'))fitBig();},120);});
+    function initScaledFrame(opts){
+      var frame=document.getElementById(opts.frameId),stage=document.getElementById(opts.stageId);
+      if(!frame||!stage)return null;
+      var big=document.getElementById(opts.bigFrameId),bigStage=document.getElementById(opts.bigStageId),modal=document.getElementById(opts.modalId);
+      function mode(){return {src:frame.getAttribute('data-d'),w:opts.width,h:opts.height};}
+      function place(frameNode,hostNode,m,scale){
+        frameNode.style.width=m.w+'px';
+        frameNode.style.height=m.h+'px';
+        frameNode.style.transform=(scale>=.999?'none':'scale('+scale+')');
+        hostNode.style.height=Math.round(m.h*scale)+'px';
+      }
+      function fitPrev(){
+        var m=mode();
+        if(frame.getAttribute('src')!==m.src)frame.setAttribute('src',m.src);
+        var w=stage.clientWidth||520;
+        place(frame,stage,m,w/m.w);
+      }
+      function fitBig(){
+        if(!modal||!big||!bigStage)return;
+        var m=mode();
+        var availW=Math.min(window.innerWidth*0.96,m.w),availH=window.innerHeight*0.9;
+        var scale=Math.min(availW/m.w,availH/m.h,1);
+        if(!big.getAttribute('src'))big.setAttribute('src',m.src);
+        big.style.width=m.w+'px';
+        big.style.height=m.h+'px';
+        big.style.transform=(scale>=.999?'none':'scale('+scale+')');
+        bigStage.style.width=Math.round(m.w*scale)+'px';
+        bigStage.style.height=Math.round(m.h*scale)+'px';
+      }
+      function open(){
+        if(!modal)return;
+        modal.classList.remove('closing');
+        modal.classList.add('open');
+        document.body.style.overflow='hidden';
+        fitBig();
+      }
+      function close(){
+        if(!modal||!modal.classList.contains('open')||modal.classList.contains('closing'))return;
+        modal.classList.add('closing');
+        document.body.style.overflow='';
+        setTimeout(function(){
+          modal.classList.remove('open');
+          modal.classList.remove('closing');
+        },250);
+      }
+      fitPrev();
+      if(modal){
+        modal.addEventListener('click',function(e){if(e.target===modal)close();});
+        document.addEventListener('keydown',function(e){if(e.key==='Escape'&&modal.classList.contains('open'))close();});
+      }
+      return {
+        fitPrev:fitPrev,
+        fitBig:fitBig,
+        open:open,
+        close:close,
+        isOpen:function(){return !!(modal&&modal.classList.contains('open'));}
+      };
+    }
+
+    var heroDemo=initScaledFrame({
+      frameId:'wbFrame',
+      stageId:'wbStage',
+      bigFrameId:'wbFrameBig',
+      bigStageId:'wbBigStage',
+      modalId:'wbModal',
+      width:1440,
+      height:820
+    });
+    if(heroDemo){
+      window.wbOpen=heroDemo.open;
+      window.wbClose=heroDemo.close;
+    }
+
+    var modelDemo=initScaledFrame({
+      frameId:'modelSelectFrame',
+      stageId:'modelSelectStage',
+      bigFrameId:'modelSelectFrameBig',
+      bigStageId:'modelSelectBigStage',
+      modalId:'modelSelectModal',
+      width:1440,
+      height:820
+    });
+    if(modelDemo){
+      window.modelDemoOpen=modelDemo.open;
+      window.modelDemoClose=modelDemo.close;
+    }
+
+    var demos=[heroDemo,modelDemo].filter(Boolean);
+    if(!demos.length)return;
+    var rt;window.addEventListener('resize',function(){
+      clearTimeout(rt);
+      rt=setTimeout(function(){
+        demos.forEach(function(demo){
+          demo.fitPrev();
+          if(demo.isOpen())demo.fitBig();
+        });
+      },120);
+    });
   })();
   </script>
 </main>
