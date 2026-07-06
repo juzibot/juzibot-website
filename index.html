@@ -1164,6 +1164,7 @@
   }
   .cmd-content::-webkit-scrollbar{display:none}
   .cmd-content.drag{cursor:grabbing}
+  .cmd-content:focus-visible{outline:2px solid var(--blue);outline-offset:-3px;border-radius:24px}
   .cmd-panel{
     flex:0 0 clamp(300px,55vw,620px);
     min-height:clamp(360px,58vh,500px);
@@ -2287,7 +2288,7 @@ html{overflow-x:clip}
             <i class="fa-solid fa-arrow-right"></i>
           </button>
         </div>
-        <div class="cmd-content">
+        <div class="cmd-content" tabindex="0" aria-label="企业级能力卡片滑轨">
           <div class="cmd-panel active" id="cmd-0" data-seq="00" style="--ac:#4338CA">
             <span class="pl-meta"><i class="pl-dot"></i><b>真问题</b></span>
             <h3>客户最常问的，<br>不是「哪个模型最强」</h3>
@@ -3400,6 +3401,7 @@ if(!sessionStorage.getItem('intro_shown')){
   var rafId=0;
   var dragging=false;
   var moved=false;
+  var activePointerId=null;
   var startX=0;
   var startScroll=0;
   if(!track||!panels.length||!items.length)return;
@@ -3412,6 +3414,10 @@ if(!sessionStorage.getItem('intro_shown')){
       if(panels[i].id===id)return i;
     }
     return -1;
+  }
+
+  function shouldSyncHashFromTrack(){
+    return !window.location.hash || getIndexFromHash() >= 0;
   }
 
   function syncHashToIndex(index){
@@ -3505,7 +3511,7 @@ if(!sessionStorage.getItem('intro_shown')){
     rafId=0;
     setActive(getNearestIndex(),{
       scroll:false,
-      syncHash:true,
+      syncHash:shouldSyncHashFromTrack(),
       navBehavior:'auto'
     });
   }
@@ -3562,22 +3568,31 @@ if(!sessionStorage.getItem('intro_shown')){
 
   if(matchMedia('(pointer:fine)').matches){
     track.addEventListener('pointerdown',function(e){
+      if(e.button!==0)return;
       dragging=true;
       moved=false;
+      activePointerId=e.pointerId;
       startX=e.clientX;
       startScroll=track.scrollLeft;
       track.classList.add('drag');
+      if(track.setPointerCapture)track.setPointerCapture(e.pointerId);
     });
     track.addEventListener('pointermove',function(e){
       if(!dragging)return;
+      if(activePointerId!==null&&e.pointerId!==activePointerId)return;
       var delta=e.clientX-startX;
       if(Math.abs(delta)>6)moved=true;
       track.scrollLeft=startScroll-delta;
     });
-    var endDrag=function(){
+    var endDrag=function(e){
       if(!dragging)return;
+      if(e&&activePointerId!==null&&typeof e.pointerId==='number'&&e.pointerId!==activePointerId)return;
       dragging=false;
       track.classList.remove('drag');
+      if(activePointerId!==null&&track.releasePointerCapture&&track.hasPointerCapture&&track.hasPointerCapture(activePointerId)){
+        track.releasePointerCapture(activePointerId);
+      }
+      activePointerId=null;
       if(moved){
         setTimeout(function(){
           setActive(getNearestIndex(),{
@@ -3590,6 +3605,8 @@ if(!sessionStorage.getItem('intro_shown')){
         },20);
       }
     };
+    track.addEventListener('pointerup',endDrag);
+    track.addEventListener('lostpointercapture',endDrag);
     window.addEventListener('pointerup',endDrag);
     track.addEventListener('pointercancel',endDrag);
   }

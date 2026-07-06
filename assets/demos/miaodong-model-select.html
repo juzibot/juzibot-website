@@ -581,6 +581,26 @@ body{
   flex-direction:column;
   gap:8px;
 }
+.model-empty{
+  padding:18px 16px;
+  border:1px dashed var(--line-strong);
+  border-radius:16px;
+  background:linear-gradient(180deg,#FFFFFF,#F8FBFF);
+  color:var(--ink-2);
+}
+.model-empty b{
+  display:block;
+  font-size:13px;
+  font-weight:760;
+  color:var(--ink);
+}
+.model-empty span{
+  display:block;
+  margin-top:6px;
+  font-size:11.5px;
+  line-height:1.6;
+  text-wrap:pretty;
+}
 .model-list::-webkit-scrollbar,
 .provider-list::-webkit-scrollbar{
   width:8px;
@@ -1505,6 +1525,10 @@ function currentModels() {
 }
 
 function ensureModelVisible(models) {
+  if (!models.length) {
+    activeModel = "";
+    return;
+  }
   const exists = models.some((item) => item.name === activeModel);
   if (!exists && models.length) activeModel = models[0].name;
 }
@@ -1578,7 +1602,7 @@ function renderModels() {
     }
     return `<span class="price-row"><strong>${metric.label}</strong><span>${metric.value}</span></span>`;
   }
-  modelList.innerHTML = models.map((item) => `
+  modelList.innerHTML = models.length ? models.map((item) => `
     <button
       class="model${item.name === activeModel ? " active" : ""}"
       type="button"
@@ -1606,12 +1630,36 @@ function renderModels() {
         })()}
       </span>
     </button>
-  `).join("");
-  renderDetail(provider, models.find((item) => item.name === activeModel) || models[0]);
+  `).join("") : `
+    <div class="model-empty" role="status" aria-live="polite">
+      <b>当前筛选下暂无模型</b>
+      <span>可以切换到其他能力标签，或切回“全部模型”查看该供应商当前接入的版本。</span>
+    </div>
+  `;
+  renderDetail(provider, models.find((item) => item.name === activeModel) || null);
 }
 
 function renderDetail(provider, model) {
-  if (!model) return;
+  if (!model) {
+    detailTitle.textContent = "当前筛选暂无可用模型";
+    detailDesc.textContent = "这组筛选条件下，" + provider.name + " 暂无可展示的模型版本。请切换标签，或回到“全部模型”查看完整列表。";
+    detailGrid.innerHTML = `
+      <div class="mini full">
+        <div class="k">当前状态</div>
+        <div class="v">共 0 个模型，右侧详情已切换为空状态，避免保留上一条模型信息。</div>
+      </div>
+    `;
+    taskList.innerHTML = `
+      <div class="task" style="--accent:${provider.accent}">
+        <i>!</i>
+        <div>
+          <b>暂无推荐模型</b>
+          <span>当前筛选条件没有命中 ${provider.name} 的已接入版本，请调整筛选条件后再查看详情。</span>
+        </div>
+      </div>
+    `;
+    return;
+  }
   const metrics = [
     model.note ? { label: "计费说明", value: model.note } : null,
     model.input ? { label: "输入价格", value: model.input } : null,
