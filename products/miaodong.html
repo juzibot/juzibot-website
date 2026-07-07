@@ -105,7 +105,7 @@
   .shotmedia .win .d{width:9px;height:9px;border-radius:50%}
   .shotmedia .win .d.r{background:#FF5F57}.shotmedia .win .d.y{background:#FEBC2E}.shotmedia .win .d.g{background:#28C840}
   .shotmedia .win .t{margin-left:6px;font-family:var(--mono);font-size:11px;letter-spacing:.03em;color:var(--ink-3)}
-  .shotmedia img{width:100%;height:auto;display:block;object-fit:cover;object-position:top center}
+  .shotmedia img,.shotmedia video,.shotcard video{width:100%;height:auto;display:block;object-fit:cover;object-position:top center}
   .shotstage{position:relative;width:100%;overflow:hidden;background:#fff}
   .shotstage iframe{position:absolute;top:0;left:0;border:0;background:#fff;transform-origin:top left}
   .shotzoom{position:absolute;right:12px;bottom:12px;z-index:3;display:inline-flex;align-items:center;gap:7px;
@@ -310,7 +310,9 @@
         <div class="shotrow rv">
           <div class="shotmedia">
             <div class="win"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="t">句子秒懂 · 流程引擎</span></div>
-            <img src="../assets/product-shots/miaodong-flow-engine.png" alt="句子秒懂 流程引擎（Canvas）可视化编排界面" loading="lazy" decoding="async" />
+            <video autoplay muted playsinline preload="metadata" poster="../assets/product-shots/miaodong-flow-engine.png" aria-label="句子秒懂 流程引擎（Canvas）可视化编排界面">
+              <source src="../assets/product-shots/miaodong-flow-engine.mp4" type="video/mp4" />
+            </video>
           </div>
           <div class="shotcopy">
             <span class="shotidx">01 · 流程引擎</span>
@@ -325,7 +327,9 @@
         <div class="shotrow rv rv-d1">
           <div class="shotmedia">
             <div class="win"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="t">句子秒懂 · 调优中心</span></div>
-            <img src="../assets/product-shots/miaodong-tuning-center.png" alt="句子秒懂 调优中心 运行回放与节点结果查看" loading="lazy" decoding="async" />
+            <video autoplay muted playsinline preload="metadata" poster="../assets/product-shots/miaodong-tuning-center.png" aria-label="句子秒懂 调优中心 运行回放与节点结果查看">
+              <source src="../assets/product-shots/miaodong-tuning-center.mp4" type="video/mp4" />
+            </video>
           </div>
           <div class="shotcopy">
             <span class="shotidx">02 · 调优中心</span>
@@ -521,7 +525,9 @@
           <div>
             <div class="shotcard rv" style="margin:0">
               <div class="win"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="t">调优中心 · 运行回放</span></div>
-              <img src="../assets/product-shots/miaodong-tuning-center.png" alt="句子秒懂 调优中心 运行回放界面" loading="lazy" decoding="async" />
+              <video autoplay muted playsinline preload="metadata" poster="../assets/product-shots/miaodong-tuning-center.png" aria-label="句子秒懂 调优中心 运行回放界面">
+                <source src="../assets/product-shots/miaodong-tuning-center.mp4" type="video/mp4" />
+              </video>
               <div class="cap">回放时可查看节点运行结果（输入/输出/耗时/命中），把“效果不好”拆成可解决的问题。</div>
             </div>
           </div>
