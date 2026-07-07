@@ -1658,20 +1658,6 @@ function renderModels(options = {}) {
   renderDetail(provider, models.find((item) => item.name === activeModel) || null);
 }
 
-function updateModelSelection(modelName) {
-  const provider = currentProvider();
-  const models = currentModels();
-  const selectedModel = models.find((item) => item.name === modelName) || null;
-  if (!selectedModel) return;
-  activeModel = selectedModel.name;
-  modelList.querySelectorAll("[data-model]").forEach((button) => {
-    const isActive = button.dataset.model === activeModel;
-    button.classList.toggle("active", isActive);
-    button.setAttribute("aria-selected", isActive ? "true" : "false");
-  });
-  renderDetail(provider, selectedModel);
-}
-
 function renderDetail(provider, model) {
   if (!model) {
     detailTitle.textContent = "当前筛选暂无可用模型";
@@ -1735,8 +1721,8 @@ providerList.addEventListener("click", (event) => {
 modelList.addEventListener("click", (event) => {
   const button = event.target.closest("[data-model]");
   if (!button) return;
-  if (button.dataset.model === activeModel) return;
-  updateModelSelection(button.dataset.model);
+  activeModel = button.dataset.model;
+  renderModels({ preserveScroll: true });
 });
 
 document.querySelectorAll(".filter").forEach((button) => {
