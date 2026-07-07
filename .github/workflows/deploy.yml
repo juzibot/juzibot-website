@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       BR: ${{ github.ref_name }}
+      WEBSITE_ENV_B64: ${{ secrets.WEBSITE_ENV }}
     steps:
       - name: SSH and deploy
         id: deploy
@@ -17,7 +18,7 @@ jobs:
           host:     ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           key:      ${{ secrets.SSH_KEY }}
-          envs: BR
+          envs: BR,WEBSITE_ENV_B64
           script: |
             set -e
             case "$BR" in stage-1|stage-2) ;; *) echo "refuse branch: $BR"; exit 1 ;; esac
@@ -26,6 +27,7 @@ jobs:
             git fetch origin "$BR"
             git checkout -f -B "$BR" "origin/$BR"
             git clean -fd
+            if [ -n "${WEBSITE_ENV_B64:-}" ]; then printf '%s' "$WEBSITE_ENV_B64" | base64 -d > "$DIR/.env" && echo ".env injected ($(wc -c <"$DIR/.env")B)"; else echo "no WEBSITE_ENV secret, skip .env"; fi
             echo "deployed $BR -> $DIR ($(git rev-parse --short HEAD))"
 
       - name: Notify Lark (card)
