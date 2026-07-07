@@ -1553,6 +1553,14 @@ function renderProviders() {
   `).join("");
 }
 
+function updateProviderSelection() {
+  providerList.querySelectorAll("[data-provider]").forEach((button) => {
+    const isActive = button.dataset.provider === activeProvider;
+    button.classList.toggle("active", isActive);
+    button.setAttribute("aria-selected", isActive ? "true" : "false");
+  });
+}
+
 function renderHero(provider) {
   tbLogo.className = `tb-logo${hasProviderIcon(provider) ? " has-image" : ""}`;
   tbLogo.innerHTML = getProviderIconMarkup(provider);
@@ -1698,9 +1706,14 @@ function updateFilterNote() {
   filterNote.textContent = mapping[activeFilter] || mapping.all;
 }
 
-function render() {
+function render(options = {}) {
+  const shouldRenderProviders = !!options.renderProviders || !providerList.children.length;
   const provider = currentProvider();
-  renderProviders();
+  if (shouldRenderProviders) {
+    renderProviders();
+  } else {
+    updateProviderSelection();
+  }
   renderHero(provider);
   renderModels();
   updateFilterNote();
@@ -1709,6 +1722,7 @@ function render() {
 providerList.addEventListener("click", (event) => {
   const button = event.target.closest("[data-provider]");
   if (!button) return;
+  if (button.dataset.provider === activeProvider) return;
   activeProvider = button.dataset.provider;
   activeFilter = "all";
   document.querySelectorAll(".filter").forEach((item) => {
@@ -1736,7 +1750,7 @@ document.querySelectorAll(".filter").forEach((button) => {
   });
 });
 
-render();
+render({ renderProviders: true });
 </script>
 </body>
 </html>
