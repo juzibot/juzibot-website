@@ -1,7 +1,7 @@
 name: deploy
 on:
   push:
-    branches: [stage-1, stage-2]
+    branches: [stage-1, stage-2, stage-3]
   workflow_dispatch:
 
 jobs:
@@ -20,7 +20,7 @@ jobs:
           envs: BR
           script: |
             set -e
-            case "$BR" in stage-1|stage-2) ;; *) echo "refuse branch: $BR"; exit 1 ;; esac
+            case "$BR" in stage-1|stage-2|stage-3) ;; *) echo "refuse branch: $BR"; exit 1 ;; esac
             DIR="/opt/www/jz-$BR"
             cd "$DIR"
             git fetch origin "$BR"
