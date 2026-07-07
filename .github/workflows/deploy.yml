@@ -1,7 +1,8 @@
 name: deploy
 on:
   push:
-    branches: [stage-1, stage-2, stage-3]
+    branches:
+      - 'stage-[0-9]'
   workflow_dispatch:
 
 jobs:
@@ -19,16 +20,7 @@ jobs:
           username: ${{ secrets.USER }}
           key:      ${{ secrets.SSH_KEY }}
           envs: BR,WEBSITE_ENV_B64
-          script: |
-            set -e
-            case "$BR" in stage-1|stage-2|stage-3) ;; *) echo "refuse branch: $BR"; exit 1 ;; esac
-            DIR="/opt/www/jz-$BR"
-            cd "$DIR"
-            git fetch origin "$BR"
-            git checkout -f -B "$BR" "origin/$BR"
-            git clean -fd
-            if [ -n "${WEBSITE_ENV_B64:-}" ]; then printf '%s' "$WEBSITE_ENV_B64" | base64 -d > "$DIR/.env" && echo ".env injected ($(wc -c <"$DIR/.env")B)"; else echo "no WEBSITE_ENV secret, skip .env"; fi
-            echo "deployed $BR -> $DIR ($(git rev-parse --short HEAD))"
+          script: bash /opt/www/deploy-stage.sh "$BR"
 
       - name: Notify Lark (card)
         if: always()
