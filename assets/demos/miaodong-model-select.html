@@ -1668,15 +1668,6 @@ function renderDetail(provider, model) {
         <div class="v">共 0 个模型，右侧详情已切换为空状态，避免保留上一条模型信息。</div>
       </div>
     `;
-    taskList.innerHTML = `
-      <div class="task" style="--accent:${provider.accent}">
-        <i>!</i>
-        <div>
-          <b>暂无推荐模型</b>
-          <span>当前筛选条件没有命中 ${provider.name} 的已接入版本，请调整筛选条件后再查看详情。</span>
-        </div>
-      </div>
-    `;
     return;
   }
   const metrics = [
