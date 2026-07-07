@@ -1723,6 +1723,7 @@ function render() {
 providerList.addEventListener("click", (event) => {
   const button = event.target.closest("[data-provider]");
   if (!button) return;
+  if (button.dataset.provider === activeProvider) return;
   activeProvider = button.dataset.provider;
   activeFilter = "all";
   document.querySelectorAll(".filter").forEach((item) => {
