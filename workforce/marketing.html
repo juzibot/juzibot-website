@@ -90,8 +90,6 @@
     .role-lede{font-size:15px}
     .crumbs{font-size:12px}
     .pill{padding:9px 14px;min-height:38px}
-    /* 人物形象图：移动端限高，避免占满屏 */
-    .hero-art img{max-height:280px}
     /* 推送卡：收窄留白 + 字号 */
     .push-card{padding:18px 16px}
     .push-stream .pb{font-size:13px;padding:10px 12px;max-width:92%}
@@ -173,8 +171,18 @@
         </div>
       </div>
       <div class="hero-art rv rv-d2" style="display:block">
-        <div style="display:flex;align-items:center;justify-content:center;height:100%">
-          <img src="../careers/emp-v2-guide.png" alt="AI 门店导购形象" style="max-width:100%;max-height:420px;object-fit:contain;border-radius:var(--radius-lg)" loading="eager" />
+        <div class="push-card">
+          <div class="pc-hd"><span class="pulse"></span><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> AI 导购 · 给客户王女士的推送</div>
+          <div class="push-stream">
+            <div class="pb">王姐好，您之前看的那款风衣到货了～</div>
+            <div class="pb">您 165cm/52kg 建议 M 码，肩线刚好</div>
+            <div class="pb">还有同色系的腰带搭配，配着穿超有型</div>
+            <div class="pb me">嗯帮我拼下单</div>
+          </div>
+          <div class="push-tags">
+            <div class="push-tag t1">已下单</div>
+            <div class="push-tag t2">客单 +¥420</div>
+          </div>
         </div>
       </div>
     </div>
