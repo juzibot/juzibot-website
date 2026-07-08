@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="../assets/site.css" />
 <style>
-  /* —— 仅本页：页头 + pills + 合规边界面板 + 角色能力，全部沿用 site.css 设计令牌 —— */
+  /* —— 仅本页：页头 + pills + 人物海报舞台 + 角色能力，全部沿用 site.css 设计令牌 —— */
   .role-hero{position:relative;overflow:hidden;padding:clamp(118px,15vh,168px) var(--gut) clamp(48px,7vw,86px);
     background:radial-gradient(1100px 560px at 84% 0%,var(--blue-100),transparent 60%),
                radial-gradient(720px 520px at 2% 8%,var(--orange-lt),transparent 56%),
@@ -31,25 +31,76 @@
     background:#fff;border:1px solid var(--line);padding:8px 16px;border-radius:999px;box-shadow:var(--shadow-soft)}
   .pill .dot{width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0}
 
-  /* 右侧：AI 理财顾问 · 合规边界面板（沿用品牌浅色 + 绿/橙双语义） */
-  .guard-card{position:relative;background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);
-    padding:clamp(20px,2.4vw,28px);box-shadow:0 1px 2px rgba(14,20,48,.05),0 40px 80px -30px rgba(67,56,202,.32),0 12px 24px -12px rgba(14,20,48,.12)}
-  .guard-hd{display:flex;align-items:center;gap:9px;font-size:12.5px;font-weight:800;color:var(--blue);
-    letter-spacing:-.01em;margin-bottom:clamp(15px,2vw,20px)}
-  .guard-hd .pulse{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);
+  /* 右侧：人物海报舞台（index 长廊 gposter 同款配方）+ 悬浮合规边界贴片 */
+  .sales-stage{position:relative;max-width:390px;margin:0 auto;padding:0 6px 20px}
+  .sales-poster{position:relative;border-radius:22px;overflow:hidden;aspect-ratio:3/4;isolation:isolate;
+    background:radial-gradient(128% 84% at 50% -4%,color-mix(in srgb,var(--blue) 42%,#fff),color-mix(in srgb,var(--blue) 12%,#fff) 60%,#fff 92%);
+    border:1px solid color-mix(in srgb,var(--blue) 24%,var(--line));
+    box-shadow:0 1px 2px rgba(14,20,48,.05),0 40px 80px -30px rgba(67,56,202,.38);
+    transform:rotate(-1.2deg);transition:transform .4s var(--ease),box-shadow .5s var(--ease)}
+  .sales-stage:hover .sales-poster{transform:rotate(0) translateY(-8px);
+    box-shadow:0 2px 6px rgba(14,20,48,.06),0 52px 96px -32px rgba(67,56,202,.5)}
+  .sp-word{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);z-index:0;white-space:nowrap;
+    font-weight:900;font-size:clamp(54px,8vw,80px);letter-spacing:-.05em;line-height:1;color:transparent;
+    -webkit-text-stroke:1.4px color-mix(in srgb,var(--blue) 50%,transparent);opacity:.6;
+    -webkit-mask-image:linear-gradient(180deg,#000 16%,transparent 74%);mask-image:linear-gradient(180deg,#000 16%,transparent 74%)}
+  .sp-glow{position:absolute;left:50%;bottom:-8%;width:84%;height:42%;transform:translateX(-50%);z-index:0;
+    background:radial-gradient(50% 50% at 50% 50%,color-mix(in srgb,var(--blue) 56%,transparent),transparent 70%);
+    filter:blur(13px);opacity:.5}
+  .sp-pic{position:absolute;left:50%;bottom:0;height:97%;width:auto;max-width:none;transform:translateX(-50%);z-index:2;
+    object-fit:contain;object-position:bottom;filter:drop-shadow(0 16px 22px rgba(14,20,48,.18));
+    -webkit-user-drag:none;user-select:none}
+  .sp-sheen{position:absolute;inset:0;z-index:4;pointer-events:none;border-radius:22px;
+    background:linear-gradient(116deg,transparent 32%,rgba(255,255,255,.6) 48%,transparent 64%);
+    transform:translateX(-135%);transition:transform .85s var(--ease);mix-blend-mode:overlay}
+  .sales-stage:hover .sp-sheen{transform:translateX(135%)}
+  .sp-badge{position:absolute;left:12px;top:12px;z-index:3;display:inline-flex;align-items:center;gap:7px;
+    font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fff;
+    background:color-mix(in srgb,var(--blue) 86%,#000);padding:5px 11px;border-radius:999px;
+    box-shadow:0 6px 16px color-mix(in srgb,var(--blue) 40%,transparent)}
+  .sp-badge .pulse{width:6px;height:6px;border-radius:50%;background:#4ADE80;box-shadow:0 0 8px #4ADE80;
     animation:ping 1.8s var(--ease) infinite}
-  .guard-list{display:flex;flex-direction:column;gap:9px}
-  .guard-row{display:flex;align-items:center;gap:11px;padding:11px 14px;border-radius:var(--radius-sm);
-    font-size:13px;line-height:1.5;border:1px solid transparent;
-    transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
-  .guard-row:hover{transform:translateX(4px);box-shadow:var(--shadow-soft)}
-  .guard-row .gi{flex:0 0 22px;width:22px;height:22px;border-radius:7px;display:grid;place-items:center;
-    color:#fff;font-size:11px}
-  .guard-row.ok{background:var(--green-lt);color:var(--orange-deep);border-color:rgba(45,212,191,.34)}
-  .guard-row.ok .gi{background:linear-gradient(135deg,#0D9488,var(--green))}
-  .guard-row.no{background:#FFF4F0;color:#B4451F;border-color:rgba(234,108,68,.26)}
-  .guard-row.no .gi{background:linear-gradient(135deg,#EA6C44,#F08A5D)}
-  .guard-row b{font-weight:750}
+  /* 合规边界贴片：悬浮在人物四周的玻璃卡（✓ 绿 / 拒答 橙红，沿用原面板双语义） */
+  .sp-chip{position:absolute;z-index:5;display:flex;flex-direction:column;gap:2px;
+    background:rgba(255,255,255,.86);backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:14px;
+    padding:10px 14px;box-shadow:0 12px 26px -12px rgba(14,20,48,.28);
+    animation:spfloat 5s ease-in-out infinite}
+  .sp-chip .l{font-size:10.5px;color:var(--ink-3);font-weight:600;white-space:nowrap}
+  .sp-chip .v{font-size:17px;font-weight:850;letter-spacing:-.02em;line-height:1.2;white-space:nowrap;
+    font-variant-numeric:tabular-nums}
+  .sp-chip.c1{top:7%;right:-6%}.sp-chip.c1 .v{color:var(--green)}
+  .sp-chip.c2{top:24%;left:-8%;animation-delay:.8s}.sp-chip.c2 .v{color:var(--green)}
+  .sp-chip.c3{top:44%;right:-7%;animation-delay:1.6s}.sp-chip.c3 .v{color:#B4451F}
+  .sp-chip.c5{top:53%;left:-7%;animation-delay:2.4s}.sp-chip.c5 .v{color:#B4451F}
+  .sp-chip.c6{top:67%;right:-5%;animation-delay:3.2s}.sp-chip.c6 .v{color:#B4451F}
+  .sp-chip.c4{left:50%;bottom:-2px;transform:translateX(-50%);flex-direction:row;align-items:center;gap:8px;
+    width:max-content;max-width:104%;padding:11px 16px;border:1.6px solid transparent;animation:none;
+    background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,var(--blue),var(--blue-2)) border-box;
+    box-shadow:0 18px 38px -14px rgba(67,56,202,.45);
+    font-size:12.5px;font-weight:700;color:var(--ink);line-height:1.45}
+  .sp-chip.c4 i{color:var(--green);flex:0 0 auto}
+  @keyframes spfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+
+  /* —— 能力清单卡片：与 fde / sales 页同款改造（覆盖 site.css 首页交互卡默认态） —— */
+  .fde-card{opacity:1;cursor:default;background:#fff;border-radius:16px;
+    box-shadow:0 1px 2px rgba(14,20,48,.05),0 16px 30px -18px rgba(14,20,48,.18)}
+  .fde-card::before{background:var(--ac,var(--blue))}
+  .fde-card:hover{transform:translateY(-5px);
+    box-shadow:0 1px 2px rgba(14,20,48,.05),0 26px 46px -20px rgba(67,56,202,.28)}
+  .fde-card.k1{--ac:var(--blue)}.fde-card.k2{--ac:var(--teal)}.fde-card.k3{--ac:var(--orange)}
+  .fde-card.k4{--ac:var(--purple)}.fde-card.k5{--ac:var(--green)}.fde-card.k6{--ac:var(--blue-2)}
+  .fde-hd{display:flex;align-items:center;gap:10px;margin-bottom:15px}
+  .fde-ic{width:32px;height:32px;border-radius:10px;flex:0 0 32px;display:grid;place-items:center;
+    background:var(--ac,var(--blue));color:#fff;font-size:13.5px;
+    box-shadow:0 6px 14px -6px color-mix(in srgb,var(--ac,var(--blue)) 55%,transparent)}
+  .fde-card .fde-num{margin:0 0 0 auto;font-size:10.5px;color:var(--ink-3);
+    background:var(--blue-50);border:1px solid var(--line);border-radius:999px;padding:3px 10px;line-height:1.5}
+  .fde-card:hover .fde-num{color:var(--ac,var(--blue))}
+  .fde-card h4{font-size:17.5px}
+
+  /* —— sec-top 副文：小字右对齐（与 fde / sales 页一致），窄屏回落左对齐 —— */
+  .sec-top .sub{margin-left:auto;text-align:right;max-width:38ch;font-size:14px;color:var(--ink-3)}
+  @media(max-width:760px){.sec-top .sub{margin-left:0;text-align:left}}
 
   /* 角色画像：合规要点 + 能力清单 */
   .role-split{display:block}
@@ -71,19 +122,22 @@
     .role-hero .wrap{grid-template-columns:1fr;gap:clamp(40px,8vw,56px)}
     .role-split{grid-template-columns:1fr;gap:clamp(28px,6vw,40px)}
   }
-  /* —— 移动端适配（≤640px）：收页头 / 合规面板防溢出 / 能力卡收紧 / KPI 塌 1 列 —— */
+  @media(max-width:520px){
+    .sp-chip{padding:8px 11px}
+    .sp-chip .v{font-size:14.5px}
+    .sp-chip.c1{right:0}.sp-chip.c2{left:-2%}.sp-chip.c3{right:-2%}.sp-chip.c5{left:-2%}.sp-chip.c6{right:-2%}
+  }
+  /* —— 移动端适配（≤640px）：收页头 / 海报舞台防溢出 / 能力卡收紧 / KPI 塌 1 列 —— */
   @media(max-width:640px){
     .role-hero{padding-top:clamp(96px,17vw,120px)}
     .role-hero h1{max-width:none}
     .role-lede{max-width:none}
     .pill-row{gap:8px}
     .pill{font-size:12px;padding:7px 13px}
-    /* 合规边界面板：收 padding/字号，✓/✗ 行收窄不溢出，行文自动换行 */
-    .guard-card{padding:18px 15px}
-    .guard-row{gap:9px;padding:10px 11px;font-size:12.5px;align-items:flex-start}
-    .guard-row span:last-child{min-width:0;overflow-wrap:anywhere}
-    .guard-row .gi{margin-top:1px}
-    .guard-row:hover{transform:none}
+    /* 人物海报舞台：收窄 + 贴片字号收，避免窄屏溢出 */
+    .sales-stage{max-width:320px}
+    .sp-chip .v{font-size:15px}
+    .sp-chip.c4{font-size:11.5px;max-width:100%}
     /* 能力卡：收 padding，去 hover 位移 */
     .cap-list .cap{padding:13px 14px}
     .cap-list .cap:hover{transform:none}
@@ -94,7 +148,7 @@
   @media(max-width:400px){
     .cta-stats{grid-template-columns:1fr !important}
   }
-  @media (prefers-reduced-motion:reduce){.guard-hd .pulse{animation:none}}
+  @media (prefers-reduced-motion:reduce){.sp-badge .pulse,.sp-chip{animation:none}}
 
   /* —— 活体工牌条（6 页通用，前缀 .fleet-*；沿用 site.css 令牌） —— */
   .fleet-bar{position:relative;z-index:3;max-width:var(--max);margin:calc(-1 * clamp(28px,4vw,52px)) auto 0;
@@ -162,16 +216,20 @@
         </div>
       </div>
       <div class="hero-art rv rv-d2" style="display:block">
-        <div class="guard-card">
-          <div class="guard-hd"><span class="pulse"></span><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> AI 理财顾问 · 合规边界</div>
-          <div class="guard-list">
-            <div class="guard-row ok"><span class="gi"><i class="fa-solid fa-check" aria-hidden="true"></i></span><span>解读产品条款 / 介绍历史业绩</span></div>
-            <div class="guard-row ok"><span class="gi"><i class="fa-solid fa-check" aria-hidden="true"></i></span><span>风险等级匹配检查</span></div>
-            <div class="guard-row ok"><span class="gi"><i class="fa-solid fa-check" aria-hidden="true"></i></span><span>合规材料 + 风险揭示书自动播报</span></div>
-            <div class="guard-row no"><span class="gi"><i class="fa-solid fa-xmark" aria-hidden="true"></i></span><span>给具体投资建议 → <b>拒答</b></span></div>
-            <div class="guard-row no"><span class="gi"><i class="fa-solid fa-xmark" aria-hidden="true"></i></span><span>承诺保本保收益 → <b>拒答</b></span></div>
-            <div class="guard-row no"><span class="gi"><i class="fa-solid fa-xmark" aria-hidden="true"></i></span><span>诱导销售 / 误导话术 → <b>拒答</b></span></div>
+        <div class="sales-stage">
+          <div class="sales-poster">
+            <span class="sp-word" aria-hidden="true">FINANCE</span>
+            <span class="sp-glow" aria-hidden="true"></span>
+            <img class="sp-pic" src="../careers/emp-v2-finance.png" alt="AI 理财顾问 · 数字员工形象" />
+            <span class="sp-badge"><span class="pulse"></span>AI 理财顾问 · 合规边界</span>
+            <span class="sp-sheen" aria-hidden="true"></span>
           </div>
+          <div class="sp-chip c1"><span class="l">解读产品条款 / 介绍历史业绩</span><span class="v"><i class="fa-solid fa-check" aria-hidden="true"></i></span></div>
+          <div class="sp-chip c2"><span class="l">风险等级匹配检查</span><span class="v"><i class="fa-solid fa-check" aria-hidden="true"></i></span></div>
+          <div class="sp-chip c3"><span class="l">给具体投资建议 →</span><span class="v">拒答</span></div>
+          <div class="sp-chip c5"><span class="l">承诺保本保收益 →</span><span class="v">拒答</span></div>
+          <div class="sp-chip c6"><span class="l">诱导销售 / 误导话术 →</span><span class="v">拒答</span></div>
+          <div class="sp-chip c4"><i class="fa-solid fa-circle-check" aria-hidden="true"></i><span>合规材料 + 风险揭示书自动播报</span></div>
         </div>
       </div>
     </div>
@@ -239,33 +297,33 @@ var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isInter
         <p class="sub">每一项都来自头部客户的真实部署。</p>
       </div>
       <div class="fde-grid">
-        <div class="fde-card rv">
-          <div class="fde-num">01</div>
+        <div class="fde-card k1 rv">
+          <div class="fde-hd"><span class="fde-ic"><i class="fa-solid fa-shield-halved"></i></span><div class="fde-num">01</div></div>
           <h4>可设的合规边界</h4>
           <p>风控团队设定的边界 AI 无法越过，输出前先由规则校验。</p>
         </div>
-        <div class="fde-card rv rv-d1">
-          <div class="fde-num">02</div>
+        <div class="fde-card k2 rv rv-d1">
+          <div class="fde-hd"><span class="fde-ic"><i class="fa-solid fa-table-cells"></i></span><div class="fde-num">02</div></div>
           <h4>产品矩阵覆盖</h4>
           <p>理财、保险、基金、信贷、信用卡——所有产品条款随时调取。</p>
         </div>
-        <div class="fde-card rv rv-d2">
-          <div class="fde-num">03</div>
+        <div class="fde-card k3 rv rv-d2">
+          <div class="fde-hd"><span class="fde-ic"><i class="fa-solid fa-user-tag"></i></span><div class="fde-num">03</div></div>
           <h4>客户画像匹配</h4>
           <p>按风险偏好、资产规模、年龄层级推荐合规产品。</p>
         </div>
-        <div class="fde-card rv rv-d3">
-          <div class="fde-num">04</div>
+        <div class="fde-card k4 rv rv-d3">
+          <div class="fde-hd"><span class="fde-ic"><i class="fa-solid fa-fingerprint"></i></span><div class="fde-num">04</div></div>
           <h4>KYC 集成</h4>
           <p>客户身份核实、风险等级评估、反洗钱筛查自动化。</p>
         </div>
-        <div class="fde-card rv">
-          <div class="fde-num">05</div>
+        <div class="fde-card k5 rv">
+          <div class="fde-hd"><span class="fde-ic"><i class="fa-solid fa-magnifying-glass-dollar"></i></span><div class="fde-num">05</div></div>
           <h4>机会识别</h4>
           <p>从对话中识别理财升级、保险增配等机会，转给真人顾问跟进。</p>
         </div>
-        <div class="fde-card rv rv-d1">
-          <div class="fde-num">06</div>
+        <div class="fde-card k6 rv rv-d1">
+          <div class="fde-hd"><span class="fde-ic"><i class="fa-solid fa-clipboard-check"></i></span><div class="fde-num">06</div></div>
           <h4>全程可审计</h4>
           <p>每次决策均留存记录，合规审查或监管核查时可直接调取。</p>
         </div>
