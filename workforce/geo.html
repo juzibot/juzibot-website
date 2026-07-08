@@ -30,28 +30,75 @@
   .pill{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--ink-2);
     background:#fff;border:1px solid var(--line);padding:8px 16px;border-radius:999px;box-shadow:var(--shadow-soft)}
   .pill .dot{width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0}
-  /* 右侧：GEO 优化师 · 全域监测台 */
-  .live-card{position:relative;background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);
-    padding:clamp(22px,2.6vw,30px);box-shadow:0 1px 2px rgba(14,20,48,.05),0 40px 80px -30px rgba(67,56,202,.32),0 12px 24px -12px rgba(14,20,48,.12)}
-  .live-card .lc-hd{display:flex;align-items:center;gap:9px;font-size:12.5px;font-weight:800;color:var(--blue);
-    letter-spacing:-.01em;margin-bottom:clamp(16px,2vw,22px)}
-  .live-card .lc-hd .pulse{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);
+  /* 右侧：人物海报舞台（index 长廊 gposter 同款配方）+ 悬浮监测台贴片 */
+  .sales-stage{position:relative;max-width:390px;margin:0 auto;padding:0 6px 20px}
+  .sales-poster{position:relative;border-radius:22px;overflow:hidden;aspect-ratio:3/4;isolation:isolate;
+    background:radial-gradient(128% 84% at 50% -4%,color-mix(in srgb,var(--blue) 42%,#fff),color-mix(in srgb,var(--blue) 12%,#fff) 60%,#fff 92%);
+    border:1px solid color-mix(in srgb,var(--blue) 24%,var(--line));
+    box-shadow:0 1px 2px rgba(14,20,48,.05),0 40px 80px -30px rgba(67,56,202,.38);
+    transform:rotate(-1.2deg);transition:transform .4s var(--ease),box-shadow .5s var(--ease)}
+  .sales-stage:hover .sales-poster{transform:rotate(0) translateY(-8px);
+    box-shadow:0 2px 6px rgba(14,20,48,.06),0 52px 96px -32px rgba(67,56,202,.5)}
+  .sp-word{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);z-index:0;white-space:nowrap;
+    font-weight:900;font-size:clamp(88px,13vw,132px);letter-spacing:-.05em;line-height:1;color:transparent;
+    -webkit-text-stroke:1.4px color-mix(in srgb,var(--blue) 50%,transparent);opacity:.6;
+    -webkit-mask-image:linear-gradient(180deg,#000 16%,transparent 74%);mask-image:linear-gradient(180deg,#000 16%,transparent 74%)}
+  .sp-glow{position:absolute;left:50%;bottom:-8%;width:84%;height:42%;transform:translateX(-50%);z-index:0;
+    background:radial-gradient(50% 50% at 50% 50%,color-mix(in srgb,var(--blue) 56%,transparent),transparent 70%);
+    filter:blur(13px);opacity:.5}
+  .sp-pic{position:absolute;left:50%;bottom:0;height:97%;width:auto;max-width:none;transform:translateX(-50%);z-index:2;
+    object-fit:contain;object-position:bottom;filter:drop-shadow(0 16px 22px rgba(14,20,48,.18));
+    -webkit-user-drag:none;user-select:none}
+  .sp-sheen{position:absolute;inset:0;z-index:4;pointer-events:none;border-radius:22px;
+    background:linear-gradient(116deg,transparent 32%,rgba(255,255,255,.6) 48%,transparent 64%);
+    transform:translateX(-135%);transition:transform .85s var(--ease);mix-blend-mode:overlay}
+  .sales-stage:hover .sp-sheen{transform:translateX(135%)}
+  .sp-badge{position:absolute;left:12px;top:12px;z-index:3;display:inline-flex;align-items:center;gap:7px;
+    font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fff;
+    background:color-mix(in srgb,var(--blue) 86%,#000);padding:5px 11px;border-radius:999px;
+    box-shadow:0 6px 16px color-mix(in srgb,var(--blue) 40%,transparent)}
+  .sp-badge .pulse{width:6px;height:6px;border-radius:50%;background:#4ADE80;box-shadow:0 0 8px #4ADE80;
     animation:ping 1.8s var(--ease) infinite}
-  .live-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,1.8vw,20px)}
-  .live-stat{padding:14px 16px;border:1px solid var(--line);border-radius:var(--radius-sm);background:#FBFCFF}
-  .live-stat .l{font-size:11px;color:var(--ink-3);font-weight:600}
-  .live-stat .v{font-size:clamp(22px,2.4vw,28px);font-weight:850;letter-spacing:-.02em;line-height:1.15;margin-top:6px}
-  .live-stat.s1 .v{color:var(--blue)}
-  .live-stat.s2 .v{color:var(--purple)}
-  .live-stat.s3 .v{color:var(--orange-deep)}
-  .live-stat.s4 .v{color:var(--green)}
-  /* 控制台状态流水（全域营销实时反馈） */
-  .lc-feed{margin-top:clamp(16px,2vw,20px);padding-top:clamp(14px,1.8vw,18px);border-top:1px solid var(--line);
-    display:flex;flex-direction:column;gap:9px}
-  .lc-feed .row{display:flex;align-items:flex-start;gap:9px;font-size:12px;line-height:1.5}
-  .lc-feed .row.ok{color:var(--green);font-weight:600}
-  .lc-feed .row.mute{color:var(--ink-3)}
-  .lc-feed .row i{flex:0 0 auto;margin-top:2px}
+  /* 监测台贴片：悬浮在人物四周的玻璃卡 */
+  .sp-chip{position:absolute;z-index:5;display:flex;flex-direction:column;gap:2px;
+    background:rgba(255,255,255,.86);backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:14px;
+    padding:10px 14px;box-shadow:0 12px 26px -12px rgba(14,20,48,.28);
+    animation:spfloat 5s ease-in-out infinite}
+  .sp-chip .l{font-size:10.5px;color:var(--ink-3);font-weight:600;white-space:nowrap}
+  .sp-chip .v{font-size:17px;font-weight:850;letter-spacing:-.02em;line-height:1.2;white-space:nowrap;
+    font-variant-numeric:tabular-nums}
+  .sp-chip.c1{top:8%;right:-6%}.sp-chip.c1 .v{color:var(--blue)}
+  .sp-chip.c2{top:30%;left:-9%;animation-delay:.8s}.sp-chip.c2 .v{color:var(--purple)}
+  .sp-chip.c3{top:56%;right:-8%;animation-delay:1.6s}.sp-chip.c3 .v{color:var(--orange-deep)}
+  .sp-chip.c5{top:64%;left:-7%;animation-delay:2.4s}.sp-chip.c5 .v{color:var(--green)}
+  .sp-chip.c4{left:50%;bottom:-2px;transform:translateX(-50%);flex-direction:row;align-items:center;gap:8px;
+    width:max-content;max-width:104%;padding:11px 16px;border:1.6px solid transparent;animation:none;
+    background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,var(--blue),var(--blue-2)) border-box;
+    box-shadow:0 18px 38px -14px rgba(67,56,202,.45);
+    font-size:12.5px;font-weight:700;color:var(--ink);line-height:1.45}
+  .sp-chip.c4 i{color:var(--green);flex:0 0 auto}
+  @keyframes spfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+
+  /* —— 能力清单卡片：与 fde / sales 页同款改造（覆盖 site.css 首页交互卡默认态） —— */
+  .fde-card{opacity:1;cursor:default;background:#fff;border-radius:16px;
+    box-shadow:0 1px 2px rgba(14,20,48,.05),0 16px 30px -18px rgba(14,20,48,.18)}
+  .fde-card::before{background:var(--ac,var(--blue))}
+  .fde-card:hover{transform:translateY(-5px);
+    box-shadow:0 1px 2px rgba(14,20,48,.05),0 26px 46px -20px rgba(67,56,202,.28)}
+  .fde-card.k1{--ac:var(--blue)}.fde-card.k2{--ac:var(--teal)}.fde-card.k3{--ac:var(--orange)}
+  .fde-card.k4{--ac:var(--purple)}.fde-card.k5{--ac:var(--green)}.fde-card.k6{--ac:var(--blue-2)}
+  .fde-hd{display:flex;align-items:center;gap:10px;margin-bottom:15px}
+  .fde-ic{width:32px;height:32px;border-radius:10px;flex:0 0 32px;display:grid;place-items:center;
+    background:var(--ac,var(--blue));color:#fff;font-size:13.5px;
+    box-shadow:0 6px 14px -6px color-mix(in srgb,var(--ac,var(--blue)) 55%,transparent)}
+  .fde-card .fde-num{margin:0 0 0 auto;font-size:10.5px;color:var(--ink-3);
+    background:var(--blue-50);border:1px solid var(--line);border-radius:999px;padding:3px 10px;line-height:1.5}
+  .fde-card:hover .fde-num{color:var(--ac,var(--blue))}
+  .fde-card h4{font-size:17.5px}
+
+  /* —— sec-top 副文：小字右对齐（与 fde / sales 页一致），窄屏回落左对齐 —— */
+  .sec-top .sub{margin-left:auto;text-align:right;max-width:38ch;font-size:14px;color:var(--ink-3)}
+  @media(max-width:760px){.sec-top .sub{margin-left:0;text-align:left}}
   /* 角色画像：能力清单 */
   .role-split{display:block}
   .role-split>div:first-child{max-width:64ch}
@@ -73,18 +120,15 @@
     .role-split{grid-template-columns:1fr;gap:clamp(28px,6vw,40px)}
   }
   @media(max-width:520px){
-    .live-grid{grid-template-columns:1fr}
+    .sp-chip{padding:8px 11px}
+    .sp-chip .v{font-size:14.5px}
+    .sp-chip.c1{right:0}.sp-chip.c2{left:-2%}.sp-chip.c3{right:-2%}.sp-chip.c5{left:-2%}
   }
-  /* —— 移动端适配：≤900px 监测台 2 列收窄；≤640px 全面塌缩+收字号间距 —— */
-  @media(max-width:900px){
-    .live-card{padding:clamp(20px,4.6vw,26px)}
-  }
+  /* —— 移动端适配：≤640px 舞台收窄+收字号间距 —— */
   @media(max-width:640px){
-    .live-card{padding:18px 16px}
-    .live-grid{grid-template-columns:1fr;gap:12px}
-    .live-stat{padding:13px 14px}
-    .live-stat .v{font-size:22px}
-    .lc-feed .row{font-size:12px}
+    .sales-stage{max-width:320px}
+    .sp-chip .v{font-size:15px}
+    .sp-chip.c4{font-size:11.5px;max-width:100%}
     .role-hero h1{max-width:18ch}
     .role-lede{max-width:none}
     .pill{padding:10px 15px;min-height:44px;box-sizing:border-box}
@@ -99,7 +143,7 @@
   @media(max-width:400px){
     #results .cta-stats{grid-template-columns:1fr!important}
   }
-  @media (prefers-reduced-motion:reduce){.live-card .lc-hd .pulse{animation:none}}
+  @media (prefers-reduced-motion:reduce){.sp-badge .pulse,.sp-chip{animation:none}}
 
 .fleet-bar{position:relative;z-index:3;max-width:var(--max);margin:calc(-1 * clamp(28px,4vw,52px)) auto 0;
     padding:0 var(--gut)}
@@ -166,19 +210,19 @@
         </div>
       </div>
       <div class="hero-art rv rv-d2" style="display:block">
-        <div class="live-card">
-          <div class="lc-hd"><span class="pulse"></span><i class="fa-solid fa-bolt" aria-hidden="true"></i> GEO 优化师 · 全域监测台</div>
-          <div class="live-grid">
-            <div class="live-stat s1"><div class="l">今日监测问题</div><div class="v">1,280</div></div>
-            <div class="live-stat s2"><div class="l">品牌进入 AI 答案</div><div class="v">340</div></div>
-            <div class="live-stat s3"><div class="l">公域意向捕获</div><div class="v">86</div></div>
-            <div class="live-stat s4"><div class="l">沉淀到企微</div><div class="v">52</div></div>
+        <div class="sales-stage">
+          <div class="sales-poster">
+            <span class="sp-word" aria-hidden="true">GEO</span>
+            <span class="sp-glow" aria-hidden="true"></span>
+            <img class="sp-pic" src="../careers/emp-v2-geo-person.png" alt="GEO 优化师 · 数字员工形象" />
+            <span class="sp-badge"><span class="pulse"></span>GEO 优化师 · 全域监测台</span>
+            <span class="sp-sheen" aria-hidden="true"></span>
           </div>
-          <div class="lc-feed">
-            <div class="row ok"><i class="fa-solid fa-circle-check" aria-hidden="true"></i><span>豆包「这个品类怎么选」答案已收录品牌，推荐位 #2</span></div>
-            <div class="row ok"><i class="fa-solid fa-circle-check" aria-hidden="true"></i><span>小红书 12 条评论意向已自动引导到企业微信</span></div>
-            <div class="row mute"><i class="fa-solid fa-ellipsis" aria-hidden="true"></i><span>GEO 优化师 在岗中</span></div>
-          </div>
+          <div class="sp-chip c1"><span class="l">今日监测问题</span><span class="v">1,280</span></div>
+          <div class="sp-chip c2"><span class="l">品牌进入 AI 答案</span><span class="v">340</span></div>
+          <div class="sp-chip c3"><span class="l">公域意向捕获</span><span class="v">86</span></div>
+          <div class="sp-chip c5"><span class="l">沉淀到企微</span><span class="v">52</span></div>
+          <div class="sp-chip c4"><i class="fa-solid fa-circle-check" aria-hidden="true"></i><span>豆包「这个品类怎么选」答案已收录品牌，推荐位 #2</span></div>
         </div>
       </div>
     </div>
@@ -246,33 +290,33 @@ var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isInter
         <p class="sub">从被 AI 看见，一路接到被咨询、被下单、被复购。</p>
       </div>
       <div class="fde-grid">
-        <div class="fde-card rv">
-          <div class="fde-num">01</div>
+        <div class="fde-card k1 rv">
+          <div class="fde-hd"><span class="fde-ic"><i class="fa-solid fa-magnifying-glass-chart"></i></span><div class="fde-num">01</div></div>
           <h4>GEO 监测</h4>
           <p>跑清楚用户怎么问、AI 怎么答、品牌和竞品分别在哪个推荐位、引用了谁。</p>
         </div>
-        <div class="fde-card rv rv-d1">
-          <div class="fde-num">02</div>
+        <div class="fde-card k2 rv rv-d1">
+          <div class="fde-hd"><span class="fde-ic"><i class="fa-solid fa-clipboard-question"></i></span><div class="fde-num">02</div></div>
           <h4>问题库构建</h4>
           <p>按城市、预算、场景、时效、人群，生成贴近真实消费决策的问题库。</p>
         </div>
-        <div class="fde-card rv rv-d2">
-          <div class="fde-num">03</div>
+        <div class="fde-card k3 rv rv-d2">
+          <div class="fde-hd"><span class="fde-ic"><i class="fa-solid fa-pen-nib"></i></span><div class="fde-num">03</div></div>
           <h4>内容生产</h4>
           <p>把品牌资料加工成 AI 愿意引用的事实、对比说明、适用人群和注意事项。</p>
         </div>
-        <div class="fde-card rv rv-d3">
-          <div class="fde-num">04</div>
+        <div class="fde-card k4 rv rv-d3">
+          <div class="fde-hd"><span class="fde-ic"><i class="fa-solid fa-tower-broadcast"></i></span><div class="fde-num">04</div></div>
           <h4>多渠道发布</h4>
           <p>官网落地页、公众号、小红书、抖音、本地生活与问答，铺成可信证据链。</p>
         </div>
-        <div class="fde-card rv">
-          <div class="fde-num">05</div>
+        <div class="fde-card k5 rv">
+          <div class="fde-hd"><span class="fde-ic"><i class="fa-solid fa-hand-pointer"></i></span><div class="fde-num">05</div></div>
           <h4>公域承接</h4>
           <p>识别小红书 / 抖音评论、私信、搜索意向，自动引导到商城和企业微信。</p>
         </div>
-        <div class="fde-card rv rv-d1">
-          <div class="fde-num">06</div>
+        <div class="fde-card k6 rv rv-d1">
+          <div class="fde-hd"><span class="fde-ic"><i class="fa-solid fa-rotate"></i></span><div class="fde-num">06</div></div>
           <h4>私域复购</h4>
           <p>企微打标记录来源、场景、预算，AI 客服 / 销售 / 复购机器人接力跟进。</p>
         </div>
