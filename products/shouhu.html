@@ -9,13 +9,13 @@
 <meta name="keywords" content="AI员工,FDE,AI原生组织,Agent测试,AI质检,灰度发布,句子守护,句子互动" />
 <meta name="robots" content="index,follow" />
 <meta name="format-detection" content="telephone=no,email=no,address=no" />
-<link rel="canonical" href="https://juzibot.com/products/shouhu2.html" />
+<link rel="canonical" href="https://juzibot.com/products/shouhu.html" />
 <link rel="icon" href="../logo.png" />
 <meta property="og:type" content="website" />
 <meta property="og:title" content="句子守护 - 句子互动 | AI员工测试与质检" />
 <meta property="og:description" content="句子守护是句子互动的 AI 员工测试与质检平台，覆盖 AI 测试用例生成、批量验收、灰度发布、回归测试、工单与质检，帮助企业把 Agent 上线风险前移。" />
 <meta property="og:image" content="https://juzibot.com/assets/product-shots/shouhu-quality.png" />
-<meta property="og:url" content="https://juzibot.com/products/shouhu2.html" />
+<meta property="og:url" content="https://juzibot.com/products/shouhu.html" />
 <meta property="og:locale" content="zh_CN" />
 <meta property="og:site_name" content="句子互动" />
 <meta name="twitter:card" content="summary_large_image" />
@@ -25,7 +25,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="../assets/site.css" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","name":"句子守护 - 句子互动 | AI员工测试与质检","description":"句子守护是句子互动的 AI 员工测试与质检平台，覆盖 AI 测试用例生成、批量验收、灰度发布、回归测试、工单与质检，帮助企业把 Agent 上线风险前移。","url":"https://juzibot.com/products/shouhu2.html","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"句子互动","url":"https://juzibot.com/"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://juzibot.com/assets/product-shots/shouhu-quality.png"}}
+{"@context":"https://schema.org","@type":"WebPage","name":"句子守护 - 句子互动 | AI员工测试与质检","description":"句子守护是句子互动的 AI 员工测试与质检平台，覆盖 AI 测试用例生成、批量验收、灰度发布、回归测试、工单与质检，帮助企业把 Agent 上线风险前移。","url":"https://juzibot.com/products/shouhu.html","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"句子互动","url":"https://juzibot.com/"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://juzibot.com/assets/product-shots/shouhu-quality.png"}}
 </script>
 <style>
   /* scoped · 仅用 site.css 既有变量，承接首页配色，不引入异色 */
@@ -401,11 +401,19 @@
       Array.prototype.forEach.call(document.querySelectorAll('.guard-node'),function(btn){btn.addEventListener('click',function(){var g=data[+btn.dataset.gate];ids.forEach(function(el,i){el.textContent=g[i];});Array.prototype.forEach.call(document.querySelectorAll('.guard-node'),function(x){x.classList.toggle('active',x===btn);});});});
     }
     var wall=document.getElementById('browserWall');
-    if(wall){for(var i=0;i<8;i++){var ok=i%5!==2;var w=document.createElement('div');w.className='bw run';w.innerHTML='<div class="bw-chrome"><i></i><i></i><i></i></div><div class="bw-view"><div class="ui-row s"></div><div class="ui-row m"></div><div class="ui-row"></div><span class="ui-btn">提交</span><svg class="bw-cursor" viewBox="0 0 24 24" fill="none"><path d="M4 3l13 13-7 1-3 5L4 3z" fill="#0F172A"/><path d="M4 3l13 13-7 1-3 5L4 3z" stroke="#fff" stroke-width="1.5"/></svg><span class="bw-badge '+(ok?'pass':'fail')+'">'+(ok?'通过':'不通过')+'</span></div>';wall.appendChild(w);}setInterval(function(){Array.prototype.forEach.call(wall.querySelectorAll('.bw'),function(w,i){var b=w.querySelector('.bw-badge');setTimeout(function(){b.classList.add('show');setTimeout(function(){b.classList.remove('show');},900);},i*170);});},2600);}
+    if(wall){
+      var bwTimer=null;
+      for(var i=0;i<8;i++){var ok=i%5!==2;var w=document.createElement('div');w.className='bw run';w.innerHTML='<div class="bw-chrome"><i></i><i></i><i></i></div><div class="bw-view"><div class="ui-row s"></div><div class="ui-row m"></div><div class="ui-row"></div><span class="ui-btn">提交</span><svg class="bw-cursor" viewBox="0 0 24 24" fill="none"><path d="M4 3l13 13-7 1-3 5L4 3z" fill="#0F172A"/><path d="M4 3l13 13-7 1-3 5L4 3z" stroke="#fff" stroke-width="1.5"/></svg><span class="bw-badge '+(ok?'pass':'fail')+'">'+(ok?'通过':'不通过')+'</span></div>';wall.appendChild(w);}
+      function tickWall(){Array.prototype.forEach.call(wall.querySelectorAll('.bw'),function(w,i){var b=w.querySelector('.bw-badge');setTimeout(function(){b.classList.add('show');setTimeout(function(){b.classList.remove('show');},900);},i*170);});}
+      function startWall(){if(!bwTimer){tickWall();bwTimer=setInterval(tickWall,2600);}}
+      function stopWall(){if(bwTimer){clearInterval(bwTimer);bwTimer=null;}}
+    }
     var demos=[['句子守护 · 批量验收','16 路浏览器并发 · AI 自动跑测试','127','/ 300 已执行','16 路并发，像真人一样自动跑测试','把 iframe 里的并发浏览器墙缩成页面内组件：多路任务同时执行，通过 / 不通过即时浮出，客户能直观看到验收不是一行结果。',['多轮并发跑同一批用例，降低大模型波动影响','失败用例自动归类，进入修复清单','通过用例沉淀为后续回归集']],['句子守护 · 灰度发布','新版本先放 5% 流量，AI 盯两边差异','46','次实时比对','新旧版本分流，差异自动红圈','把正式流量拆成 5% 新版和 95% 旧版，先小流量验证，再决定是否放量。',['灰度密钥让内部会话先进入新版','AI 实时比较新旧回复差异','不稳定时一键关闭回退正式版']],['句子守护 · 用例报告','自动生成客户可读的验收凭证','94.3%','通过率','一句话生成测试报告','把批量验收结果整理成客户可读报告：总用例、通过率、异常归类和交付凭证。',['报告可导出 PDF / PNG','异常原因自动归类','每次交付沉淀一份质量证据']]];
     var tabs=document.querySelectorAll('.mini-tab'),panels=document.querySelectorAll('.qa-panel'),bullets=document.getElementById('demoBullets');
-    function showDemo(i){var d=demos[i];document.getElementById('demoHead').textContent=d[0];document.getElementById('demoSub').textContent=d[1];document.getElementById('qaDone').textContent=d[2];document.getElementById('qaSub').textContent=d[3];document.getElementById('demoTitle').textContent=d[4];document.getElementById('demoText').textContent=d[5];bullets.innerHTML=d[6].map(function(x){return '<li>'+x+'</li>';}).join('');Array.prototype.forEach.call(tabs,function(t,n){t.classList.toggle('active',n===i);});Array.prototype.forEach.call(panels,function(p,n){p.classList.toggle('active',n===i);});if(i===2){var r=document.getElementById('reportLive');r.classList.remove('done');setTimeout(function(){r.classList.add('done');},60);}}
+    function showDemo(i){var d=demos[i];document.getElementById('demoHead').textContent=d[0];document.getElementById('demoSub').textContent=d[1];document.getElementById('qaDone').textContent=d[2];document.getElementById('qaSub').textContent=d[3];document.getElementById('demoTitle').textContent=d[4];document.getElementById('demoText').textContent=d[5];bullets.innerHTML=d[6].map(function(x){return '<li>'+x+'</li>';}).join('');Array.prototype.forEach.call(tabs,function(t,n){t.classList.toggle('active',n===i);});Array.prototype.forEach.call(panels,function(p,n){p.classList.toggle('active',n===i);});if(i===0){startWall();}else{stopWall();}if(i===2){var r=document.getElementById('reportLive');r.classList.remove('done');setTimeout(function(){r.classList.add('done');},60);}}
+    showDemo(0);
     Array.prototype.forEach.call(tabs,function(t){t.addEventListener('click',function(){showDemo(+t.dataset.demo);});});
+    document.addEventListener('visibilitychange',function(){if(document.hidden){stopWall();}else{var active=document.querySelector('.mini-tab.active');if(active&&active.dataset.demo==='0')startWall();}});
     var draw=document.getElementById('drawReport');if(draw)draw.addEventListener('click',function(){showDemo(2);});
   })();
   </script>
