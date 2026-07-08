@@ -40,7 +40,7 @@
   .crumbs a:hover{color:var(--blue)}
   .crumbs .sep{color:var(--line)}
   .crumbs .here{color:var(--ink-2);font-weight:650}
-  .ph-grid{display:grid;grid-template-columns:1.04fr .96fr;gap:clamp(34px,5vw,72px);align-items:center}
+  .ph-grid{display:grid;grid-template-columns:1.04fr .96fr;gap:clamp(34px,5vw,72px);align-items:start}
   .ph h1{font-size:clamp(34px,5vw,64px);font-weight:850;letter-spacing:-.04em;line-height:1.12;
     max-width:20ch;word-break:keep-all;text-wrap:balance;margin-bottom:clamp(14px,2vw,24px)}
   .ph h1 .accent{color:var(--blue)}
@@ -52,6 +52,9 @@
   .ph-pill{display:inline-flex;align-items:center;gap:9px;font-size:13px;font-weight:600;color:var(--ink-2);
     background:#fff;border:1px solid var(--line);padding:8px 16px;border-radius:999px;box-shadow:var(--shadow-soft);white-space:nowrap}
   .ph-pill .dot{width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0}
+  @media(min-width:981px){
+    .ph-art{margin-top:calc(37px + clamp(12px,2.2vw,22px))}
+  }
   @media(max-width:980px){
     .ph-grid{grid-template-columns:1fr;gap:clamp(40px,7vw,56px)}
     .ph-pills{flex-wrap:wrap;margin-top:clamp(20px,2.6vw,28px)}
@@ -154,6 +157,42 @@
       </div>
     </div>
   </header>
+
+  <!-- ════════════ 真实界面 · 工作台演示视频 ════════════ -->
+  <section class="sec pad" id="realui">
+    <div class="wrap">
+      <div class="sec-top rv">
+        <div>
+          <span class="sec-eyebrow">真实界面</span>
+          <h2>不是效果图，<span class="hl"><span>是真实跑起来的工作台</span></span>。</h2>
+        </div>
+        <p class="sub">下面是句子懂行工作台的真实录屏：从「无脑上传」到「体检修正」再到「范围内检索」，完整走一遍知识工程的闭环。</p>
+      </div>
+      <div class="dhv rv">
+        <div class="win">
+          <span class="d r"></span><span class="d y"></span><span class="d g"></span>
+          <span class="t">句子懂行 · 工作台演示</span>
+        </div>
+        <video class="vid" autoplay muted playsinline preload="auto" aria-label="句子懂行 工作台演示视频">
+          <source src="../assets/product-shots/donghang.mp4" type="video/mp4" />
+        </video>
+        <div class="cap">上传原始资料 → 体检修正 → 范围内检索命中，全流程在真实工作台里跑一遍——不是效果图，是可运行的产品。</div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .dhv{border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;background:#fff;
+      box-shadow:0 1px 2px rgba(14,20,48,.05),0 40px 80px -30px rgba(67,56,202,.35),0 12px 24px -12px rgba(14,20,48,.12)}
+    .dhv .win{display:flex;align-items:center;gap:8px;padding:11px 15px;background:rgba(255,255,255,.78);
+      backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+    .dhv .win .d{width:9px;height:9px;border-radius:50%}
+    .dhv .win .d.r{background:#FF5F57}.dhv .win .d.y{background:#FEBC2E}.dhv .win .d.g{background:#28C840}
+    .dhv .win .t{margin-left:6px;font-family:var(--mono);font-size:11px;letter-spacing:.03em;color:var(--ink-3)}
+    .dhv .vid{width:100%;height:auto;max-height:min(78vh,760px);display:block;background:#000;object-fit:contain}
+    .dhv .cap{padding:15px 20px;font-size:13.5px;line-height:1.7;color:var(--ink-2);border-top:1px solid var(--line)}
+    @media(max-width:640px){.dhv .cap{padding:13px 15px;font-size:12.5px}}
+  </style>
 
   <!-- ════════════ 知识工程 · 四步炼化 ════════════ -->
   <section class="sec pad" id="engineering">
@@ -500,112 +539,6 @@
       if(!v)return;
       run(v);
     });
-  })();
-  </script>
-
-  <!-- ════════════ 真实界面 · 轻量高保真演示 ════════════ -->
-  <section class="sec pad" id="realui">
-    <div class="wrap">
-      <div class="sec-top rv">
-        <div>
-          <span class="sec-eyebrow">真实界面</span>
-          <h2>把「知识工程」做成 <span class="hl"><span>可见、可用的工作台</span></span>。</h2>
-        </div>
-        <p class="sub">下面的界面与动效来自你提供的素材：可直接在浏览器里运行（含视频）。用于说明句子懂行从「无脑上传」到「体检修正」再到「范围内检索」的完整闭环。</p>
-      </div>
-
-      <div class="dh-demo rv">
-        <div class="win">
-          <span class="d r"></span><span class="d y"></span><span class="d g"></span>
-          <span class="t">句子懂行 · 工作台（高保真 HTML 示意）</span>
-          <span class="live" title="来自飞书素材文件夹，可离线运行"><i></i>可运行</span>
-        </div>
-        <div class="dh-stage" id="dhStage">
-          <iframe id="dhFrame" data-d="../_feishu/juzi-donghang/句子懂行.html" title="句子懂行 · 工作台高保真 HTML 示意" loading="lazy"></iframe>
-          <button class="dh-zoom" type="button" onclick="dhOpen()" aria-label="放大查看工作台">放大查看</button>
-        </div>
-      </div>
-
-      <div class="vidcard rv">
-        <div class="win">
-          <span class="d r"></span><span class="d y"></span><span class="d g"></span>
-          <span class="t">句子懂行 · 演示视频</span>
-        </div>
-        <video class="vid" controls playsinline preload="metadata" src="../_feishu/juzi-donghang/句子懂行.mp4"></video>
-      </div>
-    </div>
-  </section>
-
-  <style>
-    .dh-demo{position:relative;border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;
-      background:linear-gradient(180deg,#FBFCFF,#F3F7FE);
-      box-shadow:0 1px 2px rgba(14,20,48,.05),0 40px 80px -30px rgba(67,56,202,.35),0 12px 24px -12px rgba(14,20,48,.12)}
-    .dh-demo .win,.vidcard .win{display:flex;align-items:center;gap:8px;padding:11px 15px;background:rgba(255,255,255,.78);
-      backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-    .dh-demo .win .d,.vidcard .win .d{width:9px;height:9px;border-radius:50%}
-    .dh-demo .win .d.r,.vidcard .win .d.r{background:#FF5F57}
-    .dh-demo .win .d.y,.vidcard .win .d.y{background:#FEBC2E}
-    .dh-demo .win .d.g,.vidcard .win .d.g{background:#28C840}
-    .dh-demo .win .t,.vidcard .win .t{margin-left:6px;font-family:var(--mono);font-size:11px;letter-spacing:.03em;color:var(--ink-3)}
-    .dh-demo .win .live{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:750;
-      color:var(--green);background:var(--green-lt);padding:4px 10px;border-radius:999px}
-    .dh-demo .win .live i{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green)}
-    .dh-stage{position:relative;width:100%;overflow:hidden;background:#fff}
-    .dh-stage iframe{position:absolute;top:0;left:0;border:0;background:#fff;transform-origin:top left}
-    .dh-zoom{position:absolute;right:12px;bottom:12px;z-index:3;display:inline-flex;align-items:center;gap:7px;
-      font-size:12.5px;font-weight:700;color:#fff;background:rgba(11,16,32,.6);backdrop-filter:blur(4px);
-      border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:8px 14px;cursor:pointer;transition:background .2s,transform .2s}
-    .dh-zoom:hover{background:var(--blue);transform:translateY(-1px)}
-    .dhm{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;
-      padding:clamp(12px,3vw,34px);background:rgba(11,16,32,.5);backdrop-filter:blur(13px);-webkit-backdrop-filter:blur(13px)}
-    .dhm.open{display:flex;animation:dhm-bg .34s ease both}
-    .dhm.closing{animation:dhm-bg-out .24s ease both}
-    @keyframes dhm-bg{from{opacity:0}to{opacity:1}}
-    @keyframes dhm-bg-out{from{opacity:1}to{opacity:0}}
-    .dhm-panel{position:relative;background:#fff;border-radius:18px;overflow:hidden;
-      box-shadow:0 50px 140px rgba(11,16,32,.55),0 0 0 1px rgba(255,255,255,.05)}
-    .dhm.open .dhm-panel{animation:dhm-pop .46s cubic-bezier(.22,1,.36,1) both}
-    .dhm.closing .dhm-panel{animation:dhm-pop-out .24s cubic-bezier(.4,0,1,1) both}
-    @keyframes dhm-pop{from{opacity:0;transform:scale(.9) translateY(16px)}to{opacity:1;transform:none}}
-    @keyframes dhm-pop-out{from{opacity:1;transform:none}to{opacity:0;transform:scale(.96) translateY(8px)}}
-    .dhm-stage{position:relative;overflow:hidden;background:#fff}
-    .dhm-stage iframe{position:absolute;top:0;left:0;border:0;background:#fff;transform-origin:top left}
-    .dhm-x{position:absolute;right:14px;top:14px;z-index:3;width:36px;height:36px;border-radius:50%;border:none;
-      background:rgba(11,16,32,.55);backdrop-filter:blur(6px);color:#fff;font-size:19px;line-height:1;cursor:pointer;
-      display:grid;place-items:center;transition:background .2s,transform .2s}
-    .dhm-x:hover{background:var(--blue);transform:scale(1.06)}
-    @media(prefers-reduced-motion:reduce){.dhm.open,.dhm.closing,.dhm.open .dhm-panel,.dhm.closing .dhm-panel{animation:none}}
-
-    .vidcard{margin-top:clamp(18px,2.6vw,26px);border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;background:#fff;
-      box-shadow:0 1px 2px rgba(14,20,48,.05),0 26px 54px -28px rgba(67,56,202,.28)}
-    .vid{width:100%;height:auto;display:block;background:#000;aspect-ratio:16/9}
-
-  </style>
-
-  <div class="dhm" id="dhModal" role="dialog" aria-modal="true" aria-label="句子懂行 · 工作台放大演示">
-    <div class="dhm-panel">
-      <button class="dhm-x" type="button" onclick="dhClose()" aria-label="关闭放大">&times;</button>
-      <div class="dhm-stage" id="dhBigStage"><iframe id="dhFrameBig" title="句子懂行 · 工作台放大演示"></iframe></div>
-    </div>
-  </div>
-  <script>
-  (function(){
-    var fr=document.getElementById('dhFrame'),stg=document.getElementById('dhStage');
-    if(!fr||!stg)return;
-    var big=document.getElementById('dhFrameBig'),bstg=document.getElementById('dhBigStage'),modal=document.getElementById('dhModal');
-    function mode(){return {src:fr.getAttribute('data-d'),w:1440,h:900};}
-    function place(frame,host,m,s){frame.style.width=m.w+'px';frame.style.height=m.h+'px';frame.style.transform=(s>=.999?'none':'scale('+s+')');host.style.height=Math.round(m.h*s)+'px';}
-    function fitPrev(){var m=mode();if(fr.getAttribute('src')!==m.src)fr.setAttribute('src',m.src);var w=stg.clientWidth||520;place(fr,stg,m,w/m.w);}
-    function fitBig(){var m=mode();var availW=Math.min(window.innerWidth*0.96,m.w),availH=window.innerHeight*0.9;var s=Math.min(availW/m.w,availH/m.h,1);
-      if(!big.getAttribute('src'))big.setAttribute('src',m.src);
-      big.style.width=m.w+'px';big.style.height=m.h+'px';big.style.transform=(s>=.999?'none':'scale('+s+')');
-      bstg.style.width=Math.round(m.w*s)+'px';bstg.style.height=Math.round(m.h*s)+'px';}
-    fitPrev();
-    window.dhOpen=function(){modal.classList.remove('closing');modal.classList.add('open');document.body.style.overflow='hidden';fitBig();};
-    window.dhClose=function(){if(!modal.classList.contains('open')||modal.classList.contains('closing'))return;modal.classList.add('closing');document.body.style.overflow='';setTimeout(function(){modal.classList.remove('open');modal.classList.remove('closing');},250);};
-    modal.addEventListener('click',function(e){if(e.target===modal)window.dhClose();});
-    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&modal.classList.contains('open'))window.dhClose();});
-    var rt;window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){fitPrev();if(modal.classList.contains('open'))fitBig();},120);});
   })();
   </script>
 
