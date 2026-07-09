@@ -161,15 +161,15 @@
         <span class="metric-num text-gray-900"><span class="pulse text-emerald-500 bg-emerald-500 flex-shrink-0"></span>5</span>
         <span class="metric-lbl">Agent 在岗</span>
       </button>
-      <!-- 并行 -->
-      <div class="metric-pill">
-        <span class="metric-num text-gray-900 tabular-nums">247</span>
-        <span class="metric-lbl">并行处理</span>
-      </div>
       <!-- 自动完成率 -->
       <div class="metric-pill">
         <span class="metric-num text-emerald-600 tabular-nums">89<span class="text-base">%</span></span>
         <span class="metric-lbl">自动完成</span>
+      </div>
+      <!-- 客户满意度 -->
+      <div class="metric-pill">
+        <span class="metric-num text-gray-900 tabular-nums">4.6</span>
+        <span class="metric-lbl">客户满意度</span>
       </div>
 
       <span class="w-px h-7 bg-gray-150 mx-2.5" style="background:#ECEDF2"></span>
@@ -182,59 +182,26 @@
         </button>
         <span class="w-px h-4 bg-gray-200"></span>
         <button class="todo-seg" onclick="openBatchReview()" title="跨 3 个组批量审核">
-          <span class="todo-num text-amber-600 tabular-nums">5</span>
+          <span class="todo-num text-amber-600 tabular-nums">2</span>
           <span class="todo-lbl text-amber-600">待审核</span>
         </button>
         <span class="w-px h-4 bg-gray-200"></span>
         <button class="todo-seg" onclick="filterQueue('train')" title="训练机会">
-          <span class="todo-num text-violet-600 tabular-nums">4</span>
+          <span class="todo-num text-violet-600 tabular-nums">2</span>
           <span class="todo-lbl text-violet-500">训练机会</span>
         </button>
       </div>
     </div>
   </div>
 
-  <!-- 报告 + 用户 -->
+  <!-- 报告（已移除） -->
   <div class="flex items-center gap-4 flex-shrink-0">
-    <button id="openReport" class="h-9 px-4 rounded-lg bg-gradient-to-r from-[#4C5BF0] to-[#6D5CE5] text-white text-[13px] font-medium flex items-center gap-2 hover:opacity-90 transition shadow-sm shadow-indigo-200/50">
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2a4 4 0 014-4h2m-6 6h6m-6 0v-6m0 0V7m0 0a4 4 0 00-4 4v2m4-6h4a4 4 0 014 4v2"/></svg>
-      今日交付报告
-    </button>
-
-    <div class="relative">
-      <div class="flex items-center gap-2.5 pl-4 border-l border-gray-100 cursor-pointer" onclick="togglePop(event, 'pop-user')">
-        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-pink-300 to-pink-400 flex items-center justify-center text-white text-xs font-semibold">菲</div>
-        <div class="text-sm leading-tight">
-          <div class="font-medium text-gray-900">苏菲</div>
-          <div class="text-[11px] text-gray-400">主管</div>
-        </div>
-      </div>
-      <div id="pop-user" class="popover" style="top:48px; right:0; min-width:180px;">
-        <div class="popover-item" onclick="toast('个人资料','info'); closeAllPop()">👤 个人资料</div>
-        <div class="popover-item" onclick="toast('我的话术库','info'); closeAllPop()">📚 我的话术库</div>
-        <div class="popover-item" onclick="toast('今日我的操作记录','info'); closeAllPop()">📋 我的操作记录</div>
-        <div class="border-t border-gray-100 my-1"></div>
-        <div class="popover-item" onclick="toast('切换主题','info'); closeAllPop()">🌓 外观</div>
-        <div class="popover-item text-red-600" onclick="toast('退出登录','warn'); closeAllPop()">退出</div>
-      </div>
-    </div>
   </div>
 </header>
 
 <div class="flex" style="height: calc(100vh - 64px);">
 
-  <!-- 最左一级导航 -->
-  <nav class="w-14 flex-shrink-0 bg-white border-r border-gray-100 flex flex-col items-center py-3 gap-1">
-    <div class="nav-item" data-tip="首页" onclick="notReady('首页')"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg></div>
-    <div class="nav-item active" data-tip="聚合工作台"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg></div>
-    <div class="nav-item" data-tip="Agent 工厂" onclick="notReady('Agent 工厂')"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div>
-    <div class="nav-item" data-tip="话术库" onclick="showScriptLib()"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg></div>
-    <div class="nav-item" data-tip="知识分析" onclick="notReady('知识分析')"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg></div>
-    <div class="nav-item" data-tip="成员管理" onclick="notReady('成员管理')"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg></div>
-    <div class="nav-item" data-tip="消费记录" onclick="notReady('消费记录')"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg></div>
-    <div class="flex-1"></div>
-    <div class="nav-item" data-tip="设置" onclick="notReady('设置')"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div>
-  </nav>
+  <!-- 最左一级导航（已移除） -->
 
   <!-- 任务队列 -->
   <aside class="w-72 flex-shrink-0 bg-white border-r border-gray-100 flex flex-col">
@@ -242,7 +209,6 @@
       <div class="flex items-center bg-gray-100 rounded-lg p-1">
         <div class="seg-tab active flex-1 text-center" onclick="switchQueueView(this, 'mine')">我的队列</div>
         <div class="seg-tab flex-1 text-center" onclick="switchQueueView(this, 'team')">Agent 团队</div>
-        <div class="seg-tab flex-1 text-center" onclick="switchQueueView(this, 'all')">全部</div>
       </div>
     </div>
 
@@ -264,7 +230,7 @@
               <span class="font-medium text-sm truncate">李可</span>
               <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-700">高价值</span>
             </div>
-            <div class="text-xs text-gray-500 truncate">能不能便宜点 <span class="text-red-500">· Agent 置信度 58%</span></div>
+            <div class="text-xs text-red-500 font-medium">Agent 置信度 58%</div>
           </div>
           <div class="text-[10px] text-red-500 font-medium whitespace-nowrap">刚升级</div>
         </div>
@@ -276,7 +242,7 @@
               <span class="font-medium text-sm truncate">王总</span>
               <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-700">预算 10w+</span>
             </div>
-            <div class="text-xs text-gray-500 truncate">想和创始人聊聊 · <span class="text-red-500">需要人工</span></div>
+            <div class="text-xs text-red-500 font-medium">需要人工</div>
           </div>
           <div class="text-[10px] text-gray-400 whitespace-nowrap">4m</div>
         </div>
@@ -288,7 +254,7 @@
               <span class="font-medium text-sm truncate">张小姐</span>
               <span class="text-[10px] px-1.5 py-0.5 rounded bg-red-100 text-red-700">投诉</span>
             </div>
-            <div class="text-xs text-gray-500 truncate">"第三次问了没人管" · <span class="text-red-500">负面情绪</span></div>
+            <div class="text-xs text-red-500 font-medium">负面情绪</div>
           </div>
           <div class="text-[10px] text-gray-400 whitespace-nowrap">11m</div>
         </div>
@@ -300,7 +266,7 @@
             <span class="w-2 h-2 rounded-full bg-amber-500"></span>
             <span class="text-xs font-semibold text-gray-700">待你审核 · Agent 已写好</span>
           </div>
-          <span class="text-xs text-amber-600 font-semibold">5</span>
+          <span class="text-xs text-amber-600 font-semibold">2</span>
         </div>
 
         <div class="queue-item" onclick="selectConv(this, 'xiaoFei')">
@@ -310,7 +276,6 @@
               <span class="font-medium text-sm truncate">小飞</span>
               <span class="text-[10px] px-1.5 py-0.5 rounded bg-violet-100 text-violet-700">定金确认</span>
             </div>
-            <div class="text-xs text-gray-500 truncate">Agent 拟回：「今日生效，19:00 前…」</div>
           </div>
           <button class="text-[10px] px-2 py-1 rounded bg-[#4C5BF0] text-white" onclick="event.stopPropagation(); showReview('小飞', '定金确认', '亲～您的定金我已收到～订单今日生效，请于 19:00 前完成尾款支付哦，过期系统会自动取消。祝您购课愉快～')">审核</button>
         </div>
@@ -322,22 +287,10 @@
               <span class="font-medium text-sm truncate">大白</span>
               <span class="text-[10px] px-1.5 py-0.5 rounded bg-violet-100 text-violet-700">退费</span>
             </div>
-            <div class="text-xs text-gray-500 truncate">Agent 拟回：「按协议可以申请…」</div>
           </div>
           <button class="text-[10px] px-2 py-1 rounded bg-[#4C5BF0] text-white" onclick="event.stopPropagation(); showReview('大白', '退费申请', '您好，按照购课协议，开课 7 日内未上课可申请全额退费。我这边已经帮您起草了退费单，您核对下信息，确认后我提交给财务～')">审核</button>
         </div>
 
-        <div class="queue-item" onclick="selectConv(this, 'liZiMeng')">
-          <img class="w-9 h-9 rounded-full object-cover" src="https://api.dicebear.com/9.x/notionists/svg?seed=liZiMeng" alt="">
-          <div class="flex-1 min-w-0">
-            <div class="flex items-center gap-1.5">
-              <span class="font-medium text-sm truncate">李子萌</span>
-              <span class="text-[10px] px-1.5 py-0.5 rounded bg-gray-100 text-gray-600">合作咨询</span>
-            </div>
-            <div class="text-xs text-gray-500 truncate">Agent 拟回：「您的预算和规模…」</div>
-          </div>
-          <button class="text-[10px] px-2 py-1 rounded bg-[#4C5BF0] text-white" onclick="event.stopPropagation(); showReview('李子萌', '合作咨询', '您好～看到您的合作意向啦。方便简单介绍下贵司的规模和期望覆盖的用户体量吗？我会同步给渠道同事对接～')">审核</button>
-        </div>
       </div>
 
       <div class="mt-5" data-group="train">
@@ -346,7 +299,7 @@
             <span class="w-2 h-2 rounded-full bg-violet-500"></span>
             <span class="text-xs font-semibold text-gray-700">训练机会 · 同类问题反复出现</span>
           </div>
-          <span class="text-xs text-violet-600 font-semibold">4</span>
+          <span class="text-xs text-violet-600 font-semibold">2</span>
         </div>
 
         <div class="px-3 py-2.5 rounded-lg bg-violet-50 border border-violet-100 text-xs">
@@ -354,7 +307,7 @@
             <svg class="w-3.5 h-3.5 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
             <span class="font-medium text-violet-700">"课程和理财顾问有什么区别"</span>
           </div>
-          <div class="text-gray-600 leading-relaxed">过去 24h 被问 <b>11 次</b>，Agent 置信度平均 <b class="text-red-500">54%</b>。写一次话术，全集群当天生效。</div>
+          <div class="text-gray-600 leading-relaxed">过去 24h 被问 <b>11 次</b>，Agent 置信度平均 <b class="text-red-500">54%</b>。</div>
           <button class="mt-2 text-[11px] px-2 py-1 rounded bg-violet-600 text-white hover:opacity-90" onclick="jumpToTrain('课程和理财顾问有什么区别')">写一条话术 →</button>
         </div>
 
@@ -363,7 +316,7 @@
             <svg class="w-3.5 h-3.5 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
             <span class="font-medium text-violet-700">"三线城市有老师吗"</span>
           </div>
-          <div class="text-gray-600 leading-relaxed">被问 <b>7 次</b>，Agent 走话术 A-203，但回复后客户流失率 <b class="text-red-500">60%</b>。</div>
+          <div class="text-gray-600 leading-relaxed">被问 <b>7 次</b>，客户流失率 <b class="text-red-500">60%</b>。</div>
           <button class="mt-2 text-[11px] px-2 py-1 rounded bg-violet-600 text-white hover:opacity-90" onclick="openLab('A-203')">查看对比 →</button>
         </div>
       </div>
@@ -372,11 +325,10 @@
         <div class="flex items-center justify-between px-2 mb-1">
           <div class="flex items-center gap-2">
             <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-            <span class="text-xs font-semibold text-gray-700">Agent 正在处理 · 监督模式</span>
+            <span class="text-xs font-semibold text-gray-700">Agent 正在处理</span>
           </div>
           <span class="text-xs text-gray-500">239</span>
         </div>
-        <div class="px-2 py-2 text-xs text-gray-500">默认不打扰。Agent 置信度 ≥70% 自动发送、不上抛。<button class="text-[#4C5BF0] hover:underline ml-1" onclick="openBattleRoom()">查看集群 →</button></div>
       </div>
     </div>
 
@@ -429,15 +381,14 @@
             <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-700">高价值</span>
             <span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700">消费次数&gt;2</span>
           </div>
-          <div class="text-xs text-gray-500">添加时间 2025-02-08 · 来源：抖音 <span class="text-gray-300">|</span> 所在群：福利交流 1 群</div>
+          <div class="text-xs text-gray-500">添加时间 2025-02-08</div>
         </div>
       </div>
       <div class="flex-1"></div>
 
-      <div class="segmented">
-        <div class="seg-pill seg-tab" onclick="switchMode(this, 'agent')">Agent 接管</div>
-        <div class="seg-pill seg-tab active" onclick="switchMode(this, 'coop')">人机协作</div>
-        <div class="seg-pill seg-tab" onclick="switchMode(this, 'human')">我接管</div>
+      <div style="display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:12px;background:linear-gradient(135deg,#E879F9,#7C3AED);color:#fff;font-size:14px;font-weight:600;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="4" y="6" width="16" height="14" rx="3" fill="white" opacity="0.3"/><rect x="6" y="9" width="4" height="3" rx="1" fill="white"/><rect x="12" y="9" width="4" height="3" rx="1" fill="white"/><path d="M15 2l2 2-2 2" stroke="white" stroke-width="1.5" stroke-linecap="round"/><path d="M17 4h-4" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+        AI 辅助中
       </div>
 
       <button class="h-9 w-9 rounded-lg hover:bg-gray-100 flex items-center justify-center text-gray-500" title="标记完成" onclick="markDone()">
@@ -720,31 +671,98 @@
 
   <!-- 右侧面板 -->
   <aside class="w-[316px] flex-shrink-0 bg-white border-l border-gray-100 flex flex-col">
-    <div class="flex items-center px-4 pt-4 gap-1 border-b border-gray-100">
-      <div class="seg-tab pb-3 border-b-2 border-transparent" onclick="switchSide(this, 'profile')">客户画像</div>
-      <div class="seg-tab pb-3 border-b-2 border-[#4C5BF0] text-[#4C5BF0] font-medium" onclick="switchSide(this, 'log')">Agent 工作日志</div>
-      <div class="seg-tab pb-3 border-b-2 border-transparent" onclick="switchSide(this, 'similar')">同类对话</div>
+    <div class="flex items-center justify-center px-4 pt-4 gap-1 border-b border-gray-100">
+      <div class="seg-tab pb-3 border-b-2 border-[#4C5BF0] text-[#4C5BF0] font-medium">客户画像</div>
     </div>
 
     <!-- 画像 tab -->
-    <div id="side-profile" class="flex-1 overflow-y-auto px-4 py-4 space-y-4 hidden">
-      <div>
-        <div class="flex items-center gap-3 mb-3">
-          <img class="w-12 h-12 rounded-full object-cover" src="https://api.dicebear.com/9.x/notionists/svg?seed=liKe&backgroundColor=ffd1dc" alt="">
-          <div>
-            <div class="font-semibold flex items-center gap-2">李可 <button class="text-gray-400 hover:text-[#4C5BF0]" onclick="toast('编辑客户信息','info')">✎</button></div>
-            <div class="text-xs text-gray-500">添加时间 2025-02-08</div>
-          </div>
-        </div>
-      </div>
+    <div id="side-profile" class="flex-1 overflow-y-auto px-4 py-4 space-y-4">
       <div>
         <div class="text-xs font-semibold text-gray-700 mb-2">基础信息</div>
         <div class="space-y-1.5 text-xs">
-          <div class="flex justify-between"><span class="text-gray-500">称呼</span><span>CHEN</span></div>
           <div class="flex justify-between"><span class="text-gray-500">电话</span><span class="font-mono">13144445799, 13421313141</span></div>
           <div class="flex justify-between"><span class="text-gray-500">性别</span><span>女</span></div>
           <div class="flex justify-between"><span class="text-gray-500">生日</span><span>03-12</span></div>
           <div class="flex justify-between"><span class="text-gray-500">城市</span><span>杭州</span></div>
+        </div>
+      </div>
+      <!-- 雷达图 · 客户画像 -->
+      <div>
+        <div class="text-xs font-semibold text-gray-700 mb-2">客户画像</div>
+        <div class="flex justify-center">
+          <svg viewBox="-10 0 220 200" width="180" height="180">
+            <!-- 背景网格 -->
+            <polygon points="100,20 168,55 168,145 100,180 32,145 32,55" fill="none" stroke="#E5E7EB" stroke-width="0.5"/>
+            <polygon points="100,40 152,65 152,135 100,160 48,135 48,65" fill="none" stroke="#E5E7EB" stroke-width="0.5"/>
+            <polygon points="100,60 136,75 136,125 100,140 64,125 64,75" fill="none" stroke="#E5E7EB" stroke-width="0.5"/>
+            <polygon points="100,80 120,85 120,115 100,120 80,115 80,85" fill="none" stroke="#E5E7EB" stroke-width="0.5"/>
+            <!-- 轴线 -->
+            <line x1="100" y1="20" x2="100" y2="180" stroke="#E5E7EB" stroke-width="0.5"/>
+            <line x1="32" y1="55" x2="168" y2="145" stroke="#E5E7EB" stroke-width="0.5"/>
+            <line x1="168" y1="55" x2="32" y2="145" stroke="#E5E7EB" stroke-width="0.5"/>
+            <!-- 数据区域 -->
+            <polygon points="100,30 160,60 155,140 100,165 45,120 50,58" fill="rgba(99,102,241,0.12)" stroke="#6366F1" stroke-width="1.5"/>
+            <!-- 数据点 -->
+            <circle cx="100" cy="30" r="3" fill="#6366F1"/>
+            <circle cx="160" cy="60" r="3" fill="#6366F1"/>
+            <circle cx="155" cy="140" r="3" fill="#6366F1"/>
+            <circle cx="100" cy="165" r="3" fill="#6366F1"/>
+            <circle cx="45" cy="120" r="3" fill="#6366F1"/>
+            <circle cx="50" cy="58" r="3" fill="#6366F1"/>
+            <!-- 标签 -->
+            <text x="100" y="12" text-anchor="middle" font-size="10" fill="#374151">购买力</text>
+            <text x="174" y="58" text-anchor="start" font-size="10" fill="#374151">活跃度</text>
+            <text x="174" y="148" text-anchor="start" font-size="10" fill="#374151">忠诚度</text>
+            <text x="100" y="196" text-anchor="middle" font-size="10" fill="#374151">价格敏感</text>
+            <text x="26" y="124" text-anchor="end" font-size="10" fill="#374151">互动率</text>
+            <text x="26" y="58" text-anchor="end" font-size="10" fill="#374151">潜力</text>
+          </svg>
+        </div>
+      </div>
+      <!-- 触达 & 互动（柱状图+折线图） -->
+      <div>
+        <div class="flex items-center justify-between mb-2">
+          <div class="text-xs font-semibold text-gray-700">触达 & 互动</div>
+          <div class="flex items-center gap-3 text-[10px] text-gray-500">
+            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded bg-[#6366F1]"></span>触达次数</span>
+            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-[#10B981]"></span>客户互动</span>
+          </div>
+        </div>
+        <div class="flex justify-center">
+          <svg viewBox="0 0 260 110" width="100%" height="95">
+            <!-- 网格线 -->
+            <line x1="30" y1="15" x2="250" y2="15" stroke="#F3F4F6" stroke-width="0.5"/>
+            <line x1="30" y1="35" x2="250" y2="35" stroke="#F3F4F6" stroke-width="0.5"/>
+            <line x1="30" y1="55" x2="250" y2="55" stroke="#F3F4F6" stroke-width="0.5"/>
+            <line x1="30" y1="75" x2="250" y2="75" stroke="#F3F4F6" stroke-width="0.5"/>
+            <!-- Y轴标签 -->
+            <text x="26" y="18" text-anchor="end" font-size="8" fill="#9CA3AF">20</text>
+            <text x="26" y="38" text-anchor="end" font-size="8" fill="#9CA3AF">15</text>
+            <text x="26" y="58" text-anchor="end" font-size="8" fill="#9CA3AF">10</text>
+            <text x="26" y="78" text-anchor="end" font-size="8" fill="#9CA3AF">5</text>
+            <!-- X轴标签 -->
+            <text x="50" y="98" text-anchor="middle" font-size="8" fill="#9CA3AF">周一</text>
+            <text x="90" y="98" text-anchor="middle" font-size="8" fill="#9CA3AF">周二</text>
+            <text x="130" y="98" text-anchor="middle" font-size="8" fill="#9CA3AF">周三</text>
+            <text x="170" y="98" text-anchor="middle" font-size="8" fill="#9CA3AF">周四</text>
+            <text x="210" y="98" text-anchor="middle" font-size="8" fill="#9CA3AF">周五</text>
+            <text x="245" y="98" text-anchor="middle" font-size="8" fill="#9CA3AF">周六</text>
+            <!-- 触达柱状图 (紫色) -->
+            <rect x="42" y="45" width="16" height="40" rx="2" fill="#6366F1" opacity="0.7"/>
+            <rect x="82" y="30" width="16" height="55" rx="2" fill="#6366F1" opacity="0.7"/>
+            <rect x="122" y="35" width="16" height="50" rx="2" fill="#6366F1" opacity="0.7"/>
+            <rect x="162" y="20" width="16" height="65" rx="2" fill="#6366F1" opacity="0.7"/>
+            <rect x="202" y="25" width="16" height="60" rx="2" fill="#6366F1" opacity="0.7"/>
+            <rect x="237" y="18" width="16" height="67" rx="2" fill="#6366F1" opacity="0.7"/>
+            <!-- 客户互动折线 (绿色) -->
+            <polyline points="50,60 90,48 130,52 170,38 210,42 245,32" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="50" cy="60" r="3" fill="white" stroke="#10B981" stroke-width="1.5"/>
+            <circle cx="90" cy="48" r="3" fill="white" stroke="#10B981" stroke-width="1.5"/>
+            <circle cx="130" cy="52" r="3" fill="white" stroke="#10B981" stroke-width="1.5"/>
+            <circle cx="170" cy="38" r="3" fill="white" stroke="#10B981" stroke-width="1.5"/>
+            <circle cx="210" cy="42" r="3" fill="white" stroke="#10B981" stroke-width="1.5"/>
+            <circle cx="245" cy="32" r="3" fill="white" stroke="#10B981" stroke-width="1.5"/>
+          </svg>
         </div>
       </div>
       <div>
@@ -752,119 +770,50 @@
           <div class="text-xs font-semibold text-gray-700">自定义标签</div>
           <button class="text-[11px] text-[#4C5BF0]" onclick="toast('添加自定义标签','info')">+ 添加</button>
         </div>
-        <div class="flex flex-wrap gap-1.5">
-          <span class="text-[11px] px-2 py-0.5 rounded bg-amber-100 text-amber-700">高价值客户</span>
-          <span class="text-[11px] px-2 py-0.5 rounded bg-emerald-100 text-emerald-700">高活跃客户</span>
-          <span class="text-[11px] px-2 py-0.5 rounded bg-blue-100 text-blue-700">重要</span>
-          <span class="text-[11px] px-2 py-0.5 rounded bg-gray-100 text-gray-700">消费次数&gt;2</span>
+        <div class="flex flex-wrap gap-2">
+          <span class="text-[12px] font-semibold px-3 py-1 rounded-lg bg-amber-100 text-amber-800 border border-amber-200">高价值客户</span>
+          <span class="text-[12px] font-semibold px-3 py-1 rounded-lg bg-emerald-100 text-emerald-800 border border-emerald-200">高活跃客户</span>
+          <span class="text-[12px] font-semibold px-3 py-1 rounded-lg bg-blue-100 text-blue-800 border border-blue-200">重要</span>
+          <span class="text-[12px] font-semibold px-3 py-1 rounded-lg bg-purple-100 text-purple-800 border border-purple-200">消费次数:2</span>
         </div>
       </div>
+      <!-- 消费历史 -->
       <div>
-        <div class="text-xs font-semibold text-gray-700 mb-2">客户关系</div>
-        <div class="text-xs space-y-1.5">
-          <div class="text-gray-500 mb-1">共享同事</div>
-          <div class="flex gap-2">
-            <span class="text-xs px-2 py-0.5 rounded bg-gray-50 border border-gray-200">👤 刘丽丽</span>
-            <span class="text-xs px-2 py-0.5 rounded bg-gray-50 border border-gray-200">👤 王嘉莉</span>
+        <div class="text-xs font-semibold text-gray-700 mb-2">消费历史</div>
+        <div class="space-y-2">
+          <div class="flex items-center justify-between text-xs p-2 rounded-lg bg-gray-50">
+            <div><span class="text-gray-500">2025-05</span> <span class="font-medium">体验营</span></div>
+            <span class="font-semibold text-emerald-600">¥680</span>
           </div>
-          <div class="text-gray-500 mb-1 mt-2">所在群聊</div>
-          <div class="flex flex-wrap gap-1">
-            <span class="text-[11px] px-2 py-0.5 rounded bg-gray-50 border border-gray-200">福利交流 1 群</span>
-            <span class="text-[11px] px-2 py-0.5 rounded bg-gray-50 border border-gray-200">福利交流 2 群</span>
-            <span class="text-[11px] px-2 py-0.5 rounded bg-gray-50 border border-gray-200">福利交流 3 群</span>
-            <span class="text-[11px] px-2 py-0.5 rounded bg-gray-50 border border-gray-200">+ 2</span>
+          <div class="flex items-center justify-between text-xs p-2 rounded-lg bg-gray-50">
+            <div><span class="text-gray-500">2025-02</span> <span class="font-medium">基础理财课</span></div>
+            <span class="font-semibold text-emerald-600">¥1,280</span>
           </div>
         </div>
+        <div class="text-[11px] text-gray-400 mt-1.5">累计消费 ¥1,960 · 2 次</div>
+      </div>
+      <!-- AI 建议 -->
+      <div class="p-3 rounded-lg bg-gradient-to-r from-violet-50 to-indigo-50 border border-violet-100">
+        <div class="flex items-center gap-2 mb-1.5">
+          <svg class="w-3.5 h-3.5 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          <span class="text-xs font-semibold text-violet-700">AI 建议</span>
+        </div>
+        <div class="text-[11px] text-gray-700 leading-relaxed">基于画像推荐：<b>进阶课程</b>转化成功率 42%，建议发限时优惠券促成。</div>
       </div>
     </div>
-
-    <!-- 日志 tab -->
-    <div id="side-log" class="flex-1 overflow-y-auto px-4 py-4 space-y-5">
-      <div class="rounded-lg bg-gradient-to-br from-violet-50 to-indigo-50 border border-violet-100 p-3 cursor-pointer hover:shadow-md transition" onclick="showAgent('A1')">
-        <div class="flex items-center gap-2 mb-2">
-          <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-violet-500 to-indigo-500 flex items-center justify-center text-white text-xs font-bold">A1</div>
-          <div class="flex-1">
-            <div class="text-sm font-semibold">Agent A1 · 销售助理型</div>
-            <div class="text-[11px] text-gray-500">处理本会话 7 分钟 · 来回 4 轮</div>
-          </div>
-          <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-        </div>
-        <div class="grid grid-cols-3 gap-2 text-center">
-          <div class="py-1.5 rounded bg-white"><div class="text-[10px] text-gray-500">读取字段</div><div class="text-sm font-semibold">12</div></div>
-          <div class="py-1.5 rounded bg-white"><div class="text-[10px] text-gray-500">调用话术</div><div class="text-sm font-semibold">3</div></div>
-          <div class="py-1.5 rounded bg-white"><div class="text-[10px] text-gray-500">当前置信</div><div class="text-sm font-semibold text-amber-600">58%</div></div>
-        </div>
-      </div>
-
       <div>
-        <div class="text-xs font-semibold text-gray-700 mb-3">Agent 处理过程</div>
-        <div class="pl-1">
-          <div class="tl-item agent">
-            <div class="text-xs text-gray-500">14:02</div>
-            <div class="text-sm">Agent A1 接入会话</div>
-            <div class="text-[11px] text-gray-500 mt-0.5">路由规则：高价值客户 → A1</div>
-          </div>
-          <div class="tl-item">
-            <div class="text-xs text-gray-500">14:02</div>
-            <div class="text-sm">读取客户画像</div>
-            <div class="text-[11px] text-gray-500 mt-0.5">标签：高价值、高活跃、消费次数>2 · 最近课程：基础理财</div>
-          </div>
-          <div class="tl-item agent">
-            <div class="text-xs text-gray-500">14:03</div>
-            <div class="text-sm">匹配话术 <button class="text-violet-700 underline decoration-dotted" onclick="showScript('A-127')">#A-127</button> · 置信 92%</div>
-            <div class="text-[11px] text-gray-500 mt-0.5">发送：基础→进阶转化</div>
-          </div>
-          <div class="tl-item">
-            <div class="text-xs text-gray-500">14:05</div>
-            <div class="text-sm">客户回复：情绪<b class="text-emerald-600">正向</b>+<b>困惑</b></div>
-          </div>
-          <div class="tl-item agent">
-            <div class="text-xs text-gray-500">14:07</div>
-            <div class="text-sm">匹配话术 <button class="text-violet-700 underline decoration-dotted" onclick="showScript('A-089')">#A-089</button> · 置信 74%</div>
-            <div class="text-[11px] text-gray-500 mt-0.5">发送：性价比+社会证明</div>
-          </div>
-          <div class="tl-item alert">
-            <div class="text-xs text-gray-500">14:09</div>
-            <div class="text-sm">检测到<b class="text-amber-600">价格异议第 3 轮</b></div>
-            <div class="text-[11px] text-gray-500 mt-0.5">Agent 生成草稿但置信度降至 58%</div>
-          </div>
-          <div class="tl-item escalate">
-            <div class="text-xs text-red-600 font-medium">14:09 · 升级</div>
-            <div class="text-sm">触发规则 <button class="underline decoration-dotted" onclick="showEscalateReason()">R-032</button>：低置信 + 高价值 → 主管</div>
-            <div class="text-[11px] text-gray-500 mt-0.5">已停止自动回复，等待苏菲处理</div>
-          </div>
+        <div class="text-gray-500 text-xs mb-1">所在群聊</div>
+        <div class="flex flex-wrap gap-1">
+          <span class="text-[11px] px-2 py-0.5 rounded bg-gray-50 border border-gray-200">福利交流 1 群</span>
+          <span class="text-[11px] px-2 py-0.5 rounded bg-gray-50 border border-gray-200">福利交流 2 群</span>
+          <span class="text-[11px] px-2 py-0.5 rounded bg-gray-50 border border-gray-200">福利交流 3 群</span>
+          <span class="text-[11px] px-2 py-0.5 rounded bg-gray-50 border border-gray-200">+ 2</span>
         </div>
       </div>
     </div>
 
-    <!-- 同类对话 tab -->
-    <div id="side-similar" class="flex-1 overflow-y-auto px-4 py-4 space-y-3 hidden">
-      <div class="flex items-center justify-between">
-        <div class="text-xs font-semibold text-gray-700">过去 24h 相似对话</div>
-        <button class="text-[11px] text-[#4C5BF0]" onclick="showSimilarAll()">查看全部 11 条</button>
-      </div>
-      <div class="p-3 rounded-lg border border-gray-200 hover:border-violet-300 cursor-pointer" onclick="showSimilarDetail('chen')">
-        <div class="flex items-center justify-between text-[11px] text-gray-500 mb-1">
-          <span>客户 陈芳 · A2 处理</span>
-          <span class="text-emerald-600 font-semibold">已成交 ¥1,280</span>
-        </div>
-        <div class="text-xs text-gray-700 leading-relaxed">"有点贵能不能便宜" → Agent 发券 + 限时 3 天 → 客户 2h 后付款</div>
-      </div>
-      <div class="p-3 rounded-lg border border-gray-200 hover:border-violet-300 cursor-pointer" onclick="showSimilarDetail('zhou')">
-        <div class="flex items-center justify-between text-[11px] text-gray-500 mb-1">
-          <span>客户 周晓 · A3 处理</span>
-          <span class="text-gray-500">流失</span>
-        </div>
-        <div class="text-xs text-gray-700 leading-relaxed">"双十一有活动吗" → Agent 回复"再等等" → 客户 1 天未回</div>
-      </div>
-      <div class="p-3 rounded-lg border border-gray-200 hover:border-violet-300 cursor-pointer" onclick="showSimilarDetail('li')">
-        <div class="flex items-center justify-between text-[11px] text-gray-500 mb-1">
-          <span>客户 李明 · A1 处理</span>
-          <span class="text-emerald-600 font-semibold">已成交 ¥1,580</span>
-        </div>
-        <div class="text-xs text-gray-700 leading-relaxed">"太贵了" → Agent 用了 #A-089 + 引入学员案例 → 次日付款</div>
-      </div>
-    </div>
+    <!-- 日志 tab（已移除） -->
+    <!-- 同类对话 tab（已移除） -->
   </aside>
 </div>
 
@@ -1346,7 +1295,7 @@
     document.getElementById('drawer').classList.remove('open');
     document.getElementById('mask').classList.remove('open');
   }
-  document.getElementById('openReport').addEventListener('click', openReport);
+  var reportBtn = document.getElementById('openReport'); if (reportBtn) reportBtn.addEventListener('click', openReport);
 
   // ========== 输入区 ==========
   function switchInput(tabEl, name) {
