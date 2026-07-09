@@ -1168,11 +1168,9 @@
     perspective:1600px;
   }
   .pl-node.prod{--ac:#4338CA}
-  .pl-node:nth-child(5),
-  .pl-node:nth-child(6),
-  .pl-node:nth-child(7){min-height:192px}
   .fc-card{
     position:relative;
+    display:grid;
     width:100%;
     height:100%;
     border:none;
@@ -1185,11 +1183,11 @@
   .pl-node.is-flipped .fc-card{transform:rotateY(180deg)}
   .fc-card:focus-visible{outline:2px solid color-mix(in srgb,var(--ac) 72%,#fff);outline-offset:4px;border-radius:24px}
   .fc-face{
-    position:absolute;
-    inset:0;
+    position:relative;
+    grid-area:1/1;
+    height:100%;
     display:flex;
     flex-direction:column;
-    justify-content:space-between;
     gap:16px;
     overflow:hidden;
     border-radius:24px;
@@ -1300,6 +1298,7 @@
   .fc-hint{
     position:relative;
     z-index:1;
+    margin-top:auto;
     display:inline-flex;
     align-items:center;
     gap:6px;
@@ -1313,6 +1312,7 @@
   .fc-metric{
     position:relative;
     z-index:1;
+    margin-top:auto;
     display:flex;
     flex-wrap:wrap;
     gap:8px;
