@@ -2,12 +2,31 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>句子懂行 · AI 员工的记忆 | 句子互动</title>
-<meta name="description" content="句子懂行——AI 员工的记忆。把客户散乱的知识炼成 AI 能查、能用、越用越准的可检索资产。知识工程是 Agent 上岗的前提：先把知识做对，再上产品。" />
+<title>句子懂行 - 句子互动 | AI员工知识引擎</title>
+<meta name="description" content="句子懂行是句子互动面向 AI 员工的知识引擎，把企业散落的文档、FAQ 与业务经验整理成可检索、可引用、可持续优化的知识资产，支撑 Agent 稳定回答。" />
+<meta name="keywords" content="AI员工,FDE,AI原生组织,知识引擎,RAG,企业知识库,句子懂行,句子互动" />
+<meta name="robots" content="index,follow" />
+<meta name="format-detection" content="telephone=no,email=no,address=no" />
+<link rel="canonical" href="https://juzibot.com/products/dongxing.html" />
 <link rel="icon" href="../logo.png" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="句子懂行 - 句子互动 | AI员工知识引擎" />
+<meta property="og:description" content="句子懂行是句子互动面向 AI 员工的知识引擎，把企业散落的文档、FAQ 与业务经验整理成可检索、可引用、可持续优化的知识资产，支撑 Agent 稳定回答。" />
+<meta property="og:image" content="https://juzibot.com/assets/product-shots/both-products.png" />
+<meta property="og:url" content="https://juzibot.com/products/dongxing.html" />
+<meta property="og:locale" content="zh_CN" />
+<meta property="og:site_name" content="句子互动" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="句子懂行 - 句子互动 | AI员工知识引擎" />
+<meta name="twitter:description" content="句子懂行是句子互动面向 AI 员工的知识引擎，把企业散落的文档、FAQ 与业务经验整理成可检索、可引用、可持续优化的知识资产，支撑 Agent 稳定回答。" />
+<meta name="twitter:image" content="https://juzibot.com/assets/product-shots/both-products.png" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="../assets/site.css" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","name":"句子懂行 - 句子互动 | AI员工知识引擎","description":"句子懂行是句子互动面向 AI 员工的知识引擎，把企业散落的文档、FAQ 与业务经验整理成可检索、可引用、可持续优化的知识资产，支撑 Agent 稳定回答。","url":"https://juzibot.com/products/dongxing.html","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"句子互动","url":"https://juzibot.com/"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://juzibot.com/assets/product-shots/both-products.png"}}
+</script>
 <style>
   /* scoped · 仅用 site.css 既有变量，承接首页配色，不引入异色 */
   /* —— 产品页头：沿用 .hero 的浅色径向底，承接面包屑 + KPI —— */
@@ -21,7 +40,7 @@
   .crumbs a:hover{color:var(--blue)}
   .crumbs .sep{color:var(--line)}
   .crumbs .here{color:var(--ink-2);font-weight:650}
-  .ph-grid{display:grid;grid-template-columns:1.04fr .96fr;gap:clamp(34px,5vw,72px);align-items:center}
+  .ph-grid{display:grid;grid-template-columns:1.04fr .96fr;gap:clamp(34px,5vw,72px);align-items:start}
   .ph h1{font-size:clamp(34px,5vw,64px);font-weight:850;letter-spacing:-.04em;line-height:1.12;
     max-width:20ch;word-break:keep-all;text-wrap:balance;margin-bottom:clamp(14px,2vw,24px)}
   .ph h1 .accent{color:var(--blue)}
@@ -29,13 +48,18 @@
   .ph-lede strong{color:var(--ink);font-weight:700}
   .ph-cta{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:clamp(20px,2.6vw,30px)}
   /* 页头要点 pills */
-  .ph-pills{display:flex;flex-wrap:wrap;gap:10px;margin-top:clamp(20px,2.6vw,28px)}
+  .ph-pills{display:flex;flex-wrap:wrap;gap:10px;margin-top:clamp(8px,1.4vw,16px);grid-column:1 / -1;min-width:0}
   .ph-pill{display:inline-flex;align-items:center;gap:9px;font-size:13px;font-weight:600;color:var(--ink-2);
-    background:#fff;border:1px solid var(--line);padding:8px 16px;border-radius:999px;box-shadow:var(--shadow-soft)}
+    background:#fff;border:1px solid var(--line);padding:8px 16px;border-radius:999px;box-shadow:var(--shadow-soft);white-space:nowrap}
   .ph-pill .dot{width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0}
+  @media(min-width:981px){
+    .ph-art{margin-top:calc(37px + clamp(12px,2.2vw,22px))}
+  }
   @media(max-width:980px){
     .ph-grid{grid-template-columns:1fr;gap:clamp(40px,7vw,56px)}
-    .ph-art{order:2}
+    .ph-pills{flex-wrap:wrap;margin-top:clamp(20px,2.6vw,28px)}
+    .ph-art{order:3}
+    .ph-pills{order:2;grid-column:auto}
   }
   /* —— 知识炼化：原始资料 → 知识资产 转化图 —— */
   .refine{position:relative;border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;
@@ -99,12 +123,6 @@
             </button>
             <a href="#engineering" class="btn btn-ghost btn-lg">看知识工程四步</a>
           </div>
-          <div class="ph-pills">
-            <span class="ph-pill"><span class="dot"></span>知识工程进场第一步</span>
-            <span class="ph-pill"><span class="dot"></span>散乱知识 → 可检索资产</span>
-            <span class="ph-pill"><span class="dot"></span>每条回答可追溯出处</span>
-            <span class="ph-pill"><span class="dot"></span>Agent 上岗的前提</span>
-          </div>
         </div>
         <div class="ph-art">
           <div class="refine">
@@ -130,9 +148,51 @@
             </div>
           </div>
         </div>
+        <div class="ph-pills">
+          <span class="ph-pill"><span class="dot"></span>知识工程进场第一步</span>
+          <span class="ph-pill"><span class="dot"></span>散乱知识 → 可检索资产</span>
+          <span class="ph-pill"><span class="dot"></span>每条回答可追溯出处</span>
+          <span class="ph-pill"><span class="dot"></span>Agent 上岗的前提</span>
+        </div>
       </div>
     </div>
   </header>
+
+  <!-- ════════════ 真实界面 · 工作台演示视频 ════════════ -->
+  <section class="sec pad" id="realui">
+    <div class="wrap">
+      <div class="sec-top rv">
+        <div>
+          <span class="sec-eyebrow">真实界面</span>
+          <h2>不是效果图，<span class="hl"><span>是真实跑起来的工作台</span></span>。</h2>
+        </div>
+        <p class="sub">下面是句子懂行工作台的真实录屏：从「无脑上传」到「体检修正」再到「范围内检索」，完整走一遍知识工程的闭环。</p>
+      </div>
+      <div class="dhv rv">
+        <div class="win">
+          <span class="d r"></span><span class="d y"></span><span class="d g"></span>
+          <span class="t">句子懂行 · 工作台演示</span>
+        </div>
+        <video class="vid" autoplay loop muted playsinline preload="metadata" aria-label="句子懂行 工作台演示视频">
+          <source src="../assets/product-shots/donghang.mp4" type="video/mp4" />
+        </video>
+        <div class="cap">上传原始资料 → 体检修正 → 范围内检索命中，全流程在真实工作台里跑一遍——不是效果图，是可运行的产品。</div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .dhv{border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;background:#fff;
+      box-shadow:0 1px 2px rgba(14,20,48,.05),0 40px 80px -30px rgba(67,56,202,.35),0 12px 24px -12px rgba(14,20,48,.12)}
+    .dhv .win{display:flex;align-items:center;gap:8px;padding:11px 15px;background:rgba(255,255,255,.78);
+      backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+    .dhv .win .d{width:9px;height:9px;border-radius:50%}
+    .dhv .win .d.r{background:#FF5F57}.dhv .win .d.y{background:#FEBC2E}.dhv .win .d.g{background:#28C840}
+    .dhv .win .t{margin-left:6px;font-family:var(--mono);font-size:11px;letter-spacing:.03em;color:var(--ink-3)}
+    .dhv .vid{width:100%;height:auto;max-height:min(78vh,760px);display:block;background:#000;object-fit:contain}
+    .dhv .cap{padding:15px 20px;font-size:13.5px;line-height:1.7;color:var(--ink-2);border-top:1px solid var(--line)}
+    @media(max-width:640px){.dhv .cap{padding:13px 15px;font-size:12.5px}}
+  </style>
 
   <!-- ════════════ 知识工程 · 四步炼化 ════════════ -->
   <section class="sec pad" id="engineering">
