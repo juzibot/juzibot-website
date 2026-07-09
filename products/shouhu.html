@@ -47,7 +47,6 @@
   .ph-lede{font-size:clamp(16px,1.4vw,18.5px);color:var(--ink-2);max-width:50ch;line-height:1.7}
   .ph-lede strong{color:var(--ink);font-weight:700}
   .ph-cta{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:clamp(20px,2.6vw,30px)}
-  /* hero 内嵌真实质量中心演示（iframe） */
   .ph-demo{position:relative;border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;
     background:linear-gradient(180deg,#FBFCFF,#F3F7FE);
     box-shadow:0 1px 2px rgba(14,20,48,.05),0 40px 80px -30px rgba(67,56,202,.35),0 12px 24px -12px rgba(14,20,48,.12)}
@@ -56,36 +55,22 @@
   .ph-demo .win .d{width:9px;height:9px;border-radius:50%}
   .ph-demo .win .d.r{background:#FF5F57}.ph-demo .win .d.y{background:#FEBC2E}.ph-demo .win .d.g{background:#28C840}
   .ph-demo .win .t{margin-left:6px;font-family:var(--mono);font-size:11px;letter-spacing:.03em;color:var(--ink-3)}
-  .ph-demo .win .live{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:750;
-    color:var(--green);background:var(--green-lt);padding:4px 10px;border-radius:999px}
-  .ph-demo .win .live i{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green)}
-  /* 质量中心预览：按真实宽度渲染再等比缩放（布局正确、不挤叠），角上「放大查看」 */
-  .ph-stage{position:relative;width:100%;overflow:hidden;background:#fff;height:clamp(360px,40vw,520px)}
-  .ph-stage iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#fff}
-  .ph-zoom{position:absolute;right:12px;bottom:12px;z-index:3;display:inline-flex;align-items:center;gap:7px;
-    font-size:12.5px;font-weight:700;color:#fff;background:rgba(11,16,32,.6);backdrop-filter:blur(4px);
-    border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:8px 14px;cursor:pointer;transition:background .2s,transform .2s}
-  .ph-zoom:hover{background:var(--blue);transform:translateY(-1px)}
-  /* 放大模态：苹果式丝滑开合 · 虚化背景 + 大窗质量中心 */
-  .wbm{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;
-    padding:clamp(12px,3vw,34px);background:rgba(11,16,32,.5);backdrop-filter:blur(13px);-webkit-backdrop-filter:blur(13px)}
-  .wbm.open{display:flex;animation:wbm-bg .34s ease both}
-  .wbm.closing{animation:wbm-bg-out .24s ease both}
-  @keyframes wbm-bg{from{opacity:0}to{opacity:1}}
-  @keyframes wbm-bg-out{from{opacity:1}to{opacity:0}}
-  .wbm-panel{position:relative;background:#fff;border-radius:18px;overflow:hidden;
-    box-shadow:0 50px 140px rgba(11,16,32,.55),0 0 0 1px rgba(255,255,255,.05);width:min(1240px,96vw)}
-  .wbm.open .wbm-panel{animation:wbm-pop .46s cubic-bezier(.22,1,.36,1) both}
-  .wbm.closing .wbm-panel{animation:wbm-pop-out .24s cubic-bezier(.4,0,1,1) both}
-  @keyframes wbm-pop{from{opacity:0;transform:scale(.9) translateY(16px)}to{opacity:1;transform:none}}
-  @keyframes wbm-pop-out{from{opacity:1;transform:none}to{opacity:0;transform:scale(.96) translateY(8px)}}
-  .wbm-stage{position:relative;overflow:hidden;background:#fff;width:100%;height:min(80vh,760px)}
-  .wbm-stage iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#fff}
-  .wbm-x{position:absolute;right:14px;top:14px;z-index:3;width:36px;height:36px;border-radius:50%;border:none;
-    background:rgba(11,16,32,.55);backdrop-filter:blur(6px);color:#fff;font-size:19px;line-height:1;cursor:pointer;
-    display:grid;place-items:center;transition:background .2s,transform .2s}
-  .wbm-x:hover{background:var(--blue);transform:scale(1.06)}
-  @media(prefers-reduced-motion:reduce){.wbm.open,.wbm.closing,.wbm.open .wbm-panel,.wbm.closing .wbm-panel{animation:none}}
+  .ph-loop{--r:#E0264A;--r2:#FF4D6D;position:relative;min-height:410px;background:
+    linear-gradient(115deg,rgba(255,255,255,.42) 0 18%,transparent 18% 72%,rgba(255,255,255,.36) 72% 100%),
+    linear-gradient(90deg,rgba(72,113,185,.055) 1px,transparent 1px),
+    linear-gradient(180deg,rgba(72,113,185,.055) 1px,transparent 1px),
+    radial-gradient(440px 300px at 52% 45%,rgba(255,255,255,.86),transparent 66%),
+    linear-gradient(135deg,#EEF4FF 0%,#F9FBFF 43%,#E8F7FF 68%,#D9ECFF 100%);
+    background-size:auto,42px 42px,42px 42px,auto,auto;overflow:hidden}
+  .ph-loop:before{content:"";position:absolute;left:50%;top:50%;width:38%;aspect-ratio:1;border-radius:50%;transform:translate(-50%,-50%);
+    border:8px solid var(--r2);box-shadow:0 0 0 1px rgba(224,38,74,.16),0 18px 44px rgba(224,38,74,.12)}
+  .ph-loop-center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:112px;height:112px;border-radius:50%;
+    background:radial-gradient(circle at 50% 34%,#fff,#FFF2F5);border:1px solid rgba(224,38,74,.22);box-shadow:0 12px 34px rgba(224,38,74,.1);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+  .ph-loop-center i{color:#E0264A;font-size:20px;margin-bottom:5px}.ph-loop-center b{color:#E0264A;font-size:19px;font-weight:850}.ph-loop-center span{font-size:12px;color:var(--ink-3);margin-top:2px}
+  .ph-loop-node{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,-50%);display:flex;align-items:center;gap:12px;color:#E0264A;font-weight:850;letter-spacing:-.02em;white-space:nowrap}
+  .ph-loop-node .n{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(180deg,var(--r2),var(--r));color:#fff;font-size:20px;font-weight:900;box-shadow:0 9px 26px rgba(224,38,74,.24),0 0 0 4px rgba(255,77,109,.22),inset 0 0 0 2px rgba(255,255,255,.35)}
+  .ph-loop-node .name{font-size:16px}.ph-loop-node.top,.ph-loop-node.bottom{flex-direction:column;gap:8px}.ph-loop-node.left{flex-direction:row-reverse}.ph-loop-node.right{text-align:right}
+  @media(max-width:560px){.ph-loop{min-height:390px}.ph-loop:before{width:44%;border-width:7px}.ph-loop-center{width:100px;height:100px}.ph-loop-center b{font-size:17px}.ph-loop-node{gap:8px}.ph-loop-node .n{width:40px;height:40px;font-size:18px}.ph-loop-node .name{font-size:14px}}
   @media(min-width:981px){
     .ph-art{margin-top:calc(37px + clamp(12px,2.2vw,22px))}
   }
@@ -241,13 +226,17 @@
           <div class="ph-demo">
             <div class="win">
               <span class="d r"></span><span class="d y"></span><span class="d g"></span>
-              <span class="t">句子守护 · Agent Quality Center</span>
-              <span class="live"><i></i>LIVE</span>
+              <span class="t">句子守护 · 六关闭环</span>
             </div>
-            <div class="ph-stage" id="wbStage">
-              <iframe id="wbFrame" data-d="../assets/demos/shouhu-quality-feishu.html" title="句子守护 · Agent 质量中心 实时演示" loading="lazy"></iframe>
+            <div class="ph-loop" aria-label="句子守护六关闭环">
+              <div class="ph-loop-center"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i><b>句子守护</b><span>六关闭环</span></div>
+              <div class="ph-loop-node top" style="--x:50%;--y:13%"><span class="name">用例生成</span><span class="n">1</span></div>
+              <div class="ph-loop-node right" style="--x:82%;--y:32%"><span class="name">批量验收</span><span class="n">2</span></div>
+              <div class="ph-loop-node right" style="--x:82%;--y:68%"><span class="name">灰度</span><span class="n">3</span></div>
+              <div class="ph-loop-node bottom" style="--x:50%;--y:87%"><span class="n">4</span><span class="name">回归</span></div>
+              <div class="ph-loop-node left" style="--x:18%;--y:68%"><span class="name">AI 工单</span><span class="n">5</span></div>
+              <div class="ph-loop-node left" style="--x:18%;--y:32%"><span class="name">AI 质检</span><span class="n">6</span></div>
             </div>
-            <button class="ph-zoom" type="button" onclick="wbOpen()" aria-label="放大查看质量中心演示"><i class="fa-solid fa-up-right-and-down-left-from-center" aria-hidden="true"></i> 放大查看</button>
           </div>
         </div>
       </div>
@@ -360,7 +349,7 @@
   <!-- ════════════ 让客户看得见 · 批量验收 / 灰度 / 报告交互 ════════════ -->
   <section class="sec pad" id="report">
     <div class="wrap">
-      <div class="sec-top rv"><div><span class="sec-eyebrow">让客户看得见</span><h2>上线前怎么验、上线中怎么放、上线后怎么交代，<span class="hl"><span>都放在同一套守护链路里</span></span>。</h2></div><p class="sub">客户关心的不是“我们做了测试”，而是哪些用例跑过、哪个版本先进灰度、失败问题有没有归因、最后能不能留下可审计的验收凭证。</p></div>
+      <div class="sec-top rv"><div><span class="sec-eyebrow">让客户看得见</span><h2>上线前怎么验、上线中怎么放、上线后怎么交代，<span class="hl"><span>都放在同一套守护链路里</span></span>。</h2></div><p class="sub">客户关心的不是「我们做了测试」，而是哪些用例跑过、哪个版本先进灰度、失败问题有没有归因、最后能不能留下可审计的验收凭证。</p></div>
       <div class="demo-stack rv">
         <div class="demo-block">
           <div class="split-text"><h3>批量验收：同一批用例多轮并发跑，先把波动拦在上线前</h3><p>大模型每次输出都会有波动，单轮通过不代表真的稳定。句子守护会把测试集按轮次、并发数和验收规则跑完，逐条判断回复是否达标。</p><ul class="ap-feats"><li>多轮并发跑同一批用例，降低偶然通过的风险</li><li>失败用例自动归类，进入修复清单</li><li>通过用例沉淀为后续回归集，版本更新时继续复用</li></ul></div>
@@ -399,14 +388,6 @@
     </div>
   </section>
 
-  <!-- 质量中心放大模态（虚化背景 + 大窗） -->
-  <div class="wbm" id="wbModal" role="dialog" aria-modal="true" aria-label="句子守护 质量中心 · 放大演示">
-    <div class="wbm-panel">
-      <button class="wbm-x" type="button" onclick="wbClose()" aria-label="关闭放大">&times;</button>
-      <div class="wbm-stage" id="wbBigStage"><iframe id="wbFrameBig" title="句子守护 质量中心 · 放大演示"></iframe></div>
-    </div>
-  </div>
-
   <script>
   (function(){
     var ring=document.getElementById('guardRing');
@@ -429,19 +410,6 @@
   })();
   </script>
 
-  <script>
-  (function(){
-    var fr=document.getElementById('wbFrame'),modal=document.getElementById('wbModal');
-    if(!fr||!modal)return;
-    var big=document.getElementById('wbFrameBig');
-    function src(){return fr.getAttribute('data-d');}
-    if(src() && fr.getAttribute('src')!==src()) fr.setAttribute('src',src());
-    window.wbOpen=function(){modal.classList.remove('closing');modal.classList.add('open');document.body.style.overflow='hidden';if(big&&src()&&big.getAttribute('src')!==src())big.setAttribute('src',src());};
-    window.wbClose=function(){if(!modal.classList.contains('open')||modal.classList.contains('closing'))return;modal.classList.add('closing');document.body.style.overflow='';setTimeout(function(){modal.classList.remove('open');modal.classList.remove('closing');},250);};
-    modal.addEventListener('click',function(e){if(e.target===modal)window.wbClose();});
-    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&modal.classList.contains('open'))window.wbClose();});
-  })();
-  </script>
 </main>
 <div id="site-footer"></div>
 <script>window.SITE_REL='../';window.PAGE_CTX={entity:'shouhu',type:'product',title:'句子守护 · 主管'};</script><script src="../assets/site.js"></script>
