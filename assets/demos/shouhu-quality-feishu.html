@@ -1192,17 +1192,28 @@
   </section>
 
   <script>
+    // 各屏定时器登记：离开视口即暂停，回到视口再恢复，避免离屏后 setInterval 只增不减、持续占用 CPU/内存
+    const _screenTimers = {};
+    function armTimer(sid, fn, ms) { const t = { fn, ms, id: setInterval(fn, ms) }; (_screenTimers[sid] || (_screenTimers[sid] = [])).push(t); return t; }
+    function pauseTimers(sid) { (_screenTimers[sid] || []).forEach(t => { if (t.id != null) { clearInterval(t.id); t.id = null; } }); }
+    function resumeTimers(sid) { (_screenTimers[sid] || []).forEach(t => { if (t.id == null) t.id = setInterval(t.fn, t.ms); }); }
+    function stopTimers(sid) { pauseTimers(sid); _screenTimers[sid] = []; }
+
     // 滚动进入视口时让对应屏淡入
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => {
-        if (!e.isIntersecting) return;
-        e.target.classList.add('show');
-        if (e.target.id === 's7') bfStart();
-        if (e.target.id === 's8') grStart();
-        if (e.target.id === 's9') regStart();
-        if (e.target.id === 's10') bcStart();
-        if (e.target.id === 's11') mfStart();
-        if (e.target.id === 's15') rtStart();
+        if (e.isIntersecting) {
+          e.target.classList.add('show');
+          if (e.target.id === 's7') bfStart();
+          if (e.target.id === 's8') grStart();
+          if (e.target.id === 's9') regStart();
+          if (e.target.id === 's10') bcStart();
+          if (e.target.id === 's11') mfStart();
+          if (e.target.id === 's15') rtStart();
+          resumeTimers(e.target.id);
+        } else {
+          pauseTimers(e.target.id);
+        }
       });
     }, { threshold: 0.4 });
     ['s2', 's4', 's5', 's6', 's7', 's8', 's9', 's10', 's11', 's15'].forEach(id => { const el = document.getElementById(id); if (el) io.observe(el); });
@@ -1596,8 +1607,8 @@
         const badge = cell.querySelector('.bw-badge');
         const cap = cell.querySelector('.bw-cap');
         const st = cell.querySelector('.st');
-        // 每个窗口按自己节奏完成一轮用例，循环
-        setInterval(() => {
+        // 每个窗口按自己节奏完成一轮用例，循环（登记到 s7，离屏暂停 / 出报告时永久停止）
+        armTimer('s7', () => {
           const ok = Math.random() > 0.16;
           badge.className = 'bw-badge show ' + (ok ? 'pass' : 'fail');
           badge.textContent = ok ? '✓ 通过' : '✗ 不通过';
@@ -1643,6 +1654,13 @@
       // 验收墙消失
       const grid = document.getElementById('bf-grid'); if (grid) grid.style.opacity = '0';
       const mask = document.getElementById('bf-mask'); mask.classList.add('show');
+
+      // 停掉 16 个验收窗口的定时器；并把顶部实时计数对齐到报告最终值（300 总 / 283 通过 / 17 不通过 = 94.3%），避免二者数字自相矛盾
+      stopTimers('s7');
+      bfDone = 300; bfPass = 283; bfFail = 17;
+      const hDone = document.getElementById('bf-done'), hPass = document.getElementById('bf-pass'), hFail = document.getElementById('bf-fail'), hFill = document.getElementById('bf-fill');
+      if (hDone) hDone.textContent = bfDone; if (hPass) hPass.textContent = bfPass; if (hFail) hFail.textContent = bfFail;
+      if (hFill) hFill.style.width = '100%';
 
       // 逐个数据生成
       const rep = mask.querySelector('.bf-report');
@@ -1717,7 +1735,7 @@
         elDiff.textContent = grDiff;
       }
       emit();
-      setInterval(emit, 1600);
+      armTimer('s8', emit, 1600);
     }
 
     /* ===== 第九屏 · 回归 git → 绿勾瀑布 ===== */
@@ -1781,7 +1799,7 @@
         elNum.textContent = regNum.toLocaleString();
       }
       commit();
-      setInterval(commit, 2400);
+      armTimer('s9', commit, 2400);
     }
 
     /* ===== 第十屏 · badcase 回流 ===== */
@@ -1863,8 +1881,8 @@
       }
 
       emitLog();
-      setInterval(emitLog, 850);
-      setInterval(reflow, 3200);
+      armTimer('s10', emitLog, 850);
+      armTimer('s10', reflow, 3200);
     }
   </script>
 </body>
