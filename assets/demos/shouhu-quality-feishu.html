@@ -594,7 +594,6 @@
   .bf-mask { position: absolute; inset: 0; z-index: 20; display: flex; align-items: center; justify-content: center; background: radial-gradient(1200px 800px at 50% -10%, #16203A, #0B1020 60%); opacity: 0; pointer-events: none; transition: opacity .55s; }
   .bf-mask.show { opacity: 1; pointer-events: auto; }
   .br-donut .dc.arc { stroke-dasharray: 0 100; transition: stroke-dasharray 1.1s ease; }
-  .br-donut.drawn .dc.arc { stroke-dasharray: 94.3 5.7; }
   .bf-report { width: min(760px, 92vw); max-height: 90vh; overflow: auto; background: #fff; border-radius: 16px; box-shadow: 0 30px 80px rgba(0,0,0,.5); padding: 22px 26px 20px; transform: translateY(16px) scale(.98); transition: transform .5s; }
   .bf-mask.show .bf-report { transform: none; }
   .br-head { display: flex; align-items: flex-start; justify-content: space-between; border-bottom: 1px solid #eef0f3; padding-bottom: 14px; }
@@ -1076,12 +1075,12 @@
                 <circle class="dc" cx="18" cy="18" r="15.9155" stroke="#FDE2E7"/>
                 <circle class="dc arc" cx="18" cy="18" r="15.9155" stroke="#16A34A" stroke-linecap="round"/>
               </svg>
-              <div class="center"><b>94.3%</b><span>通过率</span></div>
+              <div class="center"><b id="br-rate">0%</b><span>通过率</span></div>
             </div>
             <div class="br-metrics">
-              <div class="br-m"><div class="v">300</div><div class="l">总用例</div></div>
-              <div class="br-m"><div class="v green">283</div><div class="l">通过</div></div>
-              <div class="br-m"><div class="v red">17</div><div class="l">不通过</div></div>
+              <div class="br-m"><div class="v" id="br-m-total">0</div><div class="l">总用例</div></div>
+              <div class="br-m"><div class="v green" id="br-m-pass">0</div><div class="l">通过</div></div>
+              <div class="br-m"><div class="v red" id="br-m-fail">0</div><div class="l">不通过</div></div>
               <div class="br-m"><div class="v">16 路</div><div class="l">并发执行</div></div>
               <div class="br-m"><div class="v">14′08″</div><div class="l">总耗时（人工约 3 天）</div></div>
               <div class="br-m"><div class="v">2.8s</div><div class="l">平均单例</div></div>
@@ -1089,11 +1088,11 @@
           </div>
 
           <div class="br-fail">
-            <div class="br-fh">异常分析 · 17 条不通过归类</div>
-            <div class="br-frow"><span class="fl">元素定位失败</span><span class="fbar"><i style="width:35%"></i></span><span class="fn">6 · 35%</span></div>
-            <div class="br-frow"><span class="fl">接口响应超时</span><span class="fbar"><i style="width:24%"></i></span><span class="fn">4 · 24%</span></div>
-            <div class="br-frow"><span class="fl">断言不一致</span><span class="fbar"><i style="width:24%"></i></span><span class="fn">4 · 24%</span></div>
-            <div class="br-frow"><span class="fl">数据 / 权限异常</span><span class="fbar"><i style="width:17%"></i></span><span class="fn">3 · 17%</span></div>
+            <div class="br-fh">异常分析 · <span id="br-fh-n">0</span> 条不通过归类</div>
+            <div class="br-frow"><span class="fl">元素定位失败</span><span class="fbar"><i id="br-fbar-0" style="width:0%"></i></span><span class="fn" id="br-fn-0">0 · 0%</span></div>
+            <div class="br-frow"><span class="fl">接口响应超时</span><span class="fbar"><i id="br-fbar-1" style="width:0%"></i></span><span class="fn" id="br-fn-1">0 · 0%</span></div>
+            <div class="br-frow"><span class="fl">断言不一致</span><span class="fbar"><i id="br-fbar-2" style="width:0%"></i></span><span class="fn" id="br-fn-2">0 · 0%</span></div>
+            <div class="br-frow"><span class="fl">数据 / 权限异常</span><span class="fbar"><i id="br-fbar-3" style="width:0%"></i></span><span class="fn" id="br-fn-3">0 · 0%</span></div>
           </div>
 
           <div class="br-foot">
@@ -1195,7 +1194,13 @@
     // 滚动进入视口时让对应屏淡入
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => {
-        if (!e.isIntersecting) return;
+        if (!e.isIntersecting) {
+          if (e.target.id === 's7') bfStop();
+          if (e.target.id === 's8') grStop();
+          if (e.target.id === 's9') regStop();
+          if (e.target.id === 's10') bcStop();
+          return;
+        }
         e.target.classList.add('show');
         if (e.target.id === 's7') bfStart();
         if (e.target.id === 's8') grStart();
@@ -1570,10 +1575,23 @@
       ['发票申请', '/invoice'], ['余额提现', '/withdraw'], ['分享裂变', '/share'], ['客服转接', '/handoff']
     ];
     const CURSOR_SVG = '<svg viewBox="0 0 24 24" width="16" height="16"><path d="M5 3l15 8.5-6.4 1.4L17 19l-2.6 1.2-3.4-6.2L6 18z" fill="#1b2540" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/></svg>';
-    let bfStarted = false, bfDone = 127, bfPass = 118, bfFail = 9;
+    let bfStarted = false, bfIntervals = [], bfRunners = [], bfReportTimer = null, bfDone = 127, bfPass = 118, bfFail = 9;
+
+    function bfStop() {
+      bfIntervals.forEach(id => clearInterval(id));
+      bfIntervals = [];
+      if (bfReportTimer) { clearTimeout(bfReportTimer); bfReportTimer = null; }
+    }
+
+    function bfRun() {
+      if (bfReported || bfIntervals.length) return;
+      bfRunners.forEach(r => bfIntervals.push(setInterval(r.run, r.dur * 1000)));
+      if (!bfReportTimer) bfReportTimer = setTimeout(showBfReport, 10000);
+    }
 
     function bfStart() {
-      if (bfStarted) return; bfStarted = true;
+      if (bfStarted) { bfRun(); return; }
+      bfStarted = true;
       const grid = document.getElementById('bf-grid');
       const fill = document.getElementById('bf-fill');
       const elDone = document.getElementById('bf-done'), elPass = document.getElementById('bf-pass'), elFail = document.getElementById('bf-fail');
@@ -1597,7 +1615,7 @@
         const cap = cell.querySelector('.bw-cap');
         const st = cell.querySelector('.st');
         // 每个窗口按自己节奏完成一轮用例，循环
-        setInterval(() => {
+        const run = () => {
           const ok = Math.random() > 0.16;
           badge.className = 'bw-badge show ' + (ok ? 'pass' : 'fail');
           badge.textContent = ok ? '✓ 通过' : '✗ 不通过';
@@ -1609,7 +1627,8 @@
             bfDone++; ok ? bfPass++ : bfFail++;
             bfRender();
           }
-        }, dur * 1000);
+        };
+        bfRunners.push({ run, dur });
       });
 
       function bfRender() {
@@ -1617,8 +1636,7 @@
         fill.style.width = Math.min(100, bfDone / 300 * 100) + '%';
       }
 
-      // 停留约 10 秒 → 生成用例报告
-      setTimeout(showBfReport, 10000);
+      bfRun();
     }
 
     let bfReported = false;
@@ -1633,12 +1651,33 @@
     }
     function showBfReport() {
       if (bfReported) return; bfReported = true;
+      bfStop();
+
       const d = new Date();
       const pad = n => String(n).padStart(2, '0');
       const ymd = d.getFullYear() + '/' + pad(d.getMonth() + 1) + '/' + pad(d.getDate());
       const idEl = document.getElementById('br-id'), timeEl = document.getElementById('br-time');
       if (idEl) idEl.textContent = 'QA-' + d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate()) + '-016';
       if (timeEl) timeEl.textContent = ymd + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+
+      const total = bfDone, pass = bfPass, fail = bfFail;
+      const rate = total > 0 ? Math.round((pass / total) * 1000) / 10 : 0;
+      const RATIOS = [0.35, 0.24, 0.24, 0.17];
+      let famounts = RATIOS.map(r => Math.round(fail * r));
+      let diff = fail - famounts.reduce((a, b) => a + b, 0);
+      if (famounts.length) famounts[0] += diff;
+
+      document.getElementById('br-m-total').textContent = total;
+      document.getElementById('br-m-pass').textContent = pass;
+      document.getElementById('br-m-fail').textContent = fail;
+      document.getElementById('br-fh-n').textContent = fail;
+      famounts.forEach((n, i) => {
+        const pct = fail > 0 ? Math.round((n / fail) * 1000) / 10 : 0;
+        const bar = document.getElementById('br-fbar-' + i);
+        const fn = document.getElementById('br-fn-' + i);
+        if (bar) bar.dataset.w = pct + '%';
+        if (fn) fn.textContent = n + ' · ' + pct + '%';
+      });
 
       // 验收墙消失
       const grid = document.getElementById('bf-grid'); if (grid) grid.style.opacity = '0';
@@ -1653,13 +1692,12 @@
       const foot = rep.querySelector('.br-foot');
       const seq = [donut, ...metrics, failTitle, ...frows, foot];
       seq.forEach(el => { el.style.opacity = '0'; el.style.transform = 'translateY(8px)'; el.style.transition = 'opacity .45s, transform .45s'; });
-      frows.forEach(r => { const b = r.querySelector('.fbar i'); b.dataset.w = b.style.width; b.style.width = '0'; b.style.transition = 'width .6s ease'; });
-      metrics.forEach(m => { const v = m.querySelector('.v'); v.dataset.txt = v.textContent; });
+      frows.forEach((r, i) => { const b = document.getElementById('br-fbar-' + i); b.style.width = '0'; b.style.transition = 'width .6s ease'; });
 
       const base = 500;
       seq.forEach((el, i) => setTimeout(() => {
         el.style.opacity = '1'; el.style.transform = 'none';
-        if (el === donut) { donut.classList.add('drawn'); bfCountUp(donut.querySelector('.center b'), 94.3, 1100, '%'); }
+        if (el === donut) { donut.classList.add('drawn'); donut.querySelector('.dc.arc').style.strokeDasharray = rate + ' ' + (100 - rate); bfCountUp(donut.querySelector('.center b'), rate, 1100, '%'); }
         if (el.classList.contains('br-frow')) { const b = el.querySelector('.fbar i'); b.style.width = b.dataset.w; }
       }, base + i * 200));
 
@@ -1688,12 +1726,17 @@
       ['课程有效期', '12 个月', '12 个月', false],
       ['分期免息期数', '最高 6 期', '<span class="diff">最高 12 期</span>', true]
     ];
-    let grStarted = false, grTotal = 0, grDiff = 0, grIdx = 0;
+    let grStarted = false, grInterval = null, grEmit = null, grTotal = 0, grDiff = 0, grIdx = 0;
+
+    function grStop() {
+      if (grInterval) { clearInterval(grInterval); grInterval = null; }
+    }
 
     function grStart() {
-      if (grStarted) return; grStarted = true;
       const feed = document.getElementById('gr-feed');
       const elTotal = document.getElementById('gr-total'), elDiff = document.getElementById('gr-diff');
+      if (grStarted) { if (!grInterval) grInterval = setInterval(grEmit, 1600); return; }
+      grStarted = true;
 
       function emit() {
         const item = GR_POOL[grIdx % GR_POOL.length]; grIdx++;
@@ -1716,8 +1759,9 @@
         elTotal.textContent = grTotal.toLocaleString();
         elDiff.textContent = grDiff;
       }
+      grEmit = emit;
       emit();
-      setInterval(emit, 1600);
+      grInterval = setInterval(grEmit, 1600);
     }
 
     /* ===== 第九屏 · 回归 git → 绿勾瀑布 ===== */
@@ -1736,15 +1780,20 @@
     const HEX = '0123456789abcdef';
     function shortHash() { let s = ''; for (let i = 0; i < 7; i++) s += HEX[Math.floor(Math.random() * 16)]; return s; }
 
-    let regStarted = false, regNum = 0, regCommitIdx = 0;
+    let regStarted = false, regInterval = null, regCommit = null, regNum = 0, regCommitIdx = 0, regCells = [];
     const REG_SUITE = 12480, FALL_COLS = 20, FALL_ROWS = 10;
 
+    function regStop() {
+      if (regInterval) { clearInterval(regInterval); regInterval = null; }
+    }
+
     function regStart() {
-      if (regStarted) return; regStarted = true;
       const fall = document.getElementById('reg-fall');
       const list = document.getElementById('reg-gitlist');
       const elNum = document.getElementById('reg-num');
-      const cells = [];
+      if (regStarted) { if (!regInterval) regInterval = setInterval(regCommit, 2400); return; }
+      regStarted = true;
+      const cells = regCells;
       for (let i = 0; i < FALL_COLS * FALL_ROWS; i++) {
         const c = document.createElement('div');
         c.className = 'fc'; c.textContent = '✓';
@@ -1780,8 +1829,9 @@
         regNum += REG_SUITE;
         elNum.textContent = regNum.toLocaleString();
       }
+      regCommit = commit;
       commit();
-      setInterval(commit, 2400);
+      regInterval = setInterval(regCommit, 2400);
     }
 
     /* ===== 第十屏 · badcase 回流 ===== */
@@ -1793,15 +1843,25 @@
       { l: '响应超时', i: '⏱️', tpl: '高并发下响应 <1s 兜底' },
       { l: '答非所问', i: '❓', tpl: '多意图拆解：逐条命中回答' }
     ];
-    let bcStarted = false, bcFail = 0, bcFlow = 0, bcCounts = [0, 0, 0, 0, 0];
+    let bcStarted = false, bcLogInterval = null, bcReflowInterval = null, bcEmitLog = null, bcReflow = null, bcFail = 0, bcFlow = 0, bcCounts = [0, 0, 0, 0, 0];
+
+    function bcStop() {
+      if (bcLogInterval) { clearInterval(bcLogInterval); bcLogInterval = null; }
+      if (bcReflowInterval) { clearInterval(bcReflowInterval); bcReflowInterval = null; }
+    }
 
     function bcStart() {
-      if (bcStarted) return; bcStarted = true;
       const logs = document.getElementById('bc-logs');
       const clWrap = document.getElementById('bc-clusters');
       const cases = document.getElementById('bc-cases');
       const elFail = document.getElementById('bc-fail'), elFlow = document.getElementById('bc-flow');
       const beam = document.getElementById('bc-beam');
+      if (bcStarted) {
+        if (!bcLogInterval) bcLogInterval = setInterval(bcEmitLog, 850);
+        if (!bcReflowInterval) bcReflowInterval = setInterval(bcReflow, 3200);
+        return;
+      }
+      bcStarted = true;
 
       const clEls = BC_CLUSTERS.map((c, i) => {
         const d = document.createElement('div');
@@ -1862,9 +1922,11 @@
         while (cases.children.length > 7) cases.removeChild(cases.lastChild);
       }
 
+      bcEmitLog = emitLog;
+      bcReflow = reflow;
       emitLog();
-      setInterval(emitLog, 850);
-      setInterval(reflow, 3200);
+      bcLogInterval = setInterval(bcEmitLog, 850);
+      bcReflowInterval = setInterval(bcReflow, 3200);
     }
   </script>
 </body>
