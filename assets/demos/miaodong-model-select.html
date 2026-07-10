@@ -1,0 +1,1768 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1440, initial-scale=1">
+<title>句子秒懂 · 模型选择中心</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root{
+  --ink:#0E1525;
+  --ink-2:#52607A;
+  --ink-3:#8A97AD;
+  --line:#E8EDF5;
+  --line-strong:#D7E1F0;
+  --bg:#F2F5FA;
+  --panel:#FFFFFF;
+  --soft:#F8FAFD;
+  --blue:#1659E5;
+  --blue-soft:#EAF1FF;
+  --green:#00B578;
+  --green-soft:#E9FBF3;
+  --orange:#FF7A00;
+  --orange-soft:#FFF3E7;
+  --purple:#6D5EF8;
+  --purple-soft:#F0EEFF;
+  --shadow:0 18px 40px -30px rgba(20,35,75,.20), 0 6px 16px -14px rgba(20,35,75,.12);
+}
+body{
+  font-family:"PingFang SC",-apple-system,"Segoe UI","Helvetica Neue",sans-serif;
+  background:
+    radial-gradient(760px 420px at 84% -8%, rgba(22,89,229,.10), transparent 54%),
+    radial-gradient(620px 360px at 0% 8%, rgba(22,89,229,.05), transparent 52%),
+    var(--bg);
+  color:var(--ink);
+  font-size:14px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+.app{
+  width:1440px;
+  height:820px;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+.topbar{
+  height:62px;
+  flex:none;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:0 18px;
+  background:rgba(255,255,255,.9);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(215,225,240,.85);
+}
+.tb-brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  min-width:0;
+}
+.tb-logo{
+  width:34px;
+  height:34px;
+  border-radius:10px;
+  display:grid;
+  place-items:center;
+  color:#fff;
+  font-weight:700;
+  font-size:15px;
+  background:linear-gradient(135deg,#1659E5,#5A7BFF);
+  box-shadow:0 10px 20px -10px rgba(22,89,229,.55);
+}
+.tb-logo.has-image,
+.provider-badge.has-image{
+  background:#fff;
+  box-shadow:inset 0 0 0 1px rgba(209,219,233,.92), 0 8px 16px -14px rgba(20,35,75,.18);
+}
+.tb-logo img,
+.provider-badge img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+.tb-logo.has-image{
+  padding:6px;
+}
+.provider-badge.has-image{
+  padding:4px;
+}
+.tb-copy b{
+  display:block;
+  font-size:14px;
+  font-weight:760;
+  letter-spacing:-.02em;
+}
+.tb-copy span{
+  display:block;
+  margin-top:2px;
+  font-size:11px;
+  color:var(--ink-3);
+}
+.tb-tabs{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  margin-left:14px;
+}
+.tb-tab{
+  padding:8px 12px;
+  border-radius:10px;
+  border:1px solid transparent;
+  color:var(--ink-2);
+  font-size:12px;
+  font-weight:650;
+  background:transparent;
+}
+.tb-tab.active{
+  background:var(--blue-soft);
+  color:var(--blue);
+  border-color:rgba(22,89,229,.14);
+}
+.tb-actions{
+  margin-left:auto;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.tb-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:6px 10px;
+  font-size:11px;
+  font-weight:720;
+  color:var(--green);
+  background:var(--green-soft);
+  border-radius:999px;
+}
+.tb-pill i{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 10px rgba(0,181,120,.45);
+}
+.tb-btn{
+  padding:8px 12px;
+  border-radius:10px;
+  border:1px solid var(--line);
+  background:#fff;
+  color:var(--ink-2);
+  font-size:12px;
+  font-weight:700;
+  transition:transform .14s cubic-bezier(.2,0,0,1), border-color .14s ease, background-color .14s ease, box-shadow .14s ease, color .14s ease;
+}
+.tb-btn.primary{
+  border-color:transparent;
+  background:linear-gradient(135deg,#1659E5,#3E74FF);
+  color:#fff;
+  box-shadow:0 10px 24px -14px rgba(22,89,229,.58);
+}
+.shell{
+  flex:1;
+  display:grid;
+  grid-template-columns:276px 1fr;
+  gap:14px;
+  padding:14px;
+  min-height:0;
+}
+.sidebar,
+.workspace{
+  min-height:0;
+}
+.sidebar{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  height:100%;
+}
+.side-card,
+.board{
+  background:rgba(255,255,255,.84);
+  border:1px solid rgba(215,225,240,.86);
+  box-shadow:var(--shadow);
+  border-radius:18px;
+  backdrop-filter:blur(8px);
+}
+.side-card{
+  padding:13px;
+  height:100%;
+  min-height:0;
+  display:flex;
+  flex-direction:column;
+}
+.side-hd{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+}
+.side-hd b{
+  display:block;
+  font-size:13px;
+  font-weight:760;
+  letter-spacing:-.01em;
+}
+.side-hd span{
+  display:block;
+  margin-top:2px;
+  font-size:11px;
+  color:var(--ink-3);
+}
+.side-stat{
+  flex:none;
+  padding:4px 8px;
+  font-size:10.5px;
+  font-weight:720;
+  color:var(--blue);
+  background:var(--blue-soft);
+  border-radius:999px;
+}
+.search{
+  margin-top:12px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 12px;
+  background:var(--soft);
+  border:1px solid var(--line);
+  border-radius:12px;
+  color:var(--ink-3);
+  font-size:12px;
+}
+.search .dot{
+  width:10px;
+  height:10px;
+  border:2px solid currentColor;
+  border-radius:50%;
+  position:relative;
+}
+.search .dot::after{
+  content:"";
+  position:absolute;
+  right:-4px;
+  bottom:-4px;
+  width:5px;
+  height:2px;
+  border-radius:2px;
+  background:currentColor;
+  transform:rotate(45deg);
+}
+.provider-list{
+  margin-top:12px;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  flex:1;
+  min-height:0;
+  overflow:auto;
+  padding-right:4px;
+}
+.provider{
+  width:100%;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 11px;
+  border:1px solid transparent;
+  border-radius:14px;
+  background:#fff;
+  color:var(--ink);
+  text-align:left;
+  transition:transform .16s cubic-bezier(.2,0,0,1), box-shadow .16s ease, border-color .16s ease, background-color .16s ease;
+  cursor:pointer;
+}
+.provider:hover{
+  transform:translateY(-1px);
+  border-color:rgba(22,89,229,.14);
+  box-shadow:0 12px 20px -20px rgba(20,35,75,.28);
+}
+.provider.active{
+  border-color:color-mix(in srgb, var(--accent, var(--blue)) 28%, #D8E2F0);
+  background:linear-gradient(135deg, color-mix(in srgb, var(--accent, var(--blue)) 11%, #FFFFFF), #FFFFFF);
+  box-shadow:0 14px 24px -22px color-mix(in srgb, var(--accent, var(--blue)) 34%, transparent);
+}
+.provider-badge{
+  width:30px;
+  height:30px;
+  flex:none;
+  display:grid;
+  place-items:center;
+  border-radius:10px;
+  font-size:11.5px;
+  font-weight:760;
+  color:#fff;
+  background:linear-gradient(135deg, var(--accent, #1659E5), color-mix(in srgb, var(--accent, #1659E5) 56%, #ffffff));
+  box-shadow:0 10px 18px -12px color-mix(in srgb, var(--accent, #1659E5) 75%, transparent);
+}
+.provider-copy{
+  min-width:0;
+  flex:1;
+}
+.provider-copy b{
+  display:block;
+  font-size:13px;
+  font-weight:720;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.provider-copy span{
+  display:block;
+  margin-top:1px;
+  font-size:11px;
+  color:var(--ink-3);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.provider-arrow{
+  font-size:14px;
+  color:var(--ink-3);
+}
+.hint{
+  margin-top:12px;
+  padding:11px 12px;
+  border-radius:14px;
+  background:linear-gradient(180deg,#F9FBFF,#F4F7FD);
+  border:1px solid var(--line);
+}
+.hint b{
+  display:block;
+  font-size:11.5px;
+  font-weight:760;
+}
+.hint p{
+  margin-top:5px;
+  color:var(--ink-2);
+  font-size:11.5px;
+  line-height:1.55;
+  text-wrap:pretty;
+}
+.workspace{
+  min-width:0;
+}
+.board{
+  height:100%;
+  padding:14px;
+  display:grid;
+  grid-template-rows:auto auto minmax(0,1fr);
+  gap:12px;
+}
+.hero{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 220px;
+  gap:12px;
+}
+.hero-main,
+.hero-side{
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:linear-gradient(180deg,#FFFFFF,#FBFCFF);
+  padding:14px;
+}
+.hero-main{
+  position:relative;
+  overflow:hidden;
+}
+.hero-main::after{
+  content:"";
+  position:absolute;
+  right:-100px;
+  top:-130px;
+  width:220px;
+  height:220px;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(22,89,229,.13), transparent 66%);
+  pointer-events:none;
+}
+.hero-kicker{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:5px 9px;
+  border-radius:999px;
+  background:var(--blue-soft);
+  color:var(--blue);
+  font-size:10.5px;
+  font-weight:760;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.hero-title{
+  margin-top:10px;
+  font-size:26px;
+  line-height:1.08;
+  letter-spacing:-.04em;
+  font-weight:820;
+  text-wrap:balance;
+}
+.hero-desc{
+  margin-top:10px;
+  max-width:60ch;
+  color:var(--ink-2);
+  font-size:13px;
+  line-height:1.6;
+  text-wrap:pretty;
+}
+.hero-meta{
+  margin-top:12px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+.meta-chip{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:6px 10px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:#fff;
+  font-size:11.5px;
+  font-weight:680;
+  color:var(--ink-2);
+}
+.meta-chip i{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--accent, var(--blue));
+}
+.hero-foot{
+  margin-top:12px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+.hero-foot span{
+  color:var(--ink-3);
+  font-size:11.5px;
+}
+.hero-foot b{
+  color:var(--ink);
+  font-size:12.5px;
+}
+.hero-side{
+  display:grid;
+  gap:10px;
+  align-content:start;
+}
+.microstat{
+  padding:11px 12px;
+  border-radius:13px;
+  background:#fff;
+  border:1px solid var(--line);
+}
+.microstat .k{
+  font-size:11px;
+  color:var(--ink-3);
+}
+.microstat .v{
+  margin-top:4px;
+  font-size:18px;
+  font-weight:780;
+  letter-spacing:-.03em;
+  font-variant-numeric:tabular-nums;
+}
+.microstat .s{
+  margin-top:4px;
+  color:var(--ink-2);
+  font-size:11.5px;
+  text-wrap:pretty;
+}
+.toolbar{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  min-width:0;
+}
+.toolbar-left{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.toolbar-title{
+  font-size:12.5px;
+  font-weight:720;
+  color:var(--ink);
+  margin-right:3px;
+}
+.filter{
+  border:none;
+  background:#fff;
+  color:var(--ink-2);
+  border:1px solid var(--line);
+  padding:7px 10px;
+  border-radius:999px;
+  font-size:11.5px;
+  font-weight:680;
+  cursor:pointer;
+  transition:transform .14s cubic-bezier(.2,0,0,1), color .14s ease, background-color .14s ease, border-color .14s ease, box-shadow .14s ease;
+}
+.filter.active{
+  color:#fff;
+  background:linear-gradient(135deg,var(--blue),#4C79FF);
+  border-color:transparent;
+  box-shadow:0 8px 14px -12px rgba(22,89,229,.38);
+}
+.toolbar-right{
+  margin-left:auto;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.toolbar-note{
+  font-size:11.5px;
+  color:var(--ink-3);
+}
+.toolbar-switch{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  padding:7px 10px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:#fff;
+  color:var(--ink-2);
+  font-size:11.5px;
+  font-weight:700;
+}
+.switch-knob{
+  width:28px;
+  height:16px;
+  border-radius:999px;
+  background:rgba(22,89,229,.14);
+  position:relative;
+}
+.switch-knob::after{
+  content:"";
+  position:absolute;
+  right:2px;
+  top:2px;
+  width:12px;
+  height:12px;
+  border-radius:50%;
+  background:var(--blue);
+}
+.content{
+  min-height:0;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 276px;
+  gap:12px;
+}
+.catalog,
+.detail{
+  min-height:0;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:rgba(255,255,255,.92);
+}
+.catalog{
+  padding:12px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.catalog-hd{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:10px;
+  padding:4px 4px 0;
+}
+.catalog-hd b{
+  display:block;
+  font-size:14px;
+  font-weight:760;
+}
+.catalog-hd span{
+  display:block;
+  margin-top:3px;
+  font-size:11.5px;
+  color:var(--ink-3);
+}
+.catalog-tag{
+  flex:none;
+  padding:5px 9px;
+  border-radius:999px;
+  background:var(--soft);
+  border:1px solid var(--line);
+  color:var(--ink-2);
+  font-size:11px;
+  font-weight:700;
+  font-variant-numeric:tabular-nums;
+}
+.model-list{
+  min-height:0;
+  overflow:auto;
+  padding-right:4px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.model-empty{
+  padding:18px 16px;
+  border:1px dashed var(--line-strong);
+  border-radius:16px;
+  background:linear-gradient(180deg,#FFFFFF,#F8FBFF);
+  color:var(--ink-2);
+}
+.model-empty b{
+  display:block;
+  font-size:13px;
+  font-weight:760;
+  color:var(--ink);
+}
+.model-empty span{
+  display:block;
+  margin-top:6px;
+  font-size:11.5px;
+  line-height:1.6;
+  text-wrap:pretty;
+}
+.model-list::-webkit-scrollbar,
+.provider-list::-webkit-scrollbar{
+  width:8px;
+}
+.model-list::-webkit-scrollbar-thumb,
+.provider-list::-webkit-scrollbar-thumb{
+  background:#D7E1F0;
+  border-radius:999px;
+}
+.model{
+  position:relative;
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:10px;
+  padding:12px 14px;
+  border-radius:14px;
+  border:1px solid var(--line);
+  background:linear-gradient(180deg,#FFFFFF,#FBFCFF);
+  cursor:pointer;
+  transition:transform .16s cubic-bezier(.2,0,0,1), border-color .16s ease, box-shadow .16s ease, background-color .16s ease;
+}
+.model:hover{
+  transform:translateY(-1px);
+  border-color:color-mix(in srgb, var(--accent, var(--blue)) 20%, #D8E2F0);
+  box-shadow:0 14px 18px -18px rgba(20,35,75,.24);
+}
+.model.active{
+  border-color:color-mix(in srgb, var(--accent, var(--blue)) 26%, #D8E2F0);
+  background:linear-gradient(135deg, color-mix(in srgb, var(--accent, var(--blue)) 10%, #FFFFFF), #FFFFFF);
+  box-shadow:0 14px 22px -20px color-mix(in srgb, var(--accent, var(--blue)) 28%, transparent);
+}
+.model::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:10px;
+  bottom:10px;
+  width:3px;
+  border-radius:4px;
+  background:transparent;
+}
+.model.active::before{
+  background:var(--accent, var(--blue));
+}
+.model-main{
+  min-width:0;
+}
+.model-title{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.model-title b{
+  font-size:15px;
+  line-height:1.16;
+  letter-spacing:-.02em;
+  text-wrap:balance;
+}
+.model-badge{
+  padding:4px 8px;
+  border-radius:999px;
+  background:color-mix(in srgb, var(--accent, var(--blue)) 10%, #FFFFFF);
+  color:var(--accent, var(--blue));
+  font-size:10.5px;
+  font-weight:760;
+}
+.model-sub{
+  margin-top:5px;
+  color:var(--ink-2);
+  font-size:12px;
+  text-wrap:pretty;
+}
+.model-sub:empty,
+.model-tags:empty,
+.model-meta:empty{
+  display:none;
+}
+.model-tags{
+  margin-top:9px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+}
+.tag{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  padding:4px 8px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:680;
+  color:var(--ink-2);
+  background:var(--soft);
+  border:1px solid var(--line);
+}
+.tag::before{
+  content:"";
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:var(--accent, var(--blue));
+}
+.model-meta{
+  min-width:168px;
+  display:grid;
+  gap:6px;
+  align-content:start;
+}
+.price-row{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:8px;
+  font-size:11.5px;
+  color:var(--ink-2);
+  font-variant-numeric:tabular-nums;
+}
+.price-row strong{
+  color:var(--ink);
+  font-size:12.5px;
+}
+.context{
+  justify-self:end;
+  padding:6px 9px;
+  border-radius:10px;
+  background:#fff;
+  border:1px solid var(--line);
+  font-size:11px;
+  color:var(--ink-2);
+  text-align:right;
+  font-variant-numeric:tabular-nums;
+}
+.detail{
+  padding:14px;
+  display:grid;
+  grid-template-rows:auto auto 1fr;
+  gap:10px;
+}
+.detail-hd{
+  padding:2px 2px 0;
+}
+.detail-hd b{
+  display:block;
+  font-size:14px;
+  font-weight:760;
+}
+.detail-hd span{
+  display:block;
+  margin-top:3px;
+  color:var(--ink-3);
+  font-size:11.5px;
+}
+.detail-card{
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:linear-gradient(180deg,#FFFFFF,#FAFCFF);
+  padding:13px;
+}
+.detail-card h3{
+  font-size:18px;
+  line-height:1.14;
+  letter-spacing:-.03em;
+  text-wrap:balance;
+}
+.detail-card p{
+  margin-top:6px;
+  color:var(--ink-2);
+  font-size:12.5px;
+  line-height:1.55;
+  text-wrap:pretty;
+}
+.detail-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+.mini{
+  padding:10px;
+  border-radius:12px;
+  background:#fff;
+  border:1px solid var(--line);
+}
+.mini.full{
+  grid-column:1 / -1;
+}
+.mini .k{
+  font-size:10.5px;
+  color:var(--ink-3);
+}
+.mini .v{
+  margin-top:4px;
+  font-size:12.5px;
+  font-weight:730;
+  color:var(--ink);
+  font-variant-numeric:tabular-nums;
+  text-wrap:pretty;
+}
+.provider:active,
+.model:active,
+.filter:active,
+.tb-btn:active{
+  transform:scale(.96);
+}
+@media (prefers-reduced-motion:no-preference){
+  .provider,
+  .model{
+    animation:rise .44s cubic-bezier(.22,1,.36,1) both;
+  }
+  .provider:nth-child(2){animation-delay:.03s}
+  .provider:nth-child(3){animation-delay:.06s}
+  .provider:nth-child(4){animation-delay:.09s}
+  .provider:nth-child(5){animation-delay:.12s}
+  .provider:nth-child(6){animation-delay:.15s}
+  .provider:nth-child(7){animation-delay:.18s}
+  .provider:nth-child(8){animation-delay:.21s}
+  .provider:nth-child(9){animation-delay:.24s}
+  .provider:nth-child(10){animation-delay:.27s}
+  .provider:nth-child(11){animation-delay:.30s}
+  .provider:nth-child(12){animation-delay:.33s}
+  .provider:nth-child(13){animation-delay:.36s}
+  .provider:nth-child(14){animation-delay:.39s}
+  .provider:nth-child(15){animation-delay:.42s}
+}
+@keyframes rise{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="topbar">
+    <div class="tb-brand">
+      <span class="tb-logo" id="tbLogo" aria-hidden="true">句</span>
+      <span class="tb-copy">
+        <b>模型设置</b>
+        <span>句子秒懂 · 选择大模型</span>
+      </span>
+    </div>
+    <div class="tb-tabs" aria-hidden="true">
+      <span class="tb-tab">渠道设置</span>
+      <span class="tb-tab">知识库</span>
+      <span class="tb-tab active">模型版本</span>
+      <span class="tb-tab">发布配置</span>
+    </div>
+    <div class="tb-actions">
+      <span class="tb-pill"><i></i>100+ 模型已接入</span>
+      <span class="tb-btn">保存草稿</span>
+      <span class="tb-btn primary">立即切换</span>
+    </div>
+  </div>
+
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="side-card">
+        <div class="side-hd">
+          <div>
+            <b>模型服务商</b>
+            <span>按供应商聚合查看能力、价格与推荐场景</span>
+          </div>
+          <span class="side-stat" id="providerCount">15 家</span>
+        </div>
+        <div class="search">
+          <span class="dot" aria-hidden="true"></span>
+          <span>搜索服务商 / 模型名称</span>
+        </div>
+        <div class="provider-list" id="providerList" role="tablist" aria-label="模型服务商列表"></div>
+        <div class="hint">
+          <b>选型提醒</b>
+          <p>先按任务看能力边界，再比较成本、稳定性与上下文长度，避免单模型锁死交付。</p>
+        </div>
+      </div>
+    </aside>
+
+    <section class="workspace">
+      <div class="board">
+        <div class="hero">
+          <div class="hero-main">
+            <span class="hero-kicker">模型选择中心</span>
+            <h1 class="hero-title" id="heroTitle">按任务选模型，而不是被单一模型绑死</h1>
+            <p class="hero-desc" id="heroDesc"></p>
+            <div class="hero-meta" id="heroMeta"></div>
+            <div class="hero-foot">
+              <span id="heroFoot"></span>
+              <b id="heroBest"></b>
+            </div>
+          </div>
+          <div class="hero-side" id="heroSide"></div>
+        </div>
+
+        <div class="toolbar">
+          <div class="toolbar-left">
+            <span class="toolbar-title">看什么</span>
+            <button class="filter active" type="button" data-filter="all">全部模型</button>
+            <button class="filter" type="button" data-filter="text">文本推理</button>
+            <button class="filter" type="button" data-filter="multi">多模态</button>
+            <button class="filter" type="button" data-filter="tool">工具调用</button>
+            <button class="filter" type="button" data-filter="budget">成本优先</button>
+          </div>
+          <div class="toolbar-right">
+            <span class="toolbar-note" id="filterNote">看清模型边界与成本结构</span>
+            <span class="toolbar-switch"><span class="switch-knob" aria-hidden="true"></span>按任务推荐</span>
+          </div>
+        </div>
+
+        <div class="content">
+          <div class="catalog">
+            <div class="catalog-hd">
+              <div>
+                <b id="catalogTitle">GPT 模型列表</b>
+                <span id="catalogSub">输入价格、输出价格、上下文长度与能力标签一并展示</span>
+              </div>
+              <span class="catalog-tag" id="catalogTag">共 0 个模型</span>
+            </div>
+            <div class="model-list" id="modelList" role="listbox" aria-label="模型列表"></div>
+          </div>
+
+          <aside class="detail">
+            <div class="detail-hd">
+              <b>选中模型</b>
+              <span>像采购清单一样看懂能力、成本与适用场景</span>
+            </div>
+            <div class="detail-card">
+              <h3 id="detailTitle"></h3>
+              <p id="detailDesc"></p>
+            </div>
+            <div class="detail-grid" id="detailGrid"></div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<script>
+const providers = [
+  {
+    key: "gpt",
+    name: "GPT",
+    vendor: "由 OpenAI 提供",
+    short: "GPT",
+    accent: "#1659E5",
+    description: "后台当前已接入 GPT 5.2、GPT 5/5.1、4.1、4o、o1、o3、Codex 等多个系列，价格、缓存和 token 限制按真实后台字段展示。",
+    best: "适合从高质量交付到高频调用、从通用问答到推理模型的分层选型",
+    reliability: "高稳定",
+    latency: "中等延迟",
+    price: "旗舰到 Nano 全覆盖",
+    strengths: ["工具调用", "图片处理", "文件处理", "推理分层"],
+    tasks: [
+      ["复杂流程", "优先看 GPT 5.2、GPT 5.1、o1、o3 等高质量版本"],
+      ["高频成本", "Mini / Nano / mini 系列更适合批量节点和工作台调用"],
+      ["工具协同", "后台已明确标出工具调用、图片处理、文件处理等真实能力标签"]
+    ],
+    models: [
+      { name:"GPT 5.2", badge:"旗舰", subtitle:"后台展示为 GPT 5.2 主版本，适合高要求交付任务。", input:"$1.75/M", output:"$14/M", cache:"$0.175/M", context:"400k", tags:["text","multi","tool"], ability:["工具调用","图片处理"], detail:"按后台实录展示：已标注工具调用、图片处理、缓存价格和 400k token 限制。"},
+      { name:"GPT 5.2 Chat", badge:"对话", subtitle:"Chat 版本保留高质量输出，但上下文限制更短。", input:"$1.75/M", output:"$14/M", cache:"$0.175/M", context:"128k", tags:["text","multi","tool"], ability:["工具调用","图片处理"], detail:"适合需要对话形态但仍要保留 GPT 5.2 能力层级的场景。"},
+      { name:"GPT 5(0807)", badge:"通用", subtitle:"后台显示已开放工具调用、图片处理和文件处理。", input:"$1.25/M", output:"$10/M", cache:"$0.125/M", context:"400k", tags:["text","multi","tool"], ability:["工具调用","图片处理","文件处理"], detail:"适合常规企业工作流和文件协同类任务。"},
+      { name:"GPT 5 Mini(0807)", badge:"性价比", subtitle:"Mini 版本价格明显下探，适合高频标准化调用。", input:"$0.25/M", output:"$2/M", cache:"$0.025/M", context:"400k", tags:["text","multi","tool","budget"], ability:["工具调用","图片处理","文件处理"], detail:"适合客服问答、基础节点执行和成本敏感型流程。"},
+      { name:"GPT 5 Nano(0807)", badge:"极低成本", subtitle:"Nano 是当前截图里 GPT 系列最低成本档。", input:"$0.05/M", output:"$0.4/M", cache:"$0.005/M", context:"400k", tags:["text","multi","tool","budget"], ability:["工具调用","图片处理","文件处理"], detail:"适合批量处理、轻量分发和成本优先型任务。"},
+      { name:"GPT 5 Chat(latest)", badge:"最新对话", subtitle:"后台展示为 latest 对话版，同时支持文件处理。", input:"$1.25/M", output:"$10/M", cache:"$0.125/M", context:"400k", tags:["text","multi","tool"], ability:["工具调用","图片处理","文件处理"], detail:"适合工作台类场景和对话型 Agent。"},
+      { name:"GPT 5.1", badge:"稳定版", subtitle:"后台实录显示已支持工具、图片、文件三类能力。", input:"$1.25/M", output:"$10/M", cache:"$0.125/M", context:"400k", tags:["text","multi","tool"], ability:["工具调用","图片处理","文件处理"], detail:"适合偏稳定交付的主力版本。"},
+      { name:"GPT 5.1 Chat", badge:"对话", subtitle:"后台展示了价格、缓存与 128k 上下文。", input:"$1.25/M", output:"$10/M", cache:"$0.125/M", context:"128k", tags:["text","multi","tool"], ability:["工具调用","图片处理","文件处理"], detail:"适合会话型场景，版式按后台原字段保留。"},
+      { name:"GPT 5.1 Codex", badge:"Codex", subtitle:"Codex 版本在后台同样展示了工具、图片和文件处理。", input:"$1.25/M", output:"$10/M", cache:"$0.125/M", context:"400k", tags:["text","multi","tool"], ability:["工具调用","图片处理","文件处理"], detail:"适合代码相关协作和文件型任务。"},
+      { name:"GPT 5.1 Codex Mini", badge:"Codex Mini", subtitle:"Codex Mini 适合成本更可控的开发辅助调用。", input:"$0.25/M", output:"$2/M", cache:"$0.025/M", context:"400k", tags:["text","multi","tool","budget"], ability:["工具调用","图片处理","文件处理"], detail:"适合批量代码辅助、脚本生成和文件处理节点。"},
+      { name:"GPT-4.1(0414)", badge:"4.1", subtitle:"后台实录显示 4.1 系列有 1M token 限制。", input:"$2/M", output:"$8/M", cache:"$0.5/M", context:"1M", tags:["text","multi","tool"], ability:["工具调用","图片处理","文件处理"], detail:"适合需要更长上下文的工作流和知识密集型任务。"},
+      { name:"GPT-4.1 mini(0414)", badge:"4.1 Mini", subtitle:"4.1 Mini 保留 1M 上下文，同时价格更低。", input:"$0.4/M", output:"$1.6/M", cache:"$0.1/M", context:"1M", tags:["text","multi","tool","budget"], ability:["工具调用","图片处理","文件处理"], detail:"适合长上下文且更看重成本效率的场景。"},
+      { name:"GPT-4.1 nano(0414)", badge:"4.1 Nano", subtitle:"4.1 Nano 是长上下文下更轻量的一档。", input:"$0.1/M", output:"$0.4/M", cache:"$0.025/M", context:"1M", tags:["text","multi","tool","budget"], ability:["工具调用","图片处理","文件处理"], detail:"适合轻量长文任务和批量调用。"},
+      { name:"o4 mini(04-16)", badge:"推理 Mini", subtitle:"后台截图显示支持工具调用与图片处理。", input:"$1.1/M", output:"$4.4/M", cache:"$0.275/M", context:"200k", tags:["text","multi","tool","budget"], ability:["工具调用","图片处理"], detail:"适合在推理能力和成本之间做平衡。"},
+      { name:"GPT-4 Turbo(0409)", badge:"历史版本", subtitle:"后台当前仅展示模型名，未展示价格和能力标签。", tags:["text"], ability:[], detail:"按你的规则，这里保留为后台原样：只有模型名，没有价格、标签和上下文字段。"},
+      { name:"GPT-4o(0513)", badge:"4o", subtitle:"后台展示了输入/输出价格和 128k token 限制。", input:"$5/M", output:"$15/M", context:"128k", tags:["text","multi","tool"], ability:["工具调用","图片处理","文件处理"], detail:"这一版后台未显示缓存价格，所以前台按原样不补。"},
+      { name:"GPT-4o(0806)", badge:"4o", subtitle:"后台展示为含缓存价格的 4o 版本。", input:"$2.5/M", output:"$10/M", cache:"$1.25/M", context:"128k", tags:["text","multi","tool"], ability:["工具调用","图片处理","文件处理"], detail:"适合中高质量多模态和文件处理任务。"},
+      { name:"GPT-4o(1120)", badge:"4o", subtitle:"后台字段与 0806 版本一致。", input:"$2.5/M", output:"$10/M", cache:"$1.25/M", context:"128k", tags:["text","multi","tool"], ability:["工具调用","图片处理","文件处理"], detail:"适合图文问答和工具协同场景。"},
+      { name:"GPT-4o mini(0718)", badge:"4o Mini", subtitle:"更低成本的 4o mini 版本。", input:"$0.15/M", output:"$0.6/M", cache:"$0.075/M", context:"128k", tags:["text","multi","tool","budget"], ability:["工具调用","图片处理","文件处理"], detail:"适合高频多模态调用和轻量工作台任务。"},
+      { name:"o1 Preview 09-12", badge:"预览", subtitle:"后台当前仅展示模型名，未展示价格和能力标签。", tags:["text"], ability:[], detail:"这里保持后台原状展示，不额外补充未出现的字段。"},
+      { name:"o1 mini 09-12", badge:"o1 Mini", subtitle:"后台展示了价格、缓存和 128k token 限制，但未展示能力标签。", input:"$1.1/M", output:"$4.4/M", cache:"$0.55/M", context:"128k", tags:["text","budget"], ability:[], detail:"按后台真实字段展示：有价格和上下文，但没有能力标签。"},
+      { name:"o1(12-17)", badge:"推理", subtitle:"后台展示支持工具调用和图片处理。", input:"$15/M", output:"$60/M", cache:"$7.5/M", context:"200k", tags:["text","multi","tool"], ability:["工具调用","图片处理"], detail:"适合高价值推理和复杂问题求解。"},
+      { name:"o3 mini(01-31)", badge:"推理 Mini", subtitle:"后台仅标注了工具调用能力。", input:"$1.1/M", output:"$4.4/M", cache:"$0.55/M", context:"200k", tags:["text","tool","budget"], ability:["工具调用"], detail:"适合需要推理能力但更关注成本控制的场景。"},
+      { name:"o3(04-16)", badge:"推理", subtitle:"后台显示支持工具调用和图片处理。", input:"$2/M", output:"$8/M", cache:"$0.5/M", context:"200k", tags:["text","multi","tool"], ability:["工具调用","图片处理"], detail:"适合中高复杂度推理任务。"},
+      { name:"o3 pro(06-10)", badge:"高阶推理", subtitle:"后台截图展示了工具调用、图片处理及输入输出价格。", input:"$20/M", output:"$80/M", tags:["text","multi","tool"], ability:["工具调用","图片处理"], detail:"当前截图未展示缓存价格和 token 限制，因此前台不额外补充。"}
+    ]
+  },
+  {
+    key: "doubao",
+    name: "豆包",
+    vendor: "由字节跳动提供",
+    short: "豆",
+    accent: "#7B5CFF",
+    description: "后台当前已识别到豆包 Seed 2.1、2.0、1.8、1.6、1.5 以及 Pro / Lite / 视觉系列多个版本，价格字段包含固定计费、梯度计费和仅名称展示三种情况。",
+    best: "适合中文业务、多模态生产、音视频处理以及不同成本档位的分层选型",
+    reliability: "高并发友好",
+    latency: "低延迟",
+    price: "固定价 + 梯度计费",
+    strengths: ["工具调用", "图片处理", "视频处理", "音频处理"],
+    tasks: [
+      ["多模态生成", "Seed 系列从 2.1 到 1.6 都已在后台标出图片、视频、文件等真实能力"],
+      ["中文业务", "适合中文客服、内容生产、企业助手和工作台型场景"],
+      ["成本分层", "2.1 / 2.0 / 1.8 / 1.6 / 1.5 与 Pro / Lite 系列可以按预算持续下钻"]
+    ],
+    models: [
+      { name:"豆包Seed 2.1 Pro", badge:"旗舰", subtitle:"后台展示支持工具调用、图片处理、视频处理和文件处理。", input:"¥6/M", output:"¥30/M", cache:"¥1.2/M", context:"256k", tags:["text","multi","tool"], ability:["工具调用","图片处理","视频处理","文件处理"], detail:"适合高质量多模态生成、复杂工作流和高价值业务任务。"},
+      { name:"豆包Seed 2.1 Turbo", badge:"高频", subtitle:"同样支持多模态与文件处理，但价格更低。", input:"¥3/M", output:"¥15/M", cache:"¥0.6/M", context:"256k", tags:["text","multi","tool"], ability:["工具调用","图片处理","视频处理","文件处理"], detail:"适合更高频的生产场景和成本敏感型多模态流程。"},
+      { name:"豆包Seed 2.0 Mini (260428)", badge:"梯度计费", subtitle:"后台展示为梯度计费版本，并开放音频处理。", note:"梯度计费", input:"¥0.2-0.8/M", output:"¥2-8/M", context:"256k", tags:["text","multi","tool","budget"], ability:["工具调用","图片处理","视频处理","音频处理","文件处理"], detail:"适合批量多模态处理和更看重成本弹性的场景。"},
+      { name:"豆包Seed 2.0 Lite (260428)", badge:"梯度计费", subtitle:"后台展示为梯度计费，能力标签覆盖音视频与文件。", note:"梯度计费", input:"¥0.6-1.8/M", output:"¥3.6-10.8/M", context:"256k", tags:["text","multi","tool","budget"], ability:["工具调用","图片处理","视频处理","音频处理","文件处理"], detail:"适合更高质量的多模态任务，同时保留梯度计费结构。"},
+      { name:"豆包Seed 2.0 Mini", badge:"梯度计费", subtitle:"未带日期版本号，但后台字段与 260428 版一致。", note:"梯度计费", input:"¥0.2-0.8/M", output:"¥2-8/M", context:"256k", tags:["text","multi","tool","budget"], ability:["工具调用","图片处理","视频处理","音频处理","文件处理"], detail:"适合音视频与文件处理并存的轻量多模态任务。"},
+      { name:"豆包Seed 2.0 Lite", badge:"梯度计费", subtitle:"后台展示的 Lite 版本同样保留音视频和文件处理。", note:"梯度计费", input:"¥0.6-1.8/M", output:"¥3.6-10.8/M", context:"256k", tags:["text","multi","tool","budget"], ability:["工具调用","图片处理","视频处理","音频处理","文件处理"], detail:"适合多模态生产流程和更稳一点的 Lite 档调用。"},
+      { name:"豆包Seed 2.0 Pro", badge:"梯度计费", subtitle:"后台展示为更高档位的 2.0 Pro，能力覆盖到视频和文件。", note:"梯度计费", input:"¥3.2-9.6/M", output:"¥16-48/M", context:"256k", tags:["text","multi","tool"], ability:["工具调用","图片处理","视频处理","文件处理"], detail:"适合更复杂的多模态生成和流程执行任务。"},
+      { name:"豆包Seed 2.0 Code", badge:"Code", subtitle:"后台截图显示与 2.0 Pro 接近的价格带和多模态标签。", note:"梯度计费", input:"¥3.2-9.6/M", output:"¥16-48/M", context:"256k", tags:["text","multi","tool"], ability:["工具调用","图片处理","视频处理","文件处理"], detail:"适合代码协作、文件处理和多模态任务混合场景。"},
+      { name:"豆包Seed 1.8", badge:"梯度计费", subtitle:"后台展示支持工具调用、图片处理、视频处理和文件处理。", note:"梯度计费", input:"¥0.8-2.4/M", output:"¥8-24/M", context:"256k", tags:["text","multi","tool"], ability:["工具调用","图片处理","视频处理","文件处理"], detail:"适合上一代 Seed 主力档位任务。"},
+      { name:"豆包Seed 1.6 Flash", badge:"梯度计费", subtitle:"Flash 版本价格更低，适合高频多模态调用。", note:"梯度计费", input:"¥0.15-0.6/M", output:"¥1.5-6/M", context:"256k", tags:["text","multi","tool","budget"], ability:["工具调用","图片处理","视频处理","文件处理"], detail:"适合更高频、成本更敏感的多模态工作流。"},
+      { name:"豆包Seed 1.6", badge:"梯度计费", subtitle:"后台展示为标准 1.6 版本。", note:"梯度计费", input:"¥0.8-2.4/M", output:"¥8-24/M", context:"256k", tags:["text","multi","tool"], ability:["工具调用","图片处理","视频处理","文件处理"], detail:"适合稳态多模态与工具协同任务。"},
+      { name:"豆包Seed 1.6 思考", badge:"思考", subtitle:"后台当前仅展示模型名。", tags:["text"], ability:[], detail:"按后台原样展示：当前截图未出现价格、缓存、上下文和能力标签。"},
+      { name:"豆包Pro 4k", badge:"Pro", subtitle:"后台当前仅展示模型名。", tags:["text"], ability:[], detail:"按后台原样展示：当前截图未出现价格、缓存、上下文和能力标签。"},
+      { name:"豆包Pro 32k", badge:"Pro", subtitle:"后台当前仅展示模型名。", tags:["text"], ability:[], detail:"按后台原样展示：当前截图未出现价格、缓存、上下文和能力标签。"},
+      { name:"豆包Pro 128k", badge:"Pro", subtitle:"后台当前仅展示模型名。", tags:["text"], ability:[], detail:"按后台原样展示：当前截图未出现价格、缓存、上下文和能力标签。"},
+      { name:"豆包Lite 4k", badge:"Lite", subtitle:"后台当前仅展示模型名。", tags:["text","budget"], ability:[], detail:"按后台原样展示：当前截图未出现价格、缓存、上下文和能力标签。"},
+      { name:"豆包Lite 32k", badge:"Lite", subtitle:"后台当前仅展示模型名。", tags:["text","budget"], ability:[], detail:"按后台原样展示：当前截图未出现价格、缓存、上下文和能力标签。"},
+      { name:"豆包Lite 128k", badge:"Lite", subtitle:"后台当前仅展示模型名。", tags:["text","budget"], ability:[], detail:"按后台原样展示：当前截图未出现价格、缓存、上下文和能力标签。"},
+      { name:"豆包视觉Pro 32k", badge:"视觉", subtitle:"后台当前仅展示模型名。", tags:["multi"], ability:[], detail:"按后台原样展示：当前截图未出现价格、缓存、上下文和能力标签。"},
+      { name:"豆包视觉Lite 32k", badge:"视觉", subtitle:"后台当前仅展示模型名。", tags:["multi","budget"], ability:[], detail:"按后台原样展示：当前截图未出现价格、缓存、上下文和能力标签。"},
+      { name:"豆包1.5 Lite 32k", badge:"1.5 Lite", subtitle:"后台展示支持工具调用。", input:"¥0.3/M", output:"¥0.6/M", cache:"¥0.06/M", context:"32k", tags:["text","tool","budget"], ability:["工具调用"], detail:"适合基础问答和轻量工作流。"},
+      { name:"豆包1.5 Pro 32k", badge:"1.5 Pro", subtitle:"后台展示支持工具调用。", input:"¥0.8/M", output:"¥2/M", cache:"¥0.16/M", context:"32k", tags:["text","tool"], ability:["工具调用"], detail:"适合更高质量的文本和工具协同任务。"},
+      { name:"豆包1.5 视觉Pro 32k", badge:"1.5 视觉", subtitle:"后台展示支持工具调用和图片处理。", input:"¥3/M", output:"¥9/M", context:"32k", tags:["multi","tool"], ability:["工具调用","图片处理"], detail:"适合图像理解与视觉增强场景。"},
+      { name:"豆包1.5 Pro 256k", badge:"1.5 Pro", subtitle:"后台当前仅展示模型名。", tags:["text"], ability:[], detail:"按后台原样展示：当前截图未出现价格、缓存、上下文和能力标签。"},
+      { name:"豆包1.5 思考Pro 视觉", badge:"1.5 思考", subtitle:"后台当前仅展示模型名。", tags:["multi"], ability:[], detail:"按后台原样展示：当前截图未出现价格、缓存、上下文和能力标签。"},
+      { name:"豆包1.5 思考Pro", badge:"1.5 思考", subtitle:"后台当前仅展示模型名。", tags:["text"], ability:[], detail:"按后台原样展示：当前截图未出现价格、缓存、上下文和能力标签。"}
+    ]
+  },
+  {
+    key: "claude",
+    name: "Claude",
+    vendor: "由 Anthropic 提供",
+    short: "CL",
+    accent: "#A76A35",
+    description: "后台当前已识别到 Claude 5、4.6、4.5、4、3.7、3.5、3、Opus、Sonnet、Haiku 多条产品线，价格同时包含梯度计费和固定价两类展示方式。",
+    best: "适合长上下文知识任务、制度解读、复杂分析和高质量文本生成",
+    reliability: "稳健输出",
+    latency: "中等偏快",
+    price: "梯度计费 + 固定价并存",
+    strengths: ["工具调用", "图片处理", "文件处理", "长上下文"],
+    tasks: [
+      ["知识库问答", "1M 和 200k 两档上下文很适合长文档问答与制度检索"],
+      ["制度解读", "Sonnet / Opus 系列适合高质量长文总结与策略分析"],
+      ["复杂分析", "Opus 档位更适合高价值推理与专家型回答"]
+    ],
+    models: [
+      { name:"Claude 5 Sonnet", badge:"梯度计费", subtitle:"后台展示支持工具调用、图片处理和文件处理。", note:"梯度计费", input:"$3-6/M", output:"$15-22.5/M", context:"1M", tags:["text","multi","tool"], ability:["工具调用","图片处理","文件处理"], detail:"适合长上下文知识助手和高质量文本生成。"},
+      { name:"Claude 4.6 Sonnet", badge:"梯度计费", subtitle:"后台字段与 Claude 5 Sonnet 接近。", note:"梯度计费", input:"$3-6/M", output:"$15-22.5/M", context:"1M", tags:["text","multi","tool"], ability:["工具调用","图片处理","文件处理"], detail:"适合制度解读、知识问答和长文整理。"},
+      { name:"Claude 4.6 Opus", badge:"梯度计费", subtitle:"后台展示为更高档位的 Opus。", note:"梯度计费", input:"$5-10/M", output:"$25-37.5/M", context:"1M", tags:["text","multi","tool"], ability:["工具调用","图片处理","文件处理"], detail:"适合更复杂的分析和推理任务。"},
+      { name:"Claude 4.5 Sonnet", badge:"梯度计费", subtitle:"后台同样展示 Sonnet 梯度计费。", note:"梯度计费", input:"$3-6/M", output:"$15-22.5/M", context:"1M", tags:["text","multi","tool"], ability:["工具调用","图片处理","文件处理"], detail:"适合复杂文本生成和长文任务。"},
+      { name:"Claude 4.5 Haiku", badge:"Haiku", subtitle:"后台展示支持工具调用、图片处理和文件处理。", input:"$1/M", output:"$5/M", cache:"$0.1/M", context:"200k", tags:["text","multi","tool","budget"], ability:["工具调用","图片处理","文件处理"], detail:"适合高频基础问答和成本敏感场景。"},
+      { name:"Claude 4 Sonnet", badge:"梯度计费", subtitle:"后台展示支持工具调用、图片处理和文件处理。", note:"梯度计费", input:"$3-6/M", output:"$15-22.5/M", context:"1M", tags:["text","multi","tool"], ability:["工具调用","图片处理","文件处理"], detail:"适合知识问答和长上下文整理任务。"},
+      { name:"Claude 3.7 Sonnet", badge:"Sonnet", subtitle:"后台展示为固定价格版本。", input:"$3/M", output:"$15/M", cache:"$0.3/M", context:"200k", tags:["text","multi","tool"], ability:["工具调用","图片处理","文件处理"], detail:"适合多轮对话、文档总结和专家助手。"},
+      { name:"Claude 3.5 Sonnet v2", badge:"Sonnet", subtitle:"后台截图已识别到 v2 版本。", input:"$3/M", output:"$15/M", cache:"$0.3/M", context:"200k", tags:["text","multi","tool"], ability:["工具调用","图片处理"], detail:"适合延续旧版 Sonnet 工作流和文本型任务。"},
+      { name:"Claude 3.5 Sonnet", badge:"Sonnet", subtitle:"后台展示支持工具调用和图片处理。", input:"$3/M", output:"$15/M", cache:"$0.3/M", context:"200k", tags:["text","multi","tool"], ability:["工具调用","图片处理"], detail:"适合标准化高质量问答和内容生成。"},
+      { name:"Claude 3.5 Haiku", badge:"Haiku", subtitle:"后台展示为更低成本版本。", input:"$0.8/M", output:"$4/M", cache:"$0.08/M", context:"200k", tags:["text","multi","tool","budget"], ability:["工具调用","图片处理"], detail:"适合高频调用和轻量文本任务。"},
+      { name:"Claude 3 Haiku", badge:"Haiku", subtitle:"后台展示支持工具调用和图片处理。", input:"$0.25/M", output:"$1.25/M", cache:"$0.03/M", context:"200k", tags:["text","multi","tool","budget"], ability:["工具调用","图片处理"], detail:"适合极低成本的基础问答和分发节点。"},
+      { name:"Claude 3 Sonnet", badge:"Sonnet", subtitle:"后台展示支持工具调用和图片处理。", input:"$3/M", output:"$15/M", cache:"$0.3/M", context:"200k", tags:["text","multi","tool"], ability:["工具调用","图片处理"], detail:"适合中高质量文本和多轮问答。"},
+      { name:"Claude 3 Opus", badge:"Opus", subtitle:"后台展示为固定价格高阶版本。", input:"$15/M", output:"$75/M", cache:"$1.5/M", context:"200k", tags:["text","multi","tool"], ability:["工具调用","图片处理"], detail:"适合高价值分析和复杂推理任务。"},
+      { name:"Claude 4 Opus", badge:"Opus", subtitle:"后台展示支持文件处理。", input:"$15/M", output:"$75/M", cache:"$1.5/M", context:"200k", tags:["text","multi","tool"], ability:["工具调用","图片处理","文件处理"], detail:"适合高质量分析、知识整合与复杂文件任务。"},
+      { name:"Claude 4.1 Opus", badge:"Opus", subtitle:"后台展示支持文件处理。", input:"$15/M", output:"$75/M", cache:"$1.5/M", context:"200k", tags:["text","multi","tool"], ability:["工具调用","图片处理","文件处理"], detail:"适合高价值长文分析和专家型场景。"}
+    ]
+  },
+  {
+    key: "gemini",
+    name: "Gemini",
+    vendor: "由谷歌提供",
+    short: "GM",
+    accent: "#2563FF",
+    description: "后台当前已识别到 Gemini 3.5、3.1、3、2.5、2.0、1.5 多个版本，字段同时包含固定计费、梯度计费和仅名称展示三种后台状态。",
+    best: "适合图文、视频、音频、文件并存的多模态任务，以及长上下文资料处理场景",
+    reliability: "多模态强",
+    latency: "中等",
+    price: "固定价 + 梯度计费",
+    strengths: ["工具调用", "图片处理", "视频处理", "音频处理"],
+    tasks: [
+      ["资料审核", "Gemini 系列在后台明确区分了图像、视频、音频、文件等多模态能力"],
+      ["视频脚本", "适合视频理解、截图分析和多媒体内容处理"],
+      ["复杂问答", "1M 上下文版本适合长资料阅读与复杂问答"]
+    ],
+    models: [
+      { name:"Gemini 3.5 Flash", badge:"3.5 Flash", subtitle:"后台展示支持工具调用、图片处理、视频处理、音频处理和文件处理。", input:"$1.5/M", output:"$9/M", cache:"$0.15/M", context:"1M", tags:["text","multi","tool"], ability:["工具调用","图片处理","视频处理","音频处理","文件处理"], detail:"适合高频多模态任务和较长上下文工作流。"},
+      { name:"Gemini 3.1 Pro Preview", badge:"梯度计费", subtitle:"后台展示为梯度计费 Pro Preview。", note:"梯度计费", input:"$2-4/M", output:"$12-18/M", context:"1M", tags:["text","multi","tool"], ability:["工具调用","图片处理","视频处理","音频处理","文件处理"], detail:"适合预览版高质量多模态和长上下文任务。"},
+      { name:"Gemini 3.1 Pro Preview (Custom Tools)", badge:"梯度计费", subtitle:"后台展示为支持自定义工具的 Pro Preview 版本。", note:"梯度计费", input:"$2-4/M", output:"$12-18/M", context:"1M", tags:["text","multi","tool"], ability:["工具调用","图片处理","视频处理","音频处理","文件处理"], detail:"适合需要自定义工具与多模态协同的复杂场景。"},
+      { name:"Gemini 3.1 Flash Lite", badge:"Flash Lite", subtitle:"后台展示支持完整多模态与文件处理。", input:"$0.25/M", output:"$1.5/M", context:"1M", tags:["text","multi","tool","budget"], ability:["工具调用","图片处理","视频处理","音频处理","文件处理"], detail:"适合成本更可控的多模态生产任务。"},
+      { name:"Gemini 3.1 Flash Lite Preview", badge:"Preview", subtitle:"后台当前仅展示模型名。", tags:["multi","budget"], ability:[], detail:"按后台原样展示：当前截图未出现价格、缓存、上下文和能力标签。"},
+      { name:"Gemini 3 Flash Preview", badge:"Flash Preview", subtitle:"后台展示支持工具调用、图片处理、视频处理和音频处理。", input:"$0.5/M", output:"$3/M", context:"1M", tags:["text","multi","tool","budget"], ability:["工具调用","图片处理","视频处理","音频处理"], detail:"适合预览版高频多模态调用。"},
+      { name:"Gemini 3 Pro Preview", badge:"Preview", subtitle:"后台当前仅展示模型名。", tags:["multi"], ability:[], detail:"按后台原样展示：当前截图未出现价格、缓存、上下文和能力标签。"},
+      { name:"Gemini 2.5 Pro", badge:"梯度计费", subtitle:"后台展示支持工具调用、图片处理、视频处理、音频处理和文件处理。", note:"梯度计费", input:"$1.25-2.5/M", output:"$10-15/M", context:"1M", tags:["text","multi","tool"], ability:["工具调用","图片处理","视频处理","音频处理","文件处理"], detail:"适合复杂多模态处理和长上下文任务。"},
+      { name:"Gemini 2.5 Flash", badge:"2.5 Flash", subtitle:"后台展示支持工具调用、图片处理、视频处理、音频处理和文件处理。", input:"$0.3/M", output:"$2.5/M", context:"1M", tags:["text","multi","tool","budget"], ability:["工具调用","图片处理","视频处理","音频处理","文件处理"], detail:"适合高频多模态工作流和实时交互。"},
+      { name:"Gemini 2.5 Flash Lite Preview", badge:"Preview", subtitle:"后台当前仅展示模型名。", tags:["multi","budget"], ability:[], detail:"按后台原样展示：当前截图未出现价格、缓存、上下文和能力标签。"},
+      { name:"Gemini 2.5 Flash Preview", badge:"Preview", subtitle:"后台当前仅展示模型名。", tags:["multi"], ability:[], detail:"按后台原样展示：当前截图未出现价格、缓存、上下文和能力标签。"},
+      { name:"Gemini 2.5 Pro Preview", badge:"Preview", subtitle:"后台当前仅展示模型名。", tags:["multi"], ability:[], detail:"按后台原样展示：当前截图未出现价格、缓存、上下文和能力标签。"},
+      { name:"Gemini 2.5 Pro Exp", badge:"Exp", subtitle:"后台当前仅展示模型名。", tags:["multi"], ability:[], detail:"按后台原样展示：当前截图未出现价格、缓存、上下文和能力标签。"},
+      { name:"Gemini 2.0 flash", badge:"2.0", subtitle:"后台当前仅展示模型名。", tags:["multi"], ability:[], detail:"按后台原样展示：当前截图未出现价格、缓存、上下文和能力标签。"},
+      { name:"Gemini 2.0 flash exp", badge:"2.0 Exp", subtitle:"后台当前仅展示模型名。", tags:["multi"], ability:[], detail:"按后台原样展示：当前截图未出现价格、缓存、上下文和能力标签。"},
+      { name:"Gemini 2.0 flash lite", badge:"2.0 Lite", subtitle:"后台当前仅展示模型名。", tags:["multi","budget"], ability:[], detail:"按后台原样展示：当前截图未出现价格、缓存、上下文和能力标签。"},
+      { name:"Gemini 1.5 flash", badge:"1.5", subtitle:"后台当前仅展示模型名。", tags:["multi"], ability:[], detail:"按后台原样展示：当前截图未出现价格、缓存、上下文和能力标签。"},
+      { name:"Gemini 1.5 flash 8b", badge:"1.5 8B", subtitle:"后台当前仅展示模型名。", tags:["multi","budget"], ability:[], detail:"按后台原样展示：当前截图未出现价格、缓存、上下文和能力标签。"},
+      { name:"Gemini 1.5 pro", badge:"1.5 Pro", subtitle:"后台当前仅展示模型名。", tags:["multi"], ability:[], detail:"按后台原样展示：当前截图未出现价格、缓存、上下文和能力标签。"}
+    ]
+  },
+  {
+    key: "qwen",
+    name: "通义千问",
+    vendor: "由阿里云提供",
+    short: "QW",
+    accent: "#695BFF",
+    description: "后台当前已识别到千问 3、3.5、Turbo、Plus、Max、Omni、VL、Coder、QwQ 等多条产品线，字段同时覆盖梯度计费、固定价和仅名称展示。",
+    best: "适合中文业务、多模态输入、代码生成以及不同上下文长度下的企业级分层选型",
+    reliability: "企业生态友好",
+    latency: "中低延迟",
+    price: "固定价 + 梯度计费",
+    strengths: ["工具调用", "图片处理", "视频处理", "音频处理"],
+    tasks: [
+      ["企业助手", "适合中文业务系统、企业平台和内部知识助手"],
+      ["代码 Copilot", "Coder 系列更适合代码生成与研发辅助场景"],
+      ["多模态质检", "Omni / VL 系列适合图文、音视频混合输入任务"]
+    ],
+    models: [
+      { name:"千问 3 Max(0123)", badge:"梯度计费", subtitle:"后台展示支持工具调用。", note:"梯度计费", input:"¥2.5-7/M", output:"¥10-28/M", context:"252k", tags:["text","tool"], ability:["工具调用"], detail:"适合更高质量的中文问答与复杂任务。"},
+      { name:"千问 3 Max", badge:"梯度计费", subtitle:"后台同样展示为工具调用型梯度计费版本。", note:"梯度计费", input:"¥2.5-7/M", output:"¥10-28/M", context:"252k", tags:["text","tool"], ability:["工具调用"], detail:"适合企业级主力中文任务和长文本处理。"},
+      { name:"千问 3 Omni Flash", badge:"Omni", subtitle:"后台展示支持工具调用、图片处理、视频处理和音频处理。", input:"¥3.3/M", output:"¥12.7/M", context:"64k", tags:["multi","tool"], ability:["工具调用","图片处理","视频处理","音频处理"], detail:"适合实时多模态输入和前台交互任务。"},
+      { name:"千问 3 VL Plus", badge:"梯度计费", subtitle:"后台展示支持工具调用和图片处理。", note:"梯度计费", input:"¥1-3/M", output:"¥10-30/M", context:"256k", tags:["multi","tool"], ability:["工具调用","图片处理"], detail:"适合视觉理解、图文审核和多模态解析。"},
+      { name:"千问 3 Coder Plus", badge:"梯度计费", subtitle:"后台展示为代码增强版本。", note:"梯度计费", input:"¥4-20/M", output:"¥16-200/M", context:"1M", tags:["text","tool"], ability:["工具调用"], detail:"适合代码生成、研发辅助和长上下文开发任务。"},
+      { name:"千问 3 Coder Flash", badge:"梯度计费", subtitle:"后台展示为更高频的 Coder 版本。", note:"梯度计费", input:"¥1-5/M", output:"¥4-25/M", context:"1M", tags:["text","tool","budget"], ability:["工具调用"], detail:"适合高频代码补全和工程协作任务。"},
+      { name:"千问 Turbo", badge:"Turbo", subtitle:"后台展示支持工具调用。", input:"¥0.3/M", output:"¥0.6/M", context:"8k", tags:["text","tool","budget"], ability:["工具调用"], detail:"适合短上下文、高频基础问答。"},
+      { name:"千问 Plus", badge:"Plus", subtitle:"后台展示支持工具调用。", input:"¥0.8/M", output:"¥2/M", context:"32k", tags:["text","tool"], ability:["工具调用"], detail:"适合标准中文助手与流程节点。"},
+      { name:"千问 Plus 最新", badge:"Plus", subtitle:"后台展示支持工具调用。", input:"¥0.8/M", output:"¥2/M", context:"128k", tags:["text","tool"], ability:["工具调用"], detail:"适合更长上下文的中文业务任务。"},
+      { name:"千问 Max", badge:"Max", subtitle:"后台展示支持工具调用。", input:"¥2.4/M", output:"¥9.6/M", context:"8k", tags:["text","tool"], ability:["工具调用"], detail:"适合短上下文高质量问答。"},
+      { name:"千问 Max 最新", badge:"Max", subtitle:"后台展示支持工具调用。", input:"¥2.4/M", output:"¥9.6/M", context:"32k", tags:["text","tool"], ability:["工具调用"], detail:"适合更长上下文的高质量中文任务。"},
+      { name:"千问 QwQ Plus", badge:"QwQ", subtitle:"后台展示了固定价格和上下文，但未展示能力标签。", input:"¥1.6/M", output:"¥4/M", context:"128k", tags:["text"], ability:[], detail:"按后台真实字段展示：有价格和上下文，但当前截图未显示能力标签。"},
+      { name:"千问 Omni Turbo", badge:"Omni", subtitle:"后台展示支持视频处理和音频处理。", input:"¥0.4/M", output:"¥1.6/M", context:"32k", tags:["multi","budget"], ability:["视频处理","音频处理"], detail:"适合音视频类轻量多模态任务。"},
+      { name:"千问 QwQ 32B", badge:"QwQ", subtitle:"后台当前仅展示模型名。", tags:["text"], ability:[], detail:"按后台原样展示：当前截图未出现价格、缓存、上下文和能力标签。"},
+      { name:"千问 3.5 Plus", badge:"梯度计费", subtitle:"后台展示支持工具调用。", note:"梯度计费", input:"¥0.8-4/M", output:"¥4.8-24/M", context:"1M", tags:["text","tool"], ability:["工具调用"], detail:"适合长上下文中文问答和企业知识任务。"}
+    ]
+  },
+  {
+    key: "deepseek",
+    name: "DeepSeek",
+    vendor: "由深度求索提供",
+    short: "DS",
+    accent: "#1B77FF",
+    description: "后台当前已识别到 DeepSeek V4、chat、reasoner 以及多款 R1 蒸馏版本，字段同时覆盖固定价格和仅名称展示两种状态。",
+    best: "适合中文推理、技术问答和高性价比部署场景",
+    reliability: "推理强",
+    latency: "中等",
+    price: "固定价为主",
+    strengths: ["工具调用", "推理能力", "中文场景", "高性价比"],
+    tasks: [
+      ["技术支持", "V4 / reasoner 适合复杂排障和解释型问答"],
+      ["研发助手", "chat / reasoner 适合代码与技术文档处理"],
+      ["成本受控部署", "蒸馏版本适合更轻量的本地化或分发场景"]
+    ],
+    models: [
+      { name:"DeepSeek V4 Pro", badge:"V4 Pro", subtitle:"后台展示支持工具调用。", input:"¥3/M", output:"¥6/M", cache:"¥0.025/M", context:"1M", tags:["text","tool"], ability:["工具调用"], detail:"适合高质量技术问答和复杂推理任务。"},
+      { name:"DeepSeek V4 Flash", badge:"V4 Flash", subtitle:"后台展示支持工具调用。", input:"¥1/M", output:"¥2/M", cache:"¥0.02/M", context:"1M", tags:["text","tool","budget"], ability:["工具调用"], detail:"适合更高频的技术问答和业务助手场景。"},
+      { name:"DeepSeek chat", badge:"Chat", subtitle:"后台展示支持工具调用。", input:"¥1/M", output:"¥2/M", cache:"¥0.02/M", context:"1M", tags:["text","tool","budget"], ability:["工具调用"], detail:"适合标准中文问答与日常业务助手。"},
+      { name:"DeepSeek reasoner", badge:"Reasoner", subtitle:"后台展示支持工具调用。", input:"¥1/M", output:"¥2/M", cache:"¥0.02/M", context:"1M", tags:["text","tool"], ability:["工具调用"], detail:"适合解释型推理和复杂问题拆解。"},
+      { name:"DeepSeek R1 蒸馏 Llama 70b", badge:"蒸馏", subtitle:"后台当前仅展示模型名。", tags:["text"], ability:[], detail:"按后台原样展示：当前截图未出现价格、缓存、上下文和能力标签。"},
+      { name:"DeepSeek R1 蒸馏 千问 32b", badge:"蒸馏", subtitle:"后台当前仅展示模型名。", tags:["text"], ability:[], detail:"按后台原样展示：当前截图未出现价格、缓存、上下文和能力标签。"},
+      { name:"DeepSeek R1 蒸馏 千问 14b", badge:"蒸馏", subtitle:"后台当前仅展示模型名。", tags:["text"], ability:[], detail:"按后台原样展示：当前截图未出现价格、缓存、上下文和能力标签。"},
+      { name:"DeepSeek R1 蒸馏 Llama 8b", badge:"蒸馏", subtitle:"后台当前仅展示模型名。", tags:["text","budget"], ability:[], detail:"按后台原样展示：当前截图未出现价格、缓存、上下文和能力标签。"},
+      { name:"DeepSeek R1 蒸馏 千问 7b", badge:"蒸馏", subtitle:"后台当前仅展示模型名。", tags:["text","budget"], ability:[], detail:"按后台原样展示：当前截图未出现价格、缓存、上下文和能力标签。"},
+      { name:"DeepSeek R1 蒸馏 千问 1.5b", badge:"蒸馏", subtitle:"后台当前仅展示模型名。", tags:["text","budget"], ability:[], detail:"按后台原样展示：当前截图未出现价格、缓存、上下文和能力标签。"}
+    ]
+  },
+  {
+    key: "minimax",
+    name: "MiniMax",
+    vendor: "由 MiniMax 提供",
+    short: "MM",
+    accent: "#FF8A4C",
+    description: "后台当前已识别到 MiniMax M3、M2.x、M1、Text 01 和 abab 系列多个版本，字段同时覆盖梯度计费、固定价和仅工具标签差异。",
+    best: "适合中文生成、通用工具调用，以及不同成本档位下的批量生产任务",
+    reliability: "表达丰富",
+    latency: "中低延迟",
+    price: "固定价 + 梯度计费",
+    strengths: ["工具调用", "图片处理", "高频调用", "版本分层清晰"],
+    tasks: [
+      ["营销内容", "M 系列适合通用生成、批量生产和内容工作流"],
+      ["应用助手", "工具调用版本适合工作台和流程编排场景"],
+      ["成本分层", "abab 与 M 系列覆盖从低价到高质量的多档预算"]
+    ],
+    models: [
+      { name:"MiniMax M3", badge:"梯度计费", subtitle:"后台展示支持工具调用和图片处理。", note:"梯度计费", input:"¥4.2-8.4/M", output:"¥16.8-33.6/M", context:"1M", tags:["text","multi","tool"], ability:["工具调用","图片处理"], detail:"适合更高质量的通用生成与多模态场景。"},
+      { name:"MiniMax M2.7", badge:"M2.7", subtitle:"后台展示支持工具调用。", input:"¥2.1/M", output:"¥8.4/M", cache:"¥0.42/M", context:"200k", tags:["text","tool"], ability:["工具调用"], detail:"适合标准化工作流和高频生产任务。"},
+      { name:"MiniMax M2.7 Highspeed", badge:"Highspeed", subtitle:"后台展示支持工具调用。", input:"¥4.2/M", output:"¥16.8/M", cache:"¥0.42/M", context:"200k", tags:["text","tool"], ability:["工具调用"], detail:"适合更高吞吐的工作台和接口调用。"},
+      { name:"MiniMax M2.5", badge:"M2.5", subtitle:"后台展示支持工具调用。", input:"¥2.1/M", output:"¥8.4/M", cache:"¥0.21/M", context:"200k", tags:["text","tool"], ability:["工具调用"], detail:"适合通用中文助手和批量内容生成。"},
+      { name:"MiniMax M2.5 Lightning", badge:"Lightning", subtitle:"后台展示支持工具调用。", input:"¥2.1/M", output:"¥16.8/M", cache:"¥0.21/M", context:"200k", tags:["text","tool"], ability:["工具调用"], detail:"适合对响应速度要求更高的生成任务。"},
+      { name:"MiniMax M2.1", badge:"M2.1", subtitle:"后台展示支持工具调用。", input:"¥2.1/M", output:"¥8.4/M", cache:"¥0.21/M", context:"200k", tags:["text","tool"], ability:["工具调用"], detail:"适合稳定型业务问答和通用助手。"},
+      { name:"MiniMax M2.1 Lightning", badge:"Lightning", subtitle:"后台展示支持工具调用。", input:"¥2.1/M", output:"¥16.8/M", cache:"¥0.21/M", context:"200k", tags:["text","tool"], ability:["工具调用"], detail:"适合更快输出的批量工作流。"},
+      { name:"MiniMax M2", badge:"M2", subtitle:"后台展示支持工具调用。", input:"¥2.1/M", output:"¥8.4/M", cache:"¥0.21/M", context:"200k", tags:["text","tool"], ability:["工具调用"], detail:"适合上一代稳定型通用任务。"},
+      { name:"MiniMax M1", badge:"M1", subtitle:"后台展示支持工具调用。", input:"¥2.4/M", output:"¥24/M", context:"1M", tags:["text","tool"], ability:["工具调用"], detail:"适合更长上下文下的中文生成任务。"},
+      { name:"MiniMax Text 01", badge:"Text", subtitle:"后台展示支持工具调用。", input:"¥1/M", output:"¥8/M", context:"1M", tags:["text","tool","budget"], ability:["工具调用"], detail:"适合纯文本型高频调用和标准化生产。"},
+      { name:"MiniMax-abab6", badge:"abab", subtitle:"后台展示固定价格。", input:"¥15/M", output:"¥15/M", context:"32k", tags:["text"], ability:[], detail:"适合保留旧版兼容链路的文本任务。"},
+      { name:"MiniMax-abab6.5", badge:"abab", subtitle:"后台展示固定价格。", input:"¥30/M", output:"¥30/M", context:"8k", tags:["text"], ability:[], detail:"适合旧版高价高质量短上下文任务。"},
+      { name:"MiniMax-abab6.5s", badge:"abab", subtitle:"后台展示支持工具调用。", input:"¥1/M", output:"¥1/M", context:"240k", tags:["text","tool","budget"], ability:["工具调用"], detail:"适合更长上下文且成本友好的文本任务。"},
+      { name:"MiniMax-abab6.5t", badge:"abab", subtitle:"后台展示固定价格。", input:"¥5/M", output:"¥5/M", context:"8k", tags:["text"], ability:[], detail:"适合旧版短上下文生成任务。"},
+      { name:"MiniMax-abab6.5g", badge:"abab", subtitle:"后台展示固定价格。", input:"¥5/M", output:"¥5/M", context:"8k", tags:["text"], ability:[], detail:"适合旧版兼容任务和历史链路保留。"},
+      { name:"MiniMax-abab7-preview", badge:"Preview", subtitle:"后台展示固定价格。", input:"¥10/M", output:"¥10/M", context:"240k", tags:["text"], ability:[], detail:"适合预览版文本任务和版本对比场景。"}
+    ]
+  },
+  {
+    key: "nova",
+    name: "Amazon Nova",
+    vendor: "由 Amazon 提供",
+    short: "NV",
+    accent: "#0F8D7A",
+    description: "后台当前已识别到 Amazon Nova Micro、Lite、Pro 三档版本，字段以固定价格为主，并明确区分图片处理和视频处理能力。",
+    best: "适合国际化多模态任务、云上工作流和跨区域企业应用场景",
+    reliability: "企业 SLA",
+    latency: "稳定",
+    price: "低到中高端三档",
+    strengths: ["工具调用", "图片处理", "视频处理", "国际化部署"],
+    tasks: [
+      ["全球客服", "Micro 到 Pro 可按预算和能力逐级选型"],
+      ["跨境运营", "适合图文素材、视频和国际业务支持任务"],
+      ["云上 Agent", "更适合与云基础设施和企业权限体系结合"]
+    ],
+    models: [
+      { name:"Amazon Nova Micro", badge:"Micro", subtitle:"后台展示支持工具调用、图片处理和视频处理。", input:"$0.035/M", output:"$0.14/M", context:"300k", tags:["text","multi","tool","budget"], ability:["工具调用","图片处理","视频处理"], detail:"适合国际化高频多模态任务和成本敏感场景。"},
+      { name:"Amazon Nova Lite", badge:"Lite", subtitle:"后台展示支持工具调用、图片处理和视频处理。", input:"$0.06/M", output:"$0.24/M", context:"128k", tags:["text","multi","tool","budget"], ability:["工具调用","图片处理","视频处理"], detail:"适合标准化图文和视频处理工作流。"},
+      { name:"Amazon Nova Pro", badge:"Pro", subtitle:"后台展示支持工具调用、图片处理和视频处理。", input:"$0.8/M", output:"$3.2/M", context:"300k", tags:["text","multi","tool"], ability:["工具调用","图片处理","视频处理"], detail:"适合更高质量的云上多模态任务和企业应用。"}
+    ]
+  },
+  {
+    key: "zhipu",
+    name: "智谱",
+    vendor: "由智谱清言提供",
+    short: "ZP",
+    accent: "#2C76F7",
+    description: "后台当前已识别到 GLM 5、4.7、4.6、4.5、4 及旧版 `智谱-glm-*` 多条产品线，字段同时覆盖梯度计费、固定价、免费档和仅名称展示。",
+    best: "适合中文知识助手、多模态理解、长上下文处理以及 GLM 旧版兼容场景",
+    reliability: "中文友好",
+    latency: "中低延迟",
+    price: "固定价 + 梯度计费 + 免费档",
+    strengths: ["工具调用", "图片处理", "视频处理", "长上下文"],
+    tasks: [
+      ["企业知识库", "GLM 5 与 4.7 更适合高质量中文问答和制度解析"],
+      ["多模态理解", "4.6V / 4.5V 系列适合图像和视频混合任务"],
+      ["兼容迁移", "旧版 `智谱-glm-*` 适合历史链路保留和版本过渡"]
+    ],
+    models: [
+      { name:"GLM 5.1", badge:"梯度计费", subtitle:"后台展示支持工具调用。", note:"梯度计费", input:"¥6-8/M", output:"¥24-28/M", context:"200k", tags:["text","tool"], ability:["工具调用"], detail:"适合高质量中文问答和复杂业务场景。"},
+      { name:"GLM 5V Turbo", badge:"梯度计费", subtitle:"后台展示支持工具调用、图片处理和视频处理。", note:"梯度计费", input:"¥5-7/M", output:"¥22-26/M", context:"200k", tags:["multi","tool"], ability:["工具调用","图片处理","视频处理"], detail:"适合视觉与视频混合的高质量多模态任务。"},
+      { name:"GLM 5 Turbo", badge:"梯度计费", subtitle:"后台展示支持工具调用。", note:"梯度计费", input:"¥5-7/M", output:"¥22-26/M", context:"200k", tags:["text","tool"], ability:["工具调用"], detail:"适合企业级主力文本任务和工作流。"},
+      { name:"GLM 5", badge:"梯度计费", subtitle:"后台展示支持工具调用。", note:"梯度计费", input:"¥4-6/M", output:"¥18-22/M", context:"200k", tags:["text","tool"], ability:["工具调用"], detail:"适合高质量中文助手和标准化生产任务。"},
+      { name:"GLM 4.7", badge:"梯度计费", subtitle:"后台展示支持工具调用。", note:"梯度计费", input:"¥3-4/M", output:"¥14-16/M", context:"200k", tags:["text","tool"], ability:["工具调用"], detail:"适合中高质量问答和业务知识任务。"},
+      { name:"GLM 4.6V Flash", badge:"免费档", subtitle:"后台展示支持工具调用、图片处理和视频处理。", input:"¥0/M", output:"¥0/M", context:"128k", tags:["multi","tool","budget"], ability:["工具调用","图片处理","视频处理"], detail:"适合零成本验证和基础多模态任务。"},
+      { name:"GLM 4.6V FlashX", badge:"梯度计费", subtitle:"后台展示支持工具调用、图片处理和视频处理。", note:"梯度计费", input:"¥0.15-0.3/M", output:"¥1.5-3/M", context:"128k", tags:["multi","tool","budget"], ability:["工具调用","图片处理","视频处理"], detail:"适合低成本视觉理解和视频处理任务。"},
+      { name:"GLM 4.6V", badge:"梯度计费", subtitle:"后台展示支持工具调用、图片处理和视频处理。", note:"梯度计费", input:"¥1-2/M", output:"¥3-6/M", context:"128k", tags:["multi","tool"], ability:["工具调用","图片处理","视频处理"], detail:"适合标准化多模态理解和视觉任务。"},
+      { name:"GLM 4.6", badge:"4.6", subtitle:"后台展示支持工具调用。", input:"¥4/M", output:"¥16/M", context:"200k", tags:["text","tool"], ability:["工具调用"], detail:"适合中文问答和通用工作流场景。"},
+      { name:"GLM 4.5V", badge:"梯度计费", subtitle:"后台展示支持工具调用、图片处理和视频处理。", note:"梯度计费", input:"¥2-4/M", output:"¥6-12/M", context:"64k", tags:["multi","tool"], ability:["工具调用","图片处理","视频处理"], detail:"适合成本可控的图像和视频理解任务。"},
+      { name:"GLM 4.5 Flash", badge:"免费档", subtitle:"后台展示支持工具调用。", input:"¥0/M", output:"¥0/M", context:"128k", tags:["text","tool","budget"], ability:["工具调用"], detail:"适合零成本文本验证和基础业务问答。"},
+      { name:"GLM 4.5 Air", badge:"梯度计费", subtitle:"后台展示支持工具调用。", note:"梯度计费", input:"¥0.8-1.2/M", output:"¥6-8/M", context:"128k", tags:["text","tool","budget"], ability:["工具调用"], detail:"适合高频中文任务和成本敏感型场景。"},
+      { name:"GLM 4.5 Airx", badge:"Airx", subtitle:"后台展示支持工具调用。", input:"¥8/M", output:"¥32/M", context:"128k", tags:["text","tool"], ability:["工具调用"], detail:"适合更高质量的中短上下文生成任务。"},
+      { name:"GLM 4.5 X", badge:"X", subtitle:"后台展示支持工具调用。", input:"¥16/M", output:"¥64/M", context:"128k", tags:["text","tool"], ability:["工具调用"], detail:"适合高阶复杂任务和高价值场景。"},
+      { name:"GLM 4.5", badge:"4.5", subtitle:"后台展示支持工具调用。", input:"¥4/M", output:"¥16/M", context:"128k", tags:["text","tool"], ability:["工具调用"], detail:"适合通用中文问答和企业知识任务。"},
+      { name:"GLM 4 Plus", badge:"4 Plus", subtitle:"后台展示支持工具调用。", input:"¥5/M", output:"¥5/M", context:"128k", tags:["text","tool"], ability:["工具调用"], detail:"适合中等复杂度文本任务和旧版兼容。"},
+      { name:"GLM 4 Long", badge:"Long", subtitle:"后台展示支持工具调用。", input:"¥1/M", output:"¥1/M", context:"1M", tags:["text","tool","budget"], ability:["工具调用"], detail:"适合长上下文资料阅读和大文本处理。"},
+      { name:"GLM 4 Airx", badge:"Airx", subtitle:"后台展示支持工具调用。", input:"¥10/M", output:"¥10/M", context:"8k", tags:["text","tool"], ability:["工具调用"], detail:"适合短上下文高质量文本任务。"},
+      { name:"智谱-glm-4-air", badge:"旧版", subtitle:"后台展示支持工具调用。", input:"¥0.5/M", output:"¥0.5/M", context:"128k", tags:["text","tool","budget"], ability:["工具调用"], detail:"适合旧版兼容链路和低成本文本任务。"},
+      { name:"智谱-glm-4-flash", badge:"旧版", subtitle:"后台展示支持工具调用。", input:"¥0/M", output:"¥0/M", context:"128k", tags:["text","tool","budget"], ability:["工具调用"], detail:"适合旧版免费验证和兼容测试。"},
+      { name:"智谱-glm-4v-plus", badge:"旧版", subtitle:"后台当前仅展示模型名。", tags:["multi"], ability:[], detail:"按后台原样展示：当前截图未出现价格、缓存、上下文和能力标签。"},
+      { name:"智谱-glm-4v", badge:"旧版", subtitle:"后台当前仅展示模型名。", tags:["multi"], ability:[], detail:"按后台原样展示：当前截图未出现价格、缓存、上下文和能力标签。"},
+      { name:"智谱-glm-4-0520", badge:"旧版", subtitle:"后台当前仅展示模型名。", tags:["text"], ability:[], detail:"按后台原样展示：当前截图未出现价格、缓存、上下文和能力标签。"},
+      { name:"智谱-glm-4", badge:"旧版", subtitle:"后台当前仅展示模型名。", tags:["text"], ability:[], detail:"按后台原样展示：当前截图未出现价格、缓存、上下文和能力标签。"},
+      { name:"智谱-glm-3-turbo", badge:"旧版", subtitle:"后台当前仅展示模型名。", tags:["text"], ability:[], detail:"按后台原样展示：当前截图未出现价格、缓存、上下文和能力标签。"},
+      { name:"智谱-chatglm-turbo", badge:"旧版", subtitle:"后台当前仅展示模型名。", tags:["text"], ability:[], detail:"按后台原样展示：当前截图未出现价格、缓存、上下文和能力标签。"}
+    ]
+  },
+  {
+    key: "baichuan",
+    name: "百川",
+    vendor: "由百川智能提供",
+    short: "BC",
+    accent: "#FF7A00",
+    description: "后台当前已识别到 baichuan2、baichuan3 和 baichuan4 多条产品线，字段以固定价格为主，并保留不同上下文长度的版本链路。",
+    best: "适合中文文本任务、旧版兼容链路和不同上下文长度下的企业接入场景",
+    reliability: "业务易落地",
+    latency: "中低延迟",
+    price: "固定价",
+    strengths: ["工具调用", "中文问答", "旧版兼容", "上下文分层"],
+    tasks: [
+      ["客服问答", "baichuan2/3 适合中文标准问答和内部助手"],
+      ["兼容迁移", "不同代际版本适合历史系统平滑迁移"],
+      ["上下文分层", "4k / 32k / 128k / 192k 可按任务长度选择"]
+    ],
+    models: [
+      { name:"百川-baichuan2", badge:"baichuan2", subtitle:"后台展示固定价格。", input:"¥8/M", output:"¥8/M", context:"4k", tags:["text"], ability:[], detail:"适合旧版中文任务和兼容链路保留。"},
+      { name:"百川-baichuan2-turbo", badge:"baichuan2", subtitle:"后台展示固定价格。", input:"¥8/M", output:"¥8/M", context:"4k", tags:["text"], ability:[], detail:"适合旧版高频文本任务和历史系统兼容。"},
+      { name:"百川-baichuan2-turbo-192k", badge:"baichuan2", subtitle:"后台展示固定价格。", input:"¥16/M", output:"¥16/M", context:"192k", tags:["text"], ability:[], detail:"适合长上下文旧版任务和资料处理。"},
+      { name:"百川-baichuan3-turbo", badge:"baichuan3", subtitle:"后台展示支持工具调用。", input:"¥12/M", output:"¥12/M", context:"32k", tags:["text","tool"], ability:["工具调用"], detail:"适合中文业务助手和标准化工作流。"},
+      { name:"百川-baichuan3-turbo-128k", badge:"baichuan3", subtitle:"后台展示支持工具调用。", input:"¥24/M", output:"¥24/M", context:"128k", tags:["text","tool"], ability:["工具调用"], detail:"适合更长上下文下的中文任务和知识问答。"},
+      { name:"百川-baichuan4", badge:"baichuan4", subtitle:"后台展示支持工具调用。", input:"¥100/M", output:"¥100/M", context:"32k", tags:["text","tool"], ability:["工具调用"], detail:"适合高价值中文任务和高质量业务场景。"}
+    ]
+  },
+  {
+    key: "moonshot",
+    name: "月之暗面",
+    vendor: "由 Moonshot AI 提供",
+    short: "KS",
+    accent: "#295CFF",
+    description: "后台当前已识别到 Kimi K2.x、Kimi 通用版以及月之暗面-v1 多个版本，字段以固定价格为主，并区分了图片处理与工具调用能力。",
+    best: "适合中文长文本、推理任务、Kimi 版本分层选型以及 Moonshot 旧版兼容场景",
+    reliability: "长文强",
+    latency: "中等",
+    price: "固定价",
+    strengths: ["工具调用", "图片处理", "长上下文", "推理分层"],
+    tasks: [
+      ["复杂推理", "K2 Thinking / Turbo 系列更适合推理和复杂问答"],
+      ["图文任务", "Kimi K2.5 与 Kimi 通用版支持图片处理"],
+      ["旧版兼容", "月之暗面-v1 系列适合历史链路和不同上下文长度任务"]
+    ],
+    models: [
+      { name:"Kimi K2.5", badge:"K2.5", subtitle:"后台展示支持工具调用和图片处理。", input:"¥4/M", output:"¥21/M", cache:"¥0.7/M", context:"256k", tags:["text","multi","tool"], ability:["工具调用","图片处理"], detail:"适合高质量图文任务和复杂业务场景。"},
+      { name:"Kimi K2 Thinking Turbo", badge:"Thinking Turbo", subtitle:"后台展示支持工具调用。", input:"¥8/M", output:"¥58/M", cache:"¥1/M", context:"256k", tags:["text","tool"], ability:["工具调用"], detail:"适合高阶推理和复杂问答任务。"},
+      { name:"Kimi K2 Thinking", badge:"Thinking", subtitle:"后台展示支持工具调用。", input:"¥4/M", output:"¥16/M", cache:"¥1/M", context:"256k", tags:["text","tool"], ability:["工具调用"], detail:"适合需要思考链路的中文推理任务。"},
+      { name:"Kimi K2 Turbo", badge:"Turbo", subtitle:"后台展示支持工具调用。", input:"¥8/M", output:"¥58/M", cache:"¥1/M", context:"256k", tags:["text","tool"], ability:["工具调用"], detail:"适合高吞吐的高质量文本任务。"},
+      { name:"Kimi K2(0905)", badge:"K2", subtitle:"后台展示支持工具调用。", input:"¥4/M", output:"¥16/M", cache:"¥1/M", context:"256k", tags:["text","tool"], ability:["工具调用"], detail:"适合标准化 K2 文本任务和业务问答。"},
+      { name:"Kimi K2(0711)", badge:"K2", subtitle:"后台展示支持工具调用。", input:"¥4/M", output:"¥16/M", cache:"¥1/M", context:"128k", tags:["text","tool"], ability:["工具调用"], detail:"适合较短上下文的 K2 场景和兼容任务。"},
+      { name:"月之暗面-v1-8k", badge:"v1", subtitle:"后台展示固定价格。", input:"¥12/M", output:"¥12/M", cache:"¥1.2/M", context:"8k", tags:["text"], ability:[], detail:"适合旧版短上下文任务和历史链路保留。"},
+      { name:"月之暗面-v1-32k", badge:"v1", subtitle:"后台展示固定价格。", input:"¥24/M", output:"¥24/M", cache:"¥2.4/M", context:"32k", tags:["text"], ability:[], detail:"适合中等上下文长度的旧版任务。"},
+      { name:"月之暗面-v1-128k", badge:"v1", subtitle:"后台展示固定价格。", input:"¥60/M", output:"¥60/M", cache:"¥6/M", context:"128k", tags:["text"], ability:[], detail:"适合长上下文旧版任务和资料处理。"},
+      { name:"Kimi", badge:"通用", subtitle:"后台展示支持工具调用和图片处理。", input:"¥10/M", output:"¥30/M", cache:"¥1/M", context:"128k", tags:["text","multi","tool"], ability:["工具调用","图片处理"], detail:"适合通用图文任务和标准工作流场景。"}
+    ]
+  },
+  {
+    key: "ernie",
+    name: "文心一言",
+    vendor: "由百度提供",
+    short: "WX",
+    accent: "#2259FF",
+    description: "后台当前已识别到文心-bot、文心 3.5、turbo、speed 等多个版本，字段以固定价格为主，部分旧模型只展示可见的价格和上下文信息。",
+    best: "适合中文问答、旧版文心兼容场景以及不同成本档位下的标准文本任务",
+    reliability: "中文稳",
+    latency: "中低延迟",
+    price: "固定价",
+    strengths: ["中文问答", "旧版兼容", "成本分层", "标准文本任务"],
+    tasks: [
+      ["企业客服", "文心-bot 与 turbo 适合标准化中文问答场景"],
+      ["兼容迁移", "3.5 与 bot 旧版链路适合历史系统保留"],
+      ["成本分层", "speed / turbo / bot / 4.0 便于按预算分层选择"]
+    ],
+    models: [
+      { name:"文心-bot-4.0", badge:"4.0", subtitle:"后台展示固定价格。", input:"¥120/M", output:"¥120/M", tags:["text"], ability:[], detail:"按后台可见字段展示：当前截图右侧被截断，未补写未确认的 token 限制。"},
+      { name:"文心-bot-8k", badge:"bot", subtitle:"后台展示固定价格。", input:"¥24/M", output:"¥48/M", context:"7k", tags:["text"], ability:[], detail:"适合旧版短上下文文本任务和兼容链路。"},
+      { name:"文心-bot", badge:"bot", subtitle:"后台展示固定价格。", input:"¥12/M", output:"¥12/M", context:"4k", tags:["text"], ability:[], detail:"适合旧版标准中文问答任务。"},
+      { name:"文心-3.5-4k-0205", badge:"3.5", subtitle:"后台展示固定价格。", input:"¥12/M", output:"¥12/M", context:"4k", tags:["text"], ability:[], detail:"适合文心 3.5 旧版兼容任务。"},
+      { name:"文心-3.5-8k-0205", badge:"3.5", subtitle:"后台展示固定价格。", input:"¥24/M", output:"¥48/M", context:"7k", tags:["text"], ability:[], detail:"适合更长一点上下文的 3.5 旧版任务。"},
+      { name:"文心-bot-turbo", badge:"Turbo", subtitle:"后台展示固定价格。", input:"¥8/M", output:"¥8/M", context:"8k", tags:["text"], ability:[], detail:"适合高频标准文本任务和业务助手。"},
+      { name:"文心-speed", badge:"Speed", subtitle:"后台展示固定价格。", input:"¥4/M", output:"¥8/M", context:"8k", tags:["text","budget"], ability:[], detail:"适合更低成本的基础中文问答任务。"}
+    ]
+  },
+  {
+    key: "hunyuan",
+    name: "混元",
+    vendor: "由腾讯提供",
+    short: "HY",
+    accent: "#1C74F7",
+    description: "后台当前已识别到混元-chatpro 与 混元-chatstd 两个版本，字段以固定价格为主，适合保留腾讯生态旧版文本链路。",
+    best: "适合腾讯生态兼容场景、旧版文本任务和基础中文问答",
+    reliability: "企业协作友好",
+    latency: "中低延迟",
+    price: "固定价",
+    strengths: ["腾讯生态", "中文问答", "旧版兼容", "基础文本任务"],
+    tasks: [
+      ["企业协作", "适合腾讯生态内的旧版文本助手场景"],
+      ["客服工作台", "适合基础中文问答和标准回复"],
+      ["兼容保留", "chatpro / chatstd 适合历史系统链路平滑保留"]
+    ],
+    models: [
+      { name:"混元-chatpro", badge:"chatpro", subtitle:"后台展示固定价格。", input:"¥1/M", output:"¥1/M", context:"16k", tags:["text"], ability:[], detail:"适合腾讯生态旧版文本任务和标准问答链路。"},
+      { name:"混元-chatstd", badge:"chatstd", subtitle:"后台展示固定价格。", input:"¥1/M", output:"¥1/M", context:"16k", tags:["text"], ability:[], detail:"适合基础中文问答和兼容保留场景。"}
+    ]
+  },
+  {
+    key: "stepfun",
+    name: "跃阶星辰",
+    vendor: "由 StepFun 提供",
+    short: "SF",
+    accent: "#5E60F5",
+    description: "后台当前已识别到 step-1、step-2 与 step-1v 多个版本，但本批截图仅展示了模型名，未显示价格、上下文和能力标签。",
+    best: "适合 Step 系列旧版兼容场景，以及按不同上下文长度保留模型目录",
+    reliability: "目录完整",
+    latency: "未展示",
+    price: "后台未展示",
+    strengths: ["版本分层", "旧版兼容", "目录保留", "上下文规格清晰"],
+    tasks: [
+      ["兼容迁移", "保留 step-1 / step-2 / step-1v 的历史链路目录"],
+      ["版本选型", "按 8k / 32k / 128k / 256k 等规格区分版本"],
+      ["后续补齐", "等你补下一批更完整截图后再补价格和能力字段"]
+    ],
+    models: [
+      { name:"step-1-8k", badge:"step-1", subtitle:"后台当前仅展示模型名。", tags:["text"], ability:[], detail:"按后台原样展示：当前截图未出现价格、缓存、上下文和能力标签。"},
+      { name:"step-1-32k", badge:"step-1", subtitle:"后台当前仅展示模型名。", tags:["text"], ability:[], detail:"按后台原样展示：当前截图未出现价格、缓存、上下文和能力标签。"},
+      { name:"step-1-128k", badge:"step-1", subtitle:"后台当前仅展示模型名。", tags:["text"], ability:[], detail:"按后台原样展示：当前截图未出现价格、缓存、上下文和能力标签。"},
+      { name:"step-1-256k", badge:"step-1", subtitle:"后台当前仅展示模型名。", tags:["text"], ability:[], detail:"按后台原样展示：当前截图未出现价格、缓存、上下文和能力标签。"},
+      { name:"step-1-flash", badge:"step-1", subtitle:"后台当前仅展示模型名。", tags:["text","budget"], ability:[], detail:"按后台原样展示：当前截图未出现价格、缓存、上下文和能力标签。"},
+      { name:"step-2-16k", badge:"step-2", subtitle:"后台当前仅展示模型名。", tags:["text"], ability:[], detail:"按后台原样展示：当前截图未出现价格、缓存、上下文和能力标签。"},
+      { name:"step-1v-8k", badge:"step-1v", subtitle:"后台当前仅展示模型名。", tags:["multi"], ability:[], detail:"按后台原样展示：当前截图未出现价格、缓存、上下文和能力标签。"},
+      { name:"step-1v-32k", badge:"step-1v", subtitle:"后台当前仅展示模型名。", tags:["multi"], ability:[], detail:"按后台原样展示：当前截图未出现价格、缓存、上下文和能力标签。"}
+    ]
+  },
+  {
+    key: "xai",
+    name: "xAI",
+    vendor: "由 xAI 提供",
+    short: "xA",
+    accent: "#111827",
+    description: "后台当前已识别到 Grok 4、3、2 系列多个版本，字段以固定价格为主，并区分了工具调用与图片处理能力。",
+    best: "适合国际化文本任务、Grok 系列分层选型，以及图文能力补位场景",
+    reliability: "前沿补充",
+    latency: "中等偏快",
+    price: "固定价分层",
+    strengths: ["工具调用", "图片处理", "英文场景", "版本分层"],
+    tasks: [
+      ["海外客服", "Grok 3 / Mini 适合国际化标准问答和工作台任务"],
+      ["复杂分析", "Grok 4 适合更高质量的文本任务和策略分析"],
+      ["图文补位", "Grok 2 Vision 适合图片理解和多模态补位场景"]
+    ],
+    models: [
+      { name:"Grok 4", badge:"Grok 4", subtitle:"后台展示支持工具调用和图片处理。", input:"$3/M", output:"$15/M", context:"256k", tags:["text","multi","tool"], ability:["工具调用","图片处理"], detail:"适合更高质量的国际化文本与图文任务。"},
+      { name:"Grok 3", badge:"Grok 3", subtitle:"后台展示支持工具调用。", input:"$3/M", output:"$15/M", context:"128k", tags:["text","tool"], ability:["工具调用"], detail:"适合标准国际化文本任务和业务问答。"},
+      { name:"Grok 3 Mini", badge:"Mini", subtitle:"后台展示支持工具调用。", input:"$0.3/M", output:"$0.5/M", context:"128k", tags:["text","tool","budget"], ability:["工具调用"], detail:"适合更低成本的高频文本任务。"},
+      { name:"Grok 3 Fast", badge:"Fast", subtitle:"后台展示支持工具调用。", input:"$5/M", output:"$25/M", context:"128k", tags:["text","tool"], ability:["工具调用"], detail:"适合高吞吐的国际化任务和工作台场景。"},
+      { name:"Grok 3 Mini Fast", badge:"Mini Fast", subtitle:"后台展示支持工具调用。", input:"$0.6/M", output:"$4/M", context:"128k", tags:["text","tool","budget"], ability:["工具调用"], detail:"适合更快响应的低成本文本任务。"},
+      { name:"Grok 2", badge:"Grok 2", subtitle:"后台展示支持工具调用。", input:"$2/M", output:"$10/M", context:"128k", tags:["text","tool"], ability:["工具调用"], detail:"适合旧版国际化文本任务和兼容链路。"},
+      { name:"Grok 2 Vision", badge:"Vision", subtitle:"后台展示支持工具调用和图片处理。", input:"$2/M", output:"$10/M", context:"32k", tags:["multi","tool"], ability:["工具调用","图片处理"], detail:"适合图片理解和多模态补位任务。"}
+    ]
+  }
+];
+
+let activeProvider = providers[0].key;
+let activeModel = providers[0].models[0].name;
+let activeFilter = "all";
+
+const providerIconPaths = {
+  gpt: "../modelicon/chatgpt.svg",
+  doubao: "../modelicon/doubao.svg",
+  claude: "../modelicon/claude.svg",
+  gemini: "../modelicon/gemini.svg",
+  qwen: "../modelicon/qwen.svg",
+  deepseek: "../modelicon/deepseek.svg",
+  minimax: "../modelicon/minimax.svg",
+  nova: "../modelicon/nova.svg",
+  zhipu: "../modelicon/zai.svg",
+  baichuan: "../modelicon/baichuan.svg",
+  moonshot: "../modelicon/moonshot.svg",
+  ernie: "../modelicon/wenxin.svg",
+  hunyuan: "../modelicon/hunyuan.svg",
+  stepfun: "../modelicon/stepfun-color.svg",
+  xai: "../modelicon/xai.svg"
+};
+
+const providerList = document.getElementById("providerList");
+const modelList = document.getElementById("modelList");
+const providerCount = document.getElementById("providerCount");
+const tbLogo = document.getElementById("tbLogo");
+const catalogTitle = document.getElementById("catalogTitle");
+const catalogTag = document.getElementById("catalogTag");
+const heroTitle = document.getElementById("heroTitle");
+const heroDesc = document.getElementById("heroDesc");
+const heroMeta = document.getElementById("heroMeta");
+const heroFoot = document.getElementById("heroFoot");
+const heroBest = document.getElementById("heroBest");
+const heroSide = document.getElementById("heroSide");
+const detailTitle = document.getElementById("detailTitle");
+const detailDesc = document.getElementById("detailDesc");
+const detailGrid = document.getElementById("detailGrid");
+const filterNote = document.getElementById("filterNote");
+
+providerCount.textContent = providers.length + " 家";
+
+function currentProvider() {
+  return providers.find((item) => item.key === activeProvider) || providers[0];
+}
+
+function getProviderIconMarkup(provider) {
+  const iconPath = providerIconPaths[provider.key];
+  if (!iconPath) return provider.short || provider.name.slice(0, 2);
+  const safeName = (provider.name || provider.key).replace(/"/g, "&quot;");
+  return `<img src="${iconPath}" alt="${safeName} logo" loading="eager" decoding="async">`;
+}
+
+function hasProviderIcon(provider) {
+  return !!providerIconPaths[provider.key];
+}
+
+function currentModels() {
+  const models = currentProvider().models;
+  if (activeFilter === "all") return models;
+  return models.filter((item) => item.tags.includes(activeFilter));
+}
+
+function ensureModelVisible(models) {
+  if (!models.length) {
+    activeModel = "";
+    return;
+  }
+  const exists = models.some((item) => item.name === activeModel);
+  if (!exists && models.length) activeModel = models[0].name;
+}
+
+function renderProviders() {
+  providerList.innerHTML = providers.map((item) => `
+    <button
+      class="provider${item.key === activeProvider ? " active" : ""}"
+      type="button"
+      role="tab"
+      aria-selected="${item.key === activeProvider}"
+      data-provider="${item.key}"
+      style="--accent:${item.accent}">
+      <span class="provider-badge${hasProviderIcon(item) ? " has-image" : ""}">${getProviderIconMarkup(item)}</span>
+      <span class="provider-copy">
+        <b>${item.name}</b>
+        <span>${item.vendor}</span>
+      </span>
+      <span class="provider-arrow">›</span>
+    </button>
+  `).join("");
+}
+
+function updateProviderSelection() {
+  providerList.querySelectorAll("[data-provider]").forEach((button) => {
+    const isActive = button.dataset.provider === activeProvider;
+    button.classList.toggle("active", isActive);
+    button.setAttribute("aria-selected", isActive ? "true" : "false");
+  });
+}
+
+function renderHero(provider) {
+  tbLogo.className = `tb-logo${hasProviderIcon(provider) ? " has-image" : ""}`;
+  tbLogo.innerHTML = getProviderIconMarkup(provider);
+  heroDesc.textContent = provider.description;
+  heroFoot.textContent = provider.vendor + " · " + provider.reliability + " · " + provider.latency;
+  heroBest.textContent = provider.best;
+  heroMeta.innerHTML = provider.strengths.map((item) => `
+    <span class="meta-chip" style="--accent:${provider.accent}">
+      <i aria-hidden="true"></i>${item}
+    </span>
+  `).join("");
+  heroSide.innerHTML = `
+    <div class="microstat">
+      <div class="k">主推策略</div>
+      <div class="v">${provider.price}</div>
+      <div class="s">根据预算与稳定性灵活组合</div>
+    </div>
+    <div class="microstat">
+      <div class="k">当前供应商</div>
+      <div class="v">${provider.name}</div>
+      <div class="s">${provider.vendor}</div>
+    </div>
+    <div class="microstat">
+      <div class="k">推荐方向</div>
+      <div class="v">${provider.models.length} 个版本</div>
+      <div class="s">覆盖旗舰、均衡与高频调用</div>
+    </div>
+  `;
+}
+
+function renderModels(options = {}) {
+  const preserveScroll = !!options.preserveScroll;
+  const previousScrollTop = preserveScroll ? modelList.scrollTop : 0;
+  const provider = currentProvider();
+  const models = currentModels();
+  ensureModelVisible(models);
+  catalogTitle.textContent = provider.name + " 模型列表";
+  catalogTag.textContent = "共 " + models.length + " 个模型";
+  function getModelMetrics(model) {
+    return [
+      model.note ? { label: "计费", value: model.note } : null,
+      model.input ? { label: "输入", value: model.input } : null,
+      model.output ? { label: "输出", value: model.output } : null,
+      model.cache ? { label: "缓存", value: model.cache } : null,
+      model.context ? { label: "上下文", value: model.context, context: true } : null
+    ].filter(Boolean);
+  }
+  function hasModelMeta(model) {
+    return getModelMetrics(model).length > 0;
+  }
+  function hasModelAbility(model) {
+    return Array.isArray(model.ability) && model.ability.length > 0;
+  }
+  function getModelSubtitle(model) {
+    const subtitle = (model.subtitle || "").trim();
+    if (!subtitle) return "";
+    if (subtitle.includes("后台")) return "";
+    if (!hasModelMeta(model) && !hasModelAbility(model)) return "";
+    return subtitle;
+  }
+  function renderMetric(metric) {
+    if (metric.context) {
+      return `<span class="context">${metric.label}<br><strong>${metric.value}</strong></span>`;
+    }
+    return `<span class="price-row"><strong>${metric.label}</strong><span>${metric.value}</span></span>`;
+  }
+  modelList.innerHTML = models.length ? models.map((item) => `
+    <button
+      class="model${item.name === activeModel ? " active" : ""}"
+      type="button"
+      role="option"
+      aria-selected="${item.name === activeModel}"
+      data-model="${item.name}"
+      style="--accent:${provider.accent}">
+      <span class="model-main">
+        <span class="model-title">
+          <b>${item.name}</b>
+          <span class="model-badge">${item.badge || "已接入"}</span>
+        </span>
+        <span class="model-sub">${getModelSubtitle(item)}</span>
+        <span class="model-tags">
+          ${(item.ability || []).map((tag) => `<span class="tag">${tag}</span>`).join("")}
+        </span>
+      </span>
+      <span class="model-meta">
+        ${(function () {
+          const metrics = getModelMetrics(item);
+          return metrics.map(renderMetric).join("");
+        })()}
+      </span>
+    </button>
+  `).join("") : `
+    <div class="model-empty" role="status" aria-live="polite">
+      <b>当前筛选下暂无模型</b>
+      <span>可以切换到其他能力标签，或切回“全部模型”查看该供应商当前接入的版本。</span>
+    </div>
+  `;
+  if (preserveScroll) {
+    const maxScrollTop = Math.max(0, modelList.scrollHeight - modelList.clientHeight);
+    modelList.scrollTop = Math.min(previousScrollTop, maxScrollTop);
+  }
+  renderDetail(provider, models.find((item) => item.name === activeModel) || null);
+}
+
+function updateModelSelection(modelName) {
+  const provider = currentProvider();
+  const models = currentModels();
+  const selectedModel = models.find((item) => item.name === modelName) || null;
+  if (!selectedModel) return;
+  activeModel = selectedModel.name;
+  modelList.querySelectorAll("[data-model]").forEach((button) => {
+    const isActive = button.dataset.model === activeModel;
+    button.classList.toggle("active", isActive);
+    button.setAttribute("aria-selected", isActive ? "true" : "false");
+  });
+  renderDetail(provider, selectedModel);
+}
+
+function renderDetail(provider, model) {
+  if (!model) {
+    detailTitle.textContent = "当前筛选暂无可用模型";
+    detailDesc.textContent = "这组筛选条件下，" + provider.name + " 暂无可展示的模型版本。请切换标签，或回到“全部模型”查看完整列表。";
+    detailGrid.innerHTML = `
+      <div class="mini full">
+        <div class="k">当前状态</div>
+        <div class="v">共 0 个模型，右侧详情已切换为空状态，避免保留上一条模型信息。</div>
+      </div>
+    `;
+    return;
+  }
+  const metrics = [
+    model.note ? { label: "计费说明", value: model.note } : null,
+    model.input ? { label: "输入价格", value: model.input } : null,
+    model.output ? { label: "输出价格", value: model.output } : null,
+    model.cache ? { label: "缓存价格", value: model.cache } : null,
+    model.context ? { label: "上下文长度", value: model.context } : null
+  ].filter(Boolean);
+  detailTitle.textContent = model.name;
+  detailDesc.textContent = model.detail || "当前按后台真实字段展示，未出现的字段不额外补充。";
+  detailGrid.innerHTML = metrics.length ? metrics.map((item) => `
+    <div class="mini">
+      <div class="k">${item.label}</div>
+      <div class="v">${item.value}</div>
+    </div>
+  `).join("") : "";
+}
+
+function updateFilterNote() {
+  const mapping = {
+    all: "看清模型边界与成本结构",
+    text: "优先看文本理解、推理与长文能力",
+    multi: "优先看图片、文件与多模态能力",
+    tool: "优先看工具调用与流程协同能力",
+    budget: "优先看高频调用下的成本控制"
+  };
+  filterNote.textContent = mapping[activeFilter] || mapping.all;
+}
+
+function render(options = {}) {
+  const shouldRenderProviders = !!options.renderProviders || !providerList.children.length;
+  const provider = currentProvider();
+  if (shouldRenderProviders) {
+    renderProviders();
+  } else {
+    updateProviderSelection();
+  }
+  renderHero(provider);
+  renderModels();
+  updateFilterNote();
+}
+
+providerList.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-provider]");
+  if (!button) return;
+  if (button.dataset.provider === activeProvider) return;
+  activeProvider = button.dataset.provider;
+  activeFilter = "all";
+  document.querySelectorAll(".filter").forEach((item) => {
+    item.classList.toggle("active", item.dataset.filter === "all");
+  });
+  activeModel = currentProvider().models[0].name;
+  render();
+});
+
+modelList.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-model]");
+  if (!button) return;
+  if (button.dataset.model === activeModel) return;
+  updateModelSelection(button.dataset.model);
+});
+
+document.querySelectorAll(".filter").forEach((button) => {
+  button.addEventListener("click", () => {
+    activeFilter = button.dataset.filter;
+    document.querySelectorAll(".filter").forEach((item) => {
+      item.classList.toggle("active", item === button);
+    });
+    renderModels();
+    updateFilterNote();
+  });
+});
+
+render({ renderProviders: true });
+</script>
+</body>
+</html>
