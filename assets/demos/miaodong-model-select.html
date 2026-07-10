@@ -1489,7 +1489,6 @@ const modelList = document.getElementById("modelList");
 const providerCount = document.getElementById("providerCount");
 const tbLogo = document.getElementById("tbLogo");
 const catalogTitle = document.getElementById("catalogTitle");
-const catalogSub = document.getElementById("catalogSub");
 const catalogTag = document.getElementById("catalogTag");
 const heroTitle = document.getElementById("heroTitle");
 const heroDesc = document.getElementById("heroDesc");
@@ -1598,7 +1597,6 @@ function renderModels(options = {}) {
   const models = currentModels();
   ensureModelVisible(models);
   catalogTitle.textContent = provider.name + " 模型列表";
-  catalogSub.textContent = provider.best;
   catalogTag.textContent = "共 " + models.length + " 个模型";
   function getModelMetrics(model) {
     return [
