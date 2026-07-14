@@ -40,7 +40,7 @@ jobs:
           if [ -z "${LARK_WEBHOOK:-}" ]; then echo "no LARK_WEBHOOK secret, skip"; exit 0; fi
           if [ "$RESULT" = "success" ]; then TITLE="🚀 预览部署成功 [$BR]"; COLOR="green"; else TITLE="❌ 预览部署失败 [$BR]"; COLOR="red"; fi
           MSG1=$(printf '%s' "$COMMIT_MSG" | head -n1)
-          PRNUM=$(printf '%s' "$COMMIT_MSG" | grep -oE '#[0-9]+' | head -n1 | tr -d '#' || true)
+          PRNUM=$(printf '%s' "$COMMIT_MSG" | grep -oE '#[0-9]+' | head -n1 | tr -d '#')
           if [ -n "$PRNUM" ]; then LINK="$SERVER_URL/$REPO/pull/$PRNUM"; BTN="查看 PR"; else LINK="$COMMIT_URL"; BTN="查看提交"; fi
           RUN_URL="$SERVER_URL/$REPO/actions/runs/$RUN_ID"
           BODY=$(printf '**%s**\n环境: %s 预览\n提交: %s\npush: %s' "$MSG1" "$BR" "${SHA:0:7}" "$ACTOR")
