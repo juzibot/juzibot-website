@@ -65,7 +65,8 @@
   .cap-list .cap .cb{font-weight:800;font-size:14.5px;letter-spacing:-.01em;color:var(--ink)}
   .cap-list .cap .cd{font-size:13.5px;line-height:1.6;color:var(--ink-2);margin-top:3px}
   /* 能力卡(fde-card)：覆盖 site.css 默认半透明,加强 hover 效果 */
-  #abilities .fde-card{opacity:1;background:#fff;position:relative;overflow:hidden}
+  #abilities .fde-card{background:#fff;position:relative;overflow:hidden}
+  #abilities .fde-card.vis{opacity:1}
   #abilities .fde-card::after{content:"";position:absolute;right:0;top:0;width:60%;height:60%;
     background:radial-gradient(circle at top right,rgba(67,56,202,.08),transparent 70%);opacity:0;transition:opacity .4s var(--ease)}
   #abilities .fde-card:hover{transform:translateY(-6px);box-shadow:0 18px 44px -18px rgba(67,56,202,.35);border-color:var(--blue-200)}
