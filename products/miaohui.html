@@ -28,25 +28,65 @@
   .ph-lede{font-size:clamp(16px,1.4vw,18.5px);color:var(--ink-2);max-width:50ch;line-height:1.7}
   .ph-lede strong{color:var(--ink);font-weight:700}
   .ph-cta{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:clamp(20px,2.6vw,30px)}
-  /* hero 内嵌真实工作台演示（iframe） */
-  .ph-demo{position:relative;border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;
-    background:linear-gradient(180deg,#FBFCFF,#F3F7FE);
-    box-shadow:0 1px 2px rgba(14,20,48,.05),0 40px 80px -30px rgba(67,56,202,.35),0 12px 24px -12px rgba(14,20,48,.12)}
-  .ph-demo .win{display:flex;align-items:center;gap:8px;padding:11px 15px;background:rgba(255,255,255,.78);
-    backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  /* hero · 局部功能特写：不再把完整工作台缩成密集小图 */
+  .ph-demo{position:relative;border:1px solid rgba(226,232,245,.92);border-radius:24px;overflow:hidden;
+    background:linear-gradient(180deg,#fff,#F8FAFF);
+    box-shadow:0 1px 2px rgba(14,20,48,.04),0 34px 72px -42px rgba(67,56,202,.32),0 18px 40px -30px rgba(14,20,48,.18)}
+  .ph-demo .win{display:flex;align-items:center;gap:8px;padding:10px 14px;background:rgba(255,255,255,.86);
+    backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
   .ph-demo .win .d{width:9px;height:9px;border-radius:50%}
   .ph-demo .win .d.r{background:#FF5F57}.ph-demo .win .d.y{background:#FEBC2E}.ph-demo .win .d.g{background:#28C840}
-  .ph-demo .win .t{margin-left:6px;font-family:var(--mono);font-size:11px;letter-spacing:.03em;color:var(--ink-3)}
-  .ph-demo .win .live{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:750;
-    color:var(--green);background:var(--green-lt);padding:4px 10px;border-radius:999px}
-  .ph-demo .win .live i{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green)}
-  /* 工作台预览：按真实宽度渲染再等比缩放（布局正确、不挤叠），角上「放大查看」 */
-  .ph-stage{position:relative;width:100%;overflow:hidden;background:#fff}
-  .ph-stage iframe{position:absolute;top:0;left:0;border:0;background:#fff;transform-origin:top left}
-  .ph-zoom{position:absolute;right:12px;bottom:12px;z-index:3;display:inline-flex;align-items:center;gap:7px;
-    font-size:12.5px;font-weight:700;color:#fff;background:rgba(11,16,32,.6);backdrop-filter:blur(4px);
-    border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:8px 14px;cursor:pointer;transition:background .2s,transform .2s}
-  .ph-zoom:hover{background:var(--blue);transform:translateY(-1px)}
+  .ph-demo .win .t{margin-left:6px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+    font-family:var(--mono);font-size:11px;letter-spacing:.03em;color:var(--ink-3)}
+  .ph-focus{position:relative;isolation:isolate;background:
+    radial-gradient(280px 160px at 76% 18%,rgba(45,212,191,.12),transparent 72%),
+    linear-gradient(180deg,#FFFFFF,#F7F9FF);padding:clamp(14px,1.7vw,20px)}
+  .ph-focus::before{content:"";position:absolute;inset:auto 8% 0 20%;height:1px;background:linear-gradient(90deg,transparent,var(--blue-200),transparent);opacity:.55}
+  .focus-grid{position:relative;z-index:1;display:grid;grid-template-columns:minmax(300px,1.58fr) minmax(150px,.78fr);
+    gap:10px;align-items:stretch}
+  .focus-pane{min-width:0;border:1px solid rgba(226,232,245,.92);background:#fff;
+    border-radius:12px;box-shadow:0 10px 24px -22px rgba(14,20,48,.45)}
+  .focus-log-kicker{display:flex;align-items:center;justify-content:space-between;gap:8px;
+    font-size:11px;font-weight:760;color:var(--ink);letter-spacing:-.01em}
+  .focus-log-kicker span{color:var(--ink-3);font-family:var(--mono);font-weight:700;font-size:10px}
+  .focus-avatar{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;font-size:11px;font-weight:820;
+    color:#fff;background:linear-gradient(135deg,var(--blue),var(--blue-2))}
+  .focus-chat{padding:16px;display:grid;gap:11px}
+  .chat-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-bottom:9px;border-bottom:1px solid var(--line-2)}
+  .chat-person{display:flex;align-items:center;gap:9px;min-width:0}
+  .chat-person .focus-avatar{width:32px;height:32px;border-radius:10px}
+  .chat-title{font-size:14px;font-weight:820;line-height:1.2;color:var(--ink)}
+  .chat-sub{font-size:11px;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .intent-pill{display:inline-flex;align-items:center;gap:6px;flex-shrink:0;border-radius:999px;padding:6px 10px;
+    background:var(--orange-lt);color:var(--orange-deep);font-size:11px;font-weight:760}
+  .intent-pill i{font-size:10px}
+  .focus-msg{width:fit-content;max-width:88%;font-size:12.5px;line-height:1.58;padding:9px 11px;border-radius:12px;
+    overflow-wrap:anywhere;box-shadow:0 8px 20px -18px rgba(14,20,48,.45)}
+  .focus-msg.customer{background:#fff;border:1px solid var(--line);color:var(--ink);border-bottom-left-radius:4px}
+  .focus-msg.agent{justify-self:end;color:#fff;background:linear-gradient(135deg,var(--blue),var(--blue-2));border-bottom-right-radius:4px}
+  .agent-card{display:grid;gap:7px;border-radius:10px;padding:11px 12px;border:1px solid #D9DEFF;background:linear-gradient(180deg,#F8F9FF,#FFFFFF)}
+  .agent-card .agent-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .agent-card b{font-size:12px;color:var(--blue);letter-spacing:-.01em}
+  .agent-card .score{font-family:var(--mono);font-size:11px;color:var(--green);font-weight:760}
+  .agent-card p{font-size:12px;line-height:1.52;color:var(--ink-2);overflow-wrap:anywhere}
+  .assist-row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center}
+  .assist-copy{min-width:0;border:1px solid var(--blue-100);background:#fff;border-radius:8px;padding:7px 10px;
+    color:var(--blue-deep);font-size:11.5px;font-weight:680;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .assist-send{display:inline-grid;place-items:center;width:30px;height:30px;border:0;border-radius:8px;background:var(--blue);color:#fff;
+    box-shadow:0 10px 18px -12px rgba(67,56,202,.8)}
+  .focus-log{padding:13px;display:grid;gap:10px;align-content:start}
+  .log-stack{display:grid;gap:9px;position:relative}
+  .log-step{display:grid;grid-template-columns:8px 1fr;gap:8px;align-items:start}
+  .log-step i{width:8px;height:8px;border-radius:50%;background:var(--blue);margin-top:5px;box-shadow:0 0 0 4px var(--blue-50)}
+  .log-step:nth-child(2) i{background:var(--green);box-shadow:0 0 0 4px var(--green-lt)}
+  .log-step:nth-child(3) i{background:#F59E0B;box-shadow:0 0 0 4px #FFF7D6}
+  .log-step b{display:block;font-size:11.5px;line-height:1.3;color:var(--ink)}
+  .log-step span{display:block;margin-top:2px;font-size:10.5px;line-height:1.35;color:var(--ink-3)}
+  .ph-zoom{margin-left:auto;display:inline-flex;align-items:center;gap:6px;flex-shrink:0;
+    font-size:11px;font-weight:740;color:var(--ink);background:rgba(255,255,255,.82);backdrop-filter:blur(8px);
+    border:1px solid rgba(201,206,251,.9);border-radius:999px;padding:5px 10px;cursor:pointer;
+    box-shadow:0 8px 18px -14px rgba(14,20,48,.45);transition:background .2s,transform .2s,color .2s,border-color .2s}
+  .ph-zoom:hover{background:var(--blue);color:#fff;border-color:var(--blue);transform:translateY(-1px)}
   /* 放大模态：苹果式丝滑开合 · 虚化背景 + 大窗工作台 */
   .wbm{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;
     padding:clamp(12px,3vw,34px);background:rgba(11,16,32,.5);backdrop-filter:blur(13px);-webkit-backdrop-filter:blur(13px)}
@@ -70,22 +110,72 @@
   @media(max-width:980px){
     .ph-grid{grid-template-columns:1fr;gap:clamp(40px,7vw,56px)}
     .ph-art{order:2}
+    .focus-grid{grid-template-columns:minmax(260px,1fr) minmax(150px,.64fr)}
   }
-  /* —— 产品截图陈列（应用窗口框）—— */
-  .shotwrap{display:grid;grid-template-columns:1fr 1fr;gap:clamp(18px,2.4vw,28px)}
-  .shotcard{border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;background:#fff;
-    box-shadow:0 1px 2px rgba(14,20,48,.05),0 26px 54px -28px rgba(67,56,202,.28);
-    transition:transform .4s var(--ease),box-shadow .4s var(--ease),border-color .4s}
-  .shotcard:hover{transform:translateY(-5px);border-color:transparent;
-    box-shadow:0 2px 6px rgba(14,20,48,.06),0 40px 80px -30px rgba(67,56,202,.4)}
-  .shotcard .win{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--line);
-    background:linear-gradient(180deg,#FCFDFF,#F6F9FE)}
-  .shotcard .win .d{width:9px;height:9px;border-radius:50%}
-  .shotcard .win .d.r{background:#FF5F57}.shotcard .win .d.y{background:#FEBC2E}.shotcard .win .d.g{background:#28C840}
-  .shotcard .win .t{margin-left:6px;font-family:var(--mono);font-size:11px;letter-spacing:.03em;color:var(--ink-3)}
-  .shotcard img{width:100%;height:auto;display:block;object-fit:cover;object-position:top center}
-  .shotcard .cap{padding:14px 18px;font-size:13px;color:var(--ink-2);line-height:1.6;border-top:1px solid var(--line)}
-  @media(max-width:760px){.shotwrap{grid-template-columns:1fr}}
+  @media(max-width:560px){
+    .ph-focus{padding:14px}
+    .focus-grid{grid-template-columns:1fr}
+    .focus-log{display:none}
+    .focus-msg{max-width:96%}
+  }
+  /* —— 真实界面：高级证据区，不再把后台截图当主叙事 —— */
+  #screens{padding-top:clamp(58px,8vw,108px)}
+  #screens .sec-top{margin-bottom:clamp(28px,4vw,44px)}
+  #screens .sec-top h2{font-size:clamp(29px,3.4vw,46px)}
+  .proof-board{position:relative;overflow:hidden;display:grid;grid-template-columns:minmax(280px,.72fr) minmax(500px,1.28fr);
+    gap:clamp(22px,3vw,42px);align-items:stretch;border:1px solid rgba(226,232,245,.96);border-radius:30px;
+    background:linear-gradient(135deg,#fff 0%,#FCFDFF 52%,#F7FAFF 100%);
+    box-shadow:0 1px 2px rgba(14,20,48,.04),0 38px 90px -58px rgba(67,56,202,.34);
+    padding:clamp(22px,3vw,34px)}
+  .proof-board::before{content:"";position:absolute;left:36%;top:10%;bottom:10%;width:1px;
+    background:linear-gradient(180deg,transparent,var(--line),transparent)}
+  .proof-flow{position:relative;z-index:1;display:grid;align-content:center;gap:0}
+  .proof-step{display:grid;grid-template-columns:38px 1fr;gap:14px;align-items:start;padding:17px 0;border-bottom:1px solid var(--line-2)}
+  .proof-step:last-child{border-bottom:0}
+  .proof-no{width:38px;height:38px;border-radius:13px;display:grid;place-items:center;
+    font-family:var(--mono);font-size:12px;font-weight:800;color:var(--blue);background:var(--blue-50);border:1px solid var(--blue-100)}
+  .proof-step:nth-child(2) .proof-no{color:var(--green);background:var(--green-lt);border-color:#BDEFE7}
+  .proof-step:nth-child(3) .proof-no{color:var(--orange-deep);background:var(--orange-lt);border-color:#BDEFE7}
+  .proof-step h3{font-size:clamp(17px,1.5vw,20px);line-height:1.24;letter-spacing:-.02em;margin-bottom:6px}
+  .proof-step p{font-size:13.5px;line-height:1.65;color:var(--ink-2)}
+  .proof-stage{position:relative;z-index:1;min-height:clamp(360px,35vw,430px);border:1px solid rgba(226,232,245,.92);
+    border-radius:26px;overflow:hidden;background:#F7F8FE;box-shadow:inset 0 1px 0 rgba(255,255,255,.9)}
+  .proof-bg{position:absolute;inset:-12%;width:124%;height:124%;object-fit:cover;object-position:58% 28%;
+    transform:scale(1.28);filter:saturate(.72) contrast(.92);opacity:.3}
+  .proof-stage::after{content:"";position:absolute;inset:0;background:
+    linear-gradient(90deg,rgba(255,255,255,.92) 0%,rgba(255,255,255,.74) 42%,rgba(255,255,255,.44) 100%),
+    radial-gradient(420px 240px at 70% 18%,rgba(67,56,202,.16),transparent 72%);
+    pointer-events:none}
+  .proof-window{position:relative;z-index:2;width:min(520px,86%);margin:clamp(22px,3vw,34px);
+    border:1px solid rgba(226,232,245,.95);border-radius:20px;background:rgba(255,255,255,.88);
+    backdrop-filter:blur(14px);box-shadow:0 24px 54px -36px rgba(14,20,48,.38)}
+  .proof-window-head{display:flex;align-items:center;gap:8px;height:38px;padding:0 14px;border-bottom:1px solid var(--line);
+    font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .proof-window-head i{width:8px;height:8px;border-radius:50%;background:#FF5F57;box-shadow:14px 0 0 #FEBC2E,28px 0 0 #28C840;margin-right:28px}
+  .proof-body{display:grid;gap:12px;padding:16px}
+  .proof-chatline{display:flex;align-items:flex-start;gap:10px}
+  .proof-avatar{width:30px;height:30px;border-radius:10px;display:grid;place-items:center;background:var(--blue);color:#fff;font-size:12px;font-weight:800;flex:0 0 30px}
+  .proof-bubble{flex:1;border:1px solid var(--line);border-radius:12px;background:#fff;padding:10px 12px;font-size:13px;line-height:1.55;color:var(--ink)}
+  .proof-ai{border:1px solid #D9DEFF;border-radius:14px;background:linear-gradient(180deg,#F8F9FF,#fff);padding:12px}
+  .proof-ai-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px;font-size:12px;font-weight:800;color:var(--blue)}
+  .proof-ai-top span{font-family:var(--mono);font-weight:800;color:var(--green)}
+  .proof-ai p{font-size:12.5px;line-height:1.55;color:var(--ink-2)}
+  .proof-action{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid var(--line);border-radius:12px;background:#fff;padding:9px 11px}
+  .proof-action b{font-size:12.5px;color:var(--ink)}
+  .proof-action span{font-size:12px;color:var(--ink-3)}
+  .proof-action i{width:28px;height:28px;border-radius:9px;display:grid;place-items:center;background:var(--blue);color:#fff;flex:0 0 28px}
+  .proof-minis{position:absolute;z-index:2;right:clamp(16px,2vw,24px);bottom:clamp(16px,2vw,24px);
+    display:grid;grid-template-columns:1fr 1fr;gap:10px;width:min(440px,70%)}
+  .proof-mini{display:grid;grid-template-columns:58px 1fr;gap:10px;align-items:center;border:1px solid rgba(226,232,245,.95);
+    border-radius:16px;background:rgba(255,255,255,.86);backdrop-filter:blur(12px);padding:9px;
+    box-shadow:0 16px 36px -30px rgba(14,20,48,.45)}
+  .proof-mini-thumb{height:48px;border-radius:11px;overflow:hidden;background:#F7F8FE}
+  .proof-mini-thumb img{width:100%;height:100%;object-fit:cover;object-position:58% 25%;transform:scale(1.9);filter:saturate(.78)}
+  .proof-mini b{display:block;font-size:12.5px;line-height:1.2;color:var(--ink)}
+  .proof-mini span{display:block;margin-top:3px;font-size:11px;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  @media(max-width:980px){.proof-board{grid-template-columns:1fr}.proof-board::before{display:none}.proof-minis{width:min(500px,82%)}}
+  @media(max-width:640px){.proof-board{padding:16px;border-radius:24px}.proof-stage{min-height:520px}.proof-window{width:auto;margin:14px}
+    .proof-minis{left:14px;right:14px;bottom:14px;width:auto;grid-template-columns:1fr}.proof-mini{grid-template-columns:52px 1fr}}
   /* —— IM 通道网格 —— */
   .imgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(12px,1.4vw,16px)}
   .imcell{position:relative;background:#fff;border:1px solid var(--line);border-radius:var(--radius);
@@ -160,7 +250,7 @@
   .kpicard .l{font-size:13.5px;color:var(--ink-2);margin-top:10px;line-height:1.5}
   @media(max-width:760px){.kpiband{grid-template-columns:1fr 1fr}}
 
-  /* ============ 移动端适配（hero 缩放 demo 已自带处理，此处仅补 hero 以外的版式塌缩）============ */
+  /* ============ 移动端适配（首屏局部特写与后续模块版式塌缩）============ */
   @media(max-width:900px){
     /* 节头：标题与副文从并排 flex 改为竖排，避免窄屏挤压/溢出 */
     .sec-top{flex-direction:column;align-items:flex-start;gap:clamp(10px,2vw,14px)}
@@ -175,10 +265,6 @@
     .sec-top{margin-bottom:clamp(28px,7vw,40px)}
     .sec-top h2{font-size:clamp(24px,7vw,32px)}
     .sec-top .sub{font-size:14.5px}
-
-    /* 截图卡：标题省略不撑破窗框 */
-    .shotcard .win .t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
-    .shotcard .cap{padding:13px 15px;font-size:12.5px}
 
     /* IM 通道格：内距收，触控区充裕 */
     .imcell{padding:18px 12px;min-height:44px}
@@ -253,12 +339,43 @@
             <div class="win">
               <span class="d r"></span><span class="d y"></span><span class="d g"></span>
               <span class="t">句子秒回 · 聚合聊天工作台</span>
-              <span class="live"><i></i>LIVE</span>
+              <button class="ph-zoom" type="button" onclick="wbOpen()" aria-label="查看完整工作台演示"><i class="fa-solid fa-up-right-and-down-left-from-center" aria-hidden="true"></i> 完整工作台</button>
             </div>
-            <div class="ph-stage" id="wbStage">
-              <iframe id="wbFrame" data-d="../assets/demos/miaohui-workbench.html" data-m="../assets/demos/miaohui-workbench-mobile.html" title="句子秒回 · 聚合聊天工作台 实时演示" loading="lazy"></iframe>
+            <div class="ph-focus" aria-label="句子秒回 Agent 协作工作台局部示意">
+              <div class="focus-grid">
+                <section class="focus-pane focus-chat" aria-label="Agent 协作会话">
+                  <div class="chat-head">
+                    <div class="chat-person">
+                      <div class="focus-avatar">李</div>
+                      <div>
+                        <div class="chat-title">李可</div>
+                        <div class="chat-sub">抖音私信 · 所在群：福利交流群</div>
+                      </div>
+                    </div>
+                    <span class="intent-pill"><i class="fa-solid fa-bolt"></i> 高意向 92%</span>
+                  </div>
+                  <div class="focus-msg customer">课程贵了点，我还想再看看。孩子最近也不太想上课。</div>
+                  <div class="agent-card">
+                    <div class="agent-top"><b>Agent A1 已接住</b><span class="score">置信 92%</span></div>
+                    <p>价格异议 + 学习动力下降。先共情，再给出免费评估承接。</p>
+                  </div>
+                  <div class="focus-msg agent">理解，孩子状态我们也很在意。方便先了解下这两周卡在哪些点吗？</div>
+                  <div class="assist-row">
+                    <div class="assist-copy">AI 建议：免费评估 · 转人工确认</div>
+                    <button class="assist-send" type="button" aria-label="发送 AI 建议"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i></button>
+                  </div>
+                </section>
+
+                <aside class="focus-pane focus-log" aria-label="Agent 工作日志">
+                  <div class="focus-log-kicker">Agent 工作日志 <span>14:09</span></div>
+                  <div class="log-stack">
+                    <div class="log-step"><i aria-hidden="true"></i><div><b>读取客户画像</b><span>高价值、消费 2 次、近 7 天活跃</span></div></div>
+                    <div class="log-step"><i aria-hidden="true"></i><div><b>匹配话术</b><span>A-127 · 置信 92%</span></div></div>
+                    <div class="log-step"><i aria-hidden="true"></i><div><b>等待人工确认</b><span>高风险优惠动作需审核</span></div></div>
+                  </div>
+                </aside>
+              </div>
             </div>
-            <button class="ph-zoom" type="button" onclick="wbOpen()" aria-label="放大查看工作台演示"><i class="fa-solid fa-up-right-and-down-left-from-center" aria-hidden="true"></i> 放大查看</button>
           </div>
         </div>
       </div>
@@ -275,16 +392,59 @@
         </div>
         <p class="sub">11 个 IM 通道聚合到一个工作台，Agent 像真人一样工作、与同事协作，并接受统一管理。</p>
       </div>
-      <div class="shotwrap">
-        <div class="shotcard rv">
-          <div class="win"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="t">句子秒回 · 聚合聊天工作台</span></div>
-          <img src="../assets/product-shots/miaohui-workbench.png?v=2" alt="句子秒回 聚合聊天工作台界面" loading="lazy" decoding="async" />
-          <div class="cap">客服 / 销售日常回复，AI 辅助 + 团队协作，客户档案与 AI 跟进建议并排可见。</div>
+      <div class="proof-board rv">
+        <div class="proof-flow" aria-label="句子秒回真实工作流">
+          <div class="proof-step">
+            <div class="proof-no">01</div>
+            <div>
+              <h3>客户进线，先被归到正确队列</h3>
+              <p>11 个 IM 入口统一进入工作台，急需处理的会话自动靠前。</p>
+            </div>
+          </div>
+          <div class="proof-step">
+            <div class="proof-no">02</div>
+            <div>
+              <h3>Agent 接管，给出判断依据</h3>
+              <p>客户画像、历史对话、话术匹配和置信度一起呈现。</p>
+            </div>
+          </div>
+          <div class="proof-step">
+            <div class="proof-no">03</div>
+            <div>
+              <h3>关键动作，交给人确认</h3>
+              <p>优惠、转人工、升级处理等动作保留人工确认和追溯。</p>
+            </div>
+          </div>
         </div>
-        <div class="shotcard rv rv-d1">
-          <div class="win"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="t">句子秒回 · 紧急消息不漏接</span></div>
-          <img src="../assets/product-shots/miaohui-aggregation.png?v=2" alt="句子秒回 紧急消息处理界面" loading="lazy" decoding="async" />
-          <div class="cap">高优先级会话自动识别顶到最前，Agent 先接住、人再跟进，重要客户不漏接。</div>
+        <div class="proof-stage" aria-label="句子秒回真实界面局部证据">
+          <img class="proof-bg" src="../assets/product-shots/miaohui-workbench.png?v=2" alt="" loading="lazy" decoding="async" />
+          <div class="proof-window">
+            <div class="proof-window-head"><i aria-hidden="true"></i>会话接管 · Agent 协作</div>
+            <div class="proof-body">
+              <div class="proof-chatline">
+                <div class="proof-avatar">李</div>
+                <div class="proof-bubble">课程贵了点，我还想再看看。孩子最近也不太想上课。</div>
+              </div>
+              <div class="proof-ai">
+                <div class="proof-ai-top">Agent A1 已接住 <span>92%</span></div>
+                <p>识别为价格异议 + 学习动力下降，建议先共情，再交给人工确认优惠动作。</p>
+              </div>
+              <div class="proof-action">
+                <div><b>免费评估方案</b><span>等待主管确认</span></div>
+                <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+              </div>
+            </div>
+          </div>
+          <div class="proof-minis" aria-label="句子秒回界面切片">
+            <div class="proof-mini">
+              <div class="proof-mini-thumb"><img src="../assets/product-shots/miaohui-aggregation.png?v=2" alt="" loading="lazy" decoding="async" /></div>
+              <div><b>优先级上浮</b><span>重要会话先出现</span></div>
+            </div>
+            <div class="proof-mini">
+              <div class="proof-mini-thumb"><img src="../assets/product-shots/miaohui-workbench.png?v=2" alt="" loading="lazy" decoding="async" /></div>
+              <div><b>过程可追溯</b><span>判断依据留在日志</span></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -485,24 +645,20 @@
   </div>
   <script>
   (function(){
-    var fr=document.getElementById('wbFrame'),stg=document.getElementById('wbStage');
-    if(!fr||!stg)return;
     var big=document.getElementById('wbFrameBig'),bstg=document.getElementById('wbBigStage'),modal=document.getElementById('wbModal');
+    if(!big||!bstg||!modal)return;
     var mq=matchMedia('(max-width:760px)');
-    function mode(){return mq.matches?{src:fr.getAttribute('data-m'),w:430,h:860}:{src:fr.getAttribute('data-d'),w:1440,h:780};}
-    function place(frame,host,m,s){frame.style.width=m.w+'px';frame.style.height=m.h+'px';frame.style.transform=(s>=.999?'none':'scale('+s+')');host.style.height=Math.round(m.h*s)+'px';}
-    function fitPrev(){var m=mode();if(fr.getAttribute('src')!==m.src)fr.setAttribute('src',m.src);var w=stg.clientWidth||520;place(fr,stg,m,w/m.w);}
+    function mode(){return mq.matches?{src:'../assets/demos/miaohui-workbench-mobile.html',w:430,h:860}:{src:'../assets/demos/miaohui-workbench.html',w:1440,h:780};}
     function fitBig(){var m=mode();var availW=Math.min(window.innerWidth*0.96,m.w),availH=window.innerHeight*0.9;var s=Math.min(availW/m.w,availH/m.h,1);
       var want=mq.matches?'m':'d';
       if(big.getAttribute('data-mode')!==want){big.setAttribute('src',m.src);big.setAttribute('data-mode',want);}
       big.style.width=m.w+'px';big.style.height=m.h+'px';big.style.transform=(s>=.999?'none':'scale('+s+')');
       bstg.style.width=Math.round(m.w*s)+'px';bstg.style.height=Math.round(m.h*s)+'px';}
-    fitPrev();
     window.wbOpen=function(){modal.classList.remove('closing');modal.classList.add('open');document.body.style.overflow='hidden';fitBig();};
     window.wbClose=function(){if(!modal.classList.contains('open')||modal.classList.contains('closing'))return;modal.classList.add('closing');document.body.style.overflow='';setTimeout(function(){modal.classList.remove('open');modal.classList.remove('closing');},250);};
     modal.addEventListener('click',function(e){if(e.target===modal)window.wbClose();});
     document.addEventListener('keydown',function(e){if(e.key==='Escape'&&modal.classList.contains('open'))window.wbClose();});
-    var rt;window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){fitPrev();if(modal.classList.contains('open'))fitBig();},120);});
+    var rt;window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){if(modal.classList.contains('open'))fitBig();},120);});
   })();
   </script>
 </main>
