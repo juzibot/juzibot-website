@@ -85,6 +85,7 @@ SOURCES = [
         "type": "rss",
         "feeds": [("https://36kr.com/feed", "行业动态")],
         "max_items": 15,
+        "keep_max": 60,  # 外部源存量上限: RSS 窗口每次都有新内容, 不修剪会让内联数据无限膨胀
         "home": "https://36kr.com/",
     },
 ]
@@ -322,6 +323,14 @@ def cell_link(cell):
     return str(cell or "").strip()
 
 
+def cell_date(cell):
+    """飞书日期字段 → YYYY-MM-DD。日期列返回毫秒时间戳, 文本兜底解析, 空返回 ''。"""
+    if isinstance(cell, (int, float)) and cell > 0:
+        return datetime.fromtimestamp(cell / 1000).strftime("%Y-%m-%d")
+    m = re.search(r"\d{4}[-/]\d{1,2}[-/]\d{1,2}", str(cell or ""))
+    return m.group(0).replace("/", "-") if m else ""
+
+
 def sync_feishu_base(src, old, limit):
     if not shutil.which("lark-cli"):
         raise RuntimeError("lark-cli 不在 PATH(登记表 adapter 依赖本机已授权的 lark-cli)")
@@ -329,6 +338,7 @@ def sync_feishu_base(src, old, limit):
            "--base-token", src["base_token"], "--table-id", src["table_id"],
            "--field-id", "文章标题", "--field-id", "公众号正式链接",
            "--field-id", "属于哪个号", "--field-id", "上官网",
+           "--field-id", "发布日期",
            "--format", "json", "--limit", "200"]
     p = subprocess.run(cmd, capture_output=True, text=True, timeout=90)
     raw = p.stdout
@@ -341,7 +351,7 @@ def sync_feishu_base(src, old, limit):
     rows = d["data"]["data"]
     got, failed, passed = [], [], 0
     for row in rows:
-        title_cell, link_cell, acct_cell, on_site = (list(row) + [None] * 4)[:4]
+        title_cell, link_cell, acct_cell, on_site, date_cell = (list(row) + [None] * 5)[:5]
         link = cell_link(link_cell)
         if not on_site or not link:  # 闸门: 勾了「上官网」且有正式链接才收
             continue
@@ -359,7 +369,14 @@ def sync_feishu_base(src, old, limit):
             time.sleep(FETCH_DELAY)
         except Exception as ex:  # noqa: BLE001 — 元数据抓不到就用表里的标题兜底
             print(f"  [警告] 公众号元数据抓取失败 {link}: {ex}")
-        it = make_item(src, link, title, summary, date or datetime.now().strftime("%Y-%m-%d"), account)
+        # 日期兜底链: 网页元数据 → 登记表「发布日期」列 → 都没有则不上站。
+        # 不能拿"今天"顶包: 信息流按日期倒序, 伪造日期会把旧文顶到最前打乱时间线
+        date = date or cell_date(date_cell)
+        if not date:
+            failed.append(link)
+            print(f"  [跳过] 拿不到发布日期(网页元数据与登记表「发布日期」都空): {link}")
+            continue
+        it = make_item(src, link, title, summary, date, account)
         got.append(it) if it else (failed.append(link), print(f"  [跳过] 登记行缺标题且抓取失败: {link}"))
     print(f"[{src['id']}] 登记表 {len(rows)} 行, 过闸 {passed} 行, 新收 {len(got)} 条")
     return got, failed
@@ -512,10 +529,11 @@ def main():
     ap.add_argument("--limit", type=int, default=0, help="每源本次最多收 N 条新内容(调试)")
     args = ap.parse_args()
 
-    old = {}
-    if DATA_FILE.exists() and not args.full:
+    prev = {}  # 已有数据始终留底; --full 只决定"要不要跳过已抓过的", 不决定"能不能回退"
+    if DATA_FILE.exists():
         for it in json.loads(DATA_FILE.read_text(encoding="utf-8")).get("items", []):
-            old[it["url"]] = it
+            prev[it["url"]] = it
+    old = {} if args.full else dict(prev)
 
     now = datetime.now().astimezone().isoformat(timespec="seconds")
     items, sources_meta, all_failed = list(old.values()), [], []
@@ -531,8 +549,17 @@ def main():
         sources_meta.append({
             "id": src["id"], "name": src["name"], "type": src["type"],
             "home": src.get("home", ""), "status": status, "last_sync": now,
-            "count": sum(1 for i in items if i["source"] == src["id"]),
+            "count": 0,  # 终态统一重算(见下), 此处占位
         })
+
+    # --full 保底: 全量重抓只负责刷新、不负责删——这次没抓回来的历史条目一律沿用旧数据,
+    # 否则单篇/单源抓取失败会让内容从数据文件和三版页面里永久消失(下线源另由下方 valid 清理)
+    if args.full and prev:
+        have = {i["url"] for i in items}
+        kept = [p for p in prev.values() if p["url"] not in have]
+        if kept:
+            print(f"[保底] 本次全量未抓到的历史条目沿用旧数据 {len(kept)} 条")
+            items.extend(kept)
 
     if not items:
         sys.exit("[错误] 没有任何数据, 不写文件")
@@ -544,6 +571,26 @@ def main():
         items = [i for i in items if i["source"] in valid]
 
     items.sort(key=lambda x: (x["date"], x["id"]), reverse=True)
+
+    # 存量修剪: 配了 keep_max 的源(外部 RSS)只保留最新 N 条, 自家内容源不设限
+    caps = {s["id"]: s["keep_max"] for s in SOURCES if s.get("keep_max")}
+    if caps:
+        seen_n, kept_items, trimmed = {}, [], 0
+        for it in items:
+            n = seen_n.get(it["source"], 0)
+            if it["source"] in caps and n >= caps[it["source"]]:
+                trimmed += 1
+                continue
+            seen_n[it["source"]] = n + 1
+            kept_items.append(it)
+        if trimmed:
+            print(f"[修剪] 超出 keep_max 的最老条目 {trimmed} 条")
+        items = kept_items
+
+    # 计数放终态算(保底/清理/修剪都可能改动条目), 源循环里算会漏掉后续增删
+    for m in sources_meta:
+        m["count"] = sum(1 for i in items if i["source"] == m["id"])
+
     DATA_FILE.parent.mkdir(exist_ok=True)
     DATA_FILE.write_text(
         json.dumps({"generated_by": "build_news.py", "generated_at": now, "count": len(items),
