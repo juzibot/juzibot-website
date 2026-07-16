@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>客户与行业 · 教育 / 电商 / 金融 / 政务 / 互联网 已部署 | 句子互动</title>
-<meta name="description" content="句子互动 AI 员工已在在线教育、消费品电商、金融、政务·司法、泛互联网 5 个行业头部公司部署。如果你在这些行业，我们已经在这些行业跑了 多年。" />
+<title>客户与行业 · 电商 / 金融 / 政务 / 互联网 / 教育 已部署 | 句子互动</title>
+<meta name="description" content="句子互动 AI 员工已在消费品电商、金融、政务·司法、泛互联网、在线教育 5 个行业头部公司部署。如果你在这些行业，我们已经在这些行业跑了 多年。" />
 <link rel="icon" href="logo.png" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <meta property="og:type" content="website" />
-<meta property="og:title" content="客户与行业 · 教育 / 电商 / 金融 / 政务 / 互联网 已部署 | 句子互动" />
-<meta property="og:description" content="句子互动 AI 员工已在在线教育、消费品电商、金融、政务·司法、泛互联网 5 个行业头部公司部署。" />
+<meta property="og:title" content="客户与行业 · 电商 / 金融 / 政务 / 互联网 / 教育 已部署 | 句子互动" />
+<meta property="og:description" content="句子互动 AI 员工已在消费品电商、金融、政务·司法、泛互联网、在线教育 5 个行业头部公司部署。" />
 <link rel="stylesheet" href="assets/site.css" />
 <style>
   /* scoped：仅补 site.css 未覆盖的轻量结构（面包屑 / hero pills / 行业版式 / 客户墙 / 场景清单 / 案例图）
@@ -53,16 +53,10 @@
     color:var(--ac,#4338CA);margin-bottom:16px}
   .logo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
   .logo-grid .lc{border:1px solid var(--line);border-radius:10px;background:#fff;display:flex;align-items:center;
-    justify-content:center;padding:9px 12px;transition:border-color .25s var(--ease),box-shadow .25s var(--ease),transform .25s var(--ease)}
+    justify-content:center;padding:9px 12px;min-height:64px;transition:border-color .25s var(--ease),box-shadow .25s var(--ease),transform .25s var(--ease)}
   .logo-grid .lc:hover{border-color:var(--blue-200);box-shadow:0 8px 20px rgba(67,56,202,.12);transform:translateY(-2px)}
   .logo-grid .lc img{width:100%;height:auto;display:block}
-  /* 政务：落地街道文字块 */
-  .place-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-  .place-grid .pc{border:1px solid var(--line);border-radius:10px;padding:13px 10px;text-align:center;
-    font-size:13px;font-weight:700;color:var(--ink);background:#fff;
-    transition:border-color .25s var(--ease),box-shadow .25s var(--ease),transform .25s var(--ease)}
-  .place-grid .pc:hover{border-color:var(--blue-200);box-shadow:0 8px 20px rgba(67,56,202,.12);transform:translateY(-2px)}
-  .ip-foot{margin-top:14px;font-size:12px;color:var(--ink-3);line-height:1.6}
+  .logo-grid .lc img.brand{width:100%;height:auto;object-fit:contain}
   /* 行业案例实拍图（金融 / 政务） */
   .ind-shot{margin-top:14px;border:1px solid var(--line);border-radius:var(--radius-sm);overflow:hidden;
     box-shadow:var(--shadow-soft);background:#fff}
@@ -96,9 +90,6 @@
     .logo-grid{gap:8px}
     /* logo / 街道格：触控区 ≥44px */
     .logo-grid .lc{min-height:44px;padding:8px 10px}
-    .place-grid{gap:8px}
-    .place-grid .pc{min-height:44px;display:flex;align-items:center;justify-content:center;
-      padding:10px 8px;font-size:12.5px}
     /* 案例实拍图：已 width:100% / height:auto，再保险防溢出 */
     .ind-shot img{max-width:100%}
     /* 价值卡（单列）：收字号 */
@@ -107,10 +98,6 @@
   }
   @media(max-width:520px){
     .logo-grid{grid-template-columns:repeat(2,1fr)}
-  }
-  /* 极窄屏（360/390）：街道格也塌成单列，避免双列文字挤压 */
-  @media(max-width:400px){
-    .place-grid{grid-template-columns:1fr}
   }
 </style>
 </head>
@@ -127,7 +114,7 @@
         </nav>
         <span class="sec-eyebrow">WHO USES JUZIBOT</span>
         <h1>你的行业里，<span class="hl"><span>已经有人在用了</span></span>。</h1>
-        <p class="lede">如果你在<strong>在线教育、消费品电商、金融、政务、互联网</strong>这 5 个行业里，你的同行已经在用句子互动的 AI 员工。这些行业的难点我们已经和他们一起趟过，你不必从零开始。</p>
+        <p class="lede">如果你在<strong>消费品电商、金融、政务·司法、泛互联网、在线教育</strong>这 5 个行业里，你的同行已经在用句子互动的 AI 员工。这些行业的难点我们已经和他们一起趟过，你不必从零开始。</p>
         <div class="ep-pills">
           <span class="ep-pill"><span class="dot"></span>1000+ 大型企业客户</span>
           <span class="ep-pill"><span class="dot"></span>5 个行业头部公司在用</span>
@@ -149,48 +136,7 @@
     </div>
   </section>
 
-  <!-- ════════ 行业 01 · 在线教育 ════════ -->
-  <section class="sec pad" id="education" style="--ac:#4338CA">
-    <div class="wrap">
-      <div class="ind-split rv">
-        <div>
-          <span class="ind-badge"><i class="fa-solid fa-graduation-cap"></i>几百家头部公司已覆盖</span>
-          <h2>在线教育</h2>
-          <p class="ind-lede">从大班课、小班课到 1 对 1，从招生、续费到 NPS，几乎所有头部在线教育公司都在用句子互动。AI 把「低转高」的招生与续费链路跑通——招生漏斗、续费提醒、督学服务、退课处理，每一环都有 AI 在岗。</p>
-          <div class="ind-cap">典型场景</div>
-          <p class="ind-lead-line">· 学员建联：自动欢迎语 + 体验课邀约</p>
-          <ul class="ind-scn">
-            <li>招生漏斗：直播搬家 → 私域承接 → 体验课 → 正价转化</li>
-            <li>续费提醒：到期前 N 天分层 SOP，老客户深耕</li>
-            <li>督学服务：作业提醒、出勤跟进、家长群运营</li>
-            <li>退课/投诉处理：合规话术 + 真人介入节奏</li>
-          </ul>
-        </div>
-        <aside class="ind-panel rv rv-d1">
-          <div class="ip-cap">部分客户</div>
-          <div class="logo-grid">
-            <div class="lc"><img src="assets/brand/logos/edu-0-0.png" alt="" loading="lazy"></div>
-            <div class="lc"><img src="assets/brand/logos/edu-0-1.png" alt="" loading="lazy"></div>
-            <div class="lc"><img src="assets/brand/logos/edu-0-2.png" alt="" loading="lazy"></div>
-            <div class="lc"><img src="assets/brand/logos/edu-0-3.png" alt="" loading="lazy"></div>
-            <div class="lc"><img src="assets/brand/logos/edu-0-4.png" alt="" loading="lazy"></div>
-            <div class="lc"><img src="assets/brand/logos/edu-0-5.png" alt="" loading="lazy"></div>
-            <div class="lc"><img src="assets/brand/logos/edu-0-6.png" alt="" loading="lazy"></div>
-            <div class="lc"><img src="assets/brand/logos/edu-0-7.png" alt="" loading="lazy"></div>
-            <div class="lc"><img src="assets/brand/logos/edu-1-0.png" alt="" loading="lazy"></div>
-            <div class="lc"><img src="assets/brand/logos/edu-1-1.png" alt="" loading="lazy"></div>
-            <div class="lc"><img src="assets/brand/logos/edu-1-2.png" alt="" loading="lazy"></div>
-            <div class="lc"><img src="assets/brand/logos/edu-1-3.png" alt="" loading="lazy"></div>
-            <div class="lc"><img src="assets/brand/logos/edu-1-4.png" alt="" loading="lazy"></div>
-            <div class="lc"><img src="assets/brand/logos/edu-1-5.png" alt="" loading="lazy"></div>
-            <div class="lc"><img src="assets/brand/logos/edu-1-6.png" alt="" loading="lazy"></div>
-          </div>
-        </aside>
-      </div>
-    </div>
-  </section>
-
-  <!-- ════════ 行业 02 · 消费品电商 ════════ -->
+  <!-- ════════ 行业 01 · 消费品电商 ════════ -->
   <section class="sec pad" id="ecommerce" style="--ac:#0D9488">
     <div class="wrap">
       <div class="ind-split rv">
@@ -210,21 +156,21 @@
         <aside class="ind-panel rv rv-d1">
           <div class="ip-cap">部分客户</div>
           <div class="logo-grid">
-            <div class="lc"><img src="assets/brand/logos/consumer-0-0.png" alt="" loading="lazy"></div>
-            <div class="lc"><img src="assets/brand/logos/consumer-0-1.png" alt="" loading="lazy"></div>
-            <div class="lc"><img src="assets/brand/logos/consumer-0-2.png" alt="" loading="lazy"></div>
-            <div class="lc"><img src="assets/brand/logos/consumer-0-3.png" alt="" loading="lazy"></div>
-            <div class="lc"><img src="assets/brand/logos/consumer-0-4.png" alt="" loading="lazy"></div>
-            <div class="lc"><img src="assets/brand/logos/consumer-0-5.png" alt="" loading="lazy"></div>
-            <div class="lc"><img src="assets/brand/logos/consumer-0-6.png" alt="" loading="lazy"></div>
-            <div class="lc"><img src="assets/brand/logos/consumer-0-7.png" alt="" loading="lazy"></div>
-            <div class="lc"><img src="assets/brand/logos/consumer-1-0.png" alt="" loading="lazy"></div>
-            <div class="lc"><img src="assets/brand/logos/consumer-1-1.png" alt="" loading="lazy"></div>
-            <div class="lc"><img src="assets/brand/logos/consumer-1-2.png" alt="" loading="lazy"></div>
-            <div class="lc"><img src="assets/brand/logos/consumer-1-3.png" alt="" loading="lazy"></div>
-            <div class="lc"><img src="assets/brand/logos/consumer-1-4.png" alt="" loading="lazy"></div>
-            <div class="lc"><img src="assets/brand/logos/consumer-1-5.png" alt="" loading="lazy"></div>
-            <div class="lc"><img src="assets/brand/logos/consumer-1-6.png" alt="" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/consumer-0-0.png" alt="泡泡玛特" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/consumer-0-1.png" alt="新希望乳业" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/consumer-0-2.png" alt="快鱼" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/consumer-0-3.png" alt="松下" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/consumer-0-4.png" alt="Babycare" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/consumer-0-5.png" alt="汤臣倍健" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/consumer-0-6.png" alt="Swisse" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/consumer-0-7.png" alt="万达集团" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/consumer-1-0.png" alt="薇诺娜" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/consumer-1-1.png" alt="美的" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/consumer-1-2.png" alt="森马" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/consumer-1-3.png" alt="资生堂" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/consumer-1-4.png" alt="元气森林" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/consumer-1-5.png" alt="润百颜" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/consumer-1-6.png" alt="WonderLab" loading="lazy"></div>
           </div>
         </aside>
       </div>
@@ -251,14 +197,21 @@
         <aside class="ind-panel rv rv-d1">
           <div class="ip-cap">部分客户</div>
           <div class="logo-grid">
-            <div class="lc"><img src="assets/brand/logos/govfin-0-0.png" alt="" loading="lazy"></div>
-            <div class="lc"><img src="assets/brand/logos/govfin-0-1.png" alt="" loading="lazy"></div>
-            <div class="lc"><img src="assets/brand/logos/govfin-0-2.png" alt="" loading="lazy"></div>
-            <div class="lc"><img src="assets/brand/logos/govfin-0-3.png" alt="" loading="lazy"></div>
-            <div class="lc"><img src="assets/brand/logos/govfin-0-4.png" alt="" loading="lazy"></div>
-            <div class="lc"><img src="assets/brand/logos/govfin-0-5.png" alt="" loading="lazy"></div>
-            <div class="lc"><img src="assets/brand/logos/govfin-0-6.png" alt="" loading="lazy"></div>
-            <div class="lc"><img src="assets/brand/logos/govfin-0-7.png" alt="" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/govfin-0-0.png" alt="厦门银行" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/govfin-0-1.png" alt="银联商务" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/govfin-0-2.png" alt="创金合信基金" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/govfin-0-3.png" alt="中国人保" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/govfin-0-4.png" alt="招联金融" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/govfin-0-5.png" alt="昆仑银行" loading="lazy"></div>
+            <div class="lc"><img class="brand" style="max-width:70%" src="assets/brand/logos/govfin-0-6.png" alt="中国人寿" loading="lazy"></div>
+            <div class="lc"><img class="brand" style="max-width:70%" src="assets/brand/logos/govfin-0-7.png" alt="宁波银行" loading="lazy"></div>
+            <div class="lc"><img class="brand" style="max-width:70%" src="assets/brand/logos/govfin-1-0.png" alt="蚂蚁集团" loading="lazy"></div>
+            <div class="lc"><img class="brand" style="max-width:70%" src="assets/brand/logos/govfin-1-1.png" alt="中信银行" loading="lazy"></div>
+            <div class="lc"><img class="brand" style="max-width:70%" src="assets/brand/logos/govfin-1-2.png" alt="广发银行" loading="lazy"></div>
+            <div class="lc"><img class="brand" style="max-width:70%" src="assets/brand/logos/govfin-1-3.png" alt="平安银行" loading="lazy"></div>
+            <div class="lc"><img class="brand" style="max-width:70%" src="assets/brand/logos/govfin-1-4.png" alt="微众银行" loading="lazy"></div>
+            <div class="lc"><img class="brand" style="max-width:70%" src="assets/brand/logos/govfin-1-5.png" alt="深圳证券交易所" loading="lazy"></div>
+            <div class="lc"><img class="brand" style="max-width:70%" src="assets/brand/logos/govfin-1-6.png" alt="华泰证券" loading="lazy"></div>
           </div>
         </aside>
       </div>
@@ -272,7 +225,7 @@
         <div>
           <span class="ind-badge"><i class="fa-solid fa-scale-balanced"></i>AI 社工 / AI 调解员稳步落地</span>
           <h2>政务 · 司法</h2>
-          <p class="ind-lede">政务对合规的要求最高，AI 一句话出错都可能引发舆情。我们的 AI 社工从海淀东升镇起步，已落地学院路、曙光、万寿路、清河、花园路等多个街道、几十个社区；AI 普法调解员在海淀区司法局上线。</p>
+          <p class="ind-lede">政务对合规的要求最高，AI 一句话出错都可能引发舆情。我们的 AI 社工和 AI 普法调解员已在多地政务体系中落地，覆盖社区服务、矛盾调解、普法咨询等核心场景。</p>
           <div class="ind-cap">典型场景</div>
           <p class="ind-lead-line">· 普法咨询：依据法规库答疑</p>
           <ul class="ind-scn">
@@ -283,17 +236,24 @@
           </ul>
         </div>
         <aside class="ind-panel rv rv-d1">
-          <div class="ip-cap">落地街道 · 北京海淀</div>
-          <div class="place-grid">
-            <div class="pc">海淀·东升镇</div>
-            <div class="pc">学院路街道</div>
-            <div class="pc">曙光街道</div>
-            <div class="pc">万寿路街道</div>
-            <div class="pc">清河街道</div>
-            <div class="pc">花园路街道</div>
-            <div class="pc">海淀区司法局</div>
+          <div class="ip-cap">部分客户</div>
+          <div class="logo-grid">
+            <div class="lc"><img class="brand" src="assets/brand/logos/gov-0-0.png" alt="国家电网" loading="lazy"></div>
+            <div class="lc"><img class="brand" style="max-width:70%" src="assets/brand/logos/gov-0-1.png" alt="新华社" loading="lazy"></div>
+            <div class="lc"><img class="brand" style="max-width:70%" src="assets/brand/logos/gov-0-2.png" alt="电信" loading="lazy"></div>
+            <div class="lc"><img class="brand" style="max-width:70%" src="assets/brand/logos/gov-0-3.png" alt="海淀人民政府" loading="lazy"></div>
+            <div class="lc"><img class="brand" style="max-width:70%" src="assets/brand/logos/gov-0-4.png" alt="北京民政" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/gov-0-5.png" alt="杭州市临平区公安分局" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/gov-0-6.png" alt="温州市公安反诈中心" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/gov-0-7.png" alt="海淀区网信办" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/gov-1-0.png" alt="海淀区城市管理中心" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/gov-1-1.png" alt="东升镇人民政府" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/gov-1-2.png" alt="东升镇司法所" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/gov-1-3.png" alt="学院路街道" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/gov-1-4.png" alt="花园路街道" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/gov-1-5.png" alt="万寿路街道" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/gov-1-6.png" alt="北航社区" loading="lazy"></div>
           </div>
-          <div class="ip-foot">从东升镇起步，已覆盖几十个社区、数百个居民群</div>
         </aside>
       </div>
     </div>
@@ -319,14 +279,62 @@
         <aside class="ind-panel rv rv-d1">
           <div class="ip-cap">部分客户</div>
           <div class="logo-grid">
-            <div class="lc"><img src="assets/brand/logos/internet-0-0.png" alt="" loading="lazy"></div>
-            <div class="lc"><img src="assets/brand/logos/internet-0-1.png" alt="" loading="lazy"></div>
-            <div class="lc"><img src="assets/brand/logos/internet-0-2.png" alt="" loading="lazy"></div>
-            <div class="lc"><img src="assets/brand/logos/internet-0-3.png" alt="" loading="lazy"></div>
-            <div class="lc"><img src="assets/brand/logos/internet-0-4.png" alt="" loading="lazy"></div>
-            <div class="lc"><img src="assets/brand/logos/internet-0-5.png" alt="" loading="lazy"></div>
-            <div class="lc"><img src="assets/brand/logos/internet-0-6.png" alt="" loading="lazy"></div>
-            <div class="lc"><img src="assets/brand/logos/internet-0-7.png" alt="" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/internet-0-0.png" alt="火山引擎" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/internet-0-1.png" alt="腾讯广告" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/internet-0-2.png" alt="腾讯智慧零售" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/internet-0-3.png" alt="腾讯互动娱乐" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/internet-0-4.png" alt="百度" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/internet-0-5.png" alt="京东" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/internet-0-6.png" alt="58同城" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/internet-0-7.png" alt="高德地图" loading="lazy"></div>
+            <div class="lc"><img class="brand" style="max-width:70%" src="assets/brand/logos/internet-1-0.png" alt="瓜子二手车" loading="lazy"></div>
+            <div class="lc"><img class="brand" style="max-width:70%" src="assets/brand/logos/internet-1-1.png" alt="京东物流" loading="lazy"></div>
+            <div class="lc"><img class="brand" style="max-width:70%" src="assets/brand/logos/internet-1-2.png" alt="微软" loading="lazy"></div>
+            <div class="lc"><img class="brand" style="max-width:70%" src="assets/brand/logos/internet-1-3.png" alt="文心一言" loading="lazy"></div>
+            <div class="lc"><img class="brand" style="max-width:45%" src="assets/brand/logos/internet-1-4.png" alt="1688" loading="lazy"></div>
+            <div class="lc"><img class="brand" style="max-width:60%" src="assets/brand/logos/internet-1-5.png" alt="科大讯飞" loading="lazy"></div>
+            <div class="lc"><img class="brand" style="max-width:60%" src="assets/brand/logos/internet-1-6.png" alt="转转" loading="lazy"></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ 行业 05 · 在线教育 ════════ -->
+  <section class="sec pad" id="education" style="--ac:#4338CA">
+    <div class="wrap">
+      <div class="ind-split rv">
+        <div>
+          <span class="ind-badge"><i class="fa-solid fa-graduation-cap"></i>几百家头部公司已覆盖</span>
+          <h2>在线教育</h2>
+          <p class="ind-lede">从大班课、小班课到 1 对 1，从招生、续费到 NPS，几乎所有头部在线教育公司都在用句子互动。AI 把「低转高」的招生与续费链路跑通——招生漏斗、续费提醒、督学服务、退课处理，每一环都有 AI 在岗。</p>
+          <div class="ind-cap">典型场景</div>
+          <p class="ind-lead-line">· 学员建联：自动欢迎语 + 体验课邀约</p>
+          <ul class="ind-scn">
+            <li>招生漏斗：直播搬家 → 私域承接 → 体验课 → 正价转化</li>
+            <li>续费提醒：到期前 N 天分层 SOP，老客户深耕</li>
+            <li>督学服务：作业提醒、出勤跟进、家长群运营</li>
+            <li>退课/投诉处理：合规话术 + 真人介入节奏</li>
+          </ul>
+        </div>
+        <aside class="ind-panel rv rv-d1">
+          <div class="ip-cap">部分客户</div>
+          <div class="logo-grid">
+            <div class="lc"><img class="brand" src="assets/brand/logos/edu-0-0.png" alt="好未来" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/edu-0-1.png" alt="高途" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/edu-0-2.png" alt="火花思维" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/edu-0-3.png" alt="豆神大语文" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/edu-0-4.png" alt="一起" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/edu-0-5.png" alt="有道" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/edu-0-6.png" alt="量子之歌" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/edu-0-7.png" alt="粉笔" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/edu-1-0.png" alt="作业帮" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/edu-1-1.png" alt="开开华彩" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/edu-1-2.png" alt="鉴智科技" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/edu-1-3.png" alt="尚德" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/edu-1-4.png" alt="新东方" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/edu-1-5.png" alt="小度" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/edu-1-6.png" alt="喜马拉雅" loading="lazy"></div>
           </div>
         </aside>
       </div>
