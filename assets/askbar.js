@@ -31,6 +31,7 @@
     hr:       { nm: 'AI HR', ds: '简历初筛 + AI 语音面试', ic: 'fa-user-tie', href: W('hr.html') },
     geo:      { nm: 'GEO 优化师', ds: 'GEO 让品牌被 AI 推荐·公域到私域', ic: 'fa-bullhorn', href: W('geo.html') },
     enterprise:{ nm: '企业级能力', ds: '和 Anthropic 同判断', ic: 'fa-building-shield', href: REL + 'enterprise.html' },
+    news:     { nm: '句子·动态', ds: '创始人文章与公司动向，持续更新', ic: 'fa-newspaper', href: REL + 'news.html' },
     industries:{ nm: '客户与行业', ds: '5 大高合规行业落地', ic: 'fa-globe', href: REL + 'industries.html' },
     fde:      { nm: 'FDE 交付', ds: '陪跑落地、交付结果', ic: 'fa-people-carry-box', href: REL + 'fde.html' },
   };
@@ -45,6 +46,7 @@
     { re: /(销售|获客|线索|成交|转化|直播)/i, a: 'AI 销售从直播搬家、私域承接到漏斗跟进，建联到首单成交全程接管，按置信度三档执行。', cards: ['sales'] },
     { re: /(客服|售后|投诉|工单|接待)/i, a: 'AI 客服售前到售后全链路接得住，5 年 BadCase 沉淀，意图+情绪识别，必要时无缝转人工。', cards: ['service'] },
     { re: /(数据|报表|图表|问数|分析|看板|bi)/i, a: '句子问数：一句话查公司所有数据，秒级出图表，可逐层追问钻取，异常主动预警——不写 SQL、不约 BI。', cards: ['canmou'] },
+    { re: /(动态|博客|文章|佳芮|创始人|新闻|访谈|最近在做)/i, a: '「动态」页聚合了创始人李佳芮的 100+ 篇文章和公司动向——FDE、AI 员工落地、产品与组织思考，持续更新，每篇都能跳原文。', cards: ['news'] },
     { re: /(知识|文档|资料|检索|出处|知识库)/i, a: '句子懂行把散乱资料清洗、切分、对齐问法，炼成能查、带出处的知识资产——这是 Agent 答得准的前提。', cards: ['dongxing'] },
     { re: /(演示|预约|联系|试用|demo|怎么买|顾问)/i, a: '好的，我帮你接一下——留个联系方式，工作日当天会有顾问带着你所在行业的真实场景做演示。', cards: [], lead: true },
     { re: /(产品|有哪些|功能|能力|矩阵)/i, a: '句子有 7 个产品组成 AI 员工的基建：秒回(工作台)、秒懂(大脑)、守护(主管)、问数(参谋)、懂行(记忆)、CLI(手)、制造(地基)。点开看：', cards: ['miaohui', 'miaodong', 'shouhu', 'canmou'] },
