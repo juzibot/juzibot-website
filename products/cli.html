@@ -38,32 +38,37 @@
   }
   /* —— 页头右侧：模拟 CLI 在真实界面上「点屏代操作」的终端窗口 —— */
   .ph-art{min-width:0}
-  .term{position:relative;border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;
-    background:linear-gradient(180deg,#FBFCFF,#F3F7FE);
-    box-shadow:0 1px 2px rgba(14,20,48,.05),0 40px 80px -30px rgba(67,56,202,.35),0 12px 24px -12px rgba(14,20,48,.12)}
-  .term .win{display:flex;align-items:center;gap:8px;padding:11px 15px;background:rgba(255,255,255,.78);
-    backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-  .term .win .d{width:9px;height:9px;border-radius:50%}
+  .term{position:relative;border-radius:18px;overflow:hidden;font-family:var(--mono);
+    background:#15121a;border:1px solid #2b2632;
+    box-shadow:0 1px 2px rgba(25,23,28,.3),0 44px 84px rgba(40,10,25,.30),inset 0 1px 0 rgba(255,255,255,.04)}
+  .term .win{display:flex;align-items:center;gap:12px;padding:13px 18px;border-bottom:1px solid #262130;
+    background:linear-gradient(180deg,#1d1925,#15121a)}
+  .term .win .d{width:11px;height:11px;border-radius:50%;background:#3a3442}
   .term .win .d.r{background:#FF5F57}.term .win .d.y{background:#FEBC2E}.term .win .d.g{background:#28C840}
-  .term .win .t{margin-left:6px;font-family:var(--mono);font-size:11px;letter-spacing:.03em;color:var(--ink-3)}
-  .term .win .live{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:750;
-    color:var(--green);background:var(--green-lt);padding:4px 10px;border-radius:999px}
-  .term .win .live i{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green)}
-  .term-body{padding:clamp(18px,2.4vw,26px);font-family:var(--mono);font-size:13px;line-height:1.85;color:var(--ink-2)}
-  .term-line{display:flex;gap:9px;align-items:flex-start}
-  .term-line .pr{color:var(--blue);font-weight:700;flex:0 0 auto}
-  .term-line .cmd{color:var(--ink)}
-  .term-step{display:flex;align-items:center;gap:10px;padding:6px 0}
-  .term-step .ico{width:24px;height:24px;border-radius:7px;display:grid;place-items:center;font-size:12px;
+  .term .win .t{margin-left:6px;font-family:var(--mono);font-size:12.5px;letter-spacing:.04em;color:#8b8494}
+  .term .win .live{margin-left:auto;display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:750;letter-spacing:.14em;
+    color:#6f6878}
+  .term .win .live i{width:7px;height:7px;border-radius:50%;background:#27E08A;box-shadow:0 0 10px #27E08A;
+    animation:tpulse 1.7s infinite}
+  @keyframes tpulse{0%,100%{opacity:.5}50%{opacity:1}}
+  .term-body{padding:clamp(18px,2.4vw,30px) clamp(16px,2.6vw,32px);font-family:var(--mono);font-size:14px;line-height:1.7;
+    color:#cfc9d6;background:radial-gradient(120% 80% at 100% 0,rgba(67,56,202,.07),transparent 60%)}
+  .term-line{display:flex;gap:9px;align-items:flex-start;margin-bottom:14px}
+  .term-line .pr{color:#4ADE80;font-weight:700;flex:0 0 auto}
+  .term-line .cmd{color:#e9e5ef}
+  .term-step{display:flex;align-items:center;gap:12px;padding:9px 12px;border-radius:9px;
+    transition:background .25s var(--ease)}
+  .term-step:hover{background:rgba(255,255,255,.03)}
+  .term-step .ico{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;font-size:12px;
     color:#fff;flex:0 0 auto;background:var(--blue)}
   .term-step:nth-child(3) .ico{background:var(--orange-deep)}
-  .term-step:nth-child(4) .ico{background:var(--green)}
-  .term-step:nth-child(5) .ico{background:var(--purple)}
-  .term-step .tx{font-family:var(--sans);font-size:13.5px;font-weight:650;color:var(--ink)}
-  .term-step .ok{margin-left:auto;font-family:var(--mono);font-size:11px;font-weight:700;color:var(--green);flex:0 0 auto}
-  .term-done{margin-top:14px;padding-top:14px;border-top:1px dashed var(--line);
-    font-family:var(--sans);font-size:13px;color:var(--ink-2)}
-  .term-done b{color:var(--ink);font-weight:750}
+  .term-step:nth-child(4) .ico{background:#27E08A}
+  .term-step:nth-child(5) .ico{background:#A78BFA}
+  .term-step .tx{font-family:var(--sans);font-size:14px;font-weight:650;color:#e9e5ef}
+  .term-step .ok{margin-left:auto;font-family:var(--mono);font-size:11.5px;font-weight:700;color:#4ADE80;flex:0 0 auto}
+  .term-done{margin-top:16px;padding-top:16px;border-top:1px dashed #2b2632;
+    font-family:var(--sans);font-size:13.5px;color:#8b8494}
+  .term-done b{color:#e9e5ef;font-weight:750}
   /* —— 能力卡（4 块）—— */
   .capgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(14px,1.6vw,20px)}
   @media(max-width:760px){.capgrid{grid-template-columns:1fr}}
