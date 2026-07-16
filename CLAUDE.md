@@ -32,7 +32,7 @@ Hand-edit these directly:
 
 内容源走 adapter（脚本 `SOURCES`）：`sitemap`（rui 博客逐篇抓 JSON-LD）、`rss`（RSS2/Atom 通吃 + 脏 XML 正则兜底；现有 Wechaty 社区博客/Releases、36氪）、`feishu-base`（**公众号发布闸门**：飞书多维表格《官网动态发布登记》https://juzihudong.feishu.cn/base/HhPubortTafxOssddqJc4m9Znkd ，运营发文后贴公众号正式链接+勾「上官网」，管线走本机已授权的 lark-cli 只拉过闸行，og 元数据自动补齐；三个公众号——句子互动官方/AI对话未来/佳芮的创业笔记——同一张表，账号名落 category 显示为条目小标签）、`manual`（本地 JSON 投递位，备用，当前无源使用）。公众号内容的上游草稿在句子互动飞书 wiki「文章初稿」目录，但 wiki 链接访客不可见，官网只放公众号正式链接。
 
-与 build_pages.py 不同，**`python3 build_news.py` 可以安全反复运行**（增量；`--full` 全量重抓）：它只重写每页三个标记区块——`<!-- NEWS:LIST:BEGIN/END -->`（前 20 条预渲染，SEO 唯一入口）、`<script id="news-data">`（内联数据，A/B=数组、C=含 sources 的对象）、`<b id="newsTotal">`（总数）——页面其余部分照常手工维护。数据落 `data/news.json`（含各源健康元数据）。条目模板成对同步：`card_html()`↔A 页 `cardHTML()`、`row_html()`↔B 页 `rowHTML()`、`feed_item_html()/feed_list()`↔C 页 `itemHTML()/render()`（含月份分组逻辑），改一处必须同步对应 JS。每条「问句子」按钮通过改写 `window.PAGE_CTX` 后调 `window.openAskbar()` 实现，未动 askbar.js 内部。
+与 build_pages.py 不同，**`python3 build_news.py` 可以安全反复运行**（增量；`--full` 全量重抓，且只刷新不删除——本次没抓回来的历史条目自动沿用旧数据，单篇/单源失败不丢内容）。外部源用 `keep_max` 设存量上限（36氪 60 条，超出修剪最老的），自家内容源不设限。公众号条目拿不到网页发布时间时，退回登记表「发布日期」列；两头都空该行不上站（禁止拿"今天"顶包，那会把旧文顶到流最前）。它每次运行只重写每页三个标记区块——`<!-- NEWS:LIST:BEGIN/END -->`（前 20 条预渲染，SEO 唯一入口）、`<script id="news-data">`（内联数据，A/B=数组、C=含 sources 的对象）、`<b id="newsTotal">`（总数）——页面其余部分照常手工维护。数据落 `data/news.json`（含各源健康元数据）。条目模板成对同步：`card_html()`↔A 页 `cardHTML()`、`row_html()`↔B 页 `rowHTML()`、`feed_item_html()/feed_list()`↔C 页 `itemHTML()/render()`（含月份分组逻辑），改一处必须同步对应 JS。每条「问句子」按钮通过改写 `window.PAGE_CTX` 后调 `window.openAskbar()` 实现，未动 askbar.js 内部。
 
 ## Nav & footer are in `assets/site.js`
 
