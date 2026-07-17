@@ -99,9 +99,9 @@
     .ph-art{order:2}
   }
   /* —— 产品截图陈列（应用窗口框）—— */
-  .shotstack{display:flex;flex-direction:column;gap:clamp(26px,3vw,40px)}
-  .shotrow{display:grid;grid-template-columns:minmax(0,1.28fr) minmax(280px,.72fr);gap:clamp(22px,3vw,40px);align-items:start;scroll-margin-top:90px}
-  .shotmedia{position:relative;border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;background:#fff;
+  .shotstack{display:flex;flex-direction:column;gap:clamp(52px,5.5vw,80px)}
+  .shotrow{display:grid;grid-template-columns:minmax(0,1.14fr) minmax(320px,.86fr);gap:clamp(22px,3vw,40px);align-items:start;scroll-margin-top:90px}
+  .shotmedia{position:relative;margin-top:10px;border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;background:#fff;
     box-shadow:0 1px 2px rgba(14,20,48,.05),0 26px 54px -28px rgba(67,56,202,.28)}
   .shotmedia .win{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--line);
     background:linear-gradient(180deg,#FCFDFF,#F6F9FE)}
@@ -120,14 +120,14 @@
   .shotcopy{min-width:0; margin-top:-6px;}
   .shotidx{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--blue);font-weight:700;text-transform:uppercase}
   .shotidx::before{content:"";width:22px;height:1px;background:var(--blue-200)}
-  .shotcopy h3{margin-top:6px;font-size:clamp(24px,2.6vw,34px);line-height:1.08;letter-spacing:-.03em;color:var(--ink);font-weight:860}
-  .shotcopy p{margin-top:10px;font-size:14.5px;line-height:1.6;color:var(--ink-2)}
-  .shotfacts{display:grid;gap:8px;margin-top:14px}
-  .shotfact{padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:#fff;box-shadow:var(--shadow-soft)}
+  .shotcopy h3{margin-top:12px;font-size:clamp(22px,2.4vw,28px);line-height:1.12;letter-spacing:-.03em;color:var(--ink);font-weight:860;white-space:nowrap}
+  .shotcopy p{margin-top:14px;font-size:14.5px;line-height:1.72;color:var(--ink-2)}
+  .shotfacts{display:grid;gap:12px;margin-top:20px}
+  .shotfact{padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#fff;box-shadow:var(--shadow-soft)}
   .shotfact strong{display:block;font-size:12px;line-height:1.4;color:var(--ink);font-weight:760}
   .shotfact span{display:block;margin-top:4px;font-size:12.5px;line-height:1.65;color:var(--ink-2)}
   /* 单双行左右交替：.flip 行(01/03/05) 内容在左·素材在右；其余(02/04) 素材在左·内容在右 */
-  .shotrow.flip{grid-template-columns:minmax(280px,.72fr) minmax(0,1.28fr)}
+  .shotrow.flip{grid-template-columns:minmax(320px,.86fr) minmax(0,1.14fr)}
   .shotrow.flip .shotcopy{order:1}
   .shotrow.flip .shotmedia{order:2}
   /* 两段式分组小标题 */
@@ -135,7 +135,8 @@
   .shotgroup .sg-txt{flex-shrink:0;display:inline-flex;align-items:center;gap:9px;font-size:15px;font-weight:820;letter-spacing:-.01em;color:var(--ink)}
   .shotgroup .sg-txt::before{content:"";width:4px;height:16px;border-radius:2px;background:var(--blue)}
   .shotgroup .sg-line{flex:1;height:1px;background:var(--line)}
-  @media(max-width:980px){.shotrow{grid-template-columns:1fr}.shotcopy h3{font-size:clamp(24px,5vw,32px)}
+  @media(max-width:980px){.shotrow{grid-template-columns:1fr}.shotcopy h3{font-size:clamp(22px,5vw,30px);white-space:normal}
+    .shotmedia{margin-top:0}
     .shotrow.flip{grid-template-columns:1fr}
     .shotrow.flip .shotmedia,.shotrow.flip .shotcopy{order:0}}
 
@@ -154,21 +155,20 @@
   .kb-row .kb-meta{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex-shrink:0}
   .kb-row .kb-sync{font-size:11px;font-weight:700;color:var(--green);background:var(--green-lt);padding:3px 9px;border-radius:999px;flex-shrink:0}
   /* 发布渠道卡片网格 */
-  .ch-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-  .ch-card{position:relative;display:flex;flex-direction:column;gap:9px;padding:14px 15px;border:1px solid var(--line);border-radius:14px;
+  .ch-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  .ch-card{position:relative;display:flex;flex-direction:column;gap:11px;padding:18px 18px;border:1px solid var(--line);border-radius:14px;
     background:linear-gradient(180deg,#fff,#FBFCFF);transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .3s}
   .ch-card:hover{transform:translateY(-3px);border-color:var(--blue-200);box-shadow:0 18px 34px -22px rgba(67,56,202,.32)}
-  .ch-card .ch-top{display:flex;align-items:center;gap:10px;padding-right:58px}
+  .ch-card .ch-top{display:flex;align-items:center;gap:11px;padding-right:62px}
   .ch-card .ch-ic{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-size:15px;color:#fff;flex-shrink:0}
   .ch-card.c-green .ch-ic{background:var(--green)}
   .ch-card.c-blue .ch-ic{background:var(--blue)}
   .ch-card.c-orange .ch-ic{background:var(--orange-deep)}
   .ch-card.c-purple .ch-ic{background:var(--purple)}
   .ch-card .ch-nm{font-size:14px;font-weight:760;color:var(--ink);line-height:1.25;letter-spacing:-.01em}
-  .ch-card .ch-desc{font-size:12.5px;line-height:1.55;color:var(--ink-2)}
-  .ch-card .ch-tag{position:absolute;top:12px;right:13px;font-size:10.5px;font-weight:700;font-family:var(--mono);letter-spacing:.02em;
+  .ch-card .ch-desc{font-size:12.5px;line-height:1.65;color:var(--ink-2)}
+  .ch-card .ch-tag{position:absolute;top:16px;right:16px;font-size:10.5px;font-weight:700;font-family:var(--mono);letter-spacing:.02em;
     padding:3px 8px;border-radius:999px}
-  .ch-card .ch-tag.on{color:var(--green);background:var(--green-lt)}
   .ch-card .ch-tag.soon{color:var(--blue);background:var(--blue-50)}
   @media(max-width:520px){.ch-grid{grid-template-columns:1fr}}
   /* —— 5 行业策略库卡片 —— */
@@ -381,7 +381,7 @@
           </div>
           <div class="shotcopy">
             <span class="shotidx">03 · 模型选择</span>
-            <h3>按任务选模型，而不是被单一模型绑死</h3>
+            <h3>按任务选模型，不被单一模型绑死</h3>
             <p>100+ 主流模型按能力与价格透明列出，文本、图片、语音、多模态清晰标注，按场景和预算随时切换。模型不再是黑盒，成本、效果、稳定性都能自己权衡。</p>
             <div class="shotfacts">
               <div class="shotfact"><strong>看懂什么</strong><span>不同模型的能力边界和适用场景清晰可见，不需要靠经验拍脑袋选型。</span></div>
@@ -408,18 +408,13 @@
         </div>
         <div class="shotrow rv rv-d1 flip" id="publish">
           <div class="shotmedia">
-            <div class="win"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="t">句子秒懂 · 发布渠道</span></div>
-            <div class="dp-body" style="padding:clamp(14px,1.6vw,18px)">
+            <div class="win"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="t">句子秒懂 · 一键发布</span></div>
+            <div class="dp-body" style="padding:clamp(18px,2vw,24px)">
               <div class="ch-grid">
-                <div class="ch-card c-green">
-                  <span class="ch-tag on">已上线</span>
-                  <div class="ch-top"><span class="ch-ic"><i class="fa-solid fa-comment-dots"></i></span><span class="ch-nm">企业微信</span></div>
-                  <div class="ch-desc">客服 &amp; 销售场景，直接在企微里接待客户。</div>
-                </div>
                 <div class="ch-card c-blue">
                   <span class="ch-tag soon">一键接入</span>
                   <div class="ch-top"><span class="ch-ic"><i class="fa-solid fa-comments"></i></span><span class="ch-nm">11 个 IM 通道</span></div>
-                  <div class="ch-desc">微信、WhatsApp、飞书、钉钉等主流通道全覆盖。</div>
+                  <div class="ch-desc">微信生态、小红书、抖音、钉钉、飞书等 11 个 IM，客户在哪就在哪上岗。</div>
                 </div>
                 <div class="ch-card c-orange">
                   <span class="ch-tag soon">嵌入官网</span>
@@ -431,15 +426,20 @@
                   <div class="ch-top"><span class="ch-ic"><i class="fa-solid fa-code"></i></span><span class="ch-nm">开放 API</span></div>
                   <div class="ch-desc">接进自有系统与业务流程，随处调用。</div>
                 </div>
+                <div class="ch-card c-green">
+                  <span class="ch-tag soon">主动跟进</span>
+                  <div class="ch-top"><span class="ch-ic"><i class="fa-solid fa-paper-plane"></i></span><span class="ch-nm">主动触达</span></div>
+                  <div class="ch-desc">主动发消息、推进流程，客户断连自动回访。</div>
+                </div>
               </div>
             </div>
           </div>
           <div class="shotcopy">
             <span class="shotidx">05 · 一键发布</span>
-            <h3>配好的 AI 员工，一键发布到客户在的地方</h3>
-            <p>同一个 Agent 直接发布到 11 个 IM 通道、网页和 API，复用到销售、客服、招聘等多个场景。搭一次，多处上岗，不用为每个渠道各建一套。</p>
+            <h3>配好的 AI 员工，一键发到客户面前</h3>
+            <p>同一个 Agent 直接发布到 11 个 IM 通道、网页、API，并主动触达客户，复用到销售、客服、招聘等多个场景。搭一次，多处上岗，不用为每个渠道各建一套。</p>
             <div class="shotfacts">
-              <div class="shotfact"><strong>发到哪</strong><span>企业微信、11 个 IM 通道、网页组件、开放 API，客户在哪就发到哪。</span></div>
+              <div class="shotfact"><strong>发到哪</strong><span>11 个 IM 通道、网页组件、开放 API，客户在哪就发到哪，还能主动发起跟进。</span></div>
               <div class="shotfact"><strong>好在哪</strong><span>一套配置多渠道复用，销售、客服、招聘场景共享同一个 AI 员工。</span></div>
             </div>
           </div>
