@@ -294,29 +294,42 @@ window.PAGE_CTX={entity:'dongxing',type:'product',title:'句子懂行 · 知识�
   video.setAttribute('playsinline','');
   var inView=false;
   var retryTimer=null;
+  var retryCount=0;
+  var maxRetries=4;
   var play=function(){
     if(!inView||document.hidden)return;
     clearTimeout(retryTimer);
     var p=video.play();
     if(p&&p.catch){
       p.catch(function(){
-        retryTimer=setTimeout(play,900);
+        if(!inView||document.hidden||retryCount>=maxRetries)return;
+        var delay=900*Math.pow(1.7,retryCount);
+        retryCount+=1;
+        retryTimer=setTimeout(play,delay);
       });
     }
+  };
+  var resetAndPlay=function(){
+    retryCount=0;
+    play();
   };
   var setVisible=function(visible){
     inView=visible;
     if(visible)play();
     else{
       clearTimeout(retryTimer);
+      retryCount=0;
       video.pause();
     }
   };
-  video.addEventListener('loadeddata',play);
-  video.addEventListener('canplay',play);
+  video.addEventListener('playing',function(){retryCount=0;});
+  video.addEventListener('loadeddata',resetAndPlay);
+  video.addEventListener('canplay',resetAndPlay);
   document.addEventListener('visibilitychange',function(){
-    if(document.hidden)video.pause();
-    else play();
+    if(document.hidden){
+      clearTimeout(retryTimer);
+      video.pause();
+    }else resetAndPlay();
   });
   if('IntersectionObserver' in window){
     var io=new IntersectionObserver(function(entries){
