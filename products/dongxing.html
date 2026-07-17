@@ -56,35 +56,35 @@
   .loop-item:nth-child(2) .num{background:var(--green)}.loop-item:nth-child(3) .num{background:#C47A12}.loop-item:nth-child(4) .num{background:var(--purple)}
   .loop-item h3{font-size:20px;line-height:1.28;margin:18px 0 10px;letter-spacing:0}
   .loop-item p{font-size:13.5px;line-height:1.72;color:var(--ink-2)}
-  .showcase{display:grid;grid-template-columns:300px minmax(0,1fr);gap:34px;align-items:start}
-  .screen-copy h3{font-size:30px;line-height:1.22;font-weight:820;letter-spacing:0;margin:0 0 14px;word-break:keep-all}
-  .screen-copy p{font-size:14.5px;line-height:1.76;color:var(--ink-2)}
-  .screen-tabs{display:grid;gap:2px;margin-top:26px;border-top:1px solid #E8EDF5}
-  .screen-tab{appearance:none;border:0;border-bottom:1px solid #E8EDF5;background:transparent;text-align:left;padding:16px 0;display:grid;grid-template-columns:28px 1fr;gap:12px;cursor:pointer;color:var(--ink-2)}
-  .screen-tab i{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;color:#fff;background:#AAB3C5;font-size:12px}
-  .screen-tab b{display:block;font-size:14px;color:var(--ink);line-height:1.25}.screen-tab span{display:block;margin-top:4px;font-size:12px;color:var(--ink-3);line-height:1.45}
-  .screen-tab.is-active i{background:var(--blue)}.screen-tab.is-active b{color:var(--blue)}
-  .screen-stage{border:1px solid #E5EAF4;border-radius:8px;overflow:hidden;background:#fff;box-shadow:0 24px 64px -54px rgba(23,31,56,.35)}
-  .screen-top{height:40px;display:flex;align-items:center;gap:8px;padding:0 14px;border-bottom:1px solid #E9EDF5;background:#fff}
-  .screen-top .dots{display:flex;gap:7px}.screen-top .dots i{width:8px;height:8px;border-radius:50%;background:#FF5F57}.screen-top .dots i:nth-child(2){background:#FEBC2E}.screen-top .dots i:nth-child(3){background:#28C840}
-  .screen-top span{font-family:var(--mono);font-size:11px;letter-spacing:0;color:var(--ink-3);margin-left:6px}
-  .screen-image{aspect-ratio:1.75/1;overflow:hidden;background:#F5F7FB}.screen-image img{width:100%;height:100%;display:block;object-fit:cover;object-position:center}
-  .screen-foot{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center;padding:16px 18px;border-top:1px solid #E9EDF5}
-  .screen-foot b{display:block;font-size:15px;color:var(--ink);line-height:1.3}.screen-foot span{display:block;margin-top:5px;font-size:12px;color:var(--ink-3);line-height:1.45}
-  .screen-pill{font-family:var(--mono);font-size:11px;font-weight:800;color:var(--green);background:#EAFBF7;border:1px solid #CBEFE7;border-radius:999px;padding:7px 10px;white-space:nowrap}
+  .screen-stack{display:grid;border-top:1px solid #E8EDF5}
+  .screen-proof{display:grid;grid-template-columns:310px minmax(0,1fr);gap:56px;align-items:center;padding:42px 0;border-bottom:1px solid #E8EDF5;background:transparent}
+  .screen-copy{display:flex;flex-direction:column;justify-content:center;max-width:310px}
+  .screen-copy .screen-no{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;margin-bottom:22px;font-family:var(--mono);font-size:13px;line-height:1;font-weight:850;color:#fff;background:var(--blue);box-shadow:0 12px 24px -18px rgba(67,56,202,.62)}
+  .screen-proof:nth-child(2) .screen-no{background:#C47A12}.screen-proof:nth-child(3) .screen-no{background:var(--green)}
+  .screen-copy h3{font-size:26px;line-height:1.26;font-weight:840;letter-spacing:-.025em;margin:0 0 14px;word-break:keep-all;text-wrap:balance}
+  .screen-copy p{font-size:14px;line-height:1.78;color:var(--ink-2);margin:0}
+  .screen-meta{display:grid;gap:9px;margin-top:24px;padding-top:18px;border-top:1px solid #E8EDF5}
+  .screen-meta span{display:flex;align-items:flex-start;gap:9px;font-size:12.5px;line-height:1.5;color:var(--ink-2)}
+  .screen-meta i{width:6px;height:6px;margin-top:.55em;border-radius:50%;background:var(--blue);flex:0 0 6px}.screen-proof:nth-child(2) .screen-meta i{background:#C47A12}.screen-proof:nth-child(3) .screen-meta i{background:var(--green)}
+  .screen-stage{border:1px solid #E5EAF4;border-radius:10px;overflow:hidden;background:#F8FAFC;box-shadow:0 22px 62px -58px rgba(23,31,56,.35)}
+  .screen-top{height:34px;display:flex;align-items:center;padding:0 12px;border-bottom:1px solid #E9EDF5;background:#F8FAFC}
+  .screen-top span{font-family:var(--mono);font-size:11px;letter-spacing:0;color:var(--ink-3)}
+  .screen-image{aspect-ratio:16/9;overflow:hidden;background:linear-gradient(180deg,#FBFCFF,#F6F8FC);padding:10px}.screen-image img{width:100%;height:100%;display:block;object-fit:contain;object-position:center;border-radius:6px;background:#fff}
   .video-row{display:grid;grid-template-columns:520px minmax(0,1fr);gap:48px;align-items:center}
   .video-copy h2{font-size:42px;line-height:1.14;letter-spacing:-.035em;margin:0 0 16px;word-break:keep-all;text-wrap:balance}
   .video-copy h2 .nowrap{white-space:nowrap}
   .video-copy p{font-size:15px;line-height:1.78;color:var(--ink-2)}
-  .video-card{border:1px solid #E5EAF4;border-radius:8px;overflow:hidden;background:#111827;box-shadow:0 24px 64px -54px rgba(23,31,56,.38)}
-  .video-card video{display:block;width:100%;height:auto;background:#111827}
+  .video-card{position:relative;border:1px solid #E5EAF4;border-radius:8px;overflow:hidden;background:#111827;box-shadow:0 24px 64px -54px rgba(23,31,56,.38)}
+  .video-card video{display:block;width:100%;height:auto;background:#111827;pointer-events:none}
+  .video-card::after{content:"自动循环播放";position:absolute;left:14px;bottom:12px;font-family:var(--mono);font-size:11px;font-weight:800;color:rgba(255,255,255,.88);background:rgba(17,24,39,.52);border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:6px 9px;backdrop-filter:blur(8px)}
   .agent-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
   .agent-card{border:1px solid #E5EAF4;border-radius:8px;background:#fff;padding:24px}
   .agent-card i{width:36px;height:36px;border-radius:8px;display:grid;place-items:center;color:#fff;background:var(--blue);margin-bottom:18px}
   .agent-card:nth-child(2) i{background:#C47A12}.agent-card:nth-child(3) i{background:var(--green)}
   .agent-card h3{font-size:22px;line-height:1.28;letter-spacing:0;margin-bottom:10px}.agent-card p{font-size:14px;line-height:1.74;color:var(--ink-2)}
   @media(max-width:1080px){
-    .hero-grid,.section-head,.showcase,.video-row{grid-template-columns:1fr}
+    .hero-grid,.section-head,.screen-proof,.video-row{grid-template-columns:1fr}
+    .screen-copy{max-width:none}
     .dh-hero h1{font-size:56px}.hero-sub{font-size:30px}
     .loop-line{grid-template-columns:repeat(2,1fr)}.loop-item:nth-child(2){border-right:0}.loop-item:nth-child(-n+2){border-bottom:1px solid #E5EAF4}
   }
@@ -92,7 +92,7 @@
   @media(max-width:720px){
     .hero-facts,.loop-line,.agent-grid{grid-template-columns:1fr}
     .loop-item{border-right:0;border-bottom:1px solid #E5EAF4}.loop-item:last-child{border-bottom:0}
-    .screen-foot{grid-template-columns:1fr}.screen-pill{width:max-content}
+    .screen-proof{padding:28px 0;gap:20px}
   }
 </style>
 </head>
@@ -176,24 +176,52 @@
         </div>
         <p>不铺截图墙，只保留能证明产品闭环的界面：资料怎么进来、知识怎么变干净、答案怎么被找出来。</p>
       </div>
-      <div class="showcase">
-        <div class="screen-copy">
-          <h3 id="screenTitle">客户资料不用先整理完，归档 Agent 先接住。</h3>
-          <p id="screenDesc">上传后不是简单存文件，而是判断资料主题、建议归档目录、拆出可进入知识库的单元。FDE 不需要从零翻文件夹找脉络。</p>
-          <div class="screen-tabs" role="tablist" aria-label="句子懂行真实界面">
-            <button class="screen-tab is-active" type="button" data-screen="materials"><i class="fa-solid fa-file-import"></i><span><b>原始素材库</b><span>自动识别素材主题并建议归档</span></span></button>
-            <button class="screen-tab" type="button" data-screen="health"><i class="fa-solid fa-triangle-exclamation"></i><span><b>知识体检</b><span>冲突知识进入裁决任务</span></span></button>
-            <button class="screen-tab" type="button" data-screen="retrieval"><i class="fa-solid fa-route"></i><span><b>Agentic 检索</b><span>按范围、文件、片段逐级召回</span></span></button>
+      <div class="screen-stack">
+        <article class="screen-proof">
+          <div class="screen-copy">
+            <span class="screen-no">01</span>
+            <h3>客户资料不用先整理完，归档 Agent 先接住。</h3>
+            <p>上传后不是简单存文件，而是判断资料主题、建议归档目录、拆出可进入知识库的单元。FDE 不需要从零翻文件夹找脉络。</p>
+            <div class="screen-meta">
+              <span><i aria-hidden="true"></i>自动识别素材主题并建议归档</span>
+              <span><i aria-hidden="true"></i>从原件中抽取主题、渠道、返货、云策 CRM 等标签</span>
+            </div>
           </div>
-        </div>
-        <div class="screen-stage">
-          <div class="screen-top"><span class="dots"><i></i><i></i><i></i></span><span id="screenKicker">原始素材库</span></div>
-          <div class="screen-image"><img id="screenImage" src="../assets/product-shots/dongxing-materials.png" alt="句子懂行原始素材上传与归档建议界面" loading="lazy" /></div>
-          <div class="screen-foot">
-            <div><b id="screenNoteTitle">自动归档建议</b><span id="screenNoteDesc">从原件中抽取主题、渠道、返货、云策 CRM 等标签，并保留原件关系。</span></div>
-            <div class="screen-pill" id="screenPill">原件 → 知识单元</div>
+          <div class="screen-stage">
+            <div class="screen-top"><span>原始素材库</span></div>
+            <div class="screen-image"><img src="../assets/product-shots/dongxing-materials.png" alt="句子懂行原始素材上传与归档建议界面" loading="lazy" /></div>
           </div>
-        </div>
+        </article>
+        <article class="screen-proof">
+          <div class="screen-copy">
+            <span class="screen-no">02</span>
+            <h3>冲突知识不会沉进库里，而是变成待裁决任务。</h3>
+            <p>体检 Agent 把同范围内的真冲突、缺口、过期和重复内容找出来，给出处理路径：自动修、升级 FDE，或退回客户确认。</p>
+            <div class="screen-meta">
+              <span><i aria-hidden="true"></i>冲突知识进入裁决任务</span>
+              <span><i aria-hidden="true"></i>定位到单元粒度，并提示影响范围</span>
+            </div>
+          </div>
+          <div class="screen-stage">
+            <div class="screen-top"><span>知识体检 · 任务中心</span></div>
+            <div class="screen-image"><img src="../assets/product-shots/dongxing-health-conflict.png" alt="句子懂行知识体检内容冲突裁决界面" loading="lazy" /></div>
+          </div>
+        </article>
+        <article class="screen-proof">
+          <div class="screen-copy">
+            <span class="screen-no">03</span>
+            <h3>先确定范围，再逐层兜底，不把无关知识塞给模型。</h3>
+            <p>检索 Agent 会先翻目录树，钻进相关文件夹；证据不足时再检索片段、拉全文。每一步都能看到命中路径。</p>
+            <div class="screen-meta">
+              <span><i aria-hidden="true"></i>按范围、文件、片段逐级召回</span>
+              <span><i aria-hidden="true"></i>答案基于片段生成，并显示相似度</span>
+            </div>
+          </div>
+          <div class="screen-stage">
+            <div class="screen-top"><span>检索调试台</span></div>
+            <div class="screen-image"><img src="../assets/product-shots/dongxing-retrieval-fragment.png" alt="句子懂行 Agentic 检索片段召回界面" loading="lazy" /></div>
+          </div>
+        </article>
       </div>
     </div>
   </section>
@@ -206,7 +234,7 @@
         <p>38 秒看完懂行的核心动作：客户资料怎么进入原始素材库，Agent 怎么逐级检索，又怎么把冲突知识变成可处理的任务。</p>
       </div>
       <div class="video-card">
-        <video controls preload="none" playsinline poster="../assets/product-shots/dongxing-demo-poster.jpg" aria-label="句子懂行产品介绍视频">
+        <video id="dongxingDemoVideo" muted loop playsinline preload="metadata" poster="../assets/product-shots/dongxing-demo-poster.jpg" aria-label="句子懂行产品介绍视频">
           <source src="../assets/product-shots/dongxing-demo.mp4" type="video/mp4" />
         </video>
       </div>
@@ -256,60 +284,25 @@
 window.SITE_REL='../';
 window.PAGE_CTX={entity:'dongxing',type:'product',title:'句子懂行 · 知识中枢'};
 (function(){
-  var screens={
-    materials:{
-      title:'客户资料不用先整理完，归档 Agent 先接住。',
-      desc:'上传后不是简单存文件，而是判断资料主题、建议归档目录、拆出可进入知识库的单元。FDE 不需要从零翻文件夹找脉络。',
-      kicker:'原始素材库',
-      img:'../assets/product-shots/dongxing-materials.png',
-      alt:'句子懂行原始素材上传与归档建议界面',
-      note:'自动归档建议',
-      noteDesc:'从原件中抽取主题、渠道、返货、云策 CRM 等标签，并保留原件关系。',
-      pill:'原件 → 知识单元'
-    },
-    health:{
-      title:'冲突知识不会沉进库里，而是变成待裁决任务。',
-      desc:'体检 Agent 把同范围内的真冲突、缺口、过期和重复内容找出来，给出处理路径：自动修、升级 FDE，或退回客户确认。',
-      kicker:'知识体检 · 任务中心',
-      img:'../assets/product-shots/dongxing-health-conflict.png',
-      alt:'句子懂行知识体检内容冲突裁决界面',
-      note:'内容冲突裁决',
-      noteDesc:'同一个坐席数出现两种口径时，系统能定位到单元粒度并提示影响范围。',
-      pill:'冲突 → 裁决'
-    },
-    retrieval:{
-      title:'先确定范围，再逐层兜底，不把无关知识塞给模型。',
-      desc:'检索 Agent 会先翻目录树，钻进相关文件夹；证据不足时再检索片段、拉全文。每一步都能看到命中路径。',
-      kicker:'检索调试台',
-      img:'../assets/product-shots/dongxing-retrieval-fragment.png',
-      alt:'句子懂行 Agentic 检索片段召回界面',
-      note:'四级检索路径',
-      noteDesc:'目录、文件、片段、全文逐级召回，答案基于片段生成并显示相似度。',
-      pill:'范围 → 片段'
-    }
-  };
-  var title=document.getElementById('screenTitle');
-  var desc=document.getElementById('screenDesc');
-  var kicker=document.getElementById('screenKicker');
-  var image=document.getElementById('screenImage');
-  var noteTitle=document.getElementById('screenNoteTitle');
-  var noteDesc=document.getElementById('screenNoteDesc');
-  var pill=document.getElementById('screenPill');
-  document.querySelectorAll('.screen-tab').forEach(function(btn){
-    btn.addEventListener('click',function(){
-      var data=screens[btn.dataset.screen];
-      if(!data)return;
-      document.querySelectorAll('.screen-tab').forEach(function(item){item.classList.toggle('is-active',item===btn);});
-      title.textContent=data.title;
-      desc.textContent=data.desc;
-      kicker.textContent=data.kicker;
-      image.src=data.img;
-      image.alt=data.alt;
-      noteTitle.textContent=data.note;
-      noteDesc.textContent=data.noteDesc;
-      pill.textContent=data.pill;
-    });
-  });
+  var video=document.getElementById('dongxingDemoVideo');
+  if(!video)return;
+  video.muted=true;
+  video.loop=true;
+  video.controls=false;
+  video.setAttribute('muted','');
+  video.setAttribute('playsinline','');
+  var play=function(){var p=video.play();if(p&&p.catch)p.catch(function(){});};
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting)play();
+        else video.pause();
+      });
+    },{threshold:.38});
+    io.observe(video);
+  }else{
+    play();
+  }
 })();
 </script>
 <script src="../assets/site.js"></script>
