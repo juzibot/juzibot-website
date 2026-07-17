@@ -120,7 +120,9 @@
   .shotcopy{min-width:0; margin-top:-6px;}
   .shotidx{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--blue);font-weight:700;text-transform:uppercase}
   .shotidx::before{content:"";width:22px;height:1px;background:var(--blue-200)}
-  .shotcopy h3{margin-top:12px;font-size:clamp(22px,2.4vw,28px);line-height:1.12;letter-spacing:-.03em;color:var(--ink);font-weight:860;white-space:nowrap}
+  .shotcopy h3{margin-top:12px;font-size:clamp(22px,2.4vw,28px);line-height:1.12;letter-spacing:-.03em;color:var(--ink);font-weight:860}
+  /* 仅在文案列足够宽的桌面区间保持单行；窄屏自动换行，避免标题溢出盖住素材 */
+  @media(min-width:1240px){.shotcopy h3{white-space:nowrap}}
   .shotcopy p{margin-top:14px;font-size:14.5px;line-height:1.72;color:var(--ink-2)}
   .shotfacts{display:grid;gap:12px;margin-top:20px}
   .shotfact{padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#fff;box-shadow:var(--shadow-soft)}
@@ -135,7 +137,7 @@
   .shotgroup .sg-txt{flex-shrink:0;display:inline-flex;align-items:center;gap:9px;font-size:15px;font-weight:820;letter-spacing:-.01em;color:var(--ink)}
   .shotgroup .sg-txt::before{content:"";width:4px;height:16px;border-radius:2px;background:var(--blue)}
   .shotgroup .sg-line{flex:1;height:1px;background:var(--line)}
-  @media(max-width:980px){.shotrow{grid-template-columns:1fr}.shotcopy h3{font-size:clamp(22px,5vw,30px);white-space:normal}
+  @media(max-width:980px){.shotrow{grid-template-columns:1fr}.shotcopy h3{font-size:clamp(22px,5vw,30px)}
     .shotmedia{margin-top:0}
     .shotrow.flip{grid-template-columns:1fr}
     .shotrow.flip .shotmedia,.shotrow.flip .shotcopy{order:0}}
