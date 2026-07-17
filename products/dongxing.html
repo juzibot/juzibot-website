@@ -56,20 +56,23 @@
   .loop-item:nth-child(2) .num{background:var(--green)}.loop-item:nth-child(3) .num{background:#C47A12}.loop-item:nth-child(4) .num{background:var(--purple)}
   .loop-item h3{font-size:20px;line-height:1.28;margin:18px 0 10px;letter-spacing:0}
   .loop-item p{font-size:13.5px;line-height:1.72;color:var(--ink-2)}
-  .screen-stack{display:grid;border-top:1px solid #E8EDF5}
-  .screen-proof{display:grid;grid-template-columns:310px minmax(0,1fr);gap:56px;align-items:center;padding:42px 0;border-bottom:1px solid #E8EDF5;background:transparent}
-  .screen-copy{display:flex;flex-direction:column;justify-content:center;max-width:310px}
-  .screen-copy .screen-no{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;margin-bottom:22px;font-family:var(--mono);font-size:13px;line-height:1;font-weight:850;color:#fff;background:var(--blue);box-shadow:0 12px 24px -18px rgba(67,56,202,.62)}
-  .screen-proof:nth-child(2) .screen-no{background:#C47A12}.screen-proof:nth-child(3) .screen-no{background:var(--green)}
-  .screen-copy h3{font-size:26px;line-height:1.26;font-weight:840;letter-spacing:-.025em;margin:0 0 14px;word-break:keep-all;text-wrap:balance}
+  .screen-stack{display:grid;border-top:1px solid #E6EBF4}
+  .screen-proof{position:relative;display:grid;grid-template-columns:minmax(240px,.36fr) minmax(0,.64fr);gap:64px;align-items:start;padding:54px 0;border-bottom:1px solid #E6EBF4;background:transparent}
+  .screen-copy{display:flex;flex-direction:column;justify-content:flex-start;max-width:360px;padding-top:4px}
+  .screen-copy .screen-no{display:inline-flex;align-items:center;gap:10px;width:auto;height:auto;margin-bottom:18px;font-family:var(--mono);font-size:13px;line-height:1;font-weight:850;color:var(--blue);letter-spacing:.04em;background:transparent;box-shadow:none}
+  .screen-copy .screen-no::before{content:"";width:24px;height:1px;background:currentColor;opacity:.42}
+  .screen-proof:nth-child(2) .screen-no{color:#C47A12}.screen-proof:nth-child(3) .screen-no{color:var(--green)}
+  .screen-copy h3{font-size:25px;line-height:1.3;font-weight:840;letter-spacing:-.025em;margin:0 0 14px;word-break:keep-all;text-wrap:balance}
   .screen-copy p{font-size:14px;line-height:1.78;color:var(--ink-2);margin:0}
-  .screen-meta{display:grid;gap:9px;margin-top:24px;padding-top:18px;border-top:1px solid #E8EDF5}
-  .screen-meta span{display:flex;align-items:flex-start;gap:9px;font-size:12.5px;line-height:1.5;color:var(--ink-2)}
-  .screen-meta i{width:6px;height:6px;margin-top:.55em;border-radius:50%;background:var(--blue);flex:0 0 6px}.screen-proof:nth-child(2) .screen-meta i{background:#C47A12}.screen-proof:nth-child(3) .screen-meta i{background:var(--green)}
-  .screen-stage{border:1px solid #E5EAF4;border-radius:10px;overflow:hidden;background:#F8FAFC;box-shadow:0 22px 62px -58px rgba(23,31,56,.35)}
-  .screen-top{height:34px;display:flex;align-items:center;padding:0 12px;border-bottom:1px solid #E9EDF5;background:#F8FAFC}
-  .screen-top span{font-family:var(--mono);font-size:11px;letter-spacing:0;color:var(--ink-3)}
-  .screen-image{aspect-ratio:16/9;overflow:hidden;background:linear-gradient(180deg,#FBFCFF,#F6F8FC);padding:10px}.screen-image img{width:100%;height:100%;display:block;object-fit:contain;object-position:center;border-radius:6px;background:#fff}
+  .screen-meta{display:grid;gap:10px;margin-top:24px}
+  .screen-meta span{display:flex;align-items:flex-start;gap:10px;font-size:12.5px;line-height:1.55;color:var(--ink-2)}
+  .screen-meta i{width:18px;height:1px;margin-top:.8em;border-radius:0;background:var(--blue);opacity:.42;flex:0 0 18px}.screen-proof:nth-child(2) .screen-meta i{background:#C47A12}.screen-proof:nth-child(3) .screen-meta i{background:var(--green)}
+  .screen-stage{background:transparent;border:0;border-radius:0;overflow:visible;box-shadow:none}
+  .screen-top{height:auto;display:flex;align-items:center;justify-content:space-between;padding:0 2px 10px;border-bottom:0;background:transparent}
+  .screen-top span{font-size:12px;font-weight:760;letter-spacing:0;color:var(--ink-2)}
+  .screen-top::after{content:"产品截面";font-family:var(--mono);font-size:10px;font-weight:800;color:var(--ink-3);letter-spacing:0}
+  .screen-image{aspect-ratio:16/9;overflow:hidden;background:#fff;border:1px solid #E1E7F1;border-radius:14px;box-shadow:0 1px 2px rgba(14,20,48,.04),0 28px 72px -56px rgba(23,31,56,.36)}
+  .screen-image img{width:100%;height:100%;display:block;object-fit:contain;object-position:center;background:#fff}
   .video-row{display:grid;grid-template-columns:520px minmax(0,1fr);gap:48px;align-items:center}
   .video-copy h2{font-size:42px;line-height:1.14;letter-spacing:-.035em;margin:0 0 16px;word-break:keep-all;text-wrap:balance}
   .video-copy h2 .nowrap{white-space:nowrap}
@@ -92,7 +95,7 @@
   @media(max-width:720px){
     .hero-facts,.loop-line,.agent-grid{grid-template-columns:1fr}
     .loop-item{border-right:0;border-bottom:1px solid #E5EAF4}.loop-item:last-child{border-bottom:0}
-    .screen-proof{padding:28px 0;gap:20px}
+    .screen-proof{padding:34px 0;gap:22px}
   }
 </style>
 </head>
@@ -291,17 +294,47 @@ window.PAGE_CTX={entity:'dongxing',type:'product',title:'句子懂行 · 知识�
   video.controls=false;
   video.setAttribute('muted','');
   video.setAttribute('playsinline','');
-  var play=function(){var p=video.play();if(p&&p.catch)p.catch(function(){});};
+  var inView=false;
+  var retryTimer=null;
+  var play=function(){
+    if(!inView||document.hidden)return;
+    clearTimeout(retryTimer);
+    var p=video.play();
+    if(p&&p.catch){
+      p.catch(function(){
+        retryTimer=setTimeout(play,900);
+      });
+    }
+  };
+  var setVisible=function(visible){
+    inView=visible;
+    if(visible)play();
+    else{
+      clearTimeout(retryTimer);
+      video.pause();
+    }
+  };
+  video.addEventListener('loadeddata',play);
+  video.addEventListener('canplay',play);
+  document.addEventListener('visibilitychange',function(){
+    if(document.hidden)video.pause();
+    else play();
+  });
   if('IntersectionObserver' in window){
     var io=new IntersectionObserver(function(entries){
       entries.forEach(function(entry){
-        if(entry.isIntersecting)play();
-        else video.pause();
+        setVisible(entry.isIntersecting);
       });
     },{threshold:.38});
     io.observe(video);
   }else{
-    play();
+    var checkVisible=function(){
+      var rect=video.getBoundingClientRect();
+      setVisible(rect.top<window.innerHeight*.72&&rect.bottom>window.innerHeight*.28);
+    };
+    window.addEventListener('scroll',checkVisible,{passive:true});
+    window.addEventListener('resize',checkVisible);
+    checkVisible();
   }
 })();
 </script>

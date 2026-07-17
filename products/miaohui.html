@@ -108,8 +108,10 @@
     display:grid;place-items:center;transition:background .2s,transform .2s}
   .wbm-x:hover{background:var(--blue);transform:scale(1.06)}
   @media(prefers-reduced-motion:reduce){.wbm.open,.wbm.closing,.wbm.open .wbm-panel,.wbm.closing .wbm-panel{animation:none}}
-  @media(min-width:981px) and (max-width:1180px){
-    .ph-grid{grid-template-columns:minmax(0,.82fr) minmax(500px,1.18fr);gap:clamp(22px,3vw,34px)}
+  @media(min-width:981px) and (max-width:1240px){
+    .ph-grid{grid-template-columns:1fr;gap:clamp(38px,5vw,54px)}
+    .ph-copy{max-width:760px}
+    .ph-art{max-width:760px}
     .ph h1{font-size:clamp(34px,4.7vw,56px)}
     .ph-lede{font-size:16px}
   }
