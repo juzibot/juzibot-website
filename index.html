@@ -408,9 +408,12 @@
   .trust-cell{position:relative;height:66px;background:#fff;border:1px solid var(--line);border-radius:14px;
     display:flex;align-items:center;justify-content:center;padding:10px 16px;box-shadow:var(--shadow-soft);
     transition:border-color .22s var(--ease),box-shadow .22s var(--ease),transform .22s var(--ease)}
-  .trust-cell img{max-height:40px;max-width:100%;width:auto;object-fit:contain;transition:transform .22s var(--ease)}
+  .trust-cell img{max-height:40px;max-width:100%;width:auto;object-fit:contain;
+    transform:scale(var(--trust-logo-scale,1));transition:transform .22s var(--ease)}
+  .trust-cell img[src$="gov-0-0.png"]{--trust-logo-scale:1.2}
+  .trust-cell img[src$="gov-0-4.png"]{--trust-logo-scale:.8}
   .trust-cell:hover{border-color:var(--blue-200);box-shadow:0 10px 26px rgba(67,56,202,.16);transform:translateY(-3px);z-index:6}
-  .trust-cell:hover img{transform:scale(1.04)}
+  .trust-cell:hover img{transform:scale(calc(var(--trust-logo-scale,1) * 1.04))}
   /* Tooltip：客户名 / 一句话成果 */
   .lt-tip{position:absolute;left:50%;bottom:calc(100% + 9px);transform:translateX(-50%) translateY(6px);
     width:max-content;max-width:230px;background:var(--ink);color:#fff;border-radius:10px;padding:9px 13px;
