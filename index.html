@@ -429,6 +429,9 @@
   .trust-foot{margin-top:clamp(22px,2.6vw,30px)}
   .trust-foot a{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:var(--blue)}
   .trust-foot a:hover{color:var(--blue-deep)}
+  @media(max-width:900px) and (min-width:641px){
+    .trust-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+  }
   @media(max-width:640px){
     .trust .tlabel-hint{display:none}
     .trust-grid{grid-template-columns:repeat(auto-fill,minmax(94px,1fr));gap:9px}
