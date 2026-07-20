@@ -23,10 +23,6 @@
   .hero-lede{font-size:18px;line-height:1.82;color:var(--ink-2);max-width:560px}
   .hero-lede strong{color:var(--ink);font-weight:760}
   .hero-actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:30px}
-  .hero-facts{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px;max-width:560px}
-  .hero-fact{border-top:1px solid #E4E9F2;padding-top:13px}
-  .hero-fact b{display:block;font-size:24px;line-height:1;font-weight:820;color:var(--ink)}
-  .hero-fact span{display:block;margin-top:8px;font-size:12px;line-height:1.45;color:var(--ink-3)}
   .hub-panel{border:1px solid #E5EAF4;border-radius:8px;background:#fff;box-shadow:0 28px 70px -52px rgba(23,31,56,.36)}
   .hub-top{height:42px;display:flex;align-items:center;padding:0 14px;border-bottom:1px solid #E9EDF5}
   .hub-dots{display:flex;gap:7px;margin-right:12px}.hub-dots i{width:8px;height:8px;border-radius:50%;background:#FF5F57}.hub-dots i:nth-child(2){background:#FEBC2E}.hub-dots i:nth-child(3){background:#28C840}
@@ -35,7 +31,7 @@
   .hub-status{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:start;padding-bottom:20px;border-bottom:1px solid #E9EDF5}
   .hub-status h2{font-size:24px;line-height:1.25;letter-spacing:0;margin-bottom:8px}
   .hub-status p{font-size:13px;line-height:1.62;color:var(--ink-3);max-width:330px}
-  .health-score{width:78px;height:78px;border:1px solid #CFE9E4;border-radius:50%;display:grid;place-items:center;font-family:var(--mono);font-size:24px;font-weight:850;color:var(--green);background:#F2FFFC}
+  .health-score{width:78px;height:78px;border:1px solid #CFE9E4;border-radius:50%;display:grid;place-items:center;font-size:15px;font-weight:850;color:var(--green);background:#F2FFFC}
   .hub-rows{display:grid;margin-top:18px}
   .hub-row{display:grid;grid-template-columns:38px 1fr auto;gap:14px;align-items:center;padding:13px 0;border-bottom:1px solid #F0F3F8}
   .hub-row:last-child{border-bottom:0}
@@ -72,26 +68,20 @@
   .screen-top span{font-size:12px;font-weight:760;letter-spacing:0;color:var(--ink-2)}
   .screen-image{aspect-ratio:16/9;overflow:hidden;background:#fff;border:1px solid #E1E7F1;border-radius:14px;box-shadow:0 1px 2px rgba(14,20,48,.04),0 28px 72px -56px rgba(23,31,56,.36)}
   .screen-image img{width:100%;height:100%;display:block;object-fit:contain;object-position:center;background:#fff}
-  .video-row{display:grid;grid-template-columns:520px minmax(0,1fr);gap:48px;align-items:center}
-  .video-copy h2{font-size:42px;line-height:1.14;letter-spacing:-.035em;margin:0 0 16px;word-break:keep-all;text-wrap:balance}
-  .video-copy h2 .nowrap{white-space:nowrap}
-  .video-copy p{font-size:15px;line-height:1.78;color:var(--ink-2)}
-  .video-card{position:relative;border:1px solid #E5EAF4;border-radius:8px;overflow:hidden;background:#111827;box-shadow:0 24px 64px -54px rgba(23,31,56,.38)}
-  .video-card video{display:block;width:100%;height:auto;background:#111827;pointer-events:none}
   .agent-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
   .agent-card{border:1px solid #E5EAF4;border-radius:8px;background:#fff;padding:24px}
   .agent-card i{width:36px;height:36px;border-radius:8px;display:grid;place-items:center;color:#fff;background:var(--blue);margin-bottom:18px}
   .agent-card:nth-child(2) i{background:#C47A12}.agent-card:nth-child(3) i{background:var(--green)}
   .agent-card h3{font-size:22px;line-height:1.28;letter-spacing:0;margin-bottom:10px}.agent-card p{font-size:14px;line-height:1.74;color:var(--ink-2)}
   @media(max-width:1080px){
-    .hero-grid,.section-head,.screen-proof,.video-row{grid-template-columns:1fr}
+    .hero-grid,.section-head,.screen-proof{grid-template-columns:1fr}
     .screen-copy{max-width:none}
     .dh-hero h1{font-size:56px}.hero-sub{font-size:30px}
     .loop-line{grid-template-columns:repeat(2,1fr)}.loop-item:nth-child(2){border-right:0}.loop-item:nth-child(-n+2){border-bottom:1px solid #E5EAF4}
   }
   @media(min-width:1081px){.hero-sub{white-space:nowrap}}
   @media(max-width:720px){
-    .hero-facts,.loop-line,.agent-grid{grid-template-columns:1fr}
+    .loop-line,.agent-grid{grid-template-columns:1fr}
     .loop-item{border-right:0;border-bottom:1px solid #E5EAF4}.loop-item:last-child{border-bottom:0}
     .screen-proof{padding:34px 0;gap:22px}
   }
@@ -119,12 +109,7 @@
               预约演示
               <span class="ar"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h11M10 4l5 5-5 5"/></svg><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h11M10 4l5 5-5 5"/></svg></span>
             </button>
-            <a href="#screens" class="btn btn-ghost btn-lg">看真实界面</a>
-          </div>
-          <div class="hero-facts">
-            <div class="hero-fact"><b>142</b><span>原始素材统一入库</span></div>
-            <div class="hero-fact"><b>2,380</b><span>知识单元可检索</span></div>
-            <div class="hero-fact"><b>94%</b><span>示例检索准确率</span></div>
+            <a href="#agents" class="btn btn-ghost btn-lg">看三个 Agent</a>
           </div>
         </div>
 
@@ -133,16 +118,16 @@
           <div class="hub-body">
             <div class="hub-status">
               <div>
-                <h2>知识库健康度</h2>
+                <h2>知识中枢状态</h2>
                 <p>原件、知识单元、体检任务和检索路径在同一个中枢里持续更新。</p>
               </div>
-              <div class="health-score">78</div>
+              <div class="health-score">体检中</div>
             </div>
             <div class="hub-rows">
-              <div class="hub-row"><span class="hub-no">01</span><div><b>原件客户上传</b><span>文件、表格、历史对话先统一接住。</span></div><span class="hub-tag">142</span></div>
-              <div class="hub-row"><span class="hub-no">02</span><div><b>知识单元归档</b><span>自动拆分、分类、打标签。</span></div><span class="hub-tag">2,380</span></div>
-              <div class="hub-row"><span class="hub-no">03</span><div><b>知识体检任务</b><span>发现冲突、缺口、过期和重复。</span></div><span class="hub-tag">15</span></div>
-              <div class="hub-row"><span class="hub-no">04</span><div><b>范围内精准检索</b><span>先圈范围，再召回片段和出处。</span></div><span class="hub-tag">94%</span></div>
+              <div class="hub-row"><span class="hub-no">01</span><div><b>原件客户上传</b><span>文件、表格、历史对话先统一接住。</span></div><span class="hub-tag">已接收</span></div>
+              <div class="hub-row"><span class="hub-no">02</span><div><b>知识单元归档</b><span>自动拆分、分类、打标签。</span></div><span class="hub-tag">归档中</span></div>
+              <div class="hub-row"><span class="hub-no">03</span><div><b>知识体检任务</b><span>发现冲突、缺口、过期和重复。</span></div><span class="hub-tag">待裁决</span></div>
+              <div class="hub-row"><span class="hub-no">04</span><div><b>范围内精准检索</b><span>先圈范围，再召回片段和出处。</span></div><span class="hub-tag">带出处</span></div>
             </div>
           </div>
         </div>
@@ -150,20 +135,37 @@
     </div>
   </header>
 
+  <section class="dh-section" id="agents">
+    <div class="dh-wrap">
+      <div class="section-head">
+        <div>
+          <div class="kicker">三个 Agent</div>
+          <h2>三个 Agent，<span>分工维护知识中枢。</span></h2>
+        </div>
+        <p>懂行先把知识中枢拆成三类稳定分工：入库、体检、检索各管一段，让知识不是整理一次，而是长期被维护。</p>
+      </div>
+      <div class="agent-grid">
+        <article class="agent-card"><i class="fa-solid fa-box-archive" aria-hidden="true"></i><h3>归档 Agent</h3><p>解析客户上传的原始素材，拆成知识单元，建议目录、标签和归属范围。</p></article>
+        <article class="agent-card"><i class="fa-solid fa-stethoscope" aria-hidden="true"></i><h3>体检 Agent</h3><p>持续扫描冲突、缺口、过期、重复和表达歧义，把问题变成任务清单。</p></article>
+        <article class="agent-card"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><h3>检索 Agent</h3><p>在指定知识范围内逐级检索，带路径、带片段、带出处回答，减少幻觉。</p></article>
+      </div>
+    </div>
+  </section>
+
   <section class="dh-section" id="loop">
     <div class="dh-wrap">
       <div class="section-head">
         <div>
-          <div class="kicker">主线</div>
-          <h2>一条知识闭环，<span>让 Agent 真能用。</span></h2>
+          <div class="kicker">协作闭环</div>
+          <h2>三类 Agent 接力，<span>让知识持续可用。</span></h2>
         </div>
         <p>客户丢来的原始资料，会变成干净、可体检、可追溯、可被 Agent 检索的知识资产。</p>
       </div>
       <div class="loop-line">
-        <article class="loop-item"><span class="num">01</span><h3>原件客户上传</h3><p>报价表、FAQ、说明文档、运营报告先统一进入原始素材库。</p></article>
-        <article class="loop-item"><span class="num">02</span><h3>知识单元归档</h3><p>归档 Agent 自动解析、拆分、标注来源，并建议归属目录。</p></article>
-        <article class="loop-item"><span class="num">03</span><h3>体检任务生成</h3><p>冲突、缺口、过期、重复不继续污染答案，而是进入任务流。</p></article>
-        <article class="loop-item"><span class="num">04</span><h3>范围内精准检索</h3><p>检索 Agent 先圈范围，再逐层召回证据，最后带出处回答。</p></article>
+        <article class="loop-item"><span class="num">01</span><h3>归档 Agent 接收原件</h3><p>报价表、FAQ、说明文档、运营报告先统一进入原始素材库。</p></article>
+        <article class="loop-item"><span class="num">02</span><h3>归档 Agent 生成知识单元</h3><p>自动解析、拆分、标注来源，并建议归属目录。</p></article>
+        <article class="loop-item"><span class="num">03</span><h3>体检 Agent 生成任务</h3><p>冲突、缺口、过期、重复不继续污染答案，而是进入任务流。</p></article>
+        <article class="loop-item"><span class="num">04</span><h3>检索 Agent 范围内检索</h3><p>先圈范围，再逐层召回证据，最后带出处回答。</p></article>
       </div>
     </div>
   </section>
@@ -173,9 +175,9 @@
       <div class="section-head">
         <div>
           <div class="kicker">真实界面</div>
-          <h2>三个关键状态，<span>串起知识闭环。</span></h2>
+          <h2>三个 Agent 的关键界面，<span>串起知识闭环。</span></h2>
         </div>
-        <p>资料入库、知识体检、Agentic 检索连成一条路径，来源、处理状态和命中证据都能看清。</p>
+        <p>从归档、体检到检索，来源、处理状态和命中证据都能看清。</p>
       </div>
       <div class="screen-stack">
         <article class="screen-proof">
@@ -227,38 +229,6 @@
     </div>
   </section>
 
-  <section class="dh-section" id="video">
-    <div class="dh-wrap video-row">
-      <div class="video-copy">
-        <div class="kicker">产品视频</div>
-        <h2>知识库干净，<span class="nowrap">AI 才答得准。</span></h2>
-        <p>38 秒看完懂行的核心动作：客户资料怎么进入原始素材库，Agent 怎么逐级检索，又怎么把冲突知识变成可处理的任务。</p>
-      </div>
-      <div class="video-card">
-        <video id="dongxingDemoVideo" muted loop playsinline preload="metadata" poster="../assets/product-shots/dongxing-demo-poster.jpg" aria-label="句子懂行产品介绍视频">
-          <source src="../assets/product-shots/dongxing-demo.mp4" type="video/mp4" />
-        </video>
-      </div>
-    </div>
-  </section>
-
-  <section class="dh-section" id="agents">
-    <div class="dh-wrap">
-      <div class="section-head">
-        <div>
-          <div class="kicker">三个 Agent</div>
-          <h2>知识库不是整理一次，<span>而是长期被维护。</span></h2>
-        </div>
-        <p>懂行把维护知识库拆给三个 Agent：入库、体检、检索各管一段，避免知识越用越脏。</p>
-      </div>
-      <div class="agent-grid">
-        <article class="agent-card"><i class="fa-solid fa-box-archive"></i><h3>归档 Agent</h3><p>解析客户上传的原始素材，拆成知识单元，建议目录、标签和归属范围。</p></article>
-        <article class="agent-card"><i class="fa-solid fa-stethoscope"></i><h3>体检 Agent</h3><p>持续扫描冲突、缺口、过期、重复和表达歧义，把问题变成任务清单。</p></article>
-        <article class="agent-card"><i class="fa-solid fa-magnifying-glass"></i><h3>检索 Agent</h3><p>在指定知识范围内逐级检索，带路径、带片段、带出处回答，减少幻觉。</p></article>
-      </div>
-    </div>
-  </section>
-
   <section class="cta" id="cta">
     <div class="wrap cta-inner">
       <div class="rv">
@@ -284,69 +254,6 @@
 <script>
 window.SITE_REL='../';
 window.PAGE_CTX={entity:'dongxing',type:'product',title:'句子懂行 · 知识中枢'};
-(function(){
-  var video=document.getElementById('dongxingDemoVideo');
-  if(!video)return;
-  video.muted=true;
-  video.loop=true;
-  video.controls=false;
-  video.setAttribute('muted','');
-  video.setAttribute('playsinline','');
-  var inView=false;
-  var retryTimer=null;
-  var retryCount=0;
-  var maxRetries=4;
-  var play=function(){
-    if(!inView||document.hidden)return;
-    clearTimeout(retryTimer);
-    var p=video.play();
-    if(p&&p.catch){
-      p.catch(function(){
-        if(!inView||document.hidden||retryCount>=maxRetries)return;
-        var delay=900*Math.pow(1.7,retryCount);
-        retryCount+=1;
-        retryTimer=setTimeout(play,delay);
-      });
-    }
-  };
-  var resetAndPlay=function(){
-    retryCount=0;
-    play();
-  };
-  var setVisible=function(visible){
-    inView=visible;
-    if(visible)play();
-    else{
-      clearTimeout(retryTimer);
-      retryCount=0;
-      video.pause();
-    }
-  };
-  video.addEventListener('playing',function(){retryCount=0;});
-  video.addEventListener('loadeddata',resetAndPlay);
-  video.addEventListener('canplay',resetAndPlay);
-  document.addEventListener('visibilitychange',function(){
-    if(document.hidden){
-      clearTimeout(retryTimer);
-      video.pause();
-    }else resetAndPlay();
-  });
-  if('IntersectionObserver' in window){
-    var io=new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        setVisible(entry.isIntersecting);
-      });
-    },{threshold:.38});
-    io.observe(video);
-  }else{
-    var checkVisible=function(){
-      var rect=video.getBoundingClientRect();
-      setVisible(rect.top<window.innerHeight*.72&&rect.bottom>window.innerHeight*.28);
-    };
-    window.addEventListener('scroll',checkVisible,{passive:true});
-    window.addEventListener('resize',checkVisible);
-  }
-})();
 </script>
 <script src="../assets/site.js"></script>
 </body>
