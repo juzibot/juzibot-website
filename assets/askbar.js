@@ -20,7 +20,7 @@
     miaodong: { nm: '句子秒懂 · 大脑', ds: '不写代码也能搭 Agent', ic: 'fa-diagram-project', href: P('miaodong.html') },
     shouhu:   { nm: '句子守护 · 主管', ds: '上线前测过、上线后管着', ic: 'fa-shield-halved', href: P('shouhu.html') },
     canmou:   { nm: '句子问数 · 参谋', ds: '一句话查所有业务数据', ic: 'fa-chart-line', href: P('canmou.html') },
-    dongxing: { nm: '句子懂行 · 记忆', ds: '散乱知识炼成可检索资产', ic: 'fa-book-bookmark', href: P('dongxing.html') },
+    dongxing: { nm: '句子懂行 · 知识中枢', ds: '原始资料变成 AI 能用的干净知识', ic: 'fa-book-bookmark', href: P('dongxing.html') },
     cli:      { nm: '句子 CLI · 手', ds: '操作一切人用软件的执行层', ic: 'fa-terminal', href: P('cli.html') },
     zhizao:   { nm: '句子制造 · 地基', ds: '补齐数字化基建，一客一环境', ic: 'fa-cubes', href: P('zhizao.html') },
     sales:    { nm: 'AI 销售', ds: '建联到首单成交全程接管', ic: 'fa-bullseye', href: W('sales.html') },
@@ -47,7 +47,7 @@
     { re: /(数据|报表|图表|问数|分析|看板|bi)/i, a: '句子问数：一句话查公司所有数据，秒级出图表，可逐层追问钻取，异常主动预警——不写 SQL、不约 BI。', cards: ['canmou'] },
     { re: /(知识|文档|资料|检索|出处|知识库)/i, a: '句子懂行把散乱资料清洗、切分、对齐问法，炼成能查、带出处的知识资产——这是 Agent 答得准的前提。', cards: ['dongxing'] },
     { re: /(演示|预约|联系|试用|demo|怎么买|顾问)/i, a: '好的，我帮你接一下——留个联系方式，工作日当天会有顾问带着你所在行业的真实场景做演示。', cards: [], lead: true },
-    { re: /(产品|有哪些|功能|能力|矩阵)/i, a: '句子有 7 个产品组成 AI 员工的基建：秒回(工作台)、秒懂(大脑)、守护(主管)、问数(参谋)、懂行(记忆)、CLI(手)、制造(地基)。点开看：', cards: ['miaohui', 'miaodong', 'shouhu', 'canmou'] },
+    { re: /(产品|有哪些|功能|能力|矩阵)/i, a: '句子有 7 个产品组成 AI 员工的基建：秒回(工作台)、秒懂(大脑)、守护(主管)、问数(参谋)、懂行(知识中枢)、CLI(手)、制造(地基)。点开看：', cards: ['miaohui', 'miaodong', 'shouhu', 'canmou'] },
     { re: /(员工|岗位|招聘|团队|岗)/i, a: '句子的 AI 员工已在销售、客服、导购、理财顾问、社工/调解、HR 等岗位真实当班。看看他们：', cards: ['sales', 'service', 'finance', 'government'] },
   ];
 

@@ -24,7 +24,7 @@
     '        <a href="' + REL + 'products/miaodong.html"><div class="d-title">句子秒懂 · 大脑</div><div class="d-desc">业务人员不写代码也能搭 Agent</div></a>' +
     '        <a href="' + REL + 'products/shouhu.html"><div class="d-title">句子守护 · 主管</div><div class="d-desc">Agent 上线前测过、上线后管着</div></a>' +
     '        <a href="' + REL + 'products/canmou.html"><div class="d-title">句子问数 · 参谋</div><div class="d-desc">一句话查所有业务数据</div></a>' +
-    '        <a href="' + REL + 'products/dongxing.html"><div class="d-title">句子懂行 · 记忆</div><div class="d-desc">知识工程，散乱知识炼成可检索资产</div></a>' +
+    '        <a href="' + REL + 'products/dongxing.html"><div class="d-title">句子懂行 · 知识中枢</div><div class="d-desc">把原始资料变成 AI 能用的干净知识</div></a>' +
     '        <a href="' + REL + 'products/miaohui.html"><div class="d-title">句子秒回 · 工作台</div><div class="d-desc">11 个 IM 通道汇成一个工作台</div></a>' +
     '        <a href="' + REL + 'products/cli.html"><div class="d-title">句子 CLI · 手</div><div class="d-desc">操作一切人用软件的执行层</div></a>' +
     '        <a href="' + REL + 'products/zhizao.html"><div class="d-title">句子制造 · 地基</div><div class="d-desc">补齐客户数字化基建，一客一环境</div></a>' +
@@ -71,7 +71,7 @@
     '        <li><a href="' + REL + 'products/miaodong.html">句子秒懂 · 大脑</a></li>' +
     '        <li><a href="' + REL + 'products/shouhu.html">句子守护 · 主管</a></li>' +
     '        <li><a href="' + REL + 'products/canmou.html">句子问数 · 参谋</a></li>' +
-    '        <li><a href="' + REL + 'products/dongxing.html">句子懂行 · 记忆</a></li>' +
+    '        <li><a href="' + REL + 'products/dongxing.html">句子懂行 · 知识中枢</a></li>' +
     '        <li><a href="' + REL + 'products/cli.html">句子 CLI · 手</a></li>' +
     '        <li><a href="' + REL + 'products/zhizao.html">句子制造 · 地基</a></li>' +
     '      </ul></div>' +

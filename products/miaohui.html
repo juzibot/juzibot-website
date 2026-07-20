@@ -140,7 +140,7 @@
     padding:clamp(22px,3vw,34px)}
   .proof-board::before{content:"";position:absolute;left:36%;top:10%;bottom:10%;width:1px;
     background:linear-gradient(180deg,transparent,var(--line),transparent)}
-  .proof-flow{position:relative;z-index:1;display:grid;align-content:center;gap:0}
+  .proof-flow{position:relative;z-index:1;display:grid;align-content:center;gap:0;min-width:0}
   .proof-step{display:grid;grid-template-columns:38px 1fr;gap:14px;align-items:start;padding:17px 0;border-bottom:1px solid var(--line-2)}
   .proof-step:last-child{border-bottom:0}
   .proof-no{width:38px;height:38px;border-radius:13px;display:grid;place-items:center;
@@ -150,7 +150,7 @@
   .proof-step:nth-child(3) .proof-no{background:var(--orange-deep)}
   .proof-step h3{font-size:clamp(17px,1.5vw,20px);line-height:1.24;letter-spacing:-.02em;margin-bottom:6px}
   .proof-step p{font-size:13.5px;line-height:1.65;color:var(--ink-2)}
-  .proof-stage{position:relative;z-index:1;min-height:clamp(360px,35vw,430px);border:1px solid rgba(226,232,245,.92);
+  .proof-stage{position:relative;z-index:1;min-width:0;min-height:clamp(360px,35vw,430px);border:1px solid rgba(226,232,245,.92);
     border-radius:26px;overflow:hidden;background:#F7F8FE;box-shadow:inset 0 1px 0 rgba(255,255,255,.9)}
   .proof-bg{position:absolute;inset:-12%;width:124%;max-width:none;height:124%;object-fit:cover;object-position:58% 28%;
     transform:scale(1.28);filter:saturate(.72) contrast(.92);opacity:.3}
@@ -186,7 +186,7 @@
   .proof-mini:nth-child(2) .proof-mini-icon{background:var(--green);box-shadow:0 14px 26px -18px rgba(20,184,166,.65)}
   .proof-mini b{display:block;font-size:14px;line-height:1.22;color:var(--ink)}
   .proof-mini span{display:block;margin-top:4px;font-size:12.5px;line-height:1.35;color:var(--ink-3)}
-  @media(max-width:980px){.proof-board{grid-template-columns:1fr}.proof-board::before{display:none}.proof-minis{width:min(500px,82%)}}
+  @media(max-width:1120px){.proof-board{grid-template-columns:1fr}.proof-board::before{display:none}.proof-minis{width:min(500px,82%)}}
   @media(max-width:640px){.proof-board{padding:16px;border-radius:24px}.proof-stage{min-height:520px}.proof-window{width:auto;margin:14px}
     .proof-minis{left:14px;right:14px;bottom:14px;width:auto;grid-template-columns:1fr}.proof-mini{grid-template-columns:46px 1fr}}
   /* —— IM 通道网格 —— */
