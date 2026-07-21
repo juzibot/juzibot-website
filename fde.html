@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>FDE 交付结果 · 对结果负责的工程师 | 句子互动</title>
-<meta name="description" content="FDE（Forward Deployed Engineer，前端部署工程师）——前移到客户业务现场的工程师团队。不只装软件，对客户的业务结果负责：先搞懂这门生意，按结果收费，把现场踩出来的能力回流成产品。" />
+<meta name="description" content="FDE（Forward Deployed Engineer，前线部署工程师）——前移到客户业务现场的工程师团队。不只装软件，对客户的业务结果负责：先搞懂这门生意，按结果收费，把现场踩出来的能力回流成产品。" />
 <link rel="icon" href="logo.png" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="assets/site.css" />
@@ -16,8 +16,15 @@
   .crumbs a:hover{color:var(--blue)}
   .crumbs .sep{color:var(--line)}
   .crumbs .here{color:var(--ink);font-weight:700}
+  /* 标题断行策略：中文短语整体包 .nw（white-space:nowrap），断点只落在短语之间——
+     keep-all + 20ch 压宽的老写法在无标点标题上会断出「的」字开头的行 */
+  .nw{white-space:nowrap}
   .fde-hero h1{font-size:clamp(34px,5vw,64px);font-weight:850;letter-spacing:-.035em;line-height:1.12;
-    text-wrap:balance;max-width:20ch;word-break:keep-all;margin:6px 0 clamp(16px,2vw,22px)}
+    text-wrap:balance;margin:6px 0 clamp(16px,2vw,22px)}
+  /* site.css 对 .sec-head h2 没有字号规则（跌回浏览器默认 24px），与同页 .sec-top h2 的
+     clamp(28px,3.8vw,50px) 撞在一起——这里对齐成同一标题节奏 */
+  .sec-head h2{font-size:clamp(28px,3.8vw,50px);font-weight:840;letter-spacing:-.035em;line-height:1.2;text-wrap:balance}
+  .sec-head .sub{margin-top:16px}
   .fde-hero .lede{font-size:clamp(16px,1.4vw,19px);color:var(--ink-2);line-height:1.7;max-width:56ch}
   .fde-hero .lede strong{color:var(--ink);font-weight:700}
   .fde-pills{display:flex;flex-wrap:wrap;gap:10px;margin-top:clamp(20px,2.6vw,28px)}
@@ -29,10 +36,10 @@
   .fde-cmp{max-width:980px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-soft)}
   .fde-cmp .cmp-row{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}
   .fde-cmp .cmp-row:first-child{border-top:0}
-  .fde-cmp .cmp-h{padding:15px 22px;font-weight:800;font-size:13.5px}
+  .fde-cmp .cmp-h{padding:15px 22px;font-weight:800;font-size:14.5px}
   .fde-cmp .cmp-h.l{background:var(--line-2);color:var(--ink-2)}
   .fde-cmp .cmp-h.r{background:var(--blue-50);color:var(--blue)}
-  .fde-cmp .cmp-c{padding:14px 22px;font-size:14px;line-height:1.6}
+  .fde-cmp .cmp-c{padding:15px 22px;font-size:14.5px;line-height:1.65}
   .fde-cmp .cmp-c.l{color:var(--ink-2)}
   .fde-cmp .cmp-c.r{color:var(--ink);background:#FBFCFF}
 
@@ -158,7 +165,6 @@
   @media(max-width:640px){
     /* —— 面包屑 / Hero —— */
     .crumbs{font-size:12.5px;gap:7px;flex-wrap:wrap}
-    .fde-hero h1{max-width:none}
     .fde-hero .lede{max-width:none}
     .fde-pills{gap:8px;margin-top:18px}
     .fde-pill{font-size:12.5px;padding:9px 14px}        /* 触控高度 ≥38px，含间距达 ≥44px 命中区 */
@@ -195,8 +201,8 @@
           <a href="index.html">首页</a><span class="sep">/</span><span class="here">FDE 交付结果</span>
         </nav>
         <span class="sec-eyebrow">FDE · 我们怎么交付</span>
-        <h1>一支<span class="hl"><span>对结果负责</span></span>的 FDE 团队</h1>
-        <p class="lede">传统软件交付完就结束，用得好不好是客户自己的事。句子互动派出的是 FDE——<strong>Forward Deployed Engineer，前端部署工程师</strong>，前移到客户业务现场：先理解客户的业务，再按结果收费。客户业绩增长，我们才有收入，因此现场积累的能力会回流到产品中。</p>
+        <h1><span class="nw">一支<span class="hl"><span>对结果负责</span></span>的</span> <span class="nw">FDE 团队</span></h1>
+        <p class="lede">传统软件交付完就结束，用得好不好是客户自己的事。句子互动派出的是 FDE——<strong>Forward Deployed Engineer，前线部署工程师</strong>，前移到客户业务现场：先理解客户的业务，再按结果收费。客户业绩增长，我们才有收入，因此现场积累的能力会回流到产品中。</p>
         <div class="fde-pills">
           <span class="fde-pill"><span class="dot"></span>前移到客户现场</span>
           <span class="fde-pill"><span class="dot"></span>对业务结果负责</span>
@@ -212,8 +218,8 @@
     <div class="wrap">
       <div class="sec-head rv">
         <span class="sec-eyebrow">FDE 是什么</span>
-        <h2>把工程师派到客户现场，对结果负责</h2>
-        <p class="sub">FDE，Forward Deployed Engineer（前端部署工程师）——前移到客户业务现场的工程师。不止于交付软件，而是与客户一起理解业务，让 AI 真正在其中产出结果。</p>
+        <h2><span class="nw">把工程师派到客户现场，</span><span class="nw">对结果负责</span></h2>
+        <p class="sub">FDE，Forward Deployed Engineer（前线部署工程师）——前移到客户业务现场的工程师。不止于交付软件，而是与客户一起理解业务，让 AI 真正在其中产出结果。</p>
       </div>
       <div class="fde-cmp rv rv-d1" style="margin:0 auto">
         <div class="cmp-row">
@@ -242,7 +248,7 @@
       <div class="sec-top rv">
         <div>
           <span class="sec-eyebrow">FDE 怎么干</span>
-          <h2>贴着客户的业务跑，<span class="hl"><span>把脏活在现场解决</span></span></h2>
+          <h2><span class="nw">贴着客户的业务跑，</span><span class="hl"><span>把脏活在现场解决</span></span></h2>
         </div>
         <p class="sub">AI 落地的难点从来不是模型，而是客户各不相同的真实业务。FDE 正是去解决这一部分。</p>
       </div>
@@ -279,7 +285,7 @@
       <div class="sec-top rv">
         <div>
           <span class="sec-eyebrow">FDE 由两种人搭班子</span>
-          <h2>Echo 懂行业，<span class="hl warm"><span>Delta 写代码</span></span></h2>
+          <h2><span class="nw">Echo 懂行业，</span><span class="hl warm"><span>Delta 写代码</span></span></h2>
         </div>
         <p class="sub">FDE 不是一个全才，而是两种能力的组合。后方还有产品团队，把现场的粗糙定制抽象成可复用的标准产品。</p>
       </div>
