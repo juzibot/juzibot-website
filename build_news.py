@@ -144,6 +144,9 @@ def norm_date(raw):
 def make_item(src, url, title, summary, date, category, tags=None, author=None):
     if not (url and title and date):
         return None
+    # 日期在唯一汇聚点统一补零(manual 源手填 2026/7/5 之类也兜住), 保证下游排序与 month_label 安全
+    dm = re.search(r"(\d{4})[-/](\d{1,2})[-/](\d{1,2})", str(date))
+    date = f"{dm.group(1)}-{int(dm.group(2)):02d}-{int(dm.group(3)):02d}" if dm else str(date)
     return {
         "id": hashlib.sha1(url.encode()).hexdigest()[:12],
         "title": title.strip(),
@@ -341,11 +344,13 @@ def cell_link(cell):
 
 
 def cell_date(cell):
-    """飞书日期字段 → YYYY-MM-DD。日期列返回毫秒时间戳, 文本兜底解析, 空返回 ''。"""
+    """飞书日期字段 → YYYY-MM-DD。日期列返回毫秒时间戳, 文本兜底解析, 空返回 ''。
+    文本兜底必须补零: 运营手填 2026/7/5 若原样输出 2026-7-5, 字符串排序错乱,
+    且 month_label 对 date[5:7] 做 int 会炸(news-c.html 注入失败)。"""
     if isinstance(cell, (int, float)) and cell > 0:
         return datetime.fromtimestamp(cell / 1000).strftime("%Y-%m-%d")
-    m = re.search(r"\d{4}[-/]\d{1,2}[-/]\d{1,2}", str(cell or ""))
-    return m.group(0).replace("/", "-") if m else ""
+    m = re.search(r"(\d{4})[-/](\d{1,2})[-/](\d{1,2})", str(cell or ""))
+    return f"{m.group(1)}-{int(m.group(2)):02d}-{int(m.group(3)):02d}" if m else ""
 
 
 def sync_feishu_base(src, old, limit):
@@ -463,7 +468,11 @@ def ai_screen(items):
         except Exception as e:  # noqa: BLE001 — 单批失败不拖垮整体, 该批下次重试
             print(f"  [警告] AI 筛选批次失败({e}), 该批 {len(batch)} 条暂缓上站")
             continue
-        vmap = {v["id"]: bool(v.get("keep")) for v in verdicts if isinstance(v, dict) and v.get("id")}
+        # 模型可能把布尔回成字符串("false"/"true"), bool() 会把 "false" 当真 → 该筛掉的上站。显式解析。
+        def _keep(v):
+            k = v.get("keep")
+            return k is True or str(k).strip().lower() in ("true", "1", "yes")
+        vmap = {v["id"]: _keep(v) for v in verdicts if isinstance(v, dict) and v.get("id")}
         for it in batch:
             if it["id"] in vmap:
                 it["ai"] = {"keep": vmap[it["id"]], "at": today}
