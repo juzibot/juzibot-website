@@ -30,22 +30,79 @@
   .pill{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--ink-2);
     background:#fff;border:1px solid var(--line);padding:8px 16px;border-radius:999px;box-shadow:var(--shadow-soft)}
   .pill .dot{width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0}
-  /* 右侧：AI 调解员 · 合规对话演示面板 */
-  .demo-card{position:relative;background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);
-    overflow:hidden;box-shadow:0 1px 2px rgba(14,20,48,.05),0 40px 80px -30px rgba(67,56,202,.32),0 12px 24px -12px rgba(14,20,48,.12)}
-  .demo-hd{display:flex;align-items:center;gap:9px;padding:14px 18px;font-size:12.5px;font-weight:800;color:var(--blue);
-    letter-spacing:-.01em;background:rgba(255,255,255,.78);border-bottom:1px solid var(--line)}
-  .demo-hd .pulse{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);
+  /* 右侧：人物海报舞台（index 长廊 gposter 同款配方）+ 悬浮对话气泡贴片 */
+  .sales-stage{position:relative;max-width:390px;margin:0 auto;padding:0 6px 20px}
+  .sales-poster{position:relative;border-radius:22px;overflow:hidden;aspect-ratio:3/4;isolation:isolate;
+    background:radial-gradient(128% 84% at 50% -4%,color-mix(in srgb,var(--blue) 42%,#fff),color-mix(in srgb,var(--blue) 12%,#fff) 60%,#fff 92%);
+    border:1px solid color-mix(in srgb,var(--blue) 24%,var(--line));
+    box-shadow:0 1px 2px rgba(14,20,48,.05),0 40px 80px -30px rgba(67,56,202,.38);
+    transform:rotate(-1.2deg);transition:transform .4s var(--ease),box-shadow .5s var(--ease)}
+  .sales-stage:hover .sales-poster{transform:rotate(0) translateY(-8px);
+    box-shadow:0 2px 6px rgba(14,20,48,.06),0 52px 96px -32px rgba(67,56,202,.5)}
+  .sp-word{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);z-index:0;white-space:nowrap;
+    font-weight:900;font-size:clamp(60px,8.5vw,88px);letter-spacing:-.05em;line-height:1;color:transparent;
+    -webkit-text-stroke:1.4px color-mix(in srgb,var(--blue) 50%,transparent);opacity:.6;
+    -webkit-mask-image:linear-gradient(180deg,#000 16%,transparent 74%);mask-image:linear-gradient(180deg,#000 16%,transparent 74%)}
+  .sp-glow{position:absolute;left:50%;bottom:-8%;width:84%;height:42%;transform:translateX(-50%);z-index:0;
+    background:radial-gradient(50% 50% at 50% 50%,color-mix(in srgb,var(--blue) 56%,transparent),transparent 70%);
+    filter:blur(13px);opacity:.5}
+  .sp-pic{position:absolute;left:50%;bottom:0;height:97%;width:auto;max-width:none;transform:translateX(-50%);z-index:2;
+    object-fit:contain;object-position:bottom;filter:drop-shadow(0 16px 22px rgba(14,20,48,.18));
+    -webkit-user-drag:none;user-select:none}
+  .sp-sheen{position:absolute;inset:0;z-index:4;pointer-events:none;border-radius:22px;
+    background:linear-gradient(116deg,transparent 32%,rgba(255,255,255,.6) 48%,transparent 64%);
+    transform:translateX(-135%);transition:transform .85s var(--ease);mix-blend-mode:overlay}
+  .sales-stage:hover .sp-sheen{transform:translateX(135%)}
+  .sp-badge{position:absolute;left:12px;top:12px;z-index:3;display:inline-flex;align-items:center;gap:7px;
+    font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fff;
+    background:color-mix(in srgb,var(--blue) 86%,#000);padding:5px 11px;border-radius:999px;
+    box-shadow:0 6px 16px color-mix(in srgb,var(--blue) 40%,transparent)}
+  .sp-badge .pulse{width:6px;height:6px;border-radius:50%;background:#4ADE80;box-shadow:0 0 8px #4ADE80;
     animation:ping 1.8s var(--ease) infinite}
-  .demo-body{padding:clamp(16px,2vw,20px);display:flex;flex-direction:column;gap:9px}
-  .demo-body .d-msg{font-size:13px;line-height:1.6;color:var(--ink);background:var(--blue-50);
-    border:1px solid var(--line);padding:10px 13px;border-radius:4px 13px 13px 13px;box-shadow:var(--shadow-soft)}
-  .demo-body .d-msg.me{margin-left:auto;max-width:80%;color:#fff;background:var(--blue);border-color:transparent;
-    border-radius:13px 4px 13px 13px}
-  .demo-audit{margin:clamp(14px,2vw,18px) clamp(16px,2vw,20px) clamp(16px,2vw,20px);
-    display:flex;align-items:flex-start;gap:9px;font-size:11.5px;line-height:1.55;color:var(--ink-2);
-    background:var(--green-lt);border:1px solid rgba(45,212,191,.34);padding:11px 14px;border-radius:var(--radius-sm)}
-  .demo-audit i{color:var(--orange-deep);margin-top:1px;flex-shrink:0}
+  /* 对话贴片：悬浮在人物四周的玻璃气泡（文案与配色沿用原合规对话面板） */
+  .sp-chip{position:absolute;z-index:5;display:flex;flex-direction:column;gap:2px;
+    background:rgba(255,255,255,.86);backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:14px;
+    padding:10px 14px;box-shadow:0 12px 26px -12px rgba(14,20,48,.28);
+    animation:spfloat 5s ease-in-out infinite}
+  .sp-chip .l{font-size:10.5px;color:var(--ink-3);font-weight:600;white-space:nowrap}
+  .sp-chip .v{font-size:17px;font-weight:850;letter-spacing:-.02em;line-height:1.2;white-space:nowrap;
+    font-variant-numeric:tabular-nums}
+  .sp-chip.c1,.sp-chip.c2,.sp-chip.c3,.sp-chip.c5{max-width:48%;font-size:11px;font-weight:600;line-height:1.5;padding:9px 12px;color:var(--ink)}
+  .sp-chip.c1,.sp-chip.c2,.sp-chip.c5{background:color-mix(in srgb,var(--blue-50) 92%,transparent);border-radius:4px 14px 14px 14px}
+  .sp-chip.c1{top:4%;right:-14%}
+  .sp-chip.c2{top:26%;left:-16%;animation-delay:.8s}
+  .sp-chip.c3{top:49%;right:-12%;animation-delay:1.6s;color:#fff;background:var(--blue);border-color:transparent;
+    border-radius:14px 4px 14px 14px;box-shadow:0 12px 26px -12px rgba(67,56,202,.55)}
+  .sp-chip.c5{top:62%;left:-14%;animation-delay:2.4s}
+  .sp-chip.c4{left:50%;bottom:-2px;transform:translateX(-50%);flex-direction:row;align-items:center;gap:8px;
+    width:max-content;max-width:104%;padding:11px 16px;border:1.6px solid transparent;animation:none;
+    background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,var(--blue),var(--blue-2)) border-box;
+    box-shadow:0 18px 38px -14px rgba(67,56,202,.45);
+    font-size:12.5px;font-weight:700;color:var(--ink);line-height:1.45}
+  .sp-chip.c4 i{color:var(--orange-deep);flex:0 0 auto}
+  @keyframes spfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+
+  /* —— 能力清单卡片：与 fde / sales 页同款改造（覆盖 site.css 首页交互卡默认态） —— */
+  .fde-card{opacity:1;cursor:default;background:#fff;border-radius:16px;
+    box-shadow:0 1px 2px rgba(14,20,48,.05),0 16px 30px -18px rgba(14,20,48,.18)}
+  .fde-card::before{background:var(--ac,var(--blue))}
+  .fde-card:hover::before{transform:scaleY(1)}
+  .fde-card:hover{transform:translateY(-5px);
+    box-shadow:0 1px 2px rgba(14,20,48,.05),0 26px 46px -20px rgba(67,56,202,.28)}
+  .fde-card.k1{--ac:var(--blue)}.fde-card.k2{--ac:var(--teal)}.fde-card.k3{--ac:var(--orange)}
+  .fde-card.k4{--ac:var(--purple)}.fde-card.k5{--ac:var(--green)}.fde-card.k6{--ac:var(--blue-2)}
+  .fde-hd{display:flex;align-items:center;gap:10px;margin-bottom:15px}
+  .fde-ic{width:32px;height:32px;border-radius:10px;flex:0 0 32px;display:grid;place-items:center;
+    background:var(--ac,var(--blue));color:#fff;font-size:13.5px;
+    box-shadow:0 6px 14px -6px color-mix(in srgb,var(--ac,var(--blue)) 55%,transparent)}
+  .fde-card .fde-num{margin:0 0 0 auto;font-size:10.5px;color:var(--ink-3);
+    background:var(--blue-50);border:1px solid var(--line);border-radius:999px;padding:3px 10px;line-height:1.5}
+  .fde-card:hover .fde-num{color:var(--ac,var(--blue))}
+  .fde-card h4{font-size:17.5px}
+
+  /* —— sec-top 副文：小字右对齐（与 fde / sales 页一致），窄屏回落左对齐 —— */
+  .sec-top .sub{margin-left:auto;text-align:right;max-width:38ch;font-size:14px;color:var(--ink-3)}
+  @media(max-width:760px){.sec-top .sub{margin-left:0;text-align:left}}
   /* 角色画像：能力清单 */
   .role-split{display:block}
   .role-split>div:first-child{max-width:64ch}
@@ -66,7 +123,11 @@
     .role-hero .wrap{grid-template-columns:1fr;gap:clamp(40px,8vw,56px)}
     .role-split{grid-template-columns:1fr;gap:clamp(28px,6vw,40px)}
   }
-  @media (prefers-reduced-motion:reduce){.demo-hd .pulse{animation:none}}
+  @media(max-width:520px){
+    .sp-chip{padding:8px 11px}
+    .sp-chip.c1{right:0}.sp-chip.c2{left:-2%}.sp-chip.c3{right:-2%}.sp-chip.c5{left:-2%}
+  }
+  @media (prefers-reduced-motion:reduce){.sp-badge .pulse,.sp-chip{animation:none}}
 
 .fleet-bar{position:relative;z-index:3;max-width:var(--max);margin:calc(-1 * clamp(28px,4vw,52px)) auto 0;
     padding:0 var(--gut)}
@@ -113,12 +174,10 @@
     .role-lede{font-size:15px;max-width:none;line-height:1.62}
     .pill-row{gap:8px;margin-top:18px}
     .pill{font-size:12.5px;padding:8px 13px}
-    /* 演示卡:气泡收窄、内边距收 */
-    .demo-hd{padding:12px 14px;font-size:12px}
-    .demo-body{padding:14px;gap:8px}
-    .demo-body .d-msg{font-size:12.5px;padding:9px 12px}
-    .demo-body .d-msg.me{max-width:88%}
-    .demo-audit{margin:12px 14px 14px;font-size:11px;padding:10px 12px}
+    /* 人物海报舞台:收窄、气泡贴片收字号，避免窄屏溢出 */
+    .sales-stage{max-width:320px}
+    .sp-chip.c1,.sp-chip.c2,.sp-chip.c3,.sp-chip.c5{font-size:11px;max-width:56%}
+    .sp-chip.c4{font-size:11.5px;max-width:100%}
     /* 能力清单卡 */
     .role-split p{font-size:14.5px;line-height:1.7;margin-bottom:14px}
     .cap-list .cap{padding:13px 14px;gap:11px}
@@ -159,15 +218,19 @@
         </div>
       </div>
       <div class="hero-art rv rv-d2" style="display:block">
-        <div class="demo-card">
-          <div class="demo-hd"><span class="pulse"></span><i class="fa-solid fa-scale-balanced" aria-hidden="true"></i> AI 调解员 · 邻里噪音纠纷</div>
-          <div class="demo-body">
-            <div class="d-msg">您好张大爷，您说楼上夜里施工我了解了，深夜施工确实违反《环境噪声污染防治法》第 38 条。</div>
-            <div class="d-msg">建议先尝试沟通——可以请楼栋长上门协调。如果对方不配合，我可以帮您登记诉求，由社区调解员跟进。</div>
-            <div class="d-msg me">那就帮我登记吧</div>
-            <div class="d-msg">好的张大爷，工单已登记（编号 #20264829），社区调解员 24 小时内联系您。</div>
+        <div class="sales-stage">
+          <div class="sales-poster">
+            <span class="sp-word" aria-hidden="true">SOCIAL</span>
+            <span class="sp-glow" aria-hidden="true"></span>
+            <img class="sp-pic" src="../careers/emp-v2-social.png" alt="AI 社工 / 调解员 · 数字员工形象" />
+            <span class="sp-badge"><span class="pulse"></span>AI 调解员 · 邻里噪音纠纷</span>
+            <span class="sp-sheen" aria-hidden="true"></span>
           </div>
-          <div class="demo-audit"><i class="fa-solid fa-circle-check" aria-hidden="true"></i><span>引用法规来源：环境噪声污染防治法第 38 条 · 已自动归档可追溯</span></div>
+          <div class="sp-chip c1"><span>您好张大爷，您说楼上夜里施工我了解了，深夜施工确实违反《环境噪声污染防治法》第 38 条。</span></div>
+          <div class="sp-chip c2"><span>建议先尝试沟通——可以请楼栋长上门协调。如果对方不配合，我可以帮您登记诉求，由社区调解员跟进。</span></div>
+          <div class="sp-chip c3"><span>那就帮我登记吧</span></div>
+          <div class="sp-chip c5"><span>好的张大爷，工单已登记（编号 #20264829），社区调解员 24 小时内联系您。</span></div>
+          <div class="sp-chip c4"><i class="fa-solid fa-circle-check" aria-hidden="true"></i><span>引用法规来源：环境噪声污染防治法第 38 条 · 已自动归档可追溯</span></div>
         </div>
       </div>
     </div>
@@ -235,33 +298,33 @@ var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isInter
         <p class="sub">每一项都来自头部客户的真实部署。</p>
       </div>
       <div class="fde-grid">
-        <div class="fde-card rv">
-          <div class="fde-num">01</div>
+        <div class="fde-card k1 rv">
+          <div class="fde-hd"><span class="fde-ic"><i class="fa-solid fa-book-bookmark"></i></span><div class="fde-num">01</div></div>
           <h4>法规库引用</h4>
           <p>法律咨询全部基于官方法规库，所引条款均可追溯，而非大模型自由生成。</p>
         </div>
-        <div class="fde-card rv rv-d1">
-          <div class="fde-num">02</div>
+        <div class="fde-card k2 rv rv-d1">
+          <div class="fde-hd"><span class="fde-ic"><i class="fa-solid fa-sitemap"></i></span><div class="fde-num">02</div></div>
           <h4>矛盾分类</h4>
           <p>邻里纠纷、消费维权、劳动争议——按场景分类走对应调解流程。</p>
         </div>
-        <div class="fde-card rv rv-d2">
-          <div class="fde-num">03</div>
+        <div class="fde-card k3 rv rv-d2">
+          <div class="fde-hd"><span class="fde-ic"><i class="fa-solid fa-hand-holding-heart"></i></span><div class="fde-num">03</div></div>
           <h4>情绪安抚</h4>
           <p>识别投诉者的情绪状态，先安抚再处理，避免一开口就激化矛盾。</p>
         </div>
-        <div class="fde-card rv rv-d3">
-          <div class="fde-num">04</div>
+        <div class="fde-card k4 rv rv-d3">
+          <div class="fde-hd"><span class="fde-ic"><i class="fa-solid fa-ticket"></i></span><div class="fde-num">04</div></div>
           <h4>工单流转</h4>
           <p>超出 AI 能力的问题自动登记工单，转给真人调解员跟进。</p>
         </div>
-        <div class="fde-card rv">
-          <div class="fde-num">05</div>
+        <div class="fde-card k5 rv">
+          <div class="fde-hd"><span class="fde-ic"><i class="fa-solid fa-file-shield"></i></span><div class="fde-num">05</div></div>
           <h4>全程可审计</h4>
           <p>每一次决策、每一次引用都有日志记录，满足合规审查的取证要求。</p>
         </div>
-        <div class="fde-card rv rv-d1">
-          <div class="fde-num">06</div>
+        <div class="fde-card k6 rv rv-d1">
+          <div class="fde-hd"><span class="fde-ic"><i class="fa-solid fa-network-wired"></i></span><div class="fde-num">06</div></div>
           <h4>多端接入</h4>
           <p>12345 热线、政务 App、公众号、微信客服——一套 Agent 多端服务。</p>
         </div>
