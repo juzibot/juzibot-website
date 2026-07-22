@@ -58,6 +58,11 @@
     transition:background .2s var(--ease),border-color .2s var(--ease)}
   .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
   .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
 </style>
 </head>
 <body>
@@ -73,10 +78,62 @@
     <h1 class="dp-title">Claude Code现在使用Rust编写的Bun</h1>
     <p class="dp-orig">原题：Claude Code uses Bun written in Rust now</p>
     <p class="dp-by">来源：Simon Willison · 大咖观点</p>
-    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为内容导读，只收录简报与摘录，版权归原作者（Simon Willison · 大咖观点）所有 · <a href="https://simonwillison.net/2026/Jul/19/claude-code-in-bun-in-rust/#atom-everything" target="_blank" rel="noopener">全文请读原文</a></span></div>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（Simon Willison · 大咖观点）所有 · <a href="https://simonwillison.net/2026/Jul/19/claude-code-in-bun-in-rust/#atom-everything" target="_blank" rel="noopener">阅读原文</a></span></div>
     
     <div class="dp-brief"><b>简报</b>Claude Code从v2.1.181版本开始使用Rust移植的Bun，启动速度提高了10%。</div>
-    <blockquote class="dp-excerpt">In Rewriting Bun in Rust Jarred Sumner made the following claim: Claude Code v2.1.181 (released June 17th) and later use the Rust port of Bun. Startup got 10% faster on …</blockquote>
+    <div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang"><i class="fa-solid fa-language"></i><span>翻译为中文</span></button><span class="dp-lang-note">中文由 AI 翻译，仅供参考</span></div><article class="dp-body" id="dpBodyOrig"><p>In <a href="https://bun.com/blog/bun-in-rust" target="_blank" rel="noopener nofollow">Rewriting Bun in Rust</a> Jarred Sumner made the following claim:</p>
+<blockquote>
+<p>Claude Code v2.1.181 (released June 17th) and later use the <a class="cpt" href="../c/rust.html" data-def="Rust是一种系统编程语言，强调安全性和性能">Rust</a> port of <a class="cpt" href="../c/bun.html" data-def="Bun是一个用Rust编写的高性能JavaScript运行时，专注于速度和效率">Bun</a>. Startup got 10% faster on Linux but otherwise, barely anyone noticed. Boring is good.</p>
+</blockquote>
+<p>I decided to have a poke at my own Claude Code installation to see if I could find evidence that it was using Bun written in Rust.</p>
+<p>I found these two commands convincing:</p>
+<pre><code>strings ~/.local/bin/claude | grep -m1 &#x27;Bun v1&#x27;
+</code></pre>
+<p>For me this outputs <code>Bun v1.4.0 (macOS arm64)</code>. The most recent release of <a href="https://github.com/oven-sh/bun/releases" target="_blank" rel="noopener nofollow">Bun on GitHub</a> is currently <a href="https://github.com/oven-sh/bun/releases/tag/bun-v1.3.14" target="_blank" rel="noopener nofollow">v1.3.14</a> from May 12th, so that v1.4.0 version number in Claude supports them shipping a preview of a not-yet-released Bun version.</p>
+<p>(<strong>Update</strong>: The Rust version <em>has</em> been released as <a href="https://bun.com/docs/installation#canary-builds" target="_blank" rel="noopener nofollow">Bun canary</a> - running <code>bun upgrade --canary</code> will install <a href="https://github.com/oven-sh/bun/releases/tag/canary" target="_blank" rel="noopener nofollow">this release</a>.)</p>
+<pre><code>strings ~/.local/bin/claude | grep -Eo &#x27;src/[[:alnum:]_./-]+\.rs&#x27;
+</code></pre>
+<p>This outputs a list of <a href="https://gist.github.com/simonw/c92fb0f67b114ac26e3b95a09ddccfdc" target="_blank" rel="noopener nofollow">563 filenames</a>, starting with these:</p>
+<pre><code>src/runtime/bake/dev_server/mod.rs
+src/runtime/bake/production.rs
+src/bundler/bundle_v2.rs
+</code></pre>
+<p>It looks like Bun in Rust is indeed being run in production across millions of different devices. Like Jarred said, &quot;Boring is good&quot;.</p>
+<p><strong>Update</strong>: Here&#x27;s a neat trick <a href="https://twitter.com/ajanraj25/status/2078825794701242697" target="_blank" rel="noopener nofollow">from Ajan Raj</a>:</p>
+<pre><code>cat &gt; /tmp/bun-version.ts &lt;&lt;&#x27;EOF&#x27;
+console.log(&quot;embedded bun:&quot;, Bun.version);
+process.exit(0);
+EOF
+BUN_OPTIONS=&quot;--preload=/tmp/bun-version.ts&quot; claude --version
+</code></pre>
+<p>This outputs <code>1.4.0</code> for me.</p>
+<p>Here&#x27;s <a href="https://github.com/oven-sh/bun/commit/b18bf6d1d0a92238f240bfd125f0e3b3461b9243#diff-7ae45ad102eab3b6d7e7896acd08c427a9b25b346470d7bc6507b6481575d519" target="_blank" rel="noopener nofollow">the commit from May 17th</a> that updated the version in <code>package.json</code> to 1.4.0. That version hasn&#x27;t been changed since then, but also hasn&#x27;t yet made it into a tagged release outside of <code>canary</code>.</p></article><article class="dp-body" id="dpBodyZh" hidden><p>在<a href="https://bun.com/blog/bun-in-rust" target="_blank" rel="noopener nofollow">用 Rust 重写 Bun</a> 这篇文章中，Jarred Sumner 提出了以下说法：</p>
+<blockquote>
+<p>Claude Code v2.1.181（6 月 17 日发布）及之后的版本使用了 <a class="cpt" href="../c/bun.html" data-def="Bun是一个用Rust编写的高性能JavaScript运行时，专注于速度和效率">Bun</a> 的 <a class="cpt" href="../c/rust.html" data-def="Rust是一种系统编程语言，强调安全性和性能">Rust</a> 移植版。在 Linux 上启动速度提升了 10%，但除此之外，几乎没人注意到变化。平淡无奇才是好事。</p>
+</blockquote>
+<p>我决定检查一下自己安装的 Claude Code，看看能否找到它正在使用 Rust 版 Bun 的证据。</p>
+<p>我发现以下两条命令很有说服力：</p>
+<pre><code>strings ~/.local/bin/claude | grep -m1 &#x27;Bun v1&#x27;
+</code></pre>
+<p>对我来说，这输出了 <code>Bun v1.4.0 (macOS arm64)</code>。目前 <a href="https://github.com/oven-sh/bun/releases" target="_blank" rel="noopener nofollow">GitHub 上 Bun</a> 的最新版本是 5 月 12 日发布的 <a href="https://github.com/oven-sh/bun/releases/tag/bun-v1.3.14" target="_blank" rel="noopener nofollow">v1.3.14</a>，因此 Claude 中出现的 v1.4.0 版本号支持了他们可能集成了一个尚未正式发布的 Bun 预览版的说法。</p>
+<p>（<strong>更新</strong>：Rust 版本<em>已经</em>作为 <a href="https://bun.com/docs/installation#canary-builds" target="_blank" rel="noopener nofollow">Bun canary</a> 发布了 - 运行 <code>bun upgrade --canary</code> 将会安装<a href="https://github.com/oven-sh/bun/releases/tag/canary" target="_blank" rel="noopener nofollow">这个版本</a>。）</p>
+<pre><code>strings ~/.local/bin/claude | grep -Eo &#x27;src/[[:alnum:]_./-]+\.rs&#x27;
+</code></pre>
+<p>这输出了一个包含 <a href="https://gist.github.com/simonw/c92fb0f67b114ac26e3b95a09ddccfdc" target="_blank" rel="noopener nofollow">563 个文件名</a>的列表，开头是这些：</p>
+<pre><code>src/runtime/bake/dev_server/mod.rs
+src/runtime/bake/production.rs
+src/bundler/bundle_v2.rs
+</code></pre>
+<p>看起来 Rust 版的 Bun 确实正在数百万台不同的设备上投入生产使用。正如 Jarred 所说，“平淡无奇才是好事”。</p>
+<p><strong>更新</strong>：这里有一个来自 <a href="https://twitter.com/ajanraj25/status/2078825794701242697" target="_blank" rel="noopener nofollow">Ajan Raj</a> 的巧妙技巧：</p>
+<pre><code>cat &gt; /tmp/bun-version.ts &lt;&lt;&#x27;EOF&#x27;
+console.log(&quot;embedded bun:&quot;, Bun.version);
+process.exit(0);
+EOF
+BUN_OPTIONS=&quot;--preload=/tmp/bun-version.ts&quot; claude --version
+</code></pre>
+<p>对我来说，这输出了 <code>1.4.0</code>。</p>
+<p>这是<a href="https://github.com/oven-sh/bun/commit/b18bf6d1d0a92238f240bfd125f0e3b3461b9243#diff-7ae45ad102eab3b6d7e7896acd08c427a9b25b346470d7bc6507b6481575d519" target="_blank" rel="noopener nofollow">5月17日的提交</a>，它将 <code>package.json</code> 中的版本更新为 1.4.0。该版本此后一直未变，但也尚未作为正式标签发布，目前仅存在于 <code>canary</code> 版本中。</p></article>
     <div class="dp-actions">
       <a class="dp-btn pri" href="https://simonwillison.net/2026/Jul/19/claude-code-in-bun-in-rust/#atom-everything" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
       
@@ -89,5 +146,11 @@
 <div id="site-footer"></div>
 <script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "Claude Code现在使用Rust编写的Bun"};</script>
 <script src="../../assets/site.js"></script>
+<script>
+(function(){var b=document.getElementById('dpLang');if(!b)return;
+var en=document.getElementById('dpBodyOrig'),zh=document.getElementById('dpBodyZh');
+b.addEventListener('click',function(){var on=zh.hidden;zh.hidden=!on;en.hidden=on;
+b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';});})();
+</script>
 </body>
 </html>

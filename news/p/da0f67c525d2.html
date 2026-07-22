@@ -58,6 +58,11 @@
     transition:background .2s var(--ease),border-color .2s var(--ease)}
   .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
   .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
 </style>
 </head>
 <body>
@@ -73,10 +78,31 @@
     <h1 class="dp-title">AI语音进入“表演时代”：阿里Qwen-Audio-3.0-TTS登顶全球权威榜单</h1>
     
     <p class="dp-by">来源：量子位 · 行业动态</p>
-    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为内容导读，只收录简报与摘录，版权归原作者（量子位 · 行业动态）所有 · <a href="https://www.qbitai.com/2026/07/455658.html" target="_blank" rel="noopener">全文请读原文</a></span></div>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（量子位 · 行业动态）所有 · <a href="https://www.qbitai.com/2026/07/455658.html" target="_blank" rel="noopener">阅读原文</a></span></div>
     <p class="dp-quip"><i class="fa-solid fa-quote-left"></i>语音合成的自然度提升是UX升级，但对企业应用的本质帮助有限</p>
     <div class="dp-brief"><b>简报</b>阿里Qwen-Audio-3.0-TTS模型在全球权威榜单上排名第一，具备细粒度标签和20种方言支持，推动AI语音进入表演时代。</div>
-    <blockquote class="dp-excerpt">细粒度标签+ 20 种方言</blockquote>
+    <article class="dp-body"><h1>AI语音进入“表演时代”：阿里Qwen-Audio-3.0-TTS登顶全球权威榜单</h1>
+    			   
+             <img src="http://www.qbitai.com/wp-content/themes/liangziwei/imagesnew/head.jpg" referrerpolicy="no-referrer" /><em><a href="https://www.qbitai.com/author/mengchen" target="_blank" rel="noopener nofollow">梦晨</a></em>
+                          2026-07-20
+             17:05:06
+          
+          来源：<a href="https://www.qbitai.com" target="_blank" rel="noopener nofollow">量子位</a>            
+                          
+            <p>细粒度标签+ 20 种方言</p>
+                			<p>7 月20日，阿里巴巴发布语音合成大模型Qwen-Audio-3.0-<a class="cpt" href="../c/tts-model.html" data-def="TTS模型是将文本转换为自然语音的AI技术，能模拟人类语调、情感和方言，使机器语音更生动">TTS</a>，在细粒度标签控制、freestyle指令遵循、多语种与方言覆盖以及复杂声学鲁棒性等方面系统性提升，包含面向实时交互的Flash版本（首包延时300ms级别）和面向高质量生成的Plus版本，让合成语音从“能说话”走向“会表达”。目前，在全球第三方权威榜单Artificial Analysis，Qwen-Audio-3.0-TTS-Plus斩获冠军，其预览版Fun-Realtime-TTS也曾在一个月前登顶该榜单。</p>
+<img src="https://i.qbitai.com/wp-content/uploads/2026/07/8d4231eea57effc089cbedd1fbd9d3b3.png" referrerpolicy="no-referrer" />
+
+<p>Qwen-Audio-3.0-TTS的上一代版本已支持freestyle（自由风格模式），可在提示词中加入“资深客服”、“足球解说员”等角色设定，以控制情绪、场景和语速等。新模型则在细粒度上进一步跃迁，通过结构化标签，用户可直接在文本里嵌入 [gasp]（抽一口气）、[giggles]（轻笑）、[angry]（愤怒）这类标记，把控制精度从整段情绪细化到“哪个字后面该倒吸一口气”，适用于需要精确控制细节的叙事、游戏、配音等场景。</p>
+<p>面向全球多语种场景，Qwen-Audio-3.0-TTS 进行了专项优化，覆盖中、英、日、韩、德等16 种语言，新增阿拉伯语、越南语、马来语以及菲律宾语。根据CV3-Eval的多语种基准测试，在16 种语言的“词/字错误率”评测中，Qwen-Audio-3.0-TTS家族在 10 种语言中获得 SOTA，韩语和马来语的领先幅度最大；在 16 种语言的“说话人相似度”评测中，Qwen-Audio-3.0-TTS-Plus 全胜，包揽全部最优，Flash版本包揽了15项第二，其中马来语、西班牙语和阿拉伯语领先幅度最为明显。</p>
+<img src="https://i.qbitai.com/wp-content/uploads/2026/07/ad970c6ed5edc48848aa699b3b8dc996.jpeg" referrerpolicy="no-referrer" />
+
+<p>模型规模越大、训练数据越杂，方言的发音会不自觉地滑向普通话腔。针对这个痛点，研究团队专门设计了方言强化训练，让模型在韵律、声调与口语表达上接近母语者，覆盖广东、重庆、东北、陕西、上海、四川、云南等 20种方言。</p>
+<p>语音克隆产品往往要求原始参考音频在安静环境下录制，Qwen-Audio-3.0-TTS通过真实声学仿真训练，在克隆流程中嵌入了语音增强能力，让模型在高噪声、高混响条件下也能过滤干扰、只留音色。面向严肃创作场景，模型拥有开箱即用的精品音色库，并将音频输出从提升24kHz 到 48kHz，相当于视频配音和有声书的品质提升到录音棚、影视配音的规格，单次语音合成可长达 3 分钟。</p>
+<p>即日起，两款模型已在阿里云百炼开放调用。</p>
+                
+                
+                <em>版权所有，未经授权不得以任何形式转载及使用，违者必究。</em></article>
     <div class="dp-actions">
       <a class="dp-btn pri" href="https://www.qbitai.com/2026/07/455658.html" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
       

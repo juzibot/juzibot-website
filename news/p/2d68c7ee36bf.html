@@ -58,6 +58,11 @@
     transition:background .2s var(--ease),border-color .2s var(--ease)}
   .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
   .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
 </style>
 </head>
 <body>
@@ -73,10 +78,124 @@
     <h1 class="dp-title">不同模型厂同一家Agentic Infra，AGI时代的地基终于浮出水面</h1>
     
     <p class="dp-by">来源：量子位 · 行业动态</p>
-    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为内容导读，只收录简报与摘录，版权归原作者（量子位 · 行业动态）所有 · <a href="https://www.qbitai.com/2026/07/455805.html" target="_blank" rel="noopener">全文请读原文</a></span></div>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（量子位 · 行业动态）所有 · <a href="https://www.qbitai.com/2026/07/455805.html" target="_blank" rel="noopener">阅读原文</a></span></div>
     <p class="dp-quip"><i class="fa-solid fa-quote-left"></i>多模型支持的基础设施标准化是生态健康信号，让中腰部应用更有机会</p>
     <div class="dp-brief"><b>简报</b>不同模型厂商共同选择同一家Agentic Infra，这标志着AGI时代的基础设施逐渐成型。</div>
-    <blockquote class="dp-excerpt">大模型时代的共同选择</blockquote>
+    <article class="dp-body"><h1>不同模型厂同一家Agentic Infra，AGI时代的地基终于浮出水面</h1>
+    			   
+             <img src="http://www.qbitai.com/wp-content/themes/liangziwei/imagesnew/head.jpg" referrerpolicy="no-referrer" /><em><a href="https://www.qbitai.com/author/keleixi" target="_blank" rel="noopener nofollow">克雷西</a></em>
+                          2026-07-20
+             18:33:23
+          
+          来源：<a href="https://www.qbitai.com" target="_blank" rel="noopener nofollow">量子位</a>            
+                          
+            <p>大模型时代的共同选择</p>
+                			<h5>克雷西 发自 上海<br />
+量子位 | 公众号 QbitAI</h5>
+<p>先说一件有意思的事。</p>
+<p>就在今天的WAIC论坛上，MiniMax和阶跃星辰，同时出现在了一家AI Infra公司的论坛现场，前者参加战略合作签约，后者发布主旨演讲。</p>
+
+<img src="https://i.qbitai.com/wp-content/uploads/2026/07/95aa9f9bbee13094690610e103fb6a61.webp" alt="图片" referrerpolicy="no-referrer" />
+
+<p>苗头其实更早就出现了。4个月前的中关村论坛上，智谱张鹏和Kimi杨植麟就曾与这家公司联合创始人兼CEO同框，参与圆桌论坛，并被现场点名该公司已为Kimi、智谱提供服务。</p>
+<img src="https://i.qbitai.com/wp-content/uploads/2026/07/0b4df0f03e0aa4a049ce969fe00d1b88.webp" alt="img" referrerpolicy="no-referrer" />
+<p>四家国产头部基模公司，先后跟同一家AI Infra达成了深度合作。开句玩笑话——集齐四家，就可以召唤神龙了。</p>
+<p>这家AI Infra公司，正是<strong>无问芯穹</strong>。</p>
+<p>这个身位有点像「电池领域的宁德时代」——造车的人可以「兄弟登山，各自努力」，但电池这一层，绕不开就是绕不开。无问芯穹想做的，就是<strong>大模型时代的共同选择</strong>。</p>
+<p>问题也因此变得更有趣了：</p>
+<p>他们到底看中了这家公司什么？</p>
+<p>答案要从两头找。</p>
+<p><strong>需求端</strong>，2026年推理开始反超训练，成为AI算力消耗的主战场，推理成本两年降了280倍，企业的AI总支出却没降反升，中国日均Token调用量已经突破140万亿，一年涨了四成，需求呈指数级往上冲。</p>
+<p><strong>供给端</strong>却完全是另一副面孔。物理算力的扩产逻辑还是线性的，多修几个机房、多买几张卡，缺口却在三五年内都填不平。</p>
+<p>一边指数增长，一边线性爬坡，中间那道口子，就是无问芯穹想站进去的位置。</p>
+<p>更难的是，模型部署得好不好，外人很难判断。</p>
+<p>一个请求发下去，模型正常回复了，但输出的精度可能已经悄悄掉了三成，这种问题常规监控查不出来。</p>
+<p>等到用户在业务里察觉到不对劲，模型的招牌已经砸了。</p>
+<p>这道看不见的门槛，才会真正决定哪家供应商能留在牌桌上。</p>
+<h2>为什么国产大模型优选无问芯穹？</h2>
+<p>Token经济全面爆发以来，推理需求正在加速，算力缺口也在持续扩大。</p>
+<p>但MaaS这门生意的门槛，比外界想象的高得多。</p>
+<p>Kimi、智谱、MiniMax、阶跃星辰为什么都点了头，自然有他们自己的算盘，但本质上是同时把三件事押了上去——</p>
+<p><strong>比如：模型效果会不会打折，成本烧不烧得起，出了问题稳不稳得住。</strong></p>
+<p>先说<strong>效果</strong>。</p>
+<p>前面提到的那种隐蔽滑坡，是这个行业最让人头疼的地方。</p>
+<p>有第三方供应商部署模型后，精度比原厂掉了30%，客户自己甚至察觉不到，直到业务指标开始下滑才回头排查。</p>
+<p>无问芯穹在这件事上的做法，是定了一套准入测试标准。</p>
+<p>这套标准，会从工具调用的一致性，到推理模式的精度对齐，逐项进行核验，每一个新模型上架前都要过这道关。</p>
+<p>结果是，客户无论走无问芯穹还是原厂API，体验几乎感觉不到差别。</p>
+<p>再来是<strong>成本</strong>。</p>
+<p>无问芯穹在今年WAIC官宣了一项自研的硬技术——跨集群异构PD分离。</p>
+<img src="https://i.qbitai.com/wp-content/uploads/2026/07/62da3d4ed91df4d8e3dd248f72d96965.webp" alt="图片" referrerpolicy="no-referrer" />
+<p>大模型推理里的Prefill和Decode是两个负载完全不同的阶段，硬件需求也不一样，拆开部署能让不同类型的芯片各自干最擅长的事。</p>
+<p>但拆到不同机房后，会撞上一个新问题。</p>
+<p>PD分离之后，需要在异构芯片之间用广域网以太网传输KV Cache，面临着带宽低、延迟高的情况，等于两个接力选手各自都跑得很出色，但在交棒的时候，却掉了链子。</p>
+<p>为此，无问芯穹首先把Decode实例设计的Radix Cache技术，创新性地迁移到了这套跨集群架构里，让传输的数据量直接降低一个数量级。</p>
+<p>接着，他们又首创了PDD架构，把传统的PD链路拆成P、RelayDecode、MainDecode三级。</p>
+<img src="https://i.qbitai.com/wp-content/uploads/2026/07/41e975034d258ebe0bfb6b1e899b4565.webp" alt="图片" referrerpolicy="no-referrer" />
+<p>遇到传输延迟高的请求，RelayDecode先顶上去把Token吐给用户，用户完全感觉不到这段实际长达数十秒的延迟，等数据传完，再无缝切给MainDecode接手。</p>
+<p>实测显示，该架构在首Token延迟（TTFT）降低51.5%的同时，单Token成本可降低37.5%。</p>
+<p>最后是<strong>稳定性</strong>。</p>
+<p>集群规模一大，故障往往藏得很深。</p>
+<p>大模型推理背后要管理数十上百个集群，扛住全国每天上T规模的流量分发，服务器一旦宕机，靠人盯着屏幕根本来不及反应。</p>
+<p>无问芯穹这次发布了“智算集群运维智能体系统”，能够端到端地解决实际生产场景中的运维难题，7×24小时全天候值守，让智算集群的运维从“人找问题”转变为“问题找人”，和“问题自己解决”，实现了运维人效提升5倍以上，关键故障处理效率提升6倍。</p>
+<h2>前店后厂一中心，构建系统竞争力</h2>
+<p>三件事都解决了，仅仅只是构成了Token工厂这一层的地基。</p>
+<p>无问芯穹真正要交出去的答卷，是把算力、Token、生产力串成一个完整的系统，对应它自己提出的那个公式——</p>
+<p><strong>AI生产力 = 智能资源规模 × Token转化效率 × AI生产力转化效率。</strong></p>
+<img src="https://i.qbitai.com/wp-content/uploads/2026/07/5276c673bf5c7d5f009010208d7847de.webp" alt="图片" referrerpolicy="no-referrer" />
+<p>一中心，指的是<strong>「算力集散中心」</strong>，即<a class="cpt" href="../c/agentic-infra.html" data-def="智能体基础设施是为AI智能体提供运行环境、通信和协调的底层系统">Agentic Infra</a>自主式基础设施平台。</p>
+<p>国产芯片生态天然碎片化，无问芯穹把散落各处的算力资源统一汇聚、弹性调度、按需利用，为模型与应用层筑牢充足、稳定、可扩展的算力底座。核心目标非常明确：实现智能资源规模最大化。</p>
+<p>这个集散中心已部署触达<strong>37000P算力</strong>，覆盖接入<strong>16种主流芯片</strong>。</p>
+
+
+<img src="https://i.qbitai.com/wp-content/uploads/2026/07/927de5eb3020b44818a6474539e26f8a.webp" alt="图片" referrerpolicy="no-referrer" />
+
+
+<p>跨集群强化学习的挑战，同样是在这一层被啃下来的。无问芯穹认为，在Post-training的Scaling Law持续发展的当下，强化学习成为解锁智能的关键。</p>
+<p>其算力需求的硬件种类更加复杂，规模量级也更加庞大，基于异构和超大算力规模的双重刚需，跨集群强化学习因此成为智能规模化及持续进化的新锚点，这也是无问芯穹Agentic Infra自主式基础设施平台重点布局与攻克的核心场景。</p>
+<p>无问芯穹把网络、平台、框架三层的优化贯穿到底，成功实现了跨域强化学习训练连续一周0中断稳定运行，让大规模跨域强化学习不仅可以“跑得通”，还能“跑得快、跑得稳”。</p>
+
+
+<img src="https://i.qbitai.com/wp-content/uploads/2026/07/7854d9906881fef5b90897135beb3561.webp" alt="图片" referrerpolicy="no-referrer" />
+
+
+<p>未来，无问芯穹还将针对并行策略、通信融合、智能算子、极致容错等核心技术持续深耕，将跨域计算资源的支撑规模，持续拓展至十万卡级以上。</p>
+<p>后厂，也就是<strong>「Token工厂」</strong>，即Agentic MaaS大模型服务平台。</p>
+<p>这是前面讲的效果、成本、稳定性三重优势真正兑现的地方，核心思路是“在规模之上向效率要产能”，也是一整套从网关、路由到底层推理实例的完整服务技术栈，“层层可优化、处处有增量”。</p>
+<p>在这个「工厂」里，除了上文提到的新技术“跨集群异构PD分离架构”，无问芯穹还和多家头部大模型公司深度合作，在真实业务场景里持续打磨推理效率和服务稳定性，业务规模又反过来推动技术迭代得更快。</p>
+<img src="https://i.qbitai.com/wp-content/uploads/2026/07/dea1fb1d6cbd53b245901072da12b15b.webp" alt="图片" referrerpolicy="no-referrer" />
+<p>公司官宣：截至7月，无问芯穹Agentic MaaS平台的日均Token调用量，较去年12月涨了40倍。</p>
+<p>它还与上海移动联合打造了“天问”模型服务门户，联合观猹做了一个面向开发者的「TokenDance」，对标OpenRouter。</p>
+<p>前店，是把攒下的能力覆盖千行百业的<strong>「AI生产力商店」</strong>，即Agentic Infra行业解决方案。</p>
+<p>这套解决方案已覆盖文娱游戏、医疗健康、法律终端、能源电力等多个行业领域，把技术势能全面转化为各行业能用、好用、可复用的落地价值。</p>
+<p>比如：和VAST做了3D游戏解决方案，帮上海瑞金医院探索医疗大模型的落地场景，给几家律所做了AI合伙人产品，还在和南方电网琢磨智算中心的能耗预测。</p>
+<p>在支撑千行百业智能升级的另一面，无问芯穹也持续将智能体的能力应用到AI Infra本身。</p>
+<img src="https://i.qbitai.com/wp-content/uploads/2026/07/47e86807dc1768193bae8695f9ae0ee3.webp" alt="图片" referrerpolicy="no-referrer" />
+<p>公司打造了一套<strong>基础设施智能体蜂群</strong>，目前已包含——</p>
+<ul>
+<li>
+面向用户的<strong>平台管家智能体系统</strong>：可以独立解决80%日常问题，剩下20%深度问题再转交对应垂类Agent；
+</li>
+<li>
+面向集群的<strong>运维智能体系统</strong>：让智算集群的运维从“人找问题”转变为“问题找人”，和“问题自己解决”。可实现运维人效提升5倍以上，关键故障处理效率提升6倍；
+</li>
+<li>
+面向芯片的<strong>算子生成智能体系统</strong>：可在真实编译试错与知识沉淀中持续自迭代，稳定交付可直接落地的高质量工业级算子。在GLM 5.2模型的实测中，对比行业基线该系统在NVIDIA旗舰卡中实现了端到端7.3%的性能提升，在AMD旗舰卡中，更带来39%的整体性能跃升。
+</li>
+</ul>
+<p>三块拼在一起，前店在各行业里攒下的经验，会反过来优化后厂的推理策略和一中心的调度，三者互相反哺。</p>
+<h2>Token只是入口</h2>
+<p>如果只把无问芯穹理解成一家卖Token的公司，会漏掉它完整的商业模式。</p>
+<p>「Token工厂」只是入口，它真正在铺的，是<strong>面向Agent时代推出的「前店后厂一中心」的完整Agentic Infra战略布局</strong>。</p>
+<p>这些方向拼在一起，才是它想讲的完整故事。</p>
+<p>这套故事有没有说服力，上文提到的深度合作方是最直接的佐证。</p>
+<p>把目光放到海外，无问芯穹对标的是Baseten、Together AI、Fireworks AI，估值都在130亿到150亿美元区间。</p>
+<p>但这三家的底层都建在英伟达单一生态之上，而无问芯穹面对的是一个远比海外碎片得多的国产芯片生态，也因此把多元异构和更完整的架构布局，做成了自己的护城河。</p>
+<p>回到开头那个问题——这几家头部模型厂，为什么都在Infra这件事上点了头——答案可能并没有那么复杂。</p>
+<p>懂算力、懂模型结构、懂训推优化、懂应用场景，这四件事同时做到，就是这条赛道真正稀缺的能力。</p>
+                
+                
+                <em>版权所有，未经授权不得以任何形式转载及使用，违者必究。</em></article>
     <div class="dp-actions">
       <a class="dp-btn pri" href="https://www.qbitai.com/2026/07/455805.html" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
       

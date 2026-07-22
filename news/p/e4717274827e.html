@@ -58,6 +58,11 @@
     transition:background .2s var(--ease),border-color .2s var(--ease)}
   .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
   .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
 </style>
 </head>
 <body>
@@ -73,10 +78,33 @@
     <h1 class="dp-title">可验证性</h1>
     <p class="dp-orig">原题：Verifiability</p>
     <p class="dp-by">来源：Karpathy · 大咖观点</p>
-    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为内容导读，只收录简报与摘录，版权归原作者（Karpathy · 大咖观点）所有 · <a href="https://karpathy.bearblog.dev/verifiability/" target="_blank" rel="noopener">全文请读原文</a></span></div>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（Karpathy · 大咖观点）所有 · <a href="https://karpathy.bearblog.dev/verifiability/" target="_blank" rel="noopener">阅读原文</a></span></div>
     
     <div class="dp-brief"><b>简报</b>内容讨论可验证性对大语言模型（LLM）锯齿状前沿的影响，分析了在LLM发展中可验证性如何影响模型的可靠性和实际应用效果。</div>
-    <blockquote class="dp-excerpt">The impact of verifiability on the jagged frontier of LLMs</blockquote>
+    <article class="dp-body"><h1>Verifiability</h1>
+
+        <p>
+            <i>
+                
+    17 Nov, 2025
+
+            </i>
+        </p>
+    
+
+    <p>AI has been compared to various historical precedents: electricity, industrial revolution, etc., I think the strongest analogy is that of AI as a new computing paradigm because both are fundamentally about the automation of digital information processing.</p>
+<p>If you were to forecast the impact of computing on the job market in ~1980s, the most predictive feature of a task/job you&#x27;d look at is <strong>specifiability</strong>, i.e. are you just mechanically transforming information according to rote, easy to specify algorithm (examples being typing, bookkeeping, human calculators, etc.)? Back then, this was the class of programs that the computing capability of that era allowed us to write (by hand, manually). I call hand-written programs &quot;Software 1.0&quot;.</p>
+<p>With AI now, we are able to write new programs that we could never hope to write by hand before. We do it by specifying objectives (e.g. classification accuracy, reward functions), and we search the program space via gradient descent to find neural networks that work well against that objective. This is my <a href="https://karpathy.medium.com/software-2-0-a64152b37c35" target="_blank" rel="noopener nofollow">Software 2.0 blog post</a> from a while ago. In this new programming paradigm then, the new most predictive feature to look at is <strong><a class="cpt" href="../c/verifiability.html" data-def="可验证性指AI模型输出结果能够被客观检验和确认的程度">verifiability</a></strong>. If a task/job is verifiable, then it is optimizable directly or via reinforcement learning, and a neural net can be trained to work extremely well. It&#x27;s about to what extent an AI can &quot;practice&quot; something. The environment has to be:</p>
+<ul>
+<li>resettable (you can start a new attempt),</li>
+<li>efficient (a lot attempts can be made) and</li>
+<li>rewardable (there is some automated process to reward any specific attempt that was made).</li>
+</ul>
+<p>The more a task/job is verifiable, the more amenable it is to automation in the new programming paradigm. If it is not verifiable, it has to fall out from neural net magic of generalization fingers crossed, or via weaker means like imitation. This is what&#x27;s driving the &quot;jagged&quot; frontier of progress in LLMs. Tasks that are verifiable progress rapidly, including possibly beyond the ability of top experts (e.g. math, code, amount of time spent watching videos, anything that looks like puzzles with correct answers), while many others lag by comparison (creative, strategic, tasks that combine real-world knowledge, state, context and common sense).</p>
+<ul>
+<li>Software 1.0 easily automates what you can specify.</li>
+<li>Software 2.0 easily automates what you can verify.</li>
+</ul></article>
     <div class="dp-actions">
       <a class="dp-btn pri" href="https://karpathy.bearblog.dev/verifiability/" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
       

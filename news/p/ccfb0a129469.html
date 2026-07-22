@@ -58,6 +58,11 @@
     transition:background .2s var(--ease),border-color .2s var(--ease)}
   .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
   .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
 </style>
 </head>
 <body>
@@ -73,10 +78,208 @@
     <h1 class="dp-title">SQLite查询解释器</h1>
     <p class="dp-orig">原题：SQLite Query Explainer</p>
     <p class="dp-by">来源：Simon Willison · 大咖观点</p>
-    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为内容导读，只收录简报与摘录，版权归原作者（Simon Willison · 大咖观点）所有 · <a href="https://simonwillison.net/2026/Jul/18/sqlite-query-explainer/#atom-everything" target="_blank" rel="noopener">全文请读原文</a></span></div>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（Simon Willison · 大咖观点）所有 · <a href="https://simonwillison.net/2026/Jul/18/sqlite-query-explainer/#atom-everything" target="_blank" rel="noopener">阅读原文</a></span></div>
     
     <div class="dp-brief"><b>简报</b>介绍SQLite查询解释器工具，灵感来自Julia Evans学习SQLite查询计划的经历。</div>
-    <blockquote class="dp-excerpt">Tool: SQLite Query Explainer Julia Evan&#x27;s, in Learning a few things about running SQLite : Maybe one day I’ll learn to read a query plan. Big same.... which inspired me …</blockquote>
+    <div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang"><i class="fa-solid fa-language"></i><span>翻译为中文</span></button><span class="dp-lang-note">中文由 AI 翻译，仅供参考</span></div><article class="dp-body" id="dpBodyOrig"><p>18th July 2026</p>
+
+
+
+
+
+  
+    
+      <a href="https://simonwillison.net/elsewhere/tool/" target="_blank" rel="noopener nofollow">Tool</a>
+    
+    <a href="https://tools.simonwillison.net/sqlite-query-explainer" target="_blank" rel="noopener nofollow">SQLite Query Explainer</a>
+    — Run SQL queries against a SQLite database in your browser and see exactly how SQLite executes them: the tool runs your query, then annotates every line of both `EXPLAIN QUERY PLAN` and the low-level `EXPLAIN` bytecode output with plain-English descriptions of what the query planner and virtual machine are doing.
+  
+<p>Julia Evan&#x27;s, in <a href="https://jvns.ca/blog/2026/07/17/learning-about-running-sqlite/" target="_blank" rel="noopener nofollow">Learning a few things about running SQLite</a>:</p>
+<blockquote>
+<p>Maybe one day I’ll learn to read a query plan.</p>
+</blockquote>
+<p>Big same.... which inspired me to <a href="https://github.com/simonw/tools/pull/299#issue-4919268017" target="_blank" rel="noopener nofollow">have Fable build</a> this interactive explain tool, which runs SQLite in Python in Pyodide in Web Assembly in the browser and adds a layer of explanation to the results of both EXPLAIN and EXPLAIN QUERY PLAN.</p>
+<p>Approach with caution, since I don&#x27;t know enough about SQLite query plans to verify the results myself, but it seems cromulent enough to me.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2>Recent articles</h2>
+<ul>
+  
+    <li><a href="https://simonwillison.net/2026/Jul/21/cat-and-thariq/" target="_blank" rel="noopener nofollow">A Fireside Chat with Cat and Thariq from the Claude Code team</a> - 21st July 2026</li>
+  
+    <li><a href="https://simonwillison.net/2026/Jul/16/kimi-k3/" target="_blank" rel="noopener nofollow">Kimi K3, and what we can still learn from the pelican benchmark</a> - 16th July 2026</li>
+  
+    <li><a href="https://simonwillison.net/2026/Jul/9/gpt-5-6/" target="_blank" rel="noopener nofollow">The new GPT-5.6 family: Luna, Terra, Sol</a> - 9th July 2026</li>
+  
+</ul>
+
+
+
+
+
+
+ 
+
+
+
+
+
+<p>This is a <strong>beat</strong> by Simon Willison, posted on <a href="https://simonwillison.net/2026/Jul/18/" target="_blank" rel="noopener nofollow">18th July 2026</a>.</p>
+
+
+    
+        <a href="https://simonwillison.net/tags/sql/" target="_blank" rel="noopener nofollow">
+            sql
+            115
+        </a>
+    
+        <a href="https://simonwillison.net/tags/sqlite/" target="_blank" rel="noopener nofollow">
+            sqlite
+            481
+        </a>
+    
+        <a href="https://simonwillison.net/tags/tools/" target="_blank" rel="noopener nofollow">
+            tools
+            72
+        </a>
+    
+        <a href="https://simonwillison.net/tags/julia-evans/" target="_blank" rel="noopener nofollow">
+            julia-evans
+            30
+        </a>
+    
+        <a href="https://simonwillison.net/tags/pyodide/" target="_blank" rel="noopener nofollow">
+            pyodide
+            31
+        </a>
+    
+        <a href="https://simonwillison.net/tags/claude-mythos-fable/" target="_blank" rel="noopener nofollow">
+            claude-mythos-fable
+            30
+        </a>
+    
+
+
+
+
+
+
+  <h3>
+    Monthly briefing
+  </h3>
+  <p>
+    Sponsor me for <strong>$10/month</strong> and get a curated email digest of the month&#x27;s most important LLM developments.
+  </p>
+  <p>
+    Pay me to send you less!
+  </p>
+  <a href="https://github.com/sponsors/simonw/" target="_blank" rel="noopener nofollow">
+    Sponsor &amp; subscribe
+  </a></article><article class="dp-body" id="dpBodyZh" hidden><p>2026年7月18日</p>
+
+
+
+
+
+  
+    
+      <a href="https://simonwillison.net/elsewhere/tool/" target="_blank" rel="noopener nofollow">工具</a>
+    
+    <a href="https://tools.simonwillison.net/sqlite-query-explainer" target="_blank" rel="noopener nofollow">SQLite 查询解释器</a>
+    — 在浏览器中对 SQLite 数据库运行 SQL 查询，并清晰查看 SQLite 的具体执行过程：该工具运行你的查询，然后为 `EXPLAIN QUERY PLAN` 和底层 `EXPLAIN` 字节码输出的每一行添加通俗易懂的说明，解释查询规划器和虚拟机正在执行的操作。
+  
+<p>Julia Evan&#x27;s 在 <a href="https://jvns.ca/blog/2026/07/17/learning-about-running-sqlite/" target="_blank" rel="noopener nofollow">学习一些关于运行 SQLite 的知识</a> 中写道：</p>
+<blockquote>
+<p>也许有一天我能学会阅读查询计划。</p>
+</blockquote>
+<p>深有同感……这促使我 <a href="https://github.com/simonw/tools/pull/299#issue-4919268017" target="_blank" rel="noopener nofollow">让 Fable 构建了</a> 这个交互式解释工具，它通过 Pyodide 在浏览器的 Web Assembly 中运行 Python 版的 SQLite，并为 EXPLAIN 和 EXPLAIN QUERY PLAN 的结果添加了一层解释说明。</p>
+<p>使用时请保持谨慎，因为我对 SQLite 查询计划了解不够深入，无法亲自验证结果，但对我来说，它看起来已经足够可靠了。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2>近期文章</h2>
+<ul>
+  
+    <li><a href="https://simonwillison.net/2026/Jul/21/cat-and-thariq/" target="_blank" rel="noopener nofollow">与 Claude Code 团队的 Cat 和 Thariq 的炉边对话</a> - 2026年7月21日</li>
+  
+    <li><a href="https://simonwillison.net/2026/Jul/16/kimi-k3/" target="_blank" rel="noopener nofollow">Kimi K3，以及我们仍能从鹈鹕基准测试中学到什么</a> - 2026年7月16日</li>
+  
+    <li><a href="https://simonwillison.net/2026/Jul/9/gpt-5-6/" target="_blank" rel="noopener nofollow">新 GPT-5.6 系列：Luna, Terra, Sol</a> - 2026年7月9日</li>
+  
+</ul>
+<p>这是 Simon Willison 的一篇博文，发布于 <a href="https://simonwillison.net/2026/Jul/18/" target="_blank" rel="noopener nofollow">2026年7月18日</a>。</p>
+
+
+    
+        <a href="https://simonwillison.net/tags/sql/" target="_blank" rel="noopener nofollow">
+            sql
+            115 篇
+        </a>
+    
+        <a href="https://simonwillison.net/tags/sqlite/" target="_blank" rel="noopener nofollow">
+            sqlite
+            481 篇
+        </a>
+    
+        <a href="https://simonwillison.net/tags/tools/" target="_blank" rel="noopener nofollow">
+            tools
+            72 篇
+        </a>
+    
+        <a href="https://simonwillison.net/tags/julia-evans/" target="_blank" rel="noopener nofollow">
+            julia-evans
+            30 篇
+        </a>
+    
+        <a href="https://simonwillison.net/tags/pyodide/" target="_blank" rel="noopener nofollow">
+            pyodide
+            31 篇
+        </a>
+    
+        <a href="https://simonwillison.net/tags/claude-mythos-fable/" target="_blank" rel="noopener nofollow">
+            claude-mythos-fable
+            30 篇
+        </a>
+    
+
+
+
+
+
+
+  <h3>
+    每月简报
+  </h3>
+  <p>
+    以每月 <strong>10 美元</strong> 赞助我，即可获得一份精选的电子邮件摘要，内容涵盖当月最重要的 LLM 进展。
+  </p>
+  <p>
+    付钱让我少给你发点！
+  </p>
+  <a href="https://github.com/sponsors/simonw/" target="_blank" rel="noopener nofollow">
+    赞助并订阅
+  </a></article>
     <div class="dp-actions">
       <a class="dp-btn pri" href="https://simonwillison.net/2026/Jul/18/sqlite-query-explainer/#atom-everything" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
       
@@ -89,5 +292,11 @@
 <div id="site-footer"></div>
 <script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "SQLite查询解释器"};</script>
 <script src="../../assets/site.js"></script>
+<script>
+(function(){var b=document.getElementById('dpLang');if(!b)return;
+var en=document.getElementById('dpBodyOrig'),zh=document.getElementById('dpBodyZh');
+b.addEventListener('click',function(){var on=zh.hidden;zh.hidden=!on;en.hidden=on;
+b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';});})();
+</script>
 </body>
 </html>

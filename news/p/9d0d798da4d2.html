@@ -58,6 +58,11 @@
     transition:background .2s var(--ease),border-color .2s var(--ease)}
   .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
   .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
 </style>
 </head>
 <body>
@@ -73,10 +78,49 @@
     <h1 class="dp-title">North Mini Code 和代理编码基准</h1>
     <p class="dp-orig">原题：North Mini Code and Agentic Coding Benchmarks</p>
     <p class="dp-by">来源：Sebastian Raschka · 大咖观点</p>
-    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为内容导读，只收录简报与摘录，版权归原作者（Sebastian Raschka · 大咖观点）所有 · <a href="https://sebastianraschka.com/blog/2026/north-mini-code-agentic-coding.html" target="_blank" rel="noopener">全文请读原文</a></span></div>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（Sebastian Raschka · 大咖观点）所有 · <a href="https://sebastianraschka.com/blog/2026/north-mini-code-agentic-coding.html" target="_blank" rel="noopener">阅读原文</a></span></div>
     
     <div class="dp-brief"><b>简报</b>North Mini Code 是 Cohere 推出的开放权重 MoE 模型，总参数 30B，活跃参数 3B，专为代理编码任务设计，旨在提升自动化编码任务的效率。</div>
-    <blockquote class="dp-excerpt">Short note on North Mini Code, Cohere&#x27;s 30B total and 3B active open-weight MoE model for agentic coding tasks.</blockquote>
+    <div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang"><i class="fa-solid fa-language"></i><span>翻译为中文</span></button><span class="dp-lang-note">中文由 AI 翻译，仅供参考</span></div><article class="dp-body" id="dpBodyOrig"><p><a href="https://huggingface.co/CohereLabs/North-Mini-Code-1.0" target="_blank" rel="noopener nofollow">North Mini Code</a> is a new open-weight model by Cohere for agentic coding tasks.</p>
+
+<p>Based on the <a href="https://huggingface.co/blog/CohereLabs/introducing-north-mini-code" target="_blank" rel="noopener nofollow">release post</a>, it is a 30B-parameter Mixture-of-Experts model with 3B active parameters, available under Apache 2.0. Architecturally, the interesting part is the 30B-A3B tradeoff, with 128 experts, 8 active experts per token, and interleaved sliding-window and global attention.</p>
+
+<p>The important detail is the evaluation setup. The release emphasizes agentic coding, where the model has to work inside a tool loop instead of only returning a code answer for a prompt:</p>
+
+<ol>
+  <li>On <a href="https://www.tbench.ai/" target="_blank" rel="noopener nofollow">Terminal-Bench</a>, the model has to use a terminal, inspect the environment, run commands, read outputs, and continue from the observed state.</li>
+  <li>On <a href="https://www.swebench.com/" target="_blank" rel="noopener nofollow">SWE-Bench</a>, the model works on GitHub-style software issues. It has to understand the repository, find relevant files, make a patch, and pass tests.</li>
+  <li>
+<a href="https://scicode-bench.github.io/" target="_blank" rel="noopener nofollow">SciCode</a> and <a href="https://livecodebench.github.io/" target="_blank" rel="noopener nofollow">LiveCodeBench</a> are closer to traditional code-generation benchmarks. They still require reasoning, but the interaction loop is much shorter.</li>
+</ol>
+
+<p>That focus on agentic coding is probably why North Mini Code looks far ahead of Gemma 4 on the workflow-heavy rows in the table. The more traditional code-generation rows are still competitive, although not quite at Qwen3.6 level.</p>
+
+<p>As usual, I would treat these as release-time <a href="https://sebastianraschka.com/glossary/#benchmark" target="_blank" rel="noopener nofollow">benchmark</a> numbers as of June 12, 2026. For agentic coding, harness details, tool APIs, timeouts, and prompt templates can move results substantially.</p>
+
+<figure><p><a href="https://substack.com/@rasbt/note/c-275332436" target="_blank" rel="noopener nofollow"><img src="https://sebastianraschka.com/images/blog/2026/north-mini-code/hero.webp" alt="North Mini Code architecture and benchmark overview" referrerpolicy="no-referrer" /></a></p>
+<figcaption>Composite figure from the original <a href="https://substack.com/@rasbt/note/c-275332436" target="_blank" rel="noopener nofollow">Substack note</a>, summarizing the North Mini Code architecture and a release-time benchmark snapshot.</figcaption></figure>
+
+
+<p>Source: lightly edited website version of my <a href="https://substack.com/@rasbt/note/c-275332436" target="_blank" rel="noopener nofollow">Substack note</a>.</p></article><article class="dp-body" id="dpBodyZh" hidden><p><a href="https://huggingface.co/CohereLabs/North-Mini-Code-1.0" target="_blank" rel="noopener nofollow">North Mini Code</a> 是 Cohere 推出的一款面向智能体编码任务的新开源权重模型。</p>
+
+<p>根据其<a href="https://huggingface.co/blog/CohereLabs/introducing-north-mini-code" target="_blank" rel="noopener nofollow">发布文章</a>，它是一个拥有 300 亿参数、30 亿活跃参数的<a class="cpt" href="../c/moe-model.html" data-def="一种模型架构，内含多个“专家”子网络，每次推理只激活其中一部分来处理任务">混合专家模型</a>，采用 Apache 2.0 许可证。在架构上，其亮点在于 30B-A3B 的权衡设计，包含 128 个专家，每个词元激活 8 个专家，并采用了交错的滑动窗口与全局注意力机制。</p>
+
+<p>关键细节在于其评估设置。发布内容强调了智能体编码，即模型需要在工具循环中工作，而不仅仅是为提示返回代码答案：</p>
+
+<ol>
+  <li>在 <a href="https://www.tbench.ai/" target="_blank" rel="noopener nofollow">Terminal-Bench</a> 上，模型需要使用终端、检查环境、运行命令、读取输出，并根据观察到的状态继续操作。</li>
+  <li>在 <a href="https://www.swebench.com/" target="_blank" rel="noopener nofollow">SWE-Bench</a> 上，模型处理 GitHub 风格的软件问题。它需要理解代码仓库、找到相关文件、制作补丁并通过测试。</li>
+  <li><a href="https://scicode-bench.github.io/" target="_blank" rel="noopener nofollow">SciCode</a> 和 <a href="https://livecodebench.github.io/" target="_blank" rel="noopener nofollow">LiveCodeBench</a> 更接近传统的代码生成基准测试。它们仍然需要推理，但交互循环要短得多。</li>
+</ol>
+
+<p>这种对智能体编码的专注，可能解释了为何在表格中涉及复杂工作流的行上，North Mini Code 看起来远超 Gemma 4。在更传统的代码生成行上，它依然有竞争力，尽管尚未达到 Qwen3.6 的水平。</p>
+
+<p>和往常一样，我将这些视为截至 2026 年 6 月 12 日的发布时<a href="https://sebastianraschka.com/glossary/#benchmark" target="_blank" rel="noopener nofollow">基准测试</a>数据。对于智能体编码而言，测试框架细节、工具 API、超时设置和提示模板都可能显著影响结果。</p>
+
+<figure><p><a href="https://substack.com/@rasbt/note/c-275332436" target="_blank" rel="noopener nofollow"><img src="https://sebastianraschka.com/images/blog/2026/north-mini-code/hero.webp" alt="North Mini Code architecture and benchmark overview" referrerpolicy="no-referrer" /></a></p>
+<figcaption>来自原始 <a href="https://substack.com/@rasbt/note/c-275332436" target="_blank" rel="noopener nofollow">Substack 笔记</a>的合成图，总结了 North Mini Code 的架构和发布时的基准测试快照。</figcaption></figure>
+<p>来源：我的 <a href="https://substack.com/@rasbt/note/c-275332436" target="_blank" rel="noopener nofollow">Substack 笔记</a> 的网站版本（经过轻微编辑）。</p></article>
     <div class="dp-actions">
       <a class="dp-btn pri" href="https://sebastianraschka.com/blog/2026/north-mini-code-agentic-coding.html" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
       
@@ -89,5 +133,11 @@
 <div id="site-footer"></div>
 <script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "North Mini Code 和代理编码基准"};</script>
 <script src="../../assets/site.js"></script>
+<script>
+(function(){var b=document.getElementById('dpLang');if(!b)return;
+var en=document.getElementById('dpBodyOrig'),zh=document.getElementById('dpBodyZh');
+b.addEventListener('click',function(){var on=zh.hidden;zh.hidden=!on;en.hidden=on;
+b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';});})();
+</script>
 </body>
 </html>

@@ -58,6 +58,11 @@
     transition:background .2s var(--ease),border-color .2s var(--ease)}
   .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
   .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
 </style>
 </head>
 <body>
@@ -73,10 +78,28 @@
     <h1 class="dp-title">Claude 使 Fable 5 成为永久功能</h1>
     <p class="dp-orig">原题：Claude make Fable 5 permanent</p>
     <p class="dp-by">来源：Simon Willison · 大咖观点</p>
-    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为内容导读，只收录简报与摘录，版权归原作者（Simon Willison · 大咖观点）所有 · <a href="https://simonwillison.net/2026/Jul/18/claude-make-fable-5-permanent/#atom-everything" target="_blank" rel="noopener">全文请读原文</a></span></div>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（Simon Willison · 大咖观点）所有 · <a href="https://simonwillison.net/2026/Jul/18/claude-make-fable-5-permanent/#atom-everything" target="_blank" rel="noopener">阅读原文</a></span></div>
     
     <div class="dp-brief"><b>简报</b>Claude 宣布，自7月20日起，Fable 5 功能将对所有 Max 和 Team Premium 计划用户永久开放。</div>
-    <blockquote class="dp-excerpt">Claude make Fable 5 permanent An update from the @claudeai account on Twitter: Beginning July 20, Claude Fable 5 will be included in all Max and Team Premium plans, at 5…</blockquote>
+    <div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang"><i class="fa-solid fa-language"></i><span>翻译为中文</span></button><span class="dp-lang-note">中文由 AI 翻译，仅供参考</span></div><article class="dp-body" id="dpBodyOrig"><p><strong><a href="https://twitter.com/claudeai/status/2078302415804379218" target="_blank" rel="noopener nofollow">Claude make Fable 5 permanent</a></strong>. An update from the <code>@claudeai</code> account on Twitter:</p>
+<blockquote>
+<p>Beginning July 20, Claude <a class="cpt" href="../c/fable-5.html" data-def="Fable 5可能是一个领先的AI模型或评测基准，国产模型通过实测挑战其性能，体现国内AI技术的快速进步">Fable 5</a> will be included in all Max and Team Premium plans, at 50% of limits.</p>
+<p>Pro and Team Standard users will continue to have access to Fable via usage credits, and will receive a one-time $100 credit.</p>
+</blockquote>
+<p>As I was saying <a href="https://simonwillison.net/2026/Jul/12/bump/" target="_blank" rel="noopener nofollow">last week</a>, the competition from <a href="https://simonwillison.net/2026/Jul/9/gpt-5-6/" target="_blank" rel="noopener nofollow">GPT-5.6 Sol</a> (and maybe to a lesser extent <a href="https://simonwillison.net/2026/Jul/16/kimi-k3/" target="_blank" rel="noopener nofollow">Kimi 3</a>) made untenable Anthropic&#x27;s plan to remove Fable 5 from their subscription accounts and make it available exclusively through API pricing.</p>
+<p>Why pay $100 or $200/month for a subscription plan that <em>doesn&#x27;t</em> include Anthropic&#x27;s best model?</p>
+<p>Their original plan was driven by concerns over compute capacity. I wonder if they&#x27;ll have to dial back their training efforts in order to make more GPUs available to help serve the model.</p>
+<p>A lot of people were losing sleep over trying to make the most of Fable 5 before subscriber access was withdrawn. It&#x27;s nice not to have to worry about the Fablepocalypse any more.</p>
+<p><strong>Update</strong>: Important to note that users on the $20/month plan will still not have access to Fable 5 on that subscription. The Max plans are $100 and $200/month.</p></article><article class="dp-body" id="dpBodyZh" hidden><p><strong><a href="https://twitter.com/claudeai/status/2078302415804379218" target="_blank" rel="noopener nofollow">Claude 使 Fable 5 成为永久功能</a></strong>。Twitter 上 <code>@claudeai</code> 账号的更新：</p>
+<blockquote>
+<p>自7月20日起，Claude <a class="cpt" href="../c/fable-5.html" data-def="Fable 5可能是一个领先的AI模型或评测基准，国产模型通过实测挑战其性能，体现国内AI技术的快速进步">Fable 5</a> 将包含在所有 Max 和 Team Premium 套餐中，使用额度为50%。</p>
+<p>Pro 和 Team Standard 用户将继续通过使用积分访问 Fable，并将获得一次性100美元额度。</p>
+</blockquote>
+<p>正如我<a href="https://simonwillison.net/2026/Jul/12/bump/" target="_blank" rel="noopener nofollow">上周</a>所说，来自 <a href="https://simonwillison.net/2026/Jul/9/gpt-5-6/" target="_blank" rel="noopener nofollow">GPT-5.6 Sol</a>（或许还有来自 <a href="https://simonwillison.net/2026/Jul/16/kimi-k3/" target="_blank" rel="noopener nofollow">Kimi 3</a> 的部分竞争）的竞争，使得 Anthropic 原本计划将 Fable 5 从其订阅账户中移除、仅通过 API 定价提供的方案变得不可持续。</p>
+<p>谁愿意每月支付100或200美元，订阅一个<em>不包含</em> Anthropic 最佳模型的套餐呢？</p>
+<p>他们最初的计划是出于对计算能力的担忧。我想知道他们是否不得不缩减训练工作，以便腾出更多 GPU 来帮助服务该模型。</p>
+<p>此前，许多人都在为如何在订阅访问权限被取消前充分利用 Fable 5 而提心吊胆。现在不用再担心“Fable末日”了，真好。</p>
+<p><strong>更新</strong>：需要注意的是，每月20美元套餐的用户在该订阅下仍然无法使用 Fable 5。Max 套餐的月费分别为100美元和200美元。</p></article>
     <div class="dp-actions">
       <a class="dp-btn pri" href="https://simonwillison.net/2026/Jul/18/claude-make-fable-5-permanent/#atom-everything" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
       
@@ -89,5 +112,11 @@
 <div id="site-footer"></div>
 <script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "Claude 使 Fable 5 成为永久功能"};</script>
 <script src="../../assets/site.js"></script>
+<script>
+(function(){var b=document.getElementById('dpLang');if(!b)return;
+var en=document.getElementById('dpBodyOrig'),zh=document.getElementById('dpBodyZh');
+b.addEventListener('click',function(){var on=zh.hidden;zh.hidden=!on;en.hidden=on;
+b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';});})();
+</script>
 </body>
 </html>

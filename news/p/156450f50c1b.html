@@ -58,6 +58,11 @@
     transition:background .2s var(--ease),border-color .2s var(--ease)}
   .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
   .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
 </style>
 </head>
 <body>
@@ -73,10 +78,31 @@
     <h1 class="dp-title">WAIC重磅成果｜上海仪电智算牵头成立“智算系统架构联盟”并发布《超节点系统架构规范》</h1>
     
     <p class="dp-by">来源：量子位 · 行业动态</p>
-    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为内容导读，只收录简报与摘录，版权归原作者（量子位 · 行业动态）所有 · <a href="https://www.qbitai.com/2026/07/456052.html" target="_blank" rel="noopener">全文请读原文</a></span></div>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（量子位 · 行业动态）所有 · <a href="https://www.qbitai.com/2026/07/456052.html" target="_blank" rel="noopener">阅读原文</a></span></div>
     <p class="dp-quip"><i class="fa-solid fa-quote-left"></i>基础设施联盟很必要，但关键是标准怎样落地</p>
     <div class="dp-brief"><b>简报</b>WAIC期间，上海仪电智算牵头成立智算系统架构联盟，并发布《超节点系统架构规范》，推动智算系统标准化发展。</div>
-    
+    <article class="dp-body"><h1>WAIC重磅成果｜上海仪电智算牵头成立“智算系统架构联盟”并发布《超节点系统架构规范》</h1>
+    			   
+             <img src="http://www.qbitai.com/wp-content/uploads/2019/06/200-100x100.jpg" alt="量子位的朋友们" referrerpolicy="no-referrer" /><em><a href="https://www.qbitai.com/author/qbitai" target="_blank" rel="noopener nofollow">量子位的朋友们</a></em>
+                          2026-07-21
+             17:39:34
+          
+          来源：<a href="https://www.qbitai.com" target="_blank" rel="noopener nofollow">量子位</a>            
+                          
+                            			<p>在上海市经济和信息化委员会指导下，由上海仪电智算牵头，联合GPU芯片、互连、整机、大模型、软件等20余家产业链上下游主体共同发起的“智算系统架构联盟”（以下简称“联盟”）在2026世界人工智能大会上正式成立，同步发布《<a class="cpt" href="../c/super-node-system-architecture.html" data-def="超节点系统架构是一种将多个高性能计算单元深度整合的硬件设计，就像把多台服务器融合成一台超级服务器，实现算力资源的统一调度和高效利用">超节点系统架构</a>规范》（以下简称“规范”）。联盟立足上海、辐射全国，旨在汇聚生态合力、共筑开放架构，为智算基础设施高质量建设保驾护航，并明确由仪电—中兴联合实验室负责日常运营。</p>
+<p><strong>锚定智算底座建设，破解产业升级核心痛点</strong></p>
+<p>智能算力已成为数字经济发展的核心驱动力，但算力资源供需不平衡、软硬件适配壁垒高等问题制约着产业整体升级。上海仪电作为上海市智能算力公共服务平台的核心企业，已建成数座智算中心，累计完成数十款国产AI核心组件的测试验证，形成百余份测试报告，并自主研发“仪电智算云平台”，实现异构算力的统一纳管与智能调度。联盟以“聚全栈生态筑智算系统架构，践国企担当创自主可控底座”为核心使命，面向智算中心、超算集群、行业算力底座等场景，提供系统化、一体化的规划与建设方案。</p>
+<p><strong>构建多元组织架构，打造全栈生态协作平台</strong></p>
+<img src="https://i.qbitai.com/wp-content/uploads/2026/07/b075c372dde79b6dfd80f441a5de66de.jpeg" referrerpolicy="no-referrer" />
+<p>联盟由仪电智算牵头，联合阶跃星辰、稀宇科技、天数智芯、壁仞科技、平头哥、寒武纪、东方算芯、沐曦股份、燧原科技、思朗科技、中兴通讯、新华三、浪潮集团、算丰信息、曙光信息、曦智科技、驭驯网络、清程极智、趋境科技、基流科技、硅基流动、云脉芯联、云合智网等23家智算产业链上下游企业共同发起（排名不分先后），从底层芯片到上层应用的完整产业链协作体系，聚合异构算力与技术资源，打破算力壁垒，推动软硬件协同适配。联盟成员可深度参与超节点建设规范等行业标准的研讨与编制，优先使用联盟真机测试验证环境，高效完成产品适配与性能调优，缩短研发迭代周期；同时依托联盟平台联动龙头企业与国家级实验室，开展前沿技术协同攻关，联合申报重大科研专项与示范工程，打通产业链上下游合作渠道，推动供需精准匹配与业务协同。</p>
+<p><strong>发布联盟首项规范，确立智算行业技术统一基准</strong></p>
+<p>《超节点系统架构规范》（1.0版）作为联盟首项成果，分为硬件与软件两部分。硬件方面，采用冷板式液冷整机柜，统一节点尺寸并通过电、液、网三总线盲插实现前维护，配备集中供电、液冷散热与漏液联动隔离，通过高速互连背板实现Scale-up部署；软件方面，规范了运维管理、集群纳管与拓扑感知调度、集合通信、存储与数据加载、安全可信及符合性验收等要求。后续，上海仪电将据此规范打造自主超节点集群。</p>
+<img src="https://i.qbitai.com/wp-content/uploads/2026/07/93a8dfeb4fac5a50aef7fdf3274ea8b9.jpeg" referrerpolicy="no-referrer" />
+<p>联盟成立与规范发布，标志着上海在构建自主可控智算产业生态上迈出坚实一步。未来，联盟将持续拓展合作网络，以系统化规划方案与全栈生态协同合力，成为智算基础设施建设的重要加速器，为上海加快建设人工智能高地贡献力量。</p>
+<p><em>本文由仪电智算提供，量子位获授权转载，观点归原作者所有。</em></p>
+                
+                
+                <em>版权所有，未经授权不得以任何形式转载及使用，违者必究。</em></article>
     <div class="dp-actions">
       <a class="dp-btn pri" href="https://www.qbitai.com/2026/07/456052.html" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
       

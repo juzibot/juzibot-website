@@ -58,6 +58,11 @@
     transition:background .2s var(--ease),border-color .2s var(--ease)}
   .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
   .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
 </style>
 </head>
 <body>
@@ -73,10 +78,117 @@
     <h1 class="dp-title">“母病速归”式 AI：号称省 65% Token，实测只有 8.5%</h1>
     
     <p class="dp-by">来源：宝玉 · 大咖观点</p>
-    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为内容导读，只收录简报与摘录，版权归原作者（宝玉 · 大咖观点）所有 · <a href="https://baoyu.io/blog/2026-07-12/caveman-token-saving-test" target="_blank" rel="noopener">全文请读原文</a></span></div>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（宝玉 · 大咖观点）所有 · <a href="https://baoyu.io/blog/2026-07-12/caveman-token-saving-test" target="_blank" rel="noopener">阅读原文</a></span></div>
     
     <div class="dp-brief"><b>简报</b>一种让AI用简化语言的方法号称能省65% Token，实测仅省8.5%，因为上下文、工具调用和返工成本更高。</div>
-    <blockquote class="dp-excerpt">让 AI 像原始人一样说话，确实能省一点 Token，但真正昂贵的是上下文、工具调用和返工。</blockquote>
+    <article class="dp-body"><p>我把那种号称能省 Token、要求 AI 尽量少说话的 Skill，叫做<strong>“电报体 Skill”</strong>。</p>
+<p>我们小时候上语文课，学过怎么写电报文。</p>
+<p>老师先给出一件事：母亲生病了，要让在外地工作的哥哥赶紧回家。然后全班比赛拟电文，看谁能用最少的字把事情说清楚。</p>
+<p>最后可以精简成四个字：</p>
+<blockquote>
+<p><strong>母病速归。</strong></p>
+</blockquote>
+<p>再少就不行了。</p>
+<p>只写“母病”，收到的人不知道该做什么；只写“速归”，又不知道家里出了什么事。</p>
+<p>那时候必须惜字如金，因为电报按字收费，<strong>每一个字都是钱。</strong></p>
+<p>现在，这种说话方式在 AI 圈子里借着 Skill 复活了。</p>
+<h2><strong>一个让 AI 像原始人说话的 Skill</strong></h2>
+<p>GitHub 上有个叫 <a href="https://github.com/JuliusBrussee/caveman" target="_blank" rel="noopener nofollow">Caveman</a> 的项目，做的事情极其简单：给 Claude Code、Codex 等 AI 编程工具加一段提示词，让 Agent 像原始人一样说话。</p>
+<p>删掉冠词，删掉客套，删掉连接词，只保留技术要素。</p>
+<p>正常回复可能是：</p>
+<blockquote>
+<p>The issue is caused by a new object reference being created on every render...</p>
+</blockquote>
+<p>换成 Caveman 之后，就变成：</p>
+<blockquote>
+<p>New object ref each render. Wrap in <code>useMemo</code>.</p>
+</blockquote>
+<p>项目由荷兰莱顿大学一名 19 岁学生 Julius Brussee 做出来。仓库 2026 年 4 月初上线，几天内冲上 GitHub Trending 第一。截至 7 月 12 日，已经攒下约 <strong>8.85 万颗 Star</strong>。</p>
+<p>它的 README 声称能大幅压缩输出 Token，项目介绍里最常出现的数字是 <strong>65%</strong>。</p>
+<p>听起来很厉害。</p>
+<p>但跟电报体一样，这很可能是一个特定价格和产品阶段里的过渡方案。而且它在真实 Agent 工作流里省下的钱，远没有宣传数字看起来那么多。</p>
+<h2><strong>号称省 65%，实测只有 8.5%</strong></h2>
+<p>JetBrains 最近专门做了一次测试，文章标题就叫：<a href="https://blog.jetbrains.com/ai/2026/07/speak-to-ai-agents-like-cavemen-tosave-tokens/" target="_blank" rel="noopener nofollow">《Does Speaking to Agents Like Cavemen Really Save 65% of Tokens? We Test》</a>。</p>
+<p>他们用 Claude Code 跑 SkillsBench 里的 86 个真实编程任务，安装 Caveman 和不安装各跑一遍。两边使用相同任务、相同模型、相同配置和相同预算。</p>
+<p>整个实验分 3 轮，做了大约 240 次计费试验，总共花了约 106 美元。</p>
+<p>为了给 Caveman 最大的发挥空间，测试还强制它在每一次回复里生效。也就是说，这不是日常使用的平均情况，而是它能拿到的<strong>最佳情况</strong>。</p>
+<p>结果是：</p>
+<ul>
+<li>宣传节省：<strong>65% 输出 Token</strong></li>
+<li>大样本实测：<strong>8.5% 输出 Token</strong></li>
+<li>输出 Token：从约 <strong>59.2 万</strong>降到 <strong>54.2 万</strong></li>
+<li>有效配对任务：<strong>82 组</strong></li>
+</ul>
+<p><img src="https://s.baoyu.io/imgs/2026-07-12/caveman-token-saving-test/illustration-01-token-saving-gap-20260712.png" alt="宣传节省 65% 与实测节省 8.5% 的对比" referrerpolicy="no-referrer" /></p>
+<p>因为每次回复都被强制压缩，这个 8.5% 已经接近天花板。日常使用时，Skill 还要自己判断是否触发，实际节省通常只会更少。</p>
+<p>有一点也要替 Caveman 说清楚：<strong>JetBrains 没有测出显著的任务质量下降。</strong></p>
+<p>82 组配对任务里，64 个结果相同，Caveman 版本有 8 个更好、10 个更差，差异在统计上不显著。它的问题不是“让 Agent 变笨”，而是<strong>把省钱效果说得太大了。</strong></p>
+<h2><strong>Agent 的 Token，大头根本不在聊天</strong></h2>
+<p>为什么 65% 会缩水成 8.5%？</p>
+<p>因为 65% 主要来自聊天场景。</p>
+<p>你问 AI 一个问题，它回你一大段话。把“当然可以”“很高兴帮你”“下面我来详细解释”这些客套和铺垫全部砍掉，确实可能省下一大半。</p>
+<p>但编程 Agent 不是聊天机器人。</p>
+<p>它的 Token 消耗大头通常包括：</p>
+<ul>
+<li>系统提示词和不断累积的上下文</li>
+<li>代码、文件内容和搜索结果</li>
+<li>工具调用及返回结果</li>
+<li>各种 Skills 和 MCP 工具描述</li>
+<li>diff、报错信息和测试日志</li>
+<li>模型在多轮任务里反复读取的内容</li>
+</ul>
+<p>Caveman 主要压缩的是工具调用之间那几句自然语言说明。代码不能乱改，命令不能缩写，错误信息要原样保留，工具参数更不能写成原始人语法。</p>
+<p><strong>它优化的那部分，在整张账单里本来就是零头。</strong></p>
+<p><img src="https://s.baoyu.io/imgs/2026-07-12/caveman-token-saving-test/illustration-02-agent-token-bill-20260712.png" alt="Agent Token 账单的主要组成" referrerpolicy="no-referrer" /></p>
+<p>这就像一家公司要压缩差旅费，机票、酒店和打车一项没动，先把员工每天 2 块钱的矿泉水取消了。</p>
+<p>省是省了，但别指望靠这个拯救财报。</p>
+<h2><strong>语言越短，对默契的要求越高</strong></h2>
+<p>电报体也不是完全没有代价。</p>
+<p>比如 Agent 最后只回复一句：</p>
+<blockquote>
+<p><code>Fixed auth. Tests pass.</code></p>
+</blockquote>
+<p>看起来非常干练，也很省 Token。</p>
+<p>但它没有告诉你：</p>
+<ul>
+<li>修的是登录过期、权限校验，还是刷新令牌？</li>
+<li>跑的是一个单元测试，还是完整测试套件？</li>
+<li>有没有改数据库结构？</li>
+<li>有没有留下兼容性风险？</li>
+</ul>
+<p>这些信息不一定每次都要展开成小论文，但也不能因为“说话像穴居人”就固定删掉。</p>
+<p>开发者看不懂 Agent 做了什么，只好继续追问。Agent 再读一遍文件，再跑一遍测试，再解释一次。前面省下的几十个 Token，很快就会被新一轮工具调用吃回去。</p>
+<p>这不代表 Caveman 的基准测试已经证明会导致更多返工。JetBrains 的测试没有发现这种质量损失。问题在于，<strong>“任务最终做对了”和“过程对人足够透明”不是同一个指标。</strong></p>
+<p>电报体能工作，靠的是双方共享大量背景。</p>
+<p>“母病速归”只有四个字，收报人却知道母亲是谁、家在哪里、为什么要回去。</p>
+<p>编程 Agent 面对的是不断变化的代码、陌生仓库和临时任务，共享背景没有那么可靠。表达越短，越依赖默契；而默契不足时，多说的那几句就是通信协议里的纠错码。</p>
+<blockquote>
+<p><strong>啰嗦有时不是浪费，而是为了避免下一轮更昂贵的误解。</strong></p>
+</blockquote>
+<h2><strong>电报体没有被淘汰，只是失去了存在的理由</strong></h2>
+<p>电报体后来怎么样了？</p>
+<p>没有人宣布废除它。</p>
+<p>只是长途通信的价格降到可以忽略不计之后，“母病速归”自然变回了：</p>
+<blockquote>
+<p>妈住院了，你买最早的票回来，到了给我打电话。</p>
+</blockquote>
+<p>省字数，是给按字计费时代做的优化。当价格降下去，信息完整和沟通体验重新变得更重要，这种优化也就自然退场了。</p>
+<p>Token 很可能也会走同一条路。</p>
+<p>模型单价长期在下降，缓存技术也在把重复上下文变便宜。以 Anthropic 当前的提示词缓存价格为例，缓存命中的输入 Token 读取价格只有普通输入 Token 的 <strong>0.1 倍</strong>，也就是便宜约九成。</p>
+<p>当“重复读”已经可以打九折中的一折，再费很大力气把一句正常的话压成电报文，收益就更有限了。</p>
+<h2><strong>真正该省的，是上下文和返工</strong></h2>
+<p>如果真想降低 Agent 成本，更值得做的不是逼它少说几个字，而是：</p>
+<ol>
+<li><strong>少加载无关上下文。</strong> 不要一上来就把整个仓库、所有文档和历史对话塞给模型。</li>
+<li><strong>少挂没必要的 MCP 和 Skills。</strong> 工具描述本身也占上下文，装得越多不等于干得越好。</li>
+<li><strong>提高缓存命中率。</strong> 把稳定的系统提示词、工具定义和项目规则放在可复用的前缀里。</li>
+<li><strong>减少无效工具调用。</strong> 先定位问题再读文件，先确定范围再跑测试。</li>
+<li><strong>选择合适的模型。</strong> 简单任务用便宜模型，复杂任务用更可靠的模型，少一次返工往往比省几句说明更值钱。</li>
+</ol>
+<p><img src="https://s.baoyu.io/imgs/2026-07-12/caveman-token-saving-test/illustration-03-real-cost-optimization-20260712.png" alt="真正有效的 Agent 成本优化优先级" referrerpolicy="no-referrer" /></p>
+<p>Caveman 当然可以用。你喜欢简洁的回复，或者受够了 Agent 的客套话，它是个有趣而且基本无害的风格插件。</p>
+<p>但别把风格优化误当成成本革命。</p>
+<p><strong>真正昂贵的从来不是 Agent 多说了几句话，而是它读了太多没用的东西，又把同一件事做了两遍。</strong></p></article>
     <div class="dp-actions">
       <a class="dp-btn pri" href="https://baoyu.io/blog/2026-07-12/caveman-token-saving-test" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
       

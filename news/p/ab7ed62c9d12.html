@@ -58,6 +58,11 @@
     transition:background .2s var(--ease),border-color .2s var(--ease)}
   .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
   .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
 </style>
 </head>
 <body>
@@ -73,10 +78,38 @@
     <h1 class="dp-title">「月泉仿生」获数亿元融资，仿生拉压体灵巧手万台量产、订单过亿｜36氪首发</h1>
     
     <p class="dp-by">来源：36氪 · 行业动态</p>
-    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为内容导读，只收录简报与摘录，版权归原作者（36氪 · 行业动态）所有 · <a href="https://36kr.com/p/3899174356387718?f=rss" target="_blank" rel="noopener">全文请读原文</a></span></div>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（36氪 · 行业动态）所有 · <a href="https://36kr.com/p/3899174356387718?f=rss" target="_blank" rel="noopener">阅读原文</a></span></div>
     <p class="dp-quip"><i class="fa-solid fa-quote-left"></i>硬件化集成度高，但供应链与成本问题比虚拟应用大，规模化潜力有限</p>
     <div class="dp-brief"><b>简报</b>月泉仿生完成数亿元Pre-A+轮融资，资金将用于团队建设、技术研发和产能提升，推动仿生机器人研发，其仿生灵巧手已实现万台量产和过亿订单。</div>
-    <blockquote class="dp-excerpt">文｜胡香赟 编辑｜海若镜 36氪独家获悉，近日，月泉仿生已完成数亿元Pre-A+轮融资。本轮融资由长发基金、华控基金、华夏基金、国力民生、星科创投基金等联合投资，老股东中关村启航投资跟投。 据介绍，本轮募集资金将用于月泉仿生团队建设、核心产品技术研发及产能提升，以及强化全栈自研能力、打造完整技术体系，推动超仿生神经骨骼肌肉机器人研发, …</blockquote>
+    <article class="dp-body"><p>文｜胡香赟</p>
+  <p>编辑｜海若镜</p>
+  <p>36氪独家获悉，近日，月泉仿生已完成数亿元Pre-A+轮融资。本轮融资由长发基金、华控基金、华夏基金、国力民生、星科创投基金等联合投资，老股东中关村启航投资跟投。</p>
+  <p>据介绍，本轮募集资金将用于月泉仿生团队建设、核心产品技术研发及产能提升，以及强化全栈自研能力、打造完整技术体系，推动超仿生神经骨骼肌肉机器人研发,  打造“大脑-身体-环境”一体化的仿生<a class="cpt" href="../c/embodied-ai.html" data-def="指让AI拥有物理身体（如机器人），能在真实或仿真环境中感知、决策并执行动作">具身智能</a>体系。</p>
+  <p>当前，人形机器人赛道已走过最初的样机展示阶段，逐渐迈入商业化落地的关键拐点。而<a class="cpt" href="../c/dexterous-hand.html" data-def="灵巧手是机器人末端执行器，具备多自由度和精细操作能力，能模拟人手完成抓取、操纵等复杂任务，它通过传感器和智能控制实现柔顺交互，对企业意味着机器人应用从结构化…">灵巧手</a>作为机器人和现实世界交互的核心部件，更是成为资本重点押注的核心方向。仅今年一季度，国内灵巧手类企业融资总额就接近50亿元。</p>
+  <p>喧哗背后，某种程度上，灵巧手产品也在陷入比拼自由度、扭矩等硬件参数的“内卷”状态。传统刚性结构很难同时兼顾轻量化、抓取力量和操作精度，面对柔软、易损的物体时，天生就显得“笨拙”。但通常，想做到精细操作就要牺牲负载能力，提升耐用性又会大幅抬高成本，因此始终困在性能、成本、可靠性难以兼顾的矛盾中。</p>
+  <p>想要真正打破现有瓶颈，就需要在底层机械结构上重新进行设计。因此，拥有原创仿生底层技术、实现软硬件全链条自研的企业，或将成为下一阶段产业发展的核心力量。</p>
+  <p>月泉仿生正是其中的代表性企业之一。月泉仿生依托教育部长江学者、英国曼彻斯特大学终身教授任雷教授提出的“<a href="https://36kr.com/p/2410406638134274" target="_blank" rel="noopener nofollow">仿生拉压体机器人理论与技术</a>”完成科研成果转化。通俗来讲，这套<a class="cpt" href="../c/biomimetic-tension-compression-body.html" data-def="仿生拉压体技术是一种模仿人体骨骼肌肉协同工作原理的机器人结构设计，硬质构件承压、柔性构件承拉，实现轻量化与高负载的平衡，它从底层改变机器人运动逻辑，对企业意…">仿生拉压体技术</a>完全模仿人体骨骼、肌肉、韧带协同工作的逻辑，硬质构件主要承担压力、柔性构件主要承担拉力，借此基础理论级创新从根源上改变传统机器人的运动逻辑。</p>
+  <p>依托这套原创底层技术，月泉仿生已搭建起覆盖自研空心杯电机、人工肌肉模组、仿生灵巧手、人形机器人整机和世界-行为大模型的全栈自研产品矩阵。现阶段，公司已推出四大核心产品线，并于近日的2026世界人工智能大会暨人工智能全球治理高级别会议（WAIC）上亮相：</p>
+  <p>首先是主打轻量化仿生操作的“应手Y-Hand”系列仿生拉压体灵巧手。这是月泉仿生的旗舰仿生灵巧手产品线，主打贴近真人手部的柔顺仿生灵巧操作，有助于缓解传统机器人手“有力就僵硬、轻巧就无力”的问题。</p>
+  <p>该系列分M1轻量化款和M2超高自由度旗舰款两款。其中，Y-Hand M1在今年7月初刚刚发布。这款产品掌部重仅299.7g，重量还不及一罐可乐，但整手集成26个自由度、五指抓握力可达到200N。在WAIC展台互动区，Y-Hand M1展示了拿起和放下矿泉水瓶、扳手等物品的功能；对于玩具布偶类柔软物品，Y-Hand M1也能通过指尖轻触、柔性抓取、无损夹持来完成操作，未将物品捏变形。</p>
+  <p><img src="https://img.36krcdn.com/hsossms/20260720/v2_27510b874601408eb59e84826cef0a0f@5930287_oswg643969oswg907oswg721_img_jpg?x-oss-process=image/quality,q_90/format,jpg/interlace,1" referrerpolicy="no-referrer" /></p>
+  <p>月泉仿生在WAIC上展出Y-Hand M1</p>
+  <p>当前，行业内部分灵巧手产品虽在不断堆砌总自由度，却往往只给拇指分配3-4个关节，导致精细操作能力受限。相较之下，Y-Hand M1选择为拇指配置8个自由度，匹配人体生理特性，浮现人手一根拇指就能“支撑起手部近一半的操作能力”，可完成对心捏、对掌、包络抓取等绝大部分类人灵巧操控。</p>
+  <p>另一款应手Y-Hand M2则具备38个自由度。月泉仿生方面提供的数据称，目前，Y-Hand M2是“全球自由度最高的仿生灵巧手”，在速度、力量、灵活、柔顺等维度上的表现“趋近人手水平”。</p>
+  <p><img src="https://img.36krcdn.com/hsossms/20260720/v2_bf22f15b1c034f00af9c5cca9bdaac22@5930287_img_gif?x-oss-process=image/quality,q_80" referrerpolicy="no-referrer" /></p>
+  <p>Y-Hand M2</p>
+  <p>与走高度仿生路线的“应手Y-Hand”系列形成差异化定位，“信手X-Hand M1”则是一款面向标准化工业场景的刚性灵巧手，主打工厂高强度流水线作业，最大可实现50kg负重、循环使用寿命可达百万次。</p>
+  <p><img src="https://img.36krcdn.com/hsossms/20260720/v2_dd714ca0a03540849d4fa1bb9b8f2965@5930287_img_gif?x-oss-process=image/quality,q_80" referrerpolicy="no-referrer" /></p>
+  <p>信手X-Hand M1</p>
+  <p>第三类产品线“YQ Motors系列电机”是公司旗下所有灵巧手的“专属动力心脏”，覆盖4–22mm全尺寸7个系列，且全部核心驱动部件实现国产自研。</p>
+  <p><img src="https://img.36krcdn.com/hsossms/20260717/v2_687b7ad1e71d4dfb9cf9936eeee33df4@5930287_oswg1451725oswg2933oswg1345_img_png?x-oss-process=image/quality,q_90/format,jpg/interlace,1" referrerpolicy="no-referrer" /></p>
+  <p>YQ Motors系列电机</p>
+  <p>最后则是轮式人形整机代表“博文W-Bot 2.0”，它搭载0.238㎡的小底盘，这种设计使其能进驻传统大型机器人无法进入的工位。仿人髋-膝-踝三折叠结构赋予“博文W-Bot 2.0”蹲下站起的能力，使其工作空间覆盖距离地面0-2.2m。搭配自研仿生手与电机整套方案，可实现从移动、抓取到作业的一体化无人解决方案，适用于工厂自动化装配、仓储物流分拣、机房设备巡检、展厅智能接待等场景。</p>
+  <p><img src="https://img.36krcdn.com/hsossms/20260720/v2_d361115411d6432bbc50b5cadb7c644c@5930287_img_gif?x-oss-process=image/quality,q_80" referrerpolicy="no-referrer" /></p>
+  <p>博文W-Bot 2.0</p>
+  <p>从应用角度，当前，灵巧手行业已逐步从实验室走向规模化量产的阶段。从出货量维度，高工产业研究院（GGII）预计，2026年，中国灵巧手产品全年销量有望突破7万只。</p>
+  <p>在这方面，月泉仿生也已提前进行了产线布局。月泉仿生CTO赵迪曾对外介绍称，公司在设计之初就已经在同步规划量产路径，“核心零部件具备直接切换量产的能力”。目前，公司位于北京昌平的生产基地已在建设中。</p>
+  <p>商业化层面，月泉仿生已面向智能制造、仓储物流、巡检运维、医疗健康、家政服务等多个场景输出全栈解决方案，累计取得过亿元订单。</p></article>
     <div class="dp-actions">
       <a class="dp-btn pri" href="https://36kr.com/p/3899174356387718?f=rss" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
       

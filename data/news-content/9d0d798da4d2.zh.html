@@ -1,0 +1,19 @@
+<p><a href="https://huggingface.co/CohereLabs/North-Mini-Code-1.0" target="_blank" rel="noopener nofollow">North Mini Code</a> 是 Cohere 推出的一款面向智能体编码任务的新开源权重模型。</p>
+
+<p>根据其<a href="https://huggingface.co/blog/CohereLabs/introducing-north-mini-code" target="_blank" rel="noopener nofollow">发布文章</a>，它是一个拥有 300 亿参数、30 亿活跃参数的混合专家模型，采用 Apache 2.0 许可证。在架构上，其亮点在于 30B-A3B 的权衡设计，包含 128 个专家，每个词元激活 8 个专家，并采用了交错的滑动窗口与全局注意力机制。</p>
+
+<p>关键细节在于其评估设置。发布内容强调了智能体编码，即模型需要在工具循环中工作，而不仅仅是为提示返回代码答案：</p>
+
+<ol>
+  <li>在 <a href="https://www.tbench.ai/" target="_blank" rel="noopener nofollow">Terminal-Bench</a> 上，模型需要使用终端、检查环境、运行命令、读取输出，并根据观察到的状态继续操作。</li>
+  <li>在 <a href="https://www.swebench.com/" target="_blank" rel="noopener nofollow">SWE-Bench</a> 上，模型处理 GitHub 风格的软件问题。它需要理解代码仓库、找到相关文件、制作补丁并通过测试。</li>
+  <li><a href="https://scicode-bench.github.io/" target="_blank" rel="noopener nofollow">SciCode</a> 和 <a href="https://livecodebench.github.io/" target="_blank" rel="noopener nofollow">LiveCodeBench</a> 更接近传统的代码生成基准测试。它们仍然需要推理，但交互循环要短得多。</li>
+</ol>
+
+<p>这种对智能体编码的专注，可能解释了为何在表格中涉及复杂工作流的行上，North Mini Code 看起来远超 Gemma 4。在更传统的代码生成行上，它依然有竞争力，尽管尚未达到 Qwen3.6 的水平。</p>
+
+<p>和往常一样，我将这些视为截至 2026 年 6 月 12 日的发布时<a href="https://sebastianraschka.com/glossary/#benchmark" target="_blank" rel="noopener nofollow">基准测试</a>数据。对于智能体编码而言，测试框架细节、工具 API、超时设置和提示模板都可能显著影响结果。</p>
+
+<figure><p><a href="https://substack.com/@rasbt/note/c-275332436" target="_blank" rel="noopener nofollow"><img src="https://sebastianraschka.com/images/blog/2026/north-mini-code/hero.webp" alt="North Mini Code architecture and benchmark overview" referrerpolicy="no-referrer" /></a></p>
+<figcaption>来自原始 <a href="https://substack.com/@rasbt/note/c-275332436" target="_blank" rel="noopener nofollow">Substack 笔记</a>的合成图，总结了 North Mini Code 的架构和发布时的基准测试快照。</figcaption></figure>
+<p>来源：我的 <a href="https://substack.com/@rasbt/note/c-275332436" target="_blank" rel="noopener nofollow">Substack 笔记</a> 的网站版本（经过轻微编辑）。</p>

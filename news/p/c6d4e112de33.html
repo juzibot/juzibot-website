@@ -58,6 +58,11 @@
     transition:background .2s var(--ease),border-color .2s var(--ease)}
   .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
   .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
 </style>
 </head>
 <body>
@@ -76,7 +81,7 @@
     <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为内容导读，只收录简报与摘录，版权归原作者（企业微信 · 企微生态）所有 · <a href="https://developer.work.weixin.qq.com/document/path/93221#20250717" target="_blank" rel="noopener">全文请读原文</a></span></div>
     
     
-    <blockquote class="dp-excerpt">安全管理 服务端API 变更接口 支持获取封禁互通、锁定设备类型操作记录 详情 消息推送 服务端API 变更事件 智能机器人支持回复欢迎语，支持回复模板卡片类型消息 详情 文档 服务端API 新增接口 用API创建智能表格后，通过智能表格自动化创建的群聊，支持用API修改群成员 详情 审批 服务端API 变更事件 审批申请状态变化回调支…</blockquote>
+    <blockquote class="dp-excerpt">安全管理 服务端<a class="cpt" href="../c/api.html" data-def="API是应用程序之间通信的接口规范，允许不同软件系统交换数据和功能">API</a> 变更接口 支持获取封禁互通、锁定设备类型操作记录 详情 消息推送 服务端API 变更事件 <a class="cpt" href="../c/chatbot.html" data-def="聊天机器人是基于自然语言处理技术的对话系统，能模拟人类与用户进行文本或语音交互">智能机器人</a>支持回复欢迎语，支持回复模板卡片类型消息 详情 文档 服务端API 新增接口 用API创建智能表格后，通过智能表格自动化创建的群聊，支持用API修改群成员 详情 审批 服务端API 变更事件 审批申请状态变化回调支…</blockquote>
     <div class="dp-actions">
       <a class="dp-btn pri" href="https://developer.work.weixin.qq.com/document/path/93221#20250717" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
       

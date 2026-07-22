@@ -58,6 +58,11 @@
     transition:background .2s var(--ease),border-color .2s var(--ease)}
   .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
   .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
 </style>
 </head>
 <body>
@@ -73,10 +78,50 @@
     <h1 class="dp-title">懂你、能交付、专业操作：金山办公田然给出AI办公助理的三项标准</h1>
     
     <p class="dp-by">来源：量子位 · 行业动态</p>
-    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为内容导读，只收录简报与摘录，版权归原作者（量子位 · 行业动态）所有 · <a href="https://www.qbitai.com/2026/07/456910.html" target="_blank" rel="noopener">全文请读原文</a></span></div>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（量子位 · 行业动态）所有 · <a href="https://www.qbitai.com/2026/07/456910.html" target="_blank" rel="noopener">阅读原文</a></span></div>
     <p class="dp-quip"><i class="fa-solid fa-quote-left"></i>能交付是关键，这正是销售客服Agent从助手升级为员工的核心标准</p>
     <div class="dp-brief"><b>简报</b>金山办公的田然提出AI办公助理应具备懂用户、能交付结果和专业操作三项标准，定义行业新方向。</div>
-    
+    <article class="dp-body"><h1>懂你、能交付、专业操作：金山办公田然给出AI办公助理的三项标准</h1>
+    			   
+             <img src="http://www.qbitai.com/wp-content/uploads/2019/06/200-100x100.jpg" alt="量子位的朋友们" referrerpolicy="no-referrer" /><em><a href="https://www.qbitai.com/author/qbitai" target="_blank" rel="noopener nofollow">量子位的朋友们</a></em>
+                          2026-07-22
+             11:24:37
+          
+          来源：<a href="https://www.qbitai.com" target="_blank" rel="noopener nofollow">量子位</a>            
+                          
+                            			<p>过去几年，大模型越来越会写：能列提纲、做总结、改文案，也能生成一份看起来完整的PPT。但进入真实办公场景后，问题往往出现在下一步——它是否知道用户正在推进哪个项目，能否把任务真正做完，交出的表格、文档和PPT又能不能继续修改、核验和协作？</p>
+<p>7月15日，在金山办公AI生产力大会现场，金山办公助理总裁田然发布灵犀专业版。他没有从模型参数讲起，而是先谈了一个更接近真实工作的角色：助理。</p>
+<p>“参谋可以出主意，但助理要把事情做掉。”田然在现场说。按照他的判断，一名优秀的<a class="cpt" href="../c/ai-office-assistant.html" data-def="AI办公助理是能理解用户上下文、自主完成办公任务并具备专业软件操作能力的智能代理">AI办公助理</a>需要具备三项能力：懂用户的上下文，高质量完成任务，具备专业的Office操作能力。这三点也构成了灵犀专业版的产品主线。</p>
+<img src="https://i.qbitai.com/wp-content/uploads/2026/07/01fee92bdf1076ab742f68783d37a17a.png" referrerpolicy="no-referrer" />
+<h3><strong>懂你的上下文：少让用户重复解释背景</strong></h3>
+<p>一项办公任务很少从空白开始。</p>
+<p>做行业分析，需要过去的数据表、会议材料和旧版报告；修改方案，要知道哪些意见已经确认、哪些内容已经删除；准备汇报，还要沿用用户长期形成的表达方式和数据偏好。</p>
+<p>如果AI只理解眼前的一句话，用户每次都要重新上传材料、交代背景，它更像一个临时问答工具，而不是能够长期合作的AI办公助理。</p>
+<p>灵犀以“项目”为基本单位管理上下文，将此前的对话、输出文档、相关资料、技能和参与人员放在同一个空间中。用户再次进入项目时，可以沿着此前的进度继续工作，不必重新说明项目背景和修改历史。</p>
+<p>发布会演示中，用户只提出一句“完成新能源行业头部竞品数据分析”，灵犀便从知识库中寻找竞品数据追踪表和项目资料，再搜索互联网及第三方专业数据源，形成分析结果。</p>
+<p>随着使用深入，灵犀还会沉淀用户的写作风格、数据偏好、表达结构和项目经验，并定期整理这些信息。系统会在算力相对空闲时归纳当天产生的信息，更新个人知识库；在用户授权后，也可以从指定的本地文件夹中寻找新增资料。</p>
+<p>这项能力的价值，不只是让AI记住更多信息，而是让用户少解释一次背景。真正懂工作，还要知道哪些材料属于当前项目、哪些版本仍然有效，以及任务接下来要往哪里推进。</p>
+<h3><strong>高质量交付：从给建议，到把事情做完</strong></h3>
+<p>田然在演讲中区分了“参谋”和“助理”：参谋可以提出想法，助理则要把事情落地。</p>
+<p>灵犀不仅生成内容，还可以调用文档、处理数据、打开浏览器、编写代码，把任务持续推进到最终结果。</p>
+<p>在团队协作中，用户可以把同事拉入同一个项目空间。不同成员围绕同一份材料提出意见，灵犀在统一上下文中依次处理，减少信息在群聊、个人AI和文件之间来回传递。</p>
+<p>面对更复杂的需求，灵犀可以把数据分析进一步转化为在线系统，并执行本地指令完成部署。对于没有标准API接口的网页系统，也可以在用户授权和身份范围内调用浏览器，完成填写信息、上传附件和推进流程等操作。</p>
+<p>这些能力将办公软件的边界从文档延伸到浏览器、本地环境和业务系统。过去需要用户在多个软件之间反复切换、手动衔接的工作，如今可以交由AI办公助理推进。</p>
+<p>但高质量交付不能只看任务是否显示“已完成”，还要看结果是否准确、过程能否检查、用户是否仍需大量返工。AI办公助理的价值，是接过重复、琐碎、耗时的环节，让人把精力留给判断、沟通和决策。</p>
+<img src="https://i.qbitai.com/wp-content/uploads/2026/07/f4621e080cca56788e89f5ca19af0f59.png" referrerpolicy="no-referrer" />
+<h3><strong>Office专业操作：交付可以继续使用的原生文件</strong></h3>
+<p>对于AI办公助理来说，完成任务之后，还有一道现实门槛：交出来的是不是一份真正的办公文件。</p>
+<p>一些AI生成的表格没有公式，用户无法核验数字是怎样算出来的；一些PPT看起来完整，打开后却是一张图片，或者由大量文本框拼成，难以继续修改。</p>
+<p>田然在发布会上多次强调，灵犀要坚持原生Office操作。</p>
+<p>在表格中，计算使用原始公式和表格指令，用户可以直接查看数据关系；图表使用标准控件生成，可以继续调整数据、维度和展示形式。在文档中，用户可以同时在对话栏、正文和审阅区与灵犀交互，AI既能修改正文，也能处理批注和修订记录。</p>
+<p>生成PPT时，灵犀要求“图是图，表是表，图表是图表，文字是文字”。这些内容都是可以继续编辑的原生对象，而不是一张无法拆解的静态图片。面对论文等复杂文档，灵犀也能处理页眉、页脚、分栏和公式等排版要求。</p>
+<p>可编辑，意味着用户可以继续工作；可溯源，意味着数据和修改过程能够核验；可协作，意味着成果可以进入多人审阅和反复修改的正式流程。只有满足这些要求，AI生成的内容才能成为真正可用的办公成果。</p>
+<p>据介绍，灵犀专业版将以独立产品形态提供，同时进入WPS Office和Microsoft Office，并支持网页端和移动端。</p>
+<p>从懂上下文，到端到端推进任务，再到交付原生Office文件，灵犀试图回答的是AI办公助理最基本的问题：当用户把一项真正的工作交给AI时，它能否少让用户解释背景，把事情推进到底，并交出一份可以核验、修改和继续协作的结果。当AI能够做到这些，它才不再只是一个会回答问题的工具，而开始成为真正可以一起工作的办公助理。</p>
+<p><em>本文由金山办公提供，量子位获授权转载，观点归原作者所有。</em></p>
+                
+                
+                <em>版权所有，未经授权不得以任何形式转载及使用，违者必究。</em></article>
     <div class="dp-actions">
       <a class="dp-btn pri" href="https://www.qbitai.com/2026/07/456910.html" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
       

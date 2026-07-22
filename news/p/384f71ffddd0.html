@@ -58,6 +58,11 @@
     transition:background .2s var(--ease),border-color .2s var(--ease)}
   .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
   .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
 </style>
 </head>
 <body>
@@ -73,10 +78,49 @@
     <h1 class="dp-title">GLM-5.2 和用于长上下文稀疏注意力的 IndexShare</h1>
     <p class="dp-orig">原题：GLM-5.2 and IndexShare for Long-Context Sparse Attention</p>
     <p class="dp-by">来源：Sebastian Raschka · 大咖观点</p>
-    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为内容导读，只收录简报与摘录，版权归原作者（Sebastian Raschka · 大咖观点）所有 · <a href="https://sebastianraschka.com/blog/2026/glm-5-2-indexshare.html" target="_blank" rel="noopener">全文请读原文</a></span></div>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（Sebastian Raschka · 大咖观点）所有 · <a href="https://sebastianraschka.com/blog/2026/glm-5-2-indexshare.html" target="_blank" rel="noopener">阅读原文</a></span></div>
     
     <div class="dp-brief"><b>简报</b>GLM-5.2 是 GLM 的更新版本，保留了稀疏 MoE 骨干，并引入 IndexShare 技术，以降低 1M-token DSA 推理的成本，提升长上下文处理效率。</div>
-    <blockquote class="dp-excerpt">Short note on GLM-5.2, an open-weight GLM update that keeps the GLM-5 sparse MoE backbone and adds IndexShare for cheaper 1M-token DSA inference.</blockquote>
+    <div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang"><i class="fa-solid fa-language"></i><span>翻译为中文</span></button><span class="dp-lang-note">中文由 AI 翻译，仅供参考</span></div><article class="dp-body" id="dpBodyOrig"><p><a href="https://huggingface.co/zai-org/GLM-5.2" target="_blank" rel="noopener nofollow">GLM-5.2</a> is a recent open-weight model release from Z.ai. My first impression is that it is the best open-weight model today. As usual for fresh releases, I would treat the release-time leaderboard position as date-sensitive.</p>
+
+<p>Architecture-wise, it builds on the earlier GLM-5 and GLM-5.1 architecture. In particular, it reuses <a href="https://sebastianraschka.com/llm-architecture-gallery/mla/" target="_blank" rel="noopener nofollow">Multi-head Latent Attention</a> and <a href="https://sebastianraschka.com/llm-architecture-gallery/deepseek-sparse-attention/" target="_blank" rel="noopener nofollow">DeepSeek Sparse Attention</a>, the DSA mechanism from DeepSeek V3.2 that I covered in the <a href="https://magazine.sebastianraschka.com/p/technical-deepseek" target="_blank" rel="noopener nofollow">DeepSeek V3 to V3.2 article</a>.</p>
+
+<p>What’s new is <a class="cpt" href="../c/indexshare.html" data-def="一种用于长上下文稀疏注意力的技术，通过共享索引降低大模型处理超长文本时的计算成本">IndexShare</a>. This is a cross-layer reuse trick for DSA. Instead of recomputing the sparse-attention top-k indexer in every layer, GLM-5.2 runs the full indexer only once every four layers. The following layers then reuse the selected token indices.</p>
+
+<p>This keeps the same DSA idea but makes 1M-token inference cheaper. The attention pattern is still adaptive, but the model spends less work repeatedly deciding which earlier tokens to attend to.</p>
+
+<p>The local <a href="https://sebastianraschka.com/llm-architecture-gallery/#card-glm-5-2" target="_blank" rel="noopener nofollow">GLM-5.2 architecture card</a> has the current summary, config links, and <a href="https://sebastianraschka.com/glossary/#benchmark" target="_blank" rel="noopener nofollow">benchmark</a> references.</p>
+
+<figure><p><a href="https://substack.com/@rasbt/note/c-278515750" target="_blank" rel="noopener nofollow"><img src="https://sebastianraschka.com/images/blog/2026/glm-5-2/hero.webp" alt="GLM-5.2 architecture and benchmark overview" referrerpolicy="no-referrer" /></a></p>
+<figcaption>Composite figure from the original <a href="https://substack.com/@rasbt/note/c-278515750" target="_blank" rel="noopener nofollow">Substack note</a>, summarizing the GLM-5.2 architecture and release-time average benchmark snapshot.</figcaption></figure>
+
+
+<p>By the way, in the <a href="https://artificialanalysis.ai/" target="_blank" rel="noopener nofollow">Artificial Analysis Coding Index</a> snapshot below, GLM-5.2 scores 68.8 versus 56.7 for Claude Opus 4.8 (max), more than 10 points higher on coding benchmarks. That’s super impressive for a fresh open-weight model.</p>
+
+<figure><p><img src="https://sebastianraschka.com/images/blog/2026/glm-5-2/artificial-analysis-coding-index.webp" alt="Artificial Analysis Coding Index chart comparing GLM-5.2 and Claude Opus 4.8" referrerpolicy="no-referrer" /></p>
+<figcaption>Artificial Analysis Coding Index snapshot showing GLM-5.2 at 68.8 and Claude Opus 4.8 (max) at 56.7.</figcaption></figure>
+
+
+<p>Source: lightly edited website version of my <a href="https://substack.com/@rasbt/note/c-278515750" target="_blank" rel="noopener nofollow">Substack note</a>.</p></article><article class="dp-body" id="dpBodyZh" hidden><p><a href="https://huggingface.co/zai-org/GLM-5.2" target="_blank" rel="noopener nofollow">GLM-5.2</a> 是 Z.ai 近期发布的一款开源权重模型。我的第一印象是，它是目前最好的开源权重模型。和所有新发布模型一样，我认为其发布时的排行榜位置具有时效性。</p>
+
+<p>在架构上，它基于早期的 GLM-5 和 GLM-5.1 架构构建。特别是，它复用了<a href="https://sebastianraschka.com/llm-architecture-gallery/mla/" target="_blank" rel="noopener nofollow">多头潜在注意力</a>和<a href="https://sebastianraschka.com/llm-architecture-gallery/deepseek-sparse-attention/" target="_blank" rel="noopener nofollow">DeepSeek 稀疏注意力</a>，后者即来自 DeepSeek V3.2 的 DSA 机制，我在<a href="https://magazine.sebastianraschka.com/p/technical-deepseek" target="_blank" rel="noopener nofollow">关于 DeepSeek V3 到 V3.2 的文章</a>中曾有介绍。</p>
+
+<p>新引入的是 <a class="cpt" href="../c/indexshare.html" data-def="一种用于长上下文稀疏注意力的技术，通过共享索引降低大模型处理超长文本时的计算成本">IndexShare</a>。这是针对 DSA 的一种跨层复用技巧。GLM-5.2 并非在每一层都重新计算稀疏注意力的 top-k 索引器，而是每四层才运行一次完整的索引器。随后的层则复用已选定的 token 索引。</p>
+
+<p>这保持了 DSA 的核心思想，但使得百万 token 推理的成本更低。注意力模式仍然是自适应的，但模型在反复决定关注哪些先前 token 上所花费的计算量减少了。</p>
+
+<p>本地的<a href="https://sebastianraschka.com/llm-architecture-gallery/#card-glm-5-2" target="_blank" rel="noopener nofollow">GLM-5.2 架构卡片</a>提供了当前的摘要、配置链接和<a href="https://sebastianraschka.com/glossary/#benchmark" target="_blank" rel="noopener nofollow">基准测试</a>参考。</p>
+
+<figure><p><a href="https://substack.com/@rasbt/note/c-278515750" target="_blank" rel="noopener nofollow"><img src="https://sebastianraschka.com/images/blog/2026/glm-5-2/hero.webp" alt="GLM-5.2 architecture and benchmark overview" referrerpolicy="no-referrer" /></a></p>
+<figcaption>来自原始<a href="https://substack.com/@rasbt/note/c-278515750" target="_blank" rel="noopener nofollow">Substack 笔记</a>的合成图，总结了 GLM-5.2 的架构及其发布时的平均基准测试快照。</figcaption></figure>
+
+<p>顺便一提，在下面的 <a href="https://artificialanalysis.ai/" target="_blank" rel="noopener nofollow">Artificial Analysis 编程指数</a>快照中，GLM-5.2 得分为 68.8，而 Claude Opus 4.8 (max) 为 56.7，在编程基准测试上高出 10 多分。对于一个全新的开源权重模型来说，这非常令人印象深刻。</p>
+
+<figure>
+<p><img src="https://sebastianraschka.com/images/blog/2026/glm-5-2/artificial-analysis-coding-index.webp" alt="Artificial Analysis Coding Index 图表对比 GLM-5.2 与 Claude Opus 4.8" referrerpolicy="no-referrer" /></p>
+<figcaption>Artificial Analysis Coding Index 快照显示 GLM-5.2 得分为 68.8，Claude Opus 4.8（最高）得分为 56.7。</figcaption></figure>
+
+<p>来源：我的 <a href="https://substack.com/@rasbt/note/c-278515750" target="_blank" rel="noopener nofollow">Substack 笔记</a> 的稍作编辑的网站版本。</p></article>
     <div class="dp-actions">
       <a class="dp-btn pri" href="https://sebastianraschka.com/blog/2026/glm-5-2-indexshare.html" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
       
@@ -89,5 +133,11 @@
 <div id="site-footer"></div>
 <script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "GLM-5.2 和用于长上下文稀疏注意力的 IndexShare"};</script>
 <script src="../../assets/site.js"></script>
+<script>
+(function(){var b=document.getElementById('dpLang');if(!b)return;
+var en=document.getElementById('dpBodyOrig'),zh=document.getElementById('dpBodyZh');
+b.addEventListener('click',function(){var on=zh.hidden;zh.hidden=!on;en.hidden=on;
+b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';});})();
+</script>
 </body>
 </html>

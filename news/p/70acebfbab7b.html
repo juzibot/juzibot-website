@@ -58,6 +58,11 @@
     transition:background .2s var(--ease),border-color .2s var(--ease)}
   .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
   .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
 </style>
 </head>
 <body>
@@ -73,10 +78,18 @@
     <h1 class="dp-title">法官批准Anthropic因使用盗版书籍训练Claude而达成的15亿美元和解协议</h1>
     <p class="dp-orig">原题：Judge approves $1.5B Anthropic settlement for pirated books used to train Claude</p>
     <p class="dp-by">来源：Hacker News</p>
-    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为内容导读，只收录简报与摘录，版权归原作者（Hacker News）所有 · <a href="https://apnews.com/article/ai-anthropic-copyright-settlement-claude-books-bartz-74b140444023898aeba8579b6e9f0d63" target="_blank" rel="noopener">全文请读原文</a></span></div>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（Hacker News）所有 · <a href="https://apnews.com/article/ai-anthropic-copyright-settlement-claude-books-bartz-74b140444023898aeba8579b6e9f0d63" target="_blank" rel="noopener">阅读原文</a></span></div>
     
     <div class="dp-brief"><b>简报</b>法官批准了Anthropic公司就使用盗版书籍训练Claude模型一事达成的15亿美元和解协议。这起诉讼涉及版权侵权问题。</div>
+    <div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang"><i class="fa-solid fa-language"></i><span>翻译为中文</span></button><span class="dp-lang-note">中文由 AI 翻译，仅供参考</span></div><article class="dp-body" id="dpBodyOrig"><p>SAN FRANCISCO (AP) — A federal judge has approved a $1.5 billion <a href="https://apnews.com/article/anthropic-copyright-authors-settlement-training-f294266bc79a16ec90d2ddccdf435164" target="_blank" rel="noopener nofollow">copyright settlement</a> in which artificial intelligence company Anthropic will pay thousands of authors about $3,000 per book after using pirated copies of their works to train its Claude chatbot.</p><p>District Judge Araceli Martínez-Olguín said in a Monday ruling that the class-action settlement provides “meaningful relief” to affected authors and publishers. </p><p>About 91% of the more than 482,000 books covered by the ruling have been claimed by authors or publishers who are now due payment.</p><p>Plaintiff attorney Justin Nelson said in a statement that the settlement was “the largest known copyright recovery in history. We look forward to making distributions to the Class as promptly as possible.”</p><p>U.S. District Judge William Alsup issued the preliminary approval in San Francisco federal court last September and has since retired. Alsup had dealt the case a <a href="https://apnews.com/article/anthropic-ai-fair-use-copyright-pirated-libraries-1e5cece51c2e4bd0bb21d94de2abb035" target="_blank" rel="noopener nofollow">mixed ruling</a> last summer, finding that training AI chatbots on copyrighted books wasn’t illegal but that Anthropic wrongfully acquired millions of books through pirate websites.</p><p>Anthropic’s deputy general counsel, Aparna Sridhar, highlighted that ruling Friday as a landmark showing “that training AI on books is fair use under copyright law.”</p>
     
+<p>“We are pleased that more than 91% of authors and publishers covered by the settlement have claimed their share of the payment, and we’re looking forward to bringing this matter to a close,” Sridhar said in a written statement.</p>
+
+<p>Bestselling thriller novelist Andrea Bartz first brought the suit with two other authors in 2024. It’s the first major settlement in dozens of AI copyright lawsuits that are still working their way through courts.</p></article><article class="dp-body" id="dpBodyZh" hidden><p>旧金山（美联社）——一名联邦法官已批准一项15亿美元的<a href="https://apnews.com/article/anthropic-copyright-authors-settlement-training-f294266bc79a16ec90d2ddccdf435164" target="_blank" rel="noopener nofollow">版权和解协议</a>，人工智能公司Anthropic将向数千名作者支付约每本书3000美元的赔偿，此前该公司曾使用盗版副本训练其Claude聊天机器人。</p><p>地区法官Araceli Martínez-Olguín在周一的裁决中表示，该集体诉讼和解协议为受影响的作者和出版商提供了“有意义的救济”。</p><p>该裁决涵盖的48.2万余本书籍中，约91%已被作者或出版商认领，目前正等待付款。</p><p>原告律师Justin Nelson在一份声明中表示，该和解协议是“历史上已知最大的版权追偿案。我们期待尽快向集体成员分配赔偿金。”</p><p>美国地区法官William Alsup去年9月在旧金山联邦法院初步批准了该协议，此后已退休。Alsup去年夏天曾对此案作出<a href="https://apnews.com/article/anthropic-ai-fair-use-copyright-pirated-libraries-1e5cece51c2e4bd0bb21d94de2abb035" target="_blank" rel="noopener nofollow">混合裁决</a>，认定使用受版权保护的书籍训练AI聊天机器人并不违法，但Anthropic通过盗版网站非法获取了数百万本书籍。</p><p>Anthropic副总法律顾问Aparna Sridhar周五强调该裁决具有里程碑意义，表明“根据版权法，使用书籍训练AI属于合理使用。”</p>
+    
+<p>“我们很高兴超过91%的受和解协议覆盖的作者和出版商已认领其应得份额，我们期待尽快了结此事，”Sridhar在书面声明中表示。</p>
+
+<p>畅销惊悚小说作家Andrea Bartz于2024年与另外两名作者首次提起诉讼。这是数十起仍在法院审理中的AI版权诉讼中首个重大和解协议。</p></article>
     <div class="dp-actions">
       <a class="dp-btn pri" href="https://apnews.com/article/ai-anthropic-copyright-settlement-claude-books-bartz-74b140444023898aeba8579b6e9f0d63" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
       <a class="dp-btn sec" href="https://news.ycombinator.com/item?id=48996652" target="_blank" rel="noopener"><i class="fa-brands fa-hacker-news"></i>HN 讨论</a>
@@ -89,5 +102,11 @@
 <div id="site-footer"></div>
 <script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "法官批准Anthropic因使用盗版书籍训练Claude而达成的15亿美元和解协议"};</script>
 <script src="../../assets/site.js"></script>
+<script>
+(function(){var b=document.getElementById('dpLang');if(!b)return;
+var en=document.getElementById('dpBodyOrig'),zh=document.getElementById('dpBodyZh');
+b.addEventListener('click',function(){var on=zh.hidden;zh.hidden=!on;en.hidden=on;
+b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';});})();
+</script>
 </body>
 </html>

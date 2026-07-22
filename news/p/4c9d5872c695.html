@@ -58,6 +58,11 @@
     transition:background .2s var(--ease),border-color .2s var(--ease)}
   .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
   .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
 </style>
 </head>
 <body>
@@ -73,10 +78,69 @@
     <h1 class="dp-title">VibeThinker-3B 和后训练的力量</h1>
     <p class="dp-orig">原题：VibeThinker-3B and the Strength of Post-Training</p>
     <p class="dp-by">来源：Sebastian Raschka · 大咖观点</p>
-    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为内容导读，只收录简报与摘录，版权归原作者（Sebastian Raschka · 大咖观点）所有 · <a href="https://sebastianraschka.com/blog/2026/vibethinker-3b-post-training.html" target="_blank" rel="noopener">全文请读原文</a></span></div>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（Sebastian Raschka · 大咖观点）所有 · <a href="https://sebastianraschka.com/blog/2026/vibethinker-3b-post-training.html" target="_blank" rel="noopener">阅读原文</a></span></div>
     
     <div class="dp-brief"><b>简报</b>VibeThinker-3B 是一个基于 Qwen2.5-Coder-3B 的 3B 参数模型，其编码和推理性能显示后训练效果显著，突出了后训练在模型优化中的重要性。</div>
-    <blockquote class="dp-excerpt">Short note on VibeThinker-3B, a 3B model based on Qwen2.5-Coder-3B whose reported coding and reasoning results point to strong post-training.</blockquote>
+    <div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang"><i class="fa-solid fa-language"></i><span>翻译为中文</span></button><span class="dp-lang-note">中文由 AI 翻译，仅供参考</span></div><article class="dp-body" id="dpBodyOrig"><p>According to the reported benchmarks, <a href="https://huggingface.co/WeiboAI/VibeThinker-3B" target="_blank" rel="noopener nofollow">VibeThinker-3B</a> gets surprisingly close to much larger coding and reasoning systems.</p>
+
+<p>What I found most interesting is that the model builds on the older <a href="https://huggingface.co/Qwen/Qwen2.5-Coder-3B" target="_blank" rel="noopener nofollow">Qwen2.5-Coder-3B</a> stack. Based on the model card, VibeThinker-3B has 3.09B parameters and uses a Qwen2-style backbone.</p>
+
+<p>So, this is a pretty clear example of how much can come from good data curation and <a class="cpt" href="../c/post-training.html" data-def="在模型预训练后，通过特定任务数据进一步优化模型性能的过程">post-training</a>.</p>
+
+<p>The <a href="https://arxiv.org/abs/2606.16140" target="_blank" rel="noopener nofollow">technical report</a> is worth reading because it gives a detailed look at the post-training pipeline. The important pieces are:</p>
+
+<ol>
+  <li>high-signal synthetic math and code data with verifiable solutions</li>
+  <li>multiple reasoning paths per answer, followed by aggressive filtering</li>
+  <li>two-stage <a href="https://sebastianraschka.com/glossary/#instruction-finetuning" target="_blank" rel="noopener nofollow">supervised finetuning</a>, first broad coverage and then harder long-reasoning examples</li>
+  <li>checkpoint selection by target accuracy rather than validation loss alone</li>
+  <li>MGPO, a GRPO-style <a href="https://sebastianraschka.com/glossary/#rlvr" target="_blank" rel="noopener nofollow">RLVR</a> method that emphasizes samples that are neither too easy nor too hard</li>
+  <li>single-stage 64k-context RL, instead of progressive context expansion</li>
+  <li>domain RL ordered as math, then code, then STEM</li>
+  <li>a later stage that rewards shorter correct trajectories</li>
+  <li>offline self-<a href="https://sebastianraschka.com/glossary/#distillation" target="_blank" rel="noopener nofollow">distillation</a> from filtered Math, Code, and STEM RL trajectories</li>
+  <li>final instruction RL using rule-based validators and rubric-based reward models</li>
+</ol>
+
+<p>They do not share the exact GPU hours for this project. Based on numbers from the earlier VibeThinker-1.5B report, my rough guess would be that this cost on the order of $25k to $60k. That is still a lot of money, but it is not millions.</p>
+
+<p>One caveat is that as of June 17, 2026, the model is very new, and the benchmarks could still be too good to be true. It needs practical use over the next few days to see whether the VibeThinker results check out in practice. But as a first impression, this is a strong small-model result and a useful post-training write-up.</p>
+
+<figure><p><a href="https://substack.com/@rasbt/note/c-277879621" target="_blank" rel="noopener nofollow"><img src="https://sebastianraschka.com/images/blog/2026/vibethinker-3b/hero.webp" alt="VibeThinker-3B benchmark, architecture, and post-training overview" referrerpolicy="no-referrer" /></a></p>
+<figcaption>Composite figure from the original <a href="https://substack.com/@rasbt/note/c-277879621" target="_blank" rel="noopener nofollow">Substack note</a>, summarizing the <a href="https://sebastianraschka.com/glossary/#benchmark" target="_blank" rel="noopener nofollow">benchmark</a> snapshot, architecture sketch, and post-training pipeline.</figcaption></figure>
+
+
+<p>Source: lightly edited website version of my <a href="https://substack.com/@rasbt/note/c-277879621" target="_blank" rel="noopener nofollow">Substack note</a>.</p></article><article class="dp-body" id="dpBodyZh" hidden><p>根据已公布的基准测试结果，<a href="https://huggingface.co/WeiboAI/VibeThinker-3B" target="_blank" rel="noopener nofollow">VibeThinker-3B</a> 的表现令人惊讶地接近许多规模大得多的编程与推理系统。</p>
+
+<p>最让我感兴趣的是，该模型基于较早期的 <a href="https://huggingface.co/Qwen/Qwen2.5-Coder-3B" target="_blank" rel="noopener nofollow">Qwen2.5-Coder-3B</a> 技术栈构建。根据模型卡片信息，VibeThinker-3B 拥有 30.9 亿参数，并采用了 Qwen2 风格的骨干网络。</p>
+
+<p>因此，这清晰地展示了优质数据整理与<a class="cpt" href="../c/post-training.html" data-def="在模型预训练后，通过特定任务数据进一步优化模型性能的过程">后训练</a>能带来多大的提升。</p>
+
+<p>这份<a href="https://arxiv.org/abs/2606.16140" target="_blank" rel="noopener nofollow">技术报告</a>值得一读，因为它详细介绍了后训练流程。其中的关键环节包括：</p>
+
+<ol>
+  <li>使用带有可验证解决方案的高信号合成数学与代码数据</li>
+  <li>每个答案生成多条推理路径，随后进行严格筛选</li>
+  <li>两阶段<a href="https://sebastianraschka.com/glossary/#instruction-finetuning" target="_blank" rel="noopener nofollow">监督微调</a>：第一阶段追求广泛覆盖，第二阶段聚焦更难的长推理示例</li>
+  <li>依据目标准确率（而非仅凭验证损失）选择检查点</li>
+  <li>MGPO：一种 GRPO 风格的 <a href="https://sebastianraschka.com/glossary/#rlvr" target="_blank" rel="noopener nofollow">RLVR</a> 方法，侧重于那些既不太简单也不太难的样本</li>
+  <li>单阶段 64k 上下文强化学习，而非渐进式上下文扩展</li>
+  <li>领域强化学习的顺序为：先数学，再编程，最后 STEM</li>
+  <li>后期阶段奖励更短的正确推理轨迹</li>
+  <li>基于筛选后的数学、编程和 STEM 强化学习轨迹进行离线自我<a href="https://sebastianraschka.com/glossary/#distillation" target="_blank" rel="noopener nofollow">蒸馏</a></li>
+  <li>最终使用基于规则的验证器和基于评分标准的奖励模型进行指令强化学习</li>
+</ol>
+
+<p>他们并未透露该项目的确切 GPU 使用时长。根据早期 VibeThinker-1.5B 报告中的数据，我粗略估计成本大约在 2.5 万到 6 万美元之间。这仍然是一笔不小的开支，但远未达到数百万美元的量级。</p>
+
+<p>需要注意的是，截至 2026 年 6 月 17 日，该模型非常新，其基准测试结果可能好得令人难以置信。未来几天需要通过实际应用来检验 VibeThinker 的结果是否在实践中站得住脚。但就第一印象而言，这是一个出色的小模型成果，也是一份有价值的后训练技术总结。</p>
+
+<figure>
+<p><a href="https://substack.com/@rasbt/note/c-277879621" target="_blank" rel="noopener nofollow"><img src="https://sebastianraschka.com/images/blog/2026/vibethinker-3b/hero.webp" alt="VibeThinker-3B 基准测试、架构与后训练概览" referrerpolicy="no-referrer" /></a></p>
+<figcaption>来自原始 <a href="https://substack.com/@rasbt/note/c-277879621" target="_blank" rel="noopener nofollow">Substack 笔记</a> 的组合图，总结了 <a href="https://sebastianraschka.com/glossary/#benchmark" target="_blank" rel="noopener nofollow">benchmark</a> 快照、架构示意图和后训练流程。</figcaption></figure>
+
+
+<p>来源：我的 <a href="https://substack.com/@rasbt/note/c-277879621" target="_blank" rel="noopener nofollow">Substack 笔记</a> 经过轻微编辑的网站版本。</p></article>
     <div class="dp-actions">
       <a class="dp-btn pri" href="https://sebastianraschka.com/blog/2026/vibethinker-3b-post-training.html" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
       
@@ -89,5 +153,11 @@
 <div id="site-footer"></div>
 <script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "VibeThinker-3B 和后训练的力量"};</script>
 <script src="../../assets/site.js"></script>
+<script>
+(function(){var b=document.getElementById('dpLang');if(!b)return;
+var en=document.getElementById('dpBodyOrig'),zh=document.getElementById('dpBodyZh');
+b.addEventListener('click',function(){var on=zh.hidden;zh.hidden=!on;en.hidden=on;
+b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';});})();
+</script>
 </body>
 </html>

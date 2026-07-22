@@ -58,6 +58,11 @@
     transition:background .2s var(--ease),border-color .2s var(--ease)}
   .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
   .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
 </style>
 </head>
 <body>
@@ -73,10 +78,81 @@
     <h1 class="dp-title">用后见之明自动评分十年旧的 Hacker News 讨论</h1>
     <p class="dp-orig">原题：Auto-grading decade-old Hacker News discussions with hindsight</p>
     <p class="dp-by">来源：Karpathy · 大咖观点</p>
-    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为内容导读，只收录简报与摘录，版权归原作者（Karpathy · 大咖观点）所有 · <a href="https://karpathy.bearblog.dev/auto-grade-hn/" target="_blank" rel="noopener">全文请读原文</a></span></div>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（Karpathy · 大咖观点）所有 · <a href="https://karpathy.bearblog.dev/auto-grade-hn/" target="_blank" rel="noopener">阅读原文</a></span></div>
     
     <div class="dp-brief"><b>简报</b>这是一个关于用大语言模型（LLM）大规模回顾性自动评分十年旧Hacker News讨论的思考练习，探讨了vibe coding在历史数据分析中的应用可能性。</div>
-    <blockquote class="dp-excerpt">A vibe coding thought exercise on what it might look like for LLMs to scour human historical data at scale and in retrospect.</blockquote>
+    <article class="dp-body"><h1>Auto-grading decade-old Hacker News discussions with hindsight</h1>
+
+        <p>
+            <i>
+                
+    10 Dec, 2025
+
+            </i>
+        </p>
+    
+
+    <p><img src="https://bear-images.sfo2.cdn.digitaloceanspaces.com/karpathy/hnhero.webp" alt="hnhero" referrerpolicy="no-referrer" /></p>
+<p>TLDR: <a href="https://karpathy.ai/hncapsule/" target="_blank" rel="noopener nofollow">https://karpathy.ai/hncapsule/</a></p>
+<hr />
+<p>Yesterday I stumbled on this HN thread <a href="https://news.ycombinator.com/item?id=46205632" target="_blank" rel="noopener nofollow">Show HN: Gemini Pro 3 hallucinates the HN front page 10 years from now</a>, where Gemini 3 was hallucinating the frontpage of 10 years from now. One of the comments struck me a bit more though - Bjartr linked to the <a href="https://news.ycombinator.com/front?day=2015-12-09" target="_blank" rel="noopener nofollow">HN frontpage from exactly 10 years ago</a>, i.e. December 2015. I was reading through the discussions of 10 years ago and mentally grading them for prescience when I realized that an <a class="cpt" href="../c/large-language-model.html" data-def="大型语言模型是基于海量文本数据训练的AI模型，能理解和生成自然语言">LLM</a> might actually be a lot better at this task. I copy pasted one of the article+comment threads manually into ChatGPT 5.1 Thinking and it gave me a beautiful analysis of what people thought + what actually happened in retrospect, even better and significantly more detailed than what I was doing manually. I realized that this task is actually a really good fit for LLMs and I was looking for excuses to vibe code something with the newly released Opus 4.5, so I got to work. I&#x27;m going to get all the front pages of December (31 days, 30 articles per day), get ChatGPT 5.1 Thinking to do the analysis, and present everything in a nice way for historical reading.</p>
+<p>There are two macro reasons for why I think the exercise is interesting more generally:</p>
+<ol>
+<li>I believe it is quite possible and desirable to train your forward future predictor given training and effort.</li>
+<li>I was reminded again of my tweets that said <em>&quot;Be good, future LLMs are watching&quot;</em>. You can take that in many directions, but here I want to focus on the idea that future LLMs <strong>are</strong> watching. Everything we do today might be scrutinized in great detail in the future because doing so will be &quot;free&quot;. A lot of the ways people behave currently I think make an implicit &quot;security by obscurity&quot; assumption. But if intelligence really does become too cheap to meter, it will become possible to do a perfect reconstruction and synthesis of everything. LLMs are watching (or humans using them might be). Best to be good.</li>
+</ol>
+<p><a class="cpt" href="../c/vibe-coding.html" data-def="凭感觉编程是一种依赖直觉和即时反馈的软件开发方式，开发者跳过详细规划和测试，快速迭代代码">Vibe coding</a> the actual project was relatively painless and took about 3 hours with Opus 4.5, with a few hickups but overall very impressive. The repository is on GitHub here: <a href="https://github.com/karpathy/hn-time-capsule" target="_blank" rel="noopener nofollow">karpathy/hn-time-capsule</a>. Here is the progression of what the code does:</p>
+<ul>
+<li>Given a date, download the frontpage of 30 articles</li>
+<li>For each article, download/parse the article itself and the full comment thread using Algolia API.</li>
+<li>Package up everything into a markdown prompt asking for the analysis. Here is the prompt prefix I used:</li>
+</ul>
+<pre>The following is an article that appeared on Hacker News 10 years ago, and the discussion thread.
+
+Let&#x27;s use our benefit of hindsight now in 6 sections:
+
+1. Give a brief summary of the article and the discussion thread.
+2. What ended up happening to this topic? (research the topic briefly and write a summary)
+3. Give out awards for &quot;Most prescient&quot; and &quot;Most wrong&quot; comments, considering what happened.
+4. Mention any other fun or notable aspects of the article or discussion.
+5. Give out grades to specific people for their comments, considering what happened.
+6. At the end, give a final score (from 0-10) for how interesting this article and its retrospect analysis was.
+
+As for the format of Section 5, use the header &quot;Final grades&quot; and follow it with simply an unordered list of people and their grades in the format of &quot;name: grade (optional comment)&quot;. Here is an example:
+
+Final grades
+- speckx: A+ (excellent predictions on ...)
+- tosh: A (correctly predicted this or that ...)
+- keepamovin: A
+- bgwalter: D
+- fsflover: F (completely wrong on ...)
+
+Your list may contain more people of course than just this toy example. Please follow the format exactly because I will be parsing it programmatically. The idea is that I will accumulate the grades for each account to identify the accounts that were over long periods of time the most prescient or the most wrong.
+
+As for the format of Section 6, use the prefix &quot;Article hindsight analysis interestingness score:&quot; and then the score (0-10) as a number. Give high scores to articles/discussions that are prominent, notable, or interesting in retrospect. Give low scores in cases where few predictions are made, or the topic is very niche or obscure, or the discussion is not very interesting in retrospect.
+
+Here is an example:
+Article hindsight analysis interestingness score: 8
+---
+</pre>
+<ul>
+<li>Submit prompt to GPT 5.1 Thinking via the OpenAI API</li>
+<li>Collect and parse the results</li>
+<li>Render the results into static HTML web pages for easy viewing</li>
+<li>Host the html result pages on my website: <a href="https://karpathy.ai/hncapsule/" target="_blank" rel="noopener nofollow">https://karpathy.ai/hncapsule/</a></li>
+<li>Host all the intermediate results of the <code>data</code> directory if someone else would like to play. It&#x27;s the file <code>data.zip</code> under the exact same url prefix (intentionally avoiding a direct link).</li>
+</ul>
+<p>I spent a few hours browsing around and found it to be very interesting. A few example threads just for fun:</p>
+<ul>
+<li>December 3 2015 <a href="https://karpathy.ai/hncapsule/2015-12-03/index.html#article-10669891" target="_blank" rel="noopener nofollow">Swift went open source</a>.</li>
+<li>December 6 2015 <a href="https://karpathy.ai/hncapsule/2015-12-06/index.html#article-10685407" target="_blank" rel="noopener nofollow">Launch of Figma</a></li>
+<li>December 11 2015 <a href="https://karpathy.ai/hncapsule/2015-12-11/index.html#article-10720176" target="_blank" rel="noopener nofollow">original announcement of OpenAI</a> :&#x27;).</li>
+<li>December 16 2015 <a href="https://karpathy.ai/hncapsule/2015-12-16/index.html#article-10744206" target="_blank" rel="noopener nofollow">geohot is building Comma</a></li>
+<li>December 22 2015 <a href="https://karpathy.ai/hncapsule/2015-12-22/index.html#article-10774865" target="_blank" rel="noopener nofollow">SpaceX launch webcast: Orbcomm-2 Mission</a></li>
+<li>December 28 2015 <a href="https://karpathy.ai/hncapsule/2015-12-28/index.html#article-10799261" target="_blank" rel="noopener nofollow">Theranos struggles</a></li>
+</ul>
+<p>And then when you navigate over to the <a href="https://karpathy.ai/hncapsule/hall-of-fame.html" target="_blank" rel="noopener nofollow">Hall of Fame</a>, you can find the top commenters of Hacker News in December 2015, sorted by imdb-style score of their grade point average. In particular, congratulations to pcwalton, tptacek, paulmd, cstross, greglindahl, moxie, hannob, 0xcde4c3db, Manishearth, johncolanduoni - GPT 5.1 Thinking found your comments very insightful and prescient. You can also scroll all the way down to find the noise of HN, which I think we&#x27;re all familiar with too :)</p>
+<p>My <a href="https://github.com/karpathy/hn-time-capsule" target="_blank" rel="noopener nofollow">code</a> (wait, Opus&#x27; code?) on GitHub can be used to reproduce or tweak the results. Running 31 days of 30 articles through GPT 5.1 Thinking meant <code>31 * 30 =</code> 930 LLM queries and cost about $58 and somewhere around ~1 hour. The LLM megaminds of the future might find this kind of a thing a lot easier, a lot faster and a lot cheaper.</p></article>
     <div class="dp-actions">
       <a class="dp-btn pri" href="https://karpathy.bearblog.dev/auto-grade-hn/" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
       

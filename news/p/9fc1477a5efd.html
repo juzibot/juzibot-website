@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>入局5G消息！句子互动与来也、亚信、东信北邮等入驻硬核桃5G开发者社区 - 句子·动态</title>
 <meta name="description" content="5G消息商用即将开启，越来越多产业链企业加入布局。 句子互动作为聊天机器人开源框架Wechaty社区内最大的商业化公司，致力于帮助企业打造聚合所有IM消息的跨平台营销云，5G消息是其中非常重要的一环。" />
-<meta name="robots" content="noindex,follow" />
-<link rel="canonical" href="https://rui.juzi.bot/interview/2021-12-16-5g-wechaty-walnut.html" />
+<meta name="robots" content="index,follow" />
+<link rel="canonical" href="https://juzibot.com/news/p/9fc1477a5efd.html" />
 <link rel="icon" href="../../logo.png" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="../../assets/site.css" />
@@ -58,6 +58,11 @@
     transition:background .2s var(--ease),border-color .2s var(--ease)}
   .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
   .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
 </style>
 </head>
 <body>
@@ -73,10 +78,21 @@
     <h1 class="dp-title">入局5G消息！句子互动与来也、亚信、东信北邮等入驻硬核桃5G开发者社区</h1>
     
     <p class="dp-by">来源：李佳芮 · 博客精选</p>
-    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为内容导读，只收录简报与摘录，版权归原作者（李佳芮 · 博客精选）所有 · <a href="https://rui.juzi.bot/interview/2021-12-16-5g-wechaty-walnut.html" target="_blank" rel="noopener">全文请读原文</a></span></div>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>句子互动自家内容，首发于李佳芮的博客，本页为官网收录版 · <a href="https://rui.juzi.bot/interview/2021-12-16-5g-wechaty-walnut.html" target="_blank" rel="noopener">看原发布</a></span></div>
     
     
-    <blockquote class="dp-excerpt">5G消息商用即将开启，越来越多产业链企业加入布局。 句子互动作为聊天机器人开源框架Wechaty社区内最大的商业化公司，致力于帮助企业打造聚合所有IM消息的跨平台营销云，5G消息是其中非常重要的一环。</blockquote>
+    <article class="dp-body"><p><a class="cpt" href="../c/5g-messaging.html" data-def="5G消息是基于5G网络的富媒体消息服务，支持图文、视频、交互卡片等多种形式，无需安装APP即可使用">5G消息</a>商用即将开启，越来越多产业链企业加入布局。</p>
+<p>句子互动作为<a class="cpt" href="../c/chatbot.html" data-def="聊天机器人是基于自然语言处理技术的对话系统，能模拟人类与用户进行文本或语音交互">聊天机器人</a>开源框架Wechaty社区内最大的商业化公司，致力于帮助企业打造聚合所有IM消息的跨平台营销云，5G消息是其中非常重要的一环。</p>
+<p>12月15日，在5G消息开发者的垂直技术社区“硬核桃社区”一周年大会上，句子互动入驻社区并分享了团队接下来在5G消息机器人方向的规划。中国信通院、中国通信企业协会、GSMA、中国移动、中国广电、中国联通和梦网、来也、亚信、东信北邮等行业企业的近百位专家领导也参与了周年活动并做了主题交流。</p>
+<p><img alt="group" src="/img/2021/12-5g-wechaty-walnut/group.jpg" / loading="lazy" decoding="async"></p>
+<p>句子互动CEO李佳芮在下午的“核能沙龙”上，分享了团队在5G消息商业化方面的规划和实践。</p>
+<p><img alt="rui" src="/img/2021/12-5g-wechaty-walnut/rui.jpg" / loading="lazy" decoding="async"></p>
+<p>Wechaty开源社区有5年的技术沉淀，拥有社区大量的开发者已完成的现有对话机器人场景应用。这些产品技术的积累可以在零代码修改的基础上复用给5G消息运营商的业务。同时，行业中已有很多在使用Wechaty的开发者和公司，都可以在第一时间成为未来运营商Chatbot的高质量供应商，做到人才和公司的高效复用。</p>
+<p>Wechaty使用对商业最为友好的Apache-2.0许可协议，现有大量开发者和商业公司基于Wechaty为客户提供的商业产品和服务，都可以通过Wechaty迅速切入5G Chatbot新市场。</p>
+<p>句子互动在企业微信机器人商业应用上已经被市场验证，正在为欧莱雅、Babycare、元气森林、58本地版等头部品牌提供私域营销服务，这些经验将在接下来5G Chatbot商业化探索上被复用。</p>
+<p><img alt="juzibot" src="/img/2021/12-5g-wechaty-walnut/juzibot.jpg" / loading="lazy" decoding="async"></p>
+<p>Wechaty与硬核桃社区已共同完成了Wechaty Puppet Walnut - 硬核桃5G消息的开发，接下来会有更多的应用随着句子互动的入驻落地应用。</p>
+<p>以下视频是分享内容：</p></article>
     <div class="dp-actions">
       <a class="dp-btn pri" href="https://rui.juzi.bot/interview/2021-12-16-5g-wechaty-walnut.html" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
       

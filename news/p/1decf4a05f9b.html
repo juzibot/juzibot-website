@@ -58,6 +58,11 @@
     transition:background .2s var(--ease),border-color .2s var(--ease)}
   .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
   .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
 </style>
 </head>
 <body>
@@ -73,10 +78,54 @@
     <h1 class="dp-title">GPT 5.6 有 72 种可能配置。什么是好的默认设置？</h1>
     <p class="dp-orig">原题：GPT 5.6 Has 72 Possible Configurations. What&#x27;s A Good Default?</p>
     <p class="dp-by">来源：Sebastian Raschka · 大咖观点</p>
-    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为内容导读，只收录简报与摘录，版权归原作者（Sebastian Raschka · 大咖观点）所有 · <a href="https://sebastianraschka.com/blog/2026/gpt-5-6-configurations.html" target="_blank" rel="noopener">全文请读原文</a></span></div>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（Sebastian Raschka · 大咖观点）所有 · <a href="https://sebastianraschka.com/blog/2026/gpt-5-6-configurations.html" target="_blank" rel="noopener">阅读原文</a></span></div>
     
     <div class="dp-brief"><b>简报</b>GPT 5.6 模型有 72 种配置，涉及训练时间和推理时间的缩放。本文讨论了如何选择合适的默认配置，以平衡性能和资源消耗。</div>
-    <blockquote class="dp-excerpt">Short note on how GPT 5.6 model and effort choices map onto training-time and inference-time scaling, producing 72 configurations.</blockquote>
+    <div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang"><i class="fa-solid fa-language"></i><span>翻译为中文</span></button><span class="dp-lang-note">中文由 AI 翻译，仅供参考</span></div><article class="dp-body" id="dpBodyOrig"><p>Yes, there are probably too many options to choose from in the GPT 5.6 release.</p>
+
+<p>In the context of reasoning models, though, I find it interesting how these choices map onto training-time and <a href="https://sebastianraschka.com/glossary/#inference-time-scaling" target="_blank" rel="noopener nofollow">inference-time scaling</a>. If we loosely map the options onto the classic o1 plots, Sol, Terra, and Luna stand in for three model sizes and training budgets along the training-compute axis. The effort settings then sit on the inference-time-compute axis.</p>
+
+<figure><p><img src="https://sebastianraschka.com/images/blog/2026/gpt-5-6-configurations/hero.webp" alt="Annotated comparison mapping GPT 5.6 model choices to training-compute scaling and effort levels to inference-time scaling" referrerpolicy="no-referrer" /></p>
+<figcaption>Figure 1. A loose mapping from OpenAI&#x27;s classic <a href="https://openai.com/index/learning-to-reason-with-llms/" target="_blank" rel="noopener nofollow">o1 scaling plots</a> to the GPT 5.6 choices. The three model options represent different model sizes and training budgets, while the effort setting represents inference-time compute.</figcaption></figure>
+
+
+<p>The full list has three model choices and six reasoning-effort levels (Light, Medium, High, Extra High, Max, and Ultra). Once Work versus Codex and Standard versus Fast are included, the full configuration matrix becomes</p>
+
+<p><code>Work/Codex × Sol/Terra/Luna × Light/Medium/High/Extra High/Max/Ultra × Standard/Fast</code></p>
+
+<p>That gives us <code>2 × 3 × 6 × 2 = 72</code> possible configurations.</p>
+
+<p>So, what is a good default now? Luna with High effort? Sol with Light effort? Terra with Medium effort?</p>
+
+<p>Sure, a performance-versus-cost chart can help identify the good bang-for-the-buck combinations. For instance, Luna with Extra High effort may be better and cheaper than Sol with Medium effort.</p>
+
+<figure><p><img src="https://sebastianraschka.com/images/blog/2026/gpt-5-6-configurations/coding-agent-index-cost.webp" alt="Artificial Analysis Coding Agent Index scores plotted against API cost for GPT 5.6 and comparison models" referrerpolicy="no-referrer" /></p>
+<figcaption>Figure 2. Artificial Analysis Coding Agent Index v1.1 scores plotted against API cost across GPT 5.6 and several comparison models. Figure based on <a href="https://x.com/OpenAI/status/2075271425548795909" target="_blank" rel="noopener nofollow">OpenAI&#x27;s GPT 5.6 release post on X</a>.</figcaption></figure>
+
+
+<p>But yeah, 72 possible configurations leave us with a lot of choices 🤯.</p></article><article class="dp-body" id="dpBodyZh" hidden><p>是的，GPT 5.6 版本中可供选择的选项可能太多了。</p>
+
+<p>不过，在推理模型的背景下，我发现这些选择如何映射到训练时和<a href="https://sebastianraschka.com/glossary/#inference-time-scaling" target="_blank" rel="noopener nofollow">推理时缩放</a>上很有趣。如果我们粗略地将这些选项映射到经典的 o1 图表上，Sol、Terra 和 Luna 代表了沿训练计算轴的三种模型规模和训练预算。而努力程度设置则位于推理时计算轴上。</p>
+
+<figure><p><img src="https://sebastianraschka.com/images/blog/2026/gpt-5-6-configurations/hero.webp" alt="GPT 5.6 模型选择与训练计算缩放、努力程度与推理时缩放的对应关系注释图" referrerpolicy="no-referrer" /></p>
+<figcaption>图 1. OpenAI 经典<a href="https://openai.com/index/learning-to-reason-with-llms/" target="_blank" rel="noopener nofollow"> o1 缩放图</a>与 GPT 5.6 选项的粗略对应关系。三种模型选项代表不同的模型规模和训练预算，而努力程度设置代表推理时计算。</figcaption></figure>
+
+
+<p>完整列表包含三种模型选择和六个<a class="cpt" href="../c/reasoning-effort.html" data-def="推理努力指AI模型在解决问题时投入的计算资源和思考深度">推理努力</a>程度级别（Light、Medium、High、Extra High、Max 和 Ultra）。再加上 Work 与 Codex 以及 Standard 与 Fast 的区分，完整的配置矩阵就变成了</p>
+
+<p><code>Work/Codex × Sol/Terra/Luna × Light/Medium/High/Extra High/Max/Ultra × Standard/Fast</code></p>
+
+<p>这给了我们 <code>2 × 3 × 6 × 2 = 72</code> 种可能的配置。</p>
+
+<p>那么，现在什么是好的默认选择呢？是 High 努力的 Luna？Light 努力的 Sol？还是 Medium 努力的 Terra？</p>
+
+<p>当然，一张性能与成本对比图可以帮助找出性价比高的组合。例如，Extra High 努力的 Luna 可能比 Medium 努力的 Sol 更好且更便宜。</p>
+
+<figure><p><img src="https://sebastianraschka.com/images/blog/2026/gpt-5-6-configurations/coding-agent-index-cost.webp" alt="GPT 5.6 及对比模型的 Artificial Analysis Coding Agent Index 得分与 API 成本对比图" referrerpolicy="no-referrer" /></p>
+<figcaption>图 2. GPT 5.6 及多个对比模型的 Artificial Analysis Coding Agent Index v1.1 得分与 API 成本对比图。图表基于<a href="https://x.com/OpenAI/status/2075271425548795909" target="_blank" rel="noopener nofollow"> OpenAI 在 X 上发布的 GPT 5.6 发布帖</a>。</figcaption></figure>
+
+
+<p>但是，没错，72 种可能的配置给我们留下了太多选择 🤯。</p></article>
     <div class="dp-actions">
       <a class="dp-btn pri" href="https://sebastianraschka.com/blog/2026/gpt-5-6-configurations.html" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
       
@@ -89,5 +138,11 @@
 <div id="site-footer"></div>
 <script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "GPT 5.6 有 72 种可能配置。什么是好的默认设置？"};</script>
 <script src="../../assets/site.js"></script>
+<script>
+(function(){var b=document.getElementById('dpLang');if(!b)return;
+var en=document.getElementById('dpBodyOrig'),zh=document.getElementById('dpBodyZh');
+b.addEventListener('click',function(){var on=zh.hidden;zh.hidden=!on;en.hidden=on;
+b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';});})();
+</script>
 </body>
 </html>

@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>Microsoft MVP Blog: Six Lines Of Code. Two MVPs. One Chatbot. - 句子·动态</title>
 <meta name="description" content="Six lines of code. Two MVPs. One chatbot. This is the proposition behind Wechaty, a RPA SDK which enables for bot development with just six lines of J…" />
-<meta name="robots" content="noindex,follow" />
-<link rel="canonical" href="https://rui.juzi.bot/interview/2020-11-10-six-lines-code-two-ai-mvps-one-chatbot.html" />
+<meta name="robots" content="index,follow" />
+<link rel="canonical" href="https://juzibot.com/news/p/77748018f31d.html" />
 <link rel="icon" href="../../logo.png" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="../../assets/site.css" />
@@ -58,6 +58,11 @@
     transition:background .2s var(--ease),border-color .2s var(--ease)}
   .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
   .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
 </style>
 </head>
 <body>
@@ -73,10 +78,26 @@
     <h1 class="dp-title">Microsoft MVP Blog: Six Lines Of Code. Two MVPs. One Chatbot.</h1>
     
     <p class="dp-by">来源：李佳芮 · 博客精选</p>
-    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为内容导读，只收录简报与摘录，版权归原作者（李佳芮 · 博客精选）所有 · <a href="https://rui.juzi.bot/interview/2020-11-10-six-lines-code-two-ai-mvps-one-chatbot.html" target="_blank" rel="noopener">全文请读原文</a></span></div>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>句子互动自家内容，首发于李佳芮的博客，本页为官网收录版 · <a href="https://rui.juzi.bot/interview/2020-11-10-six-lines-code-two-ai-mvps-one-chatbot.html" target="_blank" rel="noopener">看原发布</a></span></div>
     
     
-    <blockquote class="dp-excerpt">Six lines of code. Two MVPs. One chatbot. This is the proposition behind Wechaty, a RPA SDK which enables for bot development with just six lines of J…</blockquote>
+    <article class="dp-body"><p><strong>Six lines of code. Two MVPs. One <a class="cpt" href="../c/chatbot.html" data-def="聊天机器人是基于自然语言处理技术的对话系统，能模拟人类与用户进行文本或语音交互">chatbot</a>.</strong></p>
+<p>This is the proposition behind Wechaty, a RPA SDK which enables for bot development with just six lines of JavaScript, Python, Go, and Java, and cross-platform support including Linux, Windows, MacOS, and Docker.</p>
+<p>Created by AI MVPs <a href="https://mvp.microsoft.com/en-us/mvp/jiarui%20li-5003226" target="_blank" rel="noopener">Jiarui Li</a> and <a href="https://mvp.microsoft.com/en-us/mvp/Huan%20%E2%80%86%20LI-5003061" target="_blank" rel="noopener">Huan Li</a>, the open-source repository on GitHub has enabled more than 10,000 developers from countries around the world to make AI chatbots and connect to each other.</p>
+<p>“We found that although the chatbot has become one of the hot spots of the internet and something which has been integrating and affecting everyone’s lives, for most developers it remained really difficult to build a chatbot,” the Chinese duo says.</p>
+<p>“Now, thanks to Microsoft AI techniques like BotFramework and Cognitive Service, developers can build a chatbot quickly without any mathematical and algorithmic skills. With Wechaty, developers can use basic software and engineering skills to build an intelligent chatbot at a very low cost.”</p>
+<p>For developers, Wechaty helps raise working efficiency and save time in three ways.</p>
+<p>First, developers save the time of creating a basic framework, which usually takes three to six months. Second, the open-source ecosystem enables developers to leverage the work of others in their solutions. Third, Wechaty supports dozens of instant messaging platforms, so one chatbot can be migrated seamlessly between WeChat, WeChat Work, Gitter, WhatsApp, DingDing, Telegram, and others.</p>
+<p>Launching in 2016, the duo has since built Microsoft AI plugins for Wechaty and given several tech talks at Microsoft Summit. Moreover, the duo has published a book, titled “Chatbot Zero to One: Practice Guide to Conversational Interaction Design,” in order to share their experience of building a chatbot using Microsoft technology.</p>
+<p>During its history, Wechaty has been updated 24 times, attracted about 10,000 developers, and received more than 100 contributors.</p>
+<p>“We built Wechaty to provide the community with a good communication platform,” the duo says. “They are passionate to test, find problems, and submit the quantity of pull requests to help Wechaty repair and grow in return. Certainly, we could say that without these fantastic contributors and community, we could not have today’s high-quality Wechaty!”</p>
+<p>Wechaty actively supports this community with hundreds of technical blogs and videos, docs, and case studies available on the <a href="https://wechaty.js.org" target="_blank" rel="noopener">official website</a>. Further, the team organizes <a href="https://www.bot5.ml" target="_blank" rel="noopener">Bot Friday</a>, a weekly club for chatbot builders and chatbot entrepreneurs which discusses and explores technical problems.</p>
+<p>“As Microsoft MVPs, we are always excited to hear “Thank you for sharing. Your project helps us to understand how AI-related projects can make a positive difference in the world’,” the duo says.</p>
+<p>“In the future, we have a great vision to upgrade Wechaty from a Conversational SDK to SaaS, which will offer a more convenient and efficient service to everyone.”</p>
+<p>For more on Wechaty, check out their <a href="https://github.com/wechaty/wechaty" target="_blank" rel="noopener">Github</a>.</p>
+<blockquote>
+<p>Source: <a href="https://techcommunity.microsoft.com/t5/microsoft-mvp-award-program-blog/six-lines-of-code-two-mvps-one-chatbot/ba-p/1861785" target="_blank" rel="noopener">Microsoft MVP Award Program Blog</a></p>
+</blockquote></article>
     <div class="dp-actions">
       <a class="dp-btn pri" href="https://rui.juzi.bot/interview/2020-11-10-six-lines-code-two-ai-mvps-one-chatbot.html" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
       

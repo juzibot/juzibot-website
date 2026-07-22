@@ -58,6 +58,11 @@
     transition:background .2s var(--ease),border-color .2s var(--ease)}
   .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
   .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
 </style>
 </head>
 <body>
@@ -73,10 +78,67 @@
     <h1 class="dp-title">天立启鸣发布教育AGI白皮书：破解教育“不可能三角”</h1>
     
     <p class="dp-by">来源：量子位 · 行业动态</p>
-    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为内容导读，只收录简报与摘录，版权归原作者（量子位 · 行业动态）所有 · <a href="https://www.qbitai.com/2026/07/457040.html" target="_blank" rel="noopener">全文请读原文</a></span></div>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（量子位 · 行业动态）所有 · <a href="https://www.qbitai.com/2026/07/457040.html" target="_blank" rel="noopener">阅读原文</a></span></div>
     <p class="dp-quip"><i class="fa-solid fa-quote-left"></i>从答题到心智仿真的跃迁，对销售客服场景理解用户深层意图有启发</p>
     <div class="dp-brief"><b>简报</b>天立启鸣发布教育AGI白皮书，旨在通过AI技术从答题响应到心智仿真，解决教育领域的“不可能三角”难题。</div>
-    <blockquote class="dp-excerpt">从答题响应到心智仿真</blockquote>
+    <article class="dp-body"><h1>天立启鸣发布教育AGI白皮书：破解教育“不可能三角”</h1>
+    			   
+             <img src="http://www.qbitai.com/wp-content/uploads/2019/06/200-100x100.jpg" alt="量子位的朋友们" referrerpolicy="no-referrer" /><em><a href="https://www.qbitai.com/author/qbitai" target="_blank" rel="noopener nofollow">量子位的朋友们</a></em>
+                          2026-07-22
+             11:54:49
+          
+          来源：<a href="https://www.qbitai.com" target="_blank" rel="noopener nofollow">量子位</a>            
+                          
+            <p>从答题响应到心智仿真</p>
+                			<p>当下教育数字化已走完信息化、数字化两大阶段，但教育仍深陷质量、成本、规模难以兼顾的“不可能三角”：传统自适应工具、通用大模型仅停留在内容分发表层，只能完成答题响应、习题推荐，无法仿真学习者内在认知逻辑，难以破解统一教学与异质认知的核心矛盾，行业亟待从“信息传递”迈向“认知仿真”。</p>
+<p>7月18日，在2026第9届世界人工智能大会（WAIC）未来计算与未来算力论坛上，天立国际、启鸣达人、天立启鸣AI研究院、AIII人工智能国际研究院，以及北京航空航天大学国际创新研究院联合打造并发布了《世界模型驱动的教育AGI白皮书——从认知仿真到教育智能体的范式跃迁》（以下简称：《白皮书》）。</p>
+<img src="https://i.qbitai.com/wp-content/uploads/2026/07/71f58ea3dcd829081b7e45add9561fbc.jpeg" referrerpolicy="no-referrer" />
+
+<p>天立国际首席科学家、启鸣达人公司CTO、天立启鸣AI研究院院长、北京航空航天大学国际创新研究院基础教育通用人工智能实验室首席科学家兼联合主任刘志毅在论坛上对《白皮书》做了详细解读。</p>
+<p>《白皮书》以<a class="cpt" href="../c/cognitive-world-model.html" data-def="认知世界模型是一种模拟人类认知过程的世界模型，它不仅理解物理规律，还能推理学习者的内在思维逻辑">认知世界模型</a>（CWM）为底座、以LAM（Learning Assessment-Modeling）闭环为范式，提出教育仿真器—规划器—渲染器为三位一体的工程架构。并将”涌现式教育”（Emergent Education）确立为未来愿景、”认知共生”（Cognitive Symbiosis）确立为人机关系主张，为政策制定者、教育从业者、技术开发者与学术研究者提供下一代智能教育基础设施的理论锚点与落地指南。</p>
+<p>值得一提的是，白皮书的技术主张并非停留在纸面：截至目前，天立启鸣AI学伴大模型已落地107所学校，服务全国25万+师生，教育世界模型的工程验证建立在规模化的真实教学场景与数据之上。</p>
+<p>刘志毅表示：“未来三年将是基于教育世界模型的智能系统从概念验证走向规模化落地的关键窗口期。当人工智能真正理解教育的本质，它便不再是冰冷的工具，而是延伸教育智慧边界的认知伙伴。“</p>
+<h1>一、范式重构：五大核心主张锚定教育AGI理论坐标</h1>
+<p>过去二十年教育数字化本质是“信息迁移”，搭起了线上教学、题库测评等信息基础设施，但无人追问：学习究竟如何在个体心智中发生？</p>
+<p>《白皮书》认为，理想状态下的教育AGI是指以认知世界模型为核心底座的通用人工智能教育系统。应具备学习者内部状态仿真、反事实教学推演、自主规划决策三项核心能力，并提出五大核心观点：</p>
+<p><strong>1、范式跃迁：</strong>构建统一认知世界模型</p>
+<p>首次确立面向教育AGI的认知世界模型（CWM），建立覆盖学习者、知识体系、教学环境的统一潜空间，推动教育AI从统计关联升级至因果推理与心智仿真。</p>
+<p><strong>2、工程闭环：</strong>LAM元框架统合全技术脉络</p>
+<p>率先提出LAM<a class="cpt" href="../c/lam-loop.html" data-def="LAM闭环是一种将学习评估与建模紧密结合的反馈系统，通过持续评估学习者状态并动态调整教学策略，形成自适应优化循环">学习评估建模闭环</a>，串联观测、建模、规划、渲染、评估五大环节，打通知识追踪、认知诊断、智能导学、学习分析四大长期割裂的技术赛道。</p>
+<p><strong>3、人机协同：</strong>打造共享能动对等队友</p>
+<p>摒弃AI替代教师、学生的工具论，提出“认知共生”——AI承接算力密集型认知推演，教师专注价值引领与情感关怀，学生转变为自主驱动的认知建构者。</p>
+<p><strong>4、商业路径：</strong>Token经济下的“智价比”运营</p>
+<p>首创教育行业专属“智价比（Edu-TokenROI）”指标，以单位算力投入带来的长期认知增益衡量产品价值，回应算力成本对规模化落地的制约难题。</p>
+<p><strong>5、伦理边疆：</strong>从数据合规升级至认知主权</p>
+<p>明确心智推断数据分级保护规则，保障学习者对自身认知画像的知情、修正、删除与使用权。</p>
+<img src="https://i.qbitai.com/wp-content/uploads/2026/07/7202156bbbf36c45530f9d2be66dfe7b.png" referrerpolicy="no-referrer" />
+
+<p>新一代教育智能体的伦理风险金字塔</p>
+<h1>二、认知底座：三位一体引擎与LAM闭环重塑技术骨架</h1>
+<p>作为行业首套系统化落地教育AGI的技术方案，《白皮书》核心创新在于教育仿真器、教育规划器、教育渲染器三位一体融合架构，三大引擎依托统一认知潜空间协同运转，实现学习者内部状态仿真、反事实教学推演、全局自主规划，补齐传统教育AI核心短板。</p>
+<img src="https://i.qbitai.com/wp-content/uploads/2026/07/3088c22846068862566837faa6f1e3d3.png" referrerpolicy="no-referrer" />
+
+<p>三引擎协同架构与 EduLink 总线</p>
+<p><strong>教育仿真器</strong>作为动力学核心，搭建物理情境、群体交互、个体认知三层仿真体系，可模拟知识习得、迷思冲突、认知负荷波动等非线性心智演化过程；<strong>教育规划器</strong>以蒙特卡洛树搜索为基础，以学习者实时认知状态为起点推演上万条教学路径，筛选兼顾短期适配与长期能力成长的最优干预方案；<strong>教育渲染器</strong>将抽象教学策略转化为动画、虚拟实验、交互式习题等多模态教学体验，动态调节信息密度规避认知超载。三大引擎依托EduLink统一智联总线打通数据流，形成持续迭代的自进化数据飞轮。</p>
+<p>同时，《白皮书》率先落地LAM闭环工程范式，将抽象认知世界模型转化为可量产落地的业务链路：观测、建模、规划、渲染、评估五大环节串联为全链路自优化闭环。学习者数字孪生作为整套架构核心载体，不再是静态学生档案，而是持续更新的高维认知概率分布，完整记录知识掌握度、思维短板、学习动机、交互偏好四大维度动态数据。</p>
+<h1>三、价值涌现：四大核心场景探路教育普惠</h1>
+<p>依托认知世界模型与三位一体引擎架构，《白皮书》明确教育AGI四大商业化、教学化核心落地场景，系统性破解传统教育规模化与个性化不可兼顾的难题：</p>
+<p><strong>1、个性化学习路径生成</strong></p>
+<p>针对班级授课制刚性进度带来的认知错配，由仿真器推演候选路径的认知演化轨迹、规划器求解全局最优序列，实现从“千人一面”到“千人千轨”。</p>
+<p>2、<strong>认知诊断与精准教学</strong></p>
+<p>传统学情诊断依赖阶段性测试与作业批改，面临时间、粒度与干预三重滞后，通过多模态过程性采信、深层迷思图谱映射、亚知识点级精准定位，让教学干预直击思维根源。</p>
+<p><strong>3、自适应评估与能力画像</strong></p>
+<p>重构评价逻辑，从课后结果打分升级为全流程预测式评估，仿真推演学生未来学习卡点并前置干预，动态生成覆盖逻辑推理、创新思考的完整能力画像。</p>
+<p><strong>4、多智能体协作学习环境</strong></p>
+<p>突破协作学习难以动态调整、难以匹配最优伙伴、无法激发自然社会性、缺乏实时监测等难题，通过多智能体角色分配、群体认知动态监测、智能调解，全面重构协作学习的生态与效能。</p>
+<p>四大场景完整覆盖课前诊断、课中教学、课后测评、群体协作全教学周期，兼顾K12、高等教育、职业培训等多元场景需求。</p>
+<p>这些能力已在真实高考场景中得到规模化验证。 2026届高考中，天立体系26所自营校、1482名AI冲刺营学员整体涨分率达86.22%，平均涨分59.64分，最高单人涨分177.5分，本科率64.14%、特控率13.29%；乌兰察布天立更实现127人全员涨分、人均破百。</p>
+<p>教育与技术的关系，从来都不是简单的工具叠加，而是一场关于“人如何成为人”的深层对话。</p>
+<p>《世界模型驱动的教育AGI白皮书》的发布，传递的不仅是一套前沿的技术架构，更传递了一种深刻的教育哲学：技术的终极使命不是替代人类的思考，而是唤醒学习者的元认知。</p>
+<p>本文由天立启鸣提供，量子位获授权转载，观点归原作者所有。</p>
+                
+                
+                <em>版权所有，未经授权不得以任何形式转载及使用，违者必究。</em></article>
     <div class="dp-actions">
       <a class="dp-btn pri" href="https://www.qbitai.com/2026/07/457040.html" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
       

@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>Global AI 北京站 - 如何从0到1搭建 Chatbot - 李佳芮 - 句子·动态</title>
 <meta name="description" content="The Global AI Bootcamp is a free one-day event organized across the world by local communities that are passionate about artificial intelligence. 演讲者简…" />
-<meta name="robots" content="noindex,follow" />
-<link rel="canonical" href="https://rui.juzi.bot/presentation/2019-12-20-microsoft-ai-global-training-camp-beijing-lijiarui-talk.html" />
+<meta name="robots" content="index,follow" />
+<link rel="canonical" href="https://juzibot.com/news/p/422dab34825f.html" />
 <link rel="icon" href="../../logo.png" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="../../assets/site.css" />
@@ -58,6 +58,11 @@
     transition:background .2s var(--ease),border-color .2s var(--ease)}
   .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
   .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
 </style>
 </head>
 <body>
@@ -73,10 +78,17 @@
     <h1 class="dp-title">Global AI 北京站 - 如何从0到1搭建 Chatbot - 李佳芮</h1>
     
     <p class="dp-by">来源：李佳芮 · 博客精选</p>
-    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为内容导读，只收录简报与摘录，版权归原作者（李佳芮 · 博客精选）所有 · <a href="https://rui.juzi.bot/presentation/2019-12-20-microsoft-ai-global-training-camp-beijing-lijiarui-talk.html" target="_blank" rel="noopener">全文请读原文</a></span></div>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>句子互动自家内容，首发于李佳芮的博客，本页为官网收录版 · <a href="https://rui.juzi.bot/presentation/2019-12-20-microsoft-ai-global-training-camp-beijing-lijiarui-talk.html" target="_blank" rel="noopener">看原发布</a></span></div>
     
     
-    <blockquote class="dp-excerpt">The Global AI Bootcamp is a free one-day event organized across the world by local communities that are passionate about artificial intelligence. 演讲者简…</blockquote>
+    <article class="dp-body"><p>The Global AI Bootcamp is a free one-day event organized across the world by local communities that are passionate about artificial intelligence.</p>
+<h3>演讲者简介</h3>
+<p>李佳芮，句子互动创始人 &amp; CEO，微软 AI MVP，连续创业者，微信生态产品的开发、运营专家。过去六年中，曾为百余家企业提供微信生态技术和运营服务，包括亚马逊、腾讯、京东、新华网、联想、微软、飞利浦、鹏金所等。</p>
+<p>2017年创立句子互动，专注基于微信生态提供智能对话服务。客户覆盖教育、保险、大健康等多个领域。同年入选百度AI加速器，次年和百度联手打造《从0到1搭建<a class="cpt" href="../c/chatbot.html" data-def="聊天机器人是基于自然语言处理技术的对话系统，能模拟人类与用户进行文本或语音交互">聊天机器人</a>》系列课程。公司先后获得 PreAngel、Plug and Play、Y Combination,、TSVC（清谷资本）和阿尔法公社等多家中美机构天使投资。</p>
+<p>GitHub 6,000+ Stars 开源项目 Wechaty 联合作者，创建并管理覆盖全球基于微信平台的聊天机器人开发者社区，多次应邀在 Google、Microsoft 大会中做 Chatbot 行业技术分享。</p>
+<p>Organized by three AI MVPs: Huan LI, Yanping CHEN, and Jiarui LI.<br />
+Github Repository: <a href="https://github.com/huan/microsoft-ai-bootcamp" target="_blank" rel="noopener">https://github.com/huan/microsoft-ai-bootcamp</a></p>
+<h3>Talk Video</h3></article>
     <div class="dp-actions">
       <a class="dp-btn pri" href="https://rui.juzi.bot/presentation/2019-12-20-microsoft-ai-global-training-camp-beijing-lijiarui-talk.html" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
       

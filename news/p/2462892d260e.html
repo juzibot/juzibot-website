@@ -58,6 +58,11 @@
     transition:background .2s var(--ease),border-color .2s var(--ease)}
   .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
   .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
 </style>
 </head>
 <body>
@@ -73,10 +78,370 @@
     <h1 class="dp-title">谨慎的缩放定律</h1>
     <p class="dp-orig">原题：Scaling Laws, Carefully</p>
     <p class="dp-by">来源：Lilian Weng · 大咖观点</p>
-    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为内容导读，只收录简报与摘录，版权归原作者（Lilian Weng · 大咖观点）所有 · <a href="https://lilianweng.github.io/posts/2026-06-24-scaling-laws/" target="_blank" rel="noopener">全文请读原文</a></span></div>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（Lilian Weng · 大咖观点）所有 · <a href="https://lilianweng.github.io/posts/2026-06-24-scaling-laws/" target="_blank" rel="noopener">阅读原文</a></span></div>
     
     <div class="dp-brief"><b>简报</b>缩放定律是深度学习中最关键的经验发现之一，观察到训练损失随模型规模扩大而可预测地下降，文章深入讨论了这一定律的重要性和应用。</div>
-    <blockquote class="dp-excerpt">Scaling laws are one of the most critical empirical findings in deep learning. The observation is simple in form: the training loss $L$ decreases predictably as we scale…</blockquote>
+    <article class="dp-body"><p><a class="cpt" href="../c/scaling-laws.html" data-def="深度学习模型性能随参数、数据和计算量增加而可预测提升的经验规律">Scaling laws</a> are one of the most critical empirical findings in deep learning. The observation is simple in form: the training loss $L$ decreases predictably as we scale up model size $N$, dataset size $D$, and compute $C$, following a power-law curve, which appears as a straight line on a log-log plot. We can view scaling laws as a framework for describing the relationship between compute, loss, model size and data; at its core, it is about how to allocate precious compute optimally between $N$ and $D$.</p>
+<p>This predictability makes scaling laws highly valuable in practice. A common workflow is to fit scaling laws on a handful of small runs and then extrapolate to estimate the token and compute requirements for larger models.</p>
+<table>
+	<thead>
+			<tr>
+					<th>Symbol</th>
+					<th>Note</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>$N$</td>
+					<td>Model size, measured in parameter count.</td>
+			</tr>
+			<tr>
+					<td>$D$</td>
+					<td>Training dataset size, usually measured in token count.</td>
+			</tr>
+			<tr>
+					<td>$C$</td>
+					<td>Training compute in FLOPs. As a useful approximation, $C \approx 6ND$ (<a href="https://arxiv.org/abs/2001.08361" target="_blank" rel="noopener nofollow">Kaplan et al. 2020</a>), where $2ND$ accounts for the forward pass and $4ND$ for backpropagation.</td>
+			</tr>
+			<tr>
+					<td>$E$</td>
+					<td>Irreducible loss</td>
+			</tr>
+			<tr>
+					<td>$L, \hat{L}(.)$</td>
+					<td>Test loss / test loss prediction function; can also refer to training loss, since they are strongly correlated.</td>
+			</tr>
+			<tr>
+					<td>$\epsilon$</td>
+					<td>Generalization error.</td>
+			</tr>
+	</tbody>
+</table>
+<h1>Early days: ML loss predictability#</h1>
+<p>The predictability of generalization error with scale had already been investigated before scaling laws became a mainstream concept.</p>
+<p><a href="https://ieeexplore.ieee.org/document/6796972" target="_blank" rel="noopener nofollow">Amari et al. (1992)</a> derived four types of learning curves using a Bayesian approach and the annealed approximation.</p>
+<ol>
+<li>Deterministic learning algorithm, noiseless data, one unique solution: $\epsilon \sim c \cdot D^{-1}$, where $c$ is some constant.</li>
+<li>Deterministic learning algorithm, noiseless data, multiple equivalent solutions: $\epsilon \sim c \cdot D^{-2}$; the learning is faster with each new data point, because the model only learns the optimal manifold of parameters, instead of finding the single solution point.</li>
+<li>Deterministic learning algorithm, noisy data: $\epsilon \sim c \cdot D^{-1/2}$; noises in data make learning harder.</li>
+<li>Stochastic learning algorithm, noisy data: $\epsilon \sim c \cdot D^{-1} + E$; here the irreducible loss $E$ is the residual error that a stochastic learner cannot reduce further, for example when the model runs out of capacity on large data.
+All four types of learning curves follow a power law:</li>
+</ol>
+<p>
+$$
+\epsilon \sim c \cdot D^\alpha + E
+$$
+</p>
+<p>where $E$ can be 0 and $\alpha = -2, -1, -1/2$. Although their theoretical setup is based on a simplified binary classification task, it points in a useful direction for building empirical ML loss prediction models.</p>
+<p>One of the earliest empirical studies by <a href="https://arxiv.org/abs/1712.00409" target="_blank" rel="noopener nofollow">Hestness et al. (2017)</a> explained the relationship between generalization error, model size and data. For a given training data size, they identified the best-fit model size via grid search and then plotted loss against training dataset size. Across four different domains in deep learning (neural machine translation, image classification, language modeling, and speech recognition), a recurring pattern was observed where:</p>
+<ul>
+<li>Generalization error scales as a power law across a set of factors (e.g. data size).</li>
+<li>Model improvements shift the error curve but do not seem to affect the power-law exponent.</li>
+<li>Interestingly, architecture changes the offset ($E$) of the power-law fit but does not change the exponent ($\alpha$). The slope of the power law appears to be a property of the problem domain rather than the model architecture.</li>
+<li>The number of model parameters $N$ needed to fit a dataset of size $D$ also scales as a power law.</li>
+</ul>
+<figure>
+    <img src="https://lilianweng.github.io/posts/2026-06-24-scaling-laws/hestness-1.png" referrerpolicy="no-referrer" />
+    <figcaption>Learning curves for (Left) Deep-Speech-2 (DS2) and attention speech model and for (Right) DS2 models of various sizes. The losses of small models plateau when training data becomes large. (Image source: Hestness et al. 2017)</figcaption>
+</figure>
+<p>A conceptual illustration breaks the learning curve into three stages. In the small-data region, when there are not enough learning signals, the model performs only slightly better than random guessing. In the middle (“power-law region”), we observe a power-law relationship between loss, data, and model size. The final irreducible-error region can be attributed to factors such as noise in the data.</p>
+<figure>
+    <img src="https://lilianweng.github.io/posts/2026-06-24-scaling-laws/hestness-2.png" referrerpolicy="no-referrer" />
+    <figcaption>Illustration of power-law learning curve phases. (Image source: Hestness et al. 2017)</figcaption>
+</figure>
+<p><a href="https://arxiv.org/abs/1909.12673" target="_blank" rel="noopener nofollow">Rosenfeld et al. (2020)</a> pushed this further by trying to model error as a joint function of both model size $N$ and data size $D$, across a diverse set of architectures (ResNet, WRN, LSTM, Transformer) and optimizers (Adam, SGD variants). Empirically they observed that, holding one axis fixed, the error decays as a power law in the other:</p>
+<p>
+$$
+\hat{L}(D,N) \approx \frac{A}{N^{\alpha}} + E_N,\quad 
+\hat{L}(D,N) \approx \frac{B}{D^{\beta}} + E_D
+$$
+</p>
+<p>which can be combined into a joint form:</p>
+<p>
+$$
+\hat{L}(D, N) \approx \frac{A}{N^{\alpha}} + \frac{B}{D^{\beta}} + E
+$$
+</p>
+<p>where $A &gt; 0, B &gt; 0, \alpha \geq 0, \beta \geq 0$ are scalar constants and $E$ is not dependent on either $N$ or $D$.</p>
+<figure>
+    <img src="https://lilianweng.github.io/posts/2026-06-24-scaling-laws/rosenfeld-1.png" referrerpolicy="no-referrer" />
+    <figcaption>A 3D contour plot of data size, model size and generalization error in log-log-log scale. Blue dots are derived from empirical experiments and the surface is a linear interpolation between blue dots. (Image source: Rosenfeld et al. 2020)</figcaption>
+</figure>
+<p>Thus, they can build a prediction model in the form of a simple parametric function with $\boldsymbol{\theta} = \langle A, B, E, \alpha, \beta \rangle$ to predict the expected loss for $(D, N)$ &gt; certain thresholds by only training on a set of smaller training configs, $(D, N)$ &lt; certain thresholds.</p>
+<figure>
+    <img src="https://lilianweng.github.io/posts/2026-06-24-scaling-laws/rosenfeld-2.png" referrerpolicy="no-referrer" />
+    <figcaption>Fitting the parametric error model on small-scale configurations and extrapolating to larger model/data regimes: (a) Illustration of the experiment setup; Experiment results on (b) ImageNet, (c) WikiText-103 and (d) CIFAR100 Error estimation with three architectures (WRN, VGG, DenseNet) and two optimizers (SGD, Adam). (Image source: Rosenfeld et al. 2020)</figcaption>
+</figure>
+<p>Side note: These early works lean on classical learning-theory intuition like the <a href="https://en.wikipedia.org/wiki/Vapnik%E2%80%93Chervonenkis_dimension" target="_blank" rel="noopener nofollow">VC dimension</a> (the cardinality of the largest set of points a model can shatter) as a proxy for capacity, but in modern deep learning work the VC dimension is often too coarse to explain the behavior and the empirical power laws turned out to be much cleaner and more practical than the worst-case bounds that theory provides.</p>
+<h1>Scaling Laws in Data-Infinite Region#</h1>
+<h2>Kaplan et al.’s Scaling Laws#</h2>
+<p><a href="https://arxiv.org/abs/2001.08361" target="_blank" rel="noopener nofollow">Kaplan et al. (2020)</a> popularized the concept of scaling laws in the language modeling community. They found that the cross-entropy test loss $L$ scales as a power law with each of model size $N$ (excluding embedding layers), dataset size $D$, and training compute $C$ across many orders of magnitude. The findings are aligned with early work in the last section, but Kaplan et al. formalized the concept with a focus on Transformer language models and empirical experimentation at a larger scale, with model size ranging from 768M to 1.5B non-embedding parameters and dataset size from 22M to 23B tokens. All training runs in the paper used a learning rate schedule with a 3000 step linear warmup, followed by a cosine decay to zero.</p>
+<p>List of key findings:</p>
+<ul>
+<li>The loss $L$ scales as a power law with $N$, $D$, and $C$ individually; for optimal performance all three must scale in tandem.</li>
+<li>Training curves follow predictable power laws whose parameters are roughly independent of model size.</li>
+<li>Larger models are more sample-efficient, meaning that they reach a given loss with fewer optimization steps and fewer data points than small models.</li>
+<li>Architectural details (width, aspect ratio, etc.) matter less than sheer scale.</li>
+<li>Train loss and test loss are positively correlated. (Sounds trivial but this is the foundation for pretraining work. On the other hand, whether pretraining loss improvement transfers to posttraining evaluation needs separate studies.)</li>
+<li>Given a fixed compute budget, it is more efficient to train a very large model and stop <em>before convergence</em> than to train a smaller model all the way to convergence. <strong>This finding is where the Chinchilla scaling laws (the next section) disagree: Kaplan et al. overestimated the optimal model size as their fitted exponent was larger.</strong></li>
+</ul>
+<p>They summarize the joint dependence on $N$ and $D$ in a single equation:</p>
+<p>
+$$
+\hat{L}(N,D) = \left[ \left(\frac{a}{N}\right)^{\frac{\alpha}{\beta}} + \frac{b}{D} \right]^{\beta}
+$$
+</p>
+<p>A nice consequence of this form is that the extent of overfitting (i.e. model is complex or data is small) depends predominantly on the ratio $N^{\alpha / \beta} / D$, which indicates that the data needs to grow in a specific proportion to the growth of the model size to avoid training being data-limited.</p>
+<figure>
+    <img src="https://lilianweng.github.io/posts/2026-06-24-scaling-laws/kaplan-1.png" referrerpolicy="no-referrer" />
+    <figcaption>Test loss as a power law in compute, dataset size, and parameters, spanning many orders of magnitude. (Image source: Kaplan et al. 2020)</figcaption>
+</figure>
+<p>The most influential and, in hindsight, most contested conclusion was the compute-optimal allocation. Kaplan et al. found $N_\text{opt} \propto C^{0.73}$ and concluded that model size should grow faster than dataset size. Concretely, for a 10x increase in compute they suggested scaling the model size by ~5.5x but the training tokens by only ~1.8x. The Chinchilla paper would later overturn this recommendation, arguing that it leaves large models badly <em>undertrained</em>.</p>
+<p>Another useful analysis in Kaplan et al. approximates the number of training FLOPs needed based on $D$ and $N$. Each multiply-add is counted as ~2 FLOPs.</p>
+<figure>
+    <img src="https://lilianweng.github.io/posts/2026-06-24-scaling-laws/kaplan-2.png" referrerpolicy="no-referrer" />
+    <figcaption>Parameter and compute estimation for different Transformer architectural components, given the number of layers $n_\text{layer}$, model width $d_\text{model}$ (= $d_\text{embed}$; the notation is inconsistent in the original table), dimension of feed-forward layer $d_\text{ff}$ (often equivalent to $4 d_\text{model}$, attention dimension $d_\text{attn}$ (often equivalent to $d_\text{model}$), the context length $n_\text{ctx}$ and the vocabulary size $n_\text{vocab}$. (Image source: Kaplan et al. 2020)</figcaption>
+</figure>
+<p>Given a standard config where $d_\text{attn} = d_\text{model} = d_\text{ff}/4$, and excluding embedding layers from $N$ and the per-token forward compute:</p>
+<p>
+$$
+\begin{align}
+N &amp;= n_\text{layer} d_\text{model} 3 d_\text{attn} + n_\text{layer} d_\text{attn} d_\text{model} + n_\text{layer} 2 d_\text{model} d_\text{ff} &amp; \small{\text{; no embedding layer}} \\
+&amp;= 2\;n_\text{layer} d_\text{model}(2d_\text{attn} + d_\text{ff}) &amp; \\
+&amp;= 12\;n_\text{layer} d_\text{model}^2 &amp; \\
+\\
+C_\text{fwd} &amp;= 2 n_\text{layer} (d_\text{model} 3 d_\text{attn} + n_\text{ctx}d_\text{attn} + d_\text{attn}d_\text{embed} + 2 d_\text{model} d_\text{ff}) &amp; \\
+&amp;= 2 n_\text{layer} (12 d_\text{model}^2 + n_\text{ctx}d_\text{attn}) &amp; \\
+&amp;= 2N + 2 n_\text{layer}n_\text{ctx}d_\text{attn} &amp; \\
+&amp;\approx 2N \quad\quad \small{\text{; assuming }n_\text{ctx} &lt; 12 d_\text{model} \text{ and the }n_\text{ctx}\text{ term is relatively small.}}\\
+\end{align}
+$$
+</p>
+<p>Then we count backward-pass FLOPs as twice the forward-pass FLOPs, because backpropagation runs two matrix multiplications, for gradients with respect to the input activations and the weights, respectively. Thus, in total, the training FLOPs per token are approximately $6N$, and the total FLOPs for training over $D$ tokens are $C \approx 6ND$.</p>
+<h2>Chinchilla Scaling Laws#</h2>
+<p>The Chinchilla paper (<a href="https://arxiv.org/abs/2203.15556" target="_blank" rel="noopener nofollow">Hoffmann et al. 2022</a>) studied the relationship between the optimal model size $N$ (total parameters, <em>including</em> embeddings) and the number of tokens $D$ under a <em>fixed</em> compute budget $C$ with a more careful experimental design and arrived at a somewhat different answer from Kaplan et al..</p>
+<figure>
+    <img src="https://lilianweng.github.io/posts/2026-06-24-scaling-laws/animal.png" referrerpolicy="no-referrer" />
+    <figcaption>You should know how chinchilla looks 😊 (Image source: ChatGPT generated)</figcaption>
+</figure>
+<p>The central question is on the best strategy to allocate resources given a constraint $\text{FLOPs}(N, D) = C \approx 6ND$. In other words, when we have only limited FLOPs (a given number of GPUs running for a given period of time), how should we choose between more data tokens and more model parameters?</p>
+<p>
+$$
+N_\text{opt}(C), D_\text{opt}(C) = \operatorname*{arg\,min}_{\text{s.t. } \text{FLOPs}(N,D) = C} \hat{L}(N, D)
+$$
+</p>
+<p>The Chinchilla paper presented three neatly designed methods for scaling laws fitting.</p>
+<p>The empirical experiments scanned over 400 models, with sizes from 70M to over 16B parameters and training tokens from 5B to 500B. The experiments were under the assumption that every training token is unique (the infinite-data regime). All runs used a cosine learning-rate schedule decaying by 10x over the training horizon. Sweeping over model sizes traces out the compute-optimal frontier.</p>
+<h3>Method 1: Fix model sizes, vary the token budget#</h3>
+<p>For each parameter count $N$, train several runs with different token budgets, and record the minimal loss achieved per FLOP budget $C$.</p>
+<figure>
+    <img src="https://lilianweng.github.io/posts/2026-06-24-scaling-laws/chinchilla-1.png" referrerpolicy="no-referrer" />
+    <figcaption>Chinchilla Method 1: training loss curves over FLOP budgets for a sweep of model sizes. (Image source: Hoffmann et al. 2022)</figcaption>
+</figure>
+<h3>Method 2: IsoFLOP profiles#</h3>
+<p>Fix a compute budget $C$ and plot the final loss against parameter count $N$. Each iso-FLOP curve is roughly a parabola in log-space, and its minimum flags the optimal model size for that compute budget. Then repeating across budgets traces a power-law line in the plot.</p>
+<figure>
+    <img src="https://lilianweng.github.io/posts/2026-06-24-scaling-laws/chinchilla-2.png" referrerpolicy="no-referrer" />
+    <figcaption>Chinchilla Method 2: IsoFLOP parabolas; the minimum of each curve is the compute-optimal model size for that budget. (Image source: Hoffmann et al. 2022)</figcaption>
+</figure>
+<h3>Method 3: Parametric fit#</h3>
+<p>Fit the same parametric function as in <a href="https://arxiv.org/abs/1909.12673" target="_blank" rel="noopener nofollow">Rosenfeld et al. (2020)</a> directly,</p>
+<p>
+$$
+\hat{L}(N, D) = \frac{A}{N^\alpha} + \frac{B}{D^\beta} + E
+$$
+</p>
+<p>We can actually get a closed form approximation of optimal $N_\text{opt}(C), D_\text{opt}(C)$ by minimizing $\hat{L}(N, D)$ under the constraint $\text{FLOPs}(N,D) = C \approx 6ND$.</p>
+<p>First let’s reduce the expression to contain only $N$:</p>
+<p>
+$$
+\begin{align}
+\hat{L}(N) &amp;= A N^{-\alpha} + B \Big(\frac{C}{6}\Big)^{-\beta}N^\beta + E \\
+\hat{L}&#x27;(N) &amp;= -\alpha A N^{-\alpha-1} + \beta B \Big(\frac{C}{6}\Big)^{-\beta} N^{\beta -1} = 0 &amp; \small{\text{; derivative wrt }N\text{ should be zero.}} \\
+\text{Thus}\quad &amp; \alpha A N^{-\alpha-1} = \beta B \Big(\frac{C}{6}\Big)^{-\beta} N^{\beta -1} \\
+&amp; \alpha A = \beta B \Big(\frac{C}{6}\Big)^{-\beta} N^{\alpha + \beta} \\
+&amp; N_\text{opt} = \Big(\frac{\alpha A}{\beta B}\Big)^{\frac{1}{\alpha + \beta}} \Big(\frac{C}{6}\Big)^{\frac{\beta}{\alpha+\beta}} \\
+&amp; D_\text{opt} = \frac{C}{6 N_\text{opt}} = \Big(\frac{\beta B}{\alpha A}\Big)^{\frac{1}{\alpha + \beta}} \Big(\frac{C}{6}\Big)^{\frac{\alpha}{\alpha+\beta}}
+\end{align}
+$$
+</p>
+<p>When $\alpha \approx \beta$, model size and training tokens should scale at equal rates.</p>
+<p>To find the optimal $\boldsymbol{\theta} = \langle A, B, E, \alpha, \beta\rangle$, the Chinchilla paper adopts a <a href="https://en.wikipedia.org/wiki/Huber_loss" target="_blank" rel="noopener nofollow">Huber loss</a> (robust to outliers; $\delta=10^{-3}$) and the <a href="https://en.wikipedia.org/wiki/Limited-memory_BFGS" target="_blank" rel="noopener nofollow">L-BFGS algorithm</a> (good for curve fitting with a small number of parameters).</p>
+<p>
+$$
+\begin{align}
+\min_{A,B,E,\alpha,\beta} \sum_{\text{runs }\{i\}} \text{Huber}_\delta (\log \hat{L}(N_i, D_i) - \log L_i) \\
+\text{ where }\text{Huber}_\delta (x) = \begin{cases}\frac{1}{2} x^2 &amp; \text{for }\vert x \vert \leq \delta \\ \delta \cdot (\vert x \vert - \frac{1}{2}\delta), &amp; \text{otherwise.}\end{cases}
+\end{align}
+$$
+</p>
+<p>Chinchilla arrives at its answer through three complementary methods whose final results agree with each other, and this is part of why the result was quite convincing.</p>
+<figure>
+    <img src="https://lilianweng.github.io/posts/2026-06-24-scaling-laws/chinchilla-3.png" referrerpolicy="no-referrer" />
+    <figcaption>The three methods agree on a compute-optimal frontier where $N_\text{opt} \propto C^{0.5}$, but disagree with Kaplan et al. Note that method 3&#x27;s results are slightly off from the other two, which we will explain later. (Image source: Hoffmann et al. 2022)</figcaption>
+</figure>
+<figure>
+    <img src="https://lilianweng.github.io/posts/2026-06-24-scaling-laws/chinchilla-4.png" referrerpolicy="no-referrer" />
+    <figcaption>The plot of the Chinchilla predictions by three different approaches, as well as predictions by Kaplan et al. (2020). All three methods suggest that several mainstream LLMs at the time were undertrained. (Image source: Hoffmann et al. 2022)</figcaption>
+</figure>
+<p>The claim in the Chinchilla paper that most large models (at the time, ~2022) were undertrained is supported by a famous demonstration: under the same compute budget as Gopher (<a href="https://arxiv.org/abs/2112.11446" target="_blank" rel="noopener nofollow">Rae et al. 2021</a>; 280B parameter count, 300B token budget), they trained Chinchilla (70B parameter count, 1.4T token budget), a model 4x smaller but trained on roughly 4x more tokens and it outperformed Gopher across the board.</p>
+<h2>Reconciling Kaplan and Chinchilla#</h2>
+<p>The Chinchilla scaling laws disagree with Kaplan et al. as follows:</p>
+<ul>
+<li>Instead of “grow the model faster than the data” ($N_\text{opt} \propto C^{0.73}$), for every doubling of model size, you should also double the number of training tokens ($N_\text{opt} \propto C^{0.5}$).</li>
+<li>Instead of “train a big model and stop before convergence,” you should train a smaller model on more data.</li>
+</ul>
+<p>Both papers still agree on the same underlying principle, but they disagree on where the optimal size-vs-token tradeoff lies. Why do they disagree so much?</p>
+<p><strong>Difference 1: Kaplan et al. experimented mostly on small models.</strong>
+Kaplan et al. experimented mostly on smaller models, while the Chinchilla paper’s experiments reached more than 10x larger scales. When we extrapolate in log-log space, a small difference in the fit can result in large differences (See toy simulation).</p>
+<p><strong>Difference 2: Embedding parameter count matters for small models.</strong>
+In the small-parameter regime, embedding parameters are a non-negligible fraction of the total and thus counting them or not matters. <a href="https://arxiv.org/abs/2406.12907" target="_blank" rel="noopener nofollow">Pearce &amp; Song (2024)</a> did a thorough analysis along this line. Let’s use $N_{\setminus E}, C_{\setminus E}$ to denote model size and compute when embedding is excluded and use $N, C$ to count total parameters.</p>
+<ul>
+<li>Kaplan et al.: $N^*_{\setminus E} \propto C^{0.73}_{\setminus E}$ (non-embedding)</li>
+<li>Chinchilla: $N^* \propto C^{0.50}$ (total)</li>
+</ul>
+<p>To bridge them, they fit a relationship between total parameters $N_T$ and non-embedding parameters $N_{\setminus E}$, for some constant $\omega$:</p>
+<p>
+$$
+N = N_{\setminus E} + \omega\, N_{\setminus E}^{1/3}.
+$$
+</p>
+<p>This form has nice properties of being strictly increasing and $\lim_{N \to \infty} N = N_{\setminus E}$ (because $\frac{N}{N_{\setminus E}} = 1 + \omega {N_{\setminus E}}^{- \frac{2}{3}}, \lim_{N_{\setminus E} \to \infty} \frac{N}{N_{\setminus E}} = 1$.</p>
+<p>Plugging this into the Chinchilla laws equation,</p>
+<p>
+$$
+\begin{align}
+L(N_{\setminus E}, C_{\setminus E}) &amp;= A(N_{\setminus E} + \omega\, N_{\setminus E}^{1/3})^{-\alpha} + B \Big(\frac{C_{\setminus E}}{6}\Big)^{-\beta} N_{\setminus E}^\beta + E \\
+L&#x27;(N_{\setminus E}, C_{\setminus E}) &amp;= - \alpha A (N_{\setminus E} + \omega N_{\setminus E}^{1/3})^{-\alpha -1}(1 + \frac{\omega}{3}N_{\setminus E}^{-2/3}) + \beta B \Big(\frac{C_{\setminus E}}{6}\Big)^{-\beta} N_{\setminus E}^{\beta -1} = 0 &amp; \small{\text{; derivative wrt }N_{\setminus E}\text{ should be zero.}} \\
+\text{Rearrange to get }&amp; \alpha A (N^{*}_{\setminus E} + \omega {N^{*}_{\setminus E}}^{1/3})^{-\alpha -1}(1 + \frac{\omega}{3} {N^{*}_{\setminus E}}^{-2/3}) = \beta B \Big(\frac{C_{\setminus E}}{6}\Big)^{-\beta} {N^{*}_{\setminus E}}^{\beta -1} \\
+&amp; 6^{-\beta}\frac{\alpha A}{\beta B} ({N^{*}_{\setminus E}} + \omega {N^{*}_{\setminus E}}^{1/3})^{-\alpha -1}(1 + \frac{\omega}{3}{N^{*}_{\setminus E}}^{-2/3}) {N^{*}_{\setminus E}}^{1 - \beta} = C_{\setminus E}^{-\beta} \\
+&amp; 6 \Big(\frac{\beta B}{\alpha A}\Big)^{\frac{1}{\beta}} ({N^{*}_{\setminus E}} + \omega {N^{*}_{\setminus E}}^{1/3})^{\frac{1 + \alpha}{\beta}} ({N^{*}_{\setminus E}} + \frac{\omega}{3}{N^{*}_{\setminus E}}^{1/3})^{-\frac{1}{\beta}} {N^{*}_{\setminus E}} = C_{\setminus E} \\
+\end{align}
+$$
+</p>
+<p>The relationship between $C_{\setminus E}$ and $N_{\setminus E}$ in the above equation is no longer a clean power law. We can only approximate it locally as $N^*_{\setminus E} \overset{\propto}{\sim} C_{\setminus E}^g$, where $g$ is a local exponent based on a first-order derivative ($\overset{\propto}{\sim}$) rather than a global power-law exponent, resulting in $g = \frac{\mathrm{d} \log C_{\setminus E}}{\mathrm{d} \log N_{\setminus E}}$. See the full details of how the exponent $g$ is approximated in Appendix A.1 in <a href="https://arxiv.org/abs/2406.12907" target="_blank" rel="noopener nofollow">Pearce &amp; Song (2024)</a>.</p>
+<figure>
+    <img src="https://lilianweng.github.io/posts/2026-06-24-scaling-laws/pearce-1.png" referrerpolicy="no-referrer" />
+    <figcaption>Visualization of how the local power-law exponent $g$ grows with $C_{\setminus E}$. (Image source: Pearce &amp; Song 2024)</figcaption>
+</figure>
+<p>As shown in the visualization above, as $C_{\setminus E}$ gets larger, $g$ converges to the Chinchilla estimate. By generating synthetic training curves using above equation, in the range of model size from 768M to 1.5B (as in Kaplan et al.), they estimated that $g$ is close to the Kaplan coefficient of 0.73 in that region.</p>
+<h2>Why power law?#</h2>
+<p>Power laws are widely observed across many domains outside AI, such as in <a href="https://en.wikipedia.org/wiki/Zipf%27s_law" target="_blank" rel="noopener nofollow">Zipf’s law</a>, <a href="https://en.wikipedia.org/wiki/Scale-free_network" target="_blank" rel="noopener nofollow">scale-free networks</a>, <a href="https://en.wikipedia.org/wiki/Urban_scaling" target="_blank" rel="noopener nofollow">urban scaling laws</a>, and many other complex systems. The recurring pattern is that large events are rare, small events are common and the relationship between size and frequency often follows a straight line at log-log scale.</p>
+<p><strong>Why do LLM scaling laws also have the shape of a power law?</strong></p>
+<p>Inspired partly by different domains displaying different exponents (<a href="https://arxiv.org/abs/1712.00409" target="_blank" rel="noopener nofollow">Hestness et al. 2017</a>), one early explanation by <a href="https://arxiv.org/abs/2004.10802" target="_blank" rel="noopener nofollow">Sharma &amp; Kaplan (2020)</a> hypothesizes that language modeling can be viewed as doing regression on a low-dimensional manifold of data. More model parameters can induce a finer partition of the data manifold and therefore smaller generalization error. In the simplest terms, if a model of effective size $N$ partitions a $d$-dimensional manifold into $O(N)$ regions, the typical linear resolution scales like $\sim N^{-1/d}$. This has a similar power-law form to the scaling laws above. This theory applies most cleanly in the infinite-data, underfitting regime, but in reality estimating the intrinsic dimension of a data manifold is quite hard.</p>
+<p>A later hypothesis (<a href="https://arxiv.org/abs/2303.13506" target="_blank" rel="noopener nofollow">Michaud et al. 2023</a>, <a href="https://arxiv.org/abs/2412.07942" target="_blank" rel="noopener nofollow">Brill 2024</a>) assumes that knowledge or skills are learned in discrete chunks (“quantized”) and that the frequency distribution of these skills follows a power law. The model learns common skills first and rare skills later, resulting in a smooth power-law decay in loss.</p>
+<p>I only listed two hypotheses here, but there are more studies on explaining the shape of power-law scaling through spectral tails of data, kernel eigenvalues, natural-language statistics, or phase transitions in training dynamics.</p>
+<h1>Scaling Laws in Data-Limited Region#</h1>
+<p>Classic scaling laws assume effectively <em>unlimited unique data</em>, no repetition, and no multi-epoch training. As the model size grows significantly, we are running out of enough high-quality unique tokens. In fact, some arguments about how long scaling in AI can continue are centered on whether we are hitting a “data wall”.</p>
+<p>It is also worth emphasizing that the dataset behind $D$ is expected to be already cleaned. The pretraining data pipeline is often a large part of an effective pretraining pipeline, with common steps like deduplication (exact and fuzzy), quality filtering, boilerplate removal, safety filtering, PII/copyright masking, benchmark decontamination and careful reweighting of data mix components based on language, quality, content type, etc. Even when two datasets contain the same token count $D$, a high-quality dataset and a dataset of Internet slop can yield drastically different compute efficiency.</p>
+<p>The study by <a href="https://arxiv.org/abs/2205.10487" target="_blank" rel="noopener nofollow">Hernandez et al. (2022)</a> focused on a controlled version: a mostly-unique dataset with a small fraction of repeated data. Starting from a large dataset, the data mix keeps 90% non-repeated but replaces the remaining 10% with repeats of a tiny portion of the original. By training a Transformer model for 100B tokens, they observed a double-descent phenomenon, that is, the test loss can actually get <em>worse</em> and then better again as a function of how much the repeated data is emphasized, an effect that becomes more pronounced as the repeated fraction grows.</p>
+<figure>
+    <img src="https://lilianweng.github.io/posts/2026-06-24-scaling-laws/hernandez-1.png" referrerpolicy="no-referrer" />
+    <figcaption>Double-descent in the test loss as the repeated fraction increases (90% repeated on the left, 50% on the right). (Image source: Hernandez et al. 2022)</figcaption>
+</figure>
+<p>The flat or increasing trend in the middle of training is possibly due to memorization of repeated data. Learning curves with such shapes make scaling law fitting less accurate. They also concluded repeated data hurts some OOD evaluation and downstream fine-tuning. However, their data mix is constructed in a more lab-like setup, and repetition in real-world data is often more nuanced (e.g. different data has different levels of repetition, semantic repetition, etc.).</p>
+<p>Rather than saying data repetition hurts training, we are more interested in how to fit scaling laws, given that the unique high-quality data is not infinite and we likely have to repeat data during training.</p>
+<p><a href="https://arxiv.org/abs/2305.16264" target="_blank" rel="noopener nofollow">Muennighoff et al. (2023)</a> took on the research question of how compute should be allocated optimally when model training is data-constrained. Specifically, they empirically studied the impact of data repetition across roughly 400 experiments, 10M–9B parameters, data sizes up to 900B tokens, and up to 1500 epochs. The exact same dataset is repeated each epoch, shuffled between epochs, and evaluated on a held-out test set.</p>
+<p>The key modeling adjustment is to decompose the total token count $D$ into two parts: (i) the number of unique tokens $U_D$ and (ii) the number of repeats $R_D$ (i.e. num. epochs - 1). Thus we have $D = U_D(1 + R_D)$. With a unique-data budget $D_\text{uniq}$, by definition $U_D = \min \{{ D_\text{uniq}, D\}}$ and $R_D = (D / U_D) - 1$. They use the Chinchilla scaling laws to find the optimal model size $U_N$ for fitting $U_D$, and define excess model size via repeats $R_N = (N / U_N) - 1$.</p>
+<p>They then update the Chinchilla parametric fit (method 3) to use effective (discounted) data $D’$ and model size $N’$ in place of the raw quantities:</p>
+<p>
+$$
+\hat{L}(N, D) = \frac{A}{N&#x27;^\alpha} + \frac{B}{D&#x27;^\beta} + E
+\quad\text{ where }
+D&#x27; = U_D + U_D\, r_D\left(1 - \exp\!\left(-\frac{R_D}{r_D}\right)\right).
+$$
+</p>
+<p>The intuition is that a token’s value decays <em>exponentially</em> as it is repeated. In their modeling, each repetition costs the token a $(1 - 1/r_D)$ fraction of its remaining value, where $r_D$ is a learnable “half-life” parameter. When $R_D = 0$ or $R_D \ll r_D$, we recover $D’ \approx D$.</p>
+<p>A symmetric formulation handles excess model size, $N’ = U_N + U_N r_N(1 - \exp(-R_N / r_N))$, capturing the idea that “larger models overfit more quickly on repeated data” and that “a model can be too large for its dataset.” This component is less intuitive, and I could not find a satisfactory explanation for why model size needs to appear in such a symmetric form as repeated data. Later work by <a href="https://arxiv.org/abs/2605.01640" target="_blank" rel="noopener nofollow">Lovelace et al. (2026)</a> changed this assumption.</p>
+<p>Their empirical fit finds that <em>excess parameters decay faster in value than repeated data</em>, $r_N &lt; r_D$, so we should allocate more resources on more epochs rather than more model parameters. One weakness of this modeling, as the authors also pointed out, is that it significantly underestimates the final test loss of failing models (i.e. models whose loss increases midway through training), such as models trained for 44 epochs.</p>
+<figure>
+    <img src="https://lilianweng.github.io/posts/2026-06-24-scaling-laws/muennighoff-1.png" referrerpolicy="no-referrer" />
+    <figcaption>Data-constrained scaling under repetition captures the experimental results better than data-unaware fitting; the value of repeated tokens decays exponentially toward a ceiling. The fitting gets worse with more epochs as high repetition causes the test loss to increase midway through training, not depicted in the plot. (Image source: Muennighoff et al. 2023)</figcaption>
+</figure>
+<p>Most recently, <a href="https://arxiv.org/abs/2605.01640" target="_blank" rel="noopener nofollow">Lovelace et al. (2026)</a> revisited the same problem with a different approach. Rather than modeling overparameterization as a diminishing return on effective model size, Lovelace et al. model the interaction between model size $\times$ data repetition explicitly. Empirically, they trained about 300 models, spanning 15M to 1B parameters and 50M to 6B unique tokens.</p>
+<p>When they plot the fit residual for a fixed model size across a range of data-repetition levels, the observation is intuitive: more epochs cause more damage, and interestingly <em>larger models are more sensitive</em> to repetition. This hints that the loss penalty is likely a function of both model size and data size.</p>
+<figure>
+    <img src="https://lilianweng.github.io/posts/2026-06-24-scaling-laws/lovelace-1.png" referrerpolicy="no-referrer" />
+    <figcaption>Residuals of the effective-size fit reveal that overfitting damage grows with both the number of epochs and the model size. (Image source: Lovelace et al. 2026)</figcaption>
+</figure>
+<p>An explicit overfitting penalty term was introduced and built around the <em>capacity ratio</em> $N / U_D$ (parameter count relative to unique tokens):</p>
+<p>
+$$
+\hat{L}(N, U_D, R_D) = E + \frac{A}{N^\alpha} + \frac{B}{\big(U_D (1 + R_D)\big)^\beta} + \color{red}{P \cdot R_D^\delta \cdot \left(\frac{N}{U_D}\right)^\kappa}
+$$
+</p>
+<p>where:</p>
+<ul>
+<li>$R_D$ is the repetition count;</li>
+<li>the scalar $P$ is a learnable parameter;</li>
+<li>the exponent $\kappa$ (the 2nd learnable parameter) lets the penalty scale nonlinearly with the capacity ratio $N / U_D$;</li>
+<li>the separate exponent $\delta$ (the 3rd learnable parameter) on the repetition count decouples repetition nonlinearity from $\kappa$.</li>
+</ul>
+<p>The added term (in red) is a direct overfitting penalty that grows with both how many times you repeat the data and how over-parameterized the model is relative to the unique data available.</p>
+<p>They also did a case study on how weight decay impacts training with the limited-data constraint and found that strong weight decay reduces the overfitting penalty caused by data repetition.</p>
+<figure>
+    <img src="https://lilianweng.github.io/posts/2026-06-24-scaling-laws/lovelace-2.png" referrerpolicy="no-referrer" />
+    <figcaption>Strong weight decay reduces the overfitting penalty from data repetition. (Image source: Lovelace et al. 2026)</figcaption>
+</figure>
+<p>Both modeling approaches by Muennighoff et al. and Lovelace et al. are constructed from empirical curve fitting, so it is still unclear why data-constrained scaling laws should have exactly these forms and why each free parameter is needed. Curious about more theoretical work along this line.</p>
+<h1>Trickiness of Fitting Scaling Laws in Reality#</h1>
+<p>Despite its clean form, in practice, scaling law fitting can be surprisingly sensitive to seemingly trivial procedural choices, like how you count parameters, how you round the precision, how you sum or average the loss, etc.</p>
+<p>Because a scaling law is only fit on the (relatively small, relatively cheap) models that we can afford to train, and the prediction is <em>extrapolated</em> for a model orders of magnitude larger. In such a setup, choices that look like rounding error may lead to wild differences in prediction.</p>
+<p>Meanwhile, scaling-law fitting assumes the only changing factor is <em>scale</em>, which means that the model architecture, optimizer, learning rate schedule, batch ramp, data mix, tokenizer, and other design choices should remain the same. Another underlying assumption is that all these settings should have been carefully tuned, as cases like undertrained models can lead to a different conclusion.</p>
+<p>The disagreement between results by Kaplan et al. and Chinchilla is one example to showcase the trickiness of scaling laws fitting.</p>
+<p>A second example is a follow-up analysis investigating why Chinchilla method 3 is slightly off from the other two methods. <a href="https://arxiv.org/abs/2404.10102" target="_blank" rel="noopener nofollow">Besiroglu et al. (2024)</a> extracted the raw $(N, D, L)$ data points from Figure 4 of Hoffmann et al. (2022) and re-ran the method 3 parametric fitting. They found a couple of concrete issues:</p>
+<ul>
+<li>A high loss scale in the L-BFGS-B minimizer, caused by averaging Huber-loss values over examples instead of summing them, which led to premature termination of the optimization. The early stopping of loss minimization during both the original fit and bootstrapping produced inconsistent estimates and implausibly narrow confidence intervals.</li>
+<li>The reported $\alpha$ and $\beta$ were rounded to 2 digits of precision, which made the derived $A, B$ look more off than they really were.</li>
+</ul>
+<h2>Toy simulation#</h2>
+<p>Here is a toy simulation widget, created by ChatGPT, designed to demonstrate three specific failure modes.</p>
+<p>We assume the ground truth function is:</p>
+<p>
+$$
+\hat{L}(N, D) = 482.01 \cdot N^{-0.3478} + 2085.43 D^{-0.3658} + 1.8172
+$$
+</p>
+<p>and thus $N_\text{opt} \propto C^{0.5126}, D_\text{opt} \propto C^{0.4874}$. This is the estimate from <a href="https://arxiv.org/abs/2404.10102" target="_blank" rel="noopener nofollow">Besiroglu et al. (2024)</a>.</p>
+<p>The simulation plots the loss prediction $\hat{L}$ vs dataset size $D$, while providing a set of sliders to show case:</p>
+<ul>
+<li>Loss precision: rounding losses from high to low decimal points can change the fitted parameter values.</li>
+<li>Loss noise: perturbing loss values by only a multiplier of milli-loss (0.001) units leads to different fit.</li>
+<li>Fit-region sensitivity: fitting only small models, only medium models, or all models gives different apparent scaling laws.</li>
+</ul>
+
+
+
+<h1>Citation#</h1>
+<p>Please cite this work as:</p>
+<blockquote>
+<p>Weng, Lilian. “Scaling Laws, Carefully”. Lil’Log (Jun 2026). https://lilianweng.github.io/posts/2026-06-24-scaling-laws/</p>
+</blockquote>
+<p>Or use the BibTex citation:</p>
+<pre><code>@article{weng2026scaling,
+ title = {Scaling Laws, Carefully},
+ author = {Weng, Lilian},
+ journal = {lilianweng.github.io},
+ year = {2026},
+ month = {June},
+ url = &quot;https://lilianweng.github.io/posts/2026-06-24-scaling-laws/&quot;
+}
+</code></pre><h1>References#</h1>
+<p>[1] S. Amari, N. Fujita, and S. Shinomoto. <a href="https://ieeexplore.ieee.org/document/6796972" target="_blank" rel="noopener nofollow">“Four Types of Learning Curves. Neural Computation.”</a> 4(4):605–618, 1992.</p>
+<p>[2] Hestness et al. <a href="https://arxiv.org/abs/1712.00409" target="_blank" rel="noopener nofollow">“Deep Learning Scaling is Predictable, Empirically.”</a> arXiv preprint arXiv:1712.00409, 2017.</p>
+<p>[3] Rosenfeld et al. <a href="https://arxiv.org/abs/1909.12673" target="_blank" rel="noopener nofollow">“A Constructive Prediction of the Generalization Error Across Scales.”</a> ICLR 2020.</p>
+<p>[4] Kaplan et al. <a href="https://arxiv.org/abs/2001.08361" target="_blank" rel="noopener nofollow">“Scaling Laws for Neural Language Models.”</a> arXiv preprint arXiv:2001.08361, 2020.</p>
+<p>[5] Hoffmann et al. <a href="https://arxiv.org/abs/2203.15556" target="_blank" rel="noopener nofollow">“Training Compute-Optimal Large Language Models.”</a> NeurIPS 2022.</p>
+<p>[6] Pearce and Song. <a href="https://arxiv.org/abs/2406.12907" target="_blank" rel="noopener nofollow">“Reconciling Kaplan and Chinchilla Scaling Laws.”</a> TMLR 2024.</p>
+<p>[7] Bahri et al. <a href="https://arxiv.org/abs/2102.06701" target="_blank" rel="noopener nofollow">“Explaining Neural Scaling Laws.”</a> arXiv preprint arXiv:2102.06701, 2021.</p>
+<p>[8] Sharma and Kaplan. <a href="https://arxiv.org/abs/2004.10802" target="_blank" rel="noopener nofollow">“A Neural Scaling Law from the Dimension of the Data Manifold.”</a> arXiv preprint arXiv:2004.10802, 2020.</p>
+<p>[9] Hernandez et al. <a href="https://arxiv.org/abs/2205.10487" target="_blank" rel="noopener nofollow">“Scaling Laws and Interpretability of Learning from Repeated Data.”</a> arXiv preprint arXiv:2205.10487, 2022.</p>
+<p>[10] Muennighoff et al. <a href="https://arxiv.org/abs/2305.16264" target="_blank" rel="noopener nofollow">“Scaling Data-Constrained Language Models.”</a> NeurIPS 2023.</p>
+<p>[11] Lovelace et al. <a href="https://arxiv.org/abs/2605.01640" target="_blank" rel="noopener nofollow">“Prescriptive Scaling Laws for Data Constrained Training.”</a> arXiv preprint arXiv:2605.01640, 2026.</p>
+<p>[12] Besiroglu et al. <a href="https://arxiv.org/abs/2404.10102" target="_blank" rel="noopener nofollow">“Chinchilla Scaling: A Replication Attempt.”</a> arXiv preprint arXiv:2404.10102, 2024.</p>
+<p>[13] Michaud et al. <a href="https://arxiv.org/abs/2303.13506" target="_blank" rel="noopener nofollow">“The Quantization Model of Neural Scaling”</a> NeurIPS 2023.</p>
+<p>[14] Brill. <a href="https://arxiv.org/abs/2412.07942" target="_blank" rel="noopener nofollow">“Neural Scaling Laws Rooted in the Data Distribution.”</a> arXiv preprint arXiv:2412.07942, 2024.</p>
+<p>[15] Rae et al. <a href="https://arxiv.org/abs/2112.11446" target="_blank" rel="noopener nofollow">“Scaling Language Models: Methods, Analysis &amp; Insights from Training Gopher.”</a> arXiv preprint arXiv:2112.11446, 2021.</p></article>
     <div class="dp-actions">
       <a class="dp-btn pri" href="https://lilianweng.github.io/posts/2026-06-24-scaling-laws/" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
       
