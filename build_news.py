@@ -137,6 +137,25 @@ SOURCES = [
         "kw_drop": re.compile(r"恒指|恒生科技指数|沪指|深成指|创业板指|纳指|道指|标普|收涨|收跌|高开|低开|平开|午间休盘|北向资金|南向资金|涨停|跌停|新股|打新|申购"),
     },
     {
+        # 三方内容 · 独立技术博主三路合流(2026-07-22): 博主名落 category(二级分类)与 author。
+        # 全部过 ai_filter=techdev 只留 AI/编程相关, 个人随笔/时政/生活文不上站。
+        # feed 试探记录: 宝玉正确地址是 /feed.xml(/feed、/rss.xml、/atom.xml 均 404, 2026-07-22 验证);
+        # Simon Willison 用 everything feed(含 blogmark/引语短条目, 英文, 更新很勤所以窗口取小)
+        "id": "voices",
+        "name": "大咖观点",
+        "author": "技术博主",
+        "type": "rss",
+        "feeds": [
+            {"url": "https://www.ruanyifeng.com/blog/atom.xml", "name": "阮一峰"},
+            {"url": "https://baoyu.io/feed.xml", "name": "宝玉"},
+            {"url": "https://simonwillison.net/atom/everything/", "name": "Simon Willison"},
+        ],
+        "max_items": 12,
+        "keep_max": 60,  # 外部源存量上限, 同 industry 的修剪逻辑(只数过筛条目)
+        "home": "",
+        "ai_filter": "techdev",
+    },
+    {
         # 二方生态 · 企业微信接口更新日志(2026-07-22): 客户全在企微生态里, 接口/能力变更对他们
         # 是真信息, 几乎没有官网做这件事。官方 changelog 页服务端渲染可直抓, 每个日期分组落一条
         "id": "wecom",
@@ -262,14 +281,26 @@ ATOM = "{http://www.w3.org/2005/Atom}"
 
 
 def parse_feed_regex(xml_text):
-    """脏 XML 兜底: 正则抽 RSS2 item(中文媒体 feed 常有未转义 HTML, 严格解析会炸)。"""
+    """脏 XML 兜底: 正则抽 RSS2 item / Atom entry(中文媒体 feed 常有未转义 HTML, 严格解析会炸)。"""
+    def grab(block, tag):
+        m = re.search(rf"<{tag}[^>]*>\s*(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?\s*</{tag}>", block, re.S)
+        return htmllib.unescape(m.group(1)).strip() if m else ""
     out = []
     for block in re.findall(r"<item>(.*?)</item>", xml_text, re.S):
-        def grab(tag):
-            m = re.search(rf"<{tag}[^>]*>\s*(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?\s*</{tag}>", block, re.S)
-            return htmllib.unescape(m.group(1)).strip() if m else ""
-        out.append({"url": grab("link"), "title": grab("title"), "summary": grab("description"),
-                    "date": norm_date(grab("pubDate")), "category": grab("category")})
+        out.append({"url": grab(block, "link"), "title": grab(block, "title"), "summary": grab(block, "description"),
+                    "date": norm_date(grab(block, "pubDate")), "category": grab(block, "category")})
+    if not out:  # Atom: link 在 href 属性里, 优先 rel="alternate"(或无 rel)的那条
+        for block in re.findall(r"<entry\b[^>]*>(.*?)</entry>", xml_text, re.S):
+            link = ""
+            for lm in re.finditer(r"<link\b[^>]*>", block):
+                rel = re.search(r'rel="([^"]*)"', lm.group(0))
+                href = re.search(r'href="([^"]*)"', lm.group(0))
+                if href and (not rel or rel.group(1) == "alternate"):
+                    link = htmllib.unescape(href.group(1)).strip()
+                    break
+            out.append({"url": link, "title": grab(block, "title"),
+                        "summary": grab(block, "summary") or grab(block, "content"),
+                        "date": norm_date(grab(block, "published") or grab(block, "updated")), "category": ""})
     return [e for e in out if e["url"]]
 
 
@@ -521,6 +552,12 @@ AI_RULES = {
         "大模型/Agent/AI 产品与应用、AI 公司融资并购、AI 行业政策与研究。"
         "与 AI 无关的股市行情快讯、非 AI 领域融资、消费电子/汽车/地产等 keep=false。拿不准时 keep=false。"
     ),
+    "techdev": (
+        "这是独立技术博主的文章(可能是英文, 判定标准不变)。keep=true 的条件: 内容与 AI 或编程直接相关——"
+        "大模型/Agent/LLM 工具与应用、编程语言与开发实践、软件工程、开源项目、科技产品与技术趋势"
+        "(科技爱好者周刊这类技术为主的综合期刊也算)。"
+        "个人生活随笔、时政社会评论、与技术无关的读书/旅行/情感杂谈 keep=false。拿不准时 keep=false。"
+    ),
 }
 
 
@@ -682,6 +719,7 @@ SRC_ICON = {  # 与 news.html / news-c.html 页内 JS 的 ICON 同步
     "product": "fa-solid fa-rocket",
     "press": "fa-solid fa-bullhorn",
     "industry": "fa-solid fa-rss",
+    "voices": "fa-solid fa-feather",
     "wecom": "fa-solid fa-plug",
 }
 

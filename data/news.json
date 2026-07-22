@@ -1,8 +1,8 @@
 {
  "generated_by": "build_news.py",
- "generated_at": "2026-07-22T14:41:24+08:00",
- "count": 305,
- "visible": 147,
+ "generated_at": "2026-07-22T17:22:25+08:00",
+ "count": 348,
+ "visible": 179,
  "sources": [
   {
    "id": "rui-blog",
@@ -10,7 +10,7 @@
    "type": "sitemap",
    "home": "https://rui.juzi.bot/",
    "status": "ok",
-   "last_sync": "2026-07-22T14:41:24+08:00",
+   "last_sync": "2026-07-22T17:22:25+08:00",
    "ai": true,
    "count": 37
   },
@@ -20,7 +20,7 @@
    "type": "feishu-base",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-22T14:41:24+08:00",
+   "last_sync": "2026-07-22T17:22:25+08:00",
    "ai": false,
    "count": 0
   },
@@ -30,7 +30,7 @@
    "type": "manual",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-22T14:41:24+08:00",
+   "last_sync": "2026-07-22T17:22:25+08:00",
    "ai": false,
    "count": 5
   },
@@ -40,7 +40,7 @@
    "type": "manual",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-22T14:41:24+08:00",
+   "last_sync": "2026-07-22T17:22:25+08:00",
    "ai": false,
    "count": 0
   },
@@ -50,9 +50,19 @@
    "type": "rss",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-22T14:41:24+08:00",
+   "last_sync": "2026-07-22T17:22:25+08:00",
    "ai": true,
-   "count": 95
+   "count": 100
+  },
+  {
+   "id": "voices",
+   "name": "大咖观点",
+   "type": "rss",
+   "home": "",
+   "status": "ok",
+   "last_sync": "2026-07-22T17:22:25+08:00",
+   "ai": true,
+   "count": 27
   },
   {
    "id": "wecom",
@@ -60,12 +70,46 @@
    "type": "wecom-changelog",
    "home": "https://developer.work.weixin.qq.com/document/path/93221",
    "status": "ok",
-   "last_sync": "2026-07-22T14:41:24+08:00",
+   "last_sync": "2026-07-22T17:22:25+08:00",
    "ai": false,
    "count": 10
   }
  ],
  "items": [
+  {
+   "id": "fdc27cd2d233",
+   "title": "对话润建股份：AI应用拼的不只是模型能力，更是从Token到价值创造的闭环能力",
+   "url": "https://36kr.com/p/3906499484996742?f=rss",
+   "summary": "7月17日，2026世界人工智能大会在上海开幕。作为36氪连续第三年深入WAIC现场的重要内容窗口，「氪话未来」直播间也在大会首日同步开启现场对话。润建股份董事、副总裁丁永在WAIC现场接受36氪「氪话未来」特邀专访，围绕Token生产、应用落地、价值闭环及出海布局等话题，分享了润建股份打造Token全栈服务能力、推动企业级AI落地的探…",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "从Token到价值的闭环，本质是让AI在具体业务流里跑通并验证效果"
+  },
+  {
+   "id": "ee4d369e55a5",
+   "title": "AI在企业中为什么没有体现价值？丨WAIC2026",
+   "url": "https://www.tmtpost.com/8075237.html",
+   "summary": "AI不会替代管理者，会用AI的管理者会替代不会用AI的。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "关键在于将AI嵌入工作流并衡量业务结果，而非简单部署"
+  },
   {
    "id": "ede646dfc9e4",
    "title": "Gemini 3.5 Pro难产，谷歌先交了两张草稿纸",
@@ -82,6 +126,39 @@
     "at": "2026-07-22"
    },
    "quip": "竞争加速，但版本慢发会影响依赖方的进度"
+  },
+  {
+   "id": "eae3d0fecfae",
+   "title": "Kimi“熔断”，杨植麟也“摸高”",
+   "url": "https://www.tmtpost.com/8074456.html",
+   "summary": "K3爆火，Kimi却不得不按下暂停键。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "增长与资源平衡是长期挑战，服务的稳定性是客户最在意的"
+  },
+  {
+   "id": "e42f2af22d64",
+   "title": "王宁，站在库克和段永平中间",
+   "url": "https://www.tmtpost.com/8075141.html",
+   "summary": "库克、段永平，同时看中了王宁什么？",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-22"
+   }
   },
   {
    "id": "e395444a5f52",
@@ -117,6 +194,23 @@
    }
   },
   {
+   "id": "e1b642a01586",
+   "title": "风向变了！三大运营商集体“卖铲”",
+   "url": "https://www.tmtpost.com/8074796.html",
+   "summary": "三大运营商在WAIC 2026集体押注“Token经济”，争做AI时代的卖铲人。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "三大运营商押注Token经济，有望使AI服务成本下降，利好微信生态企业级应用"
+  },
+  {
    "id": "dcfc2fe3b4bc",
    "title": "SpaceX做空比例飙至32%，马斯克警告空头：几无存活可能",
    "url": "https://36kr.com/newsflashes/3906425670390919?f=rss",
@@ -131,6 +225,23 @@
     "keep": false,
     "at": "2026-07-22"
    }
+  },
+  {
+   "id": "da244990b0e3",
+   "title": "百度文心助手任务 Agent 登顶国际权威榜单，超越 Claude、GPT 拿下全球智能体冠军",
+   "url": "https://www.leiphone.com/category/industrynews/JnKtRGrgnS8TvRhM.html",
+   "summary": "2026 年 7 月 17 日，百度文心助手任务 Agent，以最高分 94.6%、平均分 94.4% 的成绩，登顶全球工程向 AI 智能体评测榜单 PinchBench v2。成为首个以正式产品身份获得 PinchBench 总榜第一的国产智能体系统。 在 59 个参评模型中，文心助手任务 Agent 排名第一，领先 Anthropi…",
+   "category": "雷锋网",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "雷锋网",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "在标准测试集上的领先是好的开始，但真实业务场景的验证更重要"
   },
   {
    "id": "d7fe4a113671",
@@ -199,6 +310,23 @@
    }
   },
   {
+   "id": "d000b9187960",
+   "title": "AI竞争，为什么先比算力？",
+   "url": "https://www.tmtpost.com/8074544.html",
+   "summary": "AI越接近落地，算力基础设施越重要。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "算力是基础，但应用层的价值在于如何将其高效转化为业务效率"
+  },
+  {
    "id": "cf7873135834",
    "title": "8点1氪丨怡颗莓回应“检出致癌物”；美团否认上线“本科专送”“硕士优送”等配送服务；美方喊话三星电子、SK海力士分享超额利润",
    "url": "https://36kr.com/p/3906043683296648?f=rss",
@@ -213,6 +341,23 @@
     "keep": false,
     "at": "2026-07-22"
    }
+  },
+  {
+   "id": "ced4f41a8349",
+   "title": "WAIC深度观察：具身数据，进入「开箱即用」时代",
+   "url": "https://www.leiphone.com/category/robot/ClTZ7U1EvG0bVaHo.html",
+   "summary": "真正的「Model-Ready Data」，高精度、多模态、多样性缺一不可。 作者 丨 高景辉 编辑丨马晓宁 “具身智能的数据需求，远没有摸到上限。” 在WAIC主论坛上的一次对话中，亮源新创创始人姜旭的判断引起了广泛共鸣。他进一步提到，具身智能本质是大模型向物理世界的延伸，会沿着“规模化预训练→规模化对齐→规模化部署”的三阶段范式演进…",
+   "category": "雷锋网",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "雷锋网",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "数据'开箱即用'能加速迭代，这在销售对话数据的构建上也适用"
   },
   {
    "id": "c85907bd5c17",
@@ -249,6 +394,39 @@
    "quip": "模型迭代快但稳定性不足，企业需要成熟的用法"
   },
   {
+   "id": "c43e4067d641",
+   "title": "小马智行与京东养车达成战略合作",
+   "url": "https://36kr.com/newsflashes/3906543334970496?f=rss",
+   "summary": "36氪获悉，7月21日，小马智行与京东养车达成战略合作，双方将围绕自动驾驶车辆维保服务及供应链协同等领域展开深度合作，共同打造面向自动驾驶车队的标准化、规模化运维服务体系。这是自动驾驶公司首次与全国性汽车后市场服务平台建立全面战略合作。",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "自动驾驶运维的标准化，与数字员工服务的规模化，底层逻辑相通"
+  },
+  {
+   "id": "c1790344622f",
+   "title": "十年雅迪717，“智能痛车” 让Z世代集体“上头”",
+   "url": "https://www.tmtpost.com/8075115.html",
+   "summary": "十年717见证了用户需求与产品体验的共同进化，从倡导绿色出行到定义年轻生活方式，雅迪始终与用户站在一起，重塑了新的出行体验。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-22"
+   }
+  },
+  {
    "id": "c12db850c9df",
    "title": "小米旗下瀚星创投入股星利行新能源科技公司",
    "url": "https://36kr.com/newsflashes/3906278408934531?f=rss",
@@ -265,6 +443,40 @@
    }
   },
   {
+   "id": "be95423c034c",
+   "title": "Kimi K3爆火引发“算力荒”，“不着急上市”的杨植麒急了？",
+   "url": "https://www.tmtpost.com/8074520.html",
+   "summary": "Kimi K3爆火后，被誉为“AI六小虎”之一的月之暗面却遭遇了“算力荒”。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "爆款应用对资源的需求是刚性的，这对所有应用公司都是现实课题"
+  },
+  {
+   "id": "baa2c150c4c6",
+   "title": "大模型没有定价权，只有定价窗口",
+   "url": "https://www.tmtpost.com/8074547.html",
+   "summary": "模型之外的能力不但不能为零，还更重要",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "模型趋于同质化，围绕场景的工程化与运营能力成为关键"
+  },
+  {
    "id": "b89c67c02844",
    "title": "2026年上半年交通运输经济运行总体平稳",
    "url": "https://36kr.com/newsflashes/3906442863809671?f=rss",
@@ -279,6 +491,23 @@
     "keep": false,
     "at": "2026-07-22"
    }
+  },
+  {
+   "id": "b6b6d5eeaa1e",
+   "title": "WAIC 2026 | 面壁智能首个具身智能成果 MiniCPM-Robot 系列模型正式发布！",
+   "url": "https://www.leiphone.com/category/ai/gtBK8Ln3ANuHPQaX.html",
+   "summary": "7 月 19 日上 午，面壁智能主办的「智在终端 惠及千行」分论坛在世界人工智能大会上圆满举行。论坛上，面壁智能联合 OpenBMB 正式发布并开源了其首个具身智能技术成果 MiniCPM-Robot 系列模型，「小钢炮」正式进军机器人领域！ 本次发布的 MiniCPM-Robot 系列成果包括两个具身智能模型：通用 VLA 模型 Mi…",
+   "category": "雷锋网",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "雷锋网",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "具身智能走向端侧，而我们的数字Agent正深入企业流程的每一个环节"
   },
   {
    "id": "b02841326c1a",
@@ -298,6 +527,39 @@
    }
   },
   {
+   "id": "afe37068690c",
+   "title": "上海WAIC深度观察：模型隐身，Agent疯野",
+   "url": "https://www.tmtpost.com/8074627.html",
+   "summary": "知春路不相信模型领先",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "趋势印证了方向，Agent需要深入业务流程才能'疯野'"
+  },
+  {
+   "id": "ae73617cf3c1",
+   "title": "益生股份：2026年上半年净利润3.08亿元，同比增长4897.29%",
+   "url": "https://36kr.com/newsflashes/3906583926789254?f=rss",
+   "summary": "36氪获悉，益生股份公告，2026年上半年营收16.97亿元，同比增长28.44%；净利润3.08亿元，同比增长4897.29%。公司经董事会审议通过的利润分配预案为：以实施权益分派股权登记日的公司总股本扣除回购专用证券账户中的回购股份为基数，向全体股东每10股派发现金红利1.5元（含税），不送红股，不以公积金转增股本。",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-22"
+   }
+  },
+  {
    "id": "ad7e98888d58",
    "title": "马斯克神话",
    "url": "https://www.tmtpost.com/8074387.html",
@@ -312,6 +574,23 @@
     "keep": false,
     "at": "2026-07-22"
    }
+  },
+  {
+   "id": "a80c725a85f6",
+   "title": "AI 圈今天最大的瓜：GPT-6 越狱攻击，被 GLM 5.2 揪出了",
+   "url": "https://www.ifanr.com/1672746?utm_source=rss&utm_medium=rss&utm_campaign=",
+   "summary": "「GPT-6」为了考试作弊，黑进了别人的服务器 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。",
+   "category": "爱范儿",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "爱范儿",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "安全是应用落地的底线，尤其在处理客户数据和业务流程时"
   },
   {
    "id": "a7d621597e15",
@@ -377,6 +656,22 @@
     "keep": false,
     "at": "2026-07-22",
     "kw": true
+   }
+  },
+  {
+   "id": "9a73130562e8",
+   "title": "小红书能留住男人吗？",
+   "url": "https://www.tmtpost.com/8074728.html",
+   "summary": "“不可能三角”的困局。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-22"
    }
   },
   {
@@ -465,6 +760,22 @@
    "quip": "热潮中更需冷静，企业级应用的关键始终是解决具体业务问题"
   },
   {
+   "id": "7c413989456c",
+   "title": "亨通光电：7月22日通过员工激励账户在二级市场购入185.1万股公司股票",
+   "url": "https://36kr.com/newsflashes/3906580529173634?f=rss",
+   "summary": "36氪获悉，亨通光电公告，7月22日公司通过华能信托•亨通光电员工激励服务信托专用账户在二级市场合计购入公司股票185.1万股，约占公司总股本的0.08%，合计使用奖励基金1.08亿元（含利息收入等）。本次2025年度奖励基金购买股票实施完毕。",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-22"
+   }
+  },
+  {
    "id": "79075c996b6a",
    "title": "酷哇科技亮相WAIC 2026，解密行业首个双层智能体世界模型",
    "url": "https://www.qbitai.com/2026/07/456178.html",
@@ -496,6 +807,23 @@
     "keep": false,
     "at": "2026-07-22"
    }
+  },
+  {
+   "id": "6dfedaf87245",
+   "title": "业内首款超算+智算的大规模计算底座，在WAIC上我们找到了",
+   "url": "https://www.qbitai.com/2026/07/457054.html",
+   "summary": "一颗“不走寻常路”的芯",
+   "category": "量子位",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "量子位",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "算力底座的融合创新很重要，但离终端应用的价值转化还有一段距离"
   },
   {
    "id": "68c0cd0db594",
@@ -544,6 +872,23 @@
     "keep": false,
     "at": "2026-07-22"
    }
+  },
+  {
+   "id": "6386a4eed8ef",
+   "title": "2026世界人工智能大会 | 启鸣达人首发《世界模型驱动的教育AGI白皮书》",
+   "url": "https://www.leiphone.com/category/ai/ZQ1kV11l8qQj84Dt.html",
+   "summary": "新一轮智能浪潮席卷全球 ， 7月17日至20日，2026世界人工智能大会暨人工智能全球治理高级别会议在上海举行，作为全球人工智能领域最具影响力的年度盛会，第九届 WAIC 大会以 “ 智能伙伴 共创未来 ” 为主题，140余场论坛横跨算力基建、物理智能、科学智能等前沿领域 ，吸引 全球100多个国家和地区的顶尖学者、产业先锋与政策制定者…",
+   "category": "雷锋网",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "雷锋网",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "教育是重要场景，但不同领域的AI应用逻辑和落地难点差异很大"
   },
   {
    "id": "605c427ed74e",
@@ -663,6 +1008,23 @@
    "quip": "实时会议辅助是强需求，但眼镜形态离微信企微的沟通主场景还有距离"
   },
   {
+   "id": "52a0f5e0dbb9",
+   "title": "百度文心助手任务Agent登顶国际权威榜单，超越Claude、GPT拿下全球智能体冠军",
+   "url": "https://www.qbitai.com/2026/07/457117.html",
+   "summary": "",
+   "category": "量子位",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "量子位",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "榜单表现是能力的证明，但业务场景的复杂度是另一套评测体系"
+  },
+  {
    "id": "523cefa45dad",
    "title": "AI医疗卷了10年终于悟了：不用替代医生，而是给医院装上超强buff",
    "url": "https://www.qbitai.com/2026/07/456555.html",
@@ -731,6 +1093,22 @@
    "quip": "大厂入局加速普及，生态集成度决定实际可用性"
   },
   {
+   "id": "4280f6a713a1",
+   "title": "平价雪糕归来，社区超市能撬动冷饮市场么？",
+   "url": "https://www.tmtpost.com/8074495.html",
+   "summary": "高价产品的市场空间被压缩，低价区间的份额持续扩大，零售商的采购逻辑随之调整",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-22"
+   }
+  },
+  {
    "id": "423c8269f2d5",
    "title": "刚刚，Gemini 3.6 Flash 正式发布，但网友笑得更大声了",
    "url": "https://www.ifanr.com/1672647?utm_source=rss&utm_medium=rss&utm_campaign=",
@@ -763,6 +1141,23 @@
     "at": "2026-07-22"
    },
    "quip": "模型能力认证重要，企业客户真正关心的是稳定性和成本"
+  },
+  {
+   "id": "4042280e9343",
+   "title": "对话超擎数智CEO唐春峰：AI产业竞争正在从模型训练走向推理落地，全栈方案加速企业智能化应用",
+   "url": "https://36kr.com/p/3906523265914245?f=rss",
+   "summary": "7月17日，2026世界人工智能大会在上海开幕。作为36氪连续第三年深入WAIC现场的重要内容窗口，「氪话未来」直播间也在大会首日同步开启现场对话。超擎数智创始人兼CEO唐春峰在WAIC现场接受36氪「氪话未来」特邀专访，围绕人工智能推理应用落地、软硬一体全栈解决方案、行业应用实践等话题，分享了超擎从软件、硬件到行业部署的整体布局，以及…",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "从'有模型'到'用好模型'，这正是我们帮客户在销售客服场景落地的核心"
   },
   {
    "id": "3ee1be919d03",
@@ -815,6 +1210,23 @@
    "quip": "高倍数回报靠远见和耐心，不是单纯烧钱能做到"
   },
   {
+   "id": "2d7a79447e32",
+   "title": "硬氪首发 | 前华为智驾骨干入局AI船舶，已获亿元订单，专攻休闲艇",
+   "url": "https://36kr.com/p/3906468088042886?f=rss",
+   "summary": "硬氪获悉，智能船艇公司同舟智航近日完成数千万种子轮融资，由英诺天使和吴中金控联合领投，江苏金桥基金跟投。融资将用于补充核心研发与量产团队人才，同步启动海外品牌建设与渠道开拓。 同舟智航2025年6月成立，核心理念是用人工智能赋能船舶。创始人张呈伦拥有10余年汽车自动驾驶行业经验，曾任华为商用车解决方案部负责人，并创立过规模超百人的矿山自…",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "场景虽远，但深耕垂直领域并拿到订单的路径值得参考"
+  },
+  {
    "id": "2bb8c5bd2ae1",
    "title": "BBA集体降价！销售：价格还能谈；月之暗面以500亿美元估值洽谈Pre-IPO融资，最快2027年初赴港上市；三星宣布将成立机器人事业部",
    "url": "https://www.leiphone.com/category/zaobao/3zl6HRdhLVwLseFx.html",
@@ -830,6 +1242,38 @@
     "at": "2026-07-22"
    },
    "quip": "资本持续涌入头部模型公司，应用层的价值在于场景深耕与闭环"
+  },
+  {
+   "id": "27c93cd9ed1c",
+   "title": "智能眼镜不是一张榜单：Meta之外，中国玩家的四条路线",
+   "url": "https://www.tmtpost.com/8074531.html",
+   "summary": "Meta验证了无屏路线，中国机 会在显示与生态整合。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-22"
+   }
+  },
+  {
+   "id": "27b380ea1334",
+   "title": "杰瑞股份：子公司签署约99.5亿元燃气轮机发电机组供应合同",
+   "url": "https://36kr.com/newsflashes/3906581433570440?f=rss",
+   "summary": "36氪获悉，杰瑞股份公告，公司控股子公司J&FPowerSystemsLLC与某国际知名云服务提供商签署燃气轮机发电机组供应合同，订单金额为14.65亿美元（约合99.5亿元人民币—，约占公司2025年度经审计营收的61.33%。合同约定于2027年11月前分批次交付，并设有价格调整机制。该合作将夯实公司在数据中心供电领域的竞争优势，但…",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-22"
+   }
   },
   {
    "id": "26735e9e2896",
@@ -849,6 +1293,39 @@
    "quip": "国产算力验证了可行性，为业务连续性提供了更多供应链选择"
   },
   {
+   "id": "265815644503",
+   "title": "支付宝参与可信政务智能体服务平台，携手信通院等机构共建政务 AI 新基建",
+   "url": "https://www.leiphone.com/category/industrynews/bU3YMyf2KBYlNfGZ.html",
+   "summary": "2026 世界人工智能大会(WAIC)政务智能创新论坛顺利举办，国家网信办、国家数据 局、上海数据局相关领导列席。会上，信通院与北京大学联合发布《政务智能体发展研究报 告(2026 年)》。其中支付宝技术赋能打造的四项政务应用——吉林社保 AI 智能对话、江 苏“晓苏”、广东教育考试院 AI 智能体、育儿补贴智能体被纳入典型案例。 同时…",
+   "category": "雷锋网",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "雷锋网",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "政务场景对可信、安全的要求极高，这为所有严肃场景的AI应用打了样"
+  },
+  {
+   "id": "24295e9002e6",
+   "title": "刘强东的第二张物流网",
+   "url": "https://www.tmtpost.com/8074740.html",
+   "summary": "300万台机器人和 90 万员工如何在一个屋檐下共处？",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-22"
+   }
+  },
+  {
    "id": "23c961d43a88",
    "title": "AI落地，还差一口气",
    "url": "https://www.tmtpost.com/8074363.html",
@@ -864,6 +1341,22 @@
     "at": "2026-07-22"
    },
    "quip": "模型到产品到商业模式环环相扣，一个卡住就白搭"
+  },
+  {
+   "id": "22c1401af3c2",
+   "title": "连达芬奇手术机器人都开始降本了！",
+   "url": "https://www.tmtpost.com/8074923.html",
+   "summary": "一份亮眼到近乎无可挑剔的财报，为何换来的却是资本市场的当头一棒?",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-22"
+   }
   },
   {
    "id": "1e481c10b601",
@@ -947,6 +1440,23 @@
    }
   },
   {
+   "id": "0eed2f8a46e9",
+   "title": "大模型正在“变小”？",
+   "url": "https://www.tmtpost.com/8074930.html",
+   "summary": "“模型能干什么、能不能赚钱”？",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "大模型“变小”更贴近用户，端侧部署能增强微信AI客服的响应效率和隐私保护"
+  },
+  {
    "id": "0eb5febd1893",
    "title": "被误伤的A股：韧性、预期与底气",
    "url": "https://www.tmtpost.com/8074772.html",
@@ -957,6 +1467,22 @@
    "source": "industry",
    "source_name": "行业动态",
    "author": "钛媒体",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-22"
+   }
+  },
+  {
+   "id": "06230ee75d2d",
+   "title": "体育强国建设“十五五”规划发布，到2030年产业规模破7万亿元",
+   "url": "https://36kr.com/newsflashes/3906586078320009?f=rss",
+   "summary": "经国务院批复同意，体育总局今天发布《体育强国建设“十五五”规划》。这是首个以“体育强国”为主题的国家级专项规划，对“十五五”时期加快建设体育强国、推动体育高质量发展作出了系统部署。《规划》提出，到2030年，体育整体发展质量和效益显著提升，综合价值和多元功能充分彰显，体育成为中华民族伟大复兴的标志性事业基础更加坚实，人均体育场地面积达到…",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪",
    "ai": {
     "keep": false,
     "at": "2026-07-22"
@@ -1368,6 +1894,22 @@
    "ai": {
     "keep": false,
     "at": "2026-07-21"
+   }
+  },
+  {
+   "id": "99e42382ba86",
+   "title": "Nativ: Run AI models locally on your Mac",
+   "url": "https://simonwillison.net/2026/Jul/21/nativ/#atom-everything",
+   "summary": "Nativ: Run AI models locally on your Mac Prince Canuma is the developer behind the excellent MLX-VLM Python library for running vision-LLMs using MLX on a Mac. I'm reall…",
+   "category": "Simon Willison",
+   "tags": [],
+   "date": "2026-07-21",
+   "source": "voices",
+   "source_name": "大咖观点",
+   "author": "Simon Willison",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
    }
   },
   {
@@ -1829,6 +2371,22 @@
    "quip": "大厂AI部失败的根源不在技术，在于内部利益与权力的重分配"
   },
   {
+   "id": "009d8ac6eee7",
+   "title": "A Fireside Chat with Cat and Thariq from the Claude Code team",
+   "url": "https://simonwillison.net/2026/Jul/21/cat-and-thariq/#atom-everything",
+   "summary": "Earlier this month I hosted a fireside chat session at the AI Engineer World's Fair with Cat Wu and Thariq Shihipar from Anthropic's Claude Code team. We talked about Cl…",
+   "category": "Simon Willison",
+   "tags": [],
+   "date": "2026-07-21",
+   "source": "voices",
+   "source_name": "大咖观点",
+   "author": "Simon Willison",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   }
+  },
+  {
    "id": "fbb2c86b4ebf",
    "title": "全球首发技术路线+全域联盟双轮破局，AI for ADANES释放先进核能新质生产力",
    "url": "https://www.qbitai.com/2026/07/455729.html",
@@ -1944,6 +2502,22 @@
     "at": "2026-07-21"
    },
    "quip": "学习场景是好赛道，但B2B学习应用的变现模式与销售客服差异很大"
+  },
+  {
+   "id": "b5d7973c852a",
+   "title": "Quoting Sam Altman",
+   "url": "https://simonwillison.net/2026/Jul/20/sam-altman/#atom-everything",
+   "summary": "We have been having extensive discussions around open source strategy. We will discuss it more at our next board meeting, but one thing we’d like to do soon is to create…",
+   "category": "Simon Willison",
+   "tags": [],
+   "date": "2026-07-20",
+   "source": "voices",
+   "source_name": "大咖观点",
+   "author": "Simon Willison",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   }
   },
   {
    "id": "b2cbafa6749e",
@@ -2065,6 +2639,22 @@
    "quip": "教育是好场景，但世界模型对B2B应用的实际帮助还是太early stage"
   },
   {
+   "id": "578e1115394f",
+   "title": "Reverse-engineering is cheap now",
+   "url": "https://simonwillison.net/2026/Jul/20/cheap-reverse-engineering/#atom-everything",
+   "summary": "I keep hearing anecdotes from people who used coding agents to reverse-engineer and automate devices in their homes. I think this is an interesting illustration of the i…",
+   "category": "Simon Willison",
+   "tags": [],
+   "date": "2026-07-20",
+   "source": "voices",
+   "source_name": "大咖观点",
+   "author": "Simon Willison",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   }
+  },
+  {
    "id": "53873cfce106",
    "title": "当AI进入最依赖“人”的行业：一家四线城市康复机构利润增长40%",
    "url": "https://www.qbitai.com/2026/07/455791.html",
@@ -2132,6 +2722,22 @@
    "quip": "多模型支持的基础设施标准化是生态健康信号，让中腰部应用更有机会"
   },
   {
+   "id": "1ee0543e2b9b",
+   "title": "Who’s Afraid of Chinese Models?",
+   "url": "https://simonwillison.net/2026/Jul/20/afraid-of-chinese-models/#atom-everything",
+   "summary": "Who’s Afraid of Chinese Models? Interesting proposal from Ben Thompson that both addresses the hypocrisy of labs outlawing distillation against their models despite trai…",
+   "category": "Simon Willison",
+   "tags": [],
+   "date": "2026-07-20",
+   "source": "voices",
+   "source_name": "大咖观点",
+   "author": "Simon Willison",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   }
+  },
+  {
    "id": "c97ac867ab2f",
    "title": "这幅 5999 元的眼镜，配不配当电竞玩家的「新装备」｜ROG XREAL R1 体验",
    "url": "https://www.ifanr.com/1672380?utm_source=rss&utm_medium=rss&utm_campaign=",
@@ -2144,6 +2750,38 @@
    "author": "爱范儿",
    "ai": {
     "keep": false,
+    "at": "2026-07-22"
+   }
+  },
+  {
+   "id": "c54ae55d46e9",
+   "title": "AI Mania Is Eviscerating Global Decision-Making",
+   "url": "https://simonwillison.net/2026/Jul/19/ai-mania/#atom-everything",
+   "summary": "AI Mania Is Eviscerating Global Decision-Making Here's an entertaining perspective from Nik Suresh on the AI mania that is overwhelming the large companies that he consu…",
+   "category": "Simon Willison",
+   "tags": [],
+   "date": "2026-07-19",
+   "source": "voices",
+   "source_name": "大咖观点",
+   "author": "Simon Willison",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   }
+  },
+  {
+   "id": "165d33e669f4",
+   "title": "Claude Code uses Bun written in Rust now",
+   "url": "https://simonwillison.net/2026/Jul/19/claude-code-in-bun-in-rust/#atom-everything",
+   "summary": "In Rewriting Bun in Rust Jarred Sumner made the following claim: Claude Code v2.1.181 (released June 17th) and later use the Rust port of Bun. Startup got 10% faster on …",
+   "category": "Simon Willison",
+   "tags": [],
+   "date": "2026-07-19",
+   "source": "voices",
+   "source_name": "大咖观点",
+   "author": "Simon Willison",
+   "ai": {
+    "keep": true,
     "at": "2026-07-22"
    }
   },
@@ -2165,6 +2803,22 @@
    "quip": "模型厂涉足硬件会挤压纯软件Agent空间，生态位竞争加剧"
   },
   {
+   "id": "ccfb0a129469",
+   "title": "SQLite Query Explainer",
+   "url": "https://simonwillison.net/2026/Jul/18/sqlite-query-explainer/#atom-everything",
+   "summary": "Tool: SQLite Query Explainer Julia Evan's, in Learning a few things about running SQLite : Maybe one day I’ll learn to read a query plan. Big same.... which inspired me …",
+   "category": "Simon Willison",
+   "tags": [],
+   "date": "2026-07-18",
+   "source": "voices",
+   "source_name": "大咖观点",
+   "author": "Simon Willison",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   }
+  },
+  {
    "id": "b581c8ceb157",
    "title": "iOS 27 公测版上手：国行 AI 准备好了，但系统流畅更值得升级",
    "url": "https://www.ifanr.com/1672364?utm_source=rss&utm_medium=rss&utm_campaign=",
@@ -2182,6 +2836,22 @@
    "quip": "系统级AI整合是长期方向，但微信生态内的服务逻辑相对独立"
   },
   {
+   "id": "3c690c812db8",
+   "title": "Claude make Fable 5 permanent",
+   "url": "https://simonwillison.net/2026/Jul/18/claude-make-fable-5-permanent/#atom-everything",
+   "summary": "Claude make Fable 5 permanent An update from the @claudeai account on Twitter: Beginning July 20, Claude Fable 5 will be included in all Max and Team Premium plans, at 5…",
+   "category": "Simon Willison",
+   "tags": [],
+   "date": "2026-07-18",
+   "source": "voices",
+   "source_name": "大咖观点",
+   "author": "Simon Willison",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   }
+  },
+  {
    "id": "1d2ba72403c6",
    "title": "6 台机器人拼长城、首款智能体手机首秀：阶跃把 AI 塞进了现实世界｜WAIC 2026",
    "url": "https://www.ifanr.com/1672344?utm_source=rss&utm_medium=rss&utm_campaign=",
@@ -2197,6 +2867,54 @@
     "at": "2026-07-22"
    },
    "quip": "智能体走向物理世界，验证了Agent自主完成复杂任务的潜力"
+  },
+  {
+   "id": "0bc93da60f4a",
+   "title": "nascheme/quixote",
+   "url": "https://simonwillison.net/2026/Jul/18/quixote/#atom-everything",
+   "summary": "nascheme/quixote A certain vintage of Python web nerd might be delighted to learn that the most recent commit to the Quixote web framework was six hours ago . The oldest…",
+   "category": "Simon Willison",
+   "tags": [],
+   "date": "2026-07-18",
+   "source": "voices",
+   "source_name": "大咖观点",
+   "author": "Simon Willison",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   }
+  },
+  {
+   "id": "64131661223d",
+   "title": "LLM cliché highlighter",
+   "url": "https://simonwillison.net/2026/Jul/17/llm-cliche-highlighter/#atom-everything",
+   "summary": "Tool: LLM cliché highlighter I got frustrated reading yet another article that was crammed with the clichés of LLM-generated writing - \"no fluff, no filler, no jargon\" t…",
+   "category": "Simon Willison",
+   "tags": [],
+   "date": "2026-07-17",
+   "source": "voices",
+   "source_name": "大咖观点",
+   "author": "Simon Willison",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   }
+  },
+  {
+   "id": "103bc7df9c87",
+   "title": "Quoting Kimi K3",
+   "url": "https://simonwillison.net/2026/Jul/17/kimi-k3/#atom-everything",
+   "summary": "Is there something I can actually help you with today? — Kimi K3 , after refusing to leak its system prompt Tags: kimi , ai-personality , generative-ai , ai , llms",
+   "category": "Simon Willison",
+   "tags": [],
+   "date": "2026-07-17",
+   "source": "voices",
+   "source_name": "大咖观点",
+   "author": "Simon Willison",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   }
   },
   {
    "id": "dfdb345b9e1c",
@@ -2343,6 +3061,22 @@
    "ai": {
     "keep": false,
     "at": "2026-07-21"
+   }
+  },
+  {
+   "id": "8ccc8d3d261a",
+   "title": "科技爱好者周刊（第 404 期）：你需要知道的 AI 内存知识",
+   "url": "http://www.ruanyifeng.com/blog/2026/07/weekly-issue-404.html",
+   "summary": "这里记录每周值得分享的科技内容，周五发布。...",
+   "category": "阮一峰",
+   "tags": [],
+   "date": "2026-07-16",
+   "source": "voices",
+   "source_name": "大咖观点",
+   "author": "阮一峰",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
    }
   },
   {
@@ -2514,23 +3248,6 @@
    "quip": "端侧模型的商业化意味着应用更贴近用户，隐私优势也更突出"
   },
   {
-   "id": "0cbd860c0d89",
-   "title": "独家｜面壁智能端侧大模型将搭载三星手机上市",
-   "url": "https://36kr.com/p/3896830362601351?f=rss",
-   "summary": "文｜邓咏仪 编辑｜张雨忻 杨轩 《智能涌现》独家获悉，端侧大模型公司面壁智能已与三星手机达成合作，其自主研发的MiniCPM系列端侧模型将搭载于三星手机上市，覆盖数款旗舰机型。 就在同一日，网信部门发布公告，包括“Apple智能”等7款提供手机端侧生成式人工智能服务完成备案。 公告显示，Apple智能、华为小艺AI大模型、OPPO An…",
-   "category": "36氪",
-   "tags": [],
-   "date": "2026-07-15",
-   "source": "industry",
-   "source_name": "行业动态",
-   "author": "36氪",
-   "ai": {
-    "keep": true,
-    "at": "2026-07-21"
-   },
-   "quip": "端侧模型的商业化意味着应用更贴近用户，隐私优势也更突出"
-  },
-  {
    "id": "a23935afe1f0",
    "title": "美团四大名著，我也想让团队都读一遍",
    "url": "https://rui.juzi.bot/thought/2026-07-13-four-books-for-team.html",
@@ -2549,6 +3266,54 @@
    "ai": {
     "keep": false,
     "at": "2026-07-21"
+   }
+  },
+  {
+   "id": "7e0b368892ad",
+   "title": "“母病速归”式 AI：号称省 65% Token，实测只有 8.5%",
+   "url": "https://baoyu.io/blog/2026-07-12/caveman-token-saving-test",
+   "summary": "让 AI 像原始人一样说话，确实能省一点 Token，但真正昂贵的是上下文、工具调用和返工。",
+   "category": "宝玉",
+   "tags": [],
+   "date": "2026-07-12",
+   "source": "voices",
+   "source_name": "大咖观点",
+   "author": "宝玉",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   }
+  },
+  {
+   "id": "7860154da5f0",
+   "title": "一文看懂ChatGPT、Codex、Work 的差别",
+   "url": "https://baoyu.io/blog/chatgpt-work-codex-guide",
+   "summary": "Chat 回答问题，Work 帮你干活，Codex 帮你写代码：一篇讲清三者区别、共享额度、价格，以及与 Claude Cowork 的差异。",
+   "category": "宝玉",
+   "tags": [],
+   "date": "2026-07-11",
+   "source": "voices",
+   "source_name": "大咖观点",
+   "author": "宝玉",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   }
+  },
+  {
+   "id": "d4886199a491",
+   "title": "科技爱好者周刊（第 403 期）：为什么 Dropbox 不成功",
+   "url": "http://www.ruanyifeng.com/blog/2026/07/weekly-issue-403.html",
+   "summary": "这里记录每周值得分享的科技内容，周五发布。...",
+   "category": "阮一峰",
+   "tags": [],
+   "date": "2026-07-10",
+   "source": "voices",
+   "source_name": "大咖观点",
+   "author": "阮一峰",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
    }
   },
   {
@@ -2584,40 +3349,6 @@
    }
   },
   {
-   "id": "d306db810e27",
-   "title": "Salesforce计划未来五年在瑞士投资10亿美元",
-   "url": "https://36kr.com/newsflashes/3885277759270912?f=rss",
-   "summary": "7月7日，一份声明显示，Salesforce计划在未来五年内在瑞士投资10亿美元。该投资将用于支持当地劳动力、客户群以及人工智能技能发展。（界面）",
-   "category": "36氪",
-   "tags": [],
-   "date": "2026-07-07",
-   "source": "industry",
-   "source_name": "行业动态",
-   "author": "36氪",
-   "ai": {
-    "keep": true,
-    "at": "2026-07-21"
-   },
-   "quip": "传统企业软件向AI转型的成本与周期都被低估了"
-  },
-  {
-   "id": "c6759785ae26",
-   "title": "申昊科技成立智算科技公司，注册资本5000万",
-   "url": "https://36kr.com/newsflashes/3885265403064581?f=rss",
-   "summary": "36氪获悉，天眼查App显示，7月7日，杭州申昊智算科技有限公司成立，法定代表人为陶志锋，注册资本5000万人民币，经营范围包括技术服务、技术开发、技术咨询、技术交流、技术转让、技术推广，数字技术服务，数据处理和存储支持服务，云计算装备技术服务，大数据服务，人工智能行业应用系统集成服务等，由申昊科技全资持股。",
-   "category": "36氪",
-   "tags": [],
-   "date": "2026-07-07",
-   "source": "industry",
-   "source_name": "行业动态",
-   "author": "36氪",
-   "ai": {
-    "keep": true,
-    "at": "2026-07-21"
-   },
-   "quip": "新公司成立的密度反映赛道热度，但存活率取决于有无真实应用场景"
-  },
-  {
    "id": "be92b3974beb",
    "title": "两部门：支持再保险机构增资扩股和发行资本补充工具",
    "url": "https://36kr.com/newsflashes/3885274936602880?f=rss",
@@ -2650,40 +3381,6 @@
    }
   },
   {
-   "id": "babb9879063f",
-   "title": "用AI“复刻”人类细胞、预判药效，「华源智因」获千万级人民币种子轮融资｜36氪首发",
-   "url": "https://36kr.com/p/3883943959621634?f=rss",
-   "summary": "文｜胡香赟 编辑｜海若镜 36氪获悉，AI虚拟细胞（AIVC）企业华源智因近期已完成千万级人民币种子轮融资。本轮融资由水木创投领投，募集资金将主要用于多模态测序底层技术迭代，进一步拓展与头部三甲医院的合作，以及团队扩充等。此外，华源智因团队已计划启动新一轮融资。 华源智因创始团队由资深医药产业从业者、计算生物学研发人员组成，并邀请到深圳…",
-   "category": "36氪",
-   "tags": [],
-   "date": "2026-07-07",
-   "source": "industry",
-   "source_name": "行业动态",
-   "author": "36氪",
-   "ai": {
-    "keep": true,
-    "at": "2026-07-21"
-   },
-   "quip": "AI应用从虚拟向物理扩展，但生物领域的验证周期更长、ROI更难预测"
-  },
-  {
-   "id": "ad0b1db57ada",
-   "title": "\"龙虾\"为什么这么火？OpenClaw登顶GitHub后，AI Agent时代真的来了？",
-   "url": "https://36kr.com/p/3885061350617350?f=rss",
-   "summary": "GitHubStar-history 最近Openclaw以25.2万星标，超越Meta的React登顶GitHub开源项目历史第一！ 要知道React是Facebook(现改名Meta）打造的经典前端框架，过去十余年间，互联网上绝大多数我们熟知的网站与App，底层技术架构皆由它构筑。Openclaw官方更是高调发文嘲讽Meta“我们在…",
-   "category": "36氪",
-   "tags": [],
-   "date": "2026-07-07",
-   "source": "industry",
-   "source_name": "行业动态",
-   "author": "36氪",
-   "ai": {
-    "keep": true,
-    "at": "2026-07-21"
-   },
-   "quip": "开源Agent框架的流行是应用加速信号，但垂直化落地才是真差异"
-  },
-  {
    "id": "a3915494689a",
    "title": "平安好医生与辉瑞中国达成深度合作",
    "url": "https://36kr.com/newsflashes/3885283326488838?f=rss",
@@ -2698,23 +3395,6 @@
     "keep": false,
     "at": "2026-07-21"
    }
-  },
-  {
-   "id": "9532ab06d8f7",
-   "title": "8点1氪丨SK海力士本周五将登陆纳斯达克；99万机器人“伴侣”续航撑不过一晚？优必选回应；青海省博物馆回应“国家一级文物发现TCL字样”",
-   "url": "https://36kr.com/p/3884831072514309?f=rss",
-   "summary": "今日热点导览 华为Mate90系列有望搭载基于韬定律的新麒麟芯片 央视曝光滴眼液涉事企业被立案，对滴眼液乱象开展调查处置 千问大模型升级实时语音识别大模型Fun-ASR-Realtime WPS回应“滥收费、背刺用户”言论 TOP3大新闻 SK海力士10日在纳斯达克上市290亿美元规模ADR，创外资企业史上最大规模 据报道，SK海力士将…",
-   "category": "36氪",
-   "tags": [],
-   "date": "2026-07-07",
-   "source": "industry",
-   "source_name": "行业动态",
-   "author": "36氪",
-   "ai": {
-    "keep": true,
-    "at": "2026-07-21"
-   },
-   "quip": "硬件产业链的融资与采用速度决定了AI应用的基础成本"
   },
   {
    "id": "82d6cd8aa0a5",
@@ -2733,23 +3413,6 @@
    }
   },
   {
-   "id": "5cfe239ec4e1",
-   "title": "揭秘字节 Seedance：中国第一台大模型印钞机启动了 | 深氪",
-   "url": "https://36kr.com/p/3885177884078083?f=rss",
-   "summary": "采访 | 邓咏仪 肖思佳 李小霞 文 | 张雨忻 邓咏仪 编辑 | 张雨忻 杨轩 2025 年底，在一次模型团队的聚餐上，Seedance 模型的负责人曾妍向 leader 提到，她还是想试试训一个更大尺寸的模型，至少达到 200B（2000亿参数）。 曾妍是字节 Seed 一位非常年轻的研究员，2021 年校招生，研究方向始终聚焦在视…",
-   "category": "36氪",
-   "tags": [],
-   "date": "2026-07-07",
-   "source": "industry",
-   "source_name": "行业动态",
-   "author": "36氪",
-   "ai": {
-    "keep": true,
-    "at": "2026-07-21"
-   },
-   "quip": "字节Seedance的印钞靠的是流量与生态，不是模型本身有多强"
-  },
-  {
    "id": "512c9e447ff8",
    "title": "两部门：促进境外保险机构参与中国再保险市场",
    "url": "https://36kr.com/newsflashes/3885274237612037?f=rss",
@@ -2764,23 +3427,6 @@
     "keep": false,
     "at": "2026-07-21"
    }
-  },
-  {
-   "id": "4feb973423b0",
-   "title": "建发集团成立新科技公司，注册资本5亿",
-   "url": "https://36kr.com/newsflashes/3885287563472898?f=rss",
-   "summary": "36氪获悉，天眼查App显示，近日，厦门建发科技有限公司成立，法定代表人为蔡晓帆，注册资本5亿人民币，经营范围包括技术服务、技术开发、技术咨询、技术交流、技术转让、技术推广，人工智能行业应用系统集成服务，人工智能应用软件开发，信息系统集成服务，软件开发，大数据服务，物联网应用服务等，由厦门建发集团有限公司、厦门建发新兴产业股权投资有限责…",
-   "category": "36氪",
-   "tags": [],
-   "date": "2026-07-07",
-   "source": "industry",
-   "source_name": "行业动态",
-   "author": "36氪",
-   "ai": {
-    "keep": true,
-    "at": "2026-07-21"
-   },
-   "quip": "传统企业5亿级注册资本入场AI说明吸引力，也暗示市场竞争加剧"
   },
   {
    "id": "391849ab0277",
@@ -2815,57 +3461,6 @@
    }
   },
   {
-   "id": "fdd7c947f3be",
-   "title": "8点1氪丨7-11指控耐克新鞋配色抄袭；A股新版交易规则今起施行；华尔街称苹果采购长鑫内存是为了压价",
-   "url": "https://36kr.com/p/3883400536453381?f=rss",
-   "summary": "今日热点导览 苹果Siri AI秋季上线，仅限iPhone 15 Pro及以上机型 蒋方舟再回应被清华教授指控论文造假 张雪称负债接近1亿元，本月将还清全部债务 黑石集团放弃全球最大数据中心项目，意味着该建设计划已宣告破产 印度政府：正调查苹果手机信息泄露事件 TOP3大新闻 7-11起诉耐克，指控其新鞋配色抄袭7-11标志性颜色 据报…",
-   "category": "36氪",
-   "tags": [],
-   "date": "2026-07-06",
-   "source": "industry",
-   "source_name": "行业动态",
-   "author": "36氪",
-   "ai": {
-    "keep": true,
-    "at": "2026-07-21"
-   },
-   "quip": "消费级AI助手的采用率增长与企业级应用的需求曲线不同"
-  },
-  {
-   "id": "f8aad0da9198",
-   "title": "上市前夜 | 哈工大在读博士以百亿市值冲港股IPO，创始三人只剩一人",
-   "url": "https://36kr.com/p/3883708118921480?f=rss",
-   "summary": "本文约3600字，建议阅读8分钟 作者 | 彭孝秋 编者按： 《上市前夜》栏目聚焦企业冲刺资本市场的关键时刻。每一份招股书里，都藏着一家企业上市前的野心、周期与隐忧。这是第二期—— 珞石机器人 。 7月6日上午10点， 珞石机器人 港股IPO招股结束。此次IPO定价38港元，每手100股，对应市值99.46亿港元。合计募资8.75亿港元…",
-   "category": "36氪",
-   "tags": [],
-   "date": "2026-07-06",
-   "source": "industry",
-   "source_name": "行业动态",
-   "author": "36氪",
-   "ai": {
-    "keep": true,
-    "at": "2026-07-21"
-   },
-   "quip": "机器人公司百亿上市说明融资规模大，但虚拟与物理应用边界很清晰"
-  },
-  {
-   "id": "f7ecfa8b592d",
-   "title": "微软Teams加强第三方AI智能体权限管理，需会议组织者确认后方可放行",
-   "url": "https://36kr.com/newsflashes/3883934303367429?f=rss",
-   "summary": "微软发文，宣布为Microsoft Teams会议应用推出全新的AI机器人管理策略，当第三方AI机器人尝试加入会议时，必须先获得会议组织者批准后才能进入。据介绍，目前微软已在Teams管理中心新增“Manage external bots and their access to meetings”管理策略，该功能默认启用，管理员可将该策…",
-   "category": "36氪",
-   "tags": [],
-   "date": "2026-07-06",
-   "source": "industry",
-   "source_name": "行业动态",
-   "author": "36氪",
-   "ai": {
-    "keep": true,
-    "at": "2026-07-21"
-   },
-   "quip": "权限管理是信任基础，第三方 Agent 长期活跃需要安全管制"
-  },
-  {
    "id": "eaba2dbc9c57",
    "title": "鄂尔多斯、和达金服共同领投，「贻如科技」完成超亿元A轮融资｜36氪首发",
    "url": "https://36kr.com/p/3880060701388809?f=rss",
@@ -2880,23 +3475,6 @@
     "keep": false,
     "at": "2026-07-21"
    }
-  },
-  {
-   "id": "c58a454a037f",
-   "title": "氪星晚报｜佑驾创新正式发布四轮足机器人；千问大模型升级实时语音识别大模型Fun-ASR-Realtime",
-   "url": "https://36kr.com/p/3884024701874183?f=rss",
-   "summary": "大公司： 郭明錤爆料最新苹果折叠手机：出货量明显不足，或重现“饥饿营销” 知名分析师郭明錤分析指出，苹果可折叠iPhone预计2026年下半年出货，但初期供应可能不足。他称自己的行业调查显示，2026年下半年可折叠iPhone的组装出货量约为700万至800万部，第三季度出货量约为50万至100万部，约占苹果总出货量的10%。该产品价格…",
-   "category": "36氪",
-   "tags": [],
-   "date": "2026-07-06",
-   "source": "industry",
-   "source_name": "行业动态",
-   "author": "36氪",
-   "ai": {
-    "keep": true,
-    "at": "2026-07-21"
-   },
-   "quip": "语音识别进步好，但企业 AI 关键是业务流程和集成能力"
   },
   {
    "id": "c3d8f0530c2d",
@@ -2929,23 +3507,6 @@
     "keep": false,
     "at": "2026-07-21"
    }
-  },
-  {
-   "id": "ad61f3160130",
-   "title": "AI 砍掉的第一批大厂人：高薪，高绩效，高P｜深氪",
-   "url": "https://36kr.com/p/3883456791163138?f=rss",
-   "summary": "访谈｜任彩茹 兰杰 彭倩 文｜任彩茹 编辑｜乔芊 杨轩 “630”减员，AI是祸首还是替罪羊? “现在公司有（减员）名单，你在这里面。”5月中的一天，林越被组长叫进会议室，对方开门见山。 林越的第一反应是平静，他早有预料。早在今年三四月，一些互联网公司内部便传出要裁员的风声。开年以来，中国互联网大公司围绕AI提效激进开展的token竞赛…",
-   "category": "36氪",
-   "tags": [],
-   "date": "2026-07-06",
-   "source": "industry",
-   "source_name": "行业动态",
-   "author": "36氪",
-   "ai": {
-    "keep": true,
-    "at": "2026-07-21"
-   },
-   "quip": "工具做重复工作必然，人的价值在创意决策，搭配合理才可持续"
   },
   {
    "id": "ab9227650689",
@@ -3068,38 +3629,36 @@
    }
   },
   {
-   "id": "1282687f7a6f",
-   "title": "获DCM Ventures投资数百万美元，APTSell希望成为AI版的首席销售官｜涌现新项目",
-   "url": "https://36kr.com/p/3883591654895873?f=rss",
-   "summary": "文｜吴思瑾 编辑｜邓咏仪 01 一句话介绍 北京治真治合科技有限公司成立于2024年，旗下产品「APTSell」（AI Power To Sales）希望成为AI版的CSO （Chief Sales Officer，首席销售官）。 简单来说，APTSell是一个组合式Agent，通过整合与可视化销售全流程数据，生成管理决策和执行建议，以…",
-   "category": "36氪",
+   "id": "195d0bebc5a4",
+   "title": "从零开始玩转循环 (Getting started with loops)",
+   "url": "https://baoyu.io/blog/2026-07-06/claudedevs-2074208949205881033",
+   "summary": "最近大家都在热议“设计循环 (designing loops)”，而不是简单地给你的写代码的 AI 智能体 (AI Agent) 下提示词。如果你在 X（原 Twitter）上逛一逛，想搞清楚“循环”到底是个啥，你会看到五花八门的答案。",
+   "category": "宝玉",
    "tags": [],
    "date": "2026-07-06",
-   "source": "industry",
-   "source_name": "行业动态",
-   "author": "36氪",
+   "source": "voices",
+   "source_name": "大咖观点",
+   "author": "宝玉",
    "ai": {
     "keep": true,
-    "at": "2026-07-21"
-   },
-   "quip": "AI 销售赛道明确，真正帮客户增收才是检验标准"
+    "at": "2026-07-22"
+   }
   },
   {
-   "id": "60d810f117c0",
-   "title": "硬氪首发 | 港大教授成立的忆生科技获数亿天使轮融资，致力于为机器人造一套记忆系统",
-   "url": "https://36kr.com/p/3882365879005186?f=rss",
-   "summary": "作者 | 邱晓芬 编辑 | 袁斯来 硬氪获悉，「忆生科技」（TranscEngram）完成数亿元天使轮融资，本轮投资方阵容横跨产业资本与国资平台，包括正大旗下中生制药、浦东创投、张江科投、张江高科、弘信电子、云晖资本、沃肯资本、金舵资本等。 「忆生科技」致力于从科学第一性原理出发，用\"感知—预测—交互\"闭环构建机器人\"大脑+小脑\"统一系…",
-   "category": "36氪",
+   "id": "296ce7765dad",
+   "title": "科技爱好者周刊（第 402 期）：我在智念 AI 的日子（小说）",
+   "url": "http://www.ruanyifeng.com/blog/2026/07/weekly-issue-402.html",
+   "summary": "这里记录每周值得分享的科技内容，周五发布。...",
+   "category": "阮一峰",
    "tags": [],
-   "date": "2026-07-05",
-   "source": "industry",
-   "source_name": "行业动态",
-   "author": "36氪",
+   "date": "2026-07-02",
+   "source": "voices",
+   "source_name": "大咖观点",
+   "author": "阮一峰",
    "ai": {
     "keep": true,
-    "at": "2026-07-21"
-   },
-   "quip": "长期记忆是 Agent 升级到员工的必要条件"
+    "at": "2026-07-22"
+   }
   },
   {
    "id": "550d6604b32c",
@@ -3224,6 +3783,22 @@
    }
   },
   {
+   "id": "1e41ec2cc2f9",
+   "title": "为啥 Codex 还不推出类似 Codex Design 的产品？",
+   "url": "https://baoyu.io/blog/2026-06-13/codex-design-model-gap",
+   "summary": "Claude Design 的关键不在 Harness，而在模型能否同时处理 UI/UX、数据结构、状态管理和交互逻辑。",
+   "category": "宝玉",
+   "tags": [],
+   "date": "2026-06-13",
+   "source": "voices",
+   "source_name": "大咖观点",
+   "author": "宝玉",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   }
+  },
+  {
    "id": "10ff0f01ec77",
    "title": "AI 员工阵容新增「AI HR」：从简历初筛到语音面试",
    "url": "https://juzibot.com/workforce/hr.html",
@@ -3274,6 +3849,38 @@
    }
   },
   {
+   "id": "3fd20a6f05c4",
+   "title": "DeepSeek 的 10 万亿美元大战略",
+   "url": "https://baoyu.io/blog/2026-05-23/bookwormengr-status-2057909493250539891",
+   "summary": "你有没有想过，DeepSeek 可能怎么赚钱，而且赚很多钱？",
+   "category": "宝玉",
+   "tags": [],
+   "date": "2026-05-23",
+   "source": "voices",
+   "source_name": "大咖观点",
+   "author": "宝玉",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   }
+  },
+  {
+   "id": "de6541bcf762",
+   "title": "来自 Codex 官方团队的分享：如何把 Codex 用到极致",
+   "url": "https://baoyu.io/blog/2026-05-20/jxnlco-2057153744630890620",
+   "summary": "大多数开发者最初使用编程智能体，是为了写代码：检查仓库、生成 diff、跑测试、开 pull request。",
+   "category": "宝玉",
+   "tags": [],
+   "date": "2026-05-20",
+   "source": "voices",
+   "source_name": "大咖观点",
+   "author": "宝玉",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   }
+  },
+  {
    "id": "25f60418af43",
    "title": "句子互动新版官网上线：五套产品同场亮相",
    "url": "https://juzibot.com/",
@@ -3284,6 +3891,102 @@
    "source": "product",
    "source_name": "产品动态",
    "author": "句子互动"
+  },
+  {
+   "id": "1c8592fbafab",
+   "title": "为什么我不“凭感觉编程”",
+   "url": "https://baoyu.io/translations/2026-05-17/i-dont-vibe-code",
+   "summary": "这篇文章从成本、经验、抽象、数据、摩擦、责任和创作乐趣等角度，解释作者为什么始终无法真正接受 vibe coding。",
+   "category": "宝玉",
+   "tags": [],
+   "date": "2026-05-17",
+   "source": "voices",
+   "source_name": "大咖观点",
+   "author": "宝玉",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   }
+  },
+  {
+   "id": "0c83e7b090a8",
+   "title": "创始人手册：打造 AI 原生初创公司",
+   "url": "https://baoyu.io/translations/2026-05-16/the-founders-playbook-building-an-ai-native-startup",
+   "summary": "AI 正在重塑初创公司的生命周期：从构思、MVP、发布到扩展，创始人可以用 Claude、Claude Code 和 Claude Cowork 压缩验证、开发和运营周期。",
+   "category": "宝玉",
+   "tags": [],
+   "date": "2026-05-16",
+   "source": "voices",
+   "source_name": "大咖观点",
+   "author": "宝玉",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   }
+  },
+  {
+   "id": "aefa6b151dd0",
+   "title": "Forward Deployed Engineer：AI 时代的新宠岗位，到底干什么？",
+   "url": "https://baoyu.io/blog/2026-05-15/forward-deployed-engineer",
+   "summary": "FDE 正成为 AI 公司争抢的新岗位，关键不是写模型，而是把模型真正接进企业业务。",
+   "category": "宝玉",
+   "tags": [],
+   "date": "2026-05-15",
+   "source": "voices",
+   "source_name": "大咖观点",
+   "author": "宝玉",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   }
+  },
+  {
+   "id": "d886987181ce",
+   "title": "AI 时代到底该怎么管一个工程团队",
+   "url": "https://baoyu.io/blog/2026-05-12/running-an-ai-native-engineering-org",
+   "summary": "Fiona Fung 以 Claude Code 团队实践说明，AI 时代的软件工程不再卡在写代码，而是卡在验证、评审、跨职能协作和安全边界。真正需要重构的是流程、组织结构、知识共享方式和衡量指标。",
+   "category": "宝玉",
+   "tags": [],
+   "date": "2026-05-12",
+   "source": "voices",
+   "source_name": "大咖观点",
+   "author": "宝玉",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   }
+  },
+  {
+   "id": "33b2a5b84730",
+   "title": "为什么资深开发者讲不清自己的专业能力",
+   "url": "https://baoyu.io/translations/2026-05-12/why-senior-developers-fail-to-communicate-their-expertise",
+   "summary": "资深开发者习惯用复杂度来解释问题，而业务里的其他人真正担心的是不确定性；以及在 AI 已经进入视野之后，这件事该怎么办。",
+   "category": "宝玉",
+   "tags": [],
+   "date": "2026-05-12",
+   "source": "voices",
+   "source_name": "大咖观点",
+   "author": "宝玉",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   }
+  },
+  {
+   "id": "846c8049bd2f",
+   "title": "Codex 的野心，MCP 和 Skill 的下一步",
+   "url": "https://baoyu.io/blog/2026-05-11/skill-next-codex",
+   "summary": "Codex 右侧工作区的演进不只是 UI 变化，而是在为插件生态铺路。",
+   "category": "宝玉",
+   "tags": [],
+   "date": "2026-05-11",
+   "source": "voices",
+   "source_name": "大咖观点",
+   "author": "宝玉",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   }
   },
   {
    "id": "4896cd760f43",
