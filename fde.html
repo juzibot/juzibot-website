@@ -131,7 +131,7 @@
   .fde-card h4{font-size:17.5px}
 
   /* —— sec-top 副文：小字 + 右对齐（呼应首页 tier-sub 的排布） —— */
-  .sec-top .sub{margin-left:auto;text-align:right;max-width:38ch;font-size:14px;color:var(--ink-3)}
+  .sec-top .sub{margin-left:auto;text-align:justify;text-align-last:justify;text-justify:inter-ideograph;max-width:46ch;font-size:14px;color:var(--ink-3)}
 
   /* —— Echo/Delta 双人卡：渐变底 + 图标 + 代号右对齐胶囊 + 顶部彩条 —— */
   .fde-duo{max-width:1040px;gap:clamp(16px,2vw,24px)}
@@ -159,7 +159,7 @@
     .fde-cmp .cmp-h.l,.fde-cmp .cmp-c.l{border-bottom:1px solid var(--line)}
     /* sec-top 横排 flex（标题 + sub）→ 竖排堆叠，避免窄屏 sub 不收缩挤压/溢出 */
     .sec-top{flex-direction:column;align-items:flex-start;gap:14px}
-    .sec-top .sub{max-width:none;flex-shrink:1;margin-left:0;text-align:left}
+    .sec-top .sub{max-width:none;flex-shrink:1;margin-left:0;text-align:justify}
   }
 
   @media(max-width:640px){

@@ -100,13 +100,13 @@
   .fde-card h4{font-size:17.5px}
 
   /* —— sec-top 副文：小字右对齐（与 fde / sales 页一致），窄屏回落左对齐 —— */
-  .sec-top .sub{margin-left:auto;text-align:right;max-width:38ch;font-size:14px;color:var(--ink-3)}
-  @media(max-width:760px){.sec-top .sub{margin-left:0;text-align:left}}
+  .sec-top .sub{margin-left:auto;text-align:justify;text-align-last:justify;text-justify:inter-ideograph;max-width:46ch;font-size:14px;color:var(--ink-3)}
+  @media(max-width:760px){.sec-top .sub{margin-left:0;text-align:left;text-align-last:auto;max-width:none}}
 
   /* 角色画像：合规要点 + 能力清单 */
   .role-split{display:block}
   .role-split>div:first-child{max-width:64ch}
-  .role-split p{font-size:15.5px;line-height:1.78;color:var(--ink-2);margin-bottom:16px}
+  .role-split p{font-size:15.5px;line-height:1.78;color:var(--ink-2);margin-bottom:16px;text-align:justify;text-justify:inter-ideograph;text-wrap:pretty}
   .cap-list{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:clamp(22px,3vw,32px)}
   .cap-list .cap{display:flex;gap:13px;background:#fff;border:1px solid var(--line);border-radius:var(--radius-sm);
     padding:15px 17px;box-shadow:var(--shadow-soft);transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s}
@@ -118,7 +118,7 @@
   .cap-list .cap:nth-child(4) .ci{background:linear-gradient(135deg,var(--purple),var(--blue-2))}
   .cap-list .cap:nth-child(5) .ci{background:linear-gradient(135deg,var(--teal),var(--green))}
   .cap-list .cap .cb{font-weight:800;font-size:14.5px;letter-spacing:-.01em;color:var(--ink)}
-  .cap-list .cap .cd{font-size:13.5px;line-height:1.6;color:var(--ink-2);margin-top:3px}
+  .cap-list .cap .cd{font-size:13.5px;line-height:1.6;color:var(--ink-2);margin-top:3px;text-wrap:pretty}
   @media(max-width:980px){
     .role-hero .wrap{grid-template-columns:1fr;gap:clamp(40px,8vw,56px)}
     .role-split{grid-template-columns:1fr;gap:clamp(28px,6vw,40px)}
