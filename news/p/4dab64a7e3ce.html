@@ -113,7 +113,7 @@
 <h1>Distillation#</h1>
 <p><strong>Knowledge Distillation</strong> (<strong>KD</strong>; <a href="https://arxiv.org/abs/1503.02531" target="_blank" rel="noopener nofollow">Hinton et al. 2015</a>, <a href="https://arxiv.org/abs/2006.05525" target="_blank" rel="noopener nofollow">Gou et al. 2020</a>) is a straightforward way to build a smaller, cheaper model (<em>“student model”</em>) to speed up inference by transferring skills from a pre-trained expensive model (<em>“teacher model”</em>) into the student. There is no much restriction on how the student architecture should be constructed, except for a matched output space with the teacher in order to construct a proper learning objective.</p>
 <figure>
-	<img src="https://lilianweng.github.io/posts/2023-01-10-inference-optimization/distillation.png" referrerpolicy="no-referrer" />
+	<img loading="lazy" onerror="this.style.display='none'" src="https://lilianweng.github.io/posts/2023-01-10-inference-optimization/distillation.png" referrerpolicy="no-referrer" />
 	<figcaption>The generic framework of teacher-student knowledge distillation training. (Image source: <a href="https://lilianweng.github.io/posts/2023-01-10-inference-optimization/”https:/arxiv.org/abs/2006.05525”" target="_blank" rel="noopener nofollow">Gou et al. 2020</a>)</figcaption>
 </figure>
 <p>Given a dataset, a student model is trained to mimic outputs of a teacher via distillation loss. Usually a neural network has a softmax layer; For example, a LLM outputs a probability distribution over tokens. Let’s denote the logits layer right before softmax as $\mathbf{z}_t$ and $\mathbf{z}_s$ for teacher and student models, respectively. The <em>distillation loss</em> minimizes the difference between two softmax outputs with a high temperature $T$. When ground truth labels $\mathbf{y}$ are known, we can combine it with a <em>supervised</em> learning objective between ground truth and the student’s soft logits using e.g. cross-entropy.</p>
@@ -135,13 +135,13 @@ $$
 <h2>Challenges for Transformer Quantization#</h2>
 <p>Many studies on Transformer model quantization have the same observation: A simple low-precision (e.g. 8-bit) post-training quantization leads to significant performance drop mainly due to the high dynamic ranges of activation and a naive activation quantization strategy fails to maintain the capacity.</p>
 <figure>
-	<img src="https://lilianweng.github.io/posts/2023-01-10-inference-optimization/quantization-experiment-table.png" referrerpolicy="no-referrer" />
+	<img loading="lazy" onerror="this.style.display='none'" src="https://lilianweng.github.io/posts/2023-01-10-inference-optimization/quantization-experiment-table.png" referrerpolicy="no-referrer" />
 	<figcaption>Only quantizing model weights to 8-bit while keeping activation at full precision (`W8A32`) achieves much better results when activations are quantized to 8-bit irrespective of whether weights are in lower precision (`W8A8` and `W32A8`). (Image source: <a href="https://arxiv.org/abs/2109.12948" target="_blank" rel="noopener nofollow">Bondarenko et al. 2021</a>)</figcaption>
 </figure>
 <p><a href="https://arxiv.org/abs/2109.12948" target="_blank" rel="noopener nofollow">Bondarenko et al. (2021)</a> observed in a small BERT model that FFN’s input and output have very different dynamic ranges due to strong outliers in the output tensor. Therefore per-tensor quantization for the FFN’s residual sum is likely to cause a notable error.</p>
 <p>As the model size continues to grow to billions of parameters, outlier features of high magnitude start to emerge in <em>all</em> transformer layers, causing failure of simple low-bit quantization. <a href="https://arxiv.org/abs/2208.07339" target="_blank" rel="noopener nofollow">Dettmers et al. (2022)</a> observed such a phenomenon for <a href="https://arxiv.org/abs/2205.01068" target="_blank" rel="noopener nofollow">OPT</a> models larger than 6.7B parameters. Larger models have more layers with extreme outliers and these outlier features have a significant impact on the model performance. The scale of activation outliers in a few dimensions can be ~100× larger than most of the other values.</p>
 <figure>
-	<img src="https://lilianweng.github.io/posts/2023-01-10-inference-optimization/OPT-models-outlier.png" referrerpolicy="no-referrer" />
+	<img loading="lazy" onerror="this.style.display='none'" src="https://lilianweng.github.io/posts/2023-01-10-inference-optimization/OPT-models-outlier.png" referrerpolicy="no-referrer" />
 	<figcaption>The mean zero-shot accuracy over a set of language tasks (WinoGrande, HellaSwag, PIQA, LAMBADA) of OPT models of increasing sizes. (Image source: <a href="https://arxiv.org/abs/2208.07339" target="_blank" rel="noopener nofollow">Dettmers et al. 2022</a>)</figcaption>
 </figure>
 <h2>Post-training quantization (PTQ)#</h2>
@@ -155,12 +155,12 @@ $$
 <li>Outlier activation features (e.g. 20x larger than other dimensions) remain in FP16 but they represent only a tiny fraction of total weights. How to identify outliers is empirical.</li>
 </ol>
 <figure>
-	<img src="https://lilianweng.github.io/posts/2023-01-10-inference-optimization/LLM-int8.png" referrerpolicy="no-referrer" />
+	<img loading="lazy" onerror="this.style.display='none'" src="https://lilianweng.github.io/posts/2023-01-10-inference-optimization/LLM-int8.png" referrerpolicy="no-referrer" />
 	<figcaption>Two mixed-precision decompositions of `LLM.int8()`. (Image source: <a href="https://arxiv.org/abs/2208.07339" target="_blank" rel="noopener nofollow">Dettmers et al. 2022</a>)</figcaption>
 </figure>
 <h3>Quantization at fine-grained granularity#</h3>
 <figure>
-	<img src="https://lilianweng.github.io/posts/2023-01-10-inference-optimization/quantization-granularity.png" referrerpolicy="no-referrer" />
+	<img loading="lazy" onerror="this.style.display='none'" src="https://lilianweng.github.io/posts/2023-01-10-inference-optimization/quantization-granularity.png" referrerpolicy="no-referrer" />
 	<figcaption>Comparison of quantization at different granularity. $d$ is the model size / hidden state dimension and $h$ is the number of heads in one MHSA (multi-head self-attention) component.</figcaption>
 </figure>
 <p>Naively quantizing the entire weight matrix in one layer (“per-tensor” or “per-layer” quantization) is easiest to implement but does not lead to good granularity of quantization.</p>
@@ -177,7 +177,7 @@ $$</p>
 <h3>Outlier smoothing#</h3>
 <p>It is known that activations are harder to quantize than weights in transformer models. <strong>SmoothQuant</strong> (<a href="https://arxiv.org/abs/2211.10438" target="_blank" rel="noopener nofollow">Xiao &amp; Lin 2022</a>) proposed a smart solution to smooth outlier features from activations to weights via mathematically equivalent transformation and then enable quantization on both weights and activations (<code>W8A8</code>). Because of this, SmoothQuant has better hardware efficiency than mixed-precision quantization.</p>
 <figure>
-	<img src="https://lilianweng.github.io/posts/2023-01-10-inference-optimization/SmoothQuant.png" referrerpolicy="no-referrer" />
+	<img loading="lazy" onerror="this.style.display='none'" src="https://lilianweng.github.io/posts/2023-01-10-inference-optimization/SmoothQuant.png" referrerpolicy="no-referrer" />
 	<figcaption>SmoothQuant migrates the scale variance from activations to weights offline to reduce the difficulty of activation quantization. Both the resulting new weight and activation matrices are easy to quantize. (Image source: <a href="https://arxiv.org/abs/2211.10438" target="_blank" rel="noopener nofollow">Xiao &amp; Lin 2022</a>)</figcaption>
 </figure>
 <p>Considering a per-channel smooth factor $\mathbf{s}$, SmoothQuant scales the weights according to:</p>
@@ -219,19 +219,19 @@ $$</p>
 <h2>N:M Sparsity via Pruning#</h2>
 <p><strong>N:M sparsity</strong> is a structured sparsity pattern that works well with modern GPU hardware optimization, in which $N$ out of every $M$ consecutive elements are zeros. For example, the sparse tensor core of Nvidia A100 GPU has support for 2:4 sparsity for faster inference (<a href="https://images.nvidia.com/aem-dam/en-zz/Solutions/data-center/nvidia-ampere-architecture-whitepaper.pdf" target="_blank" rel="noopener nofollow">Nvidia 2020</a>).</p>
 <figure>
-	<img src="https://lilianweng.github.io/posts/2023-01-10-inference-optimization/2-to-4-sparsity.png" referrerpolicy="no-referrer" />
+	<img loading="lazy" onerror="this.style.display='none'" src="https://lilianweng.github.io/posts/2023-01-10-inference-optimization/2-to-4-sparsity.png" referrerpolicy="no-referrer" />
 	<figcaption>A matrix of 2:4 structured sparsity and its compressed representation. (Image source: <a href="https://developer.nvidia.com/blog/accelerating-inference-with-sparsity-using-ampere-and-tensorrt/" target="_blank" rel="noopener nofollow">Nvidia blog</a>)</figcaption>
 </figure>
 <p>To sparsify a dense neural network to follow a N:M structured sparsity pattern, <a href="https://images.nvidia.com/aem-dam/en-zz/Solutions/data-center/nvidia-ampere-architecture-whitepaper.pdf" target="_blank" rel="noopener nofollow">Nvidia (2020)</a> suggested using the three-step routine workflow for training a pruned network: train –&gt; prune to satisfy 2:4 sparsity –&gt; retrain.</p>
 <p>Permuting columns can provide more options in the pruning process to maintain parameters of large magnitude or to satisfy a special restriction like N:M sparsity (<a href="https://proceedings.neurips.cc/paper/2021/hash/6e8404c3b93a9527c8db241a1846599a-Abstract.html" target="_blank" rel="noopener nofollow">Pool &amp; Yu 2021</a>). As long as paired axes of two matrices are permuted in the same order, the results of matrix multiplication would not change. For example,</p>
 <p>(1) Within the self-attention module, if the same permutation order is applied on the axis 1 of query embedding matrix $\mathbf{Q}$ and the axis 0 of key embedding matrix $\mathbf{K}^\top$, the final result of matrix multiplication of $\mathbf{Q}\mathbf{K}^\top$ would stay the same.</p>
 <figure>
-	<img src="https://lilianweng.github.io/posts/2023-01-10-inference-optimization/permutation-QK.png" referrerpolicy="no-referrer" />
+	<img loading="lazy" onerror="this.style.display='none'" src="https://lilianweng.github.io/posts/2023-01-10-inference-optimization/permutation-QK.png" referrerpolicy="no-referrer" />
 	<figcaption>Illustration of same permutation on $\mathbf{Q}$ (axis 1) and $\mathbf{K}^\top$ (axis 0) to keep the results of a self-attention module unchanged.</figcaption>
 </figure>
 <p>(2) Within the FFN layer that contains two MLP layers and one ReLU non-linear layer, we can permute the first linear weight matrix $\mathbf{W}_1$ along the axis 1 and the second linear weight matrix $\mathbf{W}_2$ along the axis 0 in the same order.</p>
 <figure>
-	<img src="https://lilianweng.github.io/posts/2023-01-10-inference-optimization/permutation-FFN.png" referrerpolicy="no-referrer" />
+	<img loading="lazy" onerror="this.style.display='none'" src="https://lilianweng.github.io/posts/2023-01-10-inference-optimization/permutation-FFN.png" referrerpolicy="no-referrer" />
 	<figcaption>Illustration of the same permutation on $\mathbf{W}_1$ (axis 1) and $\mathbf{W}_2$ (axis 0) to keep the FFN layer&#x27;s output unchanged. For simplicity, the bias terms are skipped but the same permutation should be applied on them too.</figcaption>
 </figure>
 <p>To enforce N:M structured sparsity, let’s split the columns of one matrix into multiple slides of $M$ columns (named “stripe”) and we can easily observe that both the order of columns within each stripe and the order of stripes have no effect on the N:M sparsity restriction.</p>
@@ -241,7 +241,7 @@ $$</p>
 <li>Narrow, deep search: Choose multiple stripes and optimize them at the same time.</li>
 </ol>
 <figure>
-	<img src="https://lilianweng.github.io/posts/2023-01-10-inference-optimization/N-to-M-sparsity-permutation-algo.png" referrerpolicy="no-referrer" />
+	<img loading="lazy" onerror="this.style.display='none'" src="https://lilianweng.github.io/posts/2023-01-10-inference-optimization/N-to-M-sparsity-permutation-algo.png" referrerpolicy="no-referrer" />
 	<figcaption>Algorithm of finding the best permutation for N:M sparsity greedily and iteratively. (Image source: <a href="https://proceedings.neurips.cc/paper/2021/hash/6e8404c3b93a9527c8db241a1846599a-Abstract.html" target="_blank" rel="noopener nofollow">Pool &amp; Yu 2021</a>)</figcaption>
 </figure>
 <p>The network can achieve better performance if it was permuted before pruning, compared to pruning the network in its default channel order.</p>
@@ -256,7 +256,7 @@ W_{t+1} \gets W_t - \gamma \frac{\partial\mathcal{L}}{\partial\widetilde{W}}  + 
 $$
 where $\bar{\mathcal{E}}$ is the mask matrix for $\widetilde{W}$ and $\odot$ is element-wise multiplication. SR-STE is proposed to prevent large change in the binary mask by (1) restricting the values of weights pruned in $\widetilde{W}_t$, and (2) promoting the non-pruned weights in $\widetilde{W}_t$.</p>
 <figure>
-	<img src="https://lilianweng.github.io/posts/2023-01-10-inference-optimization/SR-STE.png" referrerpolicy="no-referrer" />
+	<img loading="lazy" onerror="this.style.display='none'" src="https://lilianweng.github.io/posts/2023-01-10-inference-optimization/SR-STE.png" referrerpolicy="no-referrer" />
 	<figcaption>Comparison of STE and SR-STE. $\odot$ is element-wise product; $\otimes$ is matrix multiplication. (Image source: <a href="https://arxiv.org/abs/2102.04010" target="_blank" rel="noopener nofollow">Zhou &amp; Ma, et al. 2021</a>)</figcaption>
 </figure>
 <p>Different from STE or SR-STE, the <strong>Top-KAST</strong> (<a href="https://arxiv.org/abs/2106.03517" target="_blank" rel="noopener nofollow">Jayakumar et al. 2021</a>) method can preserve constant sparsity throughout training in both the forward and backward-passes but does not require forward passes with dense parameters or dense gradients.</p>
@@ -286,7 +286,7 @@ $$
 </p>
 <p>Training is split into two stages and the additional coordinates in the set $B \setminus A$ controls how much exploration is brought in. The amount of exploration is expected to diminish gradually through the training process and the mask eventually stabilizes.</p>
 <figure>
-	<img src="https://lilianweng.github.io/posts/2023-01-10-inference-optimization/Top-KAST-stabilize.png" referrerpolicy="no-referrer" />
+	<img loading="lazy" onerror="this.style.display='none'" src="https://lilianweng.github.io/posts/2023-01-10-inference-optimization/Top-KAST-stabilize.png" referrerpolicy="no-referrer" />
 	<figcaption>The pruning mask of Top-KAST stabilizes in time. (Image source: <a href="https://arxiv.org/abs/2106.03517" target="_blank" rel="noopener nofollow">Jayakumar et al. 2021</a>)</figcaption>
 </figure>
 <p>To prevent rich-get-richer phenomenon, Top-KAST penalizes the magnitude of active weights via a L2 regularization loss to encourage more exploration of new items. Parameters in $B \setminus A$ are penalized more than $A$ for a higher selection bar during updates to stabilize the mask.</p>
@@ -302,7 +302,7 @@ $$
 <h2>Sparsified Transformer#</h2>
 <p><em>Scaling Transformer</em> (<a href="https://arxiv.org/abs/2111.12763" target="_blank" rel="noopener nofollow">Jaszczur et al. 2021</a>) sparsifies both self-attention and FFN layers in transformer architecture, achieving 37x speedup for single-example inference.</p>
 <figure>
-	<img src="https://lilianweng.github.io/posts/2023-01-10-inference-optimization/scaling-transformer-speedup-table.png" referrerpolicy="no-referrer" />
+	<img loading="lazy" onerror="this.style.display='none'" src="https://lilianweng.github.io/posts/2023-01-10-inference-optimization/scaling-transformer-speedup-table.png" referrerpolicy="no-referrer" />
 	<figcaption>The speed of decoding a single token (unbatched inference) by a transformer model when sparsification is applied on different layers. (Image source: <a href="https://arxiv.org/abs/2111.12763" target="_blank" rel="noopener nofollow">Jaszczur et al. 2021</a>)</figcaption>
 </figure>
 <p><strong>Sparse FFN layer</strong>: Each FFN layer contains 2 MLP and one ReLU in-between. Because ReLU will introduce a lot of zeros, they implement a fixed structure on activations to enforce only 1 non-zero value in one block of $N$ elements. The sparsity pattern is dynamic, different for each token.</p>
@@ -317,7 +317,7 @@ $$
 </p>
 <p>where each activation in $Y_\text{sparse}$ corresponds to one column in $W_1$ and one row in $W_2$. The controller is implemented as a low-rank bottleneck dense layer, $C_1 \in \mathbb{R}^{d_\text{model} \times d_\text{lowrank}}, C_2 \in \mathbb{R}^{d_\text{lowrank} \times d_\text{ff}}$ and $d_\text{lowrank} = d_\text{model} / N$. It uses $\arg\max$ for inference to select which columns should be non-zero and Gumbel-softmax trick (<a href="https://arxiv.org/abs/1611.01144" target="_blank" rel="noopener nofollow">Jang et al. 2016</a>) during training. Because we can compute $\text{Controller}(x)$ before loading FFN weight matrices, we know which columns will be zeroed out and thus choose <em>not to load</em> them into memory for inference speedup.</p>
 <figure>
-	<img src="https://lilianweng.github.io/posts/2023-01-10-inference-optimization/sparse-FFN.png" referrerpolicy="no-referrer" />
+	<img loading="lazy" onerror="this.style.display='none'" src="https://lilianweng.github.io/posts/2023-01-10-inference-optimization/sparse-FFN.png" referrerpolicy="no-referrer" />
 	<figcaption>(a) Sparse FFN layer; columns in red are not loaded in memory for faster inference. (b) Sparse FFN controller for 1:4 sparsity. (Image source: <a href="https://arxiv.org/abs/2111.12763" target="_blank" rel="noopener nofollow">Jaszczur et al. 2021</a>) *Lilian&#x27;s side note*: Fig (a) in the illustration from the paper is actually $Y_\text{sparse} = \max\big(0, (xW_1 + b_1) \odot \text{Controller}(x)\big)$, but it doesn&#x27;t change the results. </figcaption>
 </figure>
 <p><strong>Sparse QKV (attention) layer</strong>: In the attention layer, the dimensionality $d_\text{model}$ is divided into $S$ modules, each of size $M=d_\text{model} /S$. To make sure each subdivision can access any part of the embedding, Scaling Transformer introduces a multiplicative layer (i.e., a multiplication layer multiplies inputs from multiple neural network layers element-wise) which can represent arbitrary permutation but contains fewer parameters than a dense layer.</p>
@@ -330,7 +330,7 @@ $$
 </p>
 <p>The output of the multiplicative layer is a tensor of size $\in \mathbb{R}^{\text{batch size}\times \text{length} \times S \times M}$. It then gets processed by a two-dimensional convolutional layer, where $\text{length}$ and $S$ are treated as the height and width of an image. Such a convolution layer further reduces the parameter count and computation time of attention layer.</p>
 <figure>
-	<img src="https://lilianweng.github.io/posts/2023-01-10-inference-optimization/sparse-QKV.png" referrerpolicy="no-referrer" />
+	<img loading="lazy" onerror="this.style.display='none'" src="https://lilianweng.github.io/posts/2023-01-10-inference-optimization/sparse-QKV.png" referrerpolicy="no-referrer" />
 	<figcaption>(a) A multiplicative layer is introduced to enable partitions to access any part of an embedding. (b) Combination of multiplicative dense layer and 2-D convolutional layer reduces the number of parameters and computation time of the attention layer. (Image source: <a href="https://arxiv.org/abs/2111.12763" target="_blank" rel="noopener nofollow">Jaszczur et al. 2021</a>)</figcaption>
 </figure>
 <p>To better work with long sequences, Scaling Transformer is further equipped with LSH (locality-sensitive hashing) attention from <a href="https://lilianweng.github.io/posts/2023-01-27-the-transformer-family-v2/#locality-sensitive-hashing-reformer" target="_blank" rel="noopener nofollow">Reformer</a> (<a href="https://arxiv.org/abs/2001.04451" target="_blank" rel="noopener nofollow">Kitaev, et al. 2020</a>) and FFN block recurrence, resulting in <em>Terraformer</em>.</p>
@@ -348,7 +348,7 @@ $$
 <p><strong>V-MoE</strong> (Vision MoE; <a href="https://arxiv.org/abs/2106.05974" target="_blank" rel="noopener nofollow">Riquelme et al. 2021</a>) adds MoE layers into ViT (Vision Transformer). It matches the performance of previous SoTA but only requires <em>half</em> of inference compute. V-MoE can be scaled up to 15B parameters. Their experiments used $k=2$, 32 experts and every-2 expert placement (meaning that MoEs are placed in every other layer).</p>
 <p>Since each expert has a limited capacity, some important and informative tokens may have to be discarded if they come up too late in the predefined sequence order (e.g. the order of words in a sentence, or the order of image patches). To avoid such a drawback in the vanilla routing scheme, V-MoE adopts <strong>BPR (Batch Priority Routing)</strong> to assign experts to tokens with a high priority score first. BPR computes a priority score (max or sum of top-$k$ router scores) per token before expert assignment and alters the order of tokens accordingly. This guarantees that the expert capacity buffer would be fulfilled with key tokens first.</p>
 <figure>
-	<img src="https://lilianweng.github.io/posts/2023-01-10-inference-optimization/BPR.png" referrerpolicy="no-referrer" />
+	<img loading="lazy" onerror="this.style.display='none'" src="https://lilianweng.github.io/posts/2023-01-10-inference-optimization/BPR.png" referrerpolicy="no-referrer" />
 	<figcaption>How image patches are discarded according to priority scores when $C &lt; 1$. (Image source: <a href="https://arxiv.org/abs/2106.05974" target="_blank" rel="noopener nofollow">Riquelme et al. 2021</a>)</figcaption>
 </figure>
 <p>BPR works much better than vanilla routing when $C\leq 0.5$, where the model starts dropping a significant amount of tokens. It capacitates the model to be competitive with the dense network even at quite low capacities.</p>
@@ -358,7 +358,7 @@ $$
 <p>Task level MoE is essentially to categorize a distribution of tasks according to predefined  <em>heuristics</em> and incorporate such human knowledge into the router. When such heuristics do not exist (e.g. consider a general sentence continuation task), it would not be straightforward how to utilize Task MoE.</p>
 <p><strong>PR-MoE</strong> (Pyramid residual MoE; <a href="https://arxiv.org/abs/2201.05596" target="_blank" rel="noopener nofollow">Rajbhandari et al. 2022</a>) has each token pass one fixed MLP and one chosen expert. Due to the observation that MoE at later layers is more beneficial, PR-MoE adopts more exports at later layers. DeepSpeed library implements a flexible multi-expert, multi-data parallelism to enable training PR-MoE with different numbers of experts across layers.</p>
 <figure>
-	<img src="https://lilianweng.github.io/posts/2023-01-10-inference-optimization/PR-MoE.png" referrerpolicy="no-referrer" />
+	<img loading="lazy" onerror="this.style.display='none'" src="https://lilianweng.github.io/posts/2023-01-10-inference-optimization/PR-MoE.png" referrerpolicy="no-referrer" />
 	<figcaption>Illustration of PR-MoE architecture in comparison with a standard MoE. (Image source: <a href="https://arxiv.org/abs/2201.05596" target="_blank" rel="noopener nofollow">Rajbhandari et al. 2022</a>)</figcaption>
 </figure>
 <h3>Kernel Improvement#</h3>
@@ -368,7 +368,7 @@ $$
 <h1>Architectural Optimization#</h1>
 <p>The survey paper on <em>Efficient Transformers</em> (<a href="https://arxiv.org/abs/2009.06732" target="_blank" rel="noopener nofollow">Tay et al. 2020</a>) reviewed a collection of new transformer architectures with improvement for better <em>computational and memory efficiency</em>. Strongly recommend a read. You can also check out my post <a href="https://lilianweng.github.io/posts/2023-01-27-the-transformer-family-v2/" target="_blank" rel="noopener nofollow">“The Transformer Family Version 2.0”</a> for introduction to a diverse set of transformer archiecture improvements in depth, including changes to make the model cheaper to run.</p>
 <figure>
-	<img src="https://lilianweng.github.io/posts/2023-01-10-inference-optimization/efficient-transformer.png" referrerpolicy="no-referrer" />
+	<img loading="lazy" onerror="this.style.display='none'" src="https://lilianweng.github.io/posts/2023-01-10-inference-optimization/efficient-transformer.png" referrerpolicy="no-referrer" />
 	<figcaption>Categorization of efficient transformer models.<br />(Image source: <a href="https://arxiv.org/abs/2009.06732" target="_blank" rel="noopener nofollow">Tay et al. 2020</a>)</figcaption>
 </figure>
 <p>Since the self-attention mechanism has quadratic time and memory complexity and that is the main bottleneck for better transformer decoding efficiency, all the efficient transformer models have applied some form of sparsity to the otherwise dense attention layer. Here only lists a high-level overview, several derived from <a href="https://arxiv.org/abs/2009.06732" target="_blank" rel="noopener nofollow">Tay et al. 2020</a>.</p>

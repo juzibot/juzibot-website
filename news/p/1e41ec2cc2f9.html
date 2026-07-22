@@ -89,7 +89,7 @@
 <p>很多人把 Codex、Claude Design 和 GPT-5.5、Claude Opus 4.8 混在一起说，其实它们是完全不同的两层。</p>
 <p>Claude Design 和 Codex 是&quot;<a class="cpt" href="../c/harness-layer.html" data-def="AI系统中围绕模型构建的工程层，包括提示词、工具链和UI，负责将模型能力转化为可用产品">产品层</a>&quot;，业界叫 Harness，包括提示词、工具链、UI 交互流程这些工程层面的东西。Claude Opus 4.8 和 GPT-5.5 是&quot;模型层&quot;，是真正干活的大脑。</p>
 <p>打个比方：Harness 是厨房，里面有锅碗瓢盆（工具）和菜谱（Skills），模型是厨师。同一套厨房，换个厨师，做出来的菜完全不一样。</p>
-<p><img src="https://s.baoyu.io/imgs/2026-06-13/codex-design-model-gap/illustration-01-model-harness-layers-20260613.png" alt="Agent 的两层：模型和 Harness" referrerpolicy="no-referrer" /></p>
+<p><img loading="lazy" onerror="this.style.display='none'" src="https://s.baoyu.io/imgs/2026-06-13/codex-design-model-gap/illustration-01-model-harness-layers-20260613.png" alt="Agent 的两层：模型和 Harness" referrerpolicy="no-referrer" /></p>
 <p>理解了这个区分，后面的事情就好说了。</p>
 <h2>【2】Harness 不是门槛</h2>
 <p>Claude Design 的 Harness 层技术上不复杂。花点心思逆向一下，提示词、工具代码几乎都可以拿到。我已经做过了，成果在 baoyu-design（<a href="https://github.com/JimLiu/baoyu-design%EF%BC%89%EF%BC%8C%E5%8F%AF%E4%BB%A5%E5%80%9F%E5%8A%A9" target="_blank" rel="noopener nofollow">https://github.com/JimLiu/baoyu-design），可以借助</a> Skill 把 Claude Design 在其他模型上运行。工程上没秘密。</p>
@@ -99,7 +99,7 @@
 <p>这对模型的要求很高。</p>
 <p>举个例子。我要做一个类似 X/微博的客户端。让模型画一个好看的静态界面，很多模型都做得到。但要让这个界面能交互就复杂了：切换不同 Timeline，展示不同类型的推文（文本、图片、视频），点赞要变红心，删推要从列表消失，从列表点进详情再返回，状态还要保持住。</p>
 <p>要做到这些，模型必须在动手画 UI 之前，先把整套数据结构和状态管理想清楚：tweet 长什么样、timeline 有哪几种、每个按钮当前是什么状态、状态之间怎么联动。这是系统架构设计的活，不是画 UI 的活。</p>
-<p><img src="https://s.baoyu.io/imgs/2026-06-13/codex-design-model-gap/illustration-02-state-architecture-prototype-20260613.png" alt="高精度可交互原型，难在模型" referrerpolicy="no-referrer" /></p>
+<p><img loading="lazy" onerror="this.style.display='none'" src="https://s.baoyu.io/imgs/2026-06-13/codex-design-model-gap/illustration-02-state-architecture-prototype-20260613.png" alt="高精度可交互原型，难在模型" referrerpolicy="no-referrer" /></p>
 <p>Claude Design 对模型的要求，是同时具备优秀的 UI/UX 设计能力和系统架构设计能力，缺一个效果就大打折扣。这也是为什么我之前反对只产出纯 HTML 的设计稿，那只是静态的 UI 设计，没有融合 UX 交互。</p>
 <p>有条件的话可以自己测试感受一下。比如用这个提示词：</p>
 <blockquote>
@@ -111,7 +111,7 @@
 <h2>【4】产出物就是代码</h2>
 <p>去看 Claude Design 的产出物，注意里面的 data.jsx 文件。它把整个设计的数据结构定义得很清晰，基于这个结构模拟了一套完整数据，然后用 React 在这套数据上构建 UI。</p>
 <p>设计产物本身就是代码（React、CSS、JSON），不是 Figma 或 PSD，任何开发者拿到都能直接看出按钮的圆角、主色、间距，照着自己的技术栈实现就行。后续设计变更？git diff 一看就知道改了什么。设计和开发之间的沟通损耗降到了最低。</p>
-<p><img src="https://s.baoyu.io/imgs/2026-06-13/codex-design-model-gap/illustration-03-design-as-code-20260613.png" alt="产出物就是代码" referrerpolicy="no-referrer" /></p>
+<p><img loading="lazy" onerror="this.style.display='none'" src="https://s.baoyu.io/imgs/2026-06-13/codex-design-model-gap/illustration-03-design-as-code-20260613.png" alt="产出物就是代码" referrerpolicy="no-referrer" /></p>
 <p>说得不严谨，应该说设计 Agent 和开发 Agent 之间的沟通损耗很低了。现在都是人在指挥 Agent 去设计，人指挥 Agent 写代码了。</p>
 <h2>【5】怎么用好 Claude Design</h2>
 <p>很多人不知道该怎么用好 Claude Design，其实有点像 Vibe Coding：有个基本的想法，先让它做一个版本出来，然后通过 Chat 去指挥 Agent 帮你改，调整几个版本你的思路就清晰了。</p>

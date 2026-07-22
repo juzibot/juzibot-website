@@ -88,7 +88,7 @@
 <h2>Threat Model#</h2>
 <p>Adversarial attacks are inputs that trigger the model to output something undesired. Much early literature focused on classification tasks, while recent effort starts to investigate more into outputs of generative models. In the context of large language models In this post we assume the attacks only happen <strong>at inference time</strong>, meaning that <strong>model weights are fixed</strong>.</p>
 <figure>
-	<img src="https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/threats-overview.png" referrerpolicy="no-referrer" />
+	<img loading="lazy" onerror="this.style.display='none'" src="https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/threats-overview.png" referrerpolicy="no-referrer" />
 	<figcaption>An overview of threats to <a class="cpt" href="../c/large-language-model.html" data-def="大型语言模型是基于海量文本数据训练的AI模型，能理解和生成自然语言">LLM</a>-based applications. (Image source: <a href="https://arxiv.org/abs/2302.12173" target="_blank" rel="noopener nofollow">Greshake et al. 2023</a>)</figcaption>
 </figure>
 <h3>Classification#</h3>
@@ -167,12 +167,12 @@ $$
 <p>where $g_{ij} \sim \text{Gumbel}(0, 1)$; the temperature $\tau &gt; 0$ controls the smoothness of the distribution.</p>
 <p>Gumbel distribution is used to model the <em>extreme</em> value, maximum or minimum, of a number of samples, irrespective of the sample distribution. The additional Gumbel noise brings in the stochastic decisioning that mimic the sampling process from the categorical distribution.</p>
 <figure>
-	<img src="https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/gumbel.png" referrerpolicy="no-referrer" />
+	<img loading="lazy" onerror="this.style.display='none'" src="https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/gumbel.png" referrerpolicy="no-referrer" />
 	<figcaption>The probability density plot of $\text{Gumbel}(0, 1)$. (Image created by ChatGPT) </figcaption>
 </figure>
 <p>A low temperature $\tau \to 0$ pushes the convergence to categorical distribution, since sampling from softmax with temperature 0 is deterministic. The “sampling” portion only depends on the value of $g_{ij}$, which is mostly centered around 0.</p>
 <figure>
-	<img src="https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/gumbel-softmax.png" referrerpolicy="no-referrer" />
+	<img loading="lazy" onerror="this.style.display='none'" src="https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/gumbel-softmax.png" referrerpolicy="no-referrer" />
 	<figcaption>When the temperature is $\tau \to 0$, it reflects the original categorical distribution. When $\tau \to \infty$, it becomes a uniform distribution. The expectations and samples from Gumbel softmax distribution matched well. (Image source: <a href="https://arxiv.org/abs/1611.01144" target="_blank" rel="noopener nofollow">Jang et al. 2016</a>)</figcaption>
 </figure>
 <p>Let $\mathbf{e}_j$ be the embedding representation of token $j$. We can approximate $\mathbf{x}$ with $\bar{e}(\tilde{\boldsymbol{\pi}})$, a weighted average of the embedding vector corresponding to the token probabilities: $\bar{e}(\pi_i) = \sum_{j=1}^V \pi_i^{(j)} \mathbf{e}_j$. Note that when $\pi_i$ is a one-hot vector corresponding to the token $x_i$, we would have $\bar{e}(\pi_i) = \mathbf{e}_{z_i}$. Combining the embedding representation with the Gumbel-softmax approximation, we have a differentiable objective to minimize: $\min_{\Theta \in \mathbb{R}^{n \times V}} \mathbb{E}_{\tilde{\boldsymbol{\pi}} \sim \tilde{P}_{\Theta}} \mathcal{L}_\text{adv}(\bar{e}(\tilde{\boldsymbol{\pi}}), y; f)$.</p>
@@ -213,7 +213,7 @@ $$
 <p><strong>AutoPrompt</strong> (<a href="https://arxiv.org/abs/2010.15980" target="_blank" rel="noopener nofollow">Shin et al., 2020</a>) utilizes the same gradient-based search strategy to find the most effective prompt template for a diverse set of tasks.</p>
 <p>The above token search method can be augmented with beam search. When looking for the optimal token embedding $\mathbf{e}’_i$, we can pick top-$k$ candidates instead of a single one, searching from left to right and score each beam by $\mathcal{L}_\text{adv}$ on the current data batch.</p>
 <figure>
-	<img src="https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/UAT.png" referrerpolicy="no-referrer" />
+	<img loading="lazy" onerror="this.style.display='none'" src="https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/UAT.png" referrerpolicy="no-referrer" />
 	<figcaption>Illustration of how Universal Adversarial Triggers (UAT) works. (Image source: <a href="https://arxiv.org/abs/1908.07125" target="_blank" rel="noopener nofollow">Wallace et al. 2019</a>)</figcaption>
 </figure>
 <p>The design of the loss $\mathcal{L}_\text{adv}$  for UAT is task-specific. Classification or reading comprehension relies on cross entropy. In their experiment, conditional text generation is configured to maximize the likelihood of a language model $p$ generating similar content to a set of bad outputs $\mathcal{Y}_\text{bad}$ given any user input:</p>
@@ -224,7 +224,7 @@ $$
 </p>
 <p>It is impossible to exhaust the entire space of $\mathcal{X}, \mathcal{Y}_\text{bad}$ in practice, but the paper got decent results by representing each set with a small number of examples. For example, their experiments used only 30 manually written racist and non-racist tweets as approximations for $\mathcal{Y}_\text{bad}$ respectively. They later found that a small number of examples for $\mathcal{Y}_\text{bad}$ and ignoring $\mathcal{X}$ (i.e. no $\mathbf{x}$ in the formula above) give good enough results.</p>
 <figure>
-	<img src="https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/UAT-examples.png" referrerpolicy="no-referrer" />
+	<img loading="lazy" onerror="this.style.display='none'" src="https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/UAT-examples.png" referrerpolicy="no-referrer" />
 	<figcaption>Samples of Universal Adversarial Triggers (UAT) on different types of language tasks. (Image source: <a href="https://arxiv.org/abs/1908.07125" target="_blank" rel="noopener nofollow">Wallace et al. 2019</a>)</figcaption>
 </figure>
 <p>Why UATs work is an interesting question. Because they are input-agnostic and can transfer between models with different embeddings, tokenization and architecture, UATs probably exploit biases effectively in the training data that gets baked into the global model behavior.</p>
@@ -239,17 +239,17 @@ $$
 </li>
 </ul>
 <figure>
-	<img src="https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/UTSC.png" referrerpolicy="no-referrer" />
+	<img loading="lazy" onerror="this.style.display='none'" src="https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/UTSC.png" referrerpolicy="no-referrer" />
 	<figcaption>Illustration of how UTSC (unigram trigger with selection criteria) works. (Image source: <a href="https://arxiv.org/abs/2205.02392" target="_blank" rel="noopener nofollow">Mehrabi et al. 2022</a>)</figcaption>
 </figure>
 <p>UAT-LM and UTSC-1 are performing comparable to UAT baseline, but perplexity of UAT attack phrases are absurdly high (~ 10**7; according to GPT-2), much higher than UAT-LM (~10**4) and UTSC-1 (~160). High perplexity makes an attack more vulnerable to be detected and mitigated. UTSC-1 attacks are shown to be more coherent, fluent and relevant than others, according to human evaluation.</p>
 <figure>
-	<img src="https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/UAT-variation.png" referrerpolicy="no-referrer" />
+	<img loading="lazy" onerror="this.style.display='none'" src="https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/UAT-variation.png" referrerpolicy="no-referrer" />
 	<figcaption>Attack success rate measured by different toxicity classifiers on the defender model&#x27;s response to generated attacks. The &quot;Safety classifier&quot; is from <a href="https://arxiv.org/abs/2010.07079" target="_blank" rel="noopener nofollow">Xu et al. 2020</a>. (Image source: <a href="https://arxiv.org/abs/2205.02392" target="_blank" rel="noopener nofollow">[Mehrabi et al. 2022</a>)</figcaption>
 </figure>
 <p><a href="https://arxiv.org/abs/2307.15043" target="_blank" rel="noopener nofollow">Zou et al. (2023)</a> also studied universal adversarial triggering tokens as suffixes in concatenation to the input request. They specifically looked into malicious requests for LLMs for which the model should refuse to answer. In fact, refusal on disallowed content categories such as criminal advice is one important safety mitigation built into GPT-4 (<a href="https://arxiv.org/abs/2303.08774" target="_blank" rel="noopener nofollow">OpenAI 2023</a>). The adversarial goal is to trigger LLMs to output <strong>affirmative</strong> responses even facing requests that should be refused. That is, given a malicious request, model can respond with sth like <code>&quot;Sure, here is how to ...&quot;</code>. The expected affirmative response is also configured to repeat partial user prompts to avoid the suffix simply changing topics to optimize a <code>&quot;sure&quot;</code> response. The loss function is simply the NLL of outputting target response.</p>
 <figure>
-	<img src="https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/zou.png" referrerpolicy="no-referrer" />
+	<img loading="lazy" onerror="this.style.display='none'" src="https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/zou.png" referrerpolicy="no-referrer" />
 	<figcaption>Illustration of where adversarial triggers are introduced. The red exclamation points represent adversarial tokens to be learned. (Image source: <a href="https://arxiv.org/abs/2307.15043" target="_blank" rel="noopener nofollow">Zou et al. 2023</a>)</figcaption>
 </figure>
 <p>The experiments for triggering affirmative model responses across multiple inputs were conducted on two different models, <code>Vicuna-7b</code> and <code>Vicuna-13b</code>. They adopted <strong>greedy coordinate gradient (GCG)</strong> based search to greedily find one candidate that can reduce the loss the most among all possible single-token substitutions. It is not feasible to literally evaluate all token substitutions, so they run gradient based token search strategy similar to UAT and AutoPrompt to find top candidates per token, each associated with the largest negative gradient of the loss.</p>
@@ -262,7 +262,7 @@ $$
 </ol>
 <p>Although their attack sequences are only trained on open-source models, they show non-trivial <em>transferability</em> to other commercial models, indicating that white-box attacks on open-sourced models can be effective for private models, especially when the underlying training data has overlaps. Note that Vicuna is trained with data collected from <code>GPT-3.5-turbo</code> (via shareGPT), which is essentially distillation, so the attack works more like white-box attack.</p>
 <figure>
-	<img src="https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/zou2.png" referrerpolicy="no-referrer" />
+	<img loading="lazy" onerror="this.style.display='none'" src="https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/zou2.png" referrerpolicy="no-referrer" />
 	<figcaption>Average attack success rate on &quot;HB (harmful behavior)&quot; instructions, averaging 5 prompts. Two baselines are &quot;HB&quot; prompt only or HB prompt followed by `&quot;Sure here&#x27;s&quot;` as a suffix. &quot;Concatenation&quot; combines several adversarial suffixes to construct a more powerful attack with a significantly higher success rate in some cases. &quot;Ensemble&quot; tracks if any of 5 prompts and the concatenated one succeeded. (Image source: <a href="https://arxiv.org/abs/2307.15043" target="_blank" rel="noopener nofollow">Zou et al. 2023</a>)</figcaption>
 </figure>
 <p><strong>ARCA</strong> (“Autoregressive Randomized Coordinate Ascent”; <a href="https://arxiv.org/abs/2303.04381" target="_blank" rel="noopener nofollow">Jones et al. 2023</a>) considers a broader set of optimization problems to find input-output pairs $(\mathbf{x}, \mathbf{y})$ that match certain behavior pattern; such as non-toxic input starting with <code>&quot;Barack Obama&quot;</code> but leading to toxic output. Given an auditing objective $\phi: \mathcal{X} \times \mathcal{Y} \to \mathbb{R}$ that maps a pair of (input prompt, output completion) into scores. Examples of behavior patterns captured by $\phi$ are as follows:</p>
@@ -306,7 +306,7 @@ $$
 <p>Only $s^\text{lin}_i$ is approximated by first-order Taylor using the average embeddings of a random set of tokens instead of computing the delta with an original value like in HotFlip, UAT or AutoPrompt. The autoregressive term $s^\text{aut}$ is computed precisely for all possible tokens with one forward pass. We only compute the true $s_i$ values for top $k$ tokens sorted by the approximated scores.</p>
 <p>Experiment on reversing prompts for toxic outputs:</p>
 <figure>
-	<img src="https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/ARCA.png" referrerpolicy="no-referrer" />
+	<img loading="lazy" onerror="this.style.display='none'" src="https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/ARCA.png" referrerpolicy="no-referrer" />
 	<figcaption>Average success rate on triggering GPT-2 and GPT-J to produce toxic outputs. Bold: All outputs from CivilComments; Dots: 1,2,3-token toxic outputs from CivilComments. (Image source: <a href="https://arxiv.org/abs/2303.04381" target="_blank" rel="noopener nofollow">Jones et al. 2023</a>)</figcaption>
 </figure>
 <h2>Jailbreak Prompting#</h2>
@@ -336,14 +336,14 @@ $$
 <li><code>combination_3</code> adds generating website content and formatting constraints</li>
 </ul>
 <figure>
-	<img src="https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/jailbroken.png" referrerpolicy="no-referrer" />
+	<img loading="lazy" onerror="this.style.display='none'" src="https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/jailbroken.png" referrerpolicy="no-referrer" />
 	<figcaption>Types of jailbreak tricks and their success rate at attacking the models. Check the papers for detailed explanation of each attack config. (Image source: <a href="https://arxiv.org/abs/2307.02483" target="_blank" rel="noopener nofollow">Wei et al. 2023</a>)</figcaption>
 </figure>
 <p><a href="https://arxiv.org/abs/2302.12173" target="_blank" rel="noopener nofollow">Greshake et al. (2023)</a> make some high-level observations of prompt injection attacks. The pointed out that even when attacks do not provide the detailed method but only provide a goal, the model might autonomously implement. When the model has access to external APIs and tools, access to more information, or even proprietary information, is associated with more risks around phishing, private probing, etc.</p>
 <h2>Humans in the Loop Red-teaming#</h2>
 <p>Human-in-the-loop adversarial generation, proposed by <a href="https://arxiv.org/abs/1809.02701" target="_blank" rel="noopener nofollow">Wallace et al. (2019)</a> , aims to build toolings to guide humans to break models. They experimented with <a href="https://sites.google.com/view/qanta/resources" target="_blank" rel="noopener nofollow">QuizBowl QA dataset</a> and designed an adversarial writing interface for humans to write similar Jeopardy style questions to trick the model to make wrong predictions. Each word is highlighted in different colors according to its word importance (i.e. change in model prediction probability upon the removal of the word). The word importance is approximated by the gradient of the model w.r.t. the word embedding.</p>
 <figure>
-	<img src="https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/adv-writing-ui.png" referrerpolicy="no-referrer" />
+	<img loading="lazy" onerror="this.style.display='none'" src="https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/adv-writing-ui.png" referrerpolicy="no-referrer" />
 	<figcaption>The adversarial writing interface, composed of (Top Left) a list of top five predictions by the model, (Bottom Right) User questions with words highlighted according to word importance. (Image source: <a href="https://arxiv.org/abs/1809.02701" target="_blank" rel="noopener nofollow">Wallace et al. 2019</a>)</figcaption>
 </figure>
 <p>In an experiment where human trainers are instructed to find failure cases for a safety classifier on violent content, <a href="https://arxiv.org/abs/2205.01663" target="_blank" rel="noopener nofollow">Ziegler et al. (2022)</a> created a tool to assist human adversaries to find and eliminate failures in a classifier faster and more effectively. Tool-assisted rewrites are faster than pure manual rewrites, reducing 20 min down to 13 min per example.
@@ -353,7 +353,7 @@ Precisely, they introduced two features to assist human writers:</p>
 <li>Feature 2: <em>Token substitution and insertion</em>. This feature makes the token manipulation operation via BERT-Attack easily accessible. The token updates then get reviewed by human writers. Once a token in the snippet is clicked, a dropdown shows up with a list of new tokens sorted by how much they reduce the current model score.</li>
 </ul>
 <figure>
-	<img src="https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/ziegler-ui.png" referrerpolicy="no-referrer" />
+	<img loading="lazy" onerror="this.style.display='none'" src="https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/ziegler-ui.png" referrerpolicy="no-referrer" />
 	<figcaption>UI for humans to do tool-assisted adversarial attack on a classifier. Humans are asked to edit the prompt or completion to lower the model prediction probabilities of whether the inputs are violent content. (Image source: <a href="https://arxiv.org/abs/2205.01663" target="_blank" rel="noopener nofollow">Ziegler et al. 2022</a>)</figcaption>
 </figure>
 <p>Bot-Adversarial Dialogue (BAD; <a href="https://aclanthology.org/2021.naacl-main.235/" target="_blank" rel="noopener nofollow">Xu et al. 2021</a>) proposed a framework where humans are guided to trick model to make mistakes (e.g. output unsafe content). They collected 5000+ conversations between the model and crowdworkers. Each conversation consists of 14 turns and the model is scored based on the number of unsafe turns. Their work resulted in a <a href="https://github.com/facebookresearch/ParlAI/tree/main/parlai/tasks/bot_adversarial_dialogue" target="_blank" rel="noopener nofollow">BAD dataset</a> (<a href="https://www.tensorflow.org/datasets/catalog/bot_adversarial_dialogue" target="_blank" rel="noopener nofollow">Tensorflow dataset</a>), containing ~2500 dialogues labeled with offensiveness. The <a href="https://github.com/anthropics/hh-rlhf/tree/master/red-team-attempts" target="_blank" rel="noopener nofollow">red-teaming dataset</a> from Anthropic contains close to 40k adversarial attacks, collected from human red teamers having conversations with LLMs (<a href="https://arxiv.org/abs/2209.07858" target="_blank" rel="noopener nofollow">Ganguli, et al. 2022</a>). They found RLHF models are harder to be attacked as they scale up. Human expert red-teaming is commonly used for all safety preparedness work for big model releases at OpenAI, such as <a href="https://cdn.openai.com/papers/gpt-4.pdf" target="_blank" rel="noopener nofollow">GPT-4</a> and <a href="https://cdn.openai.com/papers/DALL_E_3_System_Card.pdf" target="_blank" rel="noopener nofollow">DALL-E 3</a>.</p>
@@ -380,7 +380,7 @@ Precisely, they introduced two features to assist human writers:</p>
 1.
 </code></pre><p>To encourage high-quality and diverse samples, they adopted <a href="https://lilianweng.github.io/posts/2021-01-02-controllable-text-generation/#nucleus" target="_blank" rel="noopener nofollow">nucleus sampling</a> with $p=0.95$. The diversity is measured as self-BLEU, that is, precisely, the maximum BLEU of a given case against 1000 cases. Lower self-BLEU indicates better diversity. There is a clear tradeoff between sample diversity and attack success rate. Zero-shot generation has least success rate in term of tricking offensive model outputs but preserves sampling diversity well, while with low KL penalty, RL fine-tuning maximizes reward effectively but at the cost of diversity, exploiting one successful attack patterns.</p>
 <figure>
-	<img src="https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/anthropic-redteam.png" referrerpolicy="no-referrer" />
+	<img loading="lazy" onerror="this.style.display='none'" src="https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/anthropic-redteam.png" referrerpolicy="no-referrer" />
 	<figcaption>The x-axis measures the % model responses are classified as offensive (= &quot;attack success rate&quot;) and the y-axis measures sample diversity by self-BLEU. Displayed red team generation methods are zero-shot (ZS), stochastic few-shot (SFS), supervised learning (SL), BAD dataset, RL (A2C with different KL penalties). Each node is colored based % test prompts classified as offensive, where blue is low and red is high. (Image source: <a href="https://arxiv.org/abs/2202.03286" target="_blank" rel="noopener nofollow">Perez et al. 2022</a>)</figcaption>
 </figure>
 <p>It is impossible to build a perfect classifier on detecting harmful content and any biases or flaw within this classifier can lead to biased attacks. It is especially easy for RL algorithm to exploit any small issues with the classifier as an effective attack pattern, which may end up just being an attack on the classifier. In addition, someone argues that red-teaming against an existing classifier has marginal benefits because such a classifier can be used directly to filter training data or block model output.</p>
@@ -395,7 +395,7 @@ Precisely, they introduced two features to assist human writers:</p>
 <li><em>Exploit</em>: The last step is to use RL to train an adversarial prompt generator to trigger a diverse distribution of harmful outputs. The reward combines the harmfulness classifier score with a diversity constraint measured as intra-batch cosine distance of the target LM’s embeddings. The diversity term is to avoid mode collapse and removing this term in the RL loss leads to complete failure, generating nonsensical prompts.</li>
 </ol>
 <figure>
-	<img src="https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/explore-establish-exploit.png" referrerpolicy="no-referrer" />
+	<img loading="lazy" onerror="this.style.display='none'" src="https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/explore-establish-exploit.png" referrerpolicy="no-referrer" />
 	<figcaption>The pipeline of red-teaming via Explore-Establish-Exploit steps. (Image source: <a href="https://arxiv.org/abs/2306.09442" target="_blank" rel="noopener nofollow">Casper et al. 2023</a>)</figcaption>
 </figure>
 <p><strong>FLIRT</strong> (“Feedback Loop In-context Red Teaming”; <a href="https://arxiv.org/abs/2308.04265" target="_blank" rel="noopener nofollow">Mehrabi et al. 2023</a>) relies on <a href="https://lilianweng.github.io/posts/2023-03-15-prompt-engineering/" target="_blank" rel="noopener nofollow">in-context learning</a> of a red LM $p_\text{red}$ to attack an image or text generative model $p$ to output unsafe content. Recall that zero-shot prompting was experimented as one way to generate red-teaming attacks in <a href="https://arxiv.org/abs/2202.03286" target="_blank" rel="noopener nofollow">Perez et al. 2022</a>.</p>
@@ -422,7 +422,7 @@ Precisely, they introduced two features to assist human writers:</p>
 <li><strong>Scoring-LIFO</strong>: Combine LIFO and Scoring strategies and force to update the last entry if the queue hasn’t been updated for a long time.</li>
 </ul>
 <figure>
-	<img src="https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/FLIRT-SD.png" referrerpolicy="no-referrer" />
+	<img loading="lazy" onerror="this.style.display='none'" src="https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/FLIRT-SD.png" referrerpolicy="no-referrer" />
 	<figcaption>Attack effectiveness (% of generated prompts that trigger unsafe generations) of different attack strategies on different diffusion models. SFS (stochastic few-shot) is set as a baseline. Numbers in parentheses are % of unique prompts. (Image source: <a href="https://arxiv.org/abs/2308.04265" target="_blank" rel="noopener nofollow">Mehrabi et al. 2023</a>)</figcaption>
 </figure>
 <h1>Peek into Mitigation#</h1>
@@ -441,7 +441,7 @@ $$
 <li><em>Outer minimization</em>: find the best model parameterization such that the loss with the most effective attacks triggered from the inner maximization process is minimized. Naive way to train a robust model is to replace each data point with their perturbed versions, which can be multiple adversarial variants of one data point.</li>
 </ul>
 <figure>
-	<img src="https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/saddle-point.png" referrerpolicy="no-referrer" />
+	<img loading="lazy" onerror="this.style.display='none'" src="https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/saddle-point.png" referrerpolicy="no-referrer" />
 	<figcaption>They also found that robustness to adversaries demands larger model capacity, because it makes the decision boundary more complicated. Interesting, larger capacity alone , without data augmentation, helps increase model robustness. (Image source: <a href="https://arxiv.org/abs/1706.06083" target="_blank" rel="noopener nofollow">Madry et al. 2017</a>)</figcaption>
 </figure>
 <h2>Some work on LLM Robustness#</h2>
@@ -452,7 +452,7 @@ $$
 <p>The most common way to mitigate risks of adversarial attacks is to train the model on those attack samples, known as <strong>adversarial training</strong>. It is considered as the strongest defense but leading to tradeoff between robustness and model performance. In an experiment by <a href="https://arxiv.org/abs/2309.00614v2" target="_blank" rel="noopener nofollow">Jain et al. 2023</a>, they tested two adversarial training setups: (1) run gradient descent on harmful prompts paired with <code>&quot;I&#x27;m sorry. As a ...&quot;</code> response; (2) run one descent step on a refusal response and an ascend step on a red-team bad response per training step. The method (2) ends up being quite useless because the model generation quality degrades a lot, while the drop in attack success rate is tiny.</p>
 <p>White-box attacks often lead to nonsensical adversarial prompts and thus they can be detected by examining perplexity. Of course, a white-box attack can directly bypass this by explicitly optimizing for lower perplexity, such as UAT-LM, a variation of UAT. However, there is a tradeoff and it can lead to lower attack success rate.</p>
 <figure>
-	<img src="https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/PPL-passed.png" referrerpolicy="no-referrer" />
+	<img loading="lazy" onerror="this.style.display='none'" src="https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/PPL-passed.png" referrerpolicy="no-referrer" />
 	<figcaption>Perplexity filter can block attacks by [Zou et al. (2023)](https://arxiv.org/abs/2307.15043). &quot;PPL Passed&quot; and &quot;PPL Window Passed&quot; are the rates at which harmful prompts with an adversarial suffix bypass the filter without detection. The lower the pass rate the better the filter is. (Image source: <a href="https://arxiv.org/abs/2309.00614v2" target="_blank" rel="noopener nofollow">Jain et al. 2023</a>)</figcaption>
 </figure>
 <p><a href="https://arxiv.org/abs/2309.00614v2" target="_blank" rel="noopener nofollow">Jain et al. 2023</a> also tested methods of preprocessing text inputs to remove adversarial modifications while semantic meaning remains.</p>

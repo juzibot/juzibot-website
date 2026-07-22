@@ -92,7 +92,7 @@
 </ul>
 <p>接下来，我们将带你了解这几种主要的循环类型、适用场景，以及如何在控制 token 消耗的同时，保证产出的代码质量。请记住，并不是所有任务都需要复杂的循环；建议从最简单的方案开始上手，然后根据实际情况灵活挑选这些模式。</p>
 <h2>回合制循环 (Turn-based loops)</h2>
-<p><img src="https://s.baoyu.io/imgs/2026-07-06/claudedevs-2074208949205881033/img-002-HMkOVNybEAAncbL.jpg" referrerpolicy="no-referrer" /></p>
+<p><img loading="lazy" onerror="this.style.display='none'" src="https://s.baoyu.io/imgs/2026-07-06/claudedevs-2074208949205881033/img-002-HMkOVNybEAAncbL.jpg" referrerpolicy="no-referrer" /></p>
 <ul>
 <li><strong>触发方式</strong>：用户输入提示词。</li>
 <li><strong>停止条件</strong>：Claude 自行判断任务已经完成，或者它发现需要向你索要更多上下文信息。</li>
@@ -122,7 +122,7 @@ description: 在宣布完成之前，端到端验证任何 UI 更改。
 如果任何一个步骤失败，请修复问题并从步骤 1 重新开始 —— 绝对不要把只验证了一半的工作交回给我。
 </code></pre>
 <h2>目标导向循环 (Goal-based loop /goal)</h2>
-<p><img src="https://s.baoyu.io/imgs/2026-07-06/claudedevs-2074208949205881033/img-003-HMkOlk3bcAAHX46.jpg" referrerpolicy="no-referrer" /></p>
+<p><img loading="lazy" onerror="this.style.display='none'" src="https://s.baoyu.io/imgs/2026-07-06/claudedevs-2074208949205881033/img-003-HMkOlk3bcAAHX46.jpg" referrerpolicy="no-referrer" /></p>
 <ul>
 <li><strong>触发方式</strong>：实时手动输入提示词。</li>
 <li><strong>停止条件</strong>：目标达成，或者达到了设定的最大尝试回合数。</li>
@@ -150,7 +150,7 @@ description: 在宣布完成之前，端到端验证任何 UI 更改。
 </code></pre>
 <p>需要注意的是，<code>/loop</code> 是在你本地电脑上运行的，所以一旦你关机或者退出，它就停止了。如果你想把循环搬到云端全天候运行，可以使用 <code>/schedule</code> 指令来创建一个云端的例行程序 (routine)。</p>
 <h2>主动式循环 (Proactive loops)</h2>
-<p><img src="https://s.baoyu.io/imgs/2026-07-06/claudedevs-2074208949205881033/img-004-HMkPQM8bEAA3RAk.jpg" referrerpolicy="no-referrer" /></p>
+<p><img loading="lazy" onerror="this.style.display='none'" src="https://s.baoyu.io/imgs/2026-07-06/claudedevs-2074208949205881033/img-004-HMkPQM8bEAA3RAk.jpg" referrerpolicy="no-referrer" /></p>
 <ul>
 <li><strong>触发方式</strong>：事件触发或定时计划，全程无需人类实时参与。</li>
 <li><strong>停止条件</strong>：每个子任务在达成其具体目标时退出。但整个例行程序本身会一直运行，直到你主动将它关闭。</li>

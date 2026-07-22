@@ -5,7 +5,7 @@ name: news-cron
 # 注意:
 # - schedule 只认默认分支(main)上的 workflow 文件; 本文件需要同步到 main 定时才会生效,
 #   在那之前可用 workflow_dispatch 手动跑(Actions 页选 news-cron → Run workflow)。
-# - MiMo key 走仓库 Secret `MIMO_API_KEY`(配置见 README); 缺 Secret 时管线优雅降级,
+# - 智谱 GLM key 走仓库 Secret `ZHIPU_API_KEY`(配置见 README); 缺 Secret 时管线优雅降级,
 #   新条目 pending 暂缓上站, 下轮补判, 不会失败。
 # - 公众号源依赖本机 lark-cli, 在 CI 里必然单源失败——管线按设计沿用已有数据,
 #   公众号新文仍靠本机手动跑 build_news.py 同步。
@@ -36,7 +36,7 @@ jobs:
 
       - name: 跑动态管线(增量)
         env:
-          MIMO_API_KEY: ${{ secrets.MIMO_API_KEY }}
+          ZHIPU_API_KEY: ${{ secrets.ZHIPU_API_KEY }}
         run: python3 build_news.py
 
       - name: 有变更则提交推送并触发部署
