@@ -1,8 +1,8 @@
 {
  "generated_by": "build_news.py",
- "generated_at": "2026-07-22T12:35:43+08:00",
- "count": 250,
- "visible": 113,
+ "generated_at": "2026-07-22T13:51:37+08:00",
+ "count": 263,
+ "visible": 120,
  "sources": [
   {
    "id": "rui-blog",
@@ -10,7 +10,7 @@
    "type": "sitemap",
    "home": "https://rui.juzi.bot/",
    "status": "ok",
-   "last_sync": "2026-07-22T12:35:43+08:00",
+   "last_sync": "2026-07-22T13:51:37+08:00",
    "ai": true,
    "count": 37
   },
@@ -20,7 +20,7 @@
    "type": "feishu-base",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-22T12:35:43+08:00",
+   "last_sync": "2026-07-22T13:51:37+08:00",
    "ai": false,
    "count": 0
   },
@@ -30,7 +30,7 @@
    "type": "manual",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-22T12:35:43+08:00",
+   "last_sync": "2026-07-22T13:51:37+08:00",
    "ai": false,
    "count": 0
   },
@@ -40,7 +40,7 @@
    "type": "manual",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-22T12:35:43+08:00",
+   "last_sync": "2026-07-22T13:51:37+08:00",
    "ai": false,
    "count": 0
   },
@@ -50,9 +50,9 @@
    "type": "rss",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-22T12:35:43+08:00",
+   "last_sync": "2026-07-22T13:51:37+08:00",
    "ai": true,
-   "count": 66
+   "count": 73
   },
   {
    "id": "wecom",
@@ -60,7 +60,7 @@
    "type": "wecom-changelog",
    "home": "https://developer.work.weixin.qq.com/document/path/93221",
    "status": "ok",
-   "last_sync": "2026-07-22T12:35:43+08:00",
+   "last_sync": "2026-07-22T13:51:37+08:00",
    "ai": false,
    "count": 10
   }
@@ -98,6 +98,23 @@
     "keep": false,
     "at": "2026-07-22"
    }
+  },
+  {
+   "id": "d7fe4a113671",
+   "title": "安谋科技公开新一代NPU架构 并牵头发起开源AI操作系统联盟",
+   "url": "https://www.tmtpost.com/8073630.html",
+   "summary": "安谋科技正从IP提供商向平台型生态演进。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "底层生态的开放与演进，长期看能降低AI应用的部署与集成成本"
   },
   {
    "id": "d7b933e02faf",
@@ -182,6 +199,23 @@
    }
   },
   {
+   "id": "b02841326c1a",
+   "title": "南向资金净买入额达50亿港元",
+   "url": "https://36kr.com/newsflashes/3906383970604425?f=rss",
+   "summary": "36氪获悉，南向资金净买入额达50亿港元。",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-22",
+    "kw": true
+   }
+  },
+  {
    "id": "ad7e98888d58",
    "title": "马斯克神话",
    "url": "https://www.tmtpost.com/8074387.html",
@@ -196,6 +230,57 @@
     "keep": false,
     "at": "2026-07-22"
    }
+  },
+  {
+   "id": "9b0dd23c8fa2",
+   "title": "创业板指跌超2%",
+   "url": "https://36kr.com/newsflashes/3906373311174020?f=rss",
+   "summary": "36氪获悉，创业板指跌超2%。",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-22",
+    "kw": true
+   }
+  },
+  {
+   "id": "8ad88428222a",
+   "title": "天立启鸣发布教育AGI白皮书：破解教育“不可能三角”",
+   "url": "https://www.qbitai.com/2026/07/457040.html",
+   "summary": "从答题响应到心智仿真",
+   "category": "量子位",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "量子位",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "从答题到心智仿真的跃迁，对销售客服场景理解用户深层意图有启发"
+  },
+  {
+   "id": "8974641ffa28",
+   "title": "京东押注物理 AI，打通数字到物理世界的链路",
+   "url": "https://www.tmtpost.com/8072404.html",
+   "summary": "京东正在推动AI向物理世界大规模落地。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "物理世界落地需与数字流程打通，微信企微恰是关键的连接器之一"
   },
   {
    "id": "86a1ae58c001",
@@ -215,6 +300,23 @@
    "quip": "算力制约 AI，但不该拖累应用层的创新节奏"
   },
   {
+   "id": "85736c132a6d",
+   "title": "我在WAIC 2026看见的十大趋势",
+   "url": "https://www.qbitai.com/2026/07/456974.html",
+   "summary": "没有人因此热情减退",
+   "category": "量子位",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "量子位",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "热潮中更需冷静，企业级应用的关键始终是解决具体业务问题"
+  },
+  {
    "id": "79075c996b6a",
    "title": "酷哇科技亮相WAIC 2026，解密行业首个双层智能体世界模型",
    "url": "https://www.qbitai.com/2026/07/456178.html",
@@ -230,6 +332,22 @@
     "at": "2026-07-22"
    },
    "quip": "社会世界模型对复杂业务交互关键，这是 Agent 的必经之路"
+  },
+  {
+   "id": "6eba220fc0d2",
+   "title": "三星重工将与美国公司合作开发海上浮动小型模块化反应堆",
+   "url": "https://36kr.com/newsflashes/3906374727144836?f=rss",
+   "summary": "韩国大型造船企业三星重工周三表示，已与美国工程公司Sargent & Lundy（S&L）签署了一份谅解备忘录，将共同开发海上浮动小型模块化反应堆（FSMR）。该公司在一份新闻稿中表示，该协议旨在开发一个标准化的FSMR平台，以兼容多种反应堆技术，而非单一类型的反应堆。（新浪财经）",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-22"
+   }
   },
   {
    "id": "68c0cd0db594",
@@ -262,6 +380,23 @@
     "keep": false,
     "at": "2026-07-22"
    }
+  },
+  {
+   "id": "605c427ed74e",
+   "title": "懂你、能交付、专业操作：金山办公田然给出AI办公助理的三项标准",
+   "url": "https://www.qbitai.com/2026/07/456910.html",
+   "summary": "",
+   "category": "量子位",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "量子位",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "能交付是关键，这正是销售客服Agent从助手升级为员工的核心标准"
   },
   {
    "id": "5afac147aa33",
@@ -297,6 +432,22 @@
    }
   },
   {
+   "id": "591f965da73e",
+   "title": "网传“北京或将推出郊区专属号牌”，相关部门回应",
+   "url": "https://36kr.com/newsflashes/3906396028507529?f=rss",
+   "summary": "近期，有关“北京或将推出郊区专属号牌”的消息在社交平台上出现并传播，引发了讨论。就“郊区专属号牌”传闻，记者拨打了北京市小客车数量调控政策咨询电话，北京市交通委短信回复：北京自2011年实施小客车调控，有效控制机动车增速，服务治堵与大气治理，政策仍具备持续实施的必要性。主管部门多次优化调控细则，完善指标分配机制。按照现行规定，指标依靠摇…",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-22"
+   }
+  },
+  {
    "id": "588f5c7fef70",
    "title": "Agent 赛马结束，超级工作台上位",
    "url": "https://www.tmtpost.com/8074782.html",
@@ -312,6 +463,23 @@
     "at": "2026-07-22"
    },
    "quip": "入口化是必然，但还需行业化定制才能真正着陆"
+  },
+  {
+   "id": "54c4c7b3344e",
+   "title": "Halliday发布第二代AI眼镜Halliday G2，AI功能走向“实时参与会议”",
+   "url": "https://www.qbitai.com/2026/07/457049.html",
+   "summary": "通过Meeting Flow让实时智能融入会议与商务沟通场景",
+   "category": "量子位",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "量子位",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "实时会议辅助是强需求，但眼镜形态离微信企微的沟通主场景还有距离"
   },
   {
    "id": "523cefa45dad",
@@ -432,6 +600,23 @@
    "quip": "高倍数回报靠远见和耐心，不是单纯烧钱能做到"
   },
   {
+   "id": "26735e9e2896",
+   "title": "摩尔线程公布万卡级集群训练成绩 称国产芯片可训出前沿模型",
+   "url": "https://www.tmtpost.com/8074857.html",
+   "summary": "MoE-236B模型基于25T+语料，在摩尔线程国产万卡级集群上从零起步完成预训练到长窗口训练的全流程，有效训练时长占比超过90%。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "国产算力验证了可行性，为业务连续性提供了更多供应链选择"
+  },
+  {
    "id": "23c961d43a88",
    "title": "AI落地，还差一口气",
    "url": "https://www.tmtpost.com/8074363.html",
@@ -447,6 +632,22 @@
     "at": "2026-07-22"
    },
    "quip": "模型到产品到商业模式环环相扣，一个卡住就白搭"
+  },
+  {
+   "id": "1e481c10b601",
+   "title": "印度雀巢公司第一季度净利润97.5亿卢比",
+   "url": "https://36kr.com/newsflashes/3906394588878217?f=rss",
+   "summary": "印度雀巢公司第一季度净利润97.5亿卢比，市场预期为83.7亿卢比。（财联社）",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-22"
+   }
   },
   {
    "id": "168c03b626a9",
@@ -496,6 +697,22 @@
     "at": "2026-07-22"
    },
    "quip": "大厂普及行业，垂直差异才是长期的竞争力"
+  },
+  {
+   "id": "0412d901d3fa",
+   "title": "西部数据展示百TB硬盘路线图：HAMR与ePMR双线并进，2029年冲刺100TB",
+   "url": "https://www.tmtpost.com/8074085.html",
+   "summary": "目前约80%的AI内容存储在HDD上，20%在SSD。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-22"
+   }
   },
   {
    "id": "ff8db6072603",
@@ -1599,7 +1816,8 @@
    "ai": {
     "keep": true,
     "at": "2026-07-21"
-   }
+   },
+   "quip": "安全评级的背书对复杂决策场景的AI可靠性要求，与企业级Agent的信任构建逻辑相通"
   },
   {
    "id": "539b93500dca",
