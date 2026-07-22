@@ -1,8 +1,8 @@
 {
  "generated_by": "build_news.py",
- "generated_at": "2026-07-22T13:51:37+08:00",
- "count": 263,
- "visible": 120,
+ "generated_at": "2026-07-22T14:41:24+08:00",
+ "count": 305,
+ "visible": 147,
  "sources": [
   {
    "id": "rui-blog",
@@ -10,7 +10,7 @@
    "type": "sitemap",
    "home": "https://rui.juzi.bot/",
    "status": "ok",
-   "last_sync": "2026-07-22T13:51:37+08:00",
+   "last_sync": "2026-07-22T14:41:24+08:00",
    "ai": true,
    "count": 37
   },
@@ -20,7 +20,7 @@
    "type": "feishu-base",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-22T13:51:37+08:00",
+   "last_sync": "2026-07-22T14:41:24+08:00",
    "ai": false,
    "count": 0
   },
@@ -30,9 +30,9 @@
    "type": "manual",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-22T13:51:37+08:00",
+   "last_sync": "2026-07-22T14:41:24+08:00",
    "ai": false,
-   "count": 0
+   "count": 5
   },
   {
    "id": "press",
@@ -40,7 +40,7 @@
    "type": "manual",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-22T13:51:37+08:00",
+   "last_sync": "2026-07-22T14:41:24+08:00",
    "ai": false,
    "count": 0
   },
@@ -50,9 +50,9 @@
    "type": "rss",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-22T13:51:37+08:00",
+   "last_sync": "2026-07-22T14:41:24+08:00",
    "ai": true,
-   "count": 73
+   "count": 95
   },
   {
    "id": "wecom",
@@ -60,7 +60,7 @@
    "type": "wecom-changelog",
    "home": "https://developer.work.weixin.qq.com/document/path/93221",
    "status": "ok",
-   "last_sync": "2026-07-22T13:51:37+08:00",
+   "last_sync": "2026-07-22T14:41:24+08:00",
    "ai": false,
    "count": 10
   }
@@ -84,6 +84,23 @@
    "quip": "竞争加速，但版本慢发会影响依赖方的进度"
   },
   {
+   "id": "e395444a5f52",
+   "title": "从生成到行动，生数科技用通用世界模型连接「两个世界」",
+   "url": "https://www.leiphone.com/category/industrynews/KI18cZQBZWHRPWNX.html",
+   "summary": "在世界人工智能大会（WAIC）的展馆里，机器人通常是最抢镜的一类展品。 机械臂抓取物体、人形机器人听从指令完成家务，“世界模型”也常常伴随这些演示出现，用来解释机器人如何理解环境、预测变化并完成行动。久而久之，世界模型似乎逐渐成为机器人和自动驾驶领域的专属概念。 但在生数科技创始人、清华大学人工智能研究院副院长朱军看来，通用世界模型并不…",
+   "category": "雷锋网",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "雷锋网",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "理解物理世界的能力未来可能反哺线上场景的复杂意图理解"
+  },
+  {
    "id": "e2990e7a24cd",
    "title": "8.5亿美元首付款，“杀死”一家Biotech",
    "url": "https://www.tmtpost.com/8074795.html",
@@ -94,6 +111,22 @@
    "source": "industry",
    "source_name": "行业动态",
    "author": "钛媒体",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-22"
+   }
+  },
+  {
+   "id": "dcfc2fe3b4bc",
+   "title": "SpaceX做空比例飙至32%，马斯克警告空头：几无存活可能",
+   "url": "https://36kr.com/newsflashes/3906425670390919?f=rss",
+   "summary": "据金融分析机构S3 Partners估算，目前约有2.06亿股SpaceX股份被做空，约占该公司可公开交易流通股的32%，名义空仓规模约250亿美元。马斯克对此警告称，做空SpaceX的投资者几无存活可能。SpaceX周二确认，将于8月4日美股盘后发布上市以来的首份季度财报。（财联社）",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪",
    "ai": {
     "keep": false,
     "at": "2026-07-22"
@@ -127,6 +160,39 @@
    "source": "industry",
    "source_name": "行业动态",
    "author": "36氪",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-22"
+   }
+  },
+  {
+   "id": "d6f0965bc142",
+   "title": "地平线与大众汽车集团达成合作",
+   "url": "https://36kr.com/newsflashes/3906426901222537?f=rss",
+   "summary": "36氪获悉，7月22日，地平线与大众汽车集团正式宣布，通过CARIAD与地平线的合资公司酷睿程 (CARIZON) ，大众汽车集团将进一步深化与地平线在AI基座大模型领域的技术合作。地平线的AI基座大模型将与酷睿程在研的系统级芯片C7H、以及GAIA世界模型数据平台紧密协同，全面赋能大众汽车集团L3和L4级自动驾驶能力落地。按照规划，大…",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "行业龙头与模型厂共建是可行路径，但落地需找对高价值业务场景"
+  },
+  {
+   "id": "d213b1a371e8",
+   "title": "独家解读丨三箭齐发，xTool凶猛",
+   "url": "https://www.leiphone.com/category/industrynews/MQHXfUkHTy9ZXPvX.html",
+   "summary": "一个悄然升温的市场席卷硬件行业。 如果说拓竹在2025年将3D打印这一小众赛道彻底引爆，那么2026年，激光雕刻正接力成为下一个爆发的焦点。随着智能创意工具市场持续升温，继3D打印之后，激光创作工具也正在迎来新一轮行业关注，而xTool正是这一趋势中的头部品牌。 这一趋势背后，是xTool围绕“智能创意工具“生态展开的持续布局。 xTo…",
+   "category": "雷锋网",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "雷锋网",
    "ai": {
     "keep": false,
     "at": "2026-07-22"
@@ -199,6 +265,22 @@
    }
   },
   {
+   "id": "b89c67c02844",
+   "title": "2026年上半年交通运输经济运行总体平稳",
+   "url": "https://36kr.com/newsflashes/3906442863809671?f=rss",
+   "summary": "2026年上半年交通运输经济运行总体平稳，主要指标保持增长，营业性货运量、港口货物吞吐量、跨区域人员流动量规模持续增加，为经济社会平稳健康发展提供了有力的交通运输服务保障。具体来看，上半年完成营业性货运量280.7亿吨，同比增长3.2%；全国港口完成货物吞吐量90.7亿吨，同比增长2.0%；跨区域人员流动量341.7亿人次，同比增长1.…",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-22"
+   }
+  },
+  {
    "id": "b02841326c1a",
    "title": "南向资金净买入额达50亿港元",
    "url": "https://36kr.com/newsflashes/3906383970604425?f=rss",
@@ -232,6 +314,55 @@
    }
   },
   {
+   "id": "a7d621597e15",
+   "title": "何小鹏：小鹏汇天被纳入首批民用载人eVTOL适航审定合规企业名录",
+   "url": "https://36kr.com/newsflashes/3906429697414536?f=rss",
+   "summary": "36氪获悉，7月22日，小鹏集团董事长、CEO @何小鹏 发文称，民航局适航司今日正式公示《首批民用载人eVTOL适航审定合规企业名录》，本次名录正式纳入小鹏汇天航空科技有限公司等4家国内主流载人eVTOL主机企业。",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-22"
+   }
+  },
+  {
+   "id": "a0e995e59093",
+   "title": "BW2026结束后，留给了B站什么？",
+   "url": "https://36kr.com/p/3905618377512065?f=rss",
+   "summary": "文丨刘士武 Bilibili World 2026开幕当天，我和同事果脯从国家会展中心走进展馆逛了一大圈后，发现今年BW确实和以往有所不同。 我们在4馆“BW游先看”展位前停下，那是果脯刚逛过一轮主舞台、回到试玩区的瞬间。他问了一句：“你说B站游戏今年是不是在悄悄变化？”那天我们没聊完，但这个问题让我回去想了一周。 一周后再回看，BW2…",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-22"
+   }
+  },
+  {
+   "id": "9f550c9a10e1",
+   "title": "早报｜iPhone 20 Pro Max或搭载约7英寸屏幕/曝小米上调今年手机出货目标至1.1亿部/Gemini 3.6 Flash发布,输出Token减少17%",
+   "url": "https://www.ifanr.com/1672713?utm_source=rss&utm_medium=rss&utm_campaign=",
+   "summary": "· 曝苹果正打样约 7 英寸屏幕，或用于 iPhone 20 Pro Max · 曝小米上调今年手机出货目标至 1.1 亿部 · 张一鸣向芳梅公益基金追加捐赠 3 亿元 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。",
+   "category": "爱范儿",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "爱范儿",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "终端设备升级可能影响应用体验，但微信生态的兼容性相对稳定"
+  },
+  {
    "id": "9b0dd23c8fa2",
    "title": "创业板指跌超2%",
    "url": "https://36kr.com/newsflashes/3906373311174020?f=rss",
@@ -247,6 +378,23 @@
     "at": "2026-07-22",
     "kw": true
    }
+  },
+  {
+   "id": "92d37a6299fa",
+   "title": "AI算力进入“多元协同”时代，中昊芯英携手OpenCSG加速企业级大模型落地",
+   "url": "https://www.leiphone.com/category/industrynews/ECJFdCS344ddFUWS.html",
+   "summary": "近日，中昊芯英TPU算力正式完成与 OpenCSGCSGHub 平台的适配接入。双方充分发挥国产AI专用算力与开源AI基础设施的协同优势，为大模型开发、模型服务部署及企业级AI应用落地提供更加开放、灵活的底层算力支撑。 当前，大模型与智能体应用正加速迈向产业落地阶段。企业不再只关注模型本身，更关注模型如何管理、部署、运行和持续迭代；与此…",
+   "category": "雷锋网",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "雷锋网",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "算力多元化与开源平台结合，能降低企业部署和调优的门槛"
   },
   {
    "id": "8ad88428222a",
@@ -366,6 +514,22 @@
    }
   },
   {
+   "id": "6673c86861b0",
+   "title": "港股滔搏下跌近30%",
+   "url": "https://36kr.com/newsflashes/3906443490546818?f=rss",
+   "summary": "36氪获悉，港股滔搏下跌近30%。消息面上，滔搏在港交所公告，集团目前在中国内地的耐克产品线上平台销售将于2027年1月1日起全面终止。",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-22"
+   }
+  },
+  {
    "id": "64dc71860f07",
    "title": "明治将在华牛奶业务转让给澳亚集团",
    "url": "https://36kr.com/newsflashes/3906281649067397?f=rss",
@@ -465,6 +629,23 @@
    "quip": "入口化是必然，但还需行业化定制才能真正着陆"
   },
   {
+   "id": "56de03a11eae",
+   "title": "独家解读丨Plaud 招募基带硬件工程师，或将押注AI耳机",
+   "url": "https://www.leiphone.com/category/weiwu/MEDXZUBjLKfrhX7s.html",
+   "summary": "Plaud 的招聘页最近悄悄挂出了一则基带方向硬件工程师的 JD。 岗位职责写得很直白：负责 AI 硬件产品中 4G、5G 通讯模组相关的硬件方案设计、调试和验证；参与基带通信方案选型与系统集成，包括通信模组、SIM、eSIM、电源、天线、射频链路及整机硬件协同设计；探索 AI 硬件、智能穿戴、移动终端里的通信创新方案。 翻译过来，Pl…",
+   "category": "雷锋网",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "雷锋网",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "AI硬件探索新形态，但语音交互在微信生态内并非主流入口"
+  },
+  {
    "id": "54c4c7b3344e",
    "title": "Halliday发布第二代AI眼镜Halliday G2，AI功能走向“实时参与会议”",
    "url": "https://www.qbitai.com/2026/07/457049.html",
@@ -499,6 +680,23 @@
    "quip": "辅助而非替代是可持续模式，也是用户最能接受的定位"
   },
   {
+   "id": "4e4fe689c842",
+   "title": "AI的下一站，不只在工厂，也在客厅",
+   "url": "https://www.leiphone.com/category/weiwu/AUAU8jh0ILiepQVn.html",
+   "summary": "在很长一段时间里，人们谈论机器人，首先想到的都是工厂。 搬运、焊接、装配、分拣……在标准化的生产线上，机器人追求的是速度、精度和效率。它们的价值也很容易衡量：完成了多少工作、提高了多少产能、降低了多少成本，数字一目了然。 伴随2026世界人工智能大会落幕，机器人正在走出一条更加贴近日常生活的路径。 在WAIC徐汇展区，一条“从屏幕、到设…",
+   "category": "雷锋网",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "雷锋网",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "AI从结构化环境走向非标场景，对多模态和意图理解要求更高"
+  },
+  {
    "id": "4a46d4987755",
    "title": "远程办公大PK：WorkBuddy vs DuMate",
    "url": "https://www.tmtpost.com/8074541.html",
@@ -531,6 +729,23 @@
     "at": "2026-07-22"
    },
    "quip": "大厂入局加速普及，生态集成度决定实际可用性"
+  },
+  {
+   "id": "423c8269f2d5",
+   "title": "刚刚，Gemini 3.6 Flash 正式发布，但网友笑得更大声了",
+   "url": "https://www.ifanr.com/1672647?utm_source=rss&utm_medium=rss&utm_campaign=",
+   "summary": "说好的 3.5 Pro 呢？ #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。",
+   "category": "爱范儿",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "爱范儿",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "模型效率提升能直接降低企业调用成本，这是应用层最关心的"
   },
   {
    "id": "42102891bab5",
@@ -600,6 +815,23 @@
    "quip": "高倍数回报靠远见和耐心，不是单纯烧钱能做到"
   },
   {
+   "id": "2bb8c5bd2ae1",
+   "title": "BBA集体降价！销售：价格还能谈；月之暗面以500亿美元估值洽谈Pre-IPO融资，最快2027年初赴港上市；三星宣布将成立机器人事业部",
+   "url": "https://www.leiphone.com/category/zaobao/3zl6HRdhLVwLseFx.html",
+   "summary": "要闻提示 1.BBA集体降价！销售：价格还能谈 2.月之暗面以500亿美元估值洽谈Pre-IPO融资，最快2027年初赴港上市 3.深汕比亚迪启动大规模招聘 4.2026年《财富》中国500强排行榜发布：泡泡玛特首次上榜，腾讯成最赚钱互联网企业 5.宗庆后家族争产案最新进展：宗馥莉上诉许可申请被香港高院驳回 6.阿里将推出千问办公，旗下…",
+   "category": "雷锋网",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "雷锋网",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "资本持续涌入头部模型公司，应用层的价值在于场景深耕与闭环"
+  },
+  {
    "id": "26735e9e2896",
    "title": "摩尔线程公布万卡级集群训练成绩 称国产芯片可训出前沿模型",
    "url": "https://www.tmtpost.com/8074857.html",
@@ -650,6 +882,22 @@
    }
   },
   {
+   "id": "176783e5f228",
+   "title": "上市前夜 | 手机PMIC全球第三、三年亏15亿，芯迈第三次冲港股IPO",
+   "url": "https://36kr.com/p/3906428262618241?f=rss",
+   "summary": "本文约3400字，建议阅读7分钟 作者 | 彭孝秋 编者按： 《上市前夜》栏目聚焦企业冲刺资本市场的关键时刻。每一份招股书里，都藏着一家企业上市前的野心、周期与隐忧。这是第八期—— 芯迈 。 昨日，一家名为「芯迈」的功率半导体公司，第三次向港交所递交了招股书（前两次为2025年6月、2026年1月），华泰担任 独家保荐人 。 芯迈的核心…",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-22"
+   }
+  },
+  {
    "id": "168c03b626a9",
    "title": "赛力斯的“Wintel时刻”",
    "url": "https://www.tmtpost.com/8074310.html",
@@ -660,6 +908,39 @@
    "source": "industry",
    "source_name": "行业动态",
    "author": "钛媒体",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-22"
+   }
+  },
+  {
+   "id": "1301a9e9f9f6",
+   "title": "AI 终端混战：谁在做加法，谁在重写规则",
+   "url": "https://www.leiphone.com/category/ai/t0fM6SFQ2W7BojX3.html",
+   "summary": "继 OpenAI 近日被曝正在加速研发首款 AI 智能体手机之后，又一模型厂商入局 AI 终端赛道。 据雷峰网消息，7 月 13 日，基础大模型公司阶跃星辰（以下简称“阶跃”）在上海举办“新一代智能体战略发布会”，正式推出其首个大模型原生 AI 终端品牌 STEPX，并同步推出全球首个智能体原生操作系统 Step Agentic Sys…",
+   "category": "雷锋网",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "雷锋网",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "模型厂涉足硬件会挤压纯软件Agent空间，生态位竞争加剧"
+  },
+  {
+   "id": "117003deb9a5",
+   "title": "小红书方面回应：目前流传的IPO相关信息均不属实",
+   "url": "https://www.leiphone.com/category/industrynews/rfAI5FTWsZDKMCS8.html",
+   "summary": "近日，有较多传言称“小红书已于6月底前秘密提交IPO申请”，但因前员工举报其“上市合规”问题而受阻。对此，小红书方面回应：目前流传的IPO相关信息均不属实。",
+   "category": "雷锋网",
+   "tags": [],
+   "date": "2026-07-22",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "雷锋网",
    "ai": {
     "keep": false,
     "at": "2026-07-22"
@@ -830,6 +1111,40 @@
    }
   },
   {
+   "id": "f1d2ce82496c",
+   "title": "WAIC重磅成果｜仪电智算云在国家人工智能应用中试基地建设中展现全栈服务能力",
+   "url": "https://www.leiphone.com/category/industrynews/yfYUql1ioSOVYTEn.html",
+   "summary": "7月19日，上海仪电在2026世界人工智能大会（WAIC）上正式发布“智算云赋能·标杆应用场景成果”，系统展示了其自主研发的仪电智算云YiCloud在金融、制造、医疗三大国家人工智能应用中试基地的规模化落地成效，全方位呈现“算力+模型+场景”全栈服务能力。 金融领域|深度支撑金融大模型生态构建 助力普惠金融风控新标杆 在中国银联承建的金…",
+   "category": "雷锋网",
+   "tags": [],
+   "date": "2026-07-21",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "雷锋网",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "行业基座设施的完善，最终会降低上层应用开发和创新的成本"
+  },
+  {
+   "id": "eeed01ce2a93",
+   "title": "WAIC重磅成果｜智爱赛思全面升级并发布科研专属 Token Plan",
+   "url": "https://www.leiphone.com/category/industrynews/GkXvkOUPT9uoUFe3.html",
+   "summary": "7月19日， 在2026世界人工智能大会（WAIC）“新一代智算云产业技术创新论坛”上，由上海市经济和信息化委员会指导、上海仪电牵头建设的科学智能开放社区迎来重大里程碑——爱赛思OpenAI4S社区正式全面升级为智爱赛思社区，同时发布智爱赛思科研专属Token Plan计划，旨在为科学家提供更专业的智能科研服务。 为科学而生：“科研专属…",
+   "category": "雷锋网",
+   "tags": [],
+   "date": "2026-07-21",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "雷锋网",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "垂直领域需要定制化的模型方案，通用模型难以满足专业需求"
+  },
+  {
    "id": "ebe4450f927a",
    "title": "WAIC重磅成果｜仪电智算云在国家人工智能应用中试基地建设中展现全栈服务能力",
    "url": "https://www.qbitai.com/2026/07/455998.html",
@@ -845,6 +1160,22 @@
     "at": "2026-07-22"
    },
    "quip": "全栈服务听着完整，但行业客户真正需要的是专深"
+  },
+  {
+   "id": "e877a1c69700",
+   "title": "独家丨腾讯整合Workbuddy与QClaw团队",
+   "url": "https://www.leiphone.com/category/CorporateServices/EVvkkNduzRvpxmRi.html",
+   "summary": "雷峰网独家获悉，7 月 20 日，腾讯发布内部组织调整通知，腾讯QClaw产品中心相关业务和部分团队，将调整至云产品六部。QClaw产品仍将持续运营。 QClaw由腾讯电脑管家团队基于OpenClaw打造，今年3月开启内测。据媒体报道，上线一周后其用户量曾突破数百万。 云产品六部是腾讯另一款AI办公智能体Workbuddy产品所属部门。…",
+   "category": "雷锋网",
+   "tags": [],
+   "date": "2026-07-21",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "雷锋网",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-22"
+   }
   },
   {
    "id": "e2fd057a37b7",
@@ -930,6 +1261,51 @@
    "quip": "教育算力支持好，企业级 AI 的算力需求和承载更大"
   },
   {
+   "id": "c8896230e279",
+   "title": "端侧AI不是云端AI的缩小版，安谋科技要建边端侧AI算力底座｜WAIC 2026",
+   "url": "https://www.leiphone.com/category/chips/ove6AbsecNklNHEI.html",
+   "summary": "世界人工智能大会（WAIC）2026上，超节点、万卡集群是算力领域最吸引人的焦点。更大的集群、更高的带宽、更强的供给能力，构成了大模型时代最直观的基础设施叙事。 但安谋科技在WAIC期间的AI前瞻会上把讨论拉向了另一端：当AI从云端进入手机、AI PC、智能家居、汽车、机器人、工业设备和边缘节点，算力问题不再只是“够不够大”，而是“合不…",
+   "category": "雷锋网",
+   "tags": [],
+   "date": "2026-07-21",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "雷锋网",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "端云协同是趋势，但微信生态内云端能力仍是实时交互的关键"
+  },
+  {
+   "id": "c502669c8986",
+   "title": "零跑全新B01和B10越级上市，开启10万级800V时代",
+   "url": "https://www.leiphone.com/category/industrynews/kkaBDb3wRcQoQ891.html",
+   "summary": "2026年7月16日，零跑汽车正式上市两款基于B平台全方位焕新的重磅车型——年轻时尚超长续航轿车全新B01、全球智享长续航SUV全新B10。作为零跑“科技普惠”理念的集大成之作，全新B01和B10手握四张王牌：全域800V+3C快充、前排双零重力座椅、超大尺寸AR-HUD、17.3英寸3K中控屏，直面10万级纯电市场长期存在的配置妥协、…",
+   "category": "雷锋网",
+   "tags": [],
+   "date": "2026-07-21",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "雷锋网",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-22"
+   }
+  },
+  {
+   "id": "ba0b5ccb68f5",
+   "title": "句子守护上线新版质量中心",
+   "url": "https://juzibot.com/products/shouhu.html",
+   "summary": "AI 生成测试用例、批量验收、灰度测试、回归测试、AI 工单、AI 质检——Agent 上线前测过、上线后管着，没人点头就不上线，每一步留痕、能查。",
+   "category": "句子守护",
+   "tags": [],
+   "date": "2026-07-21",
+   "source": "product",
+   "source_name": "产品动态",
+   "author": "句子互动"
+  },
+  {
    "id": "b3ddd2c8a1a5",
    "title": "茅台涨了100元，白酒还欠3000亿",
    "url": "https://36kr.com/p/3905234473158279?f=rss",
@@ -961,6 +1337,22 @@
     "at": "2026-07-21"
    },
    "quip": "硬件化集成度高，但供应链与成本问题比虚拟应用大，规模化潜力有限"
+  },
+  {
+   "id": "a6a1adaf56ab",
+   "title": "定价 13.33 万元，萤火虫 halo 寻光系列发布首款车型，比高配版还贵 7500 元",
+   "url": "https://www.ifanr.com/1672679?utm_source=rss&utm_medium=rss&utm_campaign=",
+   "summary": "还是情绪价值的事儿。 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。",
+   "category": "爱范儿",
+   "tags": [],
+   "date": "2026-07-21",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "爱范儿",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-22"
+   }
   },
   {
    "id": "9f9aff9a1831",
@@ -1224,6 +1616,23 @@
    }
   },
   {
+   "id": "2e0717fd61f9",
+   "title": "早报｜二季度华为手机份额升至23%/广汽本田与本田续签合资协议至2038年/《复仇者联盟5》首曝预告",
+   "url": "https://www.ifanr.com/1672637?utm_source=rss&utm_medium=rss&utm_campaign=",
+   "summary": "· 靳玉志：华为乾崑继续做汽车行业的「电子螺丝钉」 · 工信部：我国智能算力规模达到 2185 EFLOPS · 字节跳动发布 Seed Audio 1.0 音频创作模型 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。",
+   "category": "爱范儿",
+   "tags": [],
+   "date": "2026-07-21",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "爱范儿",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "国产手机份额变化，需确保服务在不同设备与系统上的体验一致"
+  },
+  {
    "id": "2affe7b1170b",
    "title": "意定监护，老人的“提前托孤”？",
    "url": "https://www.tmtpost.com/8073257.html",
@@ -1320,6 +1729,22 @@
    }
   },
   {
+   "id": "177595902e0d",
+   "title": "【新闻稿】小鹏品牌日暨MONA L03上市发布会",
+   "url": "https://www.leiphone.com/category/industrynews/8P6xYJjBbATLMRyy.html",
+   "summary": "【 2026 年 7 月 16 日，德国慕尼黑】 今日，小鹏集团在德国慕尼黑举办「 XPENG LIVE ： PHYSICAL AI FOR ALL 」小鹏品牌日暨 MONA L03 全球上市发布会，正式推出 MONA 系列首款全球车型小鹏 MONA L03 ，并于今年面向全球 65 个国家开启销售。小鹏 MONA L03 围绕全球年轻…",
+   "category": "雷锋网",
+   "tags": [],
+   "date": "2026-07-21",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "雷锋网",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-22"
+   }
+  },
+  {
    "id": "156450f50c1b",
    "title": "WAIC重磅成果｜上海仪电智算牵头成立“智算系统架构联盟”并发布《超节点系统架构规范》",
    "url": "https://www.qbitai.com/2026/07/456052.html",
@@ -1335,6 +1760,40 @@
     "at": "2026-07-22"
    },
    "quip": "基础设施联盟很必要，但关键是标准怎样落地"
+  },
+  {
+   "id": "13b67b26f615",
+   "title": "火山引擎与安永达成战略合作，助力企业迈向 AI 原生架构",
+   "url": "https://www.leiphone.com/category/industrynews/ZNTFoXwJNzRr47WD.html",
+   "summary": "7月19日，全球领先的专业咨询服务机构——安永（EY）与火山引擎签署战略伙伴合作备忘录，双方将在人工智能技术落地、专业服务交付与企业 AI 转型等领域深化协同，携手助力企业客户以 AI 为核心重塑业务能力，推动运营模式向 AI 原生架构演进。 在安永大中华区首席运营官兼金融服务主管合伙人忻怡、火山引擎总裁谭待见证下，安永大中华区咨询服务…",
+   "category": "雷锋网",
+   "tags": [],
+   "date": "2026-07-21",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "雷锋网",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "咨询与云服务结合，意味着大厂在整合生态，独立厂商需找差异点"
+  },
+  {
+   "id": "09ee953e236c",
+   "title": "1500 元的 Codex 键盘卖断货，这小哥反手自己造了一台",
+   "url": "https://www.ifanr.com/1672648?utm_source=rss&utm_medium=rss&utm_campaign=",
+   "summary": "一起缺货的还有 ChatGPT 篮球 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。",
+   "category": "爱范儿",
+   "tags": [],
+   "date": "2026-07-21",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "爱范儿",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "AI催生了专业工具需求，但大众市场更看重无感的集成与易用性"
   },
   {
    "id": "067352c6f1c1",
@@ -1404,6 +1863,23 @@
    "quip": "WAIC热度反映应用需求增长，但真实商业落地与展会声势往往有时差"
   },
   {
+   "id": "e1baad84e6d2",
+   "title": "早报｜曝月之暗面最快半年内上市/荣耀Robot Phone开启预约/IDC:2030年全球活跃智能体将超22亿个",
+   "url": "https://www.ifanr.com/1672471?utm_source=rss&utm_medium=rss&utm_campaign=",
+   "summary": "· Meta 与 Anthropic 商谈两年最高 100 亿美元算力租赁 · 阶跃星辰与上海期智研究院共建智能体前沿研究院 · 小米解释澎程增程车采用 76kWh 电池：日常尽量不启动增程器 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。",
+   "category": "爱范儿",
+   "tags": [],
+   "date": "2026-07-20",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "爱范儿",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "大模型公司上市潮将至，应用层需更清晰证明自身商业化路径"
+  },
+  {
    "id": "da0f67c525d2",
    "title": "AI语音进入“表演时代”：阿里Qwen-Audio-3.0-TTS登顶全球权威榜单",
    "url": "https://www.qbitai.com/2026/07/455658.html",
@@ -1419,6 +1895,22 @@
     "at": "2026-07-21"
    },
    "quip": "语音合成的自然度提升是UX升级，但对企业应用的本质帮助有限"
+  },
+  {
+   "id": "d58cc0d7f3b0",
+   "title": "19.98 万元起，标轴守山野、长轴进城市，坦克 300 开始分化",
+   "url": "https://www.ifanr.com/1672613?utm_source=rss&utm_medium=rss&utm_campaign=",
+   "summary": "坦克 300 不想只活在山野里。 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。",
+   "category": "爱范儿",
+   "tags": [],
+   "date": "2026-07-20",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "爱范儿",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-22"
+   }
   },
   {
    "id": "ccfaf6b1c3a6",
@@ -1471,6 +1963,40 @@
    "quip": "UGC生态AI化是机会，但与销售客服的商业模式和用户心理差异大"
   },
   {
+   "id": "b13f72b261b8",
+   "title": "苹果国行 AI 刷屏之外，三星也把端侧大脑交给国产 AI",
+   "url": "https://www.ifanr.com/1672593?utm_source=rss&utm_medium=rss&utm_campaign=",
+   "summary": "把智能装进手机的秘诀，在于「多、快、好、省」 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。",
+   "category": "爱范儿",
+   "tags": [],
+   "date": "2026-07-20",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "爱范儿",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "端侧AI整合是趋势，但核心交互逻辑与数据仍在云端处理"
+  },
+  {
+   "id": "a894d2d20220",
+   "title": "实测千问 Qwen3.8 预览版，国产模型开始围攻 Fable 5",
+   "url": "https://www.ifanr.com/1672515?utm_source=rss&utm_medium=rss&utm_campaign=",
+   "summary": "还有 DeepSeek、智谱、MiniMax…… #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。",
+   "category": "爱范儿",
+   "tags": [],
+   "date": "2026-07-20",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "爱范儿",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "国产模型能力进步，为企业提供了更多元、更经济的模型选择"
+  },
+  {
    "id": "9b4ac6d0259d",
    "title": "WAIC之外，一张AI人才图谱正在知乎形成",
    "url": "https://www.qbitai.com/2026/07/455496.html",
@@ -1486,6 +2012,23 @@
     "at": "2026-07-21"
    },
    "quip": "人才流动反映应用热度，但真正的竞争力卡点不在人才聚集度"
+  },
+  {
+   "id": "8553ea6c873f",
+   "title": "世界杯冠军刚出炉，我让商汤 U1 Pro 做了一份全景赛况图",
+   "url": "https://www.ifanr.com/1672547?utm_source=rss&utm_medium=rss&utm_campaign=",
+   "summary": "所有图片都是 one shot #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。",
+   "category": "爱范儿",
+   "tags": [],
+   "date": "2026-07-20",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "爱范儿",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "多模态生成能力可用于产品展示与客服场景，提升信息传达效率"
   },
   {
    "id": "78eaf7534d94",
@@ -1556,6 +2099,22 @@
    "quip": "基地背书有助于标准化，但硬件成本与部署周期决定了市场规模"
   },
   {
+   "id": "2f15fff82532",
+   "title": "21.48 万元起、五座六座同起步价，长城 H10 想把方盒子卖给全家人",
+   "url": "https://www.ifanr.com/1672622?utm_source=rss&utm_medium=rss&utm_campaign=",
+   "summary": "越野是留给家庭出行的余量。 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。",
+   "category": "爱范儿",
+   "tags": [],
+   "date": "2026-07-20",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "爱范儿",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-22"
+   }
+  },
+  {
    "id": "2d68c7ee36bf",
    "title": "不同模型厂同一家Agentic Infra，AGI时代的地基终于浮出水面",
    "url": "https://www.qbitai.com/2026/07/455805.html",
@@ -1571,6 +2130,73 @@
     "at": "2026-07-21"
    },
    "quip": "多模型支持的基础设施标准化是生态健康信号，让中腰部应用更有机会"
+  },
+  {
+   "id": "c97ac867ab2f",
+   "title": "这幅 5999 元的眼镜，配不配当电竞玩家的「新装备」｜ROG XREAL R1 体验",
+   "url": "https://www.ifanr.com/1672380?utm_source=rss&utm_medium=rss&utm_campaign=",
+   "summary": "ROG 想卖给玩家的，不只是一副眼镜。 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。",
+   "category": "爱范儿",
+   "tags": [],
+   "date": "2026-07-19",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "爱范儿",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-22"
+   }
+  },
+  {
+   "id": "daaf053b8e4b",
+   "title": "早报｜苹果上调Apple Music价格/小米SU7虚假碰撞测评博主被判一年八个月/努比亚、阶跃星辰智能体手机亮相WAIC",
+   "url": "https://www.ifanr.com/1672338?utm_source=rss&utm_medium=rss&utm_campaign=",
+   "summary": "· 智谱 ARR 被曝达到 10 亿美元，半年增长 15 倍 · Shopify CEO：反 AI 编程的人严重高估了人类代码质量 · 影石与荣耀达成影像生态合作，计划年底前进驻 300 家荣耀门店 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。",
+   "category": "爱范儿",
+   "tags": [],
+   "date": "2026-07-18",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "爱范儿",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "模型厂涉足硬件会挤压纯软件Agent空间，生态位竞争加剧"
+  },
+  {
+   "id": "b581c8ceb157",
+   "title": "iOS 27 公测版上手：国行 AI 准备好了，但系统流畅更值得升级",
+   "url": "https://www.ifanr.com/1672364?utm_source=rss&utm_medium=rss&utm_campaign=",
+   "summary": "有可能成为新一代「钉子户」系统。 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。",
+   "category": "爱范儿",
+   "tags": [],
+   "date": "2026-07-18",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "爱范儿",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "系统级AI整合是长期方向，但微信生态内的服务逻辑相对独立"
+  },
+  {
+   "id": "1d2ba72403c6",
+   "title": "6 台机器人拼长城、首款智能体手机首秀：阶跃把 AI 塞进了现实世界｜WAIC 2026",
+   "url": "https://www.ifanr.com/1672344?utm_source=rss&utm_medium=rss&utm_campaign=",
+   "summary": "大模型的下一站，是走出屏幕，自己动手 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。",
+   "category": "爱范儿",
+   "tags": [],
+   "date": "2026-07-18",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "爱范儿",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-22"
+   },
+   "quip": "智能体走向物理世界，验证了Agent自主完成复杂任务的潜力"
   },
   {
    "id": "dfdb345b9e1c",
@@ -2499,6 +3125,18 @@
    }
   },
   {
+   "id": "86a34b395b91",
+   "title": "AI 员工阵容新增「GEO 优化师」：AI 时代的 SEO",
+   "url": "https://juzibot.com/workforce/geo.html",
+   "summary": "专管品牌在豆包、DeepSeek 等 AI 答案里的位置：GEO 监测诊断、内容生产、渠道发布、公域承接，再把意向沉到企业微信接着跟进。",
+   "category": "AI 员工",
+   "tags": [],
+   "date": "2026-06-27",
+   "source": "product",
+   "source_name": "产品动态",
+   "author": "句子互动"
+  },
+  {
    "id": "ba6daec018b7",
    "title": "企业微信接口更新：支持第三方应用与企业智能机器人open_userid的转换 等 13 项",
    "url": "https://developer.work.weixin.qq.com/document/path/93221#20260623",
@@ -2586,6 +3224,30 @@
    }
   },
   {
+   "id": "10ff0f01ec77",
+   "title": "AI 员工阵容新增「AI HR」：从简历初筛到语音面试",
+   "url": "https://juzibot.com/workforce/hr.html",
+   "summary": "简历获取、初筛与第一轮语音面试全部由 Agent 自动完成，HR 只看 Top 20% 的候选人，把时间留给深度面试和人才策略。",
+   "category": "AI 员工",
+   "tags": [],
+   "date": "2026-06-08",
+   "source": "product",
+   "source_name": "产品动态",
+   "author": "句子互动"
+  },
+  {
+   "id": "85d5e6ba2748",
+   "title": "产品体系扩到七套：新增「句子懂行」与「句子 CLI」",
+   "url": "https://juzibot.com/products/dongxing.html",
+   "summary": "懂行是 AI 员工的记忆，把散乱的知识炼成能查、能用、越用越准的资产；CLI 是 AI 员工的手，有 API 走 API，没 API 就像人一样点界面。",
+   "category": "句子懂行",
+   "tags": [],
+   "date": "2026-06-05",
+   "source": "product",
+   "source_name": "产品动态",
+   "author": "句子互动"
+  },
+  {
    "id": "c2eb8df25e22",
    "title": "硅谷今年最火的岗位 FDE，我们闷头干了三年",
    "url": "https://rui.juzi.bot/thought/2026-06-04-pe-to-fde.html",
@@ -2610,6 +3272,18 @@
     "keep": true,
     "at": "2026-07-21"
    }
+  },
+  {
+   "id": "25f60418af43",
+   "title": "句子互动新版官网上线：五套产品同场亮相",
+   "url": "https://juzibot.com/",
+   "summary": "秒回、秒懂、守护、参谋、智造五套产品一次讲清，每套各管数字员工的一个环节，从接待、转化到交付都落在微信与企业微信里。",
+   "category": "官网",
+   "tags": [],
+   "date": "2026-05-18",
+   "source": "product",
+   "source_name": "产品动态",
+   "author": "句子互动"
   },
   {
    "id": "4896cd760f43",

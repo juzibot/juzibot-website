@@ -115,7 +115,9 @@ SOURCES = [
     },
     {
         # 多家科技媒体合流, feed 名落 category 做二级分类, 全部过 ai_filter=ai 只留 AI 相关。
-        # 机器之心 RSS 已停(302 到付费数据服务); 极客公园/虎嗅连不通, InfoQ 返回 HTML(2026-07-21 试探)
+        # 机器之心 RSS 已停(302 到付费数据服务); 极客公园/虎嗅连不通, InfoQ 返回 HTML(2026-07-21 试探);
+        # 2026-07-22 复测: 极客公园/虎嗅仍不通, 品玩返回 HTML, IT之家是 GBK 编码(fetch 按 utf-8 解会乱码, 不收),
+        # 少数派/Solidot 可用但偏效率工具/极客向, 对官网受众噪音大不收; 新增雷锋网/爱范儿(RSS2 干净, AI 产业向)
         "id": "industry",
         "name": "行业动态",
         "author": "行业媒体",
@@ -124,9 +126,11 @@ SOURCES = [
             {"url": "https://36kr.com/feed", "name": "36氪"},
             {"url": "https://www.qbitai.com/feed", "name": "量子位"},
             {"url": "https://www.tmtpost.com/feed", "name": "钛媒体"},
+            {"url": "https://www.leiphone.com/feed", "name": "雷锋网"},
+            {"url": "https://www.ifanr.com/feed", "name": "爱范儿"},
         ],
         "max_items": 15,
-        "keep_max": 80,  # 外部源存量上限(只数过筛条目): RSS 窗口每次都有新内容, 不修剪会让内联数据无限膨胀
+        "keep_max": 100,  # 外部源存量上限(只数过筛条目): RSS 窗口每次都有新内容, 不修剪会让内联数据无限膨胀; 2026-07-22 扩到五 feed 后 80→100
         "home": "",
         "ai_filter": "ai",
         # 关键词预过滤: 纯行情快讯类噪声不进 LLM 直接掐掉(省判定成本, 拿不到 key 时也生效)
