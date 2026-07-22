@@ -19,6 +19,7 @@
   .dp-srcb{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:750;color:var(--sc,var(--blue))}
   .s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
   .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-wecom{--sc:#2563EB}.s-voices{--sc:#9333EA}
+  .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
   .dp-cat{display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ink-3);background:#F6F7FB;border:1px solid var(--line-2);border-radius:6px;padding:2px 8px}
   .dp-date{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-3)}
   .dp-title{font-size:clamp(24px,3.2vw,34px);font-weight:850;letter-spacing:-.03em;line-height:1.32;word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance;margin-bottom:10px}
@@ -51,6 +52,12 @@
   .dp-btn.sec{background:#fff;color:var(--ink-2);border:1px solid var(--line)}
   .dp-btn.sec:hover{color:var(--blue);border-color:var(--blue)}
   .dp-note{font-size:11.5px;line-height:1.7;color:var(--ink-3);margin-top:18px}
+  .dp-langbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+  .dp-lang{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:750;color:var(--blue);
+    background:var(--blue-50);border:1px solid var(--blue-100);border-radius:999px;padding:7px 14px;
+    transition:background .2s var(--ease),border-color .2s var(--ease)}
+  .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
+  .dp-lang-note{font-size:11px;color:var(--ink-3)}
 </style>
 </head>
 <body>
@@ -69,9 +76,10 @@
     <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（Sam Altman · 大咖观点）所有 · <a href="https://blog.samaltman.com/gpt-4o" target="_blank" rel="noopener">阅读原文</a></span></div>
     
     <div class="dp-brief"><b>简报</b>OpenAI强调其使命是将强大的AI工具免费或以优惠价格提供给用户。他们自豪地宣布，世界上最优秀的模型GPT-4o已在ChatGPT中免费提供，无广告干扰。</div>
-    <article class="dp-body"><div class="posthaven-post-body"><p>There are two things from our announcement today I wanted to highlight.</p><p>First, a key part of our mission is to put very capable AI tools in the hands of people for free (or at a great price). I am very proud that we’ve made the best model in the world available for free in ChatGPT, without ads or anything like that. </p><p>Our initial conception when we started OpenAI was that we’d create AI and use it to create all sorts of benefits for the world. Instead, it now looks like we’ll create AI and then other people will use it to create all sorts of amazing things that we all benefit from. </p><p>We are a business and will find plenty of things to charge for, and that will help us provide free, outstanding AI service to (hopefully) billions of people. </p><p>Second, the new voice (and video) mode is the best computer interface I’ve ever used. It feels like AI from the movies; and it’s still a bit surprising to me that it’s real. Getting to human-level response times and expressiveness turns out to be a big change.</p><p>The original ChatGPT showed a hint of what was possible with language interfaces; this new thing feels viscerally different. It is fast, smart, fun, natural, and helpful.</p><p></p><p>Talking to a computer has never felt really natural for me; now it does. As we add (optional) personalization, access to your information, the ability to take actions on your behalf, and more, I can really see an exciting future where we are able to use computers to do much more than ever before.<br></p><p>Finally, huge thanks to the team that poured so much work into making this happen!</p></div></article>
+    <div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang"><i class="fa-solid fa-language"></i><span>翻译为中文</span></button><span class="dp-lang-note">中文由 AI 翻译，仅供参考</span></div><article class="dp-body" id="dpBodyOrig"><div class="posthaven-post-body"><p>There are two things from our announcement today I wanted to highlight.</p><p>First, a key part of our mission is to put very capable AI tools in the hands of people for free (or at a great price). I am very proud that we’ve made the best model in the world available for free in ChatGPT, without ads or anything like that. </p><p>Our initial conception when we started OpenAI was that we’d create AI and use it to create all sorts of benefits for the world. Instead, it now looks like we’ll create AI and then other people will use it to create all sorts of amazing things that we all benefit from. </p><p>We are a business and will find plenty of things to charge for, and that will help us provide free, outstanding AI service to (hopefully) billions of people. </p><p>Second, the new voice (and video) mode is the best computer interface I’ve ever used. It feels like AI from the movies; and it’s still a bit surprising to me that it’s real. Getting to human-level response times and expressiveness turns out to be a big change.</p><p>The original ChatGPT showed a hint of what was possible with language interfaces; this new thing feels viscerally different. It is fast, smart, fun, natural, and helpful.</p><p></p><p>Talking to a computer has never felt really natural for me; now it does. As we add (optional) personalization, access to your information, the ability to take actions on your behalf, and more, I can really see an exciting future where we are able to use computers to do much more than ever before.<br></p><p>Finally, huge thanks to the team that poured so much work into making this happen!</p></div></article><article class="dp-body" id="dpBodyZh" hidden><div class="posthaven-post-body"><p>今天我想重点谈谈我们公告中的两点内容。</p><p>首先，我们使命的核心部分是让人们能免费（或以极优惠的价格）获得功能强大的 AI 工具。我非常自豪，我们已通过 ChatGPT 向所有人免费开放了全球顶尖的模型，没有任何广告或其他附加条件。</p><p>OpenAI 创立之初，我们的设想是开发 AI 并用它为世界创造各种福祉。但现在看来，我们将开发 AI，而其他人会用它来创造各种令人惊叹的成果，让我们所有人受益。</p><p>我们是一家企业，会找到许多可以收费的服务，这将帮助我们为（希望是）数十亿人提供免费、卓越的 AI 服务。</p><p>其次，全新的语音（和视频）模式是我用过的最棒的计算机交互界面。它就像电影里的 AI；至今我仍会惊讶于它已成为现实。实现人类水平的响应时间和表现力，确实带来了巨大的改变。</p><p>最初的 ChatGPT 展现了语言交互潜力的冰山一角；而这次的新体验则有着本质的不同。它快速、智能、有趣、自然且实用。</p><p>对我来说，与计算机对话从未如此自然；现在实现了。随着我们逐步加入（可选的）个性化设置、接入你的信息、代表你执行操作等功能，我真切地看到了一个激动人心的未来——我们将能用计算机完成远超以往的事情。<br></p><p>最后，衷心感谢为此倾注心血的团队！</p></div></article>
     <div class="dp-actions">
       <a class="dp-btn pri" href="https://blog.samaltman.com/gpt-4o" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      
       <button type="button" class="dp-btn sec" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
       <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
     </div>
@@ -81,5 +89,11 @@
 <div id="site-footer"></div>
 <script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "GPT-4o"};</script>
 <script src="../../assets/site.js"></script>
+<script>
+(function(){var b=document.getElementById('dpLang');if(!b)return;
+var en=document.getElementById('dpBodyOrig'),zh=document.getElementById('dpBodyZh');
+b.addEventListener('click',function(){var on=zh.hidden;zh.hidden=!on;en.hidden=on;
+b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';});})();
+</script>
 </body>
 </html>
