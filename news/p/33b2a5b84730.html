@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>为什么资深开发者讲不清自己的专业能力 - 句子·动态</title>
+<meta name="description" content="资深开发者常以复杂度解释问题，但业务方更关心不确定性；文章探讨在AI时代如何改善这种沟通。" />
+<meta name="robots" content="noindex,follow" />
+<link rel="canonical" href="https://baoyu.io/translations/2026-05-12/why-senior-developers-fail-to-communicate-their-expertise" />
+<link rel="icon" href="../../logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../../assets/site.css" />
+<style>
+  .dp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
+  .dp-wrap{max-width:760px;margin:0 auto}
+  .dp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
+  .dp-back:hover{color:var(--blue)}
+  .dp-meta{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:14px}
+  .dp-srcb{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:750;color:var(--sc,var(--blue))}
+  .s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
+  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-wecom{--sc:#2563EB}.s-voices{--sc:#9333EA}
+  .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
+  .dp-cat{display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ink-3);background:#F6F7FB;border:1px solid var(--line-2);border-radius:6px;padding:2px 8px}
+  .dp-date{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-3)}
+  .dp-title{font-size:clamp(24px,3.2vw,34px);font-weight:850;letter-spacing:-.03em;line-height:1.32;word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance;margin-bottom:10px}
+  .dp-orig{font-size:13px;color:var(--ink-3);overflow-wrap:anywhere;margin-bottom:8px}
+  .dp-by{font-size:12.5px;font-weight:600;color:var(--ink-3);margin-bottom:18px}
+  .dp-notice{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:1.7;color:var(--ink-2);background:#F6F7FB;border:1px solid var(--line-2);border-radius:10px;padding:10px 14px;margin-bottom:22px}
+  .dp-notice i{color:var(--blue);margin-top:4px;flex:0 0 auto}
+  .dp-notice a{color:var(--blue);font-weight:700;overflow-wrap:anywhere}
+  .dp-quip{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.66;font-weight:600;color:var(--blue-deep);background:var(--blue-50);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:18px}
+  .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
+  .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
+  .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
+  .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
+  .dp-body p{margin:0 0 1.05em}
+  .dp-body img{max-width:100%;height:auto;border-radius:10px;margin:.4em 0}
+  .dp-body pre{background:#0F172A;color:#E2E8F0;font-family:var(--mono);font-size:12.5px;line-height:1.7;padding:14px 16px;border-radius:10px;overflow-x:auto;margin:0 0 1.1em}
+  .dp-body code{font-family:var(--mono);font-size:.92em}
+  .dp-body :not(pre)>code{background:#F1F5F9;padding:1px 5px;border-radius:5px}
+  .dp-body blockquote{border-left:3px solid var(--line);padding:2px 0 2px 14px;color:var(--ink-3);margin:0 0 1.05em}
+  .dp-body a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+  .dp-body ul,.dp-body ol{padding-left:1.5em;margin:0 0 1.05em}
+  .dp-body table{display:block;overflow-x:auto;border-collapse:collapse;margin:0 0 1.1em}
+  .dp-body td,.dp-body th{border:1px solid var(--line);padding:6px 10px;font-size:.92em}
+  .dp-excerpt{font-size:15px;line-height:1.9;color:var(--ink-2);border-left:3px solid var(--line);padding:2px 0 2px 16px;margin-bottom:8px}
+  .dp-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;padding-top:20px;border-top:1px solid var(--line-2)}
+  .dp-btn{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:750;border-radius:999px;padding:10px 20px;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+  .dp-btn.pri{background:var(--blue);color:#fff}
+  .dp-btn.pri:hover{background:var(--blue-deep)}
+  .dp-btn.sec{background:#fff;color:var(--ink-2);border:1px solid var(--line)}
+  .dp-btn.sec:hover{color:var(--blue);border-color:var(--blue)}
+  .dp-note{font-size:11.5px;line-height:1.7;color:var(--ink-3);margin-top:18px}
+  .dp-langbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+  .dp-lang{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:750;color:var(--blue);
+    background:var(--blue-50);border:1px solid var(--blue-100);border-radius:999px;padding:7px 14px;
+    transition:background .2s var(--ease),border-color .2s var(--ease)}
+  .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
+  .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div id="site-nav"></div>
+<main class="dp-main">
+  <div class="dp-wrap">
+    <a class="dp-back" href="../../news.html"><i class="fa-solid fa-arrow-left"></i>返回动态</a>
+    <div class="dp-meta">
+      <span class="dp-srcb s-voices"><i class="fa-solid fa-feather"></i>大咖观点</span>
+      <span class="dp-cat">宝玉</span>
+      <time class="dp-date" datetime="2026-05-12">2026-05-12</time>
+    </div>
+    <h1 class="dp-title">为什么资深开发者讲不清自己的专业能力</h1>
+    
+    <p class="dp-by">来源：宝玉 · 大咖观点</p>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（宝玉 · 大咖观点）所有 · <a href="https://baoyu.io/translations/2026-05-12/why-senior-developers-fail-to-communicate-their-expertise" target="_blank" rel="noopener">阅读原文</a></span></div>
+    
+    <div class="dp-brief"><b>简报</b>资深开发者常以复杂度解释问题，但业务方更关心不确定性；文章探讨在AI时代如何改善这种沟通。</div>
+    <article class="dp-body"><h1>为什么资深开发者总是无法传达他们的专业价值</h1>
+<p>作者：Tuhin Nair<br />
+原文：<a href="https://nair.sh/guides-and-opinions/communicating-your-expertise/why-senior-developers-fail-to-communicate-their-expertise" target="_blank" rel="noopener nofollow">Why senior developers fail to communicate their expertise</a></p>
+<p>你对下面这句话有什么感觉？</p>
+<blockquote>
+<p>“AI 智能体 (AI agents) 是软件开发的未来。我们再也不需要那些拖慢业务进度的开发人员了。”</p>
+</blockquote>
+<p>如果你是一位资深开发者，并且认同这句话，那我可能要对你的专业水平打个问号了（我会解释原因的，我并不是在故意找茬）。</p>
+<p>但如果你<em>不是</em>资深开发者，却认同这句话，我觉得你大概率是对的。</p>
+<p>咦？这到底是怎么回事？</p>
+<p>广告文案 (Copywriting) 的本质，其实就是让信息精准匹配它的受众。</p>
+<p>所以，在我这个文案工作者看来，这里发生的事情是：同一句话，在两类不同的受众听来，有着截然不同的含义。</p>
+<p>如果你是一位资深开发者，并且你已经玩过那些让人大开眼界的 AI 智能体、大模型以及各种花哨的 AI 技能，但你的直觉依然告诉你：“大家都在宣扬程序员要失业了，这事儿听起来总觉得哪里不对劲”。那么在这篇文章里，我将尝试把你这种说不清道不明的直觉，用清晰的文字表达出来（这正是一个优秀文案该干的活）。</p>
+<p>但是等一下！现在也有很多经验丰富的知名开发者在宣告“程序员已死”。</p>
+<p>这又是怎么回事？到底谁的直觉是对的？是什么导致了这种分歧？</p>
+<p>当我加入一个团队时，通常会遇到两类资深开发者。</p>
+<p>第一类会说这样的话：</p>
+<blockquote>
+<p>“我发现了一个新工具，简直太酷了……”</p>
+<p>“某某公司（一家和我们业务完全不搭边的公司）就是这么干的，所以……”</p>
+<p>“快看 HackerNews 上的这篇帖子，上面说这是最佳实践，我们也许应该……”</p>
+</blockquote>
+<p>说实话，我不太喜欢这类资深开发者。他们往往有点自我保护欲，在行业里混了很久，可能人缘还不错。但我们就是不在一个频道上。</p>
+<p>接着是第二类资深开发者：</p>
+<blockquote>
+<p>“我们真的需要那个功能吗？”</p>
+<p>“如果我们不做这个，会发生什么？”</p>
+<p>“我们能不能先凑合一下？也许等它变得更重要的时候再回过头来弄？”</p>
+</blockquote>
+<p>啊，宝贝，这才是我的“梦中情怪”资深开发者。他们是回避者、精简者、废物利用者。他们想尽一切办法去避免写代码。</p>
+<p>为什么？因为他们在专业的软件开发生涯中，毕生都在狩猎一只可怕的怪物：<strong>复杂性 (Complexity)</strong>。</p>
+<p>各种特殊情况、一堆的 if 条件判断、新建的数据库表、全新的组件。这些全都是让人头疼的大麻烦<strong>（因为它们极大增加了系统维护和理解的难度）</strong>。资深开发者希望这些东西越少越好，他们会花大量时间去反复确认，是不是真的非写这段代码不可。</p>
+<p>因为给系统做加法，就意味着增加了复杂性的风险。</p>
+<p>是的，是的，我承认这么说有些过于绝对了。当然有很多资深开发者擅长攻克未解难题，并提出富有创意的新架构。</p>
+<p>但归根结底，如果你要对一个正在平稳运行的系统负责，你就会对复杂性感到恐惧。</p>
+<p>那么，这到底是为什么呢？复杂性到底有什么坏处？又为什么其他人都无法理解这种恐惧呢？</p>
+<p>我们打算用两个“循环圈”来简化并解释一家公司的运作方式。</p>
+<p>这是第一个循环圈；市场营销人员、销售人员、产品经理以及 CEO，他们都生活在这个圈里：</p>
+<p><img loading="lazy" onerror="this.style.display='none'" src="https://s.baoyu.io/imgs/2026-05-12/why-senior-developers-fail-to-communicate-their-expertise/img-001-image.png" alt="中文手写信息图：第一个循环用速度消除不确定性，想法推向市场后获得反馈，再把学习带回下一次尝试。" referrerpolicy="no-referrer" /></p>
+<p>第一个循环：业务团队通过快速尝试、市场反馈和学习，持续降低不确定性。</p>
+<p>这个循环的核心目标是尝试与学习。企业想要把产品推向市场，然后获取反馈，看看他们搞出来的东西到底有没有价值。</p>
+<p>对于身处这个循环里的人来说，他们要面对的怪物是：<strong>不确定性 (Uncertainty)</strong>。</p>
+<p>不确定性是残酷的，因为没有任何策略能保证百分之百奏效。当不确定性与时间交织在一起时（比如营销和销售的薪水、创始人的工资账单，或者产品经理急需的数据），你会感觉：在死线到来之前，尽可能快地把东西推向市场，似乎是降低不确定性的唯一途径。你推向市场的东西越多，得到的反馈就越多，你（潜在地）消除的不确定性也就越多。</p>
+<p>这个循环——也是所有公司起步时的必经之路——追求的是纯粹的、原始的速度。</p>
+<p>但是，当一家公司开始拥有客户时，会发生什么呢？</p>
+<p>啊哈，现在，我们的第二个循环圈登场了。人们开始为服务付费了。</p>
+<p><img loading="lazy" onerror="this.style.display='none'" src="https://s.baoyu.io/imgs/2026-05-12/why-senior-developers-fail-to-communicate-their-expertise/img-002-image.png" alt="中文手写信息图：第二个循环用克制守住稳定性，付费客户使用现有服务，资深开发者抵御复杂性。" referrerpolicy="no-referrer" /></p>
+<p>第二个循环：付费客户依赖现有服务，资深开发者通过控制复杂性来维持长期稳定。</p>
+<p>很多资深开发者就身处这个循环圈中。这个循环的核心目标是：<strong>延续并保障服务的稳定</strong>。</p>
+<p>保持系统运转，保持代码易读，保持问题可调试，保持故障可修复，保持架构可传授给新人，最重要的是，保持稳定。</p>
+<p>资深开发者之所以操心稳定性，是因为他们肩负着让公司能够持续为客户提供服务的重任。</p>
+<p>而什么会威胁到这一切？</p>
+<p><strong>复杂性。</strong></p>
+<p>复杂性会让系统变得难以理解、难以调试、难以修复、难以交接，并最终导致系统变得极不稳定。</p>
+<p>复杂性上升 = 稳定性下降 = 资深开发者失职 = 糟糕透顶，客户付款中断，所有人都愁眉苦脸。</p>
+<p>所以，如果说第一个循环的目标是“消除不确定性”，那么第二个循环的目标就是“管理复杂性”。</p>
+<p>但这为什么会导致沟通上的失败呢？</p>
+<p>因为一旦你有了客户，这两个循环圈就会同时运转。一家公司既需要探索新的可能性，又必须同时服务好现有的客户。</p>
+<p><img loading="lazy" onerror="this.style.display='none'" src="https://s.baoyu.io/imgs/2026-05-12/why-senior-developers-fail-to-communicate-their-expertise/img-003-image.png" alt="中文手写信息图：一家公司同时运行探索循环和服务循环，左边要快，右边要稳。" referrerpolicy="no-referrer" /></p>
+<p>有客户之后，公司必须同时探索新可能，也必须守住现有客户。</p>
+<p>好了，现在你可能已经猜到我对文章标题那个问题的答案了。</p>
+<p>根据你把时间主要花在哪一个循环圈里，你对问题的认知框架是完全不同的（这也就是为什么我认为开发者在对待 AI 的观点上会产生分歧；有些人更多地在第一个循环里工作，而另一些人则在第二个循环里）。</p>
+<p><img loading="lazy" onerror="this.style.display='none'" src="https://s.baoyu.io/imgs/2026-05-12/why-senior-developers-fail-to-communicate-their-expertise/img-004-image.png" alt="中文手写信息图：同一个新增功能需求，在业务视角里是减少不确定性，在开发者视角里是增加复杂性。" referrerpolicy="no-referrer" /></p>
+<p>同一个需求，两种解读：业务看到更快验证，开发者看到更多代码路径和维护成本。</p>
+<p>在第一个循环圈里的人，他们的故事是这样的：</p>
+<p><img loading="lazy" onerror="this.style.display='none'" src="https://s.baoyu.io/imgs/2026-05-12/why-senior-developers-fail-to-communicate-their-expertise/img-005-image.png" alt="中文手写信息图：业务端的故事是需求涌入后快速实验，用真实反馈决定继续、调整或放弃。" referrerpolicy="no-referrer" /></p>
+<p>业务端的故事：他们要的不是代码本身，而是更快知道答案。</p>
+<p>但在第二个循环圈里的资深开发者，他们的故事却是这样的：</p>
+<p><img loading="lazy" onerror="this.style.display='none'" src="https://s.baoyu.io/imgs/2026-05-12/why-senior-developers-fail-to-communicate-their-expertise/img-006-image.png" alt="中文手写信息图：开发者的故事是每个新增需求都可能增加复杂性，资深开发者需要把复杂性翻译成更快的验证方案。" referrerpolicy="no-referrer" /></p>
+<p>开发者的故事：真正的专业价值，是用更少复杂性换来更快确定性。</p>
+<p>这两种故事根本搭不上调。</p>
+<p>资深开发者接到的“新增功能”需求越多，他们就越想回怼：“呃，不行……这太复杂了……维护成本太高……代码没法读了……后续开发速度会变慢……长期来看会拖累生产力……”。</p>
+<p>但是，这些牢骚对于业务端“急需消除不确定性”的诉求来说，毫无帮助。</p>
+<p>文案的诊断结果：<strong>你不能用你自己的烦恼，去搪塞别人的问题。</strong></p>
+<p>文案开出的处方：<strong>你必须把你的解决方案，包装成同样能解决他们问题的方案。</strong></p>
+<p>资深开发者之所以沟通失败，是因为他们总是在用“复杂性管理”的逻辑来表达自己的苦衷，而他们本该用“消除不确定性”的逻辑来推销自己的解决方案。</p>
+<p>只要资深开发者能意识到公司其他部门真正渴望的是消除不确定性，他们就能利用自己的专业能力来提供帮助了。</p>
+<p>那么，资深开发者最拿手的本领是什么？是不情愿去开发没必要的东西；是能够敏锐地发现复用现有代码的机会。</p>
+<p><em>需要收集问卷数据？</em> 用 Google 表单就行了，宝贝。</p>
+<p><em>需要开发一个新功能来做测试？</em> 你们有没有试过在现有的 UI 界面上加个假按钮，看看有没有人点？<strong>（也就是所谓的“画饼测试”或验证性测试）</strong></p>
+<p><em>需要一套新的数据分析服务？</em> 我们需要看数据来做出的最关键决策是什么？我们能不能只针对这一个决策，先做一个图表、看一个指标？</p>
+<p><em>你想费劲给我烤个完整的生日蛋糕？</em> 算了吧，直接在我的三明治上插根蜡烛就行。</p>
+<p>这就是资深开发者学到的生存之道：他们学会了如何利用现有的软件资源，巧妙地给别人想要的东西。</p>
+<p>但是，你该如何沟通这一点，而不至于每次都要给别人写篇小作文呢？</p>
+<p>文案们最喜欢把一堆复杂的信息浓缩成一句简短有力的话。所以，这里有一句每个资深开发者都必须背诵的魔法口诀：“我们能不能试个更快的办法？”</p>
+<p>用“更快 (quicker)”这个词，是承认并迎合了业务端真正的渴望（速度）；“办法 (something)”暗示了还有别的方式可以达成目标；而“试 (try)”则暗示了这个方案可能并不完美，但很可能已经足够好了。</p>
+<p>这句话完美地切中了公司其他部门的核心需求——用速度来消除不确定性，同时也让资深开发者能够尽情施展他们的专业特长：精简功能、复用代码，如果老天保佑的话，完全避免开发。</p>
+<p>就是这样。这就是我对文章标题的回答：当所有人都在为“不确定性”焦头烂额时，资深开发者却总是在把“复杂性”挂在嘴边。</p>
+<p>但是！大大的转折来了！</p>
+<p>现在的 AI 似乎让这一切都变得毫无意义了，不是吗？为什么还要精简？为什么还要复用？为什么还要避免开发？AI 可以在极短的时间内写出海量的代码。</p>
+<p>唉，话虽如此，但有一件事 AI 至今还做不到，而这也正是资深开发者依然在坚持做的事。</p>
+<p><strong>承担责任 (Take responsibility)——背锅。</strong></p></article>
+    <div class="dp-actions">
+      <a class="dp-btn pri" href="https://baoyu.io/translations/2026-05-12/why-senior-developers-fail-to-communicate-their-expertise" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      
+      <button type="button" class="dp-btn sec" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
+      <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
+    </div>
+    <p class="dp-note">本页由句子互动动态管线自动生成，聚合内容版权归各来源所有；如来源方希望调整或移除收录，请通过官网联系我们。</p>
+  </div>
+</main>
+<div id="site-footer"></div>
+<script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "为什么资深开发者讲不清自己的专业能力"};</script>
+<script src="../../assets/site.js"></script>
+</body>
+</html>

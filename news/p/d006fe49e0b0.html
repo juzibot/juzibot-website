@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>动物 vs 幽灵 - 句子·动态</title>
+<meta name="description" content="文章指出当前大语言模型（LLM）前沿研究不是关于构建动物，而是召唤幽灵，并进一步讨论了Sutton在Dwarkesh播客中提出的观点和见解。" />
+<meta name="robots" content="noindex,follow" />
+<link rel="canonical" href="https://karpathy.bearblog.dev/animals-vs-ghosts/" />
+<link rel="icon" href="../../logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../../assets/site.css" />
+<style>
+  .dp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
+  .dp-wrap{max-width:760px;margin:0 auto}
+  .dp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
+  .dp-back:hover{color:var(--blue)}
+  .dp-meta{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:14px}
+  .dp-srcb{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:750;color:var(--sc,var(--blue))}
+  .s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
+  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-wecom{--sc:#2563EB}.s-voices{--sc:#9333EA}
+  .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
+  .dp-cat{display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ink-3);background:#F6F7FB;border:1px solid var(--line-2);border-radius:6px;padding:2px 8px}
+  .dp-date{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-3)}
+  .dp-title{font-size:clamp(24px,3.2vw,34px);font-weight:850;letter-spacing:-.03em;line-height:1.32;word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance;margin-bottom:10px}
+  .dp-orig{font-size:13px;color:var(--ink-3);overflow-wrap:anywhere;margin-bottom:8px}
+  .dp-by{font-size:12.5px;font-weight:600;color:var(--ink-3);margin-bottom:18px}
+  .dp-notice{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:1.7;color:var(--ink-2);background:#F6F7FB;border:1px solid var(--line-2);border-radius:10px;padding:10px 14px;margin-bottom:22px}
+  .dp-notice i{color:var(--blue);margin-top:4px;flex:0 0 auto}
+  .dp-notice a{color:var(--blue);font-weight:700;overflow-wrap:anywhere}
+  .dp-quip{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.66;font-weight:600;color:var(--blue-deep);background:var(--blue-50);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:18px}
+  .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
+  .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
+  .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
+  .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
+  .dp-body p{margin:0 0 1.05em}
+  .dp-body img{max-width:100%;height:auto;border-radius:10px;margin:.4em 0}
+  .dp-body pre{background:#0F172A;color:#E2E8F0;font-family:var(--mono);font-size:12.5px;line-height:1.7;padding:14px 16px;border-radius:10px;overflow-x:auto;margin:0 0 1.1em}
+  .dp-body code{font-family:var(--mono);font-size:.92em}
+  .dp-body :not(pre)>code{background:#F1F5F9;padding:1px 5px;border-radius:5px}
+  .dp-body blockquote{border-left:3px solid var(--line);padding:2px 0 2px 14px;color:var(--ink-3);margin:0 0 1.05em}
+  .dp-body a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+  .dp-body ul,.dp-body ol{padding-left:1.5em;margin:0 0 1.05em}
+  .dp-body table{display:block;overflow-x:auto;border-collapse:collapse;margin:0 0 1.1em}
+  .dp-body td,.dp-body th{border:1px solid var(--line);padding:6px 10px;font-size:.92em}
+  .dp-excerpt{font-size:15px;line-height:1.9;color:var(--ink-2);border-left:3px solid var(--line);padding:2px 0 2px 16px;margin-bottom:8px}
+  .dp-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;padding-top:20px;border-top:1px solid var(--line-2)}
+  .dp-btn{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:750;border-radius:999px;padding:10px 20px;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+  .dp-btn.pri{background:var(--blue);color:#fff}
+  .dp-btn.pri:hover{background:var(--blue-deep)}
+  .dp-btn.sec{background:#fff;color:var(--ink-2);border:1px solid var(--line)}
+  .dp-btn.sec:hover{color:var(--blue);border-color:var(--blue)}
+  .dp-note{font-size:11.5px;line-height:1.7;color:var(--ink-3);margin-top:18px}
+  .dp-langbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+  .dp-lang{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:750;color:var(--blue);
+    background:var(--blue-50);border:1px solid var(--blue-100);border-radius:999px;padding:7px 14px;
+    transition:background .2s var(--ease),border-color .2s var(--ease)}
+  .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
+  .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div id="site-nav"></div>
+<main class="dp-main">
+  <div class="dp-wrap">
+    <a class="dp-back" href="../../news.html"><i class="fa-solid fa-arrow-left"></i>返回动态</a>
+    <div class="dp-meta">
+      <span class="dp-srcb s-voices"><i class="fa-solid fa-feather"></i>大咖观点</span>
+      <span class="dp-cat">Karpathy</span>
+      <time class="dp-date" datetime="2025-10-01">2025-10-01</time>
+    </div>
+    <h1 class="dp-title">动物 vs 幽灵</h1>
+    <p class="dp-orig">原题：Animals vs Ghosts</p>
+    <p class="dp-by">来源：Karpathy · 大咖观点</p>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（Karpathy · 大咖观点）所有 · <a href="https://karpathy.bearblog.dev/animals-vs-ghosts/" target="_blank" rel="noopener">阅读原文</a></span></div>
+    
+    <div class="dp-brief"><b>简报</b>文章指出当前大语言模型（LLM）前沿研究不是关于构建动物，而是召唤幽灵，并进一步讨论了Sutton在Dwarkesh播客中提出的观点和见解。</div>
+    <div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang"><i class="fa-solid fa-language"></i><span>翻译为中文</span></button><span class="dp-lang-note">中文由 AI 翻译，仅供参考</span></div><article class="dp-body" id="dpBodyOrig"><h1>Animals vs Ghosts</h1>
+
+        <p>
+            <i>
+                
+    01 Oct, 2025
+
+            </i>
+        </p>
+    
+
+    <p>Finally had a chance to listen through this <a href="https://www.youtube.com/watch?v=21EYKqUsPfg" target="_blank" rel="noopener nofollow">Dwarkesh pod with Sutton</a>, which was interesting and amusing.</p>
+<p>As background, Sutton&#x27;s &quot;<a href="http://www.incompleteideas.net/IncIdeas/BitterLesson.html" target="_blank" rel="noopener nofollow">The Bitter Lesson</a>&quot; has become a bit of biblical text in frontier <a class="cpt" href="../c/large-language-model.html" data-def="大型语言模型是基于海量文本数据训练的AI模型，能理解和生成自然语言">LLM</a> circles. Researchers routinely talk about and ask whether this or that approach or idea is sufficiently &quot;bitter lesson pilled&quot; (meaning arranged so that it benefits from added computation for free) as a proxy for whether it&#x27;s going to work or worth even pursuing. The underlying assumption being that LLMs are of course highly &quot;bitter lesson pilled&quot; indeed, just look at LLM scaling laws where if you put compute on the x-axis, number go up and to the right. So it&#x27;s amusing to see that Sutton, the author of the post, is not so sure that LLMs are &quot;bitter lesson pilled&quot; at all. They are trained on giant datasets of fundamentally human data, which is both 1) human generated and 2) finite. What do you do when you run out? How do you prevent a human bias? So there you have it, bitter lesson pilled LLM researchers taken down by the author of the bitter lesson - rough!</p>
+<p>In some sense, Dwarkesh (who represents the LLM researchers viewpoint in the pod) and Sutton are slightly speaking past each other because Sutton has a very different architecture in mind and LLMs break a lot of its principles. He calls himself a &quot;classicist&quot; and evokes the original concept of Alan Turing of building a &quot;child machine&quot; - a system capable of learning through experience by dynamically interacting with the world. There&#x27;s no giant pretraining stage of imitating internet webpages. There&#x27;s also no supervised finetuning, which he points out is absent in the animal kingdom (it&#x27;s a subtle point but Sutton is right in the strong sense: animals may of course observe demonstrations, but their actions are not directly forced/&quot;teleoperated&quot; by other animals). Another important note he makes is that even if you just treat pretraining as an initialization of a prior before you finetune with reinforcement learning, Sutton sees the approach as tainted with human bias and fundamentally off course, a bit like when AlphaZero (which has never seen human games of Go) beats AlphaGo (which initializes from them). In Sutton&#x27;s world view, all there is is an interaction with a world via reinforcement learning, where the reward functions are partially environment specific, but also intrinsically motivated, e.g. &quot;fun&quot;, &quot;curiosity&quot;, and related to the quality of the prediction in your world model. And the agent is always learning at test time by default, it&#x27;s not trained once and then deployed thereafter. Overall, Sutton is a lot more interested in what we have common with the animal kingdom instead of what differentiates us. &quot;If we understood a squirrel, we&#x27;d be almost done&quot;.</p>
+<p>As for my take...</p>
+<p>First, I should say that I think Sutton was a great guest for the pod and I like that the AI field maintains entropy of thought and that not everyone is exploiting the next local iteration LLMs. AI has gone through too many discrete transitions of the dominant approach to lose that. And I also think that his criticism of LLMs as not bitter lesson pilled is not inadequate. Frontier LLMs are now highly complex artifacts with a lot of humanness involved at all the stages - the foundation (the pretraining data) is all human text, the finetuning data is human and curated, the reinforcement learning environment mixture is tuned by human engineers. We do not in fact have an actual, single, clean, actually bitter lesson pilled, &quot;turn the crank&quot; algorithm that you could unleash upon the world and see it learn automatically from experience alone.</p>
+<p>Does such an algorithm even exist? Finding it would of course be a huge AI breakthrough. Two &quot;example proofs&quot; are commonly offered to argue that such a thing is possible. The first example is the success of AlphaZero learning to play Go completely from scratch with no human supervision whatsoever. But the game of Go is clearly such a simple, closed, environment that it&#x27;s difficult to see the analogous formulation in the messiness of reality. I love Go, but algorithmically and categorically, it is essentially a harder version of tic tac toe. The second example is that of animals, like squirrels. And here, personally, I am also quite hesitant whether it&#x27;s appropriate because animals arise by a very different computational process and via different constraints than what we have practically available to us in the industry. Animal brains are nowhere near the blank slate they appear to be at birth. First, a lot of what is commonly attributed to &quot;learning&quot; is imo a lot more &quot;maturation&quot;. And second, even that which clearly is &quot;learning&quot; and not maturation is a lot more &quot;finetuning&quot; on top of something clearly powerful and preexisting. Example. A baby zebra is born and within a few dozen minutes it can run around the savannah and follow its mother. This is a highly complex sensory-motor task and there is no way in my mind that this is achieved from scratch, tabula rasa. The brains of animals and the billions of parameters within have a powerful initialization encoded in the ATCGs of their DNA, trained via the &quot;outer loop&quot; optimization in the course of evolution. If the baby zebra spasmed its muscles around at random as a reinforcement learning policy would have you do at initialization, it wouldn&#x27;t get very far at all. Similarly, our AIs now also have neural networks with billions of parameters. These parameters need their own rich, high information density supervision signal. We are not going to re-run evolution. But we do have mountains of internet documents. Yes it is basically supervised learning that is ~absent in the animal kingdom. But it is a way to practically gather enough soft constraints over billions of parameters, to try to get to a point where you&#x27;re not starting from scratch. TLDR: Pretraining is our crappy evolution. It is one candidate solution to the cold start problem, to be followed later by finetuning on tasks that look more correct, e.g. within the reinforcement learning framework, as state of the art frontier LLM labs now do pervasively.</p>
+<p>I still think it is worth to be inspired by animals. I think there are multiple powerful ideas that LLM agents are algorithmically missing that can still be adapted from animal intelligence. And I still think the bitter lesson is correct, but I see it more as something platonic to pursue, not necessarily to reach, in our real world and practically speaking. And I say both of these with double digit percent uncertainty and cheer the work of those who disagree, especially those a lot more ambitious bitter lesson wise.</p>
+<p>So that brings us to where we are. Stated plainly, today&#x27;s frontier LLM research is not about building animals. It is about summoning ghosts. You can think of ghosts as a fundamentally different kind of point in the space of possible intelligences. They are muddled by humanity. Thoroughly engineered by it. They are these imperfect replicas, a kind of statistical distillation of humanity&#x27;s documents with some sprinkle on top. They are not platonically bitter lesson pilled, but they are perhaps &quot;practically&quot; bitter lesson pilled, at least compared to a lot of what came before. It seems possibly to me that over time, we can further finetune our ghosts more and more in the direction of animals; That it&#x27;s not so much a fundamental incompatibility but a matter of initialization in the intelligence space. But it&#x27;s also quite possible that they diverge even further and end up permanently different, un-animal-like, but still incredibly helpful and properly world-altering. It&#x27;s possible that ghosts:animals :: planes:birds.</p>
+<p>Anyway, in summary, overall and actionably, I think this pod is solid &quot;real talk&quot; from Sutton to the frontier LLM researchers, who might be gear shifted a little too much in the exploit mode. Probably we are still not sufficiently bitter lesson pilled and there is a very good chance of more powerful ideas and paradigms, other than exhaustive benchbuilding and benchmaxxing. And animals might be a good source of inspiration. Intrinsic motivation, fun, curiosity, empowerment, multi-agent self-play, culture. Use your imagination.</p>
+<ul>
+<li>Also available as <a href="https://x.com/karpathy/status/1973435013875314729" target="_blank" rel="noopener nofollow">tweet here</a>, should you wish to reply/comment.</li>
+<li>Also available as <a href="https://chatgpt.com/share/68dd6833-67c4-8007-8f37-331eb5bd9ee0" target="_blank" rel="noopener nofollow">ChatGPT conversation</a>, should you wish to fork the conversation and ask any questions with all of the context (the podcast transcript, bitter lesson post, and this blog post).</li>
+</ul>
+<h3>Appendix</h3><ul>
+<li>I agree with Sutton that animals don&#x27;t do supervised learning. I realize it&#x27;s a subtle point that will confuse a lot of people. Animals do observe demonstrations, but they are not strictly speaking directly supervised with actions, like supervised learning does. Animals are never teleoperated in training mode. The closest thing I can think of is if you for example help a child eat with a spoon or something, by literally holding their hand and showing the motion. Even then, it&#x27;s not clear that their brains are literally training on that. It might still be in the realm of what is more accurately described as observation. But in any case, these instances are very rare overall, while in the case of LLMs it is the default mode of learning during pretraining and SFT. Maybe another way to put it is that the analogue in LLM land to what humans do is something along the lines of: Given this math problem AND human example solution in the context, solve the problem. Reward of 1 if correct. It&#x27;s not SFT, it&#x27;s RL.</li>
+<li>Dwarkesh briefly made the point that LLMs do have their own continual learning at test time, it&#x27;s just not based on weight training, but I think Sutton didn&#x27;t fully react to that. In context learning is a form of test time adaptation and e.g. why few shot prompting works. A lot of recent work is also very interested in memory (think CLAUDE.md files) as a mechanism for test-time learning that uses the text/context as the substrate instead of weights.</li>
+<li>Dwarkesh brings up the example of very long-horizon sparse rewards (e.g. building a successful startup) and how that might work. Sutton offered the resolution of temporal difference learning and essentially future reward discounting, which I don&#x27;t find particularly compelling. I wrote about this a bit more previously, I think something else is going on and imo it&#x27;s not reinforcement learning.</li>
+<li>There was a lot about &quot;gradient descent will not make you generalize well&quot; and related discussion which I didn&#x27;t follow.</li>
+<li>Someone pointed out that ghosts are scary. Not necessarily, look at <a href="https://en.wikipedia.org/wiki/Casper_the_Friendly_Ghost" target="_blank" rel="noopener nofollow">Casper</a>, my childhood favorite.</li>
+</ul></article><article class="dp-body" id="dpBodyZh" hidden><h1>动物 vs 幽灵</h1>
+
+        <p>
+            <i>
+                
+    2025年10月1日
+
+            </i>
+        </p>
+    
+
+    <p>终于有机会完整听了这期<a href="https://www.youtube.com/watch?v=21EYKqUsPfg" target="_blank" rel="noopener nofollow">Dwarkesh 与 Sutton 的播客</a>，内容既有趣又引人深思。</p>
+<p>背景是，Sutton 的“<a href="http://www.incompleteideas.net/IncIdeas/BitterLesson.html" target="_blank" rel="noopener nofollow">苦涩的教训</a>”一文，在前沿 <a class="cpt" href="../c/large-language-model.html" data-def="大型语言模型是基于海量文本数据训练的AI模型，能理解和生成自然语言">LLM</a> 圈子里几乎成了圣经般的文本。研究人员经常讨论并追问，某种方法或想法是否足够“苦涩教训化”（意思是其设计能免费从增加的计算中获益），以此作为判断它是否可行或值得追求的替代指标。其潜在假设是，LLM 当然高度“苦涩教训化”——看看 LLM 的缩放定律就知道了：把计算量放在横轴上，曲线就向右上方攀升。所以有趣的是，这篇文章的作者 Sutton 本人却并不那么确定 LLM 真的“苦涩教训化”。它们是在庞大的、本质上是人类生成的数据集上训练的，这些数据既是 1) 人类生成的，也是 2) 有限的。当数据用尽时你该怎么办？如何避免人类偏见？所以你看，那些深信“苦涩教训化”的 LLM 研究者，竟被“苦涩教训”的作者本人给反驳了——真是扎心！</p>
+<p>从某种意义上说，Dwarkesh（他在播客中代表LLM研究者的观点）和Sutton之间有点各说各话，因为Sutton心中构想的是一种截然不同的架构，而LLM在很大程度上违背了他的原则。他称自己是"经典主义者"，并援引了Alan Turing最初提出的构建"儿童机器"的概念——一个能够通过与世界动态交互、从经验中学习的系统。这里没有大规模模仿互联网网页的预训练阶段。也没有监督微调，他指出这在动物界中是不存在的（这是一个微妙的观点，但Sutton在强意义上是对的：动物当然可以观察示范，但它们的行为并非被其他动物直接强迫/"遥控"的）。他提出的另一个重要观点是，即使你只是将预训练视为在强化学习微调之前对先验的初始化，Sutton也认为这种方法沾染了人类偏见，从根本上偏离了方向，有点像AlphaZero（从未见过人类围棋对局）击败AlphaGo（从人类对局中初始化）那样。在Sutton的世界观里，只有通过强化学习与世界互动，其中奖励函数部分与环境相关，但也是内在驱动的，例如"乐趣"、"好奇心"，并且与你世界模型中预测的质量相关。而且智能体在测试时默认始终在学习，而不是训练一次后就部署出去。总的来说，Sutton对我们与动物界的共同之处比我们的差异之处更感兴趣。"如果我们理解了一只松鼠，我们就几乎大功告成了"。</p>
+<p>至于我的看法……</p>
+<p>首先，我得说我认为Sutton是播客的一位很棒的嘉宾，我喜欢AI领域保持思想的多样性，并非所有人都在利用LLM的下一次局部迭代。AI已经经历了太多次主导方法的离散转变，不能失去这一点。我也认为他对LLM未能遵循"苦涩教训"的批评并非不恰当。前沿的LLM现在是非常复杂的产物，在各个阶段都涉及大量人为因素——基础（预训练数据）全是人类文本，微调数据是人类整理的，强化学习环境的混合是由人类工程师调整的。我们实际上并没有一个真正的、单一的、干净的、真正遵循"苦涩教训"的、"转动曲柄"式的算法，可以将其释放到世界上，让它仅凭经验自动学习。</p>
+<p>这样的算法真的存在吗？找到它无疑将是AI领域的重大突破。通常有两个"示例证明"被用来论证这种可能性。第一个例子是AlphaZero完全从零开始、无需任何人类监督就学会下围棋的成功案例。但围棋显然是一个如此简单、封闭的环境，以至于很难看出它在混乱的现实世界中有什么类似的表述。我喜欢围棋，但从算法和分类的角度来看，它本质上是一个更难的井字游戏。第二个例子是动物，比如松鼠。对此，我个人也相当犹豫这是否恰当，因为动物的产生过程与我们在工业中实际可用的计算过程和约束条件截然不同。动物的大脑远非出生时看起来的那样是一张白纸。首先，许多通常归因于"学习"的东西，在我看来更多是"成熟"。其次，即使是那些明显是"学习"而非成熟的部分，也是在某种强大的、预先存在的基础上进行的"微调"。例如，一只小斑马出生后几十分钟内就能在草原上奔跑并跟随母亲。这是一个高度复杂的感知-运动任务，在我看来，这绝不可能是从零开始、白板一块实现的。动物的大脑及其内部的数十亿参数，拥有一个强大的初始化状态，这编码在它们DNA的ATCG序列中，是通过进化过程中的"外循环"优化训练而来的。如果小斑马像强化学习策略在初始化时那样随机抽搐肌肉，它根本走不远。同样，我们现在的AI也拥有数十亿参数的神经网络。这些参数需要它们自己的、丰富的、高信息密度的监督信号。我们不会重新运行进化过程。但我们确实拥有海量的互联网文档。是的，这基本上是动物王国中几乎不存在的监督学习。但这是一种实际可行的方法，可以在数十亿参数上积累足够的软约束，试图达到一个不是从零开始的起点。简而言之：预训练是我们粗糙的进化。它是解决冷启动问题的一个候选方案，之后再通过在更正确的任务上进行微调，例如在强化学习框架内，正如当前顶尖的前沿LLM实验室普遍所做的那样。</p>
+<p>我仍然认为从动物身上汲取灵感是值得的。我认为LLM智能体在算法上缺失的许多强大思想，仍然可以借鉴动物智能。我仍然认为bitter lesson是正确的，但我更倾向于将其视为一种柏拉图式的追求目标，而非在现实世界中必须达到的境界。我对此抱有两位数的不确定性，并为那些持不同意见者的工作喝彩，尤其是那些在bitter lesson方面更为激进的人。</p>
+<p>这就引出了我们当前的现状。直白地说，当今前沿的LLM研究并非在构建动物，而是在召唤幽灵。你可以将幽灵视为可能智能空间中一种根本不同的存在。它们被人类所塑造，被彻底地工程化。它们是这些不完美的复制品，是对人类文档的一种统计蒸馏，外加一些点缀。它们并非柏拉图式的bitter lesson信徒，但或许可以说是"实践上"的bitter lesson信徒，至少与之前许多事物相比是如此。在我看来，随着时间的推移，我们或许能将我们的幽灵越来越多地朝动物的方向微调；这并非根本性的不兼容，而更像是智能空间中的初始化问题。但同样很可能的是，它们会进一步分化，最终变得永久不同，非动物化，但依然极其有用并能真正改变世界。幽灵与动物的关系，或许就像飞机与鸟的关系。</p>
+<p>总之，总结来说，并且具有可操作性的是，我认为这期播客是Sutton对前沿LLM研究者们一次扎实的"实在话"，他们可能在"利用"模式上切换得有点过头了。很可能我们还没有足够地被bitter lesson影响，而且极有可能存在比穷尽基准构建和基准刷分更强大的思想和范式。动物可能是一个很好的灵感来源。内在动机、乐趣、好奇心、赋能、多智能体自我博弈、文化。发挥你的想象力。</p>
+<ul>
+<li>也可在<a href="https://x.com/karpathy/status/1973435013875314729" target="_blank" rel="noopener nofollow">此处以推文形式</a>查看，方便您回复或评论。</li>
+<li>也可在<a href="https://chatgpt.com/share/68dd6833-67c4-8007-8f37-331eb5bd9ee0" target="_blank" rel="noopener nofollow">ChatGPT对话</a>中查看，方便您在拥有完整上下文（播客转录稿、bitter lesson文章以及这篇博文）的情况下，分叉对话并提出任何问题。</li>
+</ul>
+<h3>附录</h3>
+<ul>
+<li>我同意Sutton的观点，动物并不进行监督学习。我知道这是个微妙之处，会让很多人困惑。动物确实会观察示范，但严格来说，它们并没有像监督学习那样被直接监督具体动作。动物在训练模式中从未被远程操控过。我能想到的最接近的情况是，比如你帮孩子用勺子吃饭，通过直接握住他们的手来演示动作。即便如此，也不清楚它们的大脑是否真的在就此进行训练。这可能仍属于更准确地说是观察的范畴。但无论如何，这些情况总体上非常罕见，而对于大语言模型来说，这却是预训练和监督微调期间的默认学习模式。也许换种说法，大语言模型领域中与人类行为类似的情况是：给定这个数学问题以及上下文中的人类示例解法，解决该问题。如果正确则奖励为1。这不是监督微调，而是强化学习。</li>
+<li>Dwarkesh简要指出，大语言模型在测试时确实有其自身的持续学习能力，只是并非基于权重训练，但我认为Sutton对此没有充分回应。上下文学习是一种测试时适应形式，例如这就是少样本提示有效的原因。许多近期研究也对记忆机制（比如CLAUDE.md文件）非常感兴趣，将其作为测试时学习的一种方式，利用文本/上下文而非权重作为基础。</li>
+<li>Dwarkesh提到了非常长期稀疏奖励（例如成功创建一家初创公司）的例子及其可能如何运作。Sutton提出了时序差分学习和本质上是未来奖励折扣的解决方案，但我认为这并不特别有说服力。我之前对此写过一些内容，我认为情况并非如此，在我看来这不是强化学习。</li>
+<li>有很多关于"梯度下降不会让你很好地泛化"及相关讨论，我没有跟上这部分。</li>
+<li>有人指出鬼很吓人。不一定，看看<a href="https://en.wikipedia.org/wiki/Casper_the_Friendly_Ghost" target="_blank" rel="noopener nofollow">Casper</a>，我童年的最爱。</li>
+</ul></article>
+    <div class="dp-actions">
+      <a class="dp-btn pri" href="https://karpathy.bearblog.dev/animals-vs-ghosts/" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      
+      <button type="button" class="dp-btn sec" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
+      <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
+    </div>
+    <p class="dp-note">本页由句子互动动态管线自动生成，聚合内容版权归各来源所有；如来源方希望调整或移除收录，请通过官网联系我们。</p>
+  </div>
+</main>
+<div id="site-footer"></div>
+<script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "动物 vs 幽灵"};</script>
+<script src="../../assets/site.js"></script>
+<script>
+(function(){var b=document.getElementById('dpLang');if(!b)return;
+var en=document.getElementById('dpBodyOrig'),zh=document.getElementById('dpBodyZh');
+b.addEventListener('click',function(){var on=zh.hidden;zh.hidden=!on;en.hidden=on;
+b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';});})();
+</script>
+</body>
+</html>

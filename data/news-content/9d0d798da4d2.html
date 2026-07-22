@@ -1,0 +1,22 @@
+<p><a href="https://huggingface.co/CohereLabs/North-Mini-Code-1.0" target="_blank" rel="noopener nofollow">North Mini Code</a> is a new open-weight model by Cohere for agentic coding tasks.</p>
+
+<p>Based on the <a href="https://huggingface.co/blog/CohereLabs/introducing-north-mini-code" target="_blank" rel="noopener nofollow">release post</a>, it is a 30B-parameter Mixture-of-Experts model with 3B active parameters, available under Apache 2.0. Architecturally, the interesting part is the 30B-A3B tradeoff, with 128 experts, 8 active experts per token, and interleaved sliding-window and global attention.</p>
+
+<p>The important detail is the evaluation setup. The release emphasizes agentic coding, where the model has to work inside a tool loop instead of only returning a code answer for a prompt:</p>
+
+<ol>
+  <li>On <a href="https://www.tbench.ai/" target="_blank" rel="noopener nofollow">Terminal-Bench</a>, the model has to use a terminal, inspect the environment, run commands, read outputs, and continue from the observed state.</li>
+  <li>On <a href="https://www.swebench.com/" target="_blank" rel="noopener nofollow">SWE-Bench</a>, the model works on GitHub-style software issues. It has to understand the repository, find relevant files, make a patch, and pass tests.</li>
+  <li>
+<a href="https://scicode-bench.github.io/" target="_blank" rel="noopener nofollow">SciCode</a> and <a href="https://livecodebench.github.io/" target="_blank" rel="noopener nofollow">LiveCodeBench</a> are closer to traditional code-generation benchmarks. They still require reasoning, but the interaction loop is much shorter.</li>
+</ol>
+
+<p>That focus on agentic coding is probably why North Mini Code looks far ahead of Gemma 4 on the workflow-heavy rows in the table. The more traditional code-generation rows are still competitive, although not quite at Qwen3.6 level.</p>
+
+<p>As usual, I would treat these as release-time <a href="https://sebastianraschka.com/glossary/#benchmark" target="_blank" rel="noopener nofollow">benchmark</a> numbers as of June 12, 2026. For agentic coding, harness details, tool APIs, timeouts, and prompt templates can move results substantially.</p>
+
+<figure><p><a href="https://substack.com/@rasbt/note/c-275332436" target="_blank" rel="noopener nofollow"><img src="https://sebastianraschka.com/images/blog/2026/north-mini-code/hero.webp" alt="North Mini Code architecture and benchmark overview" referrerpolicy="no-referrer" /></a></p>
+<figcaption>Composite figure from the original <a href="https://substack.com/@rasbt/note/c-275332436" target="_blank" rel="noopener nofollow">Substack note</a>, summarizing the North Mini Code architecture and a release-time benchmark snapshot.</figcaption></figure>
+
+
+<p>Source: lightly edited website version of my <a href="https://substack.com/@rasbt/note/c-275332436" target="_blank" rel="noopener nofollow">Substack note</a>.</p>

@@ -1,0 +1,24 @@
+<p>我整理了一篇关于使用开源权重模型搭建本地编码代理的新文章。所有操作都100%在本地运行。</p>
+
+<p>我觉得整理这些内容应该很有用，因为过去很多人问过我的配置方案，而且我认为这也能激励大家开始尝试用本地模型处理正式工作。今年随着更强大的LLM和更完善的工具链出现，这方面的能力有了显著提升。</p>
+
+<p>所以，<a href="https://magazine.sebastianraschka.com/p/using-local-coding-agents" target="_blank" rel="noopener nofollow">这里有一份详细教程，介绍如何将本地LLM连接到本地编码工具链</a>。可能是Claude Code或Codex这类你可能已经熟悉的工具。</p>
+
+<p>我还加入了一些评估笔记，可以作为选择和比较不同LLM时的检查清单：</p>
+
+<ol>
+  <li>检查长上下文时的内存占用，判断模型是否适合实际工作</li>
+  <li>测量预填充和解码速度（token/秒），确保不会慢到影响使用体验</li>
+  <li>确认模型理论上具备足够的工具调用能力</li>
+  <li>对代理框架进行安全审计</li>
+  <li>评估模型在编码工具链中处理更复杂任务的能力</li>
+</ol>
+
+<p>当然，总有一些更专业的工具能进一步提升性能，但我希望这个入门套件能保持足够的灵活性。也就是说，当新模型发布时你可以轻松切换，甚至在当前模型无法满足特定任务时，也能在你熟悉的工具链中调用云端模型。</p>
+
+<p>完整文章请访问：<a href="https://magazine.sebastianraschka.com/p/using-local-coding-agents" target="_blank" rel="noopener nofollow">使用本地编码代理</a>。</p>
+
+<figure><p><a href="https://substack.com/@rasbt/note/c-284837359" target="_blank" rel="noopener nofollow"><img src="https://sebastianraschka.com/images/blog/2026/using-local-coding-agents/hero.webp" alt="Preview image for the Using Local Coding Agents article showing local models, runtimes, and coding harnesses" referrerpolicy="no-referrer" /></a></p>
+<figcaption>原始<a href="https://substack.com/@rasbt/note/c-284837359" target="_blank" rel="noopener nofollow">Substack笔记</a>的预览图，链接至<a href="https://magazine.sebastianraschka.com/p/using-local-coding-agents" target="_blank" rel="noopener nofollow">使用本地编码代理</a>文章。</figcaption></figure>
+
+<p>来源：我的<a href="https://substack.com/@rasbt/note/c-284837359" target="_blank" rel="noopener nofollow">Substack笔记</a>的网站轻度编辑版本。</p>

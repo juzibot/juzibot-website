@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>soluna 外挂 C 模块 - 句子·动态</title>
+<meta name="description" content="soluna 项目默认静态链接 Lua 库，这阻碍了以动态库形式加载 Lua 的 C 扩展，因为静态链接会导致多个 Lua 实例冲突，标准做法应使用动态链接。" />
+<meta name="robots" content="noindex,follow" />
+<link rel="canonical" href="https://blog.codingnow.com/2026/03/soluna_external_lib.html" />
+<link rel="icon" href="../../logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../../assets/site.css" />
+<style>
+  .dp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
+  .dp-wrap{max-width:760px;margin:0 auto}
+  .dp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
+  .dp-back:hover{color:var(--blue)}
+  .dp-meta{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:14px}
+  .dp-srcb{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:750;color:var(--sc,var(--blue))}
+  .s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
+  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-wecom{--sc:#2563EB}.s-voices{--sc:#9333EA}
+  .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
+  .dp-cat{display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ink-3);background:#F6F7FB;border:1px solid var(--line-2);border-radius:6px;padding:2px 8px}
+  .dp-date{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-3)}
+  .dp-title{font-size:clamp(24px,3.2vw,34px);font-weight:850;letter-spacing:-.03em;line-height:1.32;word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance;margin-bottom:10px}
+  .dp-orig{font-size:13px;color:var(--ink-3);overflow-wrap:anywhere;margin-bottom:8px}
+  .dp-by{font-size:12.5px;font-weight:600;color:var(--ink-3);margin-bottom:18px}
+  .dp-notice{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:1.7;color:var(--ink-2);background:#F6F7FB;border:1px solid var(--line-2);border-radius:10px;padding:10px 14px;margin-bottom:22px}
+  .dp-notice i{color:var(--blue);margin-top:4px;flex:0 0 auto}
+  .dp-notice a{color:var(--blue);font-weight:700;overflow-wrap:anywhere}
+  .dp-quip{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.66;font-weight:600;color:var(--blue-deep);background:var(--blue-50);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:18px}
+  .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
+  .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
+  .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
+  .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
+  .dp-body p{margin:0 0 1.05em}
+  .dp-body img{max-width:100%;height:auto;border-radius:10px;margin:.4em 0}
+  .dp-body pre{background:#0F172A;color:#E2E8F0;font-family:var(--mono);font-size:12.5px;line-height:1.7;padding:14px 16px;border-radius:10px;overflow-x:auto;margin:0 0 1.1em}
+  .dp-body code{font-family:var(--mono);font-size:.92em}
+  .dp-body :not(pre)>code{background:#F1F5F9;padding:1px 5px;border-radius:5px}
+  .dp-body blockquote{border-left:3px solid var(--line);padding:2px 0 2px 14px;color:var(--ink-3);margin:0 0 1.05em}
+  .dp-body a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+  .dp-body ul,.dp-body ol{padding-left:1.5em;margin:0 0 1.05em}
+  .dp-body table{display:block;overflow-x:auto;border-collapse:collapse;margin:0 0 1.1em}
+  .dp-body td,.dp-body th{border:1px solid var(--line);padding:6px 10px;font-size:.92em}
+  .dp-excerpt{font-size:15px;line-height:1.9;color:var(--ink-2);border-left:3px solid var(--line);padding:2px 0 2px 16px;margin-bottom:8px}
+  .dp-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;padding-top:20px;border-top:1px solid var(--line-2)}
+  .dp-btn{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:750;border-radius:999px;padding:10px 20px;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+  .dp-btn.pri{background:var(--blue);color:#fff}
+  .dp-btn.pri:hover{background:var(--blue-deep)}
+  .dp-btn.sec{background:#fff;color:var(--ink-2);border:1px solid var(--line)}
+  .dp-btn.sec:hover{color:var(--blue);border-color:var(--blue)}
+  .dp-note{font-size:11.5px;line-height:1.7;color:var(--ink-3);margin-top:18px}
+  .dp-langbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+  .dp-lang{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:750;color:var(--blue);
+    background:var(--blue-50);border:1px solid var(--blue-100);border-radius:999px;padding:7px 14px;
+    transition:background .2s var(--ease),border-color .2s var(--ease)}
+  .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
+  .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div id="site-nav"></div>
+<main class="dp-main">
+  <div class="dp-wrap">
+    <a class="dp-back" href="../../news.html"><i class="fa-solid fa-arrow-left"></i>返回动态</a>
+    <div class="dp-meta">
+      <span class="dp-srcb s-voices"><i class="fa-solid fa-feather"></i>大咖观点</span>
+      <span class="dp-cat">云风</span>
+      <time class="dp-date" datetime="2026-03-11">2026-03-11</time>
+    </div>
+    <h1 class="dp-title">soluna 外挂 C 模块</h1>
+    
+    <p class="dp-by">来源：云风 · 大咖观点</p>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（云风 · 大咖观点）所有 · <a href="https://blog.codingnow.com/2026/03/soluna_external_lib.html" target="_blank" rel="noopener">阅读原文</a></span></div>
+    
+    <div class="dp-brief"><b>简报</b>soluna 项目默认静态链接 Lua 库，这阻碍了以动态库形式加载 Lua 的 C 扩展，因为静态链接会导致多个 Lua 实例冲突，标准做法应使用动态链接。</div>
+    <article class="dp-body"><p><a href="https://github.com/cloudwu/soluna" target="_blank" rel="noopener nofollow">soluna</a> 集成了 lua 虚拟机，但默认构建方式是将 lua 库静态链接到唯一的执行文件中。这将导致无法以动态库的形式外挂 Lua 的 C 扩展。</p>
+
+<p>这是因为，如果独立编译 Lua 的 C 扩展库，通常需要链接 Lua 的 C API 。标准的方法是<a class="cpt" href="../c/dynamic-linking.html" data-def="在程序运行时加载共享库的技术，允许多个程序共享代码，减少内存占用">动态链接</a> lua 实现，如果静态链接 liblua.a ，会导致进程中有多份 lua 的实现。在 Lua 的历史版本中，这将导致运行期错误。</p>
+
+<p>这是因为，Lua 的实现中有一个静态的“空”对象，所有的 nil 都指向这个对象。如果进程空间中有多份 Lua 实现，就会出现多个空对象。运行时的数据结构中会引用这个空对象，而不同副本的实现将“空”和自身保留的“空”对象引用做比较时，就会出现错误的判断。</p>
+
+<p>在更早期的版本，出现这种链接出现的项目，bug 会隐藏得很深。所以后来 Lua 增加了 <code>luaL_checkversion()</code> ，倡议在外部库初始化时调用，除了检查版本号，还会检查当前执行的 lua 实现是否和虚拟机创建时用的实现是同一个副本。</p>
+
+                           
+                           
+                              <p>但不知道怎样正确链接 lua 的项目（保证进程中只有一份 Lua 实现）还是太多，从 Lua 5.4 以后，这个“空”对象就被移入了 <code>lua_State</code> 这个运行期结构。以牺牲一点运行时的代价，挽救那些似乎永远也搞不懂“加载和链接”的程序员。终于，错误的链接 Lua 也能不出错了。</p>
+
+<p>但我还是认为，在同一进程中置入多份 Lua 实现是不好的。</p>
+
+<p>注：这也是 Windows 动态库的一个独有问题。因为 Windows 的 DLL 不允许有未完成的符号，必须在编译链接时指定所有符号（Lua C API）的来源；如果是 Linux ，可以不链接 Lua C API 的库，在运行时加载动态库，加载器就能把进程内的对应符号装载起来。</p>
+
+<hr />
+
+<p>回到题头的问题：soluna 静态链接了 Lua ，并未导出 C  API ，要用 C 写额外的库怎么办？</p>
+
+<p>曾经在 Ant Engine 中，我采用了一个方法：提供一个假的代理动态库，提供所有 Lua C API 的符号。外部库可以动态链接它，而它将所有 Lua C API 调用转发到 engine 内部链接的 Lua 实现中。</p>
+
+<p>这样做的好处是，即使是预编译好的 Lua C 库，只要它正确的以动态链接形式链接了 Lua ，就能直接被 Ant Engine 加载。如果不需要外部库，这个代理库也可以不发布。</p>
+
+<p>今天，我想给 soluna 加上类似的特性，但尝试了新的方案：外部库在构建时额外实现一个简单的入口函数，它不依赖真的 Lua 实现，而是链接 soluna 项目中的 extlua/extlua.c 这个 Lua API 代理实现。再由 soluna 的定制加载器来加载这个外部库。</p>
+
+<p>比如，我有一个叫做 foobar 的外部库，原本的实现是这样的：</p>
+
+<pre>
+static int
+lhello(lua_State *L) {
+    lua_pushstring(L, &quot;Hello World&quot;);
+    return 1;
+}
+
+extern int
+luaopen_foobar(lua_State *L) {
+    luaL_Reg l[] = {
+        { &quot;hello&quot;, lhello },
+        { NULL, NULL },
+    };
+    luaL_newlib(L, l);
+    return 1;
+}
+</pre>
+
+<p>当我们编译成动态库时，导出的 <code>luaopen_foobar()</code> 是库的入口。lua 的 require 可以正确的导入它。但这个实现依赖若干 lua C APIs ，例如 <code>lua_pushstring()</code> 等。</p>
+
+<p>如何在 soluna 里正确加载它呢？我们需要在调用 <code>luaopen_foobar()</code> 这个入口函数前，将进程中的 Lua C APIs 注入这个动态库。</p>
+
+<p>在这个方案中，只需要链接 soluna 项目中的 extlua/extlua.c 单个文件，然后导出一个额外的库入口函数：</p>
+
+<pre>
+extern int
+extlua_init(lua_State *L) {
+    luaapi_init(L);
+    luaL_Reg l[] = {
+        { &quot;ext.foobar&quot;, luaopen_foobar },
+        { NULL, NULL },
+    };
+    luaL_newlib(L, l);
+    return 1;
+}
+</pre>
+
+<p>这个函数的第一行需要调用 <code>luaapi_init(L)</code> ，它的实现在 extlua.c 中。然后用 <code>luaL_newlib()</code> 注入原有的模块入口函数即可。</p>
+
+<p><code>luaapi_init(L)</code> 并不依赖任何 Lua 的内部实现，只依赖 Lua 的一个官方宏 <code>lua_getextraspace()</code> 完成了注入 Lua C APIs 的魔法。</p>
+
+<p>这是个有趣的技巧：</p>
+
+<p><code>lua_getextraspace(L)</code> 的官方定义是这样的：</p>
+
+<pre>
+#define lua_getextraspace(L)    ((void *)((char *)(L) - LUA_EXTRASPACE))
+</pre>
+
+<p>每个 <code>Lua_State</code> 结构前都保留有一个指针的空间，可以用来传递数据。soluna.external.load 会构建一个空的 Lua 虚拟机，并把所有 Lua C APIs 的引用放在它的 extraspace 。因为上面的 <code>extlua_init()</code> 是一个标准的 <code>lua_CFunction</code> ，所以可以用标准函数 package.loadlib 读出。传入这个带 C APIs 的空 Lua 虚拟机，<code>luaapi_init()</code> 就能正确的导入所有 API 了。随后的 <code>luaL_newlib()</code> 会把所有真正的入口函数放在这个空虚拟机中。当然，只是一些字符串（入口名）和 C 函数指针。</p>
+
+<p>接下来，soluna.external.load 再从这个虚拟机中把整个入口函数表复制到当前虚拟机，并销毁掉这个临时虚拟机，就完成了整个外部模块的动态加载。</p>
+
+<hr />
+
+<p><code>soluna.extlib(name)</code> 的实现是这样的：</p>
+
+<pre>
+function soluna.extlib(name)
+    local extlua = require &quot;soluna.extlua&quot;
+    local filename = assert(package.searchpath(name, package.cpath))
+    settings = settings and soluna.settings()
+    local entry = assert(package.loadlib(filename, settings.extlua_entry))
+    return extlua.load(entry)
+end
+</pre>
+
+<p>要使用上面例子中的放在 sample.dll 中的库 ext.foobar 只需要这样：</p>
+
+<pre>
+local libs = soluna.extlib &quot;sample&quot;
+local foobar = require &quot;ext.foobar&quot;
+assert(libs[&quot;ext.foobar&quot;] == foobar)
+</pre>
+
+<hr />
+
+<p>即使要静态链接 sample 模块（iOS 不支持动态库，可能必须静态链接），只需要采用以下编译方案即可正确工作：</p>
+
+<ol>
+<li>静态链接 sample 模块</li>
+<li>不要链接 extlua/extlua.c</li>
+<li>将 <code>luaapi_init()</code> 定义为一个空函数</li>
+<li>把 <code>extlua_init()</code> 这个入口函数导入</li>
+<li>用 soluna.extlua.load(入口函数) 加载</li>
+</ol></article>
+    <div class="dp-actions">
+      <a class="dp-btn pri" href="https://blog.codingnow.com/2026/03/soluna_external_lib.html" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      
+      <button type="button" class="dp-btn sec" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
+      <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
+    </div>
+    <p class="dp-note">本页由句子互动动态管线自动生成，聚合内容版权归各来源所有；如来源方希望调整或移除收录，请通过官网联系我们。</p>
+  </div>
+</main>
+<div id="site-footer"></div>
+<script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "soluna 外挂 C 模块"};</script>
+<script src="../../assets/site.js"></script>
+</body>
+</html>

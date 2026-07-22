@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>大模型没有定价权，只有定价窗口 - 句子·动态</title>
+<meta name="description" content="观点认为大模型本身没有定价权，关键在于模型之外的能力，这些附加能力在定价中更为重要。" />
+<meta name="robots" content="noindex,follow" />
+<link rel="canonical" href="https://www.tmtpost.com/8074547.html" />
+<link rel="icon" href="../../logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../../assets/site.css" />
+<style>
+  .dp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
+  .dp-wrap{max-width:760px;margin:0 auto}
+  .dp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
+  .dp-back:hover{color:var(--blue)}
+  .dp-meta{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:14px}
+  .dp-srcb{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:750;color:var(--sc,var(--blue))}
+  .s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
+  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-wecom{--sc:#2563EB}.s-voices{--sc:#9333EA}
+  .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
+  .dp-cat{display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ink-3);background:#F6F7FB;border:1px solid var(--line-2);border-radius:6px;padding:2px 8px}
+  .dp-date{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-3)}
+  .dp-title{font-size:clamp(24px,3.2vw,34px);font-weight:850;letter-spacing:-.03em;line-height:1.32;word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance;margin-bottom:10px}
+  .dp-orig{font-size:13px;color:var(--ink-3);overflow-wrap:anywhere;margin-bottom:8px}
+  .dp-by{font-size:12.5px;font-weight:600;color:var(--ink-3);margin-bottom:18px}
+  .dp-notice{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:1.7;color:var(--ink-2);background:#F6F7FB;border:1px solid var(--line-2);border-radius:10px;padding:10px 14px;margin-bottom:22px}
+  .dp-notice i{color:var(--blue);margin-top:4px;flex:0 0 auto}
+  .dp-notice a{color:var(--blue);font-weight:700;overflow-wrap:anywhere}
+  .dp-quip{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.66;font-weight:600;color:var(--blue-deep);background:var(--blue-50);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:18px}
+  .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
+  .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
+  .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
+  .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
+  .dp-body p{margin:0 0 1.05em}
+  .dp-body img{max-width:100%;height:auto;border-radius:10px;margin:.4em 0}
+  .dp-body pre{background:#0F172A;color:#E2E8F0;font-family:var(--mono);font-size:12.5px;line-height:1.7;padding:14px 16px;border-radius:10px;overflow-x:auto;margin:0 0 1.1em}
+  .dp-body code{font-family:var(--mono);font-size:.92em}
+  .dp-body :not(pre)>code{background:#F1F5F9;padding:1px 5px;border-radius:5px}
+  .dp-body blockquote{border-left:3px solid var(--line);padding:2px 0 2px 14px;color:var(--ink-3);margin:0 0 1.05em}
+  .dp-body a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+  .dp-body ul,.dp-body ol{padding-left:1.5em;margin:0 0 1.05em}
+  .dp-body table{display:block;overflow-x:auto;border-collapse:collapse;margin:0 0 1.1em}
+  .dp-body td,.dp-body th{border:1px solid var(--line);padding:6px 10px;font-size:.92em}
+  .dp-excerpt{font-size:15px;line-height:1.9;color:var(--ink-2);border-left:3px solid var(--line);padding:2px 0 2px 16px;margin-bottom:8px}
+  .dp-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;padding-top:20px;border-top:1px solid var(--line-2)}
+  .dp-btn{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:750;border-radius:999px;padding:10px 20px;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+  .dp-btn.pri{background:var(--blue);color:#fff}
+  .dp-btn.pri:hover{background:var(--blue-deep)}
+  .dp-btn.sec{background:#fff;color:var(--ink-2);border:1px solid var(--line)}
+  .dp-btn.sec:hover{color:var(--blue);border-color:var(--blue)}
+  .dp-note{font-size:11.5px;line-height:1.7;color:var(--ink-3);margin-top:18px}
+  .dp-langbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+  .dp-lang{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:750;color:var(--blue);
+    background:var(--blue-50);border:1px solid var(--blue-100);border-radius:999px;padding:7px 14px;
+    transition:background .2s var(--ease),border-color .2s var(--ease)}
+  .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
+  .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div id="site-nav"></div>
+<main class="dp-main">
+  <div class="dp-wrap">
+    <a class="dp-back" href="../../news.html"><i class="fa-solid fa-arrow-left"></i>返回动态</a>
+    <div class="dp-meta">
+      <span class="dp-srcb s-industry"><i class="fa-solid fa-rss"></i>行业动态</span>
+      <span class="dp-cat">钛媒体</span>
+      <time class="dp-date" datetime="2026-07-22">2026-07-22</time>
+    </div>
+    <h1 class="dp-title">大模型没有定价权，只有定价窗口</h1>
+    
+    <p class="dp-by">来源：钛媒体 · 行业动态</p>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（钛媒体 · 行业动态）所有 · <a href="https://www.tmtpost.com/8074547.html" target="_blank" rel="noopener">阅读原文</a></span></div>
+    <p class="dp-quip"><i class="fa-solid fa-quote-left"></i>模型趋于同质化，围绕场景的工程化与运营能力成为关键</p>
+    <div class="dp-brief"><b>简报</b>观点认为大模型本身没有定价权，关键在于模型之外的能力，这些附加能力在定价中更为重要。</div>
+    <article class="dp-body"><blockquote><p>文 | 浪潮不癫</p></blockquote><p>上周Kimi发布新模型K3，虽然每个大模型出来都是一片炸裂声，听都听麻了，但这次口碑确实挺炸的。</p><p>一个是把参数做到了2.8万亿，应该是国产模型目前的最大参数，另一个是在Code Arena编程榜拿了1679分，直接超越了Claude fable5，也是<a class="cpt" href="../c/open-source-model.html" data-def="指模型权重和代码公开，允许任何人免费使用、修改和分发的AI模型">开源模型</a>第一次在这个榜单上登顶榜首。</p><p>媒体开始喊出“Kimi时刻”，对标去年的“DeepSeek时刻”，顺带也让智谱的股价暴跌了，两个交易日，3000亿港元市值灰飞烟灭，甚至还有消息说，anthropic的估值因此而受到冲击，在年底前达到1.5万亿估值的概率，从原来的78%下降到67%。</p><p>争议也很快来了。Kimi K3的API混合定价是每百万token 2.3美元，创下中国模型定价新高。有人觉得合理，你做到了全球第一就该值这个价，也有人觉得离谱，你一个开源模型，权重都公开了，凭什么卖得比闭源还贵？</p><p>今天看报道，Kimi企业业务负责人黄震昕出来回应了：“开源模型、中国大模型不该被贴上低价标签，我们做出了SOTA级模型，也能匹配合理商业定价。”</p><p>听着挺提气，但浪哥也想反问一句：SOTA模型，真的有定价权吗？</p><p>这得先什么叫定价权说起。</p><p>关于定价权，巴菲特有句名言：<strong>“评估一家企业，最重要的就是定价权。如果你有能力提价而不流失客户，这就是好生意。如果你连涨10%都要祈祷，那你拥有的就是烂生意。”</strong></p><p>茅台有定价权。茅台是好酒，很多人喜欢喝，但茅台的定价权不仅是因为好喝，更重要的是它的社交属性，在社交中表达尊重的社交属性，是茅台最不可取代的护城河，而需要使用茅台这个功能的人群，又是支付能力最强的一群人。</p><p>苹果有定价权。苹果用户的整个数字生活都在iOS生态里，购买的应用在App Store里，照片在iCloud里，工作流挂在macOS上。换安卓的迁移成本巨大，这个浪哥真试过且不久就换回来，这就是锁定效应。</p><p>英伟达有定价权。全球训练大模型的算力，八九成跑在它的卡上，你想买别家的芯片，尤其是预训练的芯片，要么性能差一截，要么软件生态跟不上。</p><p>这么一列，你应该能看出来，<strong>这三家的定价权都跟“产品这一代做得最好”没有必然关系，它们收高价的底气来自同一个东西，客户换不掉它。</strong></p><p>再看大模型。</p><p>客户换掉你有多容易？改一个API endpoint，把model参数从kimi-k3换成claude-fable-5或者GLM-5.2，部署，完事。可能十分钟。</p><p>作为老产品经理，这是浪哥见过转换成本最低的产品形态之一。</p><p>其实看看这两年的行业变化就知道，SOTA这个头衔，保鲜期基本不超过半年。谷歌御三家，国内的deepseek、智谱和kimi，都是各领风骚三五周，最多每几个月就会换一次王座。去年下半年还是SOTA的Gemini，现在都被称为美国豆包了。</p><p><strong>一个每几个月就换主人的位子，有什么“权”可言？</strong></p><p>权，意味着持续、稳定、别人够不着。SOTA的榜首，更像一个限时开放的收费站。你这版模型领先了，市场暂时没有同级竞品，你能收一段时间的溢价。三个月、五个月、最多七个月，对手追平，开源兜底，价格又会被拉回去。</p><p>所以这谈不上“定价权”，最多只能叫“定价窗口”。</p><p>窗口和权的区别在于时间维度。权是地契，只要护城河在，你就能一直收租。窗口是限时摊位，趁着这条街暂时没别人卖，你加了价，但明天隔壁支起三个摊，你就得降回来。</p><p>OpenAI就是最好的例子。GPT-4时代它是绝对SOTA，API定价全行业最高。然后呢？一路降。GPT-4o比GPT-4便宜了一大截，后续版本继续往下砍。为什么？因为Claude追上来了，Gemini赶上来了，开源模型更是把地板价砸穿了。能力领先没能让OpenAI守住高价，连它都守不住，凭什么别人能？</p><p><strong>那大模型的定价权最终会在哪里产生呢？大概率不在模型本身，而是模型之外。</strong></p><p>模型层太容易被追平了，竞争格局太充分了，开源免费这个选项永远在那里兜底，AI产业真正能产生定价权的地方，可能在两头。</p><p><strong>一头是上层的应用和入口。</strong>谁能把用户的工作流、数据、使用习惯沉淀在自己的平台上，谁就有了护城河。你天天在某个Agent平台上编排工作流程，积累了几百条自定义指令和几十个项目上下文，让你换个平台，切换成本会越来越高，这就是锁定效应，也是各家大厂现在激烈争夺办公智能体市场的主要原因，毕竟大厂在这块有天然优势。</p><p><strong>另一头是底层稀缺资源。</strong>算力、先进制程芯片的重要性很好理解，英伟达的定价权说明了一切。</p><p>大模型卡在中间，上面被应用层截获了用户粘性和数据，下面被算力层控制了成本结构，它像三明治里的那片肉，很重要，但单独拎出来卖不出高价，上下两片面包、配套的奶酪番茄和酱汁，以及这些放在一起后的整体口感和综合体验，才是用户看重的东西。</p><p>不过，虽然没有定价权，但定价窗口同样很重要。</p><p>最关键的是你在窗口期做了什么。聪明的做法是趁着所有人涌进来用最强模型的时候，把他们的数据、工作流、使用习惯焊死在这里。等对手能力追平时，用户已经觉得搬家太麻烦了，懒得再动了。只有养成这样的用户习惯和心智，才能实现从窗口到权的跳跃。</p><p>反过来，如果只把一时的能力领先当成涨价的理由，窗口一关可能什么都不剩，下次又得拼命登顶，再赚一个窗口钱。</p><p>如此循环往复，就像永远在跑步机上狂奔，你跑到力竭，也甩不掉任何对手。</p></article>
+    <div class="dp-actions">
+      <a class="dp-btn pri" href="https://www.tmtpost.com/8074547.html" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      
+      <button type="button" class="dp-btn sec" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
+      <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
+    </div>
+    <p class="dp-note">本页由句子互动动态管线自动生成，聚合内容版权归各来源所有；如来源方希望调整或移除收录，请通过官网联系我们。</p>
+  </div>
+</main>
+<div id="site-footer"></div>
+<script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "大模型没有定价权，只有定价窗口"};</script>
+<script src="../../assets/site.js"></script>
+</body>
+</html>
