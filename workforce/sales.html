@@ -96,7 +96,9 @@
   .fde-card h4{font-size:17.5px}
 
   /* —— sec-top 副文：恰好两行、两端对齐、末行也撑满（无孤尾）；窄屏回落左对齐 —— */
-  .sec-top .sub{margin-left:auto;text-align:justify;text-align-last:justify;text-justify:inter-ideograph;max-width:46ch;font-size:14px;color:var(--ink-3)}
+  .sec-top .sub{margin-left:auto;text-align:justify;text-justify:inter-ideograph;text-wrap:balance;max-width:42ch;font-size:14px;color:var(--ink-3)}
+  /* 角色画像副文：密实两端对齐（宽度贴合内容，末行也齐平，不稀疏无孤尾） */
+  #role .sec-top .sub{max-width:42ch;text-align-last:justify}
   @media(max-width:760px){.sec-top .sub{margin-left:0;text-align:left;text-align-last:auto;max-width:none}}
   /* 角色画像：意向能力清单 */
   .role-split{display:block}
