@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>小红书大模型IMO满分夺金，第三题解法让冠军选手直呼优雅 - 句子·动态</title>
+<meta name="description" content="小红书的大模型在国际数学奥林匹克竞赛中获得满分金牌，其第三题解法被冠军选手称赞为优雅，这是中国大模型首次获得IMO官方金牌水平认证。" />
+<meta name="robots" content="noindex,follow" />
+<link rel="canonical" href="https://www.qbitai.com/2026/07/456061.html" />
+<link rel="icon" href="../../logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../../assets/site.css" />
+<style>
+  .dp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
+  .dp-wrap{max-width:760px;margin:0 auto}
+  .dp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
+  .dp-back:hover{color:var(--blue)}
+  .dp-meta{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:14px}
+  .dp-srcb{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:750;color:var(--sc,var(--blue))}
+  .s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
+  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-wecom{--sc:#2563EB}.s-voices{--sc:#9333EA}
+  .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
+  .dp-cat{display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ink-3);background:#F6F7FB;border:1px solid var(--line-2);border-radius:6px;padding:2px 8px}
+  .dp-date{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-3)}
+  .dp-title{font-size:clamp(24px,3.2vw,34px);font-weight:850;letter-spacing:-.03em;line-height:1.32;word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance;margin-bottom:10px}
+  .dp-orig{font-size:13px;color:var(--ink-3);overflow-wrap:anywhere;margin-bottom:8px}
+  .dp-by{font-size:12.5px;font-weight:600;color:var(--ink-3);margin-bottom:18px}
+  .dp-notice{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:1.7;color:var(--ink-2);background:#F6F7FB;border:1px solid var(--line-2);border-radius:10px;padding:10px 14px;margin-bottom:22px}
+  .dp-notice i{color:var(--blue);margin-top:4px;flex:0 0 auto}
+  .dp-notice a{color:var(--blue);font-weight:700;overflow-wrap:anywhere}
+  .dp-quip{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.66;font-weight:600;color:var(--blue-deep);background:var(--blue-50);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:18px}
+  .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
+  .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
+  .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
+  .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
+  .dp-body p{margin:0 0 1.05em}
+  .dp-body img{max-width:100%;height:auto;border-radius:10px;margin:.4em 0}
+  .dp-body pre{background:#0F172A;color:#E2E8F0;font-family:var(--mono);font-size:12.5px;line-height:1.7;padding:14px 16px;border-radius:10px;overflow-x:auto;margin:0 0 1.1em}
+  .dp-body code{font-family:var(--mono);font-size:.92em}
+  .dp-body :not(pre)>code{background:#F1F5F9;padding:1px 5px;border-radius:5px}
+  .dp-body blockquote{border-left:3px solid var(--line);padding:2px 0 2px 14px;color:var(--ink-3);margin:0 0 1.05em}
+  .dp-body a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+  .dp-body ul,.dp-body ol{padding-left:1.5em;margin:0 0 1.05em}
+  .dp-body table{display:block;overflow-x:auto;border-collapse:collapse;margin:0 0 1.1em}
+  .dp-body td,.dp-body th{border:1px solid var(--line);padding:6px 10px;font-size:.92em}
+  .dp-excerpt{font-size:15px;line-height:1.9;color:var(--ink-2);border-left:3px solid var(--line);padding:2px 0 2px 16px;margin-bottom:8px}
+  .dp-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;padding-top:20px;border-top:1px solid var(--line-2)}
+  .dp-btn{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:750;border-radius:999px;padding:10px 20px;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+  .dp-btn.pri{background:var(--blue);color:#fff}
+  .dp-btn.pri:hover{background:var(--blue-deep)}
+  .dp-btn.sec{background:#fff;color:var(--ink-2);border:1px solid var(--line)}
+  .dp-btn.sec:hover{color:var(--blue);border-color:var(--blue)}
+  .dp-note{font-size:11.5px;line-height:1.7;color:var(--ink-3);margin-top:18px}
+  .dp-langbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+  .dp-lang{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:750;color:var(--blue);
+    background:var(--blue-50);border:1px solid var(--blue-100);border-radius:999px;padding:7px 14px;
+    transition:background .2s var(--ease),border-color .2s var(--ease)}
+  .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
+  .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div id="site-nav"></div>
+<main class="dp-main">
+  <div class="dp-wrap">
+    <a class="dp-back" href="../../news.html"><i class="fa-solid fa-arrow-left"></i>返回动态</a>
+    <div class="dp-meta">
+      <span class="dp-srcb s-industry"><i class="fa-solid fa-rss"></i>行业动态</span>
+      <span class="dp-cat">量子位</span>
+      <time class="dp-date" datetime="2026-07-22">2026-07-22</time>
+    </div>
+    <h1 class="dp-title">小红书大模型IMO满分夺金，第三题解法让冠军选手直呼优雅</h1>
+    
+    <p class="dp-by">来源：量子位 · 行业动态</p>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（量子位 · 行业动态）所有 · <a href="https://www.qbitai.com/2026/07/456061.html" target="_blank" rel="noopener">阅读原文</a></span></div>
+    <p class="dp-quip"><i class="fa-solid fa-quote-left"></i>模型能力认证重要，企业客户真正关心的是稳定性和成本</p>
+    <div class="dp-brief"><b>简报</b>小红书的大模型在国际数学奥林匹克竞赛中获得满分金牌，其第三题解法被冠军选手称赞为优雅，这是中国大模型首次获得IMO官方金牌水平认证。</div>
+    <article class="dp-body"><h1>小红书大模型IMO满分夺金，第三题解法让冠军选手直呼优雅</h1>
+    			   
+             <img loading="lazy" onerror="this.style.display='none'" src="http://www.qbitai.com/wp-content/themes/liangziwei/imagesnew/head.jpg" referrerpolicy="no-referrer" /><em><a href="https://www.qbitai.com/author/luyu" target="_blank" rel="noopener nofollow">鹭羽</a></em>
+                          2026-07-22
+             08:34:33
+          
+          来源：<a href="https://www.qbitai.com" target="_blank" rel="noopener nofollow">量子位</a>            
+                          
+            <p>中国大模型首次获得IMO官方金牌水平认证</p>
+                			<blockquote>
+<p>鹭羽 发自 凹非寺</p>
+<p>量子位 | 公众号 QbitAI</p>
+</blockquote>
+<p>哈？小红书你真是闷声干大事啊！</p>
+<p>刚刚，<strong>IMO 2026</strong>成绩新鲜出炉，大模型交卷今年卷到了新高度。</p>
+<p>结果第一个拿到官方评卷满分的居然是<strong>小红书</strong>？？？</p>
+
+<p><img loading="lazy" onerror="this.style.display='none'" src="https://i.qbitai.com/wp-content/uploads/2026/07/1867981b931b1079d00db5614f33962d.jpeg" referrerpolicy="no-referrer" /></p>
+
+<p>经IMO官方评定，<strong>小红书大模型dots-note-3.0</strong>，六道题全部答对，以满分成绩斩获金牌。</p>
+<p>含金量有多高呢？</p>
+<p>这么说吧，这是中国大模型首次获得IMO官方金牌水平认证，也是继谷歌Gemini模型之后，全球第二个达到该成绩的大模型。</p>
+<p>而且划重点！是<strong>满分</strong>！谷歌当年也只答对了5/6……</p>
+
+<p><img loading="lazy" onerror="this.style.display='none'" src="https://i.qbitai.com/wp-content/uploads/2026/07/5df4a185a6a67074e5b5591b071eda57.webp" referrerpolicy="no-referrer" /></p>
+
+<p>震惊了，这还是我印象中的小红书吗？</p>
+<p>首次登上世界级竞赛，就来了场开门红～</p>
+<p>再往下深扒，小红书大模型dots-note-3.0的解题方式也让人眼前一亮又一亮：</p>
+<p>它<strong>仅用自然语言</strong>就完成了从读题、解析到写证明的全过程，最终答案不仅全部正确，在部分题目上还创新地提出了<strong>非常规解法</strong>。</p>
+
+<p><img loading="lazy" onerror="this.style.display='none'" src="https://i.qbitai.com/wp-content/uploads/2026/07/de0338a91d32e6a9c4eebc11a640ebd3.png" referrerpolicy="no-referrer" /></p>
+<p>图片由AI生成</p>
+
+<p>双CMO金牌得主<strong>刘涵祚</strong>看完后这样评价：</p>
+<blockquote>
+<p>模型最终给出了一条正确且漂亮的证明思路。</p>
+<p>这种解法结构紧凑、逻辑自然，即使放在IMO解答中，也属于较为简洁优雅的一类。</p>
+</blockquote>
+<p>CMO金牌得主<strong>汪千桐</strong>也给出了相似的结论：</p>
+<blockquote>
+<p>从数学审美的角度看，小红书大模型dots-note-3.0的解答非常漂亮也很优雅。</p>
+<p>常规解法已经很巧妙，但dots直接攻克了题目最难、也最本质的部分。</p>
+</blockquote>
+<p>在他看来，dots解题<strong>简洁明了而且直击本质</strong>。</p>
+<p>看完以后，会觉得每一步都顺理成章，但真正拿到题目时，人类选手很难想到能从这个角度切入。</p>
+<p>换句话说，IMO满分金牌或许还远不是小红书大模型dots-note-3.0能力的上限。</p>
+<h2>为什么当前的大模型需要IMO</h2>
+<p>先来个科普，讲讲IMO究竟是什么，又为何各家都在争先送自家大模型上考场。</p>
+
+<p><img loading="lazy" onerror="this.style.display='none'" src="https://i.qbitai.com/wp-content/uploads/2026/07/c7995e5cbde009798ef3a9d23d83314e.webp" referrerpolicy="no-referrer" /></p>
+
+<p>IMO又叫<strong>国际数学奥林匹克竞赛</strong>，每年全世界最顶尖的中学生云集于此。</p>
+<p>陶哲轩等几乎半数当代菲尔兹奖得主都是从IMO出来的，谷歌联创Sergey Brin也拿过IMO金牌。</p>
+<p>比赛一般分两天进行，每天4.5小时需要完成3道题，总计6道题，覆盖代数、组合、几何和数论四个方向。每题7分，满分42分。</p>
+<p>但光有答案还不算数，参赛者要想拿分，必须写出逻辑完整、能接受逐步审查的证明过程。</p>
+<p>这对大模型来说，难度极高，却也是最直观的能力展示途径。</p>
+<p>以<strong>Gemini</strong>为例，2024年谷歌首次挑战IMO，最终只拿到28分的银牌水平，彼时系统也还需要先将自然语言题目翻译成Lean等形式化语言，部分题目耗时甚至长达数天。</p>
+<p>第二年卷土重来，Gemini Deep Think直接以自然语言端到端完成证明，用4.5小时就解决了5道题，获得金牌。</p>
+
+<p><img loading="lazy" onerror="this.style.display='none'" src="https://i.qbitai.com/wp-content/uploads/2026/07/20dc42958d0f6ac9eafaa6ed3141bece.webp" referrerpolicy="no-referrer" /></p>
+
+<p>这背后是一次跨代的能力跃迁。</p>
+<p>往深了说，数学就是大模型智力与推理能力的试金石，大模型在IMO这类数学竞赛中走得越远，越能说明其底层优势。</p>
+<p>再举个最近的例子，就在本周，<strong>Fable 5</strong>参与构造了一个雅可比猜想反例。</p>
+<p>该猜想自1939年提出以来悬而未决长达87年，连张益唐等顶尖数学家都曾在此折戟。</p>
+<p>这次找到的反例虽尚未经过正式同行评审，但也标志着大模型现阶段的能力足以参与真正的数学发现。</p>
+<p>而数学竞赛，正是模型进入科研深水区之前，那道最硬核的能力门槛。</p>
+<p>除此之外，IMO还有一个相比Benchmark得天独厚的优势——<strong>未知</strong>。</p>
+<p>每届比赛的赛题都是由专家命制，在正式比赛前严格保密。</p>
+<p>也就是说，模型不可能提前拿到原题，实时参与当届比赛，也能够确保模型无法提前进行针对性训练。</p>
+<p>一位头部模型研究员对此给出了这样的判断：</p>
+<blockquote>
+<p>在今天的模型训练里，你基本可以认为，互联网上一旦出现了某些数据，很快就会被模型拿去训练，模型也就知道了。</p>
+<p>所以如果要测试一个模型到底聪不聪明，<strong>只能测一些没有公开过的东西</strong>。</p>
+</blockquote>
+<p>这恰是同步参与官方IMO测评之于大模型最难复制的价值。</p>
+
+<p><img loading="lazy" onerror="this.style.display='none'" src="https://i.qbitai.com/wp-content/uploads/2026/07/4d3ee8c1a3275f743b537e95fce9d80f.jpeg" referrerpolicy="no-referrer" /></p>
+
+<p>它考验的不是模型记住了多少题目和数学知识，而是在一个真正未知的问题第一次出现时，模型能否独立理解、探索，并最终完成严密推理。</p>
+<p>而且只有新题还不够，官方评测采用的是严格的当届赛事流程。</p>
+<p>每个比赛日的学生考试结束后，模型团队才会收到当天题目，并须在规定期限内提交PDF答卷。</p>
+<p>模型将直接阅读英文题目并生成证明，工作人员只负责保障系统运行。</p>
+<p>最终答卷则由来自不同国家的IMO评审员，按照正式标准进行审阅。</p>
+<p><strong>本届新题、规定时间、完整证明、第三方专业评审</strong>，当这些条件同时成立，才让IMO成为现下很难靠背题和包装绕过去的能力大考。</p>
+
+<p><img loading="lazy" onerror="this.style.display='none'" src="https://i.qbitai.com/wp-content/uploads/2026/07/f1d63723cdf76201261a54cbc88f5318.webp" referrerpolicy="no-referrer" /></p>
+
+<h2>一分没丢，比拿到金牌更难</h2>
+<p>正因如此，这次小红书大模型dots-note-3.0能拿到金牌，还是满分，就显得格外醒目。</p>
+<p>六道题全部做对，首先证明的是<strong>Agentic推理系统稳定性</strong>。</p>
+<p>模型需要读懂自然语言条件，判断哪些信息真正关键，提出可能成立的中间结论，再将它们组织成一套完整证明。</p>
+<p>整个过程中，任何一个条件被误读、任何一次推导跳步，都会留下可以被评审直接指出的漏洞。</p>
+<p>小红书大模型dots-note-3.0能够在六类不同问题中连续拿满，意味着它的表现并非依赖某一道题上的偶然灵感迸发。</p>
+<p>其次，小红书大模型dots-note-3.0直接一步到位，使用自然语言端到端处理，也意味着模型能够像人类选手一样直接读懂题目、自主寻找路径，具备从问题理解到答案表达的完整闭环。</p>
+<p>它代表模型拥有<strong>可迁移的通用推理能力</strong>。</p>
+<p>具体来说，在本次答题过程中，小红书大模型dots-note-3.0用<strong>智能体</strong>的方式，让模型使用自然语言结合python代码执行来推理解题。</p>
+<p>在推理过程中，也会借助递归自我批判能力，审视自己的论证，从而解决更多现实中的复杂任务。</p>
+
+<p><img loading="lazy" onerror="this.style.display='none'" src="https://i.qbitai.com/wp-content/uploads/2026/07/9414f8e464e9729597fe6a1551f03861.jpeg" referrerpolicy="no-referrer" /></p>
+<p>图片由AI生成</p>
+
+<p>不过，让人真正感到惊喜的，还是第三题传递出的<strong>模型创新思维</strong>。</p>
+<p>这是一道组合博弈问题，网上关于本届IMO赛题讨论的常见解法，是先将原问题转化成图论中的连通性问题，再借助图论语言建立证明。</p>
+<p>这条路线本身已经非常巧妙，但小红书大模型dots-note-3.0没有沿用它，而是转用<strong>归纳</strong>。</p>
+<p>小红书大模型dots-note-3.0的解法，<strong>抓住了问题最本质的结构</strong>，设计出了恰到好处的归纳对象与归纳命题。</p>
+<p>这也解释了，为什么CMO得主汪千桐会用漂亮和优雅来形容这套答案。</p>
+<p>小红书大模型dots-note-3.0对问题结构的剖析之深，会让人自然而然产生一种恍然大悟的感觉。</p>
+
+<p><img loading="lazy" onerror="this.style.display='none'" src="https://i.qbitai.com/wp-content/uploads/2026/07/3eb82d608b4cd0ae29af8039771331d7.jpeg" referrerpolicy="no-referrer" /></p>
+
+<p>回到结果本身上，模型能够在本届拿下满分，其实相当不易，我们可以从以下几个层面来看。</p>
+<p><strong>第一层，本届整套赛题的得分难度明显高于去年。</strong></p>
+<p>2026年IMO金牌线为29分，去年则高达35分，短短一年，金牌线下降了6分，几乎是一整道题的分数。</p>
+<p>所以这一届的金牌，较之去年的Gemini，分量更重。</p>
+<p><strong>第二层，满分与金牌之间亦有差距，今年整整相差13分。</strong></p>
+<p>29分意味着，选手完整解决4道题，再从剩余两道题中拿到1分，就已经能够进入金牌区间。而小红书大模型dots-note-3.0全部all in，直接抵达了这套试卷能够衡量的最高点。</p>
+<p>毕竟老话说得好，满分只是卷面的上限，不是它的上限。</p>
+<p>金牌的确代表进入了全球最顶尖的一批，但满分则代表在这批顶尖选手中，再完成一次极小概率筛选。</p>
+<h2>小红书大模型dots-note-3.0即将开源</h2>
+<p>选择<strong>IMO</strong>作为起始站，也是小红书非常聪明的一步。</p>
+<p>如今行业内，想要把大模型底层技术能力推广出去，一般是两个方向，一个是<strong>Coding</strong>，另一个就是<strong>数学</strong>。</p>
+<p>原因也很简单，这两种任务的结果，都很难靠语言包装蒙混过关，相比知识问答和主观评测，它们更直接地考查模型能否真正理解复杂问题、拆解任务并持续推进。</p>
+<p>IMO更是其中的佼佼者，知名度高、业内认可度也够，直接给到的是模型面对高难度未知问题时，所展现出的深度推理能力。</p>
+<p>所以对小红书而言，这是<strong>一次重要的技术亮相</strong>。</p>
+
+<p><img loading="lazy" onerror="this.style.display='none'" src="https://i.qbitai.com/wp-content/uploads/2026/07/ea8864ba55c99439712c38e4153de880.webp" referrerpolicy="no-referrer" /></p>
+
+<p>过去，外界对小红书的技术认知，更多集中在内容社区、推荐算法和内容理解上。</p>
+<p>在<strong><a class="cpt" href="../c/foundation-model.html" data-def="基座模型是经过大规模预训练的通用AI模型，可作为下游任务的基础，通过微调适应特定场景">基础模型</a></strong>领域，小红书究竟处于什么位置，一直缺少一份足够公开权威，而且不需要复杂解释的成绩单。</p>
+<p>参数规模很难直接等同于能力，常规Benchmark上的几个百分点，也难让行业形成鲜明认知。</p>
+<p>IMO满分不一样，42分就摆在那里，足以证明，<strong>小红书已经具备值得行业认真审视的基础模型能力</strong>。</p>
+<p>它用一枚IMO满分金牌，让行业第一次看清了自己的技术成色——</p>
+<p>基础模型领域，出现了一个值得关注的<strong>新玩家</strong>。</p>
+<p>P.S.对应模型即将开源～敬请期待</p>
+                
+                
+                <em>版权所有，未经授权不得以任何形式转载及使用，违者必究。</em></article>
+    <div class="dp-actions">
+      <a class="dp-btn pri" href="https://www.qbitai.com/2026/07/456061.html" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      
+      <button type="button" class="dp-btn sec" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
+      <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
+    </div>
+    <p class="dp-note">本页由句子互动动态管线自动生成，聚合内容版权归各来源所有；如来源方希望调整或移除收录，请通过官网联系我们。</p>
+  </div>
+</main>
+<div id="site-footer"></div>
+<script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "小红书大模型IMO满分夺金，第三题解法让冠军选手直呼优雅"};</script>
+<script src="../../assets/site.js"></script>
+</body>
+</html>

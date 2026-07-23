@@ -1,0 +1,40 @@
+{
+ "_readme": "手动投递位: 往 items 里加 {url,title,date,summary?,category?,author?}。只有 url 时管线尝试抓页面 og 元数据(mp.weixin 文章页还能拿到发布时间)。category 会显示为条目小标签(如媒体/节目名), author 是署名。",
+ "items": [
+  {
+   "url": "https://juzibot.com/products/shouhu.html",
+   "title": "句子守护上线新版质量中心",
+   "date": "2026-07-21",
+   "summary": "AI 生成测试用例、批量验收、灰度测试、回归测试、AI 工单、AI 质检——Agent 上线前测过、上线后管着，没人点头就不上线，每一步留痕、能查。",
+   "category": "句子守护"
+  },
+  {
+   "url": "https://juzibot.com/workforce/geo.html",
+   "title": "AI 员工阵容新增「GEO 优化师」：AI 时代的 SEO",
+   "date": "2026-06-27",
+   "summary": "专管品牌在豆包、DeepSeek 等 AI 答案里的位置：GEO 监测诊断、内容生产、渠道发布、公域承接，再把意向沉到企业微信接着跟进。",
+   "category": "AI 员工"
+  },
+  {
+   "url": "https://juzibot.com/workforce/hr.html",
+   "title": "AI 员工阵容新增「AI HR」：从简历初筛到语音面试",
+   "date": "2026-06-08",
+   "summary": "简历获取、初筛与第一轮语音面试全部由 Agent 自动完成，HR 只看 Top 20% 的候选人，把时间留给深度面试和人才策略。",
+   "category": "AI 员工"
+  },
+  {
+   "url": "https://juzibot.com/products/dongxing.html",
+   "title": "产品体系扩到七套：新增「句子懂行」与「句子 CLI」",
+   "date": "2026-06-05",
+   "summary": "懂行是 AI 员工的记忆，把散乱的知识炼成能查、能用、越用越准的资产；CLI 是 AI 员工的手，有 API 走 API，没 API 就像人一样点界面。",
+   "category": "句子懂行"
+  },
+  {
+   "url": "https://juzibot.com/",
+   "title": "句子互动新版官网上线：五套产品同场亮相",
+   "date": "2026-05-18",
+   "summary": "秒回、秒懂、守护、参谋、智造五套产品一次讲清，每套各管数字员工的一个环节，从接待、转化到交付都落在微信与企业微信里。",
+   "category": "官网"
+  }
+ ]
+}

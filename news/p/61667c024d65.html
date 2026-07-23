@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>对基本有序的序列排序算法 - 句子·动态</title>
+<meta name="description" content="快速排序在基本有序序列上表现良好，时间复杂度接近 O(n log n)，但它是非稳定排序，相同元素的顺序可能改变，文章讨论了其优缺点。" />
+<meta name="robots" content="noindex,follow" />
+<link rel="canonical" href="https://blog.codingnow.com/2026/06/powersort.html" />
+<link rel="icon" href="../../logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../../assets/site.css" />
+<style>
+  .dp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
+  .dp-wrap{max-width:760px;margin:0 auto}
+  .dp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
+  .dp-back:hover{color:var(--blue)}
+  .dp-meta{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:14px}
+  .dp-srcb{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:750;color:var(--sc,var(--blue))}
+  .s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
+  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-wecom{--sc:#2563EB}.s-voices{--sc:#9333EA}
+  .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
+  .dp-cat{display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ink-3);background:#F6F7FB;border:1px solid var(--line-2);border-radius:6px;padding:2px 8px}
+  .dp-date{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-3)}
+  .dp-title{font-size:clamp(24px,3.2vw,34px);font-weight:850;letter-spacing:-.03em;line-height:1.32;word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance;margin-bottom:10px}
+  .dp-orig{font-size:13px;color:var(--ink-3);overflow-wrap:anywhere;margin-bottom:8px}
+  .dp-by{font-size:12.5px;font-weight:600;color:var(--ink-3);margin-bottom:18px}
+  .dp-notice{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:1.7;color:var(--ink-2);background:#F6F7FB;border:1px solid var(--line-2);border-radius:10px;padding:10px 14px;margin-bottom:22px}
+  .dp-notice i{color:var(--blue);margin-top:4px;flex:0 0 auto}
+  .dp-notice a{color:var(--blue);font-weight:700;overflow-wrap:anywhere}
+  .dp-quip{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.66;font-weight:600;color:var(--blue-deep);background:var(--blue-50);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:18px}
+  .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
+  .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
+  .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
+  .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
+  .dp-body p{margin:0 0 1.05em}
+  .dp-body img{max-width:100%;height:auto;border-radius:10px;margin:.4em 0}
+  .dp-body pre{background:#0F172A;color:#E2E8F0;font-family:var(--mono);font-size:12.5px;line-height:1.7;padding:14px 16px;border-radius:10px;overflow-x:auto;margin:0 0 1.1em}
+  .dp-body code{font-family:var(--mono);font-size:.92em}
+  .dp-body :not(pre)>code{background:#F1F5F9;padding:1px 5px;border-radius:5px}
+  .dp-body blockquote{border-left:3px solid var(--line);padding:2px 0 2px 14px;color:var(--ink-3);margin:0 0 1.05em}
+  .dp-body a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+  .dp-body ul,.dp-body ol{padding-left:1.5em;margin:0 0 1.05em}
+  .dp-body table{display:block;overflow-x:auto;border-collapse:collapse;margin:0 0 1.1em}
+  .dp-body td,.dp-body th{border:1px solid var(--line);padding:6px 10px;font-size:.92em}
+  .dp-excerpt{font-size:15px;line-height:1.9;color:var(--ink-2);border-left:3px solid var(--line);padding:2px 0 2px 16px;margin-bottom:8px}
+  .dp-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;padding-top:20px;border-top:1px solid var(--line-2)}
+  .dp-btn{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:750;border-radius:999px;padding:10px 20px;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+  .dp-btn.pri{background:var(--blue);color:#fff}
+  .dp-btn.pri:hover{background:var(--blue-deep)}
+  .dp-btn.sec{background:#fff;color:var(--ink-2);border:1px solid var(--line)}
+  .dp-btn.sec:hover{color:var(--blue);border-color:var(--blue)}
+  .dp-note{font-size:11.5px;line-height:1.7;color:var(--ink-3);margin-top:18px}
+  .dp-langbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+  .dp-lang{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:750;color:var(--blue);
+    background:var(--blue-50);border:1px solid var(--blue-100);border-radius:999px;padding:7px 14px;
+    transition:background .2s var(--ease),border-color .2s var(--ease)}
+  .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
+  .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div id="site-nav"></div>
+<main class="dp-main">
+  <div class="dp-wrap">
+    <a class="dp-back" href="../../news.html"><i class="fa-solid fa-arrow-left"></i>返回动态</a>
+    <div class="dp-meta">
+      <span class="dp-srcb s-voices"><i class="fa-solid fa-feather"></i>大咖观点</span>
+      <span class="dp-cat">云风</span>
+      <time class="dp-date" datetime="2026-06-11">2026-06-11</time>
+    </div>
+    <h1 class="dp-title">对基本有序的序列排序算法</h1>
+    
+    <p class="dp-by">来源：云风 · 大咖观点</p>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（云风 · 大咖观点）所有 · <a href="https://blog.codingnow.com/2026/06/powersort.html" target="_blank" rel="noopener">阅读原文</a></span></div>
+    
+    <div class="dp-brief"><b>简报</b>快速排序在基本有序序列上表现良好，时间复杂度接近 O(n log n)，但它是非稳定排序，相同元素的顺序可能改变，文章讨论了其优缺点。</div>
+    <article class="dp-body"><p>quicksort 是基于比较的排序中表现最好的算法，它在大多数情况下都能接近时间复杂度 O(n log n) ，所以 qsort() 也是 C 标准库中排序的默认实现。但是，quicksort 是非稳定排序，即当原始序列中出现相同的元素时，经过 qsort ，这些相同元素的次序可能被调整。即两个 key 相同的元素，经过排序可能调换次序。</p>
+
+<p>在某些场合，我们希望排序是稳定 stable 的。因为元素的 key 相同，但元素本身可以不相同。这些有着相同 key 的元素一开始以某种次序放入序列，我们不希望对 key 排序后，打乱原有的次序。当需要稳定性时，还有许多经典<a class="cpt" href="../c/sorting-algorithm.html" data-def="用于将数据按特定顺序排列的算法，是数据处理的基础">排序算法</a>可供选择，例如插入排序，它非常简单，每次从无序序列中选择一个元素和有序序列的最后一个元素比较，要么追加在最后，要么向前依次比较，直到找到合适的位置插入。对已经有序的序列，插入排序的时间复杂度为 O(n) ，但对于逆序的序列，它会退化到 O(n^2) ，因为每个元素都要和之前所有元素比较一次，插入到最前。所以插入排序对于非特定场景（无特定规律的数据）的平均时间复杂度接近 O(n^2) 超过快速排序的 O(n log n) 。</p>
+
+<p>但需要注意，光看大 O 时间复杂度是不够的。在 n 很小的时候，对实际开销影响更大的并非算法复杂度。因为复杂度是基于执行算法中每个单步操作的数量估算的，忽略了操作本身的时间差异。而 n 很小时，单个操作的开销占比就变大了。所以在 n 很小时，简单的算法每个操作都更短，对 CPU cache 也更友好，导致实际的总时间开销也越少。大部分排序算法的实现都选择在 n 很小时退化成插入排序。</p>
+
+<p>对无规律数据集，基于比较的排序算法的理论极限是 O (n log n)。因为你需要至少对所有元素做一次比较，采用二分的形式分而治之是最好的方法，不断二分数据集的深度大致为 log n 。归并排序 merge sort 直观的体现了这个想法，它把数据不断对分，展开为一个完全平衡的二叉树，然后从叶节点逐级向根节点调整次序并合并，一路执行到根节点，就可以完成排序。所以它可以严格（即使在最坏情况）做到 O (n log n) 。或者这么看，合并两个有序序列只需要扫描两个序列各一遍，每次都挑出两个序列头部更考前的元素，插入新序列，就能得到合并后的有序序列。假设一共有 128 个元素，不断对分，就能分成 64 组元素每组 2 个。这两个元素调整位置合并成 32 组 4 元组，再继续为 16 组 8 元组，等等。</p>
+
+<p>显然，merge sort 是很容易做到 stable ，但缺点是它难以在原地 in-place 排序，需要额外的空间。这导致实际实现时，需要额外的内存复制。在大多数要求 in-place 排序（大多数 sort api 都是这样）的场合，比 quicksort 要慢，且需要额外的运行空间。</p>
+
+<p>但在真实世界的应用场合，大多数需要排序的数据并非毫无规律。针对有规律的数据排序就可以在工程上针对规律做出改进。一个普遍的规律是：往往需要排序的数据本身就是基本有序的，至少很多片段是局部有序的。因为你很难一次性获得海量的完全随机的数据集。数据都是逐步变多的，如果它们之前的片段是有序的，在整合到一起后，大部分还保持着次序；或者是原有的次序经过少量的调整，破坏了局部的次序。针对这点，就可以对 merge sort 做大幅改进。python 最早的版本直接封装 C 的 qsort() 实现排序，但随着 stable sort 的需求日益增加，在 2002 年 Tim Peters 针对这类情况改进了 merge sort 算法，最终成为 python 排序算法的标准实现。这是一个混合排序算法，一开始并未正式命名，但随着它作为一个比 merge sort 更能适应现实数据集的算法被引入 java 等其它语言的标准库，大家就用第一次工程实现者的名字命名为 <a class="cpt" href="../c/timsort.html" data-def="一种混合排序算法，结合归并和插入排序的优点，对现实世界数据高效稳定">timsort</a> 。btw , 它的核心想法并不新，在 Knuth 的计算机算法艺术第三卷的排序算法中就有提到。</p>
+
+                           
+                           
+                              <p>timsort 最重要的核心想法是：既然现实中的序列并非完全随机的，那么我们就先找出序列中的有序片段 (run) ，再对这些片段进行 merge sort ，这样就能大大的减少 N 。比如在极端情况下，一开始序列就是完全有序的，那么 N 就退化成了 1 。但是，如果我们一开始完全把序列的有序片段都标记出来，就需要等长甚至更大的内存空间记录这些 run 。原本 merge sort 的缺点就是需要更大的额外空间，但它需要的额外空间是固定的。如果在最坏情况下额外空间的上限更高 ，作为通用库，这是不可接受的。所以，需要一个有着固定上限的额外空间来处理这些 run ，且最坏情况也不能超过 merge sort 。</p>
+
+<p>我们可以把 merge sort 的 run 看成是固定的 1, 2, 4, 8 ...  虽然算法描述是递归的，但由于我们不会处理超过 2^64 个元素，所以递归深度非常有限（低于 64 ）。而且在这个固定规律下，很容易得到一个非递归的实现。当 run 的长度不固定时，Tim 认为用一个自适应的方法合并相邻 run 就可以了。应该尽量的将相邻的小 run 合并成更大的片段，而避免把已经很大的 run 上追加相邻的小 run 。至于为什么只能合并相邻的 run ，因为只有这样才能保证 stable 。</p>
+
+<p>他提出顺着扫描序列，找到三个连起来的 run 就可以决定该合并哪两个更好。在 Wikipedia 上 <a href="https://en.wikipedia.org/wiki/Timsort" target="_blank" rel="noopener nofollow">timsort</a> 页有简单的描述，还有一篇 <a href="https://drmaciver.com/2010/01/understanding-timsort-1adaptive-mergesort/" target="_blank" rel="noopener nofollow">blog</a> 也有解释，cpython 的邮件列表里也有一篇叫 listsort.txt 的文档（链接以不可访问）。我全部读过后发现它们之间有细微的差别，这让我很疑惑。直到我读到 On the Worst-Case Complexity of TimSort 这篇 paper 才确定正确的描述。然后又看了 youtube 上 <a href="https://www.youtube.com/watch?v=XjOnY-OLAPc" target="_blank" rel="noopener nofollow">Quicksort, Timsort, Powersort - PyCon US 2023 talk</a> 进一步印证了这点。</p>
+
+<p>原始的算法是这样的：</p>
+
+<p>用一个栈记录从头扫描每个 run 的长度。比如最后的三个 run 长度为 X Y Z ，其中 Z 是栈顶，也就是最后扫描到的 run 。</p>
+
+<p>首先检查规则 A ：当 Z 长度大于 X 时，把 X Y 合并起来，栈顶留下 (X+Y) 和 Z 。</p>
+
+<p>如果不满足规则 A ，再检查规则 B ：当 Z 大于等于 Y 时，合并 Y 和 Z ，即栈顶留下 X 和 (Y + Z) 。</p>
+
+<p>若以上都不满足，但满足规则 C ：若 Y+Z 大于 X ，则也合并 Y 和 Z ，结果和应用规则 B 一样。</p>
+
+<p>若三条规则都不满足，就继续向栈顶添加后续的 run ，重复这个过程，直到整个序列扫描完，最后依次合并栈顶两个 run 。</p>
+
+<p>这套规则的想法是：尽可能的把较小的相邻 run 合并在一起，但如果连着三个 run 长度类似，避免将仓促合并，而继续看下一个 run 。但实现上需要给栈设定一个最大的上限，因为它是利用 C 的 stack 实现的，需要避免 C stack 溢出。如果遵循以上规则，保留 run 长度的栈就会从大到小排列，因为一旦有更长的 run 入栈，就会引起合并。规则 C 则保证了最前面（栈底）的那一项长度超过后两项的和。这可以保证整个序列最坏情况类似斐波那契数列，大致上是指数分布的。这样，栈的最大容量在 64 位系统上也可以用一个较小的值就能保证不会溢出。</p>
+
+<p>在很长时间里，没有人去验证这个假设是否是严格正确的。这个算法也被抄到了更多地方。直到有人试图用形式化证明 java 的 OpenJDK 正确性才发现有问题。</p>
+
+<p>比如，我们构造这样一个序列，92 28 20 6 4 8 1 ，前 5 项（92 28 20 6 4 ）依次入栈时，每一项都不会被合并，同时保证了依次递减，每一项都超过后两项之和。但接下来的 8 入栈就发生了变化，因为 8 &gt; 6 ，所以 6 和 4 被合并位 10 ，序列变成了 92 28 20 10 8 ，这时，中间的 20 + 10 已经超过了前一项 28 。最后一项 1 入栈却并不会促使前面项的合并。这会导致算法根据算出的 2^64 项以内最坏情况下需要的栈容量上限偏小，精心构造一个序列就会导致栈溢出。Python 和 Java 在修复这个问题时采用了两种不同的方案。Python 增加了第四条规则：新入栈的 run 如果没有引起合并，要重复检查一次原有的栈顶三项，看前一轮合并适合做的彻底。这个方法后来被形式化证明是完备的，只不过每轮入栈可能需要多一次判断。Java 一开始的修复方案是重新计算了一个更大的理论上限。不过这个上限后来被证明又算小了，重新打了一次补丁。不过这只是理论值，构造一个超出错误上限造成栈溢出的序列，需要相当大的长度，所以实际上并没有发生过。</p>
+
+<hr />
+
+<p>依赖形式化证明堆栈上限看起来过于隐晦，需要一个更简单明了的算法确定保存 run 的栈大小上限，这是 python 3.11 引入 <a href="https://en.wikipedia.org/wiki/Powersort" target="_blank" rel="noopener nofollow">Power sort</a> 的动机。了解 power sort 的设计思路可以从回顾 merge sort 开始。merge sort 本质上是基于完全二叉树的逐层合并，所以，即使用递归实现，栈深度也严格保证在 log 2 之内，也就是 2^64 元素最多需要 64 层深度，这一目了然。当 run 的长度不确定，由原始序列中固有的有序片段长度决定，我们还是可以让合并策略尽可能的近似完全二叉树。由于我们假设了原始数据局部有序，所以可以看成是提前做了一些合并，那么理论上需要的栈深度不应超过 mergesort ，最坏情况也是和 mergesort 一致。</p>
+
+<p>所以，可以先想象一个虚拟的完全二叉树，然后在遍历序列时，把每个 run 和虚拟完全二叉树的 run 对比，找到相邻的 run 对应到完全二叉树上是否应该合并，还是已经被合并过了。由于完全二叉树可以通过非常简单的公式算出每个分支片段，所以并不需要额外的储存空间。算法就变成了每次看栈顶两个相邻 run 的中点落在哪里，找到它和虚拟完全二叉树上最接近的节点，记录下它的层级（power），越靠叶子节点的 power 越小，越靠根的 power 越大。由于节点数量限制在 2^64 ，所以 power 最大就是 64 。而合并规则就可以简化成：让保存 run 的栈额外记录每连个相邻 run 的 power ，栈中元素的 power 必须依次增大，如果减少，就合并栈顶两个元素，并重新计算合并后的 power 。显然，栈的容量上限就是 64 ，不需要过多的形式化证明。</p>
+
+<p>powersort 未必一定优于 timsort ，但在实践中它几乎总是略微好一点：更像 merge sort 表现的那样，尽可能的先合并较小的 run ，逐层合并成更大的 run 直到完全有序。当然，它虽然减少了每次合并前的条件判断，但增加了一个常量时间的 power 计算，使用 power 来拟合 merge sort 的完全二分也不总是正确，这些都有可能导致在某些条件下比 timsort 略慢。但关键在于，它运行需要的栈上限清晰明了。</p>
+
+<p>如果想更进一步理解 powersort ，非常推荐上面提到的 PyCon US 2023 上的那个演讲，其中有非常清晰的算法视觉化演示。</p>
+
+<hr />
+
+<p>除去改进了这个如何启发式合并 run 的算法，powersort 的其它部分和 timsort 是基本一致的。timsort 的其它对 mergesort 的改进几乎都是针对数据局部有序做的，长期实践也证明它的确非常有效。</p>
+
+<p>其一，当数据基本有序时，合并两个 run 需要的额外空间可以大大减少。假设相邻的两个 run 原本就是基本有序的，只是很少的数据调换导致了分割成两片有序 run 。那么，我们可以用二分法找到前一个 run 中前一半不需要移动，以及后一个 run 中后一半不需要移动的两个端点。这两部分都不需要调整位置。剩下的两段，只需要更短的一半额外空间就可以整理成有序的序列。这是因为，我们只需要把其中一个 run 复制出去，然后在空出的位置上做合并。如果是前一半空出来，就从前到后合并；如果是后一半空出来，就从后向前合并。即使是最坏情况，也不会超过 N/2 的额外空间。</p>
+
+<p>其二，在合并两个 run 时，如果发现连续取用其中一个 run 上的数据，就可以进入 Galloping 模式，即用二分法找到一段数据复制，而不是一个个比较。这里给 Galloping 设置了一个限界，逐个比较次数超过这个值时才启动 Galloping mode ，根据 Galloping 的成功率，动态调整这个值。</p>
+
+<p>其三，针对逆序的数据做特别优化。因为把逆序序列倒转过来是很简单的，O(n) 就可以完成，但用传统 merge sort 的方法成本要高得多。在预扫描 run 时，检测前两个元素的次序就可以用来猜测这个 run 是正序还是逆序的。注：如果是逆序的，需要对相同元素做额外一点处理保证 stable 。</p>
+
+<p>其四，由于 mergesort 是二分分治，所以在元素数量不足 2^n 时，复杂度其实是向上补足 2 的整数幂。即处理 1023 个元素和处理 1024 个元素近似，而处理 513 个元素也和处理 1024 元素类似。所以，分片的数量比 2 的整数幂略小一点最合适。timsort/powersort 解决这个问题的方法是设定最小的 run size ，它根据 n 的大小在 32 到 64 之间动态调整。在中间找到一个数 m ，让 n/m 最接近 2 的整数幂。这只需要取 n 的最高 6 位再加 1 就可以了。对于最小的无序 run ，采用插入排序。</p></article>
+    <div class="dp-actions">
+      <a class="dp-btn pri" href="https://blog.codingnow.com/2026/06/powersort.html" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      
+      <button type="button" class="dp-btn sec" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
+      <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
+    </div>
+    <p class="dp-note">本页由句子互动动态管线自动生成，聚合内容版权归各来源所有；如来源方希望调整或移除收录，请通过官网联系我们。</p>
+  </div>
+</main>
+<div id="site-footer"></div>
+<script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "对基本有序的序列排序算法"};</script>
+<script src="../../assets/site.js"></script>
+</body>
+</html>

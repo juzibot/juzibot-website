@@ -1,0 +1,112 @@
+<p>AI 生图最擅长的事情，已经从「画一只猫」变成了「画一只穿着宇航服站在月球，背后还有地球的猫」。只要描述得足够明确，它总能给我们几张看上去很不错的图片。</p>
+<p>但把任务换成一张真正要用的海报，麻烦很快就来了。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/PixPin_2026-07-17_11-44-49.png!720" referrerpolicy="no-referrer" /></p>
+
+<p>▲这张由其他模型生成的高浓度产品排期图，超过 20 个文字渲染 Bug</p>
+
+<p>标题、日期和地点这些关键的信息不能漏，展示产品的名字、配料和价格要一一对应，Logo 得放在正确的位置，画面还要有明确的阅读顺序。到了学术海报和工业图解场景，模型还得处理数据、图例、单位、结构编号和密密麻麻的小字。</p>
+<blockquote><p>对普通生图模型来说，100 个字错一个字是 99 分；对交付级生成来说，错一个字，这张图就是 0 分。</p></blockquote>
+<p>设计师依然离不开 Photoshop、Illustrator 和 Figma 等工具，原因就在这里。生成一张好看的图片，与完成一份设计任务，中间还隔着信息整理、视觉规划和成品排版。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/2-2.jpg!720" referrerpolicy="no-referrer" /></p>
+<p><strong>前几天，商汤在 WAIC 上正式发布了日日新 SenseNova U1 Pro，是业内首个将「理解·生成·行动」原生统一的多模态智能体基座模型</strong>。</p>
+<p>商汤首席科学家林达华曾形象地形容它：「<strong>U1 Pro 它不只是一个生图模型，它是在数字空间里打造出来的一个设计师，它会沿着思考去创造一个具有美学感的成品，一步一步去完成这个工作。</strong>」</p>
+<p>不同于常规的娱乐级 AI 生图，U1 Pro 支持原生 8K 输出，面向复杂中文、信息图、商业海报、学术设计和工业图解等高密度专业「设计」场景，主打面向复杂的长程任务，能直接提供可投入生产使用的「交付级」高精度视觉内容。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/3-3-1.png!720" referrerpolicy="no-referrer" /></p>
+
+<p>▲ 提示词：生成一张 21:9 横版、原生 8K 的中文体育报纸号外，报纸名称《终场 WHISTLE》，主标题必须逐字写为：《西班牙，2026 世界杯冠军！》副标题必须逐字写为：「1–0（加时赛）击败阿根廷，在纽约新泽西捧起冠军奖杯」。整体采用高级体育报纸、纪实摄影和现代信息图结合的风格。顶部使用超大黑体呈现冠军标题，主标题必须醒目、清晰、完整，不得改变球队名称、年份或标点。（省略部分提示词）</p>
+
+<p>APPSO 提前拿到了 U1 Pro 的测试资格，从模型的各项能力到具体的应用场景，这次，我们不让它画一些任由它自己发挥的简单信息图。</p>
+<p>我们准备了十多份接近真实项目的设计 Brief：世界杯赛况长图、城市暴雨避险图、AI 创作工具全景图、科技活动海报、咖啡菜单、SaaS UI/UX 界面、学术海报、建筑竞赛展板和工业机器人图解。</p>
+<p>每份提示词都长得让人想先开个会，U1 Pro 能不能把它们直接变成一份像样的设计成品？</p>
+<h2>8K、中文和排版，这些才是设计刚需</h2>
+<p>2026 FIFA 世界杯刚刚落下帷幕，我们先用一张长图来测试一下 U1 Pro 能生成的极限比例。</p>
+<p>提示词要求 U1 Pro 输出精确 8:1 的单幅设计，优先尺寸为 8192×1024。画面上方是一条从 6 月 11 日开幕延伸到 7 月 19 日决赛的标题带，中部要连续排列 104 个比赛节点，下方还要放入 48 支球队、3 个主办国家和 16 座主办城市等规模数据。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/bdc7db0e-a979-4bcd-bd7c-c086157feb8e-1.png!720" referrerpolicy="no-referrer" /></p>
+<p>光是这些内容要求一个文字模型输出，可能都容易出错，比赛的数据、球队的信息，稍微不仔细可能就错了。现在要求一个图像模型来创作，不仅要准确还要美观好看。</p>
+<p>模型要完成的是一届世界杯的结构：小组赛 M01—M72、32 强赛 M73—M88、16 强赛 M89—M96、四分之一决赛 M97—M100、半决赛 M101—M102、季军赛 M103，以及决赛 M104。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/bdc7db0e-a979-4bcd-bd7c-c086157feb8e_part-1.png!720" referrerpolicy="no-referrer" /> <img src="https://s3.ifanr.com/wp-content/uploads/2026/07/bdc7db0e-a979-4bcd-bd7c-c086157feb8e_part-2.png!720" referrerpolicy="no-referrer" /> <img src="https://s3.ifanr.com/wp-content/uploads/2026/07/bdc7db0e-a979-4bcd-bd7c-c086157feb8e_part-3.png!720" referrerpolicy="no-referrer" /> <img src="https://s3.ifanr.com/wp-content/uploads/2026/07/bdc7db0e-a979-4bcd-bd7c-c086157feb8e_part-4.png!720" referrerpolicy="no-referrer" /></p>
+<p>U1 Pro 实际数据比例和像素尺寸与我们的提示词要求完全一致，同时 104 个编号、16 座城市，小字在 100% 放大时清晰度，全部做到了完整齐全。</p>
+<p>最近，WAIC 在上海举行，我们就顺势要求 U1 Pro 生成一张 City Walk 的路线图，把 AI 带进石库门、酒吧、音乐厅、影视基地和机器人训练场。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/SenseNova-656f456d-7c3b-4a29-a41c-20f23d70e14c.png!720" referrerpolicy="no-referrer" /></p>
+<p>我们让 U1 Pro 把 8 个重点体验地点画成一张了 8192×2048 的 4:1 上海长图：机器人在张园做咖啡，在 AGI Bar 调酒，在上海影视乐园举起场记板。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/SenseNova-656f456d-7c3b-4a29-a41c-20f23d70e14c_part-1.png!720" referrerpolicy="no-referrer" /> <img src="https://s3.ifanr.com/wp-content/uploads/2026/07/SenseNova-656f456d-7c3b-4a29-a41c-20f23d70e14c_part-2.png!720" referrerpolicy="no-referrer" /> <img src="https://s3.ifanr.com/wp-content/uploads/2026/07/SenseNova-656f456d-7c3b-4a29-a41c-20f23d70e14c_part-3.png!720" referrerpolicy="no-referrer" /> <img src="https://s3.ifanr.com/wp-content/uploads/2026/07/SenseNova-656f456d-7c3b-4a29-a41c-20f23d70e14c_part-4.png!720" referrerpolicy="no-referrer" /></p>
+<p>OPC 同样是今年的热点，一个一人公司成了未来科技的重点方向。</p>
+<p>我们索性为一个人画了一栋 10 层办公楼：楼里有产品、研究、设计、开发、内容、市场、销售、客服、财务法务和运营十个部门，每层 10 个 AI Agent，总共 100 个。</p>
+<p>这张图要求原生输出 7680×4320。远看是一栋透明的未来办公楼，放大后应该能数清每层机器人，读懂中文部门名称，还能看见设计机器人争论两种蓝色、开发机器人围着 Bug 排错之类的小故事。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/efde8bef-03cd-4093-8edb-111a45213931.png!720" referrerpolicy="no-referrer" /></p>
+<p><strong>U1 Pro 的超宽比例和 8K 都非常实用，而且上面的测试，我们都是零抽卡，一次性生成。</strong>即便是各种微小的汉字，U1 Pro 都能做到准确地渲染。</p>
+<p>而一张信息图只能证明模型会处理很多字。设计师真正难替代的地方，还在于他知道不同场合该长什么样。</p>
+<p>所以第二组测试，我们给了 U1 Pro 两份内容密度相近、气质完全不同的任务。</p>
+<p>一张是《暴雨来袭，城市居民应急避险指南》。画面要让居民迅速看懂四级预警、居家避险、外出避险和被困后的行动步骤，视觉必须克制、可信，警示信息要一眼可见。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/7-7.jpg!720" referrerpolicy="no-referrer" /></p>
+<p>另一张是《2026 AI 创作工具全景图》。它要把文字、图片、视频、声音和 3D 工具放进同一条创作流程，使用深色科技编辑风格，既有产业地图的密度，又不能写成企业发布会 PPT。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/8-8.png!720" referrerpolicy="no-referrer" /></p>
+<p>两张图片的色彩、网格和阅读顺序，都有根据传播对象今天调整设计，并不是用一套模板套在了不同的内容上。</p>
+<p>接下来换到商业设计上，U1 Pro 通用能根据品牌、行业和受众切换视觉语言。</p>
+<p>我们准备了一张科技沙龙海报、一份日落海边风格的精品咖啡菜单，以及一张融合苏绣、竹编和桃花坞木版年画的非遗夜游节主视觉。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/9.jpg!720" referrerpolicy="no-referrer" /></p>
+<p>科技活动需要冷静和锐利，咖啡菜单要让六杯饮料看起来足够可口，非遗海报又要避开文旅纪念品常见的元素堆砌。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/d836cd02-fbbb-44ef-afca-4180661d4eba.png!720" referrerpolicy="no-referrer" /></p>
+<p>三张图放在一起，提示词里面的固定文案、菜单名字、价格和活动信息都准确的呈现出来，三张图的字体、构图和颜色也有明显的差异。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/SenseNova-5643e209-6632-4527-a4b2-942c5842d647.png!720" referrerpolicy="no-referrer" /></p>
+<p>平面设计之外，我们又让 U1 Pro 生成了一套个人知识管理应用界面。</p>
+<p>页面里有导航栏、全局搜索、数据卡片、任务列表、桑基图、最近笔记和 AI 助手输入框。它需要像产品设计师一样考虑信息密度、组件对齐和用户视线等元素。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/SenseNova-7e86010f-9b8a-4747-bb09-00042e661742.png!720" referrerpolicy="no-referrer" /></p>
+<p>接着我们还让 U1 Pro 做了一些比单纯的设计更加专业的工作，学术海报和工业机器人图解。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/13-13.png!720" referrerpolicy="no-referrer" /></p>
+<p>学术海报包含作者、研究单位、研究方法、三张数据图表和项目统计。工业机器人图解则要求模型画出盾构机的爆炸结构，用 01—12 标记刀盘、管片、皮带等运输系统，同时放入刀盘局部爆炸图、100% 细节放大窗和隧道是怎么形成的。</p>
+<p>这类图最容易出现的尴尬是远看很专业，近看每个数字都在自由发挥。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/SenseNova-0d929d84-7c9b-4757-88e8-d328f24b8fcd.png!720" referrerpolicy="no-referrer" /></p>
+<p>我们核对了图标数据和单位，U1 Pro 基本上都没有胡编乱造，并且再小的内容我们都能看清，整张图的大小来到了 12MB。</p>
+<p>这大概也是原生 8K 最大的意义，一张普通风景图变得更大，读者很难感受到它对工作有什么帮助。</p>
+<p>建筑展板、学术海报和工业图解却需要在同一画面中容纳总平面图、剖面、图表、说明文字和工程标注。分辨率决定了这些细节能否被看清，也决定了图片能否进入大屏、印刷和专业展示。</p>
+<h2>从生成图片到接下一整份设计需求</h2>
+<p>看完这些案例，U1 Pro 所说的「交付级设计」就容易理解了。</p>
+<p>它首先交付的是信息。AI 产品发布作战图和暴雨避险图都塞进了大量中文、数字和行动步骤。</p>
+<p>画面好看只占一半，另一半是模型有没有理解内容之间的关系：哪些任务存在先后依赖，比例数据该放进什么图表，警告信息应该出现在哪个位置。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/4-1.jpg!720" referrerpolicy="no-referrer" /></p>
+<p>过去，内容创作者可以让 AI 帮忙写文案、找配图，最终仍要把文字一块块搬进设计软件；如果模型能直接完成信息组织，省下的是从资料到版面的整段工作。</p>
+<p>有时候在社交媒体上搜索各种旅游攻略，旅行社的广告很快就会联系上来，然后发一份预制的 PDF 过来，内容全是文字难阅读不说，读完也很难对整趟旅程有一个清晰的大致印象。</p>
+<p>U1 Pro 的可交付在这个时候就显得尤为重要。无论是导游还是我们自己，都可以用一句提示词就生成一张包含地图信息、路线信息、热门景点以及预算等内容的导游图。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/16-16.jpg!720" referrerpolicy="no-referrer" /></p>
+
+<p>▲ 提示词：我有 7 天时间，8.21 07:15 抵达伊斯坦布尔，8.30 05:05 抵达广州白云机场，我可以怎么安排我的行程，我不会开车，你可以帮我做一张地图导游图吗，同时还要加上开支预算这些预计花费的计算，帮我看看大概要多少钱。</p>
+
+<p>这张导游图还可以作为一个模板，针对不同的客户，不同出发地点时间，停留时间进行修改。对导游来说，每一个客户都可以直接快速给他们做一套同样视觉的方案。</p>
+<p>而如果已经有明确的旅游方案，U1 Pro 的交付级设计功能，也能将下面一段超过 2000 字的「吐鲁番汽车一日游产品说明」做成一张准确、精美、有设计感的旅游路线图。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/6.jpg!720" referrerpolicy="no-referrer" /></p>
+<p>第二类交付的是商业，活动海报、咖啡菜单和非遗主视觉面对的是不同生意。</p>
+<p>这些内容需要遵守品牌气质，也要准确放入时间、地点、价格和活动内容。结果如果稳定，适用场景会从公众号封面扩展到活动物料、社交媒体广告、电商素材、门店菜单和文旅宣传。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/5.jpg!720" referrerpolicy="no-referrer" /></p>
+<p>对这类用户来说，最有吸引力的除了「AI 会不会画」，更多的是一个人能否独立完成过去需要文案、设计和插画配合的轻量项目。</p>
+<p>第三类是专业交付，UI、学术海报、建筑展板和工业图解的门槛明显更高。</p>
+<p>模型需要懂网格与组件，也要处理图表、单位、结构和空间关系。它们未必会立刻取代专业软件，但可以先承担方案草拟、汇报展示、内部沟通和视觉化说明。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/19-19.png!720" referrerpolicy="no-referrer" /></p>
+<p>U1 Pro 现阶段的「交付级」，主要体现在它能否理解一份复杂需求，自行组织信息与视觉，并一次生成高完成度成品。</p>
+<p>至于后续修改、源文件和完整设计工作流，商汤表示 U1 Pro 已经把编辑能力放进模型内部的创作循环，但首发版本暂时只向用户开放生成。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/b973a119-2f82-430f-82a2-1760e2a5a233.png!720" referrerpolicy="no-referrer" /></p>
+<p>可直接操作的交互式编辑功能仍在打磨，预计在 2026 年内上线。</p>
+<p>商汤把 U1 Pro 的底层方向概括为「理解、生成、行动」的原生统一。放在这次实测里，「理解」对应各类长短提示词和复杂内容，「生成」对应视觉结果；「行动」具体包含模型在设计流程中自主规划和修改。</p>
+<p>虽然目前出图的时间还是比较久，针对一些超长提示词，U1 Pro 需要十几分钟甚至半个小时的时间，但就像林达华说的一样，「它当前出一张图可能要十分钟的时间，但确实十分钟之后，你就真能拿出去用了。」</p>
+<h2>未来的图像模型，是一座印刷厂</h2>
+<p>过去几年，AI 生图模型一直在卷几个维度：分辨率、风格多样性、图像质量、文本理解能力。GPT-Image-2 把这些维度都推到了相当高的水平，但如果图像模型只是继续在这些维度上堆参数，边际收益会越来越小。</p>
+<p>U1 Pro 指向了一个不同的方向，要画更好的图，但更需要画出能用的图。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/SenseNova-954319c2-315d-49b6-b8d4-ff13e1a97f49.png!720" referrerpolicy="no-referrer" /></p>
+<p>这个「能用」在这次的实测里，也很容易能概括为这些层面：</p>
+<ul>
+<li>分辨率够用：能直接印刷、能直接用于后期流程，不需要放大和重绘</li>
+<li>内容精准：中文不糊字、排版不错乱、信息不丢失</li>
+<li>可修改：能听懂修改意见、能局部调整、不需要每次重抽</li>
+<li>可成套：能保持一致性、能批量产出统一风格的物料</li>
+</ul>
+<p>这些能力加在一起，大概才构成了商汤所说的「交付级」。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/22-22.png!720" referrerpolicy="no-referrer" /></p>
+<p>内容创作者可以直接尝试信息图、封面和活动物料；小团队能更快制作菜单、宣传图和汇报材料；专业设计师也可以用它探索版式与方向，把时间留给判断、筛选和真正需要经验的部分。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/PixPin_2026-07-20_17-19-57.png!720" referrerpolicy="no-referrer" /></p>
+
+<p>▲官网链接：https://www.sensenova.cn/u1-pro</p>
+
+<p>SenseNova U1 Pro 目前面向开发者和企业用户提供 MaaS 服务，采用异步图像生成 API：提交提示词与生成参数后，平台会返回任务 ID，再通过结果接口获取图片。</p>
+<p>需要调用模型的用户，可以进入商汤日日新官网，登录开发者控制台，查看模型服务的开通状态与最新接口文档。</p>
+<p>在商汤日日新官网和商汤小浣熊平台，我们也能体验到 U1 Pro，并结合商汤其他产品，实现更多任务的可交付。</p>
+<p>🔗 体验地址：https://www.sensenova.cn/u1-pro </p>

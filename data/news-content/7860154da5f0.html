@@ -1,0 +1,197 @@
+<p>很多人搞不清楚 ChatGPT、Work、Codex 到底有什么区别，也不知道它们的额度是独立的还是共享的。</p>
+<p>先用一句话说清楚：</p>
+<blockquote>
+<p><strong>Chat 回答问题，Work 帮你干活，Codex 帮你写代码。</strong></p>
+</blockquote>
+<p>听起来只差几个字，背后却是三种完全不同的使用方式。</p>
+<h2>Chat、Work、Codex，一句话说清区别</h2>
+<table>
+<thead>
+<tr>
+<th>模式</th>
+<th>主要用途</th>
+<th>读取的内容</th>
+<th>交付的结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Chat</td>
+<td>快速问答、讨论、生成内容</td>
+<td>当前对话和你提供的材料</td>
+<td>一段回答或内容</td>
+</tr>
+<tr>
+<td>Work</td>
+<td>跨应用完成知识工作</td>
+<td>邮件、文档、聊天记录、日历、业务系统</td>
+<td>文档、表格、幻灯片、网页应用等成品</td>
+</tr>
+<tr>
+<td>Codex</td>
+<td>在代码仓库里完成开发任务</td>
+<td>项目文件、代码、测试和 Git 上下文</td>
+<td>代码变更、diff、测试结果、PR</td>
+</tr>
+</tbody>
+</table>
+<p>打个比方：</p>
+<ul>
+<li>Chat 是你问“番茄炒蛋怎么做”，它告诉你步骤。</li>
+<li>Work 是你说“帮我准备一桌晚餐”，它自己去冰箱找食材、炒菜、摆盘。</li>
+<li>Codex 是你说“这个菜谱 App 有 bug”，它打开代码自己修。</li>
+</ul>
+<p><img src="https://s.baoyu.io/imgs/2026-07-11/chatgpt-work-codex-guide/official-chatgpt-work-desktop.webp" alt="OpenAI 官方展示的 ChatGPT Work 桌面端模式选择" referrerpolicy="no-referrer" /></p>
+<p><em>图：OpenAI 官方发布页中的 ChatGPT Work 桌面端界面。</em></p>
+<h2>Work 不只是“帮我写个报告”</h2>
+<p>在 Chat 里说“帮我写个报告”，它通常给你一段文字，接下来还得由你复制到 Word、补资料、排版和检查。</p>
+<p>Work 的目标不一样。你先把日常工具接进去：Slack、Gmail、Google Drive、SharePoint、Teams、日历、CRM、项目管理工具都可以。OpenAI 把这些连接能力称为 plugins。</p>
+<p>接好以后，你只需要告诉它想要什么结果。它会去不同应用里拉取数据、整合信息，最后生成可以直接交付的成品。你也可以在提示词中用 <code>@</code> 加应用名，明确指定它从哪里找资料。</p>
+<p><img src="https://s.baoyu.io/imgs/2026-07-11/chatgpt-work-codex-guide/official-chatgpt-work-plugins.webp" alt="OpenAI 官方展示的 ChatGPT plugins 目录" referrerpolicy="no-referrer" /></p>
+<p><em>图：OpenAI 官方展示的统一 plugins 目录。</em></p>
+<p>举两个实际例子：</p>
+<ul>
+<li>Zapier 的企业营销负责人用 Work 搭建了一套系统，每月审查数千条线索，追踪 CRM 和邮件中的客户触点，找出跟进断裂的位置，并生成管理层周报。</li>
+<li>Virgin Atlantic 的数字产品负责人用它做竞品对标，让 ChatGPT 调研各家航空公司的服务水平并生成团队可审查的数据集，把原本需要数周的分析缩短到几小时。</li>
+</ul>
+<p>另一个关键区别是，<strong>Work 可以长时间跟进复杂项目</strong>。它能自己拆步骤、持续推进几个小时；遇到拿不准的地方会来问你，你也可以随时调整方向、审批关键动作。</p>
+<h2>Work 能定时跑任务吗？</h2>
+<p>能。这个功能叫 Scheduled Tasks（定时任务），支持一次性任务、定时重复、事件触发和持续监控。</p>
+<p>比如：</p>
+<ul>
+<li>每天早上检查 Slack 和邮件里的新消息，整理成简报。</li>
+<li>每当收到新的客户反馈，自动归类主题并整理成产品改进建议。</li>
+<li>定期检查网站和仪表盘，总结发生了什么变化。</li>
+<li>收到新反馈时，自动更新演示文稿。</li>
+</ul>
+<p>这些任务可以在后台运行。桌面端还能使用内置浏览器查资料，并通过 Computer Use 操作电脑上的其他应用。</p>
+<p><img src="https://s.baoyu.io/imgs/2026-07-11/chatgpt-work-codex-guide/official-chatgpt-work-scheduled.webp" alt="OpenAI 官方展示的 Scheduled Tasks" referrerpolicy="no-referrer" /></p>
+<p><em>图：OpenAI 官方展示的 ChatGPT Scheduled Tasks。</em></p>
+<p>定时任务面向 Plus、Pro、Business 和 Enterprise 用户开放，不同计划的并发任务上限不同。任务不能每小时运行超过一次，长时间无人处理的任务也可能自动暂停。</p>
+<h2>Work 和 Codex，到底是什么关系？</h2>
+<p>这两个模式可以理解为<strong>同一套底层 Agent 能力，服务于两种主要场景</strong>。</p>
+<p>Work 面向办公和业务工作，读取邮件、文档、聊天记录、日历等业务上下文，交付幻灯片、电子表格、文档和网站。</p>
+<p>Codex 面向软件开发，读取代码仓库，交付 diff、测试结果和 PR。</p>
+<p>OpenAI 提到，Codex 每周已有超过 500 万人在使用，其中超过 100 万人会拿它处理软件开发之外的工作。Work 的推出，某种程度上就是把这些非编程用途正式化：提供专门的界面和工作流，用 plugins 连接业务应用，把交付物从代码变更扩展到文档、表格和幻灯片。</p>
+<p>OpenAI 内部也在大量使用：销售团队曾用 Work 在 24 小时内把一次客户探索对话变成定制 POC，这个流程过去需要几周；财务团队则把月末结账和预测从几天压缩到几小时。</p>
+<p>我的理解是，OpenAI 想用 Work 吸引办公人群。很多非开发者看到 Codex 这个名字，会本能地以为它只适合写代码；但如果直接把 Codex 改名，又会影响原有开发者的认知。</p>
+<p>所以最后就变成了：</p>
+<blockquote>
+<p><strong>一套底层能力，两个名字，两种主要场景，同时吸引两类用户。</strong></p>
+</blockquote>
+<h2>我在哪里能用这三个模式？</h2>
+<p>Chat 最简单，网页、手机和桌面端都有，所有平台通用。</p>
+<p>Work 已经开始在网页和手机端上线，Pro、Enterprise 和 Edu 优先，Plus 与 Business 随后开放。桌面端的能力更强，可以使用本地文件，还有内置浏览器抓取信息。</p>
+<p>Codex 模式只能在桌面端选择。手机上不能直接进入 Codex 模式，但可以通过 ChatGPT App 的 Remote 标签，远程查看桌面上正在运行的 Codex 任务。</p>
+<p><img src="https://s.baoyu.io/imgs/2026-07-11/chatgpt-work-codex-guide/official-chatgpt-work-web-mobile.webp" alt="OpenAI 官方展示的 ChatGPT Work 网页端与移动端" referrerpolicy="no-referrer" /></p>
+<p><em>图：OpenAI 官方展示的 ChatGPT Work 网页端与移动端入口。</em></p>
+<p>需要注意的是：<strong>网页或手机端的 Work 对话与桌面端 Work 对话目前不互通</strong>。云端是云端，本地是本地；Chat 对话则可以在网页和桌面端之间同步。</p>
+<p>原来独立的 Codex App 已经并入新版 ChatGPT 桌面端，一个 App 里可以切换 Chat、Work 和 Codex。开发者可以把 Codex 设为默认打开视图，也可以把 App 图标换成 Codex logo。原来的 ChatGPT 桌面端则会更名为 ChatGPT Classic。</p>
+<h2>Chat 和 Work、Codex 的额度共享吗？</h2>
+<p><strong>Chat 与 Work/Codex 不共享，但 Work 与 Codex 彼此共享。</strong></p>
+<p>Chat 对话有独立的消息限额，图片生成和语音也各有自己的限额与重置周期。</p>
+<p>Work 和 Codex 使用另一个池子，OpenAI 称为“智能体用量”（agentic usage）。Codex、ChatGPT Work、ChatGPT for Excel 和 Workspace Agents，都会从同一个智能体额度池中扣减。</p>
+<p>所以，在 Chat 里聊得再多，并不会影响 Work 和 Codex 的额度；但 Work 和 Codex 会互相挤占。白天用 Work 跑了一堆复杂任务，晚上再用 Codex 写代码，可能就会发现智能体额度已经不多了。</p>
+<h2>Work 要额外付费吗？</h2>
+<p>Work 不是独立付费产品。它与 Codex 共用智能体额度，包含在现有的 ChatGPT 订阅中。所有计划都能使用，从免费版到企业版，区别主要是额度。</p>
+<table>
+<thead>
+<tr>
+<th>计划</th>
+<th>价格与定位</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Free</td>
+<td>可以试用 Work 和 Codex，额度非常有限；美国地区有广告</td>
+</tr>
+<tr>
+<td>Go</td>
+<td>8 美元/月，额度约为免费版的 10 倍；桌面端可有限使用 GPT-5.6 Terra；没有 Deep Research 和 Agent Mode；有广告</td>
+</tr>
+<tr>
+<td>Plus</td>
+<td>20 美元/月，第一个无广告且功能完整的档位；包含 Deep Research、Codex 和 Agent Mode</td>
+</tr>
+<tr>
+<td>Pro</td>
+<td>100 或 200 美元/月；100 美元档额度约为 Plus 的 5 倍，200 美元档约为 20 倍，面向重度用户</td>
+</tr>
+<tr>
+<td>Business</td>
+<td>20 美元/月/人起，按年付；月付 25 美元；至少 2 人，包含 SSO 和合规控制，数据默认不用于训练</td>
+</tr>
+<tr>
+<td>Enterprise</td>
+<td>定制报价，150 人起</td>
+</tr>
+</tbody>
+</table>
+<p>额度计费从 4 月开始改成按 Token 消耗。更强的模型和 Fast 模式会消耗更多。Plus 与 Pro 用户在额度用完后，可以购买额外 credits 继续使用。</p>
+<h2>GPT-5.6 的 Sol、Terra、Luna 怎么选？</h2>
+<p>GPT-5.6 有三个子型号：</p>
+<table>
+<thead>
+<tr>
+<th>型号</th>
+<th>定位</th>
+<th>API 价格（每百万 Token，输入/输出）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sol</td>
+<td>能力最强，适合复杂推理和高难度编程</td>
+<td>5 / 30 美元</td>
+</tr>
+<tr>
+<td>Terra</td>
+<td>能力与成本居中，适合作为日常默认选择</td>
+<td>2.5 / 15 美元</td>
+</tr>
+<tr>
+<td>Luna</td>
+<td>最快、最便宜，适合简单任务或对速度敏感的场景</td>
+<td>1 / 6 美元</td>
+</tr>
+</tbody>
+</table>
+<p>Free 和 Go 用户只能使用 Terra。Plus 及以上可以选择三个型号，也能调节 effort 级别。</p>
+<p><code>ultra</code> effort 在 Work 中只对 Pro 和 Enterprise 用户开放；在 Codex 中，Plus 及以上就可以使用。</p>
+<h2>Work 上线后，原来的 ChatGPT 还在吗？</h2>
+<p>在。Chat 模式就是原来的 ChatGPT，一切照旧。</p>
+<p>桌面端点击 Quick chat 就能新建普通对话，手机端可以从顶部下拉菜单选择 Chat。你完全可以无视 Work 和 Codex，继续像以前一样使用 ChatGPT。</p>
+<hr />
+<h2>ChatGPT Work 和 Claude Cowork 有什么区别？</h2>
+<p>第二条 Post 讨论的是另一个很容易混淆的问题：ChatGPT Work 桌面端与 Claude Cowork 桌面端怎么选？</p>
+<p>两者现在都是桌面端智能体，都能操作本地文件、使用 Computer Use 控制电脑，也都支持定时任务。但实际用起来，路径和体验差别不小。</p>
+<h3>1. 执行架构不同</h3>
+<p>Cowork 会在电脑上运行一个隔离的 Linux 虚拟机作为沙箱。文件操作在本地沙箱中完成，生成的 <code>.docx</code>、<code>.xlsx</code>、<code>.pptx</code>、<code>.pdf</code> 等文件会直接保存到你指定的文件夹。</p>
+<p>ChatGPT Work 桌面端继承了 Codex 的沙箱和权限控制体系，使用操作系统原生隔离机制：macOS 上是 Seatbelt，Windows 上是 Windows Sandbox。它还内置浏览器，不需要额外安装扩展，就能查资料并操作网页工具。</p>
+<h3>2. 操作电脑的方式不同</h3>
+<p>ChatGPT Work 桌面端的 Computer Use 可以在后台操作其他应用，完成点击、打字和移动文件。你会在屏幕上看到一个“不是你在动”的第二个光标。</p>
+<p>Cowork 也有 Computer Use，目前仍处于研究预览阶段。它通过 Claude in Chrome 扩展操作浏览器，通过桌面端直接操作应用。</p>
+<h3>3. 应用连接方式不同</h3>
+<p>ChatGPT Work 使用统一的 plugins 目录，有 60 多个连接器对接 Slack、Teams、Google Drive、SharePoint、Salesforce 等服务。你可以在提示词里用 <code>@</code> 指定应用名并拉取数据。</p>
+<p>Cowork 使用 MCP（Model Context Protocol，模型上下文协议）连接器，对接 Slack、Notion、HubSpot、Jira、Linear 等服务。它还有 11 个面向销售、法务、营销、财务等行业的官方插件，也支持自建插件。</p>
+<h3>4. 产品结构相似，但并不相同</h3>
+<p>ChatGPT 桌面端现在是三合一：Chat、Work、Codex 在同一个 App 中，通过模式切换器选择。</p>
+<p>Claude 桌面端最近也做了改版，从原来的 Chat、Cowork、Code 三个标签，合并成 Home 和 Code 两个标签。</p>
+<p>Home 中，Chat 与 Cowork 共用一个首页，对话、Cowork 任务、项目和文件都放在同一个侧边栏中；你可以从消息框左下角切换 Chat 和 Cowork。Code 标签则是 Claude Code 的桌面界面，专门用于软件开发。</p>
+<p>结构上，两家现在很像：<strong>都是把日常对话、知识工作和编程三种模式塞进同一个桌面 App。</strong></p>
+<h3>5. 跨设备能力不同</h3>
+<p>Claude Cowork 从 7 月 7 日开始向网页和手机端扩展，当前为 Beta，Max 用户优先，其他付费计划陆续开放。</p>
+<p>Cowork 任务可以远程运行在 Anthropic 的服务器上。关掉电脑后，任务也能继续执行；你可以在手机上查看进度、回答 Claude 的问题，或者换一台设备接着做，定时任务也可以在后台运行。</p>
+<p>但有一个限制：如果任务需要读写本地文件、使用浏览器或 Computer Use，桌面端 App 必须保持打开。远程会话需要通过桌面端访问这些本地资源。</p>
+<p>ChatGPT 这边，Chat 对话可以在网页和桌面端之间同步，但 Work 对话目前不互通。网页或手机端创建的 Work 对话留在云端，不会出现在桌面端 Work 中；桌面端的 Work 线程与本地文件也留在那台电脑上。Codex 桌面端任务不会出现在网页端，但可以通过手机 App 的 Remote 标签远程查看。</p>
+<p><strong>Claude Cowork 的跨设备同步目前走得更靠前：同一个会话可以在桌面、网页和手机之间流转。ChatGPT Work 的云端与桌面端仍然割裂，这是 OpenAI 明确说明的“at launch”限制，后续大概率会补上。</strong></p>
+<h2>最后怎么选？</h2>
+<ul>
+<li>只是问问题、讨论想法、快速生成内容：用 Chat。</li>
+<li>需要跨邮件、文档、聊天和业务系统收集信息，并交付完整成品：用 Work。</li>
+<li>需要读取代码仓库、改代码、跑测试和提交 PR：用 Codex。</li>
+<li>更看重同一个智能体任务在桌面、网页和手机之间流转：当前 Claude Cowork 更领先一步。</li>
+</ul>
+<p>真正要记住的不是产品名，而是任务边界：<strong>Chat 给答案，Work 交成品，Codex 改代码。</strong></p>
+<h2>参考资料</h2>

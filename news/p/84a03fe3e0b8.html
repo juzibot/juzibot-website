@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>用后见之明自动评分十年旧的 Hacker News 讨论 - 句子·动态</title>
+<meta name="description" content="这是一个关于用大语言模型（LLM）大规模回顾性自动评分十年旧Hacker News讨论的思考练习，探讨了vibe coding在历史数据分析中的应用可能性。" />
+<meta name="robots" content="noindex,follow" />
+<link rel="canonical" href="https://karpathy.bearblog.dev/auto-grade-hn/" />
+<link rel="icon" href="../../logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../../assets/site.css" />
+<style>
+  .dp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
+  .dp-wrap{max-width:760px;margin:0 auto}
+  .dp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
+  .dp-back:hover{color:var(--blue)}
+  .dp-meta{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:14px}
+  .dp-srcb{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:750;color:var(--sc,var(--blue))}
+  .s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
+  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-wecom{--sc:#2563EB}.s-voices{--sc:#9333EA}
+  .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
+  .dp-cat{display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ink-3);background:#F6F7FB;border:1px solid var(--line-2);border-radius:6px;padding:2px 8px}
+  .dp-date{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-3)}
+  .dp-title{font-size:clamp(24px,3.2vw,34px);font-weight:850;letter-spacing:-.03em;line-height:1.32;word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance;margin-bottom:10px}
+  .dp-orig{font-size:13px;color:var(--ink-3);overflow-wrap:anywhere;margin-bottom:8px}
+  .dp-by{font-size:12.5px;font-weight:600;color:var(--ink-3);margin-bottom:18px}
+  .dp-notice{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:1.7;color:var(--ink-2);background:#F6F7FB;border:1px solid var(--line-2);border-radius:10px;padding:10px 14px;margin-bottom:22px}
+  .dp-notice i{color:var(--blue);margin-top:4px;flex:0 0 auto}
+  .dp-notice a{color:var(--blue);font-weight:700;overflow-wrap:anywhere}
+  .dp-quip{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.66;font-weight:600;color:var(--blue-deep);background:var(--blue-50);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:18px}
+  .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
+  .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
+  .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
+  .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
+  .dp-body p{margin:0 0 1.05em}
+  .dp-body img{max-width:100%;height:auto;border-radius:10px;margin:.4em 0}
+  .dp-body pre{background:#0F172A;color:#E2E8F0;font-family:var(--mono);font-size:12.5px;line-height:1.7;padding:14px 16px;border-radius:10px;overflow-x:auto;margin:0 0 1.1em}
+  .dp-body code{font-family:var(--mono);font-size:.92em}
+  .dp-body :not(pre)>code{background:#F1F5F9;padding:1px 5px;border-radius:5px}
+  .dp-body blockquote{border-left:3px solid var(--line);padding:2px 0 2px 14px;color:var(--ink-3);margin:0 0 1.05em}
+  .dp-body a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+  .dp-body ul,.dp-body ol{padding-left:1.5em;margin:0 0 1.05em}
+  .dp-body table{display:block;overflow-x:auto;border-collapse:collapse;margin:0 0 1.1em}
+  .dp-body td,.dp-body th{border:1px solid var(--line);padding:6px 10px;font-size:.92em}
+  .dp-excerpt{font-size:15px;line-height:1.9;color:var(--ink-2);border-left:3px solid var(--line);padding:2px 0 2px 16px;margin-bottom:8px}
+  .dp-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;padding-top:20px;border-top:1px solid var(--line-2)}
+  .dp-btn{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:750;border-radius:999px;padding:10px 20px;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+  .dp-btn.pri{background:var(--blue);color:#fff}
+  .dp-btn.pri:hover{background:var(--blue-deep)}
+  .dp-btn.sec{background:#fff;color:var(--ink-2);border:1px solid var(--line)}
+  .dp-btn.sec:hover{color:var(--blue);border-color:var(--blue)}
+  .dp-note{font-size:11.5px;line-height:1.7;color:var(--ink-3);margin-top:18px}
+  .dp-langbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+  .dp-lang{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:750;color:var(--blue);
+    background:var(--blue-50);border:1px solid var(--blue-100);border-radius:999px;padding:7px 14px;
+    transition:background .2s var(--ease),border-color .2s var(--ease)}
+  .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
+  .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div id="site-nav"></div>
+<main class="dp-main">
+  <div class="dp-wrap">
+    <a class="dp-back" href="../../news.html"><i class="fa-solid fa-arrow-left"></i>返回动态</a>
+    <div class="dp-meta">
+      <span class="dp-srcb s-voices"><i class="fa-solid fa-feather"></i>大咖观点</span>
+      <span class="dp-cat">Karpathy</span>
+      <time class="dp-date" datetime="2025-12-10">2025-12-10</time>
+    </div>
+    <h1 class="dp-title">用后见之明自动评分十年旧的 Hacker News 讨论</h1>
+    <p class="dp-orig">原题：Auto-grading decade-old Hacker News discussions with hindsight</p>
+    <p class="dp-by">来源：Karpathy · 大咖观点</p>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（Karpathy · 大咖观点）所有 · <a href="https://karpathy.bearblog.dev/auto-grade-hn/" target="_blank" rel="noopener">阅读原文</a></span></div>
+    
+    <div class="dp-brief"><b>简报</b>这是一个关于用大语言模型（LLM）大规模回顾性自动评分十年旧Hacker News讨论的思考练习，探讨了vibe coding在历史数据分析中的应用可能性。</div>
+    <div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang"><i class="fa-solid fa-language"></i><span>翻译为中文</span></button><span class="dp-lang-note">中文由 AI 翻译，仅供参考</span></div><article class="dp-body" id="dpBodyOrig"><h1>Auto-grading decade-old Hacker News discussions with hindsight</h1>
+
+        <p>
+            <i>
+                
+    10 Dec, 2025
+
+            </i>
+        </p>
+    
+
+    <p><img loading="lazy" onerror="this.style.display='none'" src="https://bear-images.sfo2.cdn.digitaloceanspaces.com/karpathy/hnhero.webp" alt="hnhero" referrerpolicy="no-referrer" /></p>
+<p>TLDR: <a href="https://karpathy.ai/hncapsule/" target="_blank" rel="noopener nofollow">https://karpathy.ai/hncapsule/</a></p>
+<hr />
+<p>Yesterday I stumbled on this HN thread <a href="https://news.ycombinator.com/item?id=46205632" target="_blank" rel="noopener nofollow">Show HN: Gemini Pro 3 hallucinates the HN front page 10 years from now</a>, where Gemini 3 was hallucinating the frontpage of 10 years from now. One of the comments struck me a bit more though - Bjartr linked to the <a href="https://news.ycombinator.com/front?day=2015-12-09" target="_blank" rel="noopener nofollow">HN frontpage from exactly 10 years ago</a>, i.e. December 2015. I was reading through the discussions of 10 years ago and mentally grading them for prescience when I realized that an <a class="cpt" href="../c/large-language-model.html" data-def="大型语言模型是基于海量文本数据训练的AI模型，能理解和生成自然语言">LLM</a> might actually be a lot better at this task. I copy pasted one of the article+comment threads manually into ChatGPT 5.1 Thinking and it gave me a beautiful analysis of what people thought + what actually happened in retrospect, even better and significantly more detailed than what I was doing manually. I realized that this task is actually a really good fit for LLMs and I was looking for excuses to vibe code something with the newly released Opus 4.5, so I got to work. I&#x27;m going to get all the front pages of December (31 days, 30 articles per day), get ChatGPT 5.1 Thinking to do the analysis, and present everything in a nice way for historical reading.</p>
+<p>There are two macro reasons for why I think the exercise is interesting more generally:</p>
+<ol>
+<li>I believe it is quite possible and desirable to train your forward future predictor given training and effort.</li>
+<li>I was reminded again of my tweets that said <em>&quot;Be good, future LLMs are watching&quot;</em>. You can take that in many directions, but here I want to focus on the idea that future LLMs <strong>are</strong> watching. Everything we do today might be scrutinized in great detail in the future because doing so will be &quot;free&quot;. A lot of the ways people behave currently I think make an implicit &quot;security by obscurity&quot; assumption. But if intelligence really does become too cheap to meter, it will become possible to do a perfect reconstruction and synthesis of everything. LLMs are watching (or humans using them might be). Best to be good.</li>
+</ol>
+<p><a class="cpt" href="../c/vibe-coding.html" data-def="凭感觉编程是一种依赖直觉和即时反馈的软件开发方式，开发者跳过详细规划和测试，快速迭代代码">Vibe coding</a> the actual project was relatively painless and took about 3 hours with Opus 4.5, with a few hickups but overall very impressive. The repository is on GitHub here: <a href="https://github.com/karpathy/hn-time-capsule" target="_blank" rel="noopener nofollow">karpathy/hn-time-capsule</a>. Here is the progression of what the code does:</p>
+<ul>
+<li>Given a date, download the frontpage of 30 articles</li>
+<li>For each article, download/parse the article itself and the full comment thread using Algolia API.</li>
+<li>Package up everything into a markdown prompt asking for the analysis. Here is the prompt prefix I used:</li>
+</ul>
+<pre>The following is an article that appeared on Hacker News 10 years ago, and the discussion thread.
+
+Let&#x27;s use our benefit of hindsight now in 6 sections:
+
+1. Give a brief summary of the article and the discussion thread.
+2. What ended up happening to this topic? (research the topic briefly and write a summary)
+3. Give out awards for &quot;Most prescient&quot; and &quot;Most wrong&quot; comments, considering what happened.
+4. Mention any other fun or notable aspects of the article or discussion.
+5. Give out grades to specific people for their comments, considering what happened.
+6. At the end, give a final score (from 0-10) for how interesting this article and its retrospect analysis was.
+
+As for the format of Section 5, use the header &quot;Final grades&quot; and follow it with simply an unordered list of people and their grades in the format of &quot;name: grade (optional comment)&quot;. Here is an example:
+
+Final grades
+- speckx: A+ (excellent predictions on ...)
+- tosh: A (correctly predicted this or that ...)
+- keepamovin: A
+- bgwalter: D
+- fsflover: F (completely wrong on ...)
+
+Your list may contain more people of course than just this toy example. Please follow the format exactly because I will be parsing it programmatically. The idea is that I will accumulate the grades for each account to identify the accounts that were over long periods of time the most prescient or the most wrong.
+
+As for the format of Section 6, use the prefix &quot;Article hindsight analysis interestingness score:&quot; and then the score (0-10) as a number. Give high scores to articles/discussions that are prominent, notable, or interesting in retrospect. Give low scores in cases where few predictions are made, or the topic is very niche or obscure, or the discussion is not very interesting in retrospect.
+
+Here is an example:
+Article hindsight analysis interestingness score: 8
+---
+</pre>
+<ul>
+<li>Submit prompt to GPT 5.1 Thinking via the OpenAI API</li>
+<li>Collect and parse the results</li>
+<li>Render the results into static HTML web pages for easy viewing</li>
+<li>Host the html result pages on my website: <a href="https://karpathy.ai/hncapsule/" target="_blank" rel="noopener nofollow">https://karpathy.ai/hncapsule/</a></li>
+<li>Host all the intermediate results of the <code>data</code> directory if someone else would like to play. It&#x27;s the file <code>data.zip</code> under the exact same url prefix (intentionally avoiding a direct link).</li>
+</ul>
+<p>I spent a few hours browsing around and found it to be very interesting. A few example threads just for fun:</p>
+<ul>
+<li>December 3 2015 <a href="https://karpathy.ai/hncapsule/2015-12-03/index.html#article-10669891" target="_blank" rel="noopener nofollow">Swift went open source</a>.</li>
+<li>December 6 2015 <a href="https://karpathy.ai/hncapsule/2015-12-06/index.html#article-10685407" target="_blank" rel="noopener nofollow">Launch of Figma</a></li>
+<li>December 11 2015 <a href="https://karpathy.ai/hncapsule/2015-12-11/index.html#article-10720176" target="_blank" rel="noopener nofollow">original announcement of OpenAI</a> :&#x27;).</li>
+<li>December 16 2015 <a href="https://karpathy.ai/hncapsule/2015-12-16/index.html#article-10744206" target="_blank" rel="noopener nofollow">geohot is building Comma</a></li>
+<li>December 22 2015 <a href="https://karpathy.ai/hncapsule/2015-12-22/index.html#article-10774865" target="_blank" rel="noopener nofollow">SpaceX launch webcast: Orbcomm-2 Mission</a></li>
+<li>December 28 2015 <a href="https://karpathy.ai/hncapsule/2015-12-28/index.html#article-10799261" target="_blank" rel="noopener nofollow">Theranos struggles</a></li>
+</ul>
+<p>And then when you navigate over to the <a href="https://karpathy.ai/hncapsule/hall-of-fame.html" target="_blank" rel="noopener nofollow">Hall of Fame</a>, you can find the top commenters of Hacker News in December 2015, sorted by imdb-style score of their grade point average. In particular, congratulations to pcwalton, tptacek, paulmd, cstross, greglindahl, moxie, hannob, 0xcde4c3db, Manishearth, johncolanduoni - GPT 5.1 Thinking found your comments very insightful and prescient. You can also scroll all the way down to find the noise of HN, which I think we&#x27;re all familiar with too :)</p>
+<p>My <a href="https://github.com/karpathy/hn-time-capsule" target="_blank" rel="noopener nofollow">code</a> (wait, Opus&#x27; code?) on GitHub can be used to reproduce or tweak the results. Running 31 days of 30 articles through GPT 5.1 Thinking meant <code>31 * 30 =</code> 930 LLM queries and cost about $58 and somewhere around ~1 hour. The LLM megaminds of the future might find this kind of a thing a lot easier, a lot faster and a lot cheaper.</p></article><article class="dp-body" id="dpBodyZh" hidden><h1>用后见之明自动评估十年前 Hacker News 讨论的价值</h1>
+
+        <p>
+            <i>
+                
+    2025年12月10日
+
+            </i>
+        </p>
+    
+
+    <p><img loading="lazy" onerror="this.style.display='none'" src="https://bear-images.sfo2.cdn.digitaloceanspaces.com/karpathy/hnhero.webp" alt="hnhero" referrerpolicy="no-referrer" /></p>
+<p>太长不看：<a href="https://karpathy.ai/hncapsule/" target="_blank" rel="noopener nofollow">https://karpathy.ai/hncapsule/</a></p>
+<hr />
+<p>昨天我偶然发现了这个 HN 帖子 <a href="https://news.ycombinator.com/item?id=46205632" target="_blank" rel="noopener nofollow">Show HN: Gemini Pro 3 幻想了10年后的 HN 首页</a>，其中 Gemini 3 在幻想十年后的首页内容。不过有一条评论更让我印象深刻——Bjartr 链接到了 <a href="https://news.ycombinator.com/front?day=2015-12-09" target="_blank" rel="noopener nofollow">整整10年前的 HN 首页</a>，也就是2015年12月的。我正在阅读十年前的讨论，并在心里评估它们的预见性时，突然意识到 <a class="cpt" href="../c/large-language-model.html" data-def="大型语言模型是基于海量文本数据训练的AI模型，能理解和生成自然语言">LLM</a> 可能更擅长这个任务。我手动将其中一个文章加评论的帖子复制粘贴到 ChatGPT 5.1 Thinking 中，它给出了一个精彩的分析，回顾了当时人们的看法以及实际发生的情况，甚至比我手动做的更好、详细得多。我意识到这个任务其实非常适合 LLM，而且我也在找借口用新发布的 Opus 4.5 随性编点东西，于是我就开始动手了。我打算获取十二月所有的首页（31天，每天30篇文章），让 ChatGPT 5.1 Thinking 进行分析，并以一种便于历史阅读的优雅方式呈现所有内容。</p>
+<p>我认为这个练习更普遍地有趣，有两个宏观原因：</p>
+<ol>
+<li>我相信，通过训练和努力，培养你自己的前瞻性未来预测器是完全可能且值得的。</li>
+<li>这让我再次想起我发过的推文：<em>“做个好人，未来的 LLM 正在看着呢。”</em> 这句话可以从很多角度理解，但在这里我想强调的是，未来的 LLM <strong>确实在</strong>看着。我们今天所做的一切，未来都可能被详细审视，因为这样做将是“免费”的。我认为，人们目前的很多行为都隐含了“通过隐匿实现安全”的假设。但如果智能真的变得廉价到无法计量，那么完美地重建和综合一切将成为可能。LLM 正在看着（或者使用它们的人类可能在看着）。最好还是做个好人。</li>
+</ol>
+<p>使用 Opus 4.5 进行氛围编程开发实际项目的过程相对轻松，大约耗时 3 小时，期间遇到一些小插曲，但整体表现非常出色。代码仓库已发布在 GitHub：<a href="https://github.com/karpathy/hn-time-capsule" target="_blank" rel="noopener nofollow">karpathy/hn-time-capsule</a>。以下是代码功能的演进说明：</p>
+<ul>
+<li>根据指定日期，下载首页的 30 篇文章</li>
+<li>针对每篇文章，通过 Algolia API 下载/解析文章正文及完整评论讨论串</li>
+<li>将所有内容打包成用于分析的 Markdown 提示词。以下是我使用的提示词前缀：</li>
+</ul>
+<pre>The following is an article that appeared on Hacker News 10 years ago, and the discussion thread.
+
+Let&#x27;s use our benefit of hindsight now in 6 sections:
+
+1. Give a brief summary of the article and the discussion thread.
+2. What ended up happening to this topic? (research the topic briefly and write a summary)
+3. Give out awards for &quot;Most prescient&quot; and &quot;Most wrong&quot; comments, considering what happened.
+4. Mention any other fun or notable aspects of the article or discussion.
+5. Give out grades to specific people for their comments, considering what happened.
+6. At the end, give a final score (from 0-10) for how interesting this article and its retrospect analysis was.
+
+As for the format of Section 5, use the header &quot;Final grades&quot; and follow it with simply an unordered list of people and their grades in the format of &quot;name: grade (optional comment)&quot;. Here is an example:
+
+Final grades
+- speckx: A+ (excellent predictions on ...)
+- tosh: A (correctly predicted this or that ...)
+- keepamovin: A
+- bgwalter: D
+- fsflover: F (completely wrong on ...)
+
+Your list may contain more people of course than just this toy example. Please follow the format exactly because I will be parsing it programmatically. The idea is that I will accumulate the grades for each account to identify the accounts that were over long periods of time the most prescient or the most wrong.
+
+As for the format of Section 6, use the prefix &quot;Article hindsight analysis interestingness score:&quot; and then the score (0-10) as a number. Give high scores to articles/discussions that are prominent, notable, or interesting in retrospect. Give low scores in cases where few predictions are made, or the topic is very niche or obscure, or the discussion is not very interesting in retrospect.
+
+Here is an example:
+Article hindsight analysis interestingness score: 8
+---
+</pre>
+<ul>
+<li>通过 OpenAI API 向 GPT 5.1 Thinking 提交提示词</li>
+<li>收集并解析结果</li>
+<li>将结果渲染成静态 HTML 网页，方便查看</li>
+<li>将 HTML 结果页面托管在我的网站上：<a href="https://karpathy.ai/hncapsule/" target="_blank" rel="noopener nofollow">https://karpathy.ai/hncapsule/</a></li>
+<li>托管 <code>data</code> 目录下的所有中间结果，供其他人把玩。文件是 <code>data.zip</code>，位于完全相同的 URL 前缀下（故意避免直接链接）。</li>
+</ul>
+<p>我花了几小时浏览，觉得非常有趣。这里列举几个纯属娱乐的帖子：</p>
+<ul>
+<li>2015 年 12 月 3 日 <a href="https://karpathy.ai/hncapsule/2015-12-03/index.html#article-10669891" target="_blank" rel="noopener nofollow">Swift 开源了</a>。</li>
+<li>2015 年 12 月 6 日 <a href="https://karpathy.ai/hncapsule/2015-12-06/index.html#article-10685407" target="_blank" rel="noopener nofollow">Figma 发布</a></li>
+<li>2015 年 12 月 11 日 <a href="https://karpathy.ai/hncapsule/2015-12-11/index.html#article-10720176" target="_blank" rel="noopener nofollow">OpenAI 的最初公告</a> :&#x27;）。</li>
+<li>2015 年 12 月 16 日 <a href="https://karpathy.ai/hncapsule/2015-12-16/index.html#article-10744206" target="_blank" rel="noopener nofollow">geohot 正在打造 Comma</a></li>
+<li>2015 年 12 月 22 日 <a href="https://karpathy.ai/hncapsule/2015-12-22/index.html#article-10774865" target="_blank" rel="noopener nofollow">SpaceX 发射直播：Orbcomm-2 任务</a></li>
+<li>2015 年 12 月 28 日 <a href="https://karpathy.ai/hncapsule/2015-12-28/index.html#article-10799261" target="_blank" rel="noopener nofollow">Theranos 陷入困境</a></li>
+</ul>
+<p>然后当你导航到 <a href="https://karpathy.ai/hncapsule/hall-of-fame.html" target="_blank" rel="noopener nofollow">名人堂</a> 时，你可以找到 2015 年 12 月 Hacker News 的顶级评论者，按其平均绩点的 IMDb 风格评分排序。特别要祝贺 pcwalton、tptacek、paulmd、cstross、greglindahl、moxie、hannob、0xcde4c3db、Manishearth、johncolanduoni——GPT 5.1 Thinking 发现你们的评论非常有洞察力和预见性。你也可以一直滚动到底部，找到 HN 的噪音，我想我们对此也都同样熟悉 :)</p>
+<p>我在 GitHub 上的<a href="https://github.com/karpathy/hn-time-capsule" target="_blank" rel="noopener nofollow">代码</a>（等等，这算是 Opus 的代码吗？）可以用来复现或调整结果。让 GPT 5.1 Thinking 处理 31 天、每天 30 篇文章的数据，意味着需要 <code>31 * 30 =</code> 930 次 LLM 查询，花费大约 58 美元，耗时约 1 小时。未来的 LLM 超级大脑们可能会觉得这类事情轻松得多、快得多，也便宜得多。</p></article>
+    <div class="dp-actions">
+      <a class="dp-btn pri" href="https://karpathy.bearblog.dev/auto-grade-hn/" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      
+      <button type="button" class="dp-btn sec" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
+      <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
+    </div>
+    <p class="dp-note">本页由句子互动动态管线自动生成，聚合内容版权归各来源所有；如来源方希望调整或移除收录，请通过官网联系我们。</p>
+  </div>
+</main>
+<div id="site-footer"></div>
+<script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "用后见之明自动评分十年旧的 Hacker News 讨论"};</script>
+<script src="../../assets/site.js"></script>
+<script>
+(function(){var b=document.getElementById('dpLang');if(!b)return;
+var en=document.getElementById('dpBodyOrig'),zh=document.getElementById('dpBodyZh');
+b.addEventListener('click',function(){var on=zh.hidden;zh.hidden=!on;en.hidden=on;
+b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';});})();
+</script>
+</body>
+</html>

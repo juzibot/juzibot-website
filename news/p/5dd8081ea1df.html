@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>如何用 QnAMaker.ai 构建一个投融资聊天机器人 - Azure Show - 句子·动态</title>
+<meta name="description" content="欢迎来到 Azure Show 的从零开始，第一期的嘉宾 Rui Li，李佳芮句子互动创始人，连续创业者，微软人工智能最有价值专家（AI MVP），GitHub 10000+ Stars开源项目Wechaty作者，创建并管理了覆盖全球的微信聊天机器人开发者社区，" />
+<meta name="robots" content="index,follow" />
+<link rel="canonical" href="https://juzibot.com/news/p/5dd8081ea1df.html" />
+<link rel="icon" href="../../logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../../assets/site.css" />
+<style>
+  .dp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
+  .dp-wrap{max-width:760px;margin:0 auto}
+  .dp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
+  .dp-back:hover{color:var(--blue)}
+  .dp-meta{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:14px}
+  .dp-srcb{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:750;color:var(--sc,var(--blue))}
+  .s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
+  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-wecom{--sc:#2563EB}.s-voices{--sc:#9333EA}
+  .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
+  .dp-cat{display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ink-3);background:#F6F7FB;border:1px solid var(--line-2);border-radius:6px;padding:2px 8px}
+  .dp-date{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-3)}
+  .dp-title{font-size:clamp(24px,3.2vw,34px);font-weight:850;letter-spacing:-.03em;line-height:1.32;word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance;margin-bottom:10px}
+  .dp-orig{font-size:13px;color:var(--ink-3);overflow-wrap:anywhere;margin-bottom:8px}
+  .dp-by{font-size:12.5px;font-weight:600;color:var(--ink-3);margin-bottom:18px}
+  .dp-notice{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:1.7;color:var(--ink-2);background:#F6F7FB;border:1px solid var(--line-2);border-radius:10px;padding:10px 14px;margin-bottom:22px}
+  .dp-notice i{color:var(--blue);margin-top:4px;flex:0 0 auto}
+  .dp-notice a{color:var(--blue);font-weight:700;overflow-wrap:anywhere}
+  .dp-quip{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.66;font-weight:600;color:var(--blue-deep);background:var(--blue-50);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:18px}
+  .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
+  .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
+  .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
+  .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
+  .dp-body p{margin:0 0 1.05em}
+  .dp-body img{max-width:100%;height:auto;border-radius:10px;margin:.4em 0}
+  .dp-body pre{background:#0F172A;color:#E2E8F0;font-family:var(--mono);font-size:12.5px;line-height:1.7;padding:14px 16px;border-radius:10px;overflow-x:auto;margin:0 0 1.1em}
+  .dp-body code{font-family:var(--mono);font-size:.92em}
+  .dp-body :not(pre)>code{background:#F1F5F9;padding:1px 5px;border-radius:5px}
+  .dp-body blockquote{border-left:3px solid var(--line);padding:2px 0 2px 14px;color:var(--ink-3);margin:0 0 1.05em}
+  .dp-body a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+  .dp-body ul,.dp-body ol{padding-left:1.5em;margin:0 0 1.05em}
+  .dp-body table{display:block;overflow-x:auto;border-collapse:collapse;margin:0 0 1.1em}
+  .dp-body td,.dp-body th{border:1px solid var(--line);padding:6px 10px;font-size:.92em}
+  .dp-excerpt{font-size:15px;line-height:1.9;color:var(--ink-2);border-left:3px solid var(--line);padding:2px 0 2px 16px;margin-bottom:8px}
+  .dp-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;padding-top:20px;border-top:1px solid var(--line-2)}
+  .dp-btn{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:750;border-radius:999px;padding:10px 20px;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+  .dp-btn.pri{background:var(--blue);color:#fff}
+  .dp-btn.pri:hover{background:var(--blue-deep)}
+  .dp-btn.sec{background:#fff;color:var(--ink-2);border:1px solid var(--line)}
+  .dp-btn.sec:hover{color:var(--blue);border-color:var(--blue)}
+  .dp-note{font-size:11.5px;line-height:1.7;color:var(--ink-3);margin-top:18px}
+  .dp-langbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+  .dp-lang{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:750;color:var(--blue);
+    background:var(--blue-50);border:1px solid var(--blue-100);border-radius:999px;padding:7px 14px;
+    transition:background .2s var(--ease),border-color .2s var(--ease)}
+  .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
+  .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div id="site-nav"></div>
+<main class="dp-main">
+  <div class="dp-wrap">
+    <a class="dp-back" href="../../news.html"><i class="fa-solid fa-arrow-left"></i>返回动态</a>
+    <div class="dp-meta">
+      <span class="dp-srcb s-rui-blog"><i class="fa-solid fa-pen-nib"></i>博客精选</span>
+      <span class="dp-cat">演讲</span>
+      <time class="dp-date" datetime="2020-05-19">2020-05-19</time>
+    </div>
+    <h1 class="dp-title">如何用 QnAMaker.ai 构建一个投融资聊天机器人 - Azure Show</h1>
+    
+    <p class="dp-by">来源：李佳芮 · 博客精选</p>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>句子互动自家内容，首发于李佳芮的博客，本页为官网收录版 · <a href="https://rui.juzi.bot/presentation/2020-05-19-qnamaker-juzi-bot-for-investors-rui.html" target="_blank" rel="noopener">看原发布</a></span></div>
+    
+    
+    <article class="dp-body"><p>欢迎来到 Azure Show 的从零开始，第一期的嘉宾 Rui Li，李佳芮句子互动创始人，连续创业者，微软人工智能最有价值专家（AI MVP），GitHub 10000+ Stars开源项目Wechaty作者，创建并管理了覆盖全球的微信<a class="cpt" href="../c/chatbot.html" data-def="聊天机器人是基于自然语言处理技术的对话系统，能模拟人类与用户进行文本或语音交互">聊天机器人</a>开发者社区，《Chatbot从0到1：对话式交互设计指南》作者。句子互动围绕微信生态为客户提供智能营销和销售服务，帮助企业引流并实现转化，客户覆盖教育、保险、大健康等多个领域。曾入选百度AI加速器，获得PreAngel、Plug and Play，Y Combination, TSVC和阿尔法公社多家中美机构投资。</p>
+<p><img referrerpolicy="no-referrer" onerror="this.style.display='none'" alt="Azure Show" src="../img/5dd8081ea1df/1f7ded4df88c.png" / loading="lazy" decoding="async"></p>
+<h2>Azure Show</h2>
+<p>Azure Show 是由微软最有价值专家、微软技术社区区域总监卢建晖和微软开发者关系PM朱兴亮共同发起的一个关于微软Azure、开源技术、还有技术社区相关的线上节目。每期节目由MVP面对面、开源故事、从零开始以及Azure101组成，邀请微软技术社区的代表人物以及行业中的技术大牛，与大家分享Azure与开源技术的相关内容，每两周一期，会通过公众号、哔哩哔哩以及油管同步上线，欢迎大家关注。</p>
+<p><a href="https://github.com/Wechaty/wechaty" target="_blank" rel="noopener"><img referrerpolicy="no-referrer" onerror="this.style.display='none'" alt="Powered by Wechaty" src="../img/5dd8081ea1df/19a74a61db64.svg" / loading="lazy" decoding="async"></a></p>
+<h2>Open-source Wechaty</h2>
+<p>Wechaty 联合作者李佳芮，用 20 分钟教会你如何用 Azure Cognitive Service QnAMaker.ai 来构建一个能够自动回答投资人问题的 Chatbot !</p>
+<ul>
+<li>Youtube: <a href="https://www.youtube.com/watch?v=ZYjYAT2g-1Q" target="_blank" rel="noopener">https://www.youtube.com/watch?v=ZYjYAT2g-1Q</a></li>
+</ul>
+<h2>MVP</h2>
+<blockquote>
+<p>本期是我们Azure Show的首秀，谢谢各位小伙伴的关注，非常感谢本期嘉宾Kris，卓桓、佳芮以及我的搭档兴亮的大力支持，还有帮忙进行视频处理的小董。想在最后跟大家聊聊为什么要开设这个线上节目。自2012年成为微软最有价值专家（MVP）以来，开始在各个社区与同行们讨论技术，分享代码，在这个过程中，既是一种分享，也是一种收获。通过社区，不仅解决了自己碰到的一些技术难题也认识到很多好朋友。MVP这个社区，汇聚了来自各个行业，各个国家的IT同行，他们乐于分享，乐于互助，我期待通过这个节目，邀请到更多的行业大牛与大家分享，分享 Azure 的知识，分享他们的开源项目，分享技术社区中的点点滴滴，希望能给大家带来点干货！从第二期开始，我们将正式启动Azure 101活动，帮助大家从0开始认识Azure的知识。第一期节目，也是一次探索，后续我们会不断改进，也欢迎大家留言或者在公众号后台留下你们的建议与意见，</p>
+</blockquote>
+<p><img referrerpolicy="no-referrer" onerror="this.style.display='none'" alt="huan" src="../img/5dd8081ea1df/5ed8f0449c4c.png" / loading="lazy" decoding="async"></p>
+<p>Source: <a href="https://mp.weixin.qq.com/s/szB4YSEAJZxDLSNZr-_3Sw" target="_blank" rel="noopener">Azure Show 第一期 开播啦！嘉宾梁迪&amp;李卓桓&amp;李佳芮</a></p></article>
+    <div class="dp-actions">
+      <a class="dp-btn pri" href="https://rui.juzi.bot/presentation/2020-05-19-qnamaker-juzi-bot-for-investors-rui.html" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      
+      <button type="button" class="dp-btn sec" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
+      <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
+    </div>
+    <p class="dp-note">本页由句子互动动态管线自动生成，聚合内容版权归各来源所有；如来源方希望调整或移除收录，请通过官网联系我们。</p>
+  </div>
+</main>
+<div id="site-footer"></div>
+<script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "如何用 QnAMaker.ai 构建一个投融资聊天机器人 - Azure Show"};</script>
+<script src="../../assets/site.js"></script>
+</body>
+</html>

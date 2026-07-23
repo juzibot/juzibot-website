@@ -5,6 +5,9 @@ on:
       - 'stage-[0-9]'
   workflow_dispatch:
 
+permissions:
+  contents: read  # 通知步骤在 workflow_dispatch 触发时用 gh api 按 SHA 兜底取提交信息(Bugbot PR#100)
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -26,6 +29,7 @@ jobs:
         if: always()
         env:
           LARK_WEBHOOK: ${{ secrets.LARK_WEBHOOK }}
+          GH_TOKEN: ${{ github.token }}
           BR: ${{ github.ref_name }}
           REPO: ${{ github.repository }}
           ACTOR: ${{ github.actor }}
@@ -38,6 +42,12 @@ jobs:
         run: |
           set -uo pipefail
           if [ -z "${LARK_WEBHOOK:-}" ]; then echo "no LARK_WEBHOOK secret, skip"; exit 0; fi
+          # workflow_dispatch(如 news-cron 触发部署)没有 head_commit → COMMIT_MSG/URL 为空,
+          # 按 github.sha 从 API 兜底取提交说明、URL 由 SHA 直接构造, push/dispatch 两种触发都完整(Bugbot PR#100)
+          if [ -z "${COMMIT_MSG:-}" ]; then
+            COMMIT_MSG=$(gh api "repos/$REPO/commits/$SHA" --jq '.commit.message' 2>/dev/null || true)
+          fi
+          if [ -z "${COMMIT_URL:-}" ]; then COMMIT_URL="$SERVER_URL/$REPO/commit/$SHA"; fi
           if [ "$RESULT" = "success" ]; then TITLE="🚀 预览部署成功 [$BR]"; COLOR="green"; else TITLE="❌ 预览部署失败 [$BR]"; COLOR="red"; fi
           MSG1=$(printf '%s' "$COMMIT_MSG" | head -n1)
           PRNUM=$(printf '%s' "$COMMIT_MSG" | grep -oE '#[0-9]+' | head -n1 | tr -d '#' || true)

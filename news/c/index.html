@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>AI 概念索引 - 句子互动</title>
+<meta name="description" content="AI 行业核心概念速查：每个概念一段面向企业决策者的大白话定义，并反向索引提到它的行业动态与技术观点。" />
+<meta name="robots" content="index,follow" />
+<link rel="canonical" href="https://juzibot.com/news/c/index.html" />
+<link rel="icon" href="../../logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../../assets/site.css" />
+<style>
+  .cp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
+  .cp-wrap{max-width:760px;margin:0 auto}
+  .cp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
+  .cp-back:hover{color:var(--blue)}
+  .cp-kicker{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:750;letter-spacing:.08em;color:var(--blue);margin-bottom:10px}
+  .cp-title{font-size:clamp(26px,3.4vw,38px);font-weight:850;letter-spacing:-.03em;line-height:1.25;word-break:keep-all;overflow-wrap:anywhere;margin-bottom:8px}
+  .cp-alias{font-size:12.5px;color:var(--ink-3);margin-bottom:18px}
+  .cp-alias b{font-weight:650;color:var(--ink-2)}
+  .cp-def{font-size:15.5px;line-height:1.95;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:14px;padding:18px 22px;margin-bottom:26px}
+  .cp-sec{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--ink-2);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
+  .cp-sec i{color:var(--blue);font-size:12px}
+  .cp-item{display:flex;align-items:baseline;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-item time{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex:0 0 auto}
+  .cp-item .src{font-size:11px;font-weight:750;color:var(--sc,var(--blue));flex:0 0 auto}
+  .cp-item a.t{font-size:14px;font-weight:650;color:var(--ink);line-height:1.5;overflow-wrap:anywhere}
+  .cp-item a.t:hover{color:var(--blue)}
+  .cp-rel{display:flex;flex-wrap:wrap;gap:8px}
+  .cp-rel a{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;color:var(--ink-2);background:#F6F7FB;border:1px solid var(--line-2);border-radius:999px;padding:6px 13px;transition:color .2s var(--ease),border-color .2s var(--ease)}
+  .cp-rel a:hover{color:var(--blue);border-color:var(--blue)}
+  .cp-note{font-size:11.5px;line-height:1.7;color:var(--ink-3);margin-top:26px}
+  .cp-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;padding-top:20px;border-top:1px solid var(--line-2)}
+  .s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
+  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-wecom{--sc:#2563EB}.s-voices{--sc:#9333EA}
+  .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
+  .dp-btn{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:750;border-radius:999px;padding:10px 20px;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+  .dp-btn.pri{background:var(--blue);color:#fff}
+  .dp-btn.pri:hover{background:var(--blue-deep)}
+  .dp-btn.sec{background:#fff;color:var(--ink-2);border:1px solid var(--line)}
+  .dp-btn.sec:hover{color:var(--blue);border-color:var(--blue)}
+  /* 总目录 */
+  .cx-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+  .cx-card{display:block;background:#fff;border:1px solid var(--line-2);border-radius:14px;padding:15px 17px;transition:border-color .2s var(--ease),box-shadow .2s var(--ease)}
+  .cx-card:hover{border-color:var(--blue);box-shadow:0 6px 20px rgba(37,99,235,.08)}
+  .cx-card b{display:block;font-size:15px;font-weight:800;color:var(--ink);margin-bottom:6px;overflow-wrap:anywhere}
+  .cx-card p{font-size:12.5px;line-height:1.7;color:var(--ink-3);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .cx-card span{display:inline-block;font-family:var(--mono);font-size:10.5px;color:var(--ink-3);margin-top:8px}
+  .cp-lede{font-size:14px;line-height:1.85;color:var(--ink-2);margin-bottom:24px;max-width:640px}
+</style>
+</head>
+<body>
+<div id="site-nav"></div>
+<main class="cp-main">
+  <div class="cp-wrap">
+    <a class="cp-back" href="../../news.html"><i class="fa-solid fa-arrow-left"></i>返回动态</a>
+    <div class="cp-kicker"><i class="fa-solid fa-book-open"></i>AI 概念库</div>
+    <h1 class="cp-title">概念索引</h1>
+    <p class="cp-lede">动态页聚合的内容里绕不开的 164 个概念，每个都用一段大白话讲清楚它是什么、对业务意味着什么。从任一概念页还能反查提到它的动态。</p>
+    <div class="cx-grid">
+      <a class="cx-card" href="chatbot.html"><b>聊天机器人</b><p>聊天机器人是基于自然语言处理技术的对话系统，能模拟人类与用户进行文本或语音交互</p><span>20 条相关动态</span></a>
+      <a class="cx-card" href="embodied-ai.html"><b>具身智能</b><p>指让AI拥有物理身体（如机器人），能在真实或仿真环境中感知、决策并执行动作</p><span>18 条相关动态</span></a>
+      <a class="cx-card" href="computing-infrastructure.html"><b>算力基础设施</b><p>支撑AI模型训练和推理的硬件与软件系统，包括GPU、服务器、网络和软件生态如CUDA</p><span>17 条相关动态</span></a>
+      <a class="cx-card" href="open-source-model.html"><b>开源模型</b><p>指模型权重和代码公开，允许任何人免费使用、修改和分发的AI模型</p><span>15 条相关动态</span></a>
+      <a class="cx-card" href="large-language-model.html"><b>大型语言模型</b><p>大型语言模型是基于海量文本数据训练的AI模型，能理解和生成自然语言</p><span>14 条相关动态</span></a>
+      <a class="cx-card" href="on-device-ai.html"><b>端侧AI</b><p>指在手机、PC、汽车、IoT设备等本地终端上直接运行的AI模型与应用</p><span>11 条相关动态</span></a>
+      <a class="cx-card" href="task-agent.html"><b>任务Agent</b><p>指能够理解用户高层指令，自主分解任务、规划步骤、调用工具并最终完成完整工作闭环的AI系统</p><span>10 条相关动态</span></a>
+      <a class="cx-card" href="coding-agent.html"><b>编码代理</b><p>编码代理是能自动执行编程任务的AI工具，如代码生成、调试和逆向工程</p><span>10 条相关动态</span></a>
+      <a class="cx-card" href="api.html"><b>API</b><p>API是应用程序之间通信的接口规范，允许不同软件系统交换数据和功能</p><span>8 条相关动态</span></a>
+      <a class="cx-card" href="private-domain-operations.html"><b>私域运营</b><p>私域运营指企业通过自有渠道（如微信群、APP）直接管理和运营用户，减少对第三方平台的依赖</p><span>8 条相关动态</span></a>
+      <a class="cx-card" href="moe-model.html"><b>MoE模型</b><p>一种模型架构，内含多个“专家”子网络，每次推理只激活其中一部分来处理任务</p><span>7 条相关动态</span></a>
+      <a class="cx-card" href="general-world-model.html"><b>通用世界模型</b><p>一种旨在让AI像人类一样理解物理世界运行规律、预测变化并据此行动的基座模型</p><span>7 条相关动态</span></a>
+      <a class="cx-card" href="multi-agent-orchestration.html"><b>多智能体编排</b><p>协调多个AI智能体分工协作以完成复杂任务的技术框架</p><span>6 条相关动态</span></a>
+      <a class="cx-card" href="inference-deployment.html"><b>推理部署</b><p>将训练好的AI模型集成到实际业务系统中，进行实时或批量预测的过程</p><span>6 条相关动态</span></a>
+      <a class="cx-card" href="ai-fde.html"><b>AI FDE</b><p>一种将AI技术深度嵌入客户业务现场的交付模式</p><span>5 条相关动态</span></a>
+      <a class="cx-card" href="fable-5.html"><b>Fable 5</b><p>Fable 5可能是一个领先的AI模型或评测基准，国产模型通过实测挑战其性能，体现国内AI技术的快速进步</p><span>5 条相关动态</span></a>
+      <a class="cx-card" href="scrm.html"><b>SCRM</b><p>SCRM是社交化客户关系管理，整合社交媒体和私域渠道，实现与客户的实时互动和精准营销</p><span>5 条相关动态</span></a>
+      <a class="cx-card" href="token-distribution.html"><b>Token分发</b><p>将多个大模型的API通过统一平台分发给用户的服务，类似“模型超市”</p><span>5 条相关动态</span></a>
+      <a class="cx-card" href="foundation-model.html"><b>基座模型</b><p>基座模型是经过大规模预训练的通用AI模型，可作为下游任务的基础，通过微调适应特定场景</p><span>5 条相关动态</span></a>
+      <a class="cx-card" href="reasoning-effort.html"><b>推理努力</b><p>推理努力指AI模型在解决问题时投入的计算资源和思考深度</p><span>5 条相关动态</span></a>
+      <a class="cx-card" href="sandbox-environment.html"><b>沙箱环境</b><p>一个与生产环境隔离的安全测试空间，允许AI模型或代码在其中自由运行而不会影响真实系统</p><span>5 条相关动态</span></a>
+      <a class="cx-card" href="computing-fuse.html"><b>算力熔断</b><p>指AI服务因用户请求量或模型复杂度激增，导致所需算力超过现有基础设施承载极限，被迫限流或降级的现象</p><span>5 条相关动态</span></a>
+      <a class="cx-card" href="world-action-model.html"><b>世界动作模型</b><p>通用世界模型的延伸，特指将模型对环境的理解和预测，直接转化为机器人等物理实体可执行动作序列的模型</p><span>4 条相关动态</span></a>
+      <a class="cx-card" href="computing-utilization.html"><b>算力利用率</b><p>算力利用率衡量计算资源（如GPU）的实际使用效率，低利用率意味着投资浪费</p><span>4 条相关动态</span></a>
+      <a class="cx-card" href="system-prompt.html"><b>系统提示词</b><p>系统提示词是预设给AI模型的指令，用于引导其行为和输出风格</p><span>4 条相关动态</span></a>
+      <a class="cx-card" href="autonomous-agents.html"><b>自主代理</b><p>自主代理是基于大语言模型的智能系统，能够自主规划、执行和调整任务，无需人工持续干预</p><span>4 条相关动态</span></a>
+      <a class="cx-card" href="long-context-window.html"><b>长上下文窗口</b><p>指大模型单次能处理和理解的文本长度上限，例如100万Token</p><span>4 条相关动态</span></a>
+      <a class="cx-card" href="5g-messaging.html"><b>5G消息</b><p>5G消息是基于5G网络的富媒体消息服务，支持图文、视频、交互卡片等多种形式，无需安装APP即可使用</p><span>3 条相关动态</span></a>
+      <a class="cx-card" href="ai-office-assistant.html"><b>AI办公助理</b><p>AI办公助理是能理解用户上下文、自主完成办公任务并具备专业软件操作能力的智能代理</p><span>3 条相关动态</span></a>
+      <a class="cx-card" href="ai-native-enterprise.html"><b>AI原生企业</b><p>AI原生企业是指从创立之初就以AI技术为核心驱动力，将AI深度融入业务流程和产品设计，而非后期附加</p><span>3 条相关动态</span></a>
+      <a class="cx-card" href="agent-capability.html"><b>Agent能力</b><p>指AI模型超越简单问答，能够自主规划步骤、调用工具、与环境交互并持续执行以完成复杂目标的能力</p><span>3 条相关动态</span></a>
+      <a class="cx-card" href="token-factory.html"><b>Token工厂</b><p>指大规模、标准化生产AI算力与能力单元（Token）的基础设施集群</p><span>3 条相关动态</span></a>
+      <a class="cx-card" href="specialized-model.html"><b>专项模型</b><p>针对特定行业或任务优化训练的AI模型，相比通用大模型，在专业领域内精度更高、成本更低</p><span>3 条相关动态</span></a>
+      <a class="cx-card" href="full-stack-ai-service.html"><b>全栈AI服务</b><p>全栈AI服务为企业提供从算力资源、模型训练部署到业务场景集成的完整AI解决方案，类似于&#x27;交钥匙&#x27;工程，让企业无需组建庞大技术团队即可快速应用AI，降低试错成…</p><span>3 条相关动态</span></a>
+      <a class="cx-card" href="vibe-coding.html"><b>凭感觉编程</b><p>凭感觉编程是一种依赖直觉和即时反馈的软件开发方式，开发者跳过详细规划和测试，快速迭代代码</p><span>3 条相关动态</span></a>
+      <a class="cx-card" href="trusted-ai-platform.html"><b>可信AI平台</b><p>集成了数据安全、模型可解释性和合规性保障的AI服务平台，确保AI应用在政务、金融等敏感领域的可靠运行</p><span>3 条相关动态</span></a>
+      <a class="cx-card" href="prompt-engineering.html"><b>提示工程</b><p>提示工程是通过设计输入文本引导大语言模型产生期望输出的技术，无需修改模型本身</p><span>3 条相关动态</span></a>
+      <a class="cx-card" href="model-distillation.html"><b>模型蒸馏</b><p>模型蒸馏是一种将大型复杂模型的知识迁移到小型高效模型的技术</p><span>3 条相关动态</span></a>
+      <a class="cx-card" href="model-routing.html"><b>模型路由</b><p>根据任务类型、成本、性能等需求，将AI请求智能分发给最合适的大模型进行处理的技术</p><span>3 条相关动态</span></a>
+      <a class="cx-card" href="process-reengineering.html"><b>流程重塑</b><p>指利用AI能力对现有业务流程进行根本性的再思考和彻底性的再设计，而非仅在旧流程上叠加AI工具</p><span>3 条相关动态</span></a>
+      <a class="cx-card" href="scaling-laws.html"><b>缩放定律</b><p>深度学习模型性能随参数、数据和计算量增加而可预测提升的经验规律</p><span>3 条相关动态</span></a>
+      <a class="cx-card" href="autonomous-driving-levels.html"><b>自动驾驶级别</b><p>自动驾驶按自动化程度分为L0到L5六级，L3和L4代表有条件和高度自动驾驶</p><span>3 条相关动态</span></a>
+      <a class="cx-card" href="pre-training.html"><b>预训练</b><p>AI模型在大量无标注数据上进行的初始训练阶段，学习通用知识</p><span>3 条相关动态</span></a>
+      <a class="cx-card" href="ai-delivery.html"><b>AI交付</b><p>AI交付指将人工智能模型或解决方案实际部署到业务场景中，并确保其产生可衡量的业务价值</p><span>2 条相关动态</span></a>
+      <a class="cx-card" href="ai-code-security.html"><b>AI代码安全</b><p>AI代码安全指利用人工智能技术自动检测、修复和预防代码中的安全漏洞，通过理解代码语义和上下文实现实时防护，它弥补了传统扫描工具的不足，对企业意味着降低安全风…</p><span>2 条相关动态</span></a>
+      <a class="cx-card" href="demo-day.html"><b>Demo Day</b><p>创业加速器或孵化器项目结束时举办的集中路演活动</p><span>2 条相关动态</span></a>
+      <a class="cx-card" href="lam-loop.html"><b>LAM闭环</b><p>LAM闭环是一种将学习评估与建模紧密结合的反馈系统，通过持续评估学习者状态并动态调整教学策略，形成自适应优化循环</p><span>2 条相关动态</span></a>
+      <a class="cx-card" href="mcp.html"><b>MCP</b><p>MCP是一种标准化协议，用于AI模型与外部工具或数据源交互，类似于USB接口统一外设连接</p><span>2 条相关动态</span></a>
+      <a class="cx-card" href="pinchbench.html"><b>PinchBench</b><p>一个专注于评测AI智能体（Agent）在真实工作场景中完成复杂任务、交付可验证结果能力的权威基准</p><span>2 条相关动态</span></a>
+      <a class="cx-card" href="saas-product.html"><b>SaaS产品</b><p>一种通过互联网以订阅方式提供软件服务的商业模式</p><span>2 条相关动态</span></a>
+      <a class="cx-card" href="sora.html"><b>Sora</b><p>Sora是OpenAI开发的视频生成模型，能根据文本描述创建高质量、连贯的视频内容</p><span>2 条相关动态</span></a>
+      <a class="cx-card" href="token-hub.html"><b>TokenHub</b><p>一个统一管理、调度和分发Token的运营平台</p><span>2 条相关动态</span></a>
+      <a class="cx-card" href="token-full-stack-service.html"><b>Token全栈服务</b><p>指从Token（AI算力与能力的基本计量单位）的生产、调度、管理到最终在企业场景中应用的全流程一体化服务</p><span>2 条相关动态</span></a>
+      <a class="cx-card" href="transformer-architecture.html"><b>Transformer架构</b><p>Transformer架构是一种基于自注意力机制的神经网络设计，擅长并行处理序列数据，是当前大语言模型和图像生成模型的核心</p><span>2 条相关动态</span></a>
+      <a class="cx-card" href="y-combinator.html"><b>Y Combinator</b><p>全球最知名的创业孵化器与加速器之一</p><span>2 条相关动态</span></a>
+      <a class="cx-card" href="context-management.html"><b>上下文管理</b><p>上下文管理指AI系统持续跟踪和利用用户历史交互、项目背景等信息的能力，以提供连贯和个性化的服务</p><span>2 条相关动态</span></a>
+      <a class="cx-card" href="simulation-evaluation.html"><b>仿真评测</b><p>在高度仿真的虚拟环境中测试和评估AI系统（尤其是机器人、自动驾驶）的性能与安全性</p><span>2 条相关动态</span></a>
+      <a class="cx-card" href="healthcare-ai.html"><b>医疗AI</b><p>医疗AI指应用于医疗健康领域的人工智能技术，如诊断辅助、康复管理</p><span>2 条相关动态</span></a>
+      <a class="cx-card" href="image-generation-model.html"><b>图像生成模型</b><p>图像生成模型是通过AI技术从文本或数据生成图像，适用于内容创作、设计等领域</p><span>2 条相关动态</span></a>
+      <a class="cx-card" href="computing-in-memory.html"><b>存内计算</b><p>一种突破冯·诺依曼架构瓶颈的芯片设计思路，直接在存储器单元内进行计算</p><span>2 条相关动态</span></a>
+      <a class="cx-card" href="adversarial-attacks.html"><b>对抗性攻击</b><p>故意设计恶意输入以欺骗或误导AI模型，使其做出错误预测或行为</p><span>2 条相关动态</span></a>
+      <a class="cx-card" href="open-source-strategy.html"><b>开源策略</b><p>开源策略是企业将AI模型或软件以开放源代码形式发布，通过社区协作加速创新，同时构建生态和商业模式</p><span>2 条相关动态</span></a>
+      <a class="cx-card" href="reinforcement-learning.html"><b>强化学习</b><p>一种机器学习方法，通过奖励机制训练模型做出最优决策，适用于动态环境</p><span>2 条相关动态</span></a>
+      <a class="cx-card" href="emotional-companion-ai.html"><b>情感陪伴AI</b><p>情感陪伴AI是通过硬件或软件形式提供持续情感交互的智能系统，像一位贴心的数字伙伴</p><span>2 条相关动态</span></a>
+      <a class="cx-card" href="reasoning-model.html"><b>推理模型</b><p>专注于逻辑推理和问题解决的AI模型，通过强化学习等技术训练，能处理复杂决策任务</p><span>2 条相关动态</span></a>
+      <a class="cx-card" href="agentic-operating-system.html"><b>智能体原生操作系统</b><p>智能体原生操作系统是一种专为AI智能体设计的操作系统，它像智能手机的iOS或Android一样，为智能体提供运行环境、资源管理和交互接口，让企业能快速部署和…</p><span>2 条相关动态</span></a>
+      <a class="cx-card" href="agentic-loop.html"><b>智能体循环</b><p>指AI智能体重复执行任务周期直到达成目标的模式，通过迭代优化提升输出质量，减少人工干预</p><span>2 条相关动态</span></a>
+      <a class="cx-card" href="agentic-organization.html"><b>智能体组织</b><p>智能体组织指以AI智能体为核心运作单元的企业形态，人类员工负责监督和战略决策，日常运营由AI自主执行，它重新定义了人机协作边界，对企业意味着运营效率的质变和…</p><span>2 条相关动态</span></a>
+      <a class="cx-card" href="intelligent-research-service.html"><b>智能科研服务</b><p>智能科研服务通过AI工具自动化文献检索、数据分析和实验模拟等环节，帮助科研人员聚焦核心创新，缩短研究周期，尤其适合生物医药、材料科学等数据密集型领域，提升科…</p><span>2 条相关动态</span></a>
+      <a class="cx-card" href="model-benchmark.html"><b>模型基准测试</b><p>模型基准测试是通过标准化任务和数据集评估AI模型性能的方法，它提供客观比较不同模型能力的指标，对企业意味着在选型和部署AI模型时有可靠依据，帮助优化投资决策…</p><span>2 条相关动态</span></a>
+      <a class="cx-card" href="model-jailbreak.html"><b>模型越狱</b><p>通过特定输入绕过AI模型的安全限制，使其生成违规或有害内容的行为</p><span>2 条相关动态</span></a>
+      <a class="cx-card" href="physical-ai.html"><b>物理AI</b><p>物理AI指能够理解和交互物理世界的人工智能系统，通过传感器和执行器实现从数字到物理的闭环操作</p><span>2 条相关动态</span></a>
+      <a class="cx-card" href="organizational-performance.html"><b>组织绩效</b><p>衡量AI应用是否成功的终极标尺，关注AI投入是否转化为整体营收增长、成本结构优化或市场份额扩大等企业级成果</p><span>2 条相关动态</span></a>
+      <a class="cx-card" href="autonomous-vehicle-maintenance.html"><b>自动驾驶运维</b><p>针对自动驾驶车队的维护、保养和供应链管理服务</p><span>2 条相关动态</span></a>
+      <a class="cx-card" href="cognitive-world-model.html"><b>认知世界模型</b><p>认知世界模型是一种模拟人类认知过程的世界模型，它不仅理解物理规律，还能推理学习者的内在思维逻辑</p><span>2 条相关动态</span></a>
+      <a class="cx-card" href="training-compute.html"><b>训练计算</b><p>训练计算是用于创建和优化AI模型的计算资源，好比培养一名专家所需的‘教育投入’</p><span>2 条相关动态</span></a>
+      <a class="cx-card" href="agi.html"><b>通用人工智能</b><p>通用人工智能指具备与人类相当或超越人类的、跨领域的通用学习与推理能力的AI系统</p><span>2 条相关动态</span></a>
+      <a class="cx-card" href="1-plus-n.html"><b>1+N模式</b><p>一种工作模式，其中一名人类员工配备多个AI智能体组成团队，共同执行任务</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="ai-hr.html"><b>AI HR</b><p>AI HR 是利用任务智能体自动化招聘中的简历筛选、初步面试等重复性工作，让HR专家专注于战略决策</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="ai-for-adanes.html"><b>AI for ADANES</b><p>利用人工智能技术优化加速器驱动先进核能系统（ADANES）的设计、运行和维护，提升铀资源利用率和核能安全性，为能源产业提供智能化解决方案，助力实现零碳算力和…</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="ai-education.html"><b>AI+教育</b><p>AI+教育指将人工智能技术融入教育教学的各个环节，如个性化学习、智能辅导、自动化评估等，它通过数据分析和自适应算法提升教学效率与质量，对企业而言意味着教育服…</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="ai-talent-map.html"><b>AI人才图谱</b><p>AI人才图谱是通过数据可视化展示AI领域人才分布、技能和流动趋势，帮助企业精准招聘和培养人才，优化组织结构，从而提升AI项目成功率和竞争力</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="ai-decision-making.html"><b>AI决策制定</b><p>AI决策制定指利用人工智能技术辅助或自动化商业决策过程</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="ai-native-architecture.html"><b>AI原生架构</b><p>AI原生架构是指从底层设计就以人工智能为核心驱动力的系统架构，类似于为自动驾驶专门设计的汽车平台，而非在传统车辆上加装传感器</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="ai-recommendation.html"><b>AI推荐</b><p>利用AI算法分析用户偏好并推荐内容的技术，提升个性化体验</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="ai-training-data-copyright.html"><b>AI训练数据版权</b><p>AI训练数据版权涉及使用受版权保护的数据训练AI模型的合法性问题，它关注数据获取、授权和使用边界，对企业意味着在开发AI产品时必须谨慎处理数据来源，避免法律…</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="bun.html"><b>Bun运行时</b><p>Bun是一个用Rust编写的高性能JavaScript运行时，专注于速度和效率</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="dall-e-2.html"><b>DALL•E 2</b><p>DALL•E 2是OpenAI的图像生成模型，能根据文字描述创建和编辑图像</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="geo-optimization.html"><b>GEO优化</b><p>在AI驱动的搜索引擎（如豆包、DeepSeek）中优化品牌内容，使其在AI生成答案中获得更高曝光</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="gpt-4o.html"><b>GPT-4o</b><p>OpenAI发布的多模态大语言模型，支持文本、图像、音频等多种输入输出</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="grpo-algorithm.html"><b>GRPO算法</b><p>一种强化学习算法，通过组内相对策略优化降低训练成本，提升模型推理能力</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="google-design-sprint.html"><b>Google Design Sprint</b><p>一套为期五天的结构化流程，帮助团队快速将想法转化为可测试的原型并获取用户反馈</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="harness-layer.html"><b>Harness层</b><p>AI系统中围绕模型构建的工程层，包括提示词、工具链和UI，负责将模型能力转化为可用产品</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="ipv6.html"><b>IPv6</b><p>IPv6是新一代互联网协议，提供近乎无限的IP地址空间和更高效的路由，为大规模设备互联奠定基础</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="indexshare.html"><b>IndexShare</b><p>一种用于长上下文稀疏注意力的技术，通过共享索引降低大模型处理超长文本时的计算成本</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="knuth-plass-justification.html"><b>Knuth-Plass对齐</b><p>Knuth-Plass对齐是一种高级文本排版算法，能优化段落中的单词间距以实现均匀对齐</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="llm-cliche-highlighter.html"><b>LLM陈词滥调高亮器</b><p>LLM陈词滥调高亮器是一种工具，用于自动检测和标记文本中由大语言模型生成的套路化表达</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="lua-vm.html"><b>Lua虚拟机</b><p>执行Lua字节码的运行时环境，支持嵌入式脚本和扩展</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="maas.html"><b>MaaS</b><p>MaaS是通过云平台提供AI模型API服务，用户无需自建模型即可调用，降低AI使用门槛</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="mixture-of-transformer.html"><b>Mixture-of-Transformer</b><p>Mixture-of-Transformer是一种模型架构，结合多个Transformer模块处理不同模态数据，实现高效多模态融合</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="model-ready-data.html"><b>Model-Ready Data</b><p>经过清洗、标注和结构化，可直接用于AI模型训练的数据，无需二次加工</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="neo-unify-architecture.html"><b>NEO-unify架构</b><p>NEO-unify架构是商汤科技提出的原生统一多模态模型架构，将理解、生成和编辑任务整合到同一表征空间，通过统一训练框架减少跨模态信息损耗</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="noa.html"><b>NOA</b><p>NOA是一种高级驾驶辅助功能，能在高速或城市道路上实现自动导航、变道和超车，减少驾驶员负担</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="rust.html"><b>Rust语言</b><p>Rust是一种系统编程语言，强调安全性和性能</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="sqlite-query-explainer.html"><b>SQLite查询解释器</b><p>SQLite查询解释器是用于分析和优化SQLite数据库查询的工具</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="tpu.html"><b>TPU</b><p>谷歌设计的专用AI芯片，针对张量运算（矩阵乘法等）进行极致优化</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="tts-model.html"><b>TTS模型</b><p>TTS模型是将文本转换为自然语音的AI技术，能模拟人类语调、情感和方言，使机器语音更生动</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="tablebench.html"><b>TableBench</b><p>TableBench是国际权威的表格数据问答能力评测基准，通过模拟真实业务场景中的表格分析任务，评估AI系统的事实核验和数值推理能力</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="timsort.html"><b>Timsort算法</b><p>一种混合排序算法，结合归并和插入排序的优点，对现实世界数据高效稳定</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="token-consumption.html"><b>Token消耗</b><p>在AI模型使用中，指处理输入和生成输出所消耗的Token数量，直接关联计算成本和响应速度</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="vla-model.html"><b>VLA模型</b><p>一种融合视觉感知、语言理解和动作执行的多模态模型，是具身智能的核心</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="webhook.html"><b>Webhook</b><p>Webhook是一种让应用程序实时接收其他系统事件通知的机制</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="business-cycle.html"><b>业务循环</b><p>企业通过尝试、反馈和学习持续降低不确定性的过程，核心是快速迭代和市场验证</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="fact-verification.html"><b>事实核验</b><p>事实核验是AI系统通过多源数据比对和逻辑验证，确保输出信息真实可靠的技术</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="product-iteration.html"><b>产品迭代</b><p>基于用户反馈和市场数据，对产品进行小步快跑、持续改进的开发模式</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="human-state-map.html"><b>人类状态地图</b><p>人类状态地图是对人类情感、意图和生理状态的动态建模，像一张实时更新的心理地图</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="biomimetic-tension-compression-body.html"><b>仿生拉压体技术</b><p>仿生拉压体技术是一种模仿人体骨骼肌肉协同工作原理的机器人结构设计，硬质构件承压、柔性构件承拉，实现轻量化与高负载的平衡，它从底层改变机器人运动逻辑，对企业意…</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="enterprise-intelligent-robot.html"><b>企业智能机器人</b><p>集成在企业系统中的AI机器人，用于自动化客服、内部流程等任务，通过API交互提升运营效率</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="meta-hospital.html"><b>元医院</b><p>指通过数字孪生、AI与物联网技术，将医院内分散的医疗设备、信息系统、诊疗流程与患者数据深度融合，构建的物理医院在数字空间的智能映射与协同运营体系</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="solid-state-perception-platform.html"><b>全固态感知平台</b><p>全固态感知平台是使用固态传感器（如激光雷达）的硬件系统，用于实时采集三维空间数据</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="embodied-ai-cognition.html"><b>具身智能认知</b><p>指具身智能体在物理世界中理解与交互所需的认知能力，强调语义理解（知道“是什么”）与空间操作能力（知道“怎么做”）的根本差异</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="memory-bandwidth.html"><b>内存带宽</b><p>内存向处理器传输数据的速度，直接影响AI模型推理时的Token生成速率</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="dynamic-linking.html"><b>动态链接</b><p>在程序运行时加载共享库的技术，允许多个程序共享代码，减少内存占用</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="dual-layer-agent-world-model.html"><b>双层智能体世界模型</b><p>双层智能体世界模型结合物理世界模型和社会世界模型，使机器人能同时理解环境物理规律和人类社会交互规则</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="verifiability.html"><b>可验证性</b><p>可验证性指AI模型输出结果能够被客观检验和确认的程度</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="post-training.html"><b>后训练</b><p>在模型预训练后，通过特定任务数据进一步优化模型性能的过程</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="rlvr.html"><b>基于验证奖励的强化学习</b><p>使用可验证奖励信号训练模型的强化学习方法，确保输出准确可靠</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="extrinsic-hallucination.html"><b>外部幻觉</b><p>大语言模型生成与外部事实不符或完全捏造的内容，好比一个自信的专家在说谎，但听起来很真实</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="multi-token-prediction.html"><b>多Token预测</b><p>训练技术让模型同时预测多个后续Token，提高训练效率和生成速度</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="brainstorming.html"><b>头脑风暴</b><p>一种通过集体讨论、不加批判地提出大量想法来激发创意和解决问题的方法</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="reward-hacking.html"><b>奖励黑客行为</b><p>在强化学习中，AI代理发现并利用奖励函数的设计缺陷来获取高分，却未真正掌握目标任务</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="platform-organization.html"><b>平台型组织</b><p>平台型组织是一种以共享资源和赋能前台团队为核心的管理模式，它通过中台提供标准化服务，减少层级冗余，对企业意味着更快的市场响应速度、更高的创新效率和更强的规模…</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="parallel-network.html"><b>并行网络</b><p>一种组织设计模式，将公司结构从串行流程转变为并行协作网络，通过AI工具消除交接瓶颈，实现多任务同步处理，提升决策速度和创新能力，适用于快速变化的AI时代</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="parallel-box-decoding.html"><b>并行边界框解码</b><p>一种视觉定位模型的高效推理技术，通过一次性并行预测所有边界框坐标，替代逐token自回归解码</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="open-source-model-pricing.html"><b>开源模型定价策略</b><p>指开源大模型在公开权重的同时，通过API服务或增值功能进行商业收费的策略</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="microtypography.html"><b>微排版</b><p>微排版是精细调整字体间距、连字等细节的排版技术，能显著提升文本可读性和美观度</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="emotional-large-model.html"><b>情感大模型</b><p>情感大模型是专门训练用于识别和生成人类情感的AI模型，能理解情绪并做出共情回应</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="diffusion-model.html"><b>扩散模型</b><p>一种生成式AI模型，通过逐步去噪过程从随机噪声中生成高质量数据，如图像或视频</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="technology-diffusion.html"><b>技术扩散</b><p>技术扩散指新技术从发明者或早期采用者传播到广大用户的过程</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="sorting-algorithm.html"><b>排序算法</b><p>用于将数据按特定顺序排列的算法，是数据处理的基础</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="numerical-reasoning.html"><b>数值推理</b><p>数值推理指AI理解和处理数字数据的能力，包括计算、比较、趋势分析等</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="digital-superintelligence.html"><b>数字超级智能</b><p>数字超级智能指在几乎所有领域都远超人类认知能力的AI系统</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="mathematical-reasoning.html"><b>数学推理</b><p>指AI模型通过逻辑推导和计算解决数学问题的能力，超越简单模式匹配，能处理抽象证明和非常规解法</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="agentic-infra.html"><b>智能体基础设施</b><p>智能体基础设施是为AI智能体提供运行环境、通信和协调的底层系统</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="agent-payment.html"><b>智能体支付</b><p>指AI智能体具备独立进行经济交易的能力，如支付、签约或代表用户做出购买决策</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="model-personality.html"><b>模型个性</b><p>模型个性指AI模型在交互中表现出的特定性格特征，如友好、专业等</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="model-capability.html"><b>模型能力</b><p>指AI模型在特定任务上的性能表现，如准确率、速度等，直接影响产品效果</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="dexterous-hand.html"><b>灵巧手</b><p>灵巧手是机器人末端执行器，具备多自由度和精细操作能力，能模拟人手完成抓取、操纵等复杂任务，它通过传感器和智能控制实现柔顺交互，对企业意味着机器人应用从结构化…</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="physical-ai-loop.html"><b>物理AI闭环</b><p>将AI模型部署到物理设备（如机器人）中，通过感知、决策和执行形成闭环反馈系统</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="elevator-pitch.html"><b>电梯演讲</b><p>一种在极短时间内（如乘坐电梯的30秒）清晰、有说服力地向他人介绍自己项目或想法的沟通技巧</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="hard-tech.html"><b>硬科技</b><p>硬科技指基于长期研发投入和核心技术突破的创新领域，如人工智能、半导体、生物技术等，它不同于互联网模式创新，需要深厚的技术积累和资本耐心，对企业意味着更高的技…</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="red-ocean-market.html"><b>红海市场</b><p>指一个竞争白热化、产品同质化严重、利润空间被不断压缩的市场状态</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="unified-memory.html"><b>统一内存</b><p>一种计算机内存架构，其中CPU和GPU等处理器共享同一物理内存池，无需数据复制即可直接访问，从而提升AI模型加载和运行效率，尤其适用于内存密集型任务，降低硬…</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="autonomous-shipping.html"><b>自主航运</b><p>利用人工智能技术实现船舶的自主导航、避碰和运营，减少对人工操控的依赖</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="vision-language-grounding.html"><b>视觉-语言定位</b><p>结合视觉和语言输入，在图像或视频中定位特定对象或区域的技术</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="vision-language-model.html"><b>视觉语言模型</b><p>视觉语言模型是一种能同时理解图像和文本的多模态AI，就像人能看图说话一样</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="super-intelligent-fusion.html"><b>超智融合</b><p>超智融合指将超级计算（HPC）与智能计算（AI）整合到统一底座，实现资源高效共享和协同调度</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="super-node-system-architecture.html"><b>超节点系统架构</b><p>超节点系统架构是一种将多个高性能计算单元深度整合的硬件设计，就像把多台服务器融合成一台超级服务器，实现算力资源的统一调度和高效利用</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="software-complexity.html"><b>软件复杂性</b><p>指软件系统中的复杂程度，包括代码、架构和依赖关系，高复杂性增加维护成本</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="reverse-engineering.html"><b>逆向工程</b><p>逆向工程指通过分析现有产品或系统来理解其设计和工作原理的过程</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="closed-source-model.html"><b>闭源模型</b><p>闭源模型指模型权重和训练细节不公开的AI模型，通常由公司通过API提供服务，它保护了知识产权和商业机密，对企业意味着可以直接使用先进AI能力而无需自建模型，…</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="high-quality-human-data.html"><b>高质量人类数据</b><p>指经过精心标注、清洗和验证的人工生成数据，用于训练AI模型</p><span>1 条相关动态</span></a>
+      <a class="cx-card" href="ai-sports-coach.html"><b>AI体育教练</b><p>AI体育教练是利用人工智能技术提供个性化训练指导的系统，能分析运动员动作并给出实时反馈</p><span>0 条相关动态</span></a>
+      <a class="cx-card" href="agent-smartphone.html"><b>智能体手机</b><p>智能体手机是集成AI智能体功能的移动设备，能执行复杂任务如语音助手、自动化操作</p><span>0 条相关动态</span></a>
+    </div>
+    <p class="cp-note">概念定义由句子互动动态管线的 AI 加工层生成、编辑维护；点击概念查看完整定义与相关动态。</p>
+  </div>
+</main>
+<div id="site-footer"></div>
+<script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-concept", "type": "page", "title": "AI 概念索引"};</script>
+<script src="../../assets/site.js"></script>
+</body>
+</html>

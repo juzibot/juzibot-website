@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>摩尔线程公布万卡级集群训练成绩 称国产芯片可训出前沿模型 - 句子·动态</title>
+<meta name="description" content="摩尔线程公布其国产万卡级集群训练成绩，成功完成MoE-236B模型的全流程训练，有效训练时长占比高，证明国产芯片能训练前沿AI模型。" />
+<meta name="robots" content="noindex,follow" />
+<link rel="canonical" href="https://www.tmtpost.com/8074857.html" />
+<link rel="icon" href="../../logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../../assets/site.css" />
+<style>
+  .dp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
+  .dp-wrap{max-width:760px;margin:0 auto}
+  .dp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
+  .dp-back:hover{color:var(--blue)}
+  .dp-meta{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:14px}
+  .dp-srcb{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:750;color:var(--sc,var(--blue))}
+  .s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
+  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-wecom{--sc:#2563EB}.s-voices{--sc:#9333EA}
+  .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
+  .dp-cat{display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ink-3);background:#F6F7FB;border:1px solid var(--line-2);border-radius:6px;padding:2px 8px}
+  .dp-date{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-3)}
+  .dp-title{font-size:clamp(24px,3.2vw,34px);font-weight:850;letter-spacing:-.03em;line-height:1.32;word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance;margin-bottom:10px}
+  .dp-orig{font-size:13px;color:var(--ink-3);overflow-wrap:anywhere;margin-bottom:8px}
+  .dp-by{font-size:12.5px;font-weight:600;color:var(--ink-3);margin-bottom:18px}
+  .dp-notice{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:1.7;color:var(--ink-2);background:#F6F7FB;border:1px solid var(--line-2);border-radius:10px;padding:10px 14px;margin-bottom:22px}
+  .dp-notice i{color:var(--blue);margin-top:4px;flex:0 0 auto}
+  .dp-notice a{color:var(--blue);font-weight:700;overflow-wrap:anywhere}
+  .dp-quip{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.66;font-weight:600;color:var(--blue-deep);background:var(--blue-50);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:18px}
+  .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
+  .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
+  .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
+  .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
+  .dp-body p{margin:0 0 1.05em}
+  .dp-body img{max-width:100%;height:auto;border-radius:10px;margin:.4em 0}
+  .dp-body pre{background:#0F172A;color:#E2E8F0;font-family:var(--mono);font-size:12.5px;line-height:1.7;padding:14px 16px;border-radius:10px;overflow-x:auto;margin:0 0 1.1em}
+  .dp-body code{font-family:var(--mono);font-size:.92em}
+  .dp-body :not(pre)>code{background:#F1F5F9;padding:1px 5px;border-radius:5px}
+  .dp-body blockquote{border-left:3px solid var(--line);padding:2px 0 2px 14px;color:var(--ink-3);margin:0 0 1.05em}
+  .dp-body a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+  .dp-body ul,.dp-body ol{padding-left:1.5em;margin:0 0 1.05em}
+  .dp-body table{display:block;overflow-x:auto;border-collapse:collapse;margin:0 0 1.1em}
+  .dp-body td,.dp-body th{border:1px solid var(--line);padding:6px 10px;font-size:.92em}
+  .dp-excerpt{font-size:15px;line-height:1.9;color:var(--ink-2);border-left:3px solid var(--line);padding:2px 0 2px 16px;margin-bottom:8px}
+  .dp-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;padding-top:20px;border-top:1px solid var(--line-2)}
+  .dp-btn{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:750;border-radius:999px;padding:10px 20px;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+  .dp-btn.pri{background:var(--blue);color:#fff}
+  .dp-btn.pri:hover{background:var(--blue-deep)}
+  .dp-btn.sec{background:#fff;color:var(--ink-2);border:1px solid var(--line)}
+  .dp-btn.sec:hover{color:var(--blue);border-color:var(--blue)}
+  .dp-note{font-size:11.5px;line-height:1.7;color:var(--ink-3);margin-top:18px}
+  .dp-langbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+  .dp-lang{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:750;color:var(--blue);
+    background:var(--blue-50);border:1px solid var(--blue-100);border-radius:999px;padding:7px 14px;
+    transition:background .2s var(--ease),border-color .2s var(--ease)}
+  .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
+  .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div id="site-nav"></div>
+<main class="dp-main">
+  <div class="dp-wrap">
+    <a class="dp-back" href="../../news.html"><i class="fa-solid fa-arrow-left"></i>返回动态</a>
+    <div class="dp-meta">
+      <span class="dp-srcb s-industry"><i class="fa-solid fa-rss"></i>行业动态</span>
+      <span class="dp-cat">钛媒体</span>
+      <time class="dp-date" datetime="2026-07-22">2026-07-22</time>
+    </div>
+    <h1 class="dp-title">摩尔线程公布万卡级集群训练成绩 称国产芯片可训出前沿模型</h1>
+    
+    <p class="dp-by">来源：钛媒体 · 行业动态</p>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（钛媒体 · 行业动态）所有 · <a href="https://www.tmtpost.com/8074857.html" target="_blank" rel="noopener">阅读原文</a></span></div>
+    <p class="dp-quip"><i class="fa-solid fa-quote-left"></i>国产算力验证了可行性，为业务连续性提供了更多供应链选择</p>
+    <div class="dp-brief"><b>简报</b>摩尔线程公布其国产万卡级集群训练成绩，成功完成MoE-236B模型的全流程训练，有效训练时长占比高，证明国产芯片能训练前沿AI模型。</div>
+    <article class="dp-body"><p><img loading="lazy" onerror="this.style.display='none'" src="https://images.tmtpost.com/uploads/images/2026/07/89fde42da8f2f3a1d7bd93958dc02ca8_1784694596.jpg?imageMogr2/auto-orient/strip/interlace/1/quality/85/thumbnail/1440x960/gravity/center/crop/!1440x960&amp;ext=.jpg" alt="图片来源于摩尔线程" referrerpolicy="no-referrer" /></p><p>2026世界人工智能大会（WAIC）期间，摩尔线程披露，一款236B参数的<a class="cpt" href="../c/moe-model.html" data-def="一种模型架构，内含多个“专家”子网络，每次推理只激活其中一部分来处理任务">MoE模型</a>基于国产万卡级集群训练，一款具身智能大脑模型，基于国产千卡集群训练，此外，北京大学EvoPhys团队首个全球5D世界模型EvoPhys-World的全栈原生训练，全程由MUSA软件栈提供底层支撑。</p><p>其中，MoE-236B模型基于25T+语料，在摩尔线程国产万卡级集群上从零起步完成<a class="cpt" href="../c/pre-training.html" data-def="AI模型在大量无标注数据上进行的初始训练阶段，学习通用知识">预训练</a>到长窗口训练的全流程，有效训练时长占比超过90%。</p><p>“高精度”是摩尔线程反复强调的能力，摩尔线程高级副总裁董龙飞提到，它指的不是单次计算的数值精度，而是模型在不同GPU平台间迁移训练时的结果对齐能力，即相同模型架构、训练数据、超参数下，能否获得稳定、可比的训练结果。</p><p>摩尔线程给出的具体数据是，在DeepSeek一类MoE模型上，与国际主流GPU做对比训练，前3万步的平均相对误差控制在万分之六以内。摩尔线程还以500B至5T不等规模的数据做过多轮实验，称基于相同卡数、模型配置和训练流程，摩尔线程平台训练所得模型在下游Benchmark评测中的得分与参考平台基本一致，部分指标更高。</p><p>摩尔线程与北京大学EvoPhys团队合作训练的5D世界模型EvoPhys-World，基于MTT S5000完成全栈原生训练，在WorldScore“世界生成”维度连续37天排名第一，该项目获得摩尔线程”灯塔计划”支持，这是国内第一次由中国科学家在中国算力设备上完成的原创世界模型工作，也是”国芯训国模”的一个分水岭。</p><p>此外，北京智源研究院的RoboBrain 2.5具身大脑模型，基于FlagOS-Robo框架，依托摩尔线程MTT S5000千卡智算集群，双方成功完成RoboBrain 2.5的全流程训练。首次验证了国产算力集群在具身智能大模型训练中的高可用性与效率。</p><p>摩尔线程创始人、董事长兼首席执行官张建中将AI产业按功能拆分为三类”工厂”：模型训练工厂、词元生产工厂、智能体生产工厂。三者共用同一套全功能GPU架构，这也是摩尔线程与专用芯片路线（ASIC）厂商的核心分野。</p><p>词元生产工厂方向，摩尔线程重点展示了基于MTT S5000的PD分离异构推理方案，将算力需求大的Prefill（预填充）计算放在S5000上，将带宽需求高的Decode（生成）计算放在国际主流GPU上，两者异构分池部署。</p><p>张建中在演讲中给出的数据是，异构组合后整体吞吐量较原有方案提升近2倍，并给出算式，“3台S5000+2台国际主流GPU≈9台国际主流GPU”。董龙飞补充表示，这类异构方案的性能比任何同构方案都要高50%以上，其中很大一部分收益来自KV Cache的调度优化，在类似OpenClaw这样反复调用本机命令行工具的场景下，缓存命中率可达90%，相当于节省90%的算力。</p><p>据悉，过去一年，国产大模型发布后到完成硬件适配的周期已从”数月”压缩到”发布即适配”（Day 0适配），部分大模型厂商现在会在模型规划部署阶段就与摩尔线程同步“共研”，而不是等模型发布后才启动适配工作。</p><p>在具身智能方面，早期VLA/VLM类模型参数在5B至14B之间，主要部署于端侧；当前的世界模型路线不再依赖语言输入，直接处理物理世界，参数跨度更大，实现高质量具身控制大致需要10亿参数级别模型在端侧运行，同时配合千亿级（1000B）及以上模型在云端协同。摩尔线程正基于自有万卡级集群持续进行万亿参数模型的训练验证，但未公布具体进展和时间表。</p><p>提及算力供应话题，董龙飞表示，中国的算力建设是面向未来十至二十年的基础设施投入，短期供不应求属于正常现象，以铁路、高速公路等基建类比，中国GPU或算力企业远未发展到“供过于求”的地步。<strong>（本文作者 | 张帅，编辑 | 杨林）</strong></p></article>
+    <div class="dp-actions">
+      <a class="dp-btn pri" href="https://www.tmtpost.com/8074857.html" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      
+      <button type="button" class="dp-btn sec" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
+      <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
+    </div>
+    <p class="dp-note">本页由句子互动动态管线自动生成，聚合内容版权归各来源所有；如来源方希望调整或移除收录，请通过官网联系我们。</p>
+  </div>
+</main>
+<div id="site-footer"></div>
+<script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "摩尔线程公布万卡级集群训练成绩 称国产芯片可训出前沿模型"};</script>
+<script src="../../assets/site.js"></script>
+</body>
+</html>

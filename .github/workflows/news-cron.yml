@@ -1,0 +1,57 @@
+name: news-cron
+
+# 动态页定时同步(2026-07-22 三轮): 每 6 小时跑一轮 build_news.py, 有变更则
+# 提交推送到 stage-2 并显式 dispatch 部署 workflow。
+# 注意:
+# - schedule 只认默认分支(main)上的 workflow 文件; 本文件需要同步到 main 定时才会生效,
+#   在那之前可用 workflow_dispatch 手动跑(Actions 页选 news-cron → Run workflow)。
+# - 智谱 GLM key 走仓库 Secret `ZHIPU_API_KEY`(配置见 README); 缺 Secret 时管线优雅降级,
+#   新条目 pending 暂缓上站, 下轮补判, 不会失败。
+# - 公众号源依赖本机 lark-cli, 在 CI 里必然单源失败——管线按设计沿用已有数据,
+#   公众号新文仍靠本机手动跑 build_news.py 同步。
+# - GITHUB_TOKEN 的 push 事件不会触发其它 workflow(GitHub 防递归), 所以 push 后
+#   用 `gh workflow run` 显式触发 deploy(workflow_dispatch 是官方豁免的例外)。
+
+on:
+  schedule:
+    - cron: '23 */6 * * *'  # 每 6 小时; 避开整点(GitHub 整点排队延迟大)
+  workflow_dispatch:
+
+permissions:
+  contents: write  # commit + push 到 stage-2
+  actions: write   # dispatch deploy workflow
+
+concurrency:
+  group: news-cron
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: stage-2
+          fetch-depth: 0   # 拉全历史: 任务运行期间 stage-2 若有新推送, 浅克隆会让 pull --rebase/push 失败(Bugbot PR#100)
+
+      - name: 跑动态管线(增量)
+        env:
+          ZHIPU_API_KEY: ${{ secrets.ZHIPU_API_KEY }}
+        run: python3 build_news.py
+
+      - name: 有变更则提交推送并触发部署
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git add -A data news news.html news-c.html
+          if git diff --cached --quiet; then
+            echo "无变更, 本轮结束"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore(news): 定时同步动态内容"
+          git pull --rebase origin stage-2
+          git push origin stage-2
+          gh workflow run deploy.yml --ref stage-2

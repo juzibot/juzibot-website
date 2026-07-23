@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>权力归于人民：LLM如何颠覆技术扩散的剧本 - 句子·动态</title>
+<meta name="description" content="内容探讨大语言模型（LLM）如何颠覆技术扩散的传统剧本，使技术更易于被普通人获取和使用，从而赋予普通人更多权力。" />
+<meta name="robots" content="noindex,follow" />
+<link rel="canonical" href="https://karpathy.bearblog.dev/power-to-the-people/" />
+<link rel="icon" href="../../logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../../assets/site.css" />
+<style>
+  .dp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
+  .dp-wrap{max-width:760px;margin:0 auto}
+  .dp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
+  .dp-back:hover{color:var(--blue)}
+  .dp-meta{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:14px}
+  .dp-srcb{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:750;color:var(--sc,var(--blue))}
+  .s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
+  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-wecom{--sc:#2563EB}.s-voices{--sc:#9333EA}
+  .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
+  .dp-cat{display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ink-3);background:#F6F7FB;border:1px solid var(--line-2);border-radius:6px;padding:2px 8px}
+  .dp-date{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-3)}
+  .dp-title{font-size:clamp(24px,3.2vw,34px);font-weight:850;letter-spacing:-.03em;line-height:1.32;word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance;margin-bottom:10px}
+  .dp-orig{font-size:13px;color:var(--ink-3);overflow-wrap:anywhere;margin-bottom:8px}
+  .dp-by{font-size:12.5px;font-weight:600;color:var(--ink-3);margin-bottom:18px}
+  .dp-notice{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:1.7;color:var(--ink-2);background:#F6F7FB;border:1px solid var(--line-2);border-radius:10px;padding:10px 14px;margin-bottom:22px}
+  .dp-notice i{color:var(--blue);margin-top:4px;flex:0 0 auto}
+  .dp-notice a{color:var(--blue);font-weight:700;overflow-wrap:anywhere}
+  .dp-quip{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.66;font-weight:600;color:var(--blue-deep);background:var(--blue-50);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:18px}
+  .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
+  .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
+  .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
+  .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
+  .dp-body p{margin:0 0 1.05em}
+  .dp-body img{max-width:100%;height:auto;border-radius:10px;margin:.4em 0}
+  .dp-body pre{background:#0F172A;color:#E2E8F0;font-family:var(--mono);font-size:12.5px;line-height:1.7;padding:14px 16px;border-radius:10px;overflow-x:auto;margin:0 0 1.1em}
+  .dp-body code{font-family:var(--mono);font-size:.92em}
+  .dp-body :not(pre)>code{background:#F1F5F9;padding:1px 5px;border-radius:5px}
+  .dp-body blockquote{border-left:3px solid var(--line);padding:2px 0 2px 14px;color:var(--ink-3);margin:0 0 1.05em}
+  .dp-body a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+  .dp-body ul,.dp-body ol{padding-left:1.5em;margin:0 0 1.05em}
+  .dp-body table{display:block;overflow-x:auto;border-collapse:collapse;margin:0 0 1.1em}
+  .dp-body td,.dp-body th{border:1px solid var(--line);padding:6px 10px;font-size:.92em}
+  .dp-excerpt{font-size:15px;line-height:1.9;color:var(--ink-2);border-left:3px solid var(--line);padding:2px 0 2px 16px;margin-bottom:8px}
+  .dp-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;padding-top:20px;border-top:1px solid var(--line-2)}
+  .dp-btn{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:750;border-radius:999px;padding:10px 20px;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+  .dp-btn.pri{background:var(--blue);color:#fff}
+  .dp-btn.pri:hover{background:var(--blue-deep)}
+  .dp-btn.sec{background:#fff;color:var(--ink-2);border:1px solid var(--line)}
+  .dp-btn.sec:hover{color:var(--blue);border-color:var(--blue)}
+  .dp-note{font-size:11.5px;line-height:1.7;color:var(--ink-3);margin-top:18px}
+  .dp-langbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+  .dp-lang{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:750;color:var(--blue);
+    background:var(--blue-50);border:1px solid var(--blue-100);border-radius:999px;padding:7px 14px;
+    transition:background .2s var(--ease),border-color .2s var(--ease)}
+  .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
+  .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div id="site-nav"></div>
+<main class="dp-main">
+  <div class="dp-wrap">
+    <a class="dp-back" href="../../news.html"><i class="fa-solid fa-arrow-left"></i>返回动态</a>
+    <div class="dp-meta">
+      <span class="dp-srcb s-voices"><i class="fa-solid fa-feather"></i>大咖观点</span>
+      <span class="dp-cat">Karpathy</span>
+      <time class="dp-date" datetime="2025-04-07">2025-04-07</time>
+    </div>
+    <h1 class="dp-title">权力归于人民：LLM如何颠覆技术扩散的剧本</h1>
+    <p class="dp-orig">原题：Power to the people: How LLMs flip the script on technology diffusion</p>
+    <p class="dp-by">来源：Karpathy · 大咖观点</p>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（Karpathy · 大咖观点）所有 · <a href="https://karpathy.bearblog.dev/power-to-the-people/" target="_blank" rel="noopener">阅读原文</a></span></div>
+    
+    <div class="dp-brief"><b>简报</b>内容探讨大语言模型（LLM）如何颠覆技术扩散的传统剧本，使技术更易于被普通人获取和使用，从而赋予普通人更多权力。</div>
+    <div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang"><i class="fa-solid fa-language"></i><span>翻译为中文</span></button><span class="dp-lang-note">中文由 AI 翻译，仅供参考</span></div><article class="dp-body" id="dpBodyOrig"><h1>Power to the people: How LLMs flip the script on technology diffusion</h1>
+
+        <p>
+            <i>
+                
+    07 Apr, 2025
+
+            </i>
+        </p>
+    
+
+    <p><img loading="lazy" onerror="this.style.display='none'" src="https://bear-images.sfo2.cdn.digitaloceanspaces.com/karpathy/a-beautifully-illustrated-watercolor-ima_tccw0iyurqi-radmafrzlw_gigbjdowq6cn6qf_yuu4ta-1.webp" alt="a-beautifully-illustrated-watercolor-ima_TcCW0iyURQi-raDmaFRZLw_GIGBjDOWQ6CN6Qf_yUU4tA (1)" referrerpolicy="no-referrer" /></p>
+<p>Transformative technologies usually follow a top-down diffusion path: originating in government or military contexts, passing through corporations, and eventually reaching individuals - think electricity, cryptography, computers, flight, the internet, or GPS. This progression feels intuitive, new and powerful technologies are usually scarce, capital-intensive, and their use requires specialized technical expertise in the early stages.</p>
+<p>So it strikes me as quite unique and remarkable that LLMs display a dramatic reversal of this pattern - they generate disproportionate benefit for regular people, while their impact is a lot more muted and lagging in corporations and governments. ChatGPT is the fastest growing consumer application in history, with 400 million weekly active users who use it for writing, coding, translation, tutoring, summarization, deep research, brainstorming, etc. This isn&#x27;t a minor upgrade to what existed before, it is a major multiplier to an individual&#x27;s power level across a broad range of capabilities. And the barrier to use is incredibly low - the models are cheap (free, even), fast, available to anyone on demand behind a url (or even local machine), and they speak anyone&#x27;s native language, including tone, slang or emoji. This is insane. As far as I can tell, the average person has never experienced a technological unlock this dramatic, this fast.</p>
+<p>Why then are the benefits a lot more muted in the corporate and government realms? I think the first reason is that LLMs offer a very specific profile of capability - that of merely quasi-expert knowledge/performance, but simultaneously across a very wide variety of domains. In other words, they are simultaneously versatile but also shallow and fallible. Meanwhile, an organization&#x27;s unique superpower is the ability to concentrate diverse expertise into a single entity by employing engineers, researchers, analysts, lawyers, marketers, etc. While LLMs can certainly make these experts more efficient individually (e.g. drafting initial legal clauses, generating boilerplate code, etc.), the improvement to the organization takes the form of becoming a bit better at the things it could already do. In contrast, an individual will usually only be an expert in at most one thing, so the broad quasi-expertise offered by the LLM fundamentally allows them to do things they couldn&#x27;t do before. People can now vibe code apps. They can approach legal documents. They can grok esoteric research papers. They can do data analytics. They can generate multimodal content for branding and marketing. They can do all of this at an adequate capability without involving an additional expert.</p>
+<p><img loading="lazy" onerror="this.style.display='none'" src="https://bear-images.sfo2.cdn.digitaloceanspaces.com/karpathy/download2.webp" alt="download2" referrerpolicy="no-referrer" /></p>
+<p>Second, organizations deal with problems of a lot greater complexity and necessary coordination, think: various integrations, legacy systems, corporate brand or style guides, stringent security protocols, privacy considerations, internationalization, regulatory compliance and legal risk. There are a lot more variables, a lot more constraints, a lot more considerations, and a lot lower margin for error. It&#x27;s not so easy to put all of it into a context window. You can&#x27;t just vibe code something. You might be one disastrous hallucination away from losing your job. And third, there is the well-documented inertia of a larger organization, featuring culture, historical precedents, political turf wars that escalate in periods of rapid change, communication overhead, re-training challenges of a distributed workforce and good old-fashioned bureaucracy. These are major headwinds when it comes to rapid adoption of a sparkling new, versatile-but-shallow-and-fallible tool. I don&#x27;t wish to downplay the impacts of LLMs in corporations or governments, but at least for the moment and in aggregate across society, they have been significantly more life altering for individuals than they have been for organizations. Mary, Jim and Joes are experiencing the majority of the benefit, not Google or the government of the United States.</p>
+<p>Looking forward, the continued diffusion of LLMs of course depends on continued performance improvement and its capability profile. The &quot;benefit distribution&quot; overall is particularly interesting to chart, and depends heavily on the dynamic range of the performance as a function of capital expenditure. Today, frontier-grade LLM performance is very accessible and cheap. Beyond this point, you cannot spend a marginal dollar to get better performance, reliability or autonomy. Money can&#x27;t buy better ChatGPT. Bill Gates talks to GPT 4o just like you do. But can this be expected to last? Train-time scaling (increase parameters, data), test-time scaling (increase time) and model ensembles (increase batch) are forces increasing the dynamic range. On the other hand, model distillation (the ability to train disproportionately powerful small models by training to mimic the big model) has been a force decreasing dynamic range. Certainly, the moment money can buy dramatically better ChatGPT, things change. Large organizations get to concentrate their vast resources to buy more intelligence. And within the category of &quot;individual&quot; too, the elite may once again split away from the rest of society. Their child will be tutored by GPT-8-pro-max-high, yours by GPT-6 mini.</p>
+<p>But at least at this moment in time, we find ourselves in a unique and unprecedented situation in the history of technology. If you go back through various sci-fi you&#x27;ll see that very few would have predicted that the AI revolution would feature this progression. It was supposed to be a top secret government megabrain project wielded by the generals, not ChatGPT appearing basically overnight and for free on a device already in everyone&#x27;s pocket. Remember that William Gibson quote <em>&quot;The future is already here, it&#x27;s just not evenly distributed&quot;</em>? Surprise - the future is already here, and it is shockingly distributed. Power to the people. <em>Personally</em>, I love it.</p>
+<p>A version of this post that allows community comments is here on <a href="https://x.com/karpathy/status/1909308143156240538" target="_blank" rel="noopener nofollow">X</a>.</p></article><article class="dp-body" id="dpBodyZh" hidden><h1>赋权于民：大语言模型如何颠覆技术扩散的传统模式</h1>
+
+        <p>
+            <i>
+                
+    2025年4月7日
+
+            </i>
+        </p>
+    
+
+    <p><img loading="lazy" onerror="this.style.display='none'" src="https://bear-images.sfo2.cdn.digitaloceanspaces.com/karpathy/a-beautifully-illustrated-watercolor-ima_tccw0iyurqi-radmafrzlw_gigbjdowq6cn6qf_yuu4ta-1.webp" alt="a-beautifully-illustrated-watercolor-ima_TcCW0iyURQi-raDmaFRZLw_GIGBjDOWQ6CN6Qf_yUU4tA (1)" referrerpolicy="no-referrer" /></p>
+<p>颠覆性技术通常遵循自上而下的扩散路径：起源于政府或军事领域，然后通过企业传播，最终才惠及个人——想想电力、密码学、计算机、飞行、互联网或GPS。这种发展模式看似理所当然，因为新兴且强大的技术通常稀缺、资本密集，且在早期阶段需要专业技术才能使用。</p>
+<p>因此，大语言模型（LLMs）展现出对这一模式的戏剧性逆转，在我看来这相当独特且引人注目——它们为普通人带来了不成比例的巨大收益，而在企业和政府中的影响却相对滞后且不那么显著。ChatGPT是历史上增长最快的消费级应用，拥有4亿周活跃用户，他们用它来写作、编程、翻译、辅导、总结、深度研究、头脑风暴等等。这并非对现有功能的微小升级，而是在广泛能力范围内对个人能力的巨大倍增器。而且使用门槛极低——模型便宜（甚至是免费的）、响应迅速、任何人都能通过网址（甚至本地机器）随时访问，并且能说任何人的母语，包括语气、俚语或表情符号。这简直太疯狂了。据我所知，普通人从未经历过如此剧烈、如此迅速的技术变革。</p>
+<p>那么，为什么在企业界和政府领域，LLM 带来的好处却要平淡得多呢？我认为第一个原因是，LLM 提供的能力画像非常特殊——它们能在非常广泛的领域内提供近乎专家级的知识和表现，但同时也仅限于此。换句话说，它们既全能，又肤浅且容易出错。与此同时，一个组织的独特优势在于，它能够通过雇佣工程师、研究员、分析师、律师、营销人员等，将多元化的专业知识集中到一个实体中。虽然 LLM 无疑能让这些专家个人变得更高效（例如，起草初步的法律条款、生成样板代码等），但对整个组织而言，这种提升仅仅体现在“把已经能做的事情做得更好一点点”。相比之下，个人通常最多只精通一件事，因此 LLM 提供的广泛“准专业”能力，从根本上让他们能够完成过去无法做到的事情。现在，人们可以凭感觉编写代码应用，可以处理法律文件，可以理解深奥的研究论文，可以进行数据分析，可以为品牌和营销生成多模态内容。他们可以在能力足够的情况下完成所有这些，而无需额外聘请专家。</p>
+<p><img loading="lazy" onerror="this.style.display='none'" src="https://bear-images.sfo2.cdn.digitaloceanspaces.com/karpathy/download2.webp" alt="download2" referrerpolicy="no-referrer" /></p>
+<p>其次，组织需要应对复杂度更高、协调性更强的问题，例如：各种系统集成、遗留系统、企业品牌或风格指南、严格的安全协议、隐私考量、国际化、法规遵从和法律风险。这里有更多的变量、更多的限制、更多的考量，以及更低的容错空间。你很难把所有这些内容都塞进一个上下文窗口里。你不能凭感觉随便写点代码。你可能因为一次灾难性的幻觉就丢了工作。第三，大型组织存在众所周知的惯性，包括文化、历史先例、在快速变化时期升级的政治地盘争夺战、沟通开销、分布式员工的再培训挑战，以及老式的官僚作风。当涉及到快速采用一个崭新、全能但肤浅且容易出错的新工具时，这些都是主要的阻力。我并非想低估 LLM 在企业或政府中的影响，但至少在当前以及整个社会的总体来看，它们对个人的改变远比对组织的影响要大得多。玛丽、吉姆和乔斯正在享受着大部分的好处，而不是谷歌或美国政府。</p>
+<p>展望未来，大语言模型（LLM）的持续普及当然取决于其性能的持续改进和能力范围的扩展。整体“收益分配”的格局尤其值得关注，它严重依赖于性能随资本支出变化的动态范围。如今，前沿级别的大模型性能已经非常唾手可得且成本低廉。超越这个点之后，你无法通过多花一分钱来获得更好的性能、可靠性或自主性。钱买不到更好的 ChatGPT。比尔·盖茨使用 GPT-4o 的方式和您一样。但这种状况能持续下去吗？训练时扩展（增加参数、数据）、推理时扩展（增加时间）以及模型集成（增加批次）是扩大动态范围的力量。另一方面，模型蒸馏（通过训练小模型来模仿大模型，从而 disproportionately 地训练出强大的小模型）则是缩小动态范围的力量。当然，一旦钱能买到显著更好的 ChatGPT，情况就会改变。大型组织可以集中其庞大资源来购买更多的智能。即使在“个人”这个类别中，精英阶层也可能再次与社会大众分化。他们的孩子将由 GPT-8-pro-max-high 辅导，而您的孩子则使用 GPT-6 mini。</p>
+<p>但至少在当前这个时刻，我们发现自己正处于技术史上一个独特且前所未有的境地。回顾各种科幻作品，你会发现很少有人能预测到人工智能革命会是这样的发展路径。它本应是一个由将军们掌控的、高度机密的政府超级大脑项目，而不是像 ChatGPT 这样，基本上在一夜之间就免费出现在每个人口袋里的设备上。还记得威廉·吉布森的那句名言 <em>“未来已经到来，只是尚未均匀分布”</em> 吗？令人惊讶的是——未来已经到来，而且其分布程度令人震惊。权力归于人民。<em>就我个人而言</em>，我非常喜欢这个局面。</p>
+<p>这篇帖子的评论区开放版本发布在 <a href="https://x.com/karpathy/status/1909308143156240538" target="_blank" rel="noopener nofollow">X</a> 上。</p></article>
+    <div class="dp-actions">
+      <a class="dp-btn pri" href="https://karpathy.bearblog.dev/power-to-the-people/" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      
+      <button type="button" class="dp-btn sec" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
+      <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
+    </div>
+    <p class="dp-note">本页由句子互动动态管线自动生成，聚合内容版权归各来源所有；如来源方希望调整或移除收录，请通过官网联系我们。</p>
+  </div>
+</main>
+<div id="site-footer"></div>
+<script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "权力归于人民：LLM如何颠覆技术扩散的剧本"};</script>
+<script src="../../assets/site.js"></script>
+<script>
+(function(){var b=document.getElementById('dpLang');if(!b)return;
+var en=document.getElementById('dpBodyOrig'),zh=document.getElementById('dpBodyZh');
+b.addEventListener('click',function(){var on=zh.hidden;zh.hidden=!on;en.hidden=on;
+b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';});})();
+</script>
+</body>
+</html>
