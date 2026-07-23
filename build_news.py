@@ -447,15 +447,28 @@ def parse_feed(xml_text):
 CONTENT_DIR = ROOT / "data" / "news-content"  # 全文源的正文镜像库(消毒后的 HTML 片段, 详情页取用)
 
 
+_URL_ATTR_RX = re.compile(r'(href|src)\s*=\s*(["\'])(.*?)\2', re.I)
+_IMG_DATA_OK_RX = re.compile(r"data:image/(?:png|jpe?g|gif|webp|bmp)[;,]")
+
+
+def _neutralize_url(m):
+    """href/src 值先解 HTML 实体、去空白/控制字符再判协议——挡住 &#106;avascript: / java&Tab;script:
+    这类实体或空白编码绕过。栅格图 data:image 白名单放行, 其余危险协议改 #(Bugbot PR#100)。"""
+    attr, q, val = m.group(1), m.group(2), m.group(3)
+    norm = re.sub(r"[\s\x00-\x1f]+", "", htmllib.unescape(val)).lower()
+    bad = norm.startswith(("javascript:", "vbscript:")) or (
+        norm.startswith("data:") and not _IMG_DATA_OK_RX.match(norm))
+    return f"{attr}={q}#{q}" if bad else m.group(0)
+
+
 def sanitize_fragment(h):
     """转载镜像用的 HTML 消毒: 去注释/脚本/样式/iframe 等活动内容与事件属性, 只留静态标签。"""
     h = re.sub(r"<!--.*?-->", "", h or "", flags=re.S)
     h = re.sub(r"<(script|style|iframe|object|embed|form|frameset|noscript)\b[^>]*>.*?</\1\s*>", "", h, flags=re.S | re.I)
     h = re.sub(r"<(script|style|iframe|object|embed|form|link|meta|base)\b[^>]*/?>", "", h, flags=re.I)
     h = re.sub(r"\s+on[a-z]+\s*=\s*(\"[^\"]*\"|'[^']*'|[^\s>]+)", "", h, flags=re.I)
-    h = re.sub(r"(href|src)\s*=\s*([\"'])\s*(?:javascript|vbscript):[^\"']*\2", r"\1=\2#\2", h, flags=re.I)
-    # data: URL 除白名单栅格图外一律掐——data:text/html 是站内 XSS 向量, data:image/svg+xml 可带脚本(Bugbot PR#100)
-    h = re.sub(r"(href|src)\s*=\s*([\"'])\s*data:(?!image/(?:png|jpe?g|gif|webp|bmp)[;,])[^\"']*\2", r"\1=\2#\2", h, flags=re.I)
+    # 危险协议链接消毒: 解实体+去空白后判 javascript/vbscript/非白名单 data(挡实体编码绕过, Bugbot PR#100)
+    h = _URL_ATTR_RX.sub(_neutralize_url, h)
     return h.strip()
 
 
@@ -2132,7 +2145,10 @@ def write_detail_pages(vis, items, lib):
         # 条目 concepts 列表本身的增删已被 item_repr 捕获; 这里补捕获它们的定义变化。
         csig = _sha(*(f"{s}={lib[s].get('term')}|{'/'.join(lib[s].get('aliases') or [])}|{lib[s].get('def')}"
                       for s in (it.get("concepts") or []) if s in lib))
-        sig = _sha(RENDER_VER, csig, item_repr,
+        # 源级 mirror(full/excerpt)与 own 配置也决定详情页形态(全文镜像 vs 导读、index vs noindex),
+        # 但不在条目字段里——须显式纳入签名, 否则改 excerpt 退级时镜像文件哈希不变会误命中跳过(Bugbot PR#100)
+        srccfg = f"{MIRROR_MODE.get(it['source'], 'full')}|{'own' if it['source'] in OWN_SOURCES else 'ext'}"
+        sig = _sha(RENDER_VER, srccfg, csig, item_repr,
                    _file_sig(CONTENT_DIR / f"{it['id']}.html"), _file_sig(zh_content_path(it["id"])))
         new_sigs[it["id"]] = sig
         if p.exists() and old_sigs.get(it["id"]) == sig:
