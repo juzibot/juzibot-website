@@ -1004,7 +1004,8 @@ def cell_date(cell):
     文本兜底必须补零: 运营手填 2026/7/5 若原样输出 2026-7-5, 字符串排序错乱,
     且 month_label 对 date[5:7] 做 int 会炸(news-c.html 注入失败)。"""
     if isinstance(cell, (int, float)) and cell > 0:
-        return datetime.fromtimestamp(cell / 1000).strftime("%Y-%m-%d")
+        # 统一按 UTC 解析, 与 wechat_meta 一致——否则东八区近午夜条目会差一天, 影响排序/按月分组(Bugbot PR#100)
+        return datetime.fromtimestamp(cell / 1000, tz=timezone.utc).strftime("%Y-%m-%d")
     m = re.search(r"(\d{4})[-/](\d{1,2})[-/](\d{1,2})", str(cell or ""))
     return f"{m.group(1)}-{int(m.group(2)):02d}-{int(m.group(3)):02d}" if m else ""
 
@@ -1370,8 +1371,9 @@ def ai_enrich(items):
     """给三方外部源的过筛条目配中文简报(brief); 英文标题的条目额外配中文译题(title_zh)。
     卡片显示中文题+原题小字, 详情页的摘要源用简报当导读。与 ai 判定同款缓存纪律:
     字段随 data/news.json 持久化、每条只做一次, 失败(或缺 key)下次运行自动补。"""
-    def _brief_stale(it):  # 当初用摘要生成、现在全文镜像到了 → 重做一次, 别让简报长期停在摘要质量(Bugbot PR#100)
-        return it.get("brief") and not it.get("brief_full") and bool(content_text(it["id"]))
+    def _brief_stale(it):  # 明确记为「摘要生成」(brief_full is False)、现在全文镜像到了 → 重做一次。
+        # 用 is False(而非 not …)：老条目无此标记时视为已定稿, 不触发批量重刷烧配额(Bugbot PR#100)
+        return it.get("brief") and it.get("brief_full") is False and bool(content_text(it["id"]))
     todo = [i for i in visible_items(items) if i["source"] in ENRICH_SOURCES
             and (not i.get("brief") or (title_is_en(i["title"]) and not i.get("title_zh")) or _brief_stale(i))]
     if not todo:
@@ -1554,8 +1556,9 @@ def ai_call_obj(prompt, temperature=0):
 def ai_concepts(items, lib):
     """对每篇上站文章抽核心概念: 库里已有的只引用(返回 slug), 新概念带原创定义入库。
     条目 concepts 字段是缓存标记——抽过(哪怕抽出 0 个)不再重抽; 批次失败该批下轮重试。"""
-    def _concepts_stale(it):  # 当初用摘要抽的、现在全文到了 → 重抽一次(Bugbot PR#100)
-        return "concepts" in it and not it.get("concepts_full") and bool(content_text(it["id"]))
+    def _concepts_stale(it):  # 明确记为「摘要抽取」(concepts_full is False)、现在全文到了 → 重抽一次。
+        # 同 _brief_stale：老条目无标记视为已定稿, 不批量重抽(Bugbot PR#100)
+        return "concepts" in it and it.get("concepts_full") is False and bool(content_text(it["id"]))
     todo = [i for i in visible_items(items) if "concepts" not in i or _concepts_stale(i)]
     if not todo:
         return
@@ -2274,7 +2277,7 @@ def main():
         p = prev.get(it["url"])
         if not p:
             continue
-        for k in ("ai", "quip", "brief", "title_zh", "concepts"):
+        for k in ("ai", "quip", "brief", "brief_full", "title_zh", "concepts", "concepts_full"):
             if k not in it and k in p:
                 it[k] = p[k]
 
