@@ -1,0 +1,31 @@
+<p>根据已公布的基准测试结果，<a href="https://huggingface.co/WeiboAI/VibeThinker-3B" target="_blank" rel="noopener nofollow">VibeThinker-3B</a> 的表现令人惊讶地接近许多规模大得多的编程与推理系统。</p>
+
+<p>最让我感兴趣的是，该模型基于较早期的 <a href="https://huggingface.co/Qwen/Qwen2.5-Coder-3B" target="_blank" rel="noopener nofollow">Qwen2.5-Coder-3B</a> 技术栈构建。根据模型卡片信息，VibeThinker-3B 拥有 30.9 亿参数，并采用了 Qwen2 风格的骨干网络。</p>
+
+<p>因此，这清晰地展示了优质数据整理与后训练能带来多大的提升。</p>
+
+<p>这份<a href="https://arxiv.org/abs/2606.16140" target="_blank" rel="noopener nofollow">技术报告</a>值得一读，因为它详细介绍了后训练流程。其中的关键环节包括：</p>
+
+<ol>
+  <li>使用带有可验证解决方案的高信号合成数学与代码数据</li>
+  <li>每个答案生成多条推理路径，随后进行严格筛选</li>
+  <li>两阶段<a href="https://sebastianraschka.com/glossary/#instruction-finetuning" target="_blank" rel="noopener nofollow">监督微调</a>：第一阶段追求广泛覆盖，第二阶段聚焦更难的长推理示例</li>
+  <li>依据目标准确率（而非仅凭验证损失）选择检查点</li>
+  <li>MGPO：一种 GRPO 风格的 <a href="https://sebastianraschka.com/glossary/#rlvr" target="_blank" rel="noopener nofollow">RLVR</a> 方法，侧重于那些既不太简单也不太难的样本</li>
+  <li>单阶段 64k 上下文强化学习，而非渐进式上下文扩展</li>
+  <li>领域强化学习的顺序为：先数学，再编程，最后 STEM</li>
+  <li>后期阶段奖励更短的正确推理轨迹</li>
+  <li>基于筛选后的数学、编程和 STEM 强化学习轨迹进行离线自我<a href="https://sebastianraschka.com/glossary/#distillation" target="_blank" rel="noopener nofollow">蒸馏</a></li>
+  <li>最终使用基于规则的验证器和基于评分标准的奖励模型进行指令强化学习</li>
+</ol>
+
+<p>他们并未透露该项目的确切 GPU 使用时长。根据早期 VibeThinker-1.5B 报告中的数据，我粗略估计成本大约在 2.5 万到 6 万美元之间。这仍然是一笔不小的开支，但远未达到数百万美元的量级。</p>
+
+<p>需要注意的是，截至 2026 年 6 月 17 日，该模型非常新，其基准测试结果可能好得令人难以置信。未来几天需要通过实际应用来检验 VibeThinker 的结果是否在实践中站得住脚。但就第一印象而言，这是一个出色的小模型成果，也是一份有价值的后训练技术总结。</p>
+
+<figure>
+<p><a href="https://substack.com/@rasbt/note/c-277879621" target="_blank" rel="noopener nofollow"><img src="https://sebastianraschka.com/images/blog/2026/vibethinker-3b/hero.webp" alt="VibeThinker-3B 基准测试、架构与后训练概览" referrerpolicy="no-referrer" /></a></p>
+<figcaption>来自原始 <a href="https://substack.com/@rasbt/note/c-277879621" target="_blank" rel="noopener nofollow">Substack 笔记</a> 的组合图，总结了 <a href="https://sebastianraschka.com/glossary/#benchmark" target="_blank" rel="noopener nofollow">benchmark</a> 快照、架构示意图和后训练流程。</figcaption></figure>
+
+
+<p>来源：我的 <a href="https://substack.com/@rasbt/note/c-277879621" target="_blank" rel="noopener nofollow">Substack 笔记</a> 经过轻微编辑的网站版本。</p>

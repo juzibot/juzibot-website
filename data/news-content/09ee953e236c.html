@@ -1,0 +1,65 @@
+<p>OpenAI 在上周推出的首款硬件产品 Codex Micro 竟然售罄了。商品于 7 月 15 日开放限量预订，之后首批预订很快售罄，而已下单产品预计从 7 月 24 日起陆续发货。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/1-16.png!720" referrerpolicy="no-referrer" /></p>
+
+<p>▲ image description. 图片来自：xxx在 OpenAI 的商店官网，Codex 键盘已经显示「缺货」</p>
+
+<p>根据外媒 Axios 的报道，<strong>Codex Micro 是一款限量产品，将「供应到售罄为止」。</strong></p>
+<p>一个巴掌大的专用键盘，售价 230 美元，大约能用 2300 万 Fable 5 的输入 Token，4600 万的 GPT-5.6 Sol 输入 Token。我想大概是大家都觉得这年头几千万 Token 能做什么，所以首批产品很快就卖光了。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/PixPin_2026-07-21_10-54-38.png!720" referrerpolicy="no-referrer" /></p>
+<p>这个专用键盘更像是一块桌面控制器，塞进了 13 枚机械按键、一个旋钮、一根摇杆和一圈对应不同状态的 RGB 灯。它能切换 Codex 任务、批准或拒绝操作、按住说话，还能用旋钮调节推理强度。</p>
+<p>有国外网友在 OpenAI 官网下单失败，看到有声段落轴和线性轴两个版本均已售罄后，他看了一眼自己桌上的 Stream Deck+，八块可以改变图标的 LCD 按键、四个旋钮、一条触控屏，怎么不算是另一个版本的 Codex Micro 呢？</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/PixPin_2026-07-21_10-59-42.png!720" referrerpolicy="no-referrer" /></p>
+<p>Stream Deck+ 听名字就知道是服务于流媒体，它是一款在直播和内容创作场景里流行的桌面控制器。</p>
+<p>主播用它切换 OBS 画面、开关麦克风、播放音效，以及切换不同的直播平台；剪辑师会把 Final Cut、Premiere 或 Photoshop 的常用命令放到手边；它也能控制灯光、会议软件和智能家居。</p>
+<p>硬件背后的 Stream Deck 软件会把每次点击转换成键盘快捷键、系统命令、插件动作，或者一串连续操作。每枚按键又是一块小型 LCD 屏幕，既能显示自定义图标，也能根据操作状态改变画面。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/PixPin_2026-07-21_11-07-22.png!720" referrerpolicy="no-referrer" /></p>
+<p>不过 Stream Deck+ 的价钱也不便宜，官方价为 179.99 美元，和 Codex Micro 只差大约 50 美元。如果因为 OpenAI 官方的键盘贵，专门买一块新的 Stream Deck+，这笔账看起来远没有那么漂亮；但这位网友的改造思路还是很值得学习。</p>
+<p>这套改造不需要焊电路，也不用 3D 打印外壳。它的核心很朴素：把 Codex 中常用的操作设置成快捷键，再让 Stream Deck 模拟这些按键。真正需要动手的部分，主要发生在两个软件的设置界面里。</p>
+<h2>100% 复刻 Codex 菜单操作</h2>
+<p>Stream Deck 也有几款版本，普通 Stream Deck 能完成确认、取消和语音输入等按钮操作，但少了旋钮，无法完整复刻 Codex Micro 的交互，所以最合适的还是 Stream Deck+。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/PixPin_2026-07-21_11-31-06.png!720" referrerpolicy="no-referrer" /></p>
+<p>准备好硬件之后，软件上需要安装 ChatGPT 桌面应用（前身是 Codex）和 Stream Deck。旋钮的 Action Trigger 功能还要求 Stream Deck 6.8 或更新版本。</p>
+<p>接着就是开始自定义 Stream Deck+ 上的图标，网友提到可以直接使用 Stream Deck 自带的图标库。不过他为了让外观更像 Codex Micro，从产品截图里裁出了键帽图案。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/PixPin_2026-07-21_11-30-18.png!720" referrerpolicy="no-referrer" /></p>
+<p>能自定义按键的样式，这大概也是 Stream Deck 相比 Codex Micro 最直观的优势。Codex Micro 虽然能设置额外的软件层，但它的实体键帽不会跟着应用变化。Stream Deck 的每一枚按键都是小屏幕，控制对象变了，图标也一起变。</p>
+<p>复刻 Codex Micro 按钮部分就更简单了，只需要在 Stream Deck 的 System 分类里，把 Hotkey 拖到对应按键上，再填入组合键即可。</p>
+<p>原作者给麦克风分配的是 Control-M，又为会话分支设置了 Option-Shift-Command-F。都只需要先在 ChatGPT 的键盘快捷键页面中确认或修改绑定，再把同一组按键填进 Stream Deck 即可。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/PixPin_2026-07-21_13-48-05.png!720" referrerpolicy="no-referrer" /></p>
+
+<p>▲在 ChatGPT 应用内提供了数十种快捷键</p>
+
+<p>到这里，批准、拒绝、听写、菜单选择和侧边栏切换都已经可以工作。对大多数人来说，Codex Micro 八成的日常操作已经搬到了 Stream Deck 上。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/ChatGPT_39.png!720" referrerpolicy="no-referrer" /></p>
+<p>最后一个难复刻的是状态灯，Agent Keys 的变色 + 脉冲状态灯是最难复刻的功能，Stream Deck 原生做不到。</p>
+<p>Codex Micro 有六枚半透明的 Agent Key。白色表示任务空闲，蓝色表示正在思考，绿色代表任务完成但尚未查看，琥珀色说明它在等待批准或回复，红色则意味着出错。按下一枚按键，还能直接切换到对应任务。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/2026-07-21-11.55.56.2026-07-21-11_56_56.gif" referrerpolicy="no-referrer" /></p>
+<p>普通快捷键只能向软件发送命令，读不到这些状态。给 Stream Deck 按键换一张动态 GIF，可以让它闪起来，却无法判断究竟是哪条任务完成了。</p>
+<p>作者在 Elgato 市场上找到了第三方付费插件 Beautiful Thread Pulses，27 美元，装好后拖进按键槽位即可。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/PixPin_2026-07-21_14-04-31.png!720" referrerpolicy="no-referrer" /></p>
+
+<p>▲Stream Deck+ 由 Elgato 公司开发，Elgato 是一家视听技术提供商，覆盖音频、视频等多项产品</p>
+
+<p>通过 Codex 桌面端内部的事件机制读取状态，再把结果送到 Stream Deck，任务完成时脉冲闪烁。</p>
+<p>虽然 179 美元的 Stream Deck+ 加上 27 美元的软件插件，都快赶上原装 230 美元的 Codex Micro 了，但这位极客表示，他得到的设备还能同时服务 Claude Code、视频剪辑等所有场景，Codex Micro 只有 Codex。</p>
+<h2>手边的旧设备都可以吗？</h2>
+<p>使用 Stream Deck+ 方案确实很通用，通过设置不同的 Profile，今天控制 Codex，明天可以切去 Claude Code，下午剪视频时又能变成 Final Cut 控制台。每个图标和动作都能改，几乎没有固定用途。</p>
+<p>整个硬件只负责发送快捷键，但社区很快开始挑战更难的那一半：能否让更多的旧硬件也看懂 Agent 状态。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/PixPin_2026-07-21_12-00-54.png!720" referrerpolicy="no-referrer" /></p>
+<p>GitHub 已经有一些开源项目，像是 Codex Deck 通过本机的调试连接找到 Codex 桌面端内部事件，再把六条任务的工作、完成、等待批准和报错状态送到标准 15 键 Stream Deck MK.2。</p>
+<p>按下屏幕键时，插件也会调用 Codex Micro 使用的原生事件。它把普通的单向宏键盘，改成了一块双向任务面板。</p>
+<p>另一位开发者做的 OpenMicro 换了一条路。PS5 DualSense 的四枚面键分别负责提交、取消、语音输入和新建对话，方向键控制菜单，摇杆调节推理强度。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/PixPin_2026-07-21_11-58-44.png!720" referrerpolicy="no-referrer" /></p>
+<p>手柄灯条会跟着当前任务变成蓝、琥珀、绿或红色，项目也能控制 Claude Code 和 Codex CLI，换成 Xbox 或普通手柄后，多数情况下就只能保留输入，少了灯光反馈。</p>
+<p>改造对象还在继续增加。ThreadDeck 把 Stream Deck Neo 做成 macOS 上的 Codex 实时仪表盘；OpenDeck 让手机和平板在浏览器里充当数字控制台；还有用户直接让 Codex 给 Loupedeck CT 生成四页配置，把六个旋钮、大转盘和一堆按钮全利用起来。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/PixPin_2026-07-21_12-00-54.png!720" referrerpolicy="no-referrer" /></p>
+<p>不过这些项目都很早期，有的依赖未公开接口，有的还在补设备兼容，距离开箱即用还有一段路。</p>
+<p>在 OpenAI 的官方商店，除了这款 Codex 键盘售罄，还有一个售罄的产品。但应该没有人能想到，另一个缺货的是一个 ChatGPT 篮球。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/PixPin_2026-07-21_10-24-44.png!720" referrerpolicy="no-referrer" /></p>
+<p>这个 70 美元的 ChatGPT 篮球，是一颗标准 7 号篮球，周长 29.5 英寸，100% 橡胶材质。它没有麦克风、传感器或任何 AI 功能，表面印着 ChatGPT 标志。</p>
+<p>OpenAI 给出的产品说明只有一句：它来自「Pause. Play. Prompt.」活动，用来提醒人们，创意并非只存在于屏幕里。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/PixPin_2026-07-21_11-51-59.png!720" referrerpolicy="no-referrer" /></p>
+<p>这样再看同样是售罄的 Codex Micro 和 ChatGPT 篮球，除了那些衣服、帽子等周边，它们两个就像是 OpenAI 商店货架的两端。</p>
+<p>一个把 Agent 的批准、切换和状态反馈搬到手边，一个只是把「Pause. Play. Prompt.」做成了一件实体商品。</p>
+<p>篮球很难证明 OpenAI 已经找到了消费硬件的答案，它更像一次带着硅谷幽默的品牌实验。</p>
+<p>Codex Micro 引发的改造潮反而更接近真正的产品反馈。OpenAI 定义了一套 Agent 时代的人机交互，而社区几乎立刻开始把这套交互搬到 Stream Deck、游戏手柄、手机和平板上。</p>
+<p>一款硬件最成功的时候，或许就是当所有人都开始复刻它。</p>

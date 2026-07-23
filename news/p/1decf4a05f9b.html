@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>GPT 5.6 有 72 种可能配置。什么是好的默认设置？ - 句子·动态</title>
+<meta name="description" content="GPT 5.6 模型有 72 种配置，涉及训练时间和推理时间的缩放。本文讨论了如何选择合适的默认配置，以平衡性能和资源消耗。" />
+<meta name="robots" content="noindex,follow" />
+<link rel="canonical" href="https://sebastianraschka.com/blog/2026/gpt-5-6-configurations.html" />
+<link rel="icon" href="../../logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../../assets/site.css" />
+<style>
+  .dp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
+  .dp-wrap{max-width:760px;margin:0 auto}
+  .dp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
+  .dp-back:hover{color:var(--blue)}
+  .dp-meta{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:14px}
+  .dp-srcb{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:750;color:var(--sc,var(--blue))}
+  .s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
+  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-wecom{--sc:#2563EB}.s-voices{--sc:#9333EA}
+  .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
+  .dp-cat{display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ink-3);background:#F6F7FB;border:1px solid var(--line-2);border-radius:6px;padding:2px 8px}
+  .dp-date{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-3)}
+  .dp-title{font-size:clamp(24px,3.2vw,34px);font-weight:850;letter-spacing:-.03em;line-height:1.32;word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance;margin-bottom:10px}
+  .dp-orig{font-size:13px;color:var(--ink-3);overflow-wrap:anywhere;margin-bottom:8px}
+  .dp-by{font-size:12.5px;font-weight:600;color:var(--ink-3);margin-bottom:18px}
+  .dp-notice{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:1.7;color:var(--ink-2);background:#F6F7FB;border:1px solid var(--line-2);border-radius:10px;padding:10px 14px;margin-bottom:22px}
+  .dp-notice i{color:var(--blue);margin-top:4px;flex:0 0 auto}
+  .dp-notice a{color:var(--blue);font-weight:700;overflow-wrap:anywhere}
+  .dp-quip{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.66;font-weight:600;color:var(--blue-deep);background:var(--blue-50);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:18px}
+  .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
+  .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
+  .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
+  .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
+  .dp-body p{margin:0 0 1.05em}
+  .dp-body img{max-width:100%;height:auto;border-radius:10px;margin:.4em 0}
+  .dp-body pre{background:#0F172A;color:#E2E8F0;font-family:var(--mono);font-size:12.5px;line-height:1.7;padding:14px 16px;border-radius:10px;overflow-x:auto;margin:0 0 1.1em}
+  .dp-body code{font-family:var(--mono);font-size:.92em}
+  .dp-body :not(pre)>code{background:#F1F5F9;padding:1px 5px;border-radius:5px}
+  .dp-body blockquote{border-left:3px solid var(--line);padding:2px 0 2px 14px;color:var(--ink-3);margin:0 0 1.05em}
+  .dp-body a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+  .dp-body ul,.dp-body ol{padding-left:1.5em;margin:0 0 1.05em}
+  .dp-body table{display:block;overflow-x:auto;border-collapse:collapse;margin:0 0 1.1em}
+  .dp-body td,.dp-body th{border:1px solid var(--line);padding:6px 10px;font-size:.92em}
+  .dp-excerpt{font-size:15px;line-height:1.9;color:var(--ink-2);border-left:3px solid var(--line);padding:2px 0 2px 16px;margin-bottom:8px}
+  .dp-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;padding-top:20px;border-top:1px solid var(--line-2)}
+  .dp-btn{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:750;border-radius:999px;padding:10px 20px;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+  .dp-btn.pri{background:var(--blue);color:#fff}
+  .dp-btn.pri:hover{background:var(--blue-deep)}
+  .dp-btn.sec{background:#fff;color:var(--ink-2);border:1px solid var(--line)}
+  .dp-btn.sec:hover{color:var(--blue);border-color:var(--blue)}
+  .dp-note{font-size:11.5px;line-height:1.7;color:var(--ink-3);margin-top:18px}
+  .dp-langbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+  .dp-lang{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:750;color:var(--blue);
+    background:var(--blue-50);border:1px solid var(--blue-100);border-radius:999px;padding:7px 14px;
+    transition:background .2s var(--ease),border-color .2s var(--ease)}
+  .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
+  .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div id="site-nav"></div>
+<main class="dp-main">
+  <div class="dp-wrap">
+    <a class="dp-back" href="../../news.html"><i class="fa-solid fa-arrow-left"></i>返回动态</a>
+    <div class="dp-meta">
+      <span class="dp-srcb s-voices"><i class="fa-solid fa-feather"></i>大咖观点</span>
+      <span class="dp-cat">Sebastian Raschka</span>
+      <time class="dp-date" datetime="2026-07-09">2026-07-09</time>
+    </div>
+    <h1 class="dp-title">GPT 5.6 有 72 种可能配置。什么是好的默认设置？</h1>
+    <p class="dp-orig">原题：GPT 5.6 Has 72 Possible Configurations. What&#x27;s A Good Default?</p>
+    <p class="dp-by">来源：Sebastian Raschka · 大咖观点</p>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（Sebastian Raschka · 大咖观点）所有 · <a href="https://sebastianraschka.com/blog/2026/gpt-5-6-configurations.html" target="_blank" rel="noopener">阅读原文</a></span></div>
+    
+    <div class="dp-brief"><b>简报</b>GPT 5.6 模型有 72 种配置，涉及训练时间和推理时间的缩放。本文讨论了如何选择合适的默认配置，以平衡性能和资源消耗。</div>
+    <div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang"><i class="fa-solid fa-language"></i><span>翻译为中文</span></button><span class="dp-lang-note">中文由 AI 翻译，仅供参考</span></div><article class="dp-body" id="dpBodyOrig"><p>Yes, there are probably too many options to choose from in the GPT 5.6 release.</p>
+
+<p>In the context of reasoning models, though, I find it interesting how these choices map onto training-time and <a href="https://sebastianraschka.com/glossary/#inference-time-scaling" target="_blank" rel="noopener nofollow">inference-time scaling</a>. If we loosely map the options onto the classic o1 plots, Sol, Terra, and Luna stand in for three model sizes and training budgets along the training-compute axis. The effort settings then sit on the inference-time-compute axis.</p>
+
+<figure><p><img loading="lazy" onerror="this.style.display='none'" src="https://sebastianraschka.com/images/blog/2026/gpt-5-6-configurations/hero.webp" alt="Annotated comparison mapping GPT 5.6 model choices to training-compute scaling and effort levels to inference-time scaling" referrerpolicy="no-referrer" /></p>
+<figcaption>Figure 1. A loose mapping from OpenAI&#x27;s classic <a href="https://openai.com/index/learning-to-reason-with-llms/" target="_blank" rel="noopener nofollow">o1 scaling plots</a> to the GPT 5.6 choices. The three model options represent different model sizes and training budgets, while the effort setting represents inference-time compute.</figcaption></figure>
+
+
+<p>The full list has three model choices and six reasoning-effort levels (Light, Medium, High, Extra High, Max, and Ultra). Once Work versus Codex and Standard versus Fast are included, the full configuration matrix becomes</p>
+
+<p><code>Work/Codex × Sol/Terra/Luna × Light/Medium/High/Extra High/Max/Ultra × Standard/Fast</code></p>
+
+<p>That gives us <code>2 × 3 × 6 × 2 = 72</code> possible configurations.</p>
+
+<p>So, what is a good default now? Luna with High effort? Sol with Light effort? Terra with Medium effort?</p>
+
+<p>Sure, a performance-versus-cost chart can help identify the good bang-for-the-buck combinations. For instance, Luna with Extra High effort may be better and cheaper than Sol with Medium effort.</p>
+
+<figure><p><img loading="lazy" onerror="this.style.display='none'" src="https://sebastianraschka.com/images/blog/2026/gpt-5-6-configurations/coding-agent-index-cost.webp" alt="Artificial Analysis Coding Agent Index scores plotted against API cost for GPT 5.6 and comparison models" referrerpolicy="no-referrer" /></p>
+<figcaption>Figure 2. Artificial Analysis Coding Agent Index v1.1 scores plotted against API cost across GPT 5.6 and several comparison models. Figure based on <a href="https://x.com/OpenAI/status/2075271425548795909" target="_blank" rel="noopener nofollow">OpenAI&#x27;s GPT 5.6 release post on X</a>.</figcaption></figure>
+
+
+<p>But yeah, 72 possible configurations leave us with a lot of choices 🤯.</p></article><article class="dp-body" id="dpBodyZh" hidden><p>是的，GPT 5.6 版本中可供选择的选项可能太多了。</p>
+
+<p>不过，在推理模型的背景下，我发现这些选择如何映射到训练时和<a href="https://sebastianraschka.com/glossary/#inference-time-scaling" target="_blank" rel="noopener nofollow">推理时缩放</a>上很有趣。如果我们粗略地将这些选项映射到经典的 o1 图表上，Sol、Terra 和 Luna 代表了沿训练计算轴的三种模型规模和训练预算。而努力程度设置则位于推理时计算轴上。</p>
+
+<figure><p><img loading="lazy" onerror="this.style.display='none'" src="https://sebastianraschka.com/images/blog/2026/gpt-5-6-configurations/hero.webp" alt="GPT 5.6 模型选择与训练计算缩放、努力程度与推理时缩放的对应关系注释图" referrerpolicy="no-referrer" /></p>
+<figcaption>图 1. OpenAI 经典<a href="https://openai.com/index/learning-to-reason-with-llms/" target="_blank" rel="noopener nofollow"> o1 缩放图</a>与 GPT 5.6 选项的粗略对应关系。三种模型选项代表不同的模型规模和训练预算，而努力程度设置代表推理时计算。</figcaption></figure>
+
+
+<p>完整列表包含三种模型选择和六个<a class="cpt" href="../c/reasoning-effort.html" data-def="推理努力指AI模型在解决问题时投入的计算资源和思考深度">推理努力</a>程度级别（Light、Medium、High、Extra High、Max 和 Ultra）。再加上 Work 与 Codex 以及 Standard 与 Fast 的区分，完整的配置矩阵就变成了</p>
+
+<p><code>Work/Codex × Sol/Terra/Luna × Light/Medium/High/Extra High/Max/Ultra × Standard/Fast</code></p>
+
+<p>这给了我们 <code>2 × 3 × 6 × 2 = 72</code> 种可能的配置。</p>
+
+<p>那么，现在什么是好的默认选择呢？是 High 努力的 Luna？Light 努力的 Sol？还是 Medium 努力的 Terra？</p>
+
+<p>当然，一张性能与成本对比图可以帮助找出性价比高的组合。例如，Extra High 努力的 Luna 可能比 Medium 努力的 Sol 更好且更便宜。</p>
+
+<figure><p><img loading="lazy" onerror="this.style.display='none'" src="https://sebastianraschka.com/images/blog/2026/gpt-5-6-configurations/coding-agent-index-cost.webp" alt="GPT 5.6 及对比模型的 Artificial Analysis Coding Agent Index 得分与 API 成本对比图" referrerpolicy="no-referrer" /></p>
+<figcaption>图 2. GPT 5.6 及多个对比模型的 Artificial Analysis Coding Agent Index v1.1 得分与 API 成本对比图。图表基于<a href="https://x.com/OpenAI/status/2075271425548795909" target="_blank" rel="noopener nofollow"> OpenAI 在 X 上发布的 GPT 5.6 发布帖</a>。</figcaption></figure>
+
+
+<p>但是，没错，72 种可能的配置给我们留下了太多选择 🤯。</p></article>
+    <div class="dp-actions">
+      <a class="dp-btn pri" href="https://sebastianraschka.com/blog/2026/gpt-5-6-configurations.html" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      
+      <button type="button" class="dp-btn sec" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
+      <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
+    </div>
+    <p class="dp-note">本页由句子互动动态管线自动生成，聚合内容版权归各来源所有；如来源方希望调整或移除收录，请通过官网联系我们。</p>
+  </div>
+</main>
+<div id="site-footer"></div>
+<script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "GPT 5.6 有 72 种可能配置。什么是好的默认设置？"};</script>
+<script src="../../assets/site.js"></script>
+<script>
+(function(){var b=document.getElementById('dpLang');if(!b)return;
+var en=document.getElementById('dpBodyOrig'),zh=document.getElementById('dpBodyZh');
+b.addEventListener('click',function(){var on=zh.hidden;zh.hidden=!on;en.hidden=on;
+b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';});})();
+</script>
+</body>
+</html>

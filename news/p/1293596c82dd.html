@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Jakub 和 Szymon - 句子·动态</title>
+<meta name="description" content="AI在近年来取得显著进步，ChatGPT能完成许多令人惊叹的任务。这背后是人类智慧的体现，许多人通过不懈努力，构建了大多数专家认为在当前时间框架内不可能实现的系统。" />
+<meta name="robots" content="noindex,follow" />
+<link rel="canonical" href="https://blog.samaltman.com/jakub-and-szymon" />
+<link rel="icon" href="../../logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../../assets/site.css" />
+<style>
+  .dp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
+  .dp-wrap{max-width:760px;margin:0 auto}
+  .dp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
+  .dp-back:hover{color:var(--blue)}
+  .dp-meta{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:14px}
+  .dp-srcb{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:750;color:var(--sc,var(--blue))}
+  .s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
+  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-wecom{--sc:#2563EB}.s-voices{--sc:#9333EA}
+  .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
+  .dp-cat{display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ink-3);background:#F6F7FB;border:1px solid var(--line-2);border-radius:6px;padding:2px 8px}
+  .dp-date{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-3)}
+  .dp-title{font-size:clamp(24px,3.2vw,34px);font-weight:850;letter-spacing:-.03em;line-height:1.32;word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance;margin-bottom:10px}
+  .dp-orig{font-size:13px;color:var(--ink-3);overflow-wrap:anywhere;margin-bottom:8px}
+  .dp-by{font-size:12.5px;font-weight:600;color:var(--ink-3);margin-bottom:18px}
+  .dp-notice{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:1.7;color:var(--ink-2);background:#F6F7FB;border:1px solid var(--line-2);border-radius:10px;padding:10px 14px;margin-bottom:22px}
+  .dp-notice i{color:var(--blue);margin-top:4px;flex:0 0 auto}
+  .dp-notice a{color:var(--blue);font-weight:700;overflow-wrap:anywhere}
+  .dp-quip{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.66;font-weight:600;color:var(--blue-deep);background:var(--blue-50);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:18px}
+  .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
+  .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
+  .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
+  .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
+  .dp-body p{margin:0 0 1.05em}
+  .dp-body img{max-width:100%;height:auto;border-radius:10px;margin:.4em 0}
+  .dp-body pre{background:#0F172A;color:#E2E8F0;font-family:var(--mono);font-size:12.5px;line-height:1.7;padding:14px 16px;border-radius:10px;overflow-x:auto;margin:0 0 1.1em}
+  .dp-body code{font-family:var(--mono);font-size:.92em}
+  .dp-body :not(pre)>code{background:#F1F5F9;padding:1px 5px;border-radius:5px}
+  .dp-body blockquote{border-left:3px solid var(--line);padding:2px 0 2px 14px;color:var(--ink-3);margin:0 0 1.05em}
+  .dp-body a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+  .dp-body ul,.dp-body ol{padding-left:1.5em;margin:0 0 1.05em}
+  .dp-body table{display:block;overflow-x:auto;border-collapse:collapse;margin:0 0 1.1em}
+  .dp-body td,.dp-body th{border:1px solid var(--line);padding:6px 10px;font-size:.92em}
+  .dp-excerpt{font-size:15px;line-height:1.9;color:var(--ink-2);border-left:3px solid var(--line);padding:2px 0 2px 16px;margin-bottom:8px}
+  .dp-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;padding-top:20px;border-top:1px solid var(--line-2)}
+  .dp-btn{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:750;border-radius:999px;padding:10px 20px;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+  .dp-btn.pri{background:var(--blue);color:#fff}
+  .dp-btn.pri:hover{background:var(--blue-deep)}
+  .dp-btn.sec{background:#fff;color:var(--ink-2);border:1px solid var(--line)}
+  .dp-btn.sec:hover{color:var(--blue);border-color:var(--blue)}
+  .dp-note{font-size:11.5px;line-height:1.7;color:var(--ink-3);margin-top:18px}
+  .dp-langbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+  .dp-lang{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:750;color:var(--blue);
+    background:var(--blue-50);border:1px solid var(--blue-100);border-radius:999px;padding:7px 14px;
+    transition:background .2s var(--ease),border-color .2s var(--ease)}
+  .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
+  .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div id="site-nav"></div>
+<main class="dp-main">
+  <div class="dp-wrap">
+    <a class="dp-back" href="../../news.html"><i class="fa-solid fa-arrow-left"></i>返回动态</a>
+    <div class="dp-meta">
+      <span class="dp-srcb s-voices"><i class="fa-solid fa-feather"></i>大咖观点</span>
+      <span class="dp-cat">Sam Altman</span>
+      <time class="dp-date" datetime="2025-09-09">2025-09-09</time>
+    </div>
+    <h1 class="dp-title">Jakub 和 Szymon</h1>
+    <p class="dp-orig">原题：Jakub and Szymon</p>
+    <p class="dp-by">来源：Sam Altman · 大咖观点</p>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（Sam Altman · 大咖观点）所有 · <a href="https://blog.samaltman.com/jakub-and-szymon" target="_blank" rel="noopener">阅读原文</a></span></div>
+    
+    <div class="dp-brief"><b>简报</b>AI在近年来取得显著进步，ChatGPT能完成许多令人惊叹的任务。这背后是人类智慧的体现，许多人通过不懈努力，构建了大多数专家认为在当前时间框架内不可能实现的系统。</div>
+    <div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang"><i class="fa-solid fa-language"></i><span>翻译为中文</span></button><span class="dp-lang-note">中文由 AI 翻译，仅供参考</span></div><article class="dp-body" id="dpBodyOrig"><div class="posthaven-post-body">AI has gotten remarkably better in recent years; ChatGPT can do amazing things that we take for granted. This is as it should be, and is the story of human progress. But behind the blinking circle, nicely abstracted away, is the greatest story of human ingenuity I have ever seen. A lot of people have worked unbelievably hard to discover how to build something that most experts thought was impossible on this timeframe, and to build a company to deliver products at massive scale to let people benefit from it. Most people who use ChatGPT will never think about the people that put so much work into it, which is totally ok, but just to take a minute of your time…<br><br>There are two people I'd like to mention that OpenAI would not be OpenAI without: Jakub Pachocki and Szymon Sidor. Time and again, they combine research and engineering to solve impossible problems. They have not gotten enough public credit, but they decided to scale up <a class="cpt" href="../c/reinforcement-learning.html" data-def="一种机器学习方法，通过奖励机制训练模型做出最优决策，适用于动态环境">RL</a> as a baseline to see where it broke when the conventional wisdom was that it didn't scale which led to our Dota result, built much of the infrastructure that enabled a lot of our scientific discoveries, led GPT-4 pretraining, drove together with Ilya and Lukasz the initial ideas that led to the reasoning breakthrough, and have made significant progress exploring new paradigms.<p>Jakub is our chief scientist. He once described Szymon as “indefatigable”, which is as perfect of a use of that word as I have ever heard. OpenAI has not yet thrown a problem at them they have not been able to solve; I have heard about partnerships like there is research labs of the past where two people are able to complement each other so well, but it is very special to get to watch it unfold over the years.<br></p></div></article><article class="dp-body" id="dpBodyZh" hidden><div class="posthaven-post-body">近年来，AI 取得了显著的进步；ChatGPT 能做到许多我们习以为常的惊人之事。这本该如此，也是人类进步的篇章。但在那个闪烁的光标背后，被巧妙地抽象化了的，是我所见过最伟大的人类智慧的故事。许多人付出了难以置信的努力，去探索如何在大多数专家认为不可能的时间框架内构建出这样的东西，并建立了一家公司，以大规模交付产品，让人们从中受益。大多数使用 ChatGPT 的人永远不会想到那些为此付出如此多心血的人，这完全没关系，但请允许我占用您片刻时间……<br><br>我想特别提到两位，没有他们，OpenAI 就不会是今天的 OpenAI：Jakub Pachocki 和 Szymon Sidor。他们一次又一次地将研究与工程相结合，解决看似不可能的问题。他们尚未获得足够的公众认可，但当普遍观点认为<a class="cpt" href="../c/reinforcement-learning.html" data-def="一种机器学习方法，通过奖励机制训练模型做出最优决策，适用于动态环境">强化学习</a>无法扩展时，他们决定将其作为基线进行扩展，以观察它在何处会失效，这最终促成了我们的 Dota 成果；他们构建了支撑我们许多科学发现的基础设施；领导了 GPT-4 的<a class="cpt" href="../c/pre-training.html" data-def="AI模型在大量无标注数据上进行的初始训练阶段，学习通用知识">预训练</a>工作；与 Ilya 和 Lukasz 一起推动了促成推理突破的初步想法；并且在探索新范式方面取得了重大进展。<p>Jakub 是我们的首席科学家。他曾形容 Szymon “indefatigable”（不知疲倦），这是我听过对这个词最完美的运用。OpenAI 还没有抛给他们一个他们无法解决的问题；我听说过像过去的研究实验室那样，两个人能够如此完美互补的合作关系，但能亲眼见证它在岁月中展开，是非常特别的体验。<br></p></div></article>
+    <div class="dp-actions">
+      <a class="dp-btn pri" href="https://blog.samaltman.com/jakub-and-szymon" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      
+      <button type="button" class="dp-btn sec" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
+      <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
+    </div>
+    <p class="dp-note">本页由句子互动动态管线自动生成，聚合内容版权归各来源所有；如来源方希望调整或移除收录，请通过官网联系我们。</p>
+  </div>
+</main>
+<div id="site-footer"></div>
+<script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "Jakub 和 Szymon"};</script>
+<script src="../../assets/site.js"></script>
+<script>
+(function(){var b=document.getElementById('dpLang');if(!b)return;
+var en=document.getElementById('dpBodyOrig'),zh=document.getElementById('dpBodyZh');
+b.addEventListener('click',function(){var on=zh.hidden;zh.hidden=!on;en.hidden=on;
+b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';});})();
+</script>
+</body>
+</html>

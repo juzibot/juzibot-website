@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>VibeThinker-3B 和后训练的力量 - 句子·动态</title>
+<meta name="description" content="VibeThinker-3B 是一个基于 Qwen2.5-Coder-3B 的 3B 参数模型，其编码和推理性能显示后训练效果显著，突出了后训练在模型优化中的重要性。" />
+<meta name="robots" content="noindex,follow" />
+<link rel="canonical" href="https://sebastianraschka.com/blog/2026/vibethinker-3b-post-training.html" />
+<link rel="icon" href="../../logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../../assets/site.css" />
+<style>
+  .dp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
+  .dp-wrap{max-width:760px;margin:0 auto}
+  .dp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
+  .dp-back:hover{color:var(--blue)}
+  .dp-meta{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:14px}
+  .dp-srcb{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:750;color:var(--sc,var(--blue))}
+  .s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
+  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-wecom{--sc:#2563EB}.s-voices{--sc:#9333EA}
+  .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
+  .dp-cat{display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ink-3);background:#F6F7FB;border:1px solid var(--line-2);border-radius:6px;padding:2px 8px}
+  .dp-date{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-3)}
+  .dp-title{font-size:clamp(24px,3.2vw,34px);font-weight:850;letter-spacing:-.03em;line-height:1.32;word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance;margin-bottom:10px}
+  .dp-orig{font-size:13px;color:var(--ink-3);overflow-wrap:anywhere;margin-bottom:8px}
+  .dp-by{font-size:12.5px;font-weight:600;color:var(--ink-3);margin-bottom:18px}
+  .dp-notice{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:1.7;color:var(--ink-2);background:#F6F7FB;border:1px solid var(--line-2);border-radius:10px;padding:10px 14px;margin-bottom:22px}
+  .dp-notice i{color:var(--blue);margin-top:4px;flex:0 0 auto}
+  .dp-notice a{color:var(--blue);font-weight:700;overflow-wrap:anywhere}
+  .dp-quip{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.66;font-weight:600;color:var(--blue-deep);background:var(--blue-50);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:18px}
+  .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
+  .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
+  .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
+  .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
+  .dp-body p{margin:0 0 1.05em}
+  .dp-body img{max-width:100%;height:auto;border-radius:10px;margin:.4em 0}
+  .dp-body pre{background:#0F172A;color:#E2E8F0;font-family:var(--mono);font-size:12.5px;line-height:1.7;padding:14px 16px;border-radius:10px;overflow-x:auto;margin:0 0 1.1em}
+  .dp-body code{font-family:var(--mono);font-size:.92em}
+  .dp-body :not(pre)>code{background:#F1F5F9;padding:1px 5px;border-radius:5px}
+  .dp-body blockquote{border-left:3px solid var(--line);padding:2px 0 2px 14px;color:var(--ink-3);margin:0 0 1.05em}
+  .dp-body a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+  .dp-body ul,.dp-body ol{padding-left:1.5em;margin:0 0 1.05em}
+  .dp-body table{display:block;overflow-x:auto;border-collapse:collapse;margin:0 0 1.1em}
+  .dp-body td,.dp-body th{border:1px solid var(--line);padding:6px 10px;font-size:.92em}
+  .dp-excerpt{font-size:15px;line-height:1.9;color:var(--ink-2);border-left:3px solid var(--line);padding:2px 0 2px 16px;margin-bottom:8px}
+  .dp-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;padding-top:20px;border-top:1px solid var(--line-2)}
+  .dp-btn{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:750;border-radius:999px;padding:10px 20px;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+  .dp-btn.pri{background:var(--blue);color:#fff}
+  .dp-btn.pri:hover{background:var(--blue-deep)}
+  .dp-btn.sec{background:#fff;color:var(--ink-2);border:1px solid var(--line)}
+  .dp-btn.sec:hover{color:var(--blue);border-color:var(--blue)}
+  .dp-note{font-size:11.5px;line-height:1.7;color:var(--ink-3);margin-top:18px}
+  .dp-langbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+  .dp-lang{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:750;color:var(--blue);
+    background:var(--blue-50);border:1px solid var(--blue-100);border-radius:999px;padding:7px 14px;
+    transition:background .2s var(--ease),border-color .2s var(--ease)}
+  .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
+  .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div id="site-nav"></div>
+<main class="dp-main">
+  <div class="dp-wrap">
+    <a class="dp-back" href="../../news.html"><i class="fa-solid fa-arrow-left"></i>返回动态</a>
+    <div class="dp-meta">
+      <span class="dp-srcb s-voices"><i class="fa-solid fa-feather"></i>大咖观点</span>
+      <span class="dp-cat">Sebastian Raschka</span>
+      <time class="dp-date" datetime="2026-06-17">2026-06-17</time>
+    </div>
+    <h1 class="dp-title">VibeThinker-3B 和后训练的力量</h1>
+    <p class="dp-orig">原题：VibeThinker-3B and the Strength of Post-Training</p>
+    <p class="dp-by">来源：Sebastian Raschka · 大咖观点</p>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（Sebastian Raschka · 大咖观点）所有 · <a href="https://sebastianraschka.com/blog/2026/vibethinker-3b-post-training.html" target="_blank" rel="noopener">阅读原文</a></span></div>
+    
+    <div class="dp-brief"><b>简报</b>VibeThinker-3B 是一个基于 Qwen2.5-Coder-3B 的 3B 参数模型，其编码和推理性能显示后训练效果显著，突出了后训练在模型优化中的重要性。</div>
+    <div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang"><i class="fa-solid fa-language"></i><span>翻译为中文</span></button><span class="dp-lang-note">中文由 AI 翻译，仅供参考</span></div><article class="dp-body" id="dpBodyOrig"><p>According to the reported benchmarks, <a href="https://huggingface.co/WeiboAI/VibeThinker-3B" target="_blank" rel="noopener nofollow">VibeThinker-3B</a> gets surprisingly close to much larger coding and reasoning systems.</p>
+
+<p>What I found most interesting is that the model builds on the older <a href="https://huggingface.co/Qwen/Qwen2.5-Coder-3B" target="_blank" rel="noopener nofollow">Qwen2.5-Coder-3B</a> stack. Based on the model card, VibeThinker-3B has 3.09B parameters and uses a Qwen2-style backbone.</p>
+
+<p>So, this is a pretty clear example of how much can come from good data curation and <a class="cpt" href="../c/post-training.html" data-def="在模型预训练后，通过特定任务数据进一步优化模型性能的过程">post-training</a>.</p>
+
+<p>The <a href="https://arxiv.org/abs/2606.16140" target="_blank" rel="noopener nofollow">technical report</a> is worth reading because it gives a detailed look at the post-training pipeline. The important pieces are:</p>
+
+<ol>
+  <li>high-signal synthetic math and code data with verifiable solutions</li>
+  <li>multiple reasoning paths per answer, followed by aggressive filtering</li>
+  <li>two-stage <a href="https://sebastianraschka.com/glossary/#instruction-finetuning" target="_blank" rel="noopener nofollow">supervised finetuning</a>, first broad coverage and then harder long-reasoning examples</li>
+  <li>checkpoint selection by target accuracy rather than validation loss alone</li>
+  <li>MGPO, a GRPO-style <a href="https://sebastianraschka.com/glossary/#rlvr" target="_blank" rel="noopener nofollow">RLVR</a> method that emphasizes samples that are neither too easy nor too hard</li>
+  <li>single-stage 64k-context RL, instead of progressive context expansion</li>
+  <li>domain RL ordered as math, then code, then STEM</li>
+  <li>a later stage that rewards shorter correct trajectories</li>
+  <li>offline self-<a href="https://sebastianraschka.com/glossary/#distillation" target="_blank" rel="noopener nofollow">distillation</a> from filtered Math, Code, and STEM RL trajectories</li>
+  <li>final instruction RL using rule-based validators and rubric-based reward models</li>
+</ol>
+
+<p>They do not share the exact GPU hours for this project. Based on numbers from the earlier VibeThinker-1.5B report, my rough guess would be that this cost on the order of $25k to $60k. That is still a lot of money, but it is not millions.</p>
+
+<p>One caveat is that as of June 17, 2026, the model is very new, and the benchmarks could still be too good to be true. It needs practical use over the next few days to see whether the VibeThinker results check out in practice. But as a first impression, this is a strong small-model result and a useful post-training write-up.</p>
+
+<figure><p><a href="https://substack.com/@rasbt/note/c-277879621" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://sebastianraschka.com/images/blog/2026/vibethinker-3b/hero.webp" alt="VibeThinker-3B benchmark, architecture, and post-training overview" referrerpolicy="no-referrer" /></a></p>
+<figcaption>Composite figure from the original <a href="https://substack.com/@rasbt/note/c-277879621" target="_blank" rel="noopener nofollow">Substack note</a>, summarizing the <a href="https://sebastianraschka.com/glossary/#benchmark" target="_blank" rel="noopener nofollow">benchmark</a> snapshot, architecture sketch, and post-training pipeline.</figcaption></figure>
+
+
+<p>Source: lightly edited website version of my <a href="https://substack.com/@rasbt/note/c-277879621" target="_blank" rel="noopener nofollow">Substack note</a>.</p></article><article class="dp-body" id="dpBodyZh" hidden><p>根据已公布的基准测试结果，<a href="https://huggingface.co/WeiboAI/VibeThinker-3B" target="_blank" rel="noopener nofollow">VibeThinker-3B</a> 的表现令人惊讶地接近许多规模大得多的编程与推理系统。</p>
+
+<p>最让我感兴趣的是，该模型基于较早期的 <a href="https://huggingface.co/Qwen/Qwen2.5-Coder-3B" target="_blank" rel="noopener nofollow">Qwen2.5-Coder-3B</a> 技术栈构建。根据模型卡片信息，VibeThinker-3B 拥有 30.9 亿参数，并采用了 Qwen2 风格的骨干网络。</p>
+
+<p>因此，这清晰地展示了优质数据整理与<a class="cpt" href="../c/post-training.html" data-def="在模型预训练后，通过特定任务数据进一步优化模型性能的过程">后训练</a>能带来多大的提升。</p>
+
+<p>这份<a href="https://arxiv.org/abs/2606.16140" target="_blank" rel="noopener nofollow">技术报告</a>值得一读，因为它详细介绍了后训练流程。其中的关键环节包括：</p>
+
+<ol>
+  <li>使用带有可验证解决方案的高信号合成数学与代码数据</li>
+  <li>每个答案生成多条推理路径，随后进行严格筛选</li>
+  <li>两阶段<a href="https://sebastianraschka.com/glossary/#instruction-finetuning" target="_blank" rel="noopener nofollow">监督微调</a>：第一阶段追求广泛覆盖，第二阶段聚焦更难的长推理示例</li>
+  <li>依据目标准确率（而非仅凭验证损失）选择检查点</li>
+  <li>MGPO：一种 GRPO 风格的 <a href="https://sebastianraschka.com/glossary/#rlvr" target="_blank" rel="noopener nofollow">RLVR</a> 方法，侧重于那些既不太简单也不太难的样本</li>
+  <li>单阶段 64k 上下文强化学习，而非渐进式上下文扩展</li>
+  <li>领域强化学习的顺序为：先数学，再编程，最后 STEM</li>
+  <li>后期阶段奖励更短的正确推理轨迹</li>
+  <li>基于筛选后的数学、编程和 STEM 强化学习轨迹进行离线自我<a href="https://sebastianraschka.com/glossary/#distillation" target="_blank" rel="noopener nofollow">蒸馏</a></li>
+  <li>最终使用基于规则的验证器和基于评分标准的奖励模型进行指令强化学习</li>
+</ol>
+
+<p>他们并未透露该项目的确切 GPU 使用时长。根据早期 VibeThinker-1.5B 报告中的数据，我粗略估计成本大约在 2.5 万到 6 万美元之间。这仍然是一笔不小的开支，但远未达到数百万美元的量级。</p>
+
+<p>需要注意的是，截至 2026 年 6 月 17 日，该模型非常新，其基准测试结果可能好得令人难以置信。未来几天需要通过实际应用来检验 VibeThinker 的结果是否在实践中站得住脚。但就第一印象而言，这是一个出色的小模型成果，也是一份有价值的后训练技术总结。</p>
+
+<figure>
+<p><a href="https://substack.com/@rasbt/note/c-277879621" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://sebastianraschka.com/images/blog/2026/vibethinker-3b/hero.webp" alt="VibeThinker-3B 基准测试、架构与后训练概览" referrerpolicy="no-referrer" /></a></p>
+<figcaption>来自原始 <a href="https://substack.com/@rasbt/note/c-277879621" target="_blank" rel="noopener nofollow">Substack 笔记</a> 的组合图，总结了 <a href="https://sebastianraschka.com/glossary/#benchmark" target="_blank" rel="noopener nofollow">benchmark</a> 快照、架构示意图和后训练流程。</figcaption></figure>
+
+
+<p>来源：我的 <a href="https://substack.com/@rasbt/note/c-277879621" target="_blank" rel="noopener nofollow">Substack 笔记</a> 经过轻微编辑的网站版本。</p></article>
+    <div class="dp-actions">
+      <a class="dp-btn pri" href="https://sebastianraschka.com/blog/2026/vibethinker-3b-post-training.html" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      
+      <button type="button" class="dp-btn sec" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
+      <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
+    </div>
+    <p class="dp-note">本页由句子互动动态管线自动生成，聚合内容版权归各来源所有；如来源方希望调整或移除收录，请通过官网联系我们。</p>
+  </div>
+</main>
+<div id="site-footer"></div>
+<script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "VibeThinker-3B 和后训练的力量"};</script>
+<script src="../../assets/site.js"></script>
+<script>
+(function(){var b=document.getElementById('dpLang');if(!b)return;
+var en=document.getElementById('dpBodyOrig'),zh=document.getElementById('dpBodyZh');
+b.addEventListener('click',function(){var on=zh.hidden;zh.hidden=!on;en.hidden=on;
+b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';});})();
+</script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Sora 2 - 句子·动态</title>
+<meta name="description" content="OpenAI推出名为Sora的新应用，结合Sora 2模型，旨在简化视频创作、分享和观看流程。这被许多人视为创意领域的ChatGPT时刻，可能引发创造力的寒武纪大爆发。" />
+<meta name="robots" content="noindex,follow" />
+<link rel="canonical" href="https://blog.samaltman.com/sora-2" />
+<link rel="icon" href="../../logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../../assets/site.css" />
+<style>
+  .dp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
+  .dp-wrap{max-width:760px;margin:0 auto}
+  .dp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
+  .dp-back:hover{color:var(--blue)}
+  .dp-meta{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:14px}
+  .dp-srcb{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:750;color:var(--sc,var(--blue))}
+  .s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
+  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-wecom{--sc:#2563EB}.s-voices{--sc:#9333EA}
+  .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
+  .dp-cat{display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ink-3);background:#F6F7FB;border:1px solid var(--line-2);border-radius:6px;padding:2px 8px}
+  .dp-date{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-3)}
+  .dp-title{font-size:clamp(24px,3.2vw,34px);font-weight:850;letter-spacing:-.03em;line-height:1.32;word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance;margin-bottom:10px}
+  .dp-orig{font-size:13px;color:var(--ink-3);overflow-wrap:anywhere;margin-bottom:8px}
+  .dp-by{font-size:12.5px;font-weight:600;color:var(--ink-3);margin-bottom:18px}
+  .dp-notice{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:1.7;color:var(--ink-2);background:#F6F7FB;border:1px solid var(--line-2);border-radius:10px;padding:10px 14px;margin-bottom:22px}
+  .dp-notice i{color:var(--blue);margin-top:4px;flex:0 0 auto}
+  .dp-notice a{color:var(--blue);font-weight:700;overflow-wrap:anywhere}
+  .dp-quip{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.66;font-weight:600;color:var(--blue-deep);background:var(--blue-50);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:18px}
+  .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
+  .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
+  .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
+  .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
+  .dp-body p{margin:0 0 1.05em}
+  .dp-body img{max-width:100%;height:auto;border-radius:10px;margin:.4em 0}
+  .dp-body pre{background:#0F172A;color:#E2E8F0;font-family:var(--mono);font-size:12.5px;line-height:1.7;padding:14px 16px;border-radius:10px;overflow-x:auto;margin:0 0 1.1em}
+  .dp-body code{font-family:var(--mono);font-size:.92em}
+  .dp-body :not(pre)>code{background:#F1F5F9;padding:1px 5px;border-radius:5px}
+  .dp-body blockquote{border-left:3px solid var(--line);padding:2px 0 2px 14px;color:var(--ink-3);margin:0 0 1.05em}
+  .dp-body a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+  .dp-body ul,.dp-body ol{padding-left:1.5em;margin:0 0 1.05em}
+  .dp-body table{display:block;overflow-x:auto;border-collapse:collapse;margin:0 0 1.1em}
+  .dp-body td,.dp-body th{border:1px solid var(--line);padding:6px 10px;font-size:.92em}
+  .dp-excerpt{font-size:15px;line-height:1.9;color:var(--ink-2);border-left:3px solid var(--line);padding:2px 0 2px 16px;margin-bottom:8px}
+  .dp-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;padding-top:20px;border-top:1px solid var(--line-2)}
+  .dp-btn{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:750;border-radius:999px;padding:10px 20px;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+  .dp-btn.pri{background:var(--blue);color:#fff}
+  .dp-btn.pri:hover{background:var(--blue-deep)}
+  .dp-btn.sec{background:#fff;color:var(--ink-2);border:1px solid var(--line)}
+  .dp-btn.sec:hover{color:var(--blue);border-color:var(--blue)}
+  .dp-note{font-size:11.5px;line-height:1.7;color:var(--ink-3);margin-top:18px}
+  .dp-langbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+  .dp-lang{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:750;color:var(--blue);
+    background:var(--blue-50);border:1px solid var(--blue-100);border-radius:999px;padding:7px 14px;
+    transition:background .2s var(--ease),border-color .2s var(--ease)}
+  .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
+  .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div id="site-nav"></div>
+<main class="dp-main">
+  <div class="dp-wrap">
+    <a class="dp-back" href="../../news.html"><i class="fa-solid fa-arrow-left"></i>返回动态</a>
+    <div class="dp-meta">
+      <span class="dp-srcb s-voices"><i class="fa-solid fa-feather"></i>大咖观点</span>
+      <span class="dp-cat">Sam Altman</span>
+      <time class="dp-date" datetime="2025-09-30">2025-09-30</time>
+    </div>
+    <h1 class="dp-title">Sora 2</h1>
+    <p class="dp-orig">原题：Sora 2</p>
+    <p class="dp-by">来源：Sam Altman · 大咖观点</p>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（Sam Altman · 大咖观点）所有 · <a href="https://blog.samaltman.com/sora-2" target="_blank" rel="noopener">阅读原文</a></span></div>
+    
+    <div class="dp-brief"><b>简报</b>OpenAI推出名为Sora的新应用，结合Sora 2模型，旨在简化视频创作、分享和观看流程。这被许多人视为创意领域的ChatGPT时刻，可能引发创造力的寒武纪大爆发。</div>
+    <div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang"><i class="fa-solid fa-language"></i><span>翻译为中文</span></button><span class="dp-lang-note">中文由 AI 翻译，仅供参考</span></div><article class="dp-body" id="dpBodyOrig"><div class="posthaven-post-body"><p>We are launching a new app called <a class="cpt" href="../c/sora.html" data-def="Sora是OpenAI开发的视频生成模型，能根据文本描述创建高质量、连贯的视频内容">Sora</a>. This is a combination of a new model called Sora 2, and a new product that makes it easy to create, share, and view videos.</p><p>This feels to many of us like the “ChatGPT for creativity” moment, and it feels fun and new. There is something great about making it really easy and fast to go from idea to result, and the new social dynamics that emerge.</p><p>Creativity could be about to go through a Cambrian explosion, and along with it, the quality of art and entertainment can drastically increase. Even in the very early days of playing with Sora, it’s been striking to many of us how open the playing field suddenly feels.</p><p>In particular, the ability to put yourself and your friends into a video—the team worked very hard on character consistency—with the cameo feature is something we have really enjoyed during testing, and is to many of us a surprisingly compelling new way to connect.</p><p>We also feel some trepidation. Social media has had some good effects on the world, but it’s also had some bad ones. We are aware of how addictive a service like this could become, and we can imagine many ways it could be used for bullying.</p><p>It is easy to imagine the degenerate case of AI video generation that ends up with us all being sucked into an RL-optimized slop feed. The team has put great care and thought into trying to figure out how to make a delightful product that doesn’t fall into that trap, and has come up with a number of promising ideas. We will experiment in the early days of the product with different approaches.</p><p><span>In addition to the mitigations we have already put in place (which include things like mitigations to prevent someone from misusing someone’s likeness in deepfakes, safeguards for disturbing or illegal content, periodic checks on how Sora is impacting users’ mood and wellbeing, and more) we are sure we will discover new things we need to do if Sora becomes very successful. To help guide us towards more of the good and less of the bad, here are some principles we have for this product:</span></p><p><br></p><p><b>*Optimize for long-term user satisfaction. </b>The majority of users, looking back on the past 6 months, should feel that their life is better for using Sora that it would have been if they hadn’t. If that’s not the case, we will make significant changes (and if we can’t fix it, we would discontinue offering the service).  </p><p>*<b>Encourage users to control their feed.</b> You should be able to tell Sora what you want—do you want to see videos that will make you more relaxed, or more energized? Or only videos that fit a specific interest? Or only for a certain about of time? Eventually as our technology progresses, you will be should to the tell Sora what you want in detail in natural language. (However, parental controls for teens include the ability to opt out of a personalized feed, and other things like turning off DMs.)</p><p>*<b>Prioritize creation.</b> We want to make it easy and rewarding for everyone to participate in the creation process; we believe people are natural-born creators, and creating is important to our satisfaction.</p><p>*<b>Help users achieve their long-term goals. </b>We want to understand a user’s true goals, and help them achieve them. If you want to be more connected to your friends, we will try to help you with that. If you want to get fit, we can show you fitness content that will motivate you. If you want to start a business, we want to help teach you the skills you need. And if you truly just want to doom scroll and be angry, then ok, we’ll help you with that (although we want users to spend time using the app if they think it’s time well spent, we don’t want to be paternalistic about what that means to them).<br></p></div></article><article class="dp-body" id="dpBodyZh" hidden><div class="posthaven-post-body"><p>我们正在推出一款名为 <a class="cpt" href="../c/sora.html" data-def="Sora是OpenAI开发的视频生成模型，能根据文本描述创建高质量、连贯的视频内容">Sora</a> 的新应用。它结合了名为 Sora 2 的新模型，以及一款让创建、分享和观看视频变得简单的新产品。</p><p>对我们许多人来说，这感觉像是“创意领域的 ChatGPT 时刻”，既有趣又新颖。能够真正轻松、快速地将想法变为成果，以及由此产生的新社交动态，这其中有种很棒的感觉。</p><p>创造力可能即将经历一场寒武纪大爆发，随之而来的是艺术和娱乐质量的急剧提升。即使在 Sora 的早期试用阶段，我们许多人已经惊讶地感觉到，竞争环境突然变得如此开放。</p><p>特别是，通过“客串”功能将你自己和朋友放入视频中的能力——团队在角色一致性方面付出了巨大努力——是我们在测试中非常享受的功能，对我们许多人来说，这是一种令人惊喜的、引人入胜的新连接方式。</p><p>我们也感到一些担忧。社交媒体对世界产生了一些积极影响，但也带来了一些负面影响。我们意识到像这样的服务可能会让人上瘾，也能想象到它可能被用于欺凌的多种方式。</p><p>很容易想象 AI 视频生成退化的情况，最终让我们所有人都被吸入一个由强化学习优化的低质信息流。团队在努力思考如何打造一个令人愉悦且不落入这种陷阱的产品方面，投入了极大的心血和考量，并提出了一些有前景的想法。我们将在产品早期尝试不同的方法。</p><p><span>除了我们已经实施的缓解措施（包括防止有人利用深度伪造技术滥用他人肖像的措施、针对令人不安或非法内容的防护措施、定期检查 Sora 对用户情绪和幸福感的影响等等），我们确信，如果 Sora 取得巨大成功，我们还会发现需要做的新事情。为了引导我们获得更多益处、减少危害，以下是我们为这款产品制定的一些原则：</span></p><p><br></p><p><b>*以长期用户满意度为优化目标。</b>大多数用户在回顾过去 6 个月时，应该感觉到使用 Sora 让他们的生活比不使用时更好。如果情况并非如此，我们将做出重大改变（如果我们无法修复，我们将停止提供该服务）。</p>
+<p>*<b>鼓励用户掌控自己的信息流。</b>你应该能够告诉 Sora 你想看什么——是想看能让你更放松的视频，还是更提神的？或者只看符合特定兴趣的内容？或者只看一段时间？随着技术的进步，你最终将能够用自然语言详细地告诉 Sora 你的需求。（不过，针对青少年的家长控制功能包括选择退出个性化信息流，以及关闭私信等其他选项。）</p><p>*<b>优先考虑创作。</b>我们希望让每个人都能轻松且有成就感地参与创作过程；我们相信人是天生的创作者，创作对我们的满足感至关重要。</p><p>*<b>帮助用户实现他们的长期目标。</b>我们希望理解用户的真实目标，并帮助他们实现。如果你想与朋友建立更紧密的联系，我们会尝试帮助你。如果你想健身，我们可以向你展示能激励你的健身内容。如果你想创业，我们希望帮助你学习所需的技能。而如果你真的只想无休止地刷负面内容并感到愤怒，那好吧，我们也会帮你实现（尽管我们希望用户是在认为时间花得值得的情况下使用应用，我们不想以家长式的姿态去定义这对他们意味着什么）。<br></p></div></article>
+    <div class="dp-actions">
+      <a class="dp-btn pri" href="https://blog.samaltman.com/sora-2" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      
+      <button type="button" class="dp-btn sec" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
+      <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
+    </div>
+    <p class="dp-note">本页由句子互动动态管线自动生成，聚合内容版权归各来源所有；如来源方希望调整或移除收录，请通过官网联系我们。</p>
+  </div>
+</main>
+<div id="site-footer"></div>
+<script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "Sora 2"};</script>
+<script src="../../assets/site.js"></script>
+<script>
+(function(){var b=document.getElementById('dpLang');if(!b)return;
+var en=document.getElementById('dpBodyOrig'),zh=document.getElementById('dpBodyZh');
+b.addEventListener('click',function(){var on=zh.hidden;zh.hidden=!on;en.hidden=on;
+b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';});})();
+</script>
+</body>
+</html>

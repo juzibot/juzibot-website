@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Vibe coding MenuGen - 句子·动态</title>
+<meta name="description" content="这是一个关于vibe coding MenuGen应用的工作日志，详细记录了开发过程中的步骤、思考和体验，展示了vibe coding方法的实际应用。" />
+<meta name="robots" content="noindex,follow" />
+<link rel="canonical" href="https://karpathy.bearblog.dev/vibe-coding-menugen/" />
+<link rel="icon" href="../../logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../../assets/site.css" />
+<style>
+  .dp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
+  .dp-wrap{max-width:760px;margin:0 auto}
+  .dp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
+  .dp-back:hover{color:var(--blue)}
+  .dp-meta{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:14px}
+  .dp-srcb{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:750;color:var(--sc,var(--blue))}
+  .s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
+  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-wecom{--sc:#2563EB}.s-voices{--sc:#9333EA}
+  .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
+  .dp-cat{display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ink-3);background:#F6F7FB;border:1px solid var(--line-2);border-radius:6px;padding:2px 8px}
+  .dp-date{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-3)}
+  .dp-title{font-size:clamp(24px,3.2vw,34px);font-weight:850;letter-spacing:-.03em;line-height:1.32;word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance;margin-bottom:10px}
+  .dp-orig{font-size:13px;color:var(--ink-3);overflow-wrap:anywhere;margin-bottom:8px}
+  .dp-by{font-size:12.5px;font-weight:600;color:var(--ink-3);margin-bottom:18px}
+  .dp-notice{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:1.7;color:var(--ink-2);background:#F6F7FB;border:1px solid var(--line-2);border-radius:10px;padding:10px 14px;margin-bottom:22px}
+  .dp-notice i{color:var(--blue);margin-top:4px;flex:0 0 auto}
+  .dp-notice a{color:var(--blue);font-weight:700;overflow-wrap:anywhere}
+  .dp-quip{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.66;font-weight:600;color:var(--blue-deep);background:var(--blue-50);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:18px}
+  .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
+  .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
+  .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
+  .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
+  .dp-body p{margin:0 0 1.05em}
+  .dp-body img{max-width:100%;height:auto;border-radius:10px;margin:.4em 0}
+  .dp-body pre{background:#0F172A;color:#E2E8F0;font-family:var(--mono);font-size:12.5px;line-height:1.7;padding:14px 16px;border-radius:10px;overflow-x:auto;margin:0 0 1.1em}
+  .dp-body code{font-family:var(--mono);font-size:.92em}
+  .dp-body :not(pre)>code{background:#F1F5F9;padding:1px 5px;border-radius:5px}
+  .dp-body blockquote{border-left:3px solid var(--line);padding:2px 0 2px 14px;color:var(--ink-3);margin:0 0 1.05em}
+  .dp-body a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+  .dp-body ul,.dp-body ol{padding-left:1.5em;margin:0 0 1.05em}
+  .dp-body table{display:block;overflow-x:auto;border-collapse:collapse;margin:0 0 1.1em}
+  .dp-body td,.dp-body th{border:1px solid var(--line);padding:6px 10px;font-size:.92em}
+  .dp-excerpt{font-size:15px;line-height:1.9;color:var(--ink-2);border-left:3px solid var(--line);padding:2px 0 2px 16px;margin-bottom:8px}
+  .dp-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;padding-top:20px;border-top:1px solid var(--line-2)}
+  .dp-btn{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:750;border-radius:999px;padding:10px 20px;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+  .dp-btn.pri{background:var(--blue);color:#fff}
+  .dp-btn.pri:hover{background:var(--blue-deep)}
+  .dp-btn.sec{background:#fff;color:var(--ink-2);border:1px solid var(--line)}
+  .dp-btn.sec:hover{color:var(--blue);border-color:var(--blue)}
+  .dp-note{font-size:11.5px;line-height:1.7;color:var(--ink-3);margin-top:18px}
+  .dp-langbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+  .dp-lang{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:750;color:var(--blue);
+    background:var(--blue-50);border:1px solid var(--blue-100);border-radius:999px;padding:7px 14px;
+    transition:background .2s var(--ease),border-color .2s var(--ease)}
+  .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
+  .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div id="site-nav"></div>
+<main class="dp-main">
+  <div class="dp-wrap">
+    <a class="dp-back" href="../../news.html"><i class="fa-solid fa-arrow-left"></i>返回动态</a>
+    <div class="dp-meta">
+      <span class="dp-srcb s-voices"><i class="fa-solid fa-feather"></i>大咖观点</span>
+      <span class="dp-cat">Karpathy</span>
+      <time class="dp-date" datetime="2025-04-27">2025-04-27</time>
+    </div>
+    <h1 class="dp-title">Vibe coding MenuGen</h1>
+    <p class="dp-orig">原题：Vibe coding MenuGen</p>
+    <p class="dp-by">来源：Karpathy · 大咖观点</p>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（Karpathy · 大咖观点）所有 · <a href="https://karpathy.bearblog.dev/vibe-coding-menugen/" target="_blank" rel="noopener">阅读原文</a></span></div>
+    
+    <div class="dp-brief"><b>简报</b>这是一个关于vibe coding MenuGen应用的工作日志，详细记录了开发过程中的步骤、思考和体验，展示了vibe coding方法的实际应用。</div>
+    <div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang"><i class="fa-solid fa-language"></i><span>翻译为中文</span></button><span class="dp-lang-note">中文由 AI 翻译，仅供参考</span></div><article class="dp-body" id="dpBodyOrig"><h1>Vibe coding MenuGen</h1>
+
+        <p>
+            <i>
+                
+    27 Apr, 2025
+
+            </i>
+        </p>
+    
+
+    <p>Very often, I sit down at a restaurant, look through their menu, and feel... kind of stuck. What is Pâté again? What is a Tagine? Cavatappi... that&#x27;s a pasta right? Sweetbread sounds delicious (I have a huge sweet tooth). It can get really out of hand sometimes. <em>&quot;Confit tubers folded with matured curd and finished with a beurre noisette infusion.&quot;</em> okay so... what is this exactly? I&#x27;ve spent so much of my life googling pictures of foods that when the time came to attend a recent <a class="cpt" href="../c/vibe-coding.html" data-def="凭感觉编程是一种依赖直觉和即时反馈的软件开发方式，开发者跳过详细规划和测试，快速迭代代码">vibe coding</a> hackathon, I knew it was the perfect opportunity to finally build the app I always wanted, but could nowhere find. And here it is in flesh, I call it... 🥁🥁🥁 ... <strong>MenuGen</strong>:</p>
+<p><img loading="lazy" onerror="this.style.display='none'" src="https://bear-images.sfo2.cdn.digitaloceanspaces.com/karpathy/02pm.webp" alt="Screenshot 2025-04-26 at 1" referrerpolicy="no-referrer" /></p>
+<p>MenuGen is super simple. You take a picture of a menu and it generates images for all the menu items. It visualizes the menu. Obviously it&#x27;s not <em>exactly</em> what you will be served in that specific restaurant, but it gives you the basic idea: Some of these dishes are salads, this is a fish, this is a soup, etc. I found it so helpful in my personal use that after the hackathon (where I got the first version to work on localhost) I continued vibe coding a bit to deploy it, add authentication, payments, and generally make it real. So here it is, give it a shot the next time you go out :): <a href="https://www.menugen.app/" target="_blank" rel="noopener nofollow">menugen.app</a>!</p>
+<p>MenuGen is my first end-to-end vibe coded app, where I (someone who tinkers but has little to no actual web development experience) went from scratch all the way to a real product that people can sign up for, pay for, get utility out of, and where I pocket some good and honest 10% markup. It&#x27;s pretty cool. But in addition to the utility of the app, MenuGen was interesting to me as an exploration of vibe coding apps and how feasible it is today. As such, I did not write any code directly; 100% of the code was written by Cursor+Claude and I basically don&#x27;t really know how MenuGen works in the conventional sense that I am used to. So now that the project is &quot;done&quot; (as in the first version seems to work), I wanted to write up this quick post on my experience - what it looks like today for a non-webdev to vibe code a web app.</p>
+<p><strong>First, local version</strong>. In what is a relatively common experience in vibe coding, the very first prototype of the app running on my local machine took very little time. I took Cursor + Claude 3.7, I gave it the description of the app, and it wrote all the React frontend components very quickly, laying out a beautiful web page with smooth, multicolored fonts, little CSS animations, responsive design and all that, except for the actual backend functionality. Seeing a new website materialize so quickly is a strong hook. I felt like I was 80% done but (foreshadowing...) it was a bit closer to 20%.</p>
+<p><strong>OpenAI API</strong>. Around here is where some of the troubles started. I needed to call OpenAI APIs to OCR the menu items from the image. I had to get the OpenAI API keys. I had to navigate slightly convoluted menus asking me about &quot;projects&quot; and detailed permissions. Claude kept hallucinating deprecated APIs, model names, and input/output conventions that have all changed recently, which was confusing, but it resolved them after I copy pasted the docs back and forth for a while. Once the individual API calls were working, I immediately ran into some heavy rate limiting of the API calls, allowing me to only issue a few queries every 10 minutes.</p>
+<p><strong>Replicate API</strong>. Next, I needed to generate images given the descriptions. I signed up for a new Replicate API key and ran into similar issues relatively quickly. My queries didn&#x27;t work because LLM knowledge was deprecated, but in addition, this time even the official docs were a little bit out of date due to recent changes in the API, which now don&#x27;t return the JSON directly but instead some kind of a Streaming object that neither I or Claude understood. I then faced rate limiting on the API so it was difficult to debug the app. I was told later that these are common protection measures by these services to mitigate fraud, but they also make it harder to get started with new, legitimate accounts. I&#x27;m told Replicate is moving to a different approach where you pre-purchase credits, which might help going forward.</p>
+<p><strong>Vercel deploy</strong>. At this point at least, the app was working locally so I was quite happy. It was time to deploy the basic first version. Sign up for Vercel, add project, configure it, point it at my GitHub repo, push to master, watch a new Deployment build and... ERROR. The logs showed some linting errors due to unused variables and other basic things like that, but it was hard to understand or debug because everything worked fine on local and only broke on Vercel build, so I debugged the issues by pushing fake debugging commits to master to force redeploys. Once I fixed these issues, the site still refused to work. I asked Claude. I asked ChatGPT. I consulted docs. I googled around. 1 hour later I finally realized my silly mistake - My <code>.env.local</code> file stored the API keys to OpenAI and Replicate, but this file is (correctly!) part of <code>.gitignore</code> and doesn&#x27;t get pushed to git, so you have to manually navigate to Vercel project settings, find the right place, and add your environment keys manually. I kind of understood the issue relatively quickly, but I could see an aspiring vibe coder get stuck on this for a while. Once the deployment finally succeeded, Vercel happily offered a URL. This surprised me again because my project was a private git repo that was not ready to see the light of day. I didn&#x27;t realize that Vercel will take your <em>!private!</em> repo of an unfinished project and auto-deploy it on a totally public and easy to guess url just like that, hah.</p>
+<p><strong>Clerk authentication</strong>. Claude suggested that we use Clerk for authentication, so I went along with it. Signed up for Clerk, configured the project, got my API keys. At this point Claude hallucinated about 1000 lines of code that appeared to be deprecated Clerk APIs. I had to copy paste a lot of the docs back and forth to get things gradually unstuck. Next, so far, Clerk was running in a &quot;Development&quot; deployment. To move to a &quot;Production&quot; deployment, there were more hoops to jump through. Clerk demands that you host your app on a custom domain that you own. <code>menugen.vercel.com</code> will not work. So I had to purchase the domain name menugen.app. Then I had to wire the domain to my Vercel project. Then I had to change the DNS records. Then I had to pick an OAuth provider, e.g. I went with Google. But to do that was its own <a href="https://clerk.com/docs/authentication/social-connections/google" target="_blank" rel="noopener nofollow">configuration adventure</a> . I had to enable an &quot;SSO connection&quot;. I had to go over to Google Cloud Console and create a new project, and add a new OAuth Credential. I had to wait some time for an approval process around here. I then had to go back and forth between the nested settings of all of Vercel, Clerk and Google for a while to wire it up properly. I thought of quitting the project around here, but I felt better when I woke up the next morning.</p>
+<p><strong>Stripe payments</strong>. Next I wanted to add payments so that people can purchase credits. This means another website, another account, more docs, more keys. I select &quot;Next.js&quot; as the backend, copy paste the very first snippet of code from the &quot;getting started&quot; docs into my app and... ERROR. I realized later that Stripe gives you JavaScript code when you select Next.js, but my app is built in TypeScript, so every time I pasted a snippet of code it made Cursor unhappy with linter errors, but Claude patched things up ok over time after I told it to &quot;fix errors&quot; a few times and after I threatened to switch to ChatGPT. Then back in the Stripe dashboard we create a Product, we create a Price, we find the price key (not the product key!), copy paste all the keys around. Around here, I caught Claude using a really bad idea approach to match up a successful Stripe payment to user credits (it tried to match up the email addresses, but the email the user might give in the Stripe checkout may not be the email of the Google account they signed up with, so the user might not actually get the credits that they purchased). I point this out to Claude and it immediately apologizes and rewrites it correctly by passing around unique user ids in the request metadata. It thanks me for pointing out the issue and tells me that it will do it correctly in the future, which I know is just gaslighting. But since our quick test works, only a few more clicks to upgrade the deployment from Development to Production, now re-do a new Product, redo a new Price, re-copy paste all the keys and ids, locally and in the Vercel settings... and then it worked :)</p>
+<p><strong>Database? Work queues?</strong> So far, all of the processing is done &quot;in the moment&quot; - it&#x27;s just requests and results right there and then, nothing is cached, saved, or etc. So the results are ephemeral and if the response takes too long (e.g. because the menu is too long and has too many items, or because the APIs show too much latency), the request can time out and break. If you refresh the page, everything is gone too. The correct way to do this is to have a database where we register and keep track of work, and the client just displays the latest state as it&#x27;s ready. I realized I&#x27;d have to connect a database from the Marketplace, something like Supabase PostgreSQL (even when Claude pitched me on using Vercel KV, which I know is actually deprecated). And then we&#x27;d also need some queue service like Upstash or so to run the actual processing. It would mean more services. More logins. More API keys. More configurations. More docs. More suffering. It was too much bear. Leave as future work.</p>
+<p><strong>TLDR</strong>. Vibe coding menugen was exhilarating and fun escapade as a local demo, but a bit of a painful slog as a deployed, real app. Building a modern app is a bit like assembling IKEA future. There are all these services, docs, API keys, configurations, dev/prod deployments, team and security features, rate limits, pricing tiers... Meanwhile the LLMs have slightly outdated knowledge of everything, they make subtle but critical design mistakes when you watch them closely, and sometimes they hallucinate or gaslight you about solutions. But the most interesting part to me was that I didn&#x27;t even spend all that much work in the code editor itself. I spent most of it in the browser, moving between tabs and settings and configuring and gluing a monster. All of this work and state is not even accessible or manipulatable by an LLM - how are we supposed to be automating society by 2027 like this?</p>
+<p><strong>Going forward</strong>. As an exploration of what it&#x27;s like to vibe code an app today if you have little to no web dev background, I&#x27;m left with an equal mix of amazement (it&#x27;s actually possible and much easier/faster than what was possible before!) and a bit of frustration of what could be. Part of the pain of course is that none of this infrastructure was really designed to be used like this. The intended target audience are teams of professional web developers living in a pre-LLM world. Not vibe coding solo devs prototyping apps. Some thoughts on solutions that could make super simple apps like MenuGen a lot easier to create:</p>
+<ul>
+<li>Some app development platform could come with all the batteries included. Something that looks like the opposite of Vercel Marketplace. Something opinionated, concrete, preconfigured with all the basics that everyone wants: domain, hosting, authentication, payments, database, server functions. If some service made these easy and &quot;just work&quot; out of the box, it could be amazing.</li>
+<li>All of these services could become more LLM friendly. Everything you tell the user will be basically right away copy pasted to an LLM, so you might as well talk directly to the LLM. Your service could have a CLI tool. The backend could be configured with curl commands. The docs could be Markdown. All of these are ergonomically a lot friendlier surfaces and abstractions for an LLM. Don&#x27;t talk to a developer. Don&#x27;t ask a developer to visit, look, or click. Instruct and empower their LLM.</li>
+<li>For my next app I&#x27;m considering rolling with basic HTML/CSS/JS + Python backend (FastAPI + Fly.io style or so?), something a lot simpler than the serverless multiverse of &quot;modern web development&quot;. It&#x27;s possible that a simple app like MenuGen (or apps like it) could have been significantly easier in that paradigm.</li>
+<li>Finally, it&#x27;s quite likely that MenuGen shouldn&#x27;t be a full-featured app at all. The &quot;app&quot; is simply one call to GPT to OCR a menu, and then a for loop over results to generate the images for each item and present them nicely to the user. This almost sounds like a simple custom GPT (in the terminology of the original GPT &quot;app store&quot; that OpenAI released earlier). Could MenuGen be just a prompt? Could the LLM respond not with text but with a simple webpage to present the results, along the lines of Artifacts? Could many other apps look like this too? Could I publish it as an app on a store and earn markup in the same way?</li>
+</ul>
+<p>For now, I&#x27;m pretty happy to have vibe coded my first super custom app through the finish line of something that is real, solves a need I&#x27;ve had for a long time, and is shareable with friends. Thank you to all the services above that I&#x27;ve used to build it. In principle, it could earn some $ if others like it too, in a completely passive way - the <a href="https://x.com/levelsio" target="_blank" rel="noopener nofollow">@levelsio</a> dream. Ultimately, vibe coding full web apps today is kind of messy and not a good idea for anything of actual importance. But there are clear hints of greatness and I think the industry just needs a bit of time to adapt to the new world of LLMs. I&#x27;m personally quite excited to see the barrier to app drop to ~zero, where anyone could build and publish an app just as easily as they can make a TikTok. These kinds of hyper-custom automations could become a beautiful new canvas for human creativity.</p>
+<p>The companion tweet (and the &quot;comments section&quot;) is on my X <a href="https://x.com/karpathy/status/1917961248031080455" target="_blank" rel="noopener nofollow">@karpathy</a>.</p></article><article class="dp-body" id="dpBodyZh" hidden><h1>Vibe coding MenuGen</h1>
+
+        <p>
+            <i>
+                
+    2025年4月27日
+
+            </i>
+        </p>
+    
+
+    <p>我经常坐在餐厅里，翻看菜单，然后感觉……有点无从下手。Pâté（肉酱）到底是什么？Tagine（塔吉锅）又是什么？Cavatappi……这应该是意面吧？Sweetbread（甜面包）听起来好美味（我超爱吃甜食）。有时候情况会变得有点失控。<em>&quot;用陈年凝乳折叠的块茎，最后注入榛果黄油精华。&quot;</em> 好吧……这到底是什么玩意儿？我花了很多时间在网上搜索食物图片，所以当最近参加 <a class="cpt" href="../c/vibe-coding.html" data-def="凭感觉编程是一种依赖直觉和即时反馈的软件开发方式，开发者跳过详细规划和测试，快速迭代代码">vibe coding</a> 黑客松时，我知道这是我终于能动手开发我一直想要、却无处可寻的应用的绝佳机会。它现在终于问世了，我把它叫做……🥁🥁🥁 …… <strong>MenuGen</strong>：</p>
+<p><img loading="lazy" onerror="this.style.display='none'" src="https://bear-images.sfo2.cdn.digitaloceanspaces.com/karpathy/02pm.webp" alt="Screenshot 2025-04-26 at 1" referrerpolicy="no-referrer" /></p>
+<p>MenuGen 非常简单。你拍一张菜单的照片，它就会为菜单上的所有菜品生成图片。它把菜单可视化。显然，它不完全是你在那家餐厅会吃到的样子，但它能给你一个基本概念：有些是沙拉，这是一道鱼，这是一道汤，等等。我个人觉得它特别有用，所以在黑客松（我在本地环境让第一个版本跑了起来）之后，我继续 vibe coding 了一段时间，把它部署上线，增加了认证和支付功能，并让它真正可用。所以，它就在这里了，下次你外出就餐时不妨试试 :): <a href="https://www.menugen.app/" target="_blank" rel="noopener nofollow">menugen.app</a>！</p>
+<p>MenuGen 是我第一个端到端 vibe coding 出来的应用。我（一个喜欢捣鼓但几乎没有实际网页开发经验的人）从零开始，一步步做出了一个人们可以注册、付费、获得实际价值的应用，而我也能从中赚取一笔诚实合理的 10% 利润。这感觉相当酷。但除了这个应用的实用性，MenuGen 对我来说还很有趣，因为它是对 vibe coding 应用的一次探索，也是对当今这种开发方式可行性的检验。因此，我没有直接写任何代码；100% 的代码都是由 Cursor+Claude 写的，而我基本上不太了解 MenuGen 在我习惯的传统意义上是如何工作的。所以，既然这个项目“完成了”（至少第一个版本看起来能用），我想写这篇简短的文章来分享我的经历——对于一个非网页开发者来说，如今 vibe coding 一个网页应用究竟是什么样子。</p>
+<p><strong>首先，本地版本</strong>。在 vibe 编程中，这算是个相当常见的体验：我在本地机器上运行的首个应用原型几乎没花多少时间。我用了 Cursor + Claude 3.7，给了它应用的描述，它很快就写好了所有 React 前端组件，搭出了一个漂亮的网页，有流畅的多彩字体、小 CSS 动画、响应式设计等等，就是没有实际的后端功能。看到新网站这么快就成型，确实很有吸引力。我感觉自己完成了 80%，但（剧透一下...）其实可能只完成了 20%。</p>
+<p><strong>OpenAI API</strong>. 大概就是从这里开始，麻烦接踵而至。我需要调用 OpenAI API 来识别图片里的菜单项。我得获取 OpenAI API 密钥。还得绕着弯儿在那些关于“项目”和详细权限的菜单里找路。Claude 总是会编造出那些已经废弃的 API、模型名，还有最近都改了的输入输出规范，搞得人很困惑，不过在我来回粘贴文档折腾了一会儿后，它总算解决了问题。单个 API 调用能用了之后，我立刻就遇到了严重的调用频率限制，每 10 分钟只能发几个请求。</p>
+<p><strong>Replicate API</strong>. 接下来，我需要根据描述来生成图片。我注册了一个新的 Replicate API 密钥，结果很快也遇到了类似的问题。我的请求不生效，因为 LLM 的知识库已经过时了，而且这次连官方文档都有点跟不上趟了，因为 API 最近改了，现在不直接返回 JSON，而是返回一种流式对象，我和 Claude 都看不懂。然后我又碰上了 API 的频率限制，导致应用很难调试。后来我听说，这些都是这些服务为了防范欺诈而采取的常见保护措施，但也让新用户想正经开始用变得很难。我听说 Replicate 正在转向一种新方式，让你提前购买额度，这或许以后会有帮助。</p>
+<p><strong>Vercel 部署</strong>. 至少在当前阶段，应用在本地运行良好，我对此相当满意。是时候部署基础的第一版了。注册 Vercel，添加项目，进行配置，指向我的 GitHub 仓库，推送到 master 分支，看着新的部署构建开始……然后报错了。日志显示了一些由于未使用变量和其他类似基础问题导致的代码检查错误，但很难理解或调试，因为一切在本地都运行正常，只在 Vercel 构建时出问题。所以我通过推送假的调试提交到 master 分支来强制重新部署，从而调试这些问题。一旦我修复了这些问题，网站仍然拒绝工作。我问了 Claude，问了 ChatGPT，查阅了文档，还谷歌了一番。一小时后，我终于意识到自己犯了个愚蠢的错误——我的 <code>.env.local</code> 文件存储了 OpenAI 和 Replicate 的 API 密钥，但这个文件（正确地！）属于 <code>.gitignore</code> 的一部分，不会被推送到 git，所以你必须手动导航到 Vercel 项目设置，找到正确的地方，手动添加你的环境变量密钥。我相对较快地理解了这个问题，但我能看出一个有抱负的 vibe 码手可能会在这个问题上卡住一阵子。当部署最终成功时，Vercel 欣然提供了一个 URL。这再次让我惊讶，因为我的项目是一个还没准备好公开的私有 git 仓库。我没意识到 Vercel 会把你的 <em>!私有!</em> 的未完成项目仓库就这样自动部署到一个完全公开且容易猜测的 URL 上，哈哈。</p>
+<p><strong>Clerk 身份验证</strong>. Claude 建议我们使用 Clerk 做身份验证，我就采纳了。注册了 Clerk，配置了项目，拿到了 API 密钥。这时候 Claude 给我编造了大约 1000 行代码，看起来都是些已经废弃的 Clerk API。我不得不来回复制粘贴大量文档，才慢慢把问题解决。接下来，到目前为止，Clerk 一直运行在“开发环境”部署上。要切换到“生产环境”部署，还得费一番周折。Clerk 要求你必须把应用托管在自己拥有的自定义域名上。<code>menugen.vercel.com</code> 是不行的。所以我得买了 menugen.app 这个域名。然后得把域名绑定到我的 Vercel 项目。然后还得修改 DNS 记录。然后还得选一个 OAuth 提供商，比如我选了 Google。但光是配置这个 OAuth 就是一场 <a href="https://clerk.com/docs/authentication/social-connections/google" target="_blank" rel="noopener nofollow">配置大冒险</a>。我得启用一个“SSO 连接”。我还得去 Google Cloud Console 创建一个新项目，添加新的 OAuth 凭据。这里还得等一段时间走审批流程。然后我又得在 Vercel、Clerk 和 Google 这些层层嵌套的设置里来回折腾了好一阵，才总算把它正确配置好。我当时真想把项目给放弃了，但第二天早上醒来后，感觉好多了。</p>
+<p><strong>Stripe 支付</strong>. 接下来我想添加支付功能，让用户可以购买积分。这意味着要搭建另一个网站、注册另一个账号、阅读更多文档、管理更多密钥。我选择 &quot;Next.js&quot; 作为后端，把 &quot;入门指南&quot; 文档中的第一段代码片段复制粘贴到我的应用里……结果报错了。后来我意识到，Stripe 在选择 Next.js 时提供的是 JavaScript 代码，但我的应用是用 TypeScript 构建的，所以每次粘贴代码片段都会让 Cursor 因为 linter 错误而不高兴，不过在我多次让它 &quot;修复错误&quot; 并威胁要换成 ChatGPT 之后，Claude 还是慢慢把问题搞定了。回到 Stripe 仪表板，我们创建一个产品，创建一个价格，找到价格密钥（不是产品密钥！），然后到处复制粘贴这些密钥和 ID。就在这时，我发现 Claude 用了一个很糟糕的方法来匹配成功的 Stripe 支付和用户积分（它试图匹配邮箱地址，但用户在 Stripe 结账时提供的邮箱可能和他们注册 Google 账号用的邮箱不一致，导致用户可能实际拿不到购买的积分）。我指出了这个问题，Claude 立刻道歉，并通过在请求元数据中传递唯一的用户 ID 重写了正确的实现。它感谢我指出问题，并表示以后会正确处理——我知道这不过是画大饼。不过既然快速测试通过了，再点击几下就能把部署从开发环境升级到生产环境，然后重新创建一个产品、重新设置一个价格、重新复制粘贴所有的密钥和 ID，本地和 Vercel 设置里都要改……最后总算搞定了 :)</p>
+<p><strong>数据库？工作队列？</strong> 到目前为止，所有处理都是 &quot;即时&quot; 进行的——就是请求发出去，结果马上返回，没有任何缓存、保存或其他操作。所以结果是临时的，如果响应时间太长（比如菜单太长项目太多，或者 API 延迟太高），请求就可能超时失败。刷新页面的话，所有数据都会消失。正确的做法应该是用数据库来注册和跟踪任务状态，客户端只显示最新的就绪状态。我意识到得从应用市场连接一个数据库，比如 Supabase PostgreSQL（虽然 Claude 曾向我推荐 Vercel KV，但我知道它其实已经被弃用了）。然后我们还需要一些队列服务，比如 Upstash 之类的来实际处理任务。这意味着要增加更多服务、更多登录、更多 API 密钥、更多配置、更多文档、更多痛苦。这负担太重了，还是留到以后再说吧。</p>
+<p><strong>长话短说</strong>。用 vibe coding 方式开发 MenuGen 作为本地演示令人兴奋又好玩，但一旦部署成真实应用就变得相当痛苦。构建现代应用有点像组装宜家的未来产品——到处都是各种服务、文档、API密钥、配置、开发/生产环境部署、团队和安全功能、速率限制、价格层级……与此同时，大语言模型对一切的了解都有些过时，仔细观察会发现它们会犯些微妙但关键的设计错误，有时还会胡编乱造或忽悠你解决方案。但最让我感兴趣的是，我其实没在代码编辑器里花多少时间，大部分时间都花在浏览器里，在各种标签页、设置间切换，配置和拼凑这个庞然大物。所有这些工作和状态甚至都无法被大语言模型访问或操作——照这样下去，我们怎么能在2027年实现社会自动化？</p>
+<p><strong>未来展望</strong>。作为一个探索，如果你几乎没有Web开发背景，如今用 vibe coding 方式开发应用会是什么体验，我既惊叹（这真的可行，而且比以前容易快捷多了！）又有些对现状的挫败感。当然，部分痛苦在于这些基础设施根本不是为这种使用方式设计的。其目标用户本是生活在LLM时代前的专业Web开发团队，而不是用 vibe coding 方式独自开发应用的原型开发者。以下是一些能让像MenuGen这样的超简单应用更容易创建的解决方案思路：</p>
+<ul>
+<li>有些应用开发平台可能会提供"开箱即用"的一站式解决方案。这看起来像是 Vercel Marketplace 的反面——一种有明确立场、具体化、预配置了所有人想要的基础功能（域名、托管、身份验证、支付、数据库、服务器函数）的平台。如果某个服务能让这些功能变得简单且"开箱即用"，那将会非常棒。</li>
+<li>所有这些服务都可以变得更加 LLM 友好。你告诉用户的任何内容基本上都会被直接复制粘贴到 LLM 中，所以你不妨直接和 LLM 对话。你的服务可以配备一个 CLI 工具，后端可以用 curl 命令配置，文档可以用 Markdown 编写。这些对于 LLM 来说都是更友好、更符合人体工程学的界面和抽象层。不要和开发者对话，不要让开发者去访问、查看或点击。直接指导并赋能他们的 LLM。</li>
+<li>对于我的下一个应用，我考虑使用基础的 HTML/CSS/JS + Python 后端（类似 FastAPI + Fly.io 的风格？），这比"现代网页开发"中无服务器架构的复杂宇宙要简单得多。像 MenuGen（或类似应用）这样的简单应用，在这种模式下可能会容易得多。</li>
+<li>最后，MenuGen 根本不应该是一个功能齐全的应用。"应用"本质上只是调用一次 GPT 来 OCR 菜单，然后通过一个循环遍历结果，为每个项目生成图片并优雅地呈现给用户。这听起来就像一个简单的自定义 GPT（按照 OpenAI 早期发布的原始 GPT"应用商店"的术语）。MenuGen 能只是一个提示词吗？LLM 能不返回文本，而是像 Artifacts 那样返回一个简单的网页来展示结果吗？其他很多应用也可以这样吗？我可以把它作为应用发布到商店，并以同样的方式赚取差价吗？</li>
+</ul>
+<p>说实话，我很高兴能通过 vibe coding 的方式，把我第一个高度定制化的应用真正做出来，解决了自己长期以来的需求，还能和朋友们分享。感谢上面提到的所有服务，我用它们来构建了这个应用。原则上，如果其他人也喜欢它，它完全有可能被动地赚点钱——这就是 <a href="https://x.com/levelsio" target="_blank" rel="noopener nofollow">@levelsio</a> 的梦想。说到底，如今用 vibe coding 来开发完整的网页应用还比较混乱，对于任何真正重要的项目来说都不是个好主意。但其中已经展现出巨大的潜力，我认为整个行业只需要一些时间来适应 LLMs 的新世界。我个人非常兴奋地看到，应用开发的门槛将降至接近于零，任何人都能像发 TikTok 一样轻松地构建和发布应用。这类高度定制化的自动化，可能会成为人类创造力的一块全新画布。</p>
+<p>相关的推文（以及“评论区”）在我的 X <a href="https://x.com/karpathy/status/1917961248031080455" target="_blank" rel="noopener nofollow">@karpathy</a> 上。</p></article>
+    <div class="dp-actions">
+      <a class="dp-btn pri" href="https://karpathy.bearblog.dev/vibe-coding-menugen/" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      
+      <button type="button" class="dp-btn sec" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
+      <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
+    </div>
+    <p class="dp-note">本页由句子互动动态管线自动生成，聚合内容版权归各来源所有；如来源方希望调整或移除收录，请通过官网联系我们。</p>
+  </div>
+</main>
+<div id="site-footer"></div>
+<script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "Vibe coding MenuGen"};</script>
+<script src="../../assets/site.js"></script>
+<script>
+(function(){var b=document.getElementById('dpLang');if(!b)return;
+var en=document.getElementById('dpBodyOrig'),zh=document.getElementById('dpBodyZh');
+b.addEventListener('click',function(){var on=zh.hidden;zh.hidden=!on;en.hidden=on;
+b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';});})();
+</script>
+</body>
+</html>

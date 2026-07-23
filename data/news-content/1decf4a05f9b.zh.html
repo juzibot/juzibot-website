@@ -1,0 +1,23 @@
+<p>是的，GPT 5.6 版本中可供选择的选项可能太多了。</p>
+
+<p>不过，在推理模型的背景下，我发现这些选择如何映射到训练时和<a href="https://sebastianraschka.com/glossary/#inference-time-scaling" target="_blank" rel="noopener nofollow">推理时缩放</a>上很有趣。如果我们粗略地将这些选项映射到经典的 o1 图表上，Sol、Terra 和 Luna 代表了沿训练计算轴的三种模型规模和训练预算。而努力程度设置则位于推理时计算轴上。</p>
+
+<figure><p><img src="https://sebastianraschka.com/images/blog/2026/gpt-5-6-configurations/hero.webp" alt="GPT 5.6 模型选择与训练计算缩放、努力程度与推理时缩放的对应关系注释图" referrerpolicy="no-referrer" /></p>
+<figcaption>图 1. OpenAI 经典<a href="https://openai.com/index/learning-to-reason-with-llms/" target="_blank" rel="noopener nofollow"> o1 缩放图</a>与 GPT 5.6 选项的粗略对应关系。三种模型选项代表不同的模型规模和训练预算，而努力程度设置代表推理时计算。</figcaption></figure>
+
+
+<p>完整列表包含三种模型选择和六个推理努力程度级别（Light、Medium、High、Extra High、Max 和 Ultra）。再加上 Work 与 Codex 以及 Standard 与 Fast 的区分，完整的配置矩阵就变成了</p>
+
+<p><code>Work/Codex × Sol/Terra/Luna × Light/Medium/High/Extra High/Max/Ultra × Standard/Fast</code></p>
+
+<p>这给了我们 <code>2 × 3 × 6 × 2 = 72</code> 种可能的配置。</p>
+
+<p>那么，现在什么是好的默认选择呢？是 High 努力的 Luna？Light 努力的 Sol？还是 Medium 努力的 Terra？</p>
+
+<p>当然，一张性能与成本对比图可以帮助找出性价比高的组合。例如，Extra High 努力的 Luna 可能比 Medium 努力的 Sol 更好且更便宜。</p>
+
+<figure><p><img src="https://sebastianraschka.com/images/blog/2026/gpt-5-6-configurations/coding-agent-index-cost.webp" alt="GPT 5.6 及对比模型的 Artificial Analysis Coding Agent Index 得分与 API 成本对比图" referrerpolicy="no-referrer" /></p>
+<figcaption>图 2. GPT 5.6 及多个对比模型的 Artificial Analysis Coding Agent Index v1.1 得分与 API 成本对比图。图表基于<a href="https://x.com/OpenAI/status/2075271425548795909" target="_blank" rel="noopener nofollow"> OpenAI 在 X 上发布的 GPT 5.6 发布帖</a>。</figcaption></figure>
+
+
+<p>但是，没错，72 种可能的配置给我们留下了太多选择 🤯。</p>

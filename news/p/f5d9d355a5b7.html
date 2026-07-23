@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>在ChatGPT中投放广告 - 句子·动态</title>
+<meta name="description" content="有信息显示，OpenAI可能正在探索在ChatGPT中引入广告的商业模式。目前相关细节尚未完全公开。" />
+<meta name="robots" content="noindex,follow" />
+<link rel="canonical" href="https://ads.openai.com/" />
+<link rel="icon" href="../../logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../../assets/site.css" />
+<style>
+  .dp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
+  .dp-wrap{max-width:760px;margin:0 auto}
+  .dp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
+  .dp-back:hover{color:var(--blue)}
+  .dp-meta{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:14px}
+  .dp-srcb{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:750;color:var(--sc,var(--blue))}
+  .s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
+  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-wecom{--sc:#2563EB}.s-voices{--sc:#9333EA}
+  .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
+  .dp-cat{display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ink-3);background:#F6F7FB;border:1px solid var(--line-2);border-radius:6px;padding:2px 8px}
+  .dp-date{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-3)}
+  .dp-title{font-size:clamp(24px,3.2vw,34px);font-weight:850;letter-spacing:-.03em;line-height:1.32;word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance;margin-bottom:10px}
+  .dp-orig{font-size:13px;color:var(--ink-3);overflow-wrap:anywhere;margin-bottom:8px}
+  .dp-by{font-size:12.5px;font-weight:600;color:var(--ink-3);margin-bottom:18px}
+  .dp-notice{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:1.7;color:var(--ink-2);background:#F6F7FB;border:1px solid var(--line-2);border-radius:10px;padding:10px 14px;margin-bottom:22px}
+  .dp-notice i{color:var(--blue);margin-top:4px;flex:0 0 auto}
+  .dp-notice a{color:var(--blue);font-weight:700;overflow-wrap:anywhere}
+  .dp-quip{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.66;font-weight:600;color:var(--blue-deep);background:var(--blue-50);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:18px}
+  .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
+  .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
+  .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
+  .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
+  .dp-body p{margin:0 0 1.05em}
+  .dp-body img{max-width:100%;height:auto;border-radius:10px;margin:.4em 0}
+  .dp-body pre{background:#0F172A;color:#E2E8F0;font-family:var(--mono);font-size:12.5px;line-height:1.7;padding:14px 16px;border-radius:10px;overflow-x:auto;margin:0 0 1.1em}
+  .dp-body code{font-family:var(--mono);font-size:.92em}
+  .dp-body :not(pre)>code{background:#F1F5F9;padding:1px 5px;border-radius:5px}
+  .dp-body blockquote{border-left:3px solid var(--line);padding:2px 0 2px 14px;color:var(--ink-3);margin:0 0 1.05em}
+  .dp-body a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+  .dp-body ul,.dp-body ol{padding-left:1.5em;margin:0 0 1.05em}
+  .dp-body table{display:block;overflow-x:auto;border-collapse:collapse;margin:0 0 1.1em}
+  .dp-body td,.dp-body th{border:1px solid var(--line);padding:6px 10px;font-size:.92em}
+  .dp-excerpt{font-size:15px;line-height:1.9;color:var(--ink-2);border-left:3px solid var(--line);padding:2px 0 2px 16px;margin-bottom:8px}
+  .dp-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;padding-top:20px;border-top:1px solid var(--line-2)}
+  .dp-btn{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:750;border-radius:999px;padding:10px 20px;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+  .dp-btn.pri{background:var(--blue);color:#fff}
+  .dp-btn.pri:hover{background:var(--blue-deep)}
+  .dp-btn.sec{background:#fff;color:var(--ink-2);border:1px solid var(--line)}
+  .dp-btn.sec:hover{color:var(--blue);border-color:var(--blue)}
+  .dp-note{font-size:11.5px;line-height:1.7;color:var(--ink-3);margin-top:18px}
+  .dp-langbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+  .dp-lang{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:750;color:var(--blue);
+    background:var(--blue-50);border:1px solid var(--blue-100);border-radius:999px;padding:7px 14px;
+    transition:background .2s var(--ease),border-color .2s var(--ease)}
+  .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
+  .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div id="site-nav"></div>
+<main class="dp-main">
+  <div class="dp-wrap">
+    <a class="dp-back" href="../../news.html"><i class="fa-solid fa-arrow-left"></i>返回动态</a>
+    <div class="dp-meta">
+      <span class="dp-srcb s-hn"><i class="fa-brands fa-hacker-news"></i>Hacker News</span>
+      
+      <time class="dp-date" datetime="2026-07-21">2026-07-21</time>
+    </div>
+    <h1 class="dp-title">在ChatGPT中投放广告</h1>
+    <p class="dp-orig">原题：Advertise in ChatGPT</p>
+    <p class="dp-by">来源：Hacker News</p>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（Hacker News）所有 · <a href="https://ads.openai.com/" target="_blank" rel="noopener">阅读原文</a></span></div>
+    
+    <div class="dp-brief"><b>简报</b>有信息显示，OpenAI可能正在探索在ChatGPT中引入广告的商业模式。目前相关细节尚未完全公开。</div>
+    <div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang"><i class="fa-solid fa-language"></i><span>翻译为中文</span></button><span class="dp-lang-note">中文由 AI 翻译，仅供参考</span></div><article class="dp-body" id="dpBodyOrig"><h1>Advertise in ChatGPT</h1><p>Reach people as they explore options, compare choices, and make decisions in ChatGPT, with relevant ads that fit naturally into the experience.</p><img loading="lazy" onerror="this.style.display='none'" src="https://images.ctfassets.net/kftzwdyauwt9/6oMr4B9PxElIT7E4UvPeoK/a2d7e811d49eacfaca54464601bb7e44/1x1.png" referrerpolicy="no-referrer" /><h2>Reach people in the moments that matter</h2><p>People come to ChatGPT not just to find information, but to explore options, compare choices, and make decisions. That gives advertisers a new way to show up in ways that feel relevant and useful  in moments of real intent.</p><img loading="lazy" onerror="this.style.display='none'" src="https://images.ctfassets.net/kftzwdyauwt9/6zSec5x8mYDGjPvkIYAvw5/4cda6d888b87c3547f892ebbf3a410a4/eye.svg" referrerpolicy="no-referrer" /><h3>Show up while people explore options and take action</h3><p>Reach people in ChatGPT as they explore options, compare alternatives, weigh tradeoffs, and make informed decisions.</p><img loading="lazy" onerror="this.style.display='none'" src="https://images.ctfassets.net/kftzwdyauwt9/fut0tV3yrhUG219Sj7lgB/151529bf583a074d4177f3157e2220bd/text-justifyleft-focus.svg" referrerpolicy="no-referrer" /><h3>Go beyond keywords with richer context signals</h3><p>In ChatGPT, people share richer context, enabling advertising that is more relevant, personalized, and useful.</p><img loading="lazy" onerror="this.style.display='none'" src="https://images.ctfassets.net/kftzwdyauwt9/6nTINdIMzdnUMAK9Ahmnw0/49dd430c8a35cb5ba4356cb05b82ef31/cursor-interactive.svg" referrerpolicy="no-referrer" /><h3>Be part of the future of AI-native advertising</h3><p>Reach customers in an advertising environment built around conversation, context, and real-time decisions.</p><p>How it works</p><h2>Get started in a few steps</h2><p>After you sign up, you&#x27;ll be taken into Ads Manager, where you can create your account, create campaigns, and access step-by-step Help Center resources.</p><h3>1. Create your campaign</h3><p>Set up your campaign, budget, and goal.</p><img loading="lazy" onerror="this.style.display='none'" src="https://images.ctfassets.net/kftzwdyauwt9/66L1eFlxtO1biCpyZuJLeH/2ad05275e722783f2b038a8bec5fe13a/chatgpt-ads-get-started.png" alt="Screenshot of a web application interface with a Create dropdown menu open, displaying options for creating campaigns, ad groups, ads, and uploading bulk CSV files." referrerpolicy="no-referrer" /><h3>2. Add your ad details</h3><p>Bulk upload your ad details, or create them directly in the tool.</p><img loading="lazy" onerror="this.style.display='none'" src="https://images.ctfassets.net/kftzwdyauwt9/2XgqsXUVgnwEc9dZ0GzZVx/1935681eaeaad30ee327dbd08cf01693/chatgpt-ads-manager.png" alt="Screenshot of an Ads Manager interface displaying campaign and ad group selections alongside a preview of a sponsored home decor advertisement." referrerpolicy="no-referrer" /><h3>3. Launch and learn</h3><p>Measure results, edit campaigns, and optimize performance.</p><img loading="lazy" onerror="this.style.display='none'" src="https://images.ctfassets.net/kftzwdyauwt9/231QcbY6rhKiVufQU3ov0w/e8d589ecf9dbf93261d2fb01f2a293e7/chatgpt-ads-metrics.png" alt="Analytics chart displaying monthly trends for impressions, conversions, and clicks, along with summary metrics and growth indicators." referrerpolicy="no-referrer" /><h2>Built with user trust in mind</h2><p>We’re taking a measured approach to advertising in ChatGPT. Our focus is on building an experience that is useful for advertisers while maintaining the trust people have in ChatGPT.</p><img loading="lazy" onerror="this.style.display='none'" src="https://images.ctfassets.net/kftzwdyauwt9/96z69VoTcxbaV6IJNJkrn/b03a3c383f6996d7442e99fdea3b5189/product-tag.svg" referrerpolicy="no-referrer" /><h3>Clearly labeled</h3><p>Ads are clearly identified in the experience.</p><img loading="lazy" onerror="this.style.display='none'" src="https://images.ctfassets.net/kftzwdyauwt9/1CbaiEJ3IDjPqZ35R7fLoE/c469477f289a0c4ac7aa29ffc41aa2ce/pop-out-window.svg" referrerpolicy="no-referrer" /><h3>Separate from answers</h3><p>Ads remain distinct from ChatGPT’s responses.</p><img loading="lazy" onerror="this.style.display='none'" src="https://images.ctfassets.net/kftzwdyauwt9/4d3Qfb9IUX8CH4XDBhYzGx/f65381872409286a8af3a5a59f330115/person-badge-heart.svg" referrerpolicy="no-referrer" /><h3>Choice and control</h3><p>People control how their data is used for ads.</p><h2>Helpful resources</h2><p>Explore step-by-step guides and  Ad Manager support.</p><h2>Ready to get started?</h2><p>Create your account to access Ads Manager, set up your first campaign, and start advertising in ChatGPT.</p></article><article class="dp-body" id="dpBodyZh" hidden><h1>在 ChatGPT 中投放广告</h1><p>在用户于 ChatGPT 中探索选项、比较选择并做出决策时，通过自然融入体验的相关广告触达他们。</p><img loading="lazy" onerror="this.style.display='none'" src="https://images.ctfassets.net/kftzwdyauwt9/6oMr4B9PxElIT7E4UvPeoK/a2d7e811d49eacfaca54464601bb7e44/1x1.png" referrerpolicy="no-referrer" /><h2>在关键时刻触达用户</h2><p>用户使用 ChatGPT 不仅是为了查找信息，更是为了探索选项、比较选择并做出决策。这为广告主提供了一种新的方式，以相关且有用的形式在用户真实意图的时刻出现。</p><img loading="lazy" onerror="this.style.display='none'" src="https://images.ctfassets.net/kftzwdyauwt9/6zSec5x8mYDGjPvkIYAvw5/4cda6d888b87c3547f892ebbf3a410a4/eye.svg" referrerpolicy="no-referrer" /><h3>在用户探索选项和采取行动时出现</h3><p>在用户于 ChatGPT 中探索选项、比较替代方案、权衡利弊并做出明智决策时触达他们。</p><img loading="lazy" onerror="this.style.display='none'" src="https://images.ctfassets.net/kftzwdyauwt9/fut0tV3yrhUG219Sj7lgB/151529bf583a074d4177f3157e2220bd/text-justifyleft-focus.svg" referrerpolicy="no-referrer" /><h3>超越关键词，利用更丰富的上下文信号</h3><p>在 ChatGPT 中，用户会分享更丰富的上下文，从而实现更具相关性、个性化和实用性的广告。</p><img loading="lazy" onerror="this.style.display='none'" src="https://images.ctfassets.net/kftzwdyauwt9/6nTINdIMzdnUMAK9Ahmnw0/49dd430c8a35cb5ba4356cb05b82ef31/cursor-interactive.svg" referrerpolicy="no-referrer" /><h3>成为 AI 原生广告未来的一部分</h3><p>在一个围绕对话、上下文和实时决策构建的广告环境中触达客户。</p><p>运作方式</p><h2>只需几步即可开始</h2><p>注册后，您将进入广告管理器，在那里您可以创建账户、创建广告系列，并访问分步帮助中心资源。</p><h3>1. 创建您的广告系列</h3><p>设置您的广告系列、预算和目标。</p><img loading="lazy" onerror="this.style.display='none'" src="https://images.ctfassets.net/kftzwdyauwt9/66L1eFlxtO1biCpyZuJLeH/2ad05275e722783f2b038a8bec5fe13a/chatgpt-ads-get-started.png" alt="网页应用界面截图，显示一个打开的“创建”下拉菜单，包含创建广告系列、广告组、广告和批量上传 CSV 文件的选项。" referrerpolicy="no-referrer" /><h3>2. 添加您的广告详情</h3><p>批量上传您的广告详情，或直接在工具中创建。</p><img loading="lazy" onerror="this.style.display='none'" src="https://images.ctfassets.net/kftzwdyauwt9/2XgqsXUVgnwEc9dZ0GzZVx/1935681eaeaad30ee327dbd08cf01693/chatgpt-ads-manager.png" alt="广告管理器界面截图，显示广告系列和广告组选择，旁边是一个赞助的家居装饰广告预览。" referrerpolicy="no-referrer" /><h3>3. 启动并学习</h3>
+<p>衡量效果、调整广告系列并优化表现。</p><img loading="lazy" onerror="this.style.display='none'" src="https://images.ctfassets.net/kftzwdyauwt9/231QcbY6rhKiVufQU3ov0w/e8d589ecf9dbf93261d2fb01f2a293e7/chatgpt-ads-metrics.png" alt="分析图表，展示展示次数、转化次数和点击次数的月度趋势，以及汇总指标和增长指标。" referrerpolicy="no-referrer" /><h2>以用户信任为核心打造</h2><p>我们在ChatGPT中采取审慎的广告策略。重点在于构建对广告主有用且能维持用户对ChatGPT信任的体验。</p><img loading="lazy" onerror="this.style.display='none'" src="https://images.ctfassets.net/kftzwdyauwt9/96z69VoTcxbaV6IJNJkrn/b03a3c383f6996d7442e99fdea3b5189/product-tag.svg" referrerpolicy="no-referrer" /><h3>清晰标注</h3><p>广告在体验中会被明确标识。</p><img loading="lazy" onerror="this.style.display='none'" src="https://images.ctfassets.net/kftzwdyauwt9/1CbaiEJ3IDjPqZ35R7fLoE/c469477f289a0c4ac7aa29ffc41aa2ce/pop-out-window.svg" referrerpolicy="no-referrer" /><h3>与回答分离</h3><p>广告内容与ChatGPT的回答保持区分。</p><img loading="lazy" onerror="this.style.display='none'" src="https://images.ctfassets.net/kftzwdyauwt9/4d3Qfb9IUX8CH4XDBhYzGx/f65381872409286a8af3a5a59f330115/person-badge-heart.svg" referrerpolicy="no-referrer" /><h3>选择与控制</h3><p>用户可以控制其数据如何用于广告。</p><h2>实用资源</h2><p>探索分步指南和 Ad Manager 支持。</h2><h2>准备好开始了吗？</h2><p>创建账户以访问 Ad Manager，设置您的首个广告系列，并在 ChatGPT 中开始投放广告。</p></article>
+    <div class="dp-actions">
+      <a class="dp-btn pri" href="https://ads.openai.com/" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      <a class="dp-btn sec" href="https://news.ycombinator.com/item?id=48996571" target="_blank" rel="noopener"><i class="fa-brands fa-hacker-news"></i>HN 讨论</a>
+      <button type="button" class="dp-btn sec" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
+      <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
+    </div>
+    <p class="dp-note">本页由句子互动动态管线自动生成，聚合内容版权归各来源所有；如来源方希望调整或移除收录，请通过官网联系我们。</p>
+  </div>
+</main>
+<div id="site-footer"></div>
+<script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "在ChatGPT中投放广告"};</script>
+<script src="../../assets/site.js"></script>
+<script>
+(function(){var b=document.getElementById('dpLang');if(!b)return;
+var en=document.getElementById('dpBodyOrig'),zh=document.getElementById('dpBodyZh');
+b.addEventListener('click',function(){var on=zh.hidden;zh.hidden=!on;en.hidden=on;
+b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';});})();
+</script>
+</body>
+</html>
