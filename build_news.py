@@ -249,12 +249,24 @@ SOURCES = [
 
 # ---------------- 抓取与通用解析 ----------------
 
+MAX_FETCH_BYTES = 6 * 1024 * 1024    # 页面抓取字节上限: 防异常大的响应顶爆 cron 内存/超时(Bugbot PR#100)
+MAX_IMAGE_BYTES = 16 * 1024 * 1024   # 图片抓取字节上限
+
+
+def _read_capped(r, cap):
+    """至多读 cap 字节; 超限即判失败(交上层重试/退级), 不把超大响应全读进内存。"""
+    raw = r.read(cap + 1)
+    if len(raw) > cap:
+        raise ValueError(f"响应超过 {cap} 字节上限")
+    return raw
+
+
 def fetch(url, retries=2, timeout=20):
     last = None
     for i in range(retries + 1):
         try:
             with urlopen(Request(url, headers={"User-Agent": UA}), timeout=timeout) as r:
-                raw = r.read()
+                raw = _read_capped(r, MAX_FETCH_BYTES)
                 # 字符集: 响应头优先, 再嗅 <meta charset>(GBK 站硬按 utf-8 解会整页乱码)
                 cs = (r.headers.get_content_charset() or "").lower()
                 if not cs:
@@ -441,7 +453,9 @@ def sanitize_fragment(h):
     h = re.sub(r"<(script|style|iframe|object|embed|form|frameset|noscript)\b[^>]*>.*?</\1\s*>", "", h, flags=re.S | re.I)
     h = re.sub(r"<(script|style|iframe|object|embed|form|link|meta|base)\b[^>]*/?>", "", h, flags=re.I)
     h = re.sub(r"\s+on[a-z]+\s*=\s*(\"[^\"]*\"|'[^']*'|[^\s>]+)", "", h, flags=re.I)
-    h = re.sub(r"(href|src)\s*=\s*([\"'])\s*javascript:[^\"']*\2", r"\1=\2#\2", h, flags=re.I)
+    h = re.sub(r"(href|src)\s*=\s*([\"'])\s*(?:javascript|vbscript):[^\"']*\2", r"\1=\2#\2", h, flags=re.I)
+    # data: URL 除白名单栅格图外一律掐——data:text/html 是站内 XSS 向量, data:image/svg+xml 可带脚本(Bugbot PR#100)
+    h = re.sub(r"(href|src)\s*=\s*([\"'])\s*data:(?!image/(?:png|jpe?g|gif|webp|bmp)[;,])[^\"']*\2", r"\1=\2#\2", h, flags=re.I)
     return h.strip()
 
 
@@ -685,7 +699,7 @@ def fetch_image(url):
     try:
         req = Request(url, headers={"User-Agent": IMG_UA, "Accept": "image/avif,image/webp,image/*,*/*;q=0.8"})
         with urlopen(req, timeout=20) as r:
-            return r.read(), (r.headers.get("Content-Type") or "").split(";")[0].strip().lower()
+            return _read_capped(r, MAX_IMAGE_BYTES), (r.headers.get("Content-Type") or "").split(";")[0].strip().lower()
     finally:
         _last_hit[host] = time.monotonic()
 
@@ -945,9 +959,10 @@ def sync_rss(src, old, limit):
             if it:
                 seen.add(e["url"])
                 got.append(it)
-                # full=True 的 feed 正文完整必镜像; 其余 feed 的 content 够长也顺手镜像(阮一峰/
-                # Karpathy 等自带全文, 省一次原文页抓取), 不够长的留给 mirror_items 抓原文页
-                if feed.get("full") or len(strip_text(e.get("content") or "")) >= 400:
+                # 只镜像 feed 明确自带全文的(full=True)。非 full feed 的 content 即便够长也可能是
+                # 摘要, 一旦落盘就永久占住全文位、mirror_items 不再抓原文页升级(Bugbot PR#100)——
+                # 故非 full 的一律交 mirror_items 抓原文页做 readability 提取, 拿真正的全文。
+                if feed.get("full"):
                     save_content(it["id"], e.get("content") or e.get("summary") or "")
     return got, failed
 
