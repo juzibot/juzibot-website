@@ -242,6 +242,7 @@
   var state = { src: 'all', cat: 'all', time: 'all', cut: '', q: '', shown: list.querySelectorAll('.news-card').length };
 
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function safeHref(u) { u = String(u == null ? '' : u).trim(); return /^https?:\/\//i.test(u) ? esc(u) : '#'; }  // 与 Python safe_href 同构: 非 http(s) 外链回 #(Bugbot PR#100)
 
   // 时间区间筛选：cut 是往回推算的 YYYY-MM-DD 下限（本地时区），条目日期是同构字符串可直接比较
   function dstr(d) { return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
@@ -269,7 +270,7 @@
       '<span class="nc-src">' + esc(it.author) + '</span>' +
       '<span class="nc-actions">' +
       '<button type="button" class="nc-ask" data-t="' + esc(title) + '"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>' +
-      '<a class="nc-read" href="' + esc(it.url) + '" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>' +
+      '<a class="nc-read" href="' + safeHref(it.url) + '" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>' +
       '</span></div></article>';
   }
 
