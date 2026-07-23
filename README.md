@@ -21,21 +21,22 @@ python3 build_news.py --full   # 全量重抓（只刷新不删除）
 
 **密钥本体严禁写进仓库任何文件（代码/注释/测试/文档一律只写变量名）。**
 
-## 定时同步（GitHub Actions）
+## 定时同步（GitHub Actions）· 生成物不入库
 
-`.github/workflows/news-cron.yml`：每 6 小时（也可在 Actions 页手动 Run workflow）跑一轮 `build_news.py`，有变更自动 commit+push 到 `stage-2` 并触发部署。
+**动态页生成物（`news/`、`data/news.json` 等）不进 git**（2026-07-23 定稿）。`.github/workflows/news-cron.yml` 每 6 小时（也可 Actions 页手动 Run workflow）在 CI 里跑一轮 `build_news.py`：先从服务器 `/opt/www/jz-news/` rsync 拉回上一轮状态 → 增量跑管线 → 把产物与状态 rsync 推回。不 commit、不 push，仓库零膨胀。完整架构、一次性上线步骤（nginx 路由 + seed 存量）与运维手册见 **`docs/DEPLOY.md`**；nginx 配置片段在 `deploy/nginx-news.conf`。
 
-需要配置的仓库 Secret（Settings → Secrets and variables → Actions）：
+需要的仓库 Secret（均已有，与 deploy 共用）：
 
 | Secret 名 | 用途 |
 | --- | --- |
+| `SSH_KEY` / `HOST` / `USER` | rsync/SSH 到服务器 |
 | `ZHIPU_API_KEY` | 智谱 GLM API key（AI 筛选/锐评/简报/译题/全文翻译/概念抽取，模型 glm-4-air）。不配也能跑，AI 层降级为 pending 攒着 |
 
 另有两点注意：
 
 - **schedule 只认默认分支（main）上的 workflow 文件**。此文件合到 main 后定时才会生效；在那之前用 workflow_dispatch 手动跑。
-- 公众号源依赖本机已授权的 lark-cli，CI 里该源必然失败并按设计沿用已有数据；公众号新文仍靠本机运行同步。
+- 公众号源依赖本机已授权的 lark-cli，CI 里该源必然失败并按设计沿用已有数据；公众号新文仍靠本机运行同步后手动 rsync（命令见 docs/DEPLOY.md）。
 
 ## 部署
 
-push 到 `stage-1` / `stage-2` 触发 `.github/workflows/deploy.yml`，SSH 到服务器 checkout 对应分支。`main` 与其它分支不部署。
+push 到 `stage-1` / `stage-2` 触发 `.github/workflows/deploy.yml`，SSH 到服务器 checkout 对应分支到 `/opt/www/jz-<branch>`。`main` 与其它分支不部署。动态页产物在独立目录 `/opt/www/jz-news/`（news-cron 维护），不受代码部署的 checkout/clean 影响。

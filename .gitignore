@@ -12,3 +12,11 @@ __pycache__/
 
 # 本机 Dispatch 预览工具配置, 不入仓库
 .dispatch-preview.json
+
+# —— 动态页生成物不入库(佳芮 2026-07-23 裁决): CI 跑 build_news.py 现做, rsync 直推服务器 /opt/www/jz-news/ ——
+# 仓库只留"配方": build_news.py + workflow + 页面模板壳 + 人工种子(data/product-news.json, data/press-news.json)
+news/
+data/news.json
+data/concepts.json
+data/render-cache.json
+data/news-content/
