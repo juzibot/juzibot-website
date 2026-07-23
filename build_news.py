@@ -1492,6 +1492,7 @@ def ai_translate(items):
             and (CONTENT_DIR / f"{i['id']}.html").exists()
             and not zh_content_path(i["id"]).exists()
             and i.get("trans_fail", 0) < TRANS_MAX_FAIL]
+    todo.sort(key=lambda i: i.get("date", ""), reverse=True)  # 新文章优先, 与 mirror_items「新条目优先」一致, 别让积压占满名额(Bugbot PR#100)
     if not todo:
         return
     if not AI_KEY:
@@ -2045,21 +2046,74 @@ b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';})
 """
 
 
+# ---------------- 增量渲染缓存(2026-07-23, Bugbot PR#100 性能) ----------------
+# 详情页/概念页数量达数百, 每轮 cron 若对全部页重算 detail_html/concept_html(含全文概念
+# 标注与读盘)再字符串比对, CPU/IO 会与镜像/翻译步骤叠加逼近 30 分钟超时。改为对每页算一个
+# 「输入签名」——签名不变则跳过重算。签名过度捕获(条目全字段 + 概念库 + 正文/译文镜像 + 模板
+# 版本), 任一输入变即重算, 绝不产生陈旧页。签名落 data/render-cache.json(随仓库提交, 供 CI
+# 跨轮增量; 不进任何内联/公开 HTML)。改模板结构时递增 RENDER_VER 触发全量重算。
+RENDER_VER = "1"
+RENDER_CACHE = ROOT / "data" / "render-cache.json"
+
+
+def _sha(*parts):
+    return hashlib.sha1("\x1e".join(parts).encode("utf-8")).hexdigest()[:16]
+
+
+def _file_sig(path):
+    try:
+        return hashlib.sha1(path.read_bytes()).hexdigest()[:16]
+    except OSError:
+        return ""
+
+
+def _lib_annot_sig(lib):
+    # 概念库对详情页标注的影响: 词条/别名/定义任一变都可能改变某页标注 → 整库纳入(过度捕获)
+    return _sha(*(f"{s}={c.get('term')}|{'/'.join(c.get('aliases') or [])}|{c.get('def')}"
+                  for s, c in sorted(lib.items())))
+
+
+def _load_render_cache():
+    try:
+        c = json.loads(RENDER_CACHE.read_text(encoding="utf-8"))
+        return c if isinstance(c, dict) else {}
+    except (OSError, ValueError):
+        return {}
+
+
+def _save_render_cache(cache):
+    cache["_readme"] = "build_news.py 增量渲染缓存: 页面输入签名, 供 CI 跳过未变页; 脚本维护, 勿手改"
+    RENDER_CACHE.write_text(json.dumps(cache, ensure_ascii=False, indent=0), encoding="utf-8")
+
+
 def write_detail_pages(vis, items, lib):
-    """过筛条目逐条落静态详情页; 内容没变的页面不重写(幂等, mtime 稳定),
+    """过筛条目逐条落静态详情页; 输入签名不变的页跳过重算(增量, 幂等),
     已下线条目的页面与孤儿正文镜像顺手清掉(部署端 git clean 同步删除)。"""
     DETAIL_DIR.mkdir(parents=True, exist_ok=True)
-    # 逐条生成即写, 不先攒全量 HTML 字典——上站条目多时峰值内存不再随页数堆高(Bugbot PR#100)
     want = set()
-    written = 0
+    written = skipped = 0
+    cache = _load_render_cache()
+    old_sigs = cache.get("detail", {})
+    new_sigs = {}
+    lsig = _lib_annot_sig(lib)
     for it in vis:
         name = f"{it['id']}.html"
         want.add(name)
-        html = detail_html(it, lib)
         p = DETAIL_DIR / name
+        item_repr = json.dumps({k: v for k, v in it.items() if not k.startswith("_")},
+                               ensure_ascii=False, sort_keys=True)
+        sig = _sha(RENDER_VER, lsig, item_repr,
+                   _file_sig(CONTENT_DIR / f"{it['id']}.html"), _file_sig(zh_content_path(it["id"])))
+        new_sigs[it["id"]] = sig
+        if p.exists() and old_sigs.get(it["id"]) == sig:
+            skipped += 1
+            continue
+        html = detail_html(it, lib)
         if not p.exists() or p.read_text(encoding="utf-8") != html:
             p.write_text(html, encoding="utf-8")
             written += 1
+    cache["detail"] = new_sigs
+    _save_render_cache(cache)
     stale = [p for p in DETAIL_DIR.glob("*.html") if p.name not in want]
     for p in stale:
         p.unlink()
@@ -2070,7 +2124,7 @@ def write_detail_pages(vis, items, lib):
         p.unlink()
     for d in ([p for p in IMG_DIR.iterdir() if p.is_dir() and p.name not in keep_ids] if IMG_DIR.exists() else []):
         shutil.rmtree(d)  # 下线条目的本地化图片目录一并清
-    print(f"[详情页] 共 {len(want)} 页(新写/重写 {written}, 清理 {len(stale)}) → news/p/"
+    print(f"[详情页] 共 {len(want)} 页(新写/重写 {written}, 跳过 {skipped}, 清理 {len(stale)}) → news/p/"
           + (f", 清孤儿镜像 {len(orphan)}" if orphan else ""))
 
 
@@ -2218,25 +2272,47 @@ def write_concept_pages(lib, vis):
             for o in cs:
                 if o != s:
                     related_map.setdefault(s, {})[o] = related_map.get(s, {}).get(o, 0) + 1
-    # 逐页生成即写, 不先攒全量字典(Bugbot PR#100 内存优化)
+    # 逐页生成即写, 不先攒全量字典(Bugbot PR#100 内存优化); 输入签名不变的页跳过重算(增量)
+    written = skipped = 0
+
     def _emit(name, html):
         nonlocal written
         p = CONCEPT_DIR / name
         if not p.exists() or p.read_text(encoding="utf-8") != html:
             p.write_text(html, encoding="utf-8")
             written += 1
+    cache = _load_render_cache()
+    old_sigs = cache.get("concept", {})
+    new_sigs = {}
     want = {"index.html"}
-    written = 0
-    _emit("index.html", concept_index_html(lib, refs_map))
+    # 目录页: 模板版本 + 全库 + 各概念引用数
+    idx_sig = _sha(RENDER_VER, _lib_annot_sig(lib),
+                   json.dumps({s: len(refs_map.get(s, [])) for s in lib}, sort_keys=True))
+    new_sigs["index.html"] = idx_sig
+    if (CONCEPT_DIR / "index.html").exists() and old_sigs.get("index.html") == idx_sig:
+        skipped += 1
+    else:
+        _emit("index.html", concept_index_html(lib, refs_map))
     for slug, c in lib.items():
         name = f"{slug}.html"
         want.add(name)
+        refs = refs_map.get(slug, [])[:30]
         related = sorted(related_map.get(slug, {}), key=lambda o: (-related_map[slug][o], o))[:8]
-        _emit(name, concept_html(slug, c, refs_map.get(slug, [])[:30], related, lib))
+        # 精确捕获 concept_html 渲染用到的输入: 概念本身 + 每条引用的展示字段 + 相关概念名
+        ref_repr = "|".join(f"{r['id']},{r['date']},{r['source']},{r['source_name']},{disp_title(r)}" for r in refs)
+        rel_repr = "|".join(f"{o}={lib.get(o, {}).get('term')}" for o in related)
+        sig = _sha(RENDER_VER, f"{c.get('term')}|{c.get('def')}|{'/'.join(c.get('aliases') or [])}", ref_repr, rel_repr)
+        new_sigs[name] = sig
+        if (CONCEPT_DIR / name).exists() and old_sigs.get(name) == sig:
+            skipped += 1
+            continue
+        _emit(name, concept_html(slug, c, refs, related, lib))
+    cache["concept"] = new_sigs
+    _save_render_cache(cache)
     stale = [p for p in CONCEPT_DIR.glob("*.html") if p.name not in want]
     for p in stale:
         p.unlink()
-    print(f"[概念页] 共 {len(want)} 页(新写/重写 {written}, 清理 {len(stale)}) → news/c/")
+    print(f"[概念页] 共 {len(want)} 页(新写/重写 {written}, 跳过 {skipped}, 清理 {len(stale)}) → news/c/")
 
 
 # 两个平行版本均为全源(2026-07-07 用户裁决; 原列表版 B 于 2026-07-21 并入聚合版),
