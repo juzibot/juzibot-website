@@ -272,6 +272,7 @@
                 lastMonth: shownInit > 0 && data[shownInit - 1] ? data[shownInit - 1].date.slice(0, 7) : '' };
 
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function safeHref(u) { u = String(u == null ? '' : u).trim(); return /^https?:\/\//i.test(u) ? esc(u) : '#'; }  // 与 Python safe_href 同构: 非 http(s) 外链回 #(Bugbot PR#100)
   function monthLabel(d) { return d.slice(0, 4) + ' 年 ' + parseInt(d.slice(5, 7), 10) + ' 月'; }
 
   // 时间区间筛选：cut 是往回推算的 YYYY-MM-DD 下限（本地时区），条目日期是同构字符串可直接比较
@@ -300,7 +301,7 @@
       (tags ? '<div class="fd-tags">' + tags + '</div>' : '') +
       '<div class="fd-act">' +
       '<button type="button" class="fd-ask" data-t="' + esc(title) + '"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>' +
-      '<a class="fd-link" href="' + esc(it.url) + '" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i>读原文</a>' +
+      '<a class="fd-link" href="' + safeHref(it.url) + '" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i>读原文</a>' +
       '<button type="button" class="fd-copy" data-u="' + esc(it.url) + '"><i class="fa-solid fa-link"></i>复制链接</button>' +
       '<span class="sp"></span>' +
       '<button type="button" class="fd-exp" aria-expanded="false">展开<i class="fa-solid fa-chevron-down"></i></button>' +
