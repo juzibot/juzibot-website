@@ -64,7 +64,7 @@
   .sp-chip{position:absolute;z-index:5;display:flex;flex-direction:column;gap:2px;
     background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:14px;
     padding:10px 14px;box-shadow:0 12px 26px -12px rgba(14,20,48,.28);
-    animation:spfloat 5s ease-in-out infinite}
+    animation:spfloat 5s ease-in-out 4}
   .sp-chip .l{font-size:10.5px;color:var(--ink-3);font-weight:600;white-space:nowrap}
   .sp-chip .v{font-size:17px;font-weight:850;letter-spacing:-.02em;line-height:1.2;white-space:nowrap;
     font-variant-numeric:tabular-nums}
@@ -102,7 +102,7 @@
   /* —— sec-top 副文：小字右对齐（与 fde / sales 页一致），窄屏回落左对齐 —— */
   .sec-top .sub{margin-left:auto;text-align:justify;text-justify:inter-ideograph;text-wrap:balance;max-width:42ch;font-size:14px;color:var(--ink-3)}
   /* 角色画像副文：密实两端对齐（宽度贴合内容，末行也齐平，不稀疏无孤尾） */
-  #role .sec-top .sub{max-width:44ch;text-align-last:justify}
+  #role .sec-top .sub{max-width:44ch;text-align-last:justify;flex-shrink:1}
   @media(max-width:760px){.sec-top .sub{margin-left:0!important;text-align:left!important;text-align-last:auto!important;max-width:none!important}}
 
   /* 角色画像：合规要点 + 能力清单 */
