@@ -129,6 +129,10 @@
     .sp-chip{padding:8px 11px}
     .sp-chip.c1{right:0}.sp-chip.c2{left:-2%}.sp-chip.c3{right:-2%}.sp-chip.c5{left:-2%}
   }
+  /* 双列临界带(单列断点980px以上、贴片大负偏移会伸进左列/被 role-hero overflow 裁, Bugbot PR#101) */
+  @media(min-width:981px) and (max-width:1120px){
+    .sp-chip.c1,.sp-chip.c3{right:-2%}.sp-chip.c2,.sp-chip.c5{left:-2%}
+  }
   @media (prefers-reduced-motion:reduce){.sp-badge .pulse,.sp-chip{animation:none}}
 
 .fleet-bar{position:relative;z-index:3;max-width:var(--max);margin:calc(-1 * clamp(28px,4vw,52px)) auto 0;
