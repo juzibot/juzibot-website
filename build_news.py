@@ -665,6 +665,13 @@ IMG_DIR = ROOT / "news" / "img"
 IMG_UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
           "(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36")  # mmbiz 等图床对非浏览器 UA 挑剔
 IMG_MAGIC = (b"\x89PNG", b"\xff\xd8", b"GIF8", b"RIFF", b"<svg", b"<?xm", b"BM", b"II*\x00", b"MM\x00*")
+# AVIF/HEIF 是 ISOBMFF: 开头是盒长度, "ftyp" 在偏移 4、品牌在偏移 8, startswith 认不出(Bugbot PR#100)
+IMG_FTYP_BRANDS = (b"avif", b"avis", b"mif1", b"msf1", b"heic", b"heix")
+
+
+def is_image_bytes(raw):
+    """图片二进制识别: 常规魔数(PNG/JPEG/GIF/WebP-RIFF/SVG/BMP/TIFF) 或 AVIF/HEIF 的 ftyp 盒。"""
+    return raw.startswith(IMG_MAGIC) or (raw[4:8] == b"ftyp" and raw[8:12] in IMG_FTYP_BRANDS)
 CTYPE_EXT = {"image/png": ".png", "image/jpeg": ".jpg", "image/gif": ".gif", "image/webp": ".webp",
              "image/svg+xml": ".svg", "image/avif": ".avif", "image/bmp": ".bmp"}
 
@@ -721,7 +728,7 @@ def localize_images(html, base_url, dest_dir, rel_prefix):
         if hit is None:
             try:
                 raw, ctype = fetch_image(absu)
-                if len(raw) < 100 or not raw.startswith(IMG_MAGIC):
+                if len(raw) < 100 or not is_image_bytes(raw):
                     raise ValueError(f"响应不是图片({ctype or '未知类型'}, {len(raw)}B)")
                 dest_dir.mkdir(parents=True, exist_ok=True)
                 hit = dest_dir / f"{name}{img_ext(absu, ctype)}"
@@ -918,6 +925,7 @@ def sync_rss(src, old, limit):
     """多 feed 合流: feed 名统一落 category(二级分类按媒体分)与 author(卡片署名)。
     配 full=True 的 feed 正文完整, 顺手镜像进 data/news-content/ 供详情页整文展示。"""
     got, failed = [], []
+    seen = set()  # 本轮已收 URL: 挡住多 feed 合流 / 同 feed 内的重复项(Bugbot PR#100)
     for feed in src["feeds"]:
         feed_url, feed_name = feed["url"], feed["name"]
         try:
@@ -926,13 +934,16 @@ def sync_rss(src, old, limit):
             failed.append(feed_url)
             print(f"  [失败] feed {feed_url}: {e}")
             continue
-        fresh = [e for e in entries[: src.get("max_items", 15)] if e["url"] not in old]
+        fresh = [e for e in entries[: src.get("max_items", 15)] if e["url"] not in old and e["url"] not in seen]
         print(f"[{src['id']}] {feed_name} 共 {len(entries)} 条, 收前 {src.get('max_items', 15)}, 新 {len(fresh)} 条")
         for e in fresh:
             if limit and len(got) >= limit:
                 break
+            if e["url"] in seen:  # 同一 feed 内同 URL 重复(fresh 一次性算出, 循环里再挡一道)
+                continue
             it = make_item(src, e["url"], e["title"], e["summary"], e["date"], feed_name, author=feed_name)
             if it:
+                seen.add(e["url"])
                 got.append(it)
                 # full=True 的 feed 正文完整必镜像; 其余 feed 的 content 够长也顺手镜像(阮一峰/
                 # Karpathy 等自带全文, 省一次原文页抓取), 不够长的留给 mirror_items 抓原文页
@@ -2095,14 +2106,18 @@ def write_detail_pages(vis, items, lib):
     cache = _load_render_cache()
     old_sigs = cache.get("detail", {})
     new_sigs = {}
-    lsig = _lib_annot_sig(lib)
     for it in vis:
         name = f"{it['id']}.html"
         want.add(name)
         p = DETAIL_DIR / name
         item_repr = json.dumps({k: v for k, v in it.items() if not k.startswith("_")},
                                ensure_ascii=False, sort_keys=True)
-        sig = _sha(RENDER_VER, lsig, item_repr,
+        # 标注只用条目自己的 concepts(annotate_concepts 取 it["concepts"][:N]): 只把这些概念的
+        # 词条/别名/定义纳入签名——新增无关概念不再让全部详情页失效(Bugbot PR#100)。
+        # 条目 concepts 列表本身的增删已被 item_repr 捕获; 这里补捕获它们的定义变化。
+        csig = _sha(*(f"{s}={lib[s].get('term')}|{'/'.join(lib[s].get('aliases') or [])}|{lib[s].get('def')}"
+                      for s in (it.get("concepts") or []) if s in lib))
+        sig = _sha(RENDER_VER, csig, item_repr,
                    _file_sig(CONTENT_DIR / f"{it['id']}.html"), _file_sig(zh_content_path(it["id"])))
         new_sigs[it["id"]] = sig
         if p.exists() and old_sigs.get(it["id"]) == sig:
