@@ -1103,6 +1103,9 @@ def sync_hn(src, old, limit):
         disc = f"https://news.ycombinator.com/item?id={h.get('objectID', '')}"
         url = (h.get("url") or "").strip() or disc  # Ask HN 等无外链帖: url 即讨论页
         if url in old:
+            ex = old[url]  # 文章已被 voices/industry 收录、随后登上 HN → 把讨论链补进已有条目, 不永久丢入口(Bugbot PR#100)
+            if isinstance(ex, dict) and not ex.get("hn"):
+                ex["hn"] = disc
             continue
         if limit and len(got) >= limit:
             break
@@ -1374,8 +1377,11 @@ def ai_enrich(items):
     def _brief_stale(it):  # 明确记为「摘要生成」(brief_full is False)、现在全文镜像到了 → 重做一次。
         # 用 is False(而非 not …)：老条目无此标记时视为已定稿, 不触发批量重刷烧配额(Bugbot PR#100)
         return it.get("brief") and it.get("brief_full") is False and bool(content_text(it["id"]))
+    # title_zh_tried: 英文条目试过一轮但模型没回可用译题就落标记, 不再每轮重进(否则反复改写简报+烧配额, Bugbot PR#100)
     todo = [i for i in visible_items(items) if i["source"] in ENRICH_SOURCES
-            and (not i.get("brief") or (title_is_en(i["title"]) and not i.get("title_zh")) or _brief_stale(i))]
+            and (not i.get("brief")
+                 or (title_is_en(i["title"]) and not i.get("title_zh") and not i.get("title_zh_tried"))
+                 or _brief_stale(i))]
     if not todo:
         return
     if not AI_KEY:
@@ -1412,9 +1418,12 @@ def ai_enrich(items):
                 it["brief_full"] = bool(content_text(it["id"]))  # 记录本次简报是否基于全文, 供 _brief_stale 判重做
                 briefs += 1
             tz = str(v.get("title_zh", "")).strip()
-            if tz and title_is_en(it["title"]):
-                it["title_zh"] = tz[:80]
-                titles += 1
+            if title_is_en(it["title"]):
+                if tz:
+                    it["title_zh"] = tz[:80]
+                    titles += 1
+                else:
+                    it["title_zh_tried"] = True  # 这轮没给译题, 落标记不再无限重试
     print(f"[AI 简报] 新写简报 {briefs} 条, 译题 {titles} 条")
 
 
@@ -1748,9 +1757,10 @@ def concept_rx(c):
     for a in sorted({term, *c.get("aliases", [])}, key=len, reverse=True):
         if not a:
             continue
-        # 护栏: 别名(非 term)若是 ≤2 字纯中文泛词(循环/模型/系统…), 跳过——
-        # 中文别名走无边界子串匹配, 短泛词会把正文常用词误标成概念链(Bugbot PR#100 报的坑)
-        if a != term and re.fullmatch(r"[一-龥]{1,2}", a):
+        # 护栏: ≤2 字纯中文(无论 term 还是 alias, 如 模型/系统/循环)一律跳过——
+        # 中文走无边界子串匹配, 短泛词会把正文常用词误标成概念链(Bugbot PR#100 二三轮)。
+        # 英文短词(RLHF 等)不受影响: 下面按词边界匹配, 不会误伤。
+        if re.fullmatch(r"[一-龥]{1,2}", a):
             continue
         p = re.escape(a)
         if re.fullmatch(r"[\x00-\x7f]+", a):
@@ -2234,6 +2244,8 @@ def main():
         try:
             got, failed = ADAPTERS[src["type"]](src, old, args.limit)
             items.extend(got)
+            for it in got:  # 本轮新收的 URL 也写回去重表, 后续源撞同一链接不再重复入库(Bugbot PR#100)
+                old.setdefault(it["url"], it)
             all_failed.extend(failed)
             status = "ok" if not failed else "warn"
         except Exception as e:  # noqa: BLE001 — 单源整体失败不拖垮其它源
@@ -2277,7 +2289,7 @@ def main():
         p = prev.get(it["url"])
         if not p:
             continue
-        for k in ("ai", "quip", "brief", "brief_full", "title_zh", "concepts", "concepts_full"):
+        for k in ("ai", "quip", "brief", "brief_full", "title_zh", "title_zh_tried", "concepts", "concepts_full", "hn"):
             if k not in it and k in p:
                 it[k] = p[k]
 
