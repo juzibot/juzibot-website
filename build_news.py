@@ -447,18 +447,23 @@ def parse_feed(xml_text):
 CONTENT_DIR = ROOT / "data" / "news-content"  # 全文源的正文镜像库(消毒后的 HTML 片段, 详情页取用)
 
 
-_URL_ATTR_RX = re.compile(r'(href|src)\s*=\s*(["\'])(.*?)\2', re.I)
+# 匹配带双引号/单引号/未加引号三种形式的 href|src(引号内 [^"]* 天然吃换行, 挡折行绕过)
+_URL_ATTR_RX = re.compile(r'(href|src)\s*=\s*(?:"([^"]*)"|\'([^\']*)\'|([^\s"\'>]+))', re.I)
 _IMG_DATA_OK_RX = re.compile(r"data:image/(?:png|jpe?g|gif|webp|bmp)[;,]")
 
 
-def _neutralize_url(m):
-    """href/src 值先解 HTML 实体、去空白/控制字符再判协议——挡住 &#106;avascript: / java&Tab;script:
-    这类实体或空白编码绕过。栅格图 data:image 白名单放行, 其余危险协议改 #(Bugbot PR#100)。"""
-    attr, q, val = m.group(1), m.group(2), m.group(3)
-    norm = re.sub(r"[\s\x00-\x1f]+", "", htmllib.unescape(val)).lower()
-    bad = norm.startswith(("javascript:", "vbscript:")) or (
+def _dangerous_url(val):
+    """链接是否危险: 解 HTML 实体 + 去空白/控制字符后看协议——javascript/vbscript/非白名单 data 都算
+    (挡 &#106;avascript:、java&Tab;script:、大小写、折行等绕过)。栅格图 data:image 放行(Bugbot PR#100)。"""
+    norm = re.sub(r"[\s\x00-\x1f]+", "", htmllib.unescape(val or "")).lower()
+    return norm.startswith(("javascript:", "vbscript:")) or (
         norm.startswith("data:") and not _IMG_DATA_OK_RX.match(norm))
-    return f"{attr}={q}#{q}" if bad else m.group(0)
+
+
+def _neutralize_url(m):
+    attr = m.group(1)
+    val = m.group(2) or m.group(3) or m.group(4) or ""  # 双引号 / 单引号 / 未加引号
+    return f'{attr}="#"' if _dangerous_url(val) else m.group(0)
 
 
 def sanitize_fragment(h):
@@ -517,7 +522,8 @@ def mirror_on(source_id):
 
 
 _last_hit = {}    # 域名 → 上次抓取时刻(镜像限频)
-_page_cache = {}  # 本轮页面缓存: 同页多条目(企微 changelog 全部条目同一页)只抓一次
+_page_cache = {}  # 本轮页面缓存(LRU 有界): 同页多条目(企微 changelog 全部条目同一页)只抓一次
+PAGE_CACHE_MAX = 8  # 缓存页数上限: 单页最大 6MB, 上限 8 页界定内存(≤~48MB), 淘汰最久未用; 镜像轮结束清空
 
 
 def polite_fetch(url):
@@ -649,7 +655,7 @@ def _ser(k, base):
     inner = "".join(_ser(x, base) for x in k["kids"])
     if tag == "a":
         href = at.get("href") or ""
-        if not href or href.startswith(("javascript:", "#")):
+        if not href or href.startswith("#") or _dangerous_url(href):  # data:/vbscript:/js 一并拦(Bugbot PR#100)
             return inner
         return f'<a href="{esc(urljoin(base, href))}" target="_blank" rel="noopener nofollow">{inner}</a>'
     if tag in BLOCK_KEEP:
@@ -929,10 +935,12 @@ def mirror_items(items):
     for it in todo[:MIRROR_MAX_PER_RUN]:
         base = mirror_target(it).split("#", 1)[0]
         try:
-            page = _page_cache.get(base)
+            page = _page_cache.pop(base, None)  # 命中则弹出待重插(LRU 触碰)
             if page is None:
                 page = polite_fetch(base)
-                _page_cache[base] = page
+            _page_cache[base] = page             # 重插到末尾(最近使用)
+            while len(_page_cache) > PAGE_CACHE_MAX:
+                _page_cache.pop(next(iter(_page_cache)))  # 淘汰最久未用, 界定内存(Bugbot PR#100)
             if page.count("�") > max(20, len(page) // 2000):
                 raise ValueError("页面疑似乱码(编码探测失败)")
             body = mirror_body(it, page)
@@ -945,6 +953,7 @@ def mirror_items(items):
             done += 1
         else:
             missed += 1
+    _page_cache.clear()  # 整轮镜像结束释放页面缓存, 不带进后续翻译/概念步骤(Bugbot PR#100)
     print(f"[镜像] 本轮新镜像 {done} 篇" + (f", 退级 {missed} 篇(导读模式, 下轮重试)" if missed else ""))
 
 
