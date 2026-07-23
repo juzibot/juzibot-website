@@ -157,6 +157,10 @@
     /* 结果区 4 列 KPI 单列 */
     #results .cta-stats[style]{grid-template-columns:1fr!important}
   }
+  /* 双列临界带(单列断点980px以上、贴片大负偏移会伸进左列/被 role-hero overflow 裁, Bugbot PR#101) */
+  @media(min-width:981px) and (max-width:1120px){
+    .sp-chip.c1,.sp-chip.c3{right:-2%}.sp-chip.c2,.sp-chip.c5{left:-2%}
+  }
   @media (prefers-reduced-motion:reduce){.sp-badge .pulse,.sp-chip{animation:none}}
 
   /* —— 活体工牌条（6 页通用，前缀 .fleet-*；沿用 site.css 令牌） —— */
