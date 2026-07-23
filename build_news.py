@@ -1649,6 +1649,11 @@ def ai_concepts(items, lib):
                 if s and s in lib and s not in seen:
                     seen.add(s)
                     slugs.append(s)
+            if not slugs and it.get("concepts"):
+                # 重抽全文却抽空(模型漏答/slug 全无效): 不拿空列表覆盖已有挂接, 保留旧概念并封顶
+                # 不再无限重抽(与简报侧 redo-miss 对齐, Bugbot PR#100)。首抽本就空的落 [] 无损失。
+                it["concepts_full"] = bool(content_text(it["id"]))
+                continue
             it["concepts"] = slugs[:CONCEPT_MAX_PER_ITEM]
             it["concepts_full"] = bool(content_text(it["id"]))  # 记录本次是否基于全文, 供 _concepts_stale 判重抽
             tagged += 1
