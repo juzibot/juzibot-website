@@ -34,6 +34,7 @@ jobs:
         with:
           ref: stage-2
           fetch-depth: 0   # 拉全历史: 任务运行期间 stage-2 若有新推送, 浅克隆会让 pull --rebase/push 失败(Bugbot PR#100)
+          lfs: true        # news/img 已迁 Git LFS: 拉真图而非指针, 否则 localize_images 会把指针当已下载的图跳过重下(Bugbot PR#100)
 
       - name: 跑动态管线(增量)
         env:
