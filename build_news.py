@@ -2264,11 +2264,11 @@ def concept_page_shell(title, desc, canonical, inner, ctx_title):
 def concept_html(slug, c, refs, related, lib):
     """单个概念页: 定义 + 提到它的动态反向索引 + 相关概念链。"""
     alias_line = " / ".join(a for a in c.get("aliases", []) if a != c["term"])
-    ref_rows = "\n".join(
+    ref_rows = "\n".join(  # 列表只铺前 30 条(控页面体积), 计数仍用全量 len(refs)(与索引页一致, Bugbot PR#100)
         f'      <div class="cp-item"><time datetime="{esc(it["date"])}">{esc(it["date"])}</time>'
         f'<span class="src s-{esc(it["source"])}">{esc(it["source_name"])}</span>'
         f'<a class="t" href="../p/{it["id"]}.html">{esc(disp_title(it))}</a></div>'
-        for it in refs)
+        for it in refs[:30])
     rel_links = "".join(
         f'<a href="{s}.html"><i class="fa-solid fa-diagram-project"></i>{esc(lib[s]["term"])}</a>'
         for s in related)
@@ -2351,10 +2351,11 @@ def write_concept_pages(lib, vis):
     for slug, c in lib.items():
         name = f"{slug}.html"
         want.add(name)
-        refs = refs_map.get(slug, [])[:30]
+        refs = refs_map.get(slug, [])  # 传全量: concept_html 内部列表切前 30, 计数用全量总数
         related = sorted(related_map.get(slug, {}), key=lambda o: (-related_map[slug][o], o))[:8]
-        # 精确捕获 concept_html 渲染用到的输入: 概念本身 + 每条引用的展示字段 + 相关概念名
-        ref_repr = "|".join(f"{r['id']},{r['date']},{r['source']},{r['source_name']},{disp_title(r)}" for r in refs)
+        # 精确捕获 concept_html 渲染用到的输入: 概念本身 + 全量计数 + 前 30 条引用的展示字段 + 相关概念名
+        ref_repr = f"{len(refs)}|" + "|".join(
+            f"{r['id']},{r['date']},{r['source']},{r['source_name']},{disp_title(r)}" for r in refs[:30])
         rel_repr = "|".join(f"{o}={lib.get(o, {}).get('term')}" for o in related)
         sig = _sha(RENDER_VER, f"{c.get('term')}|{c.get('def')}|{'/'.join(c.get('aliases') or [])}", ref_repr, rel_repr)
         new_sigs[name] = sig
