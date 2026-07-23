@@ -1370,8 +1370,10 @@ def ai_enrich(items):
     """给三方外部源的过筛条目配中文简报(brief); 英文标题的条目额外配中文译题(title_zh)。
     卡片显示中文题+原题小字, 详情页的摘要源用简报当导读。与 ai 判定同款缓存纪律:
     字段随 data/news.json 持久化、每条只做一次, 失败(或缺 key)下次运行自动补。"""
+    def _brief_stale(it):  # 当初用摘要生成、现在全文镜像到了 → 重做一次, 别让简报长期停在摘要质量(Bugbot PR#100)
+        return it.get("brief") and not it.get("brief_full") and bool(content_text(it["id"]))
     todo = [i for i in visible_items(items) if i["source"] in ENRICH_SOURCES
-            and (not i.get("brief") or (title_is_en(i["title"]) and not i.get("title_zh")))]
+            and (not i.get("brief") or (title_is_en(i["title"]) and not i.get("title_zh")) or _brief_stale(i))]
     if not todo:
         return
     if not AI_KEY:
@@ -1405,6 +1407,7 @@ def ai_enrich(items):
             b = str(v.get("brief", "")).strip()
             if b:
                 it["brief"] = b[:140]
+                it["brief_full"] = bool(content_text(it["id"]))  # 记录本次简报是否基于全文, 供 _brief_stale 判重做
                 briefs += 1
             tz = str(v.get("title_zh", "")).strip()
             if tz and title_is_en(it["title"]):
@@ -1551,7 +1554,9 @@ def ai_call_obj(prompt, temperature=0):
 def ai_concepts(items, lib):
     """对每篇上站文章抽核心概念: 库里已有的只引用(返回 slug), 新概念带原创定义入库。
     条目 concepts 字段是缓存标记——抽过(哪怕抽出 0 个)不再重抽; 批次失败该批下轮重试。"""
-    todo = [i for i in visible_items(items) if "concepts" not in i]
+    def _concepts_stale(it):  # 当初用摘要抽的、现在全文到了 → 重抽一次(Bugbot PR#100)
+        return "concepts" in it and not it.get("concepts_full") and bool(content_text(it["id"]))
+    todo = [i for i in visible_items(items) if "concepts" not in i or _concepts_stale(i)]
     if not todo:
         return
     if not AI_KEY:
@@ -1621,6 +1626,7 @@ def ai_concepts(items, lib):
                     seen.add(s)
                     slugs.append(s)
             it["concepts"] = slugs[:CONCEPT_MAX_PER_ITEM]
+            it["concepts_full"] = bool(content_text(it["id"]))  # 记录本次是否基于全文, 供 _concepts_stale 判重抽
             tagged += 1
             reused += len(slugs)
     print(f"[AI 概念] 新抽 {tagged} 篇(挂接 {reused} 次), 新增概念 {born} 个, 概念库共 {len(lib)} 个")
@@ -1735,8 +1741,13 @@ def concept_rx(c):
     英文别名要求词边界(RLHF 不匹配 xRLHFx, 但「RLHF训练」能中——汉字不算词字符);
     中文别名直接子串匹配。"""
     pats = []
-    for a in sorted({c["term"], *c.get("aliases", [])}, key=len, reverse=True):
+    term = c["term"]
+    for a in sorted({term, *c.get("aliases", [])}, key=len, reverse=True):
         if not a:
+            continue
+        # 护栏: 别名(非 term)若是 ≤2 字纯中文泛词(循环/模型/系统…), 跳过——
+        # 中文别名走无边界子串匹配, 短泛词会把正文常用词误标成概念链(Bugbot PR#100 报的坑)
+        if a != term and re.fullmatch(r"[一-龥]{1,2}", a):
             continue
         p = re.escape(a)
         if re.fullmatch(r"[\x00-\x7f]+", a):
@@ -1964,9 +1975,13 @@ def write_detail_pages(vis, items, lib):
     """过筛条目逐条落静态详情页; 内容没变的页面不重写(幂等, mtime 稳定),
     已下线条目的页面与孤儿正文镜像顺手清掉(部署端 git clean 同步删除)。"""
     DETAIL_DIR.mkdir(parents=True, exist_ok=True)
-    want = {f"{it['id']}.html": detail_html(it, lib) for it in vis}
+    # 逐条生成即写, 不先攒全量 HTML 字典——上站条目多时峰值内存不再随页数堆高(Bugbot PR#100)
+    want = set()
     written = 0
-    for name, html in want.items():
+    for it in vis:
+        name = f"{it['id']}.html"
+        want.add(name)
+        html = detail_html(it, lib)
         p = DETAIL_DIR / name
         if not p.exists() or p.read_text(encoding="utf-8") != html:
             p.write_text(html, encoding="utf-8")
@@ -2129,16 +2144,21 @@ def write_concept_pages(lib, vis):
             for o in cs:
                 if o != s:
                     related_map.setdefault(s, {})[o] = related_map.get(s, {}).get(o, 0) + 1
-    want = {"index.html": concept_index_html(lib, refs_map)}
-    for slug, c in lib.items():
-        related = sorted(related_map.get(slug, {}), key=lambda o: (-related_map[slug][o], o))[:8]
-        want[f"{slug}.html"] = concept_html(slug, c, refs_map.get(slug, [])[:30], related, lib)
-    written = 0
-    for name, html in want.items():
+    # 逐页生成即写, 不先攒全量字典(Bugbot PR#100 内存优化)
+    def _emit(name, html):
+        nonlocal written
         p = CONCEPT_DIR / name
         if not p.exists() or p.read_text(encoding="utf-8") != html:
             p.write_text(html, encoding="utf-8")
             written += 1
+    want = {"index.html"}
+    written = 0
+    _emit("index.html", concept_index_html(lib, refs_map))
+    for slug, c in lib.items():
+        name = f"{slug}.html"
+        want.add(name)
+        related = sorted(related_map.get(slug, {}), key=lambda o: (-related_map[slug][o], o))[:8]
+        _emit(name, concept_html(slug, c, refs_map.get(slug, [])[:30], related, lib))
     stale = [p for p in CONCEPT_DIR.glob("*.html") if p.name not in want]
     for p in stale:
         p.unlink()
