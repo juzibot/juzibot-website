@@ -308,6 +308,8 @@ def norm_date(raw):
 def make_item(src, url, title, summary, date, category, tags=None, author=None):
     if not (url and title and date):
         return None
+    if not re.match(r"https?://", url.strip(), re.I):  # 外链只收 http(s), 源头挡 javascript:/data: 等危险协议(Bugbot PR#100)
+        return None
     # 日期在唯一汇聚点统一补零(manual 源手填 2026/7/5 之类也兜住), 保证下游排序与 month_label 安全
     dm = re.search(r"(\d{4})[-/](\d{1,2})[-/](\d{1,2})", str(date))
     date = f"{dm.group(1)}-{int(dm.group(2)):02d}-{int(dm.group(3)):02d}" if dm else str(date)
@@ -471,7 +473,7 @@ def sanitize_fragment(h):
     h = re.sub(r"<!--.*?-->", "", h or "", flags=re.S)
     h = re.sub(r"<(script|style|iframe|object|embed|form|frameset|noscript)\b[^>]*>.*?</\1\s*>", "", h, flags=re.S | re.I)
     h = re.sub(r"<(script|style|iframe|object|embed|form|link|meta|base)\b[^>]*/?>", "", h, flags=re.I)
-    h = re.sub(r"\s+on[a-z]+\s*=\s*(\"[^\"]*\"|'[^']*'|[^\s>]+)", "", h, flags=re.I)
+    h = re.sub(r"[\s/]+on[a-z]+\s*=\s*(\"[^\"]*\"|'[^']*'|[^\s>]+)", " ", h, flags=re.I)  # [\s/]: 挡 <img/onerror=> 无空白写法(Bugbot PR#100)
     # 危险协议链接消毒: 解实体+去空白后判 javascript/vbscript/非白名单 data(挡实体编码绕过, Bugbot PR#100)
     h = _URL_ATTR_RX.sub(_neutralize_url, h)
     return h.strip()
@@ -805,12 +807,13 @@ def img_render(h):
     存储层的 on* 属性): 懒加载 + no-referrer 破图床防盗链 + 挂了 onerror 隐藏不留破图标。"""
     def fix(m):
         tag = m.group(0)
+        low = tag.lower()  # 大小写不敏感判重: 存量若残留 onError= 之类不再重复注入(Bugbot PR#100)
         add = ""
-        if "loading=" not in tag:
+        if "loading=" not in low:
             add += ' loading="lazy"'
-        if "referrerpolicy=" not in tag:
+        if "referrerpolicy=" not in low:
             add += ' referrerpolicy="no-referrer"'
-        if "onerror=" not in tag:
+        if "onerror=" not in low:
             add += " onerror=\"this.style.display='none'\""
         return ("<img" + add + tag[4:]) if add else tag
     return re.sub(r"<img\b[^>]*/?>", fix, h)
@@ -1760,6 +1763,13 @@ def esc(s):
     return htmllib.escape(str(s if s is not None else ""), quote=True)
 
 
+def safe_href(url):
+    """外链 href 安全化: 非 http(s)(javascript:/data: 等)一律回 #, 再 HTML 转义。
+    make_item 已在源头拒非 http(s), 这里覆盖存量条目与渲染层, 防御纵深(Bugbot PR#100)。"""
+    url = str(url or "").strip()
+    return esc(url) if re.match(r"https?://", url, re.I) else "#"
+
+
 def disp_title(it):
     """展示标题: 英文条目有译题用中文题, 原题降为小字。"""
     return it.get("title_zh") or it["title"]
@@ -1791,7 +1801,7 @@ def card_html(it):
         f'<span class="nc-src">{esc(it["author"])}</span>'
         '<span class="nc-actions">'
         f'<button type="button" class="nc-ask" data-t="{esc(disp_title(it))}"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>'
-        f'<a class="nc-read" href="{esc(it["url"])}" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>'
+        f'<a class="nc-read" href="{safe_href(it["url"])}" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>'
         "</span></div></article>"
     )
 
@@ -1826,7 +1836,7 @@ def feed_item_html(it):
         + (f'<div class="fd-tags">{tags}</div>' if tags else "")
         + '<div class="fd-act">'
         f'<button type="button" class="fd-ask" data-t="{esc(disp_title(it))}"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>'
-        f'<a class="fd-link" href="{esc(it["url"])}" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i>读原文</a>'
+        f'<a class="fd-link" href="{safe_href(it["url"])}" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i>读原文</a>'
         f'<button type="button" class="fd-copy" data-u="{esc(it["url"])}"><i class="fa-solid fa-link"></i>复制链接</button>'
         '<span class="sp"></span>'
         '<button type="button" class="fd-exp" aria-expanded="false">展开<i class="fa-solid fa-chevron-down"></i></button>'
@@ -2012,13 +2022,13 @@ def detail_html(it, lib):
         home = "李佳芮的博客" if it["source"] == "rui-blog" else f"微信公众号「{it['category'] or '句子互动'}」"
         verb = "本页为官网收录版" if full else "本页为内容导读"
         notice = (f'<i class="fa-solid fa-circle-info"></i><span>句子互动自家内容，首发于{esc(home)}，{verb} · '
-                  f'<a href="{esc(it["url"])}" target="_blank" rel="noopener">看原发布</a></span>')
+                  f'<a href="{safe_href(it["url"])}" target="_blank" rel="noopener">看原发布</a></span>')
     elif full:
         notice = (f'<i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（{esc(origin)}）所有 · '
-                  f'<a href="{esc(it["url"])}" target="_blank" rel="noopener">阅读原文</a></span>')
+                  f'<a href="{safe_href(it["url"])}" target="_blank" rel="noopener">阅读原文</a></span>')
     else:
         notice = (f'<i class="fa-solid fa-circle-info"></i><span>本页为内容导读，只收录简报与摘录，版权归原作者（{esc(origin)}）所有 · '
-                  f'<a href="{esc(it["url"])}" target="_blank" rel="noopener">全文请读原文</a></span>')
+                  f'<a href="{safe_href(it["url"])}" target="_blank" rel="noopener">全文请读原文</a></span>')
     # own+全文镜像 → 自家原创允许收录, canonical 指自身; 其余(外部转载/导读、own 镜像未成的薄页)
     # 维持 noindex + canonical 指原文
     if own and full:
@@ -2044,7 +2054,7 @@ var en=document.getElementById('dpBodyOrig'),zh=document.getElementById('dpBodyZ
 b.addEventListener('click',function(){var on=zh.hidden;zh.hidden=!on;en.hidden=on;
 b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';});})();
 </script>""" if zh else "")
-    hn_btn = (f'<a class="dp-btn sec" href="{esc(it["hn"])}" target="_blank" rel="noopener">'
+    hn_btn = (f'<a class="dp-btn sec" href="{safe_href(it["hn"])}" target="_blank" rel="noopener">'
               '<i class="fa-brands fa-hacker-news"></i>HN 讨论</a>' if it.get("hn") else "")
     return f"""<!DOCTYPE html>
 <html lang="zh-CN">
@@ -2078,7 +2088,7 @@ b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';})
     {f'<div class="dp-brief"><b>简报</b>{esc(it["brief"])}</div>' if it.get("brief") else ""}
     {body}
     <div class="dp-actions">
-      <a class="dp-btn pri" href="{esc(it["url"])}" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      <a class="dp-btn pri" href="{safe_href(it["url"])}" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
       {hn_btn}
       <button type="button" class="dp-btn sec" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
       <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
