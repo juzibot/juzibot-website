@@ -134,6 +134,9 @@
   .sec-top .sub{margin-left:auto;text-align:justify;text-justify:inter-ideograph;text-wrap:balance;max-width:42ch;font-size:14px;color:var(--ink-3)}
   /* fde-how 副文：密实两端对齐 */
   #fde-how .sec-top .sub{max-width:66ch}
+  /* FDE 是什么 定义段：破折号另起一行，尾部匀成两行（共三行，末行不孤） */
+  .sec-head .sub.fde-def{text-wrap:balance;max-width:50ch}
+  @media(max-width:760px){.sec-head .sub.fde-def .db{display:none}}
 
   /* —— Echo/Delta 双人卡：渐变底 + 图标 + 代号右对齐胶囊 + 顶部彩条 —— */
   .fde-duo{max-width:1040px;gap:clamp(16px,2vw,24px)}
@@ -153,7 +156,7 @@
   .duo-hd h4{font-size:18px;font-weight:820;letter-spacing:-.015em}
   .duo-card .duo-tag{margin:0 0 0 auto;font-size:10.5px;letter-spacing:.08em;line-height:1.5;
     padding:3px 10px;border-radius:999px;border:1px solid var(--line);background:#fff}
-  .fde-duo-note{max-width:760px;margin-top:clamp(28px,3.4vw,40px);padding-top:18px;border-top:1px dashed var(--line)}
+  .fde-duo-note{max-width:none;white-space:nowrap;margin-top:clamp(28px,3.4vw,40px);padding-top:18px;border-top:1px dashed var(--line)}
 
   @media(max-width:900px){
     /* 多列分栏 → 单列：对照表行 / 双人卡 / 高价值场景双栏（含 rev 顺序复位，文字在前） */
@@ -179,7 +182,7 @@
     /* —— 双人卡 / 居中引用 —— */
     .duo-card{padding:22px 20px}
     .duo-card p{font-size:13.5px}
-    .fde-duo-note{font-size:13.5px;max-width:none}
+    .fde-duo-note{font-size:13.5px;max-width:none;white-space:normal}
     .fde-cite{font-size:14px;max-width:none}
 
     /* —— 高价值场景选择台：单列、收 padding，触控区 ≥44px —— */
@@ -221,7 +224,7 @@
       <div class="sec-head rv">
         <span class="sec-eyebrow">FDE 是什么</span>
         <h2><span class="nw">把工程师派到客户现场，</span><span class="nw">对结果负责</span></h2>
-        <p class="sub">FDE，Forward Deployed Engineer（前线部署工程师）——前移到客户业务现场的工程师。不止于交付软件，而是与客户一起理解业务，让 AI 真正在其中产出结果。</p>
+        <p class="sub fde-def">FDE，Forward Deployed Engineer（前线部署工程师）<br class="db">——前移到客户业务现场的工程师。不止于交付软件，而是与客户一起理解业务，让 AI 真正在其中产出结果。</p>
       </div>
       <div class="fde-cmp rv rv-d1" style="margin:0 auto">
         <div class="cmp-row">
