@@ -105,6 +105,22 @@ jobs:
             || { echo "::error::拉取服务器状态失败——若从未初始化, 先手动跑一次 seed(Run workflow 勾 seed)"; exit 1; }
           rsync -az -e "$SSH" "$USER@$HOST:$NEWS_DIR/news/" news/ || true  # 产物缺失只影响增量跳过, 可重建
 
+      - name: 校验拉回状态完整(空/残缺则中止, 防 --delete 清空服务器 + 重烧 API)
+        run: |
+          python3 - <<'PY'
+          import json, pathlib, sys
+          nj = pathlib.Path("data/news.json")
+          if not nj.exists():
+              sys.exit("::error::data/news.json 缺失——服务器状态残缺, 中止(未初始化就先跑 seed)")
+          try:
+              items = json.loads(nj.read_text(encoding="utf-8")).get("items", [])
+          except Exception as e:  # noqa: BLE001
+              sys.exit(f"::error::data/news.json 解析失败({e}), 中止")
+          if not items:
+              sys.exit("::error::news.json 无存量条目(疑似空状态)——中止, 防止随后 --delete 清空服务器与重烧 AI 配额")
+          print(f"状态校验通过: 存量 {len(items)} 条")
+          PY
+
       - name: 跑动态管线(增量)
         env:
           ZHIPU_API_KEY: ${{ secrets.ZHIPU_API_KEY }}
@@ -116,7 +132,12 @@ jobs:
           USER: ${{ secrets.USER }}
         run: |
           SSH="ssh -i ~/.ssh/id"
-          rsync -az --delete -e "$SSH" news/ "$USER@$HOST:$NEWS_DIR/news/"
+          # 页面(p/c)由管线从 data/ 重建, --delete 清下线页; 但图片一次性下载不可重下
+          # (localize 见正文里 ../img 相对路径即跳过), 故 img/ 不 --delete: 本地不全时也绝不
+          # 清掉服务器已有真图(Bugbot PR#100)。孤儿图占用极小, 需要时另开清理不走这条热路径。
+          rsync -az --delete -e "$SSH" news/p/ "$USER@$HOST:$NEWS_DIR/news/p/"
+          rsync -az --delete -e "$SSH" news/c/ "$USER@$HOST:$NEWS_DIR/news/c/"
+          rsync -az           -e "$SSH" news/img/ "$USER@$HOST:$NEWS_DIR/news/img/"
           rsync -az --delete -e "$SSH" data/ "$USER@$HOST:$NEWS_DIR/data/"
           rsync -az -e "$SSH" news.html news-c.html "$USER@$HOST:$NEWS_DIR/"
           echo "同步完成 → $NEWS_DIR (nginx 对外路由见 deploy/nginx-news.conf)"

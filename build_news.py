@@ -1615,8 +1615,10 @@ def ai_translate(items):
 CONCEPTS_FILE = ROOT / "data" / "concepts.json"
 CONCEPT_DIR = ROOT / "news" / "c"
 CONCEPT_BATCH = 10        # 每批文章数: 新概念定义输出较长, 批次取小防截断
+CONCEPT_LIB_MAX = 500     # 塞进 prompt 的概念库上限: 库只增不删, 全量塞会让 prompt 无限膨胀触上下文上限/整批失败(Bugbot PR#100)
 CONCEPT_MAX_PER_ITEM = 5  # 每篇最多挂 5 个概念(详情页标注同此上限)
-GENERIC_SLUGS = {"ai", "artificial-intelligence", "tech", "technology", "software", "internet"}  # 泛词兜底拦截
+GENERIC_SLUGS = {"ai", "artificial-intelligence", "tech", "technology", "software", "internet",
+                 "index"}  # 泛词兜底拦截 + 保留名 index(概念页 news/c/<slug>.html 会覆盖概念索引 index.html, Bugbot PR#100)
 
 
 def load_concepts():
@@ -1681,12 +1683,20 @@ def ai_concepts(items, lib):
         return
     today = datetime.now().strftime("%Y-%m-%d")
     tagged = born = reused = 0
+    # 概念被引用次数(热门概念最可能复现, 优先塞进 prompt 供去重); 库超上限时只保留热门+较新的一批,
+    # 冷门老概念让出名额, 避免 prompt 无限膨胀(Bugbot PR#100)。
+    pop = {}
+    for it in items:
+        for s in (it.get("concepts") or []):
+            pop[s] = pop.get(s, 0) + 1
     for i in range(0, len(todo), CONCEPT_BATCH):
         batch = todo[i:i + CONCEPT_BATCH]
         entries = [{"id": it["id"], "title": it["title"],
                     "body": (content_text(it["id"]) or it.get("brief") or it["summary"])[:1500]} for it in batch]
-        known = "\n".join(f"{slug} = {c['term']}" + (f"（{'/'.join(c['aliases'][:4])}）" if c.get("aliases") else "")
-                          for slug, c in sorted(lib.items()))
+        lib_keys = sorted(lib, key=lambda s: (pop.get(s, 0), lib[s].get("at", "")), reverse=True)[:CONCEPT_LIB_MAX]
+        known = "\n".join(f"{slug} = {lib[slug]['term']}"
+                          + (f"（{'/'.join(lib[slug]['aliases'][:4])}）" if lib[slug].get("aliases") else "")
+                          for slug in sorted(lib_keys))
         prompt = (
             "句子互动官网动态页在给聚合内容建「概念索引」。对下面每篇文章, 从正文与标题里抽出 2~5 个"
             "真正承载理解门槛的核心概念(技术/行业术语, 如 RLHF、上下文窗口、多智能体编排)。规则:\n"
