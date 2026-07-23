@@ -1144,6 +1144,7 @@ def hn_rescue(items):
             n += 1
     if n:
         print(f"[HN 救援] {n} 条被别源筛掉但登上 HN 的条目归 HN 源, 交 hn 规则重判")
+    return n
 
 
 # ---------------- adapter: qisi-list(齐思 SEO 列表页) ----------------
@@ -2360,9 +2361,14 @@ def main():
             if k not in it and k in p:
                 it[k] = p[k]
 
-    hn_rescue(items)  # 继承后、判定前: 被别源筛掉但登上 HN 的条目归 HN 源重判(--full 也生效, Bugbot PR#100)
     lib = load_concepts()
     ai_screen(items)
+    # 救援放在判定之后再补一次判定: 覆盖「本轮刚被别源判 keep=false、又带 hn 讨论链」的条目——
+    # 若放判定前, 这些当轮新判掉的帖当轮救不到、要等下轮 cron(约 6h)才上站(Bugbot PR#100)。
+    # ai_screen 幂等(只判无 ai 字段的), 救援 pop 掉 ai 后第二趟只重判被救援的那几条, 无死循环
+    # (救援后 source=hn 不会再被救), 没救到任何条目时第二趟 todo 为空直接早退。
+    if hn_rescue(items):
+        ai_screen(items)
     mirror_items(items)  # 全源全文镜像先于简报/翻译/概念抽取——镜像正文是它们的首选输入
     localize_own_images(items)  # own 源配图本地化(含旧镜像相对 src 归正), 在详情页生成前
     ai_quip(items)
