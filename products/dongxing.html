@@ -10,6 +10,9 @@
 <link rel="stylesheet" href="../assets/site.css" />
 <style>
   /* scoped · 仅用 site.css 既有变量，承接首页配色，不引入异色 */
+  /* 标题整段不断行、只在短语之间断（.sec-top h2 有 text-wrap:balance，会平衡两行）；极窄屏放开 */
+  .nw{white-space:nowrap}
+  @media(max-width:420px){.nw{white-space:normal}}
   /* —— 产品页头：沿用 .hero 的浅色径向底，承接面包屑 + KPI —— */
   .ph{position:relative;overflow:hidden;padding:clamp(104px,13vh,150px) var(--gut) clamp(48px,6vw,76px);
     background:radial-gradient(1100px 540px at 82% 4%,var(--blue-100),transparent 60%),
@@ -140,7 +143,7 @@
       <div class="sec-top rv">
         <div>
           <span class="sec-eyebrow">知识工程</span>
-          <h2>把散落的知识，炼成 <span class="hl"><span>AI 答得准的资产</span></span>。</h2>
+          <h2><span class="nw">把散落的知识，炼成</span> <span class="nw"><span class="hl"><span>AI 答得准的资产</span></span>。</span></h2>
         </div>
         <p class="sub">很多客户以为把知识库直接接进 AI 就行，结果命中率反而更低、答得更乱。问题不在 AI，在知识没被整理过。这件事叫知识工程——句子懂行用下面四步，把散乱的知识炼成 AI 真正用得上的资产。</p>
       </div>
