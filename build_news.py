@@ -1103,21 +1103,12 @@ def sync_hn(src, old, limit):
         disc = f"https://news.ycombinator.com/item?id={h.get('objectID', '')}"
         url = (h.get("url") or "").strip() or disc  # Ask HN 等无外链帖: url 即讨论页
         if url in old:
-            ex = old[url]  # 文章已被 voices/industry 收录、随后登上 HN → 把讨论链补进已有条目, 不永久丢入口(Bugbot PR#100)
-            if isinstance(ex, dict):
-                if not ex.get("hn"):
-                    ex["hn"] = disc
-                if ex.get("ai", {}).get("keep") is False:
-                    # 被别的源筛掉(keep=false)但登上 HN → 归到 HN 源并清旧筛选结果,
-                    # 交 ai_screen 用 hn 规则重判, 别让 HN 值得的帖子被别源规则永久隐身(Bugbot PR#100)
-                    # 展示字段(源名/署名/二级分类)一并改成 HN 源约定, 与 make_item 新建的 HN 条目对齐;
-                    # 否则卡片仍挂旧源署名与二级分类徽章, 污染 HN 下的分类筛选(Bugbot PR#100)。
-                    ex["source"] = src["id"]
-                    ex["source_name"] = src["name"]
-                    ex["author"] = src["author"]
-                    ex["category"] = src.get("default_category", "")
-                    ex.pop("ai", None)
-                    ex.pop("quip", None)  # 锐评是行业源特产, 归 HN 后不该续挂
+            # 文章已被 voices/industry 收录、随后登上 HN → 把讨论链补进已有条目, 不永久丢入口(Bugbot PR#100)。
+            # 归源救援(被别源筛掉但登上 HN 的条目改挂 HN 源重判)不在这里做: --full 时 sync 阶段
+            # ai 判定尚未算出, 只能等继承后由 hn_rescue 统一处理(Bugbot PR#100)。这里只留 hn 讨论链标记。
+            ex = old[url]
+            if isinstance(ex, dict) and not ex.get("hn"):
+                ex["hn"] = disc
             continue
         if limit and len(got) >= limit:
             break
@@ -1128,6 +1119,31 @@ def sync_hn(src, old, limit):
             got.append(it)
     print(f"[{src['id']}] 首页 {len(hits)} 帖(≥{src['min_points']} 分), 新收 {len(got)} 条")
     return got, []
+
+
+def hn_rescue(items):
+    """曾登上 HN 首页(带 hn 讨论链)但被原源判 keep=false 的条目, 归到 HN 源交 hn 规则重判。
+    独立成「sync 之后、ai_screen 之前」的一趟: --full 时 sync 阶段判定尚未算出、URL 又先被原源
+    认领(source 停在原源, 同源继承把 keep=false 写回), 救援放在 sync_hn 内根本触发不了;
+    继承之后 ai 判定已就位, 在这里统一按 hn 字段判归属才两种模式都生效(Bugbot PR#100)。
+    展示字段(源名/署名/二级分类)一并改成 HN 源约定, 与 make_item 新建的 HN 条目对齐, 清掉
+    别源锐评; 清掉旧 ai 让 ai_screen 用 hn 规则重判。"""
+    hn = next((s for s in SOURCES if s["id"] == "hn"), None)
+    if not hn:
+        return
+    n = 0
+    for it in items:
+        if (it.get("hn") and it.get("source") != hn["id"]
+                and it.get("ai", {}).get("keep") is False):
+            it["source"] = hn["id"]
+            it["source_name"] = hn["name"]
+            it["author"] = hn["author"]
+            it["category"] = hn.get("default_category", "")
+            it.pop("ai", None)
+            it.pop("quip", None)
+            n += 1
+    if n:
+        print(f"[HN 救援] {n} 条被别源筛掉但登上 HN 的条目归 HN 源, 交 hn 规则重判")
 
 
 # ---------------- adapter: qisi-list(齐思 SEO 列表页) ----------------
@@ -1333,6 +1349,14 @@ def visible_items(items):
 QUIP_SOURCES = {"industry"}  # 齐思式加工层只做三方内容; 自家内容(博客/公众号/产品)不自评
 
 
+def json_str(d, k):
+    """从模型 JSON 里安全取字符串字段: null/数字/其它非字符串一律当空。
+    直接 str(d.get(k, "")) 会把 JSON null 落成字面量 "None" 写进 brief/title_zh/quip/term
+    并显示出来(Bugbot PR#100), 故只认真正的字符串。"""
+    v = d.get(k)
+    return v.strip() if isinstance(v, str) else ""
+
+
 def ai_quip(items):
     """给过筛的三方条目各写一句站在句子互动视角的短评(对标齐思的加工层, 口吻更克制)。
     结果落条目 quip 字段随 data/news.json 持久化, 每条只写一次; 失败下次运行补。"""
@@ -1363,7 +1387,7 @@ def ai_quip(items):
         except Exception as e:  # noqa: BLE001 — 锐评是增强层, 失败不影响上站
             print(f"  [警告] 锐评批次失败({e}), 该批 {len(batch)} 条下次重试")
             continue
-        qmap = {v["id"]: str(v.get("quip", "")).strip() for v in out if isinstance(v, dict) and v.get("id")}
+        qmap = {v["id"]: json_str(v, "quip") for v in out if isinstance(v, dict) and v.get("id")}
         for it in batch:
             q = qmap.get(it["id"], "")
             if q:
@@ -1424,7 +1448,7 @@ def ai_enrich(items):
             has_full = bool(content_text(it["id"]))
             redo = bool(it.get("brief"))  # 已有简报=本次是 stale 重做(非首抽)
             v = emap.get(it["id"])
-            b = str(v.get("brief", "")).strip() if isinstance(v, dict) else ""
+            b = json_str(v, "brief") if isinstance(v, dict) else ""
             if b:
                 it["brief"] = b[:140]
                 it["brief_full"] = has_full  # 记录本次简报是否基于全文, 供 _brief_stale 判重做
@@ -1433,7 +1457,7 @@ def ai_enrich(items):
                 # 重做但模型漏答/给空简报: 已用全文试过, 保留旧简报并封顶标记, 不再每轮无限重做烧配额(Bugbot PR#100)
                 it["brief_full"] = True
             if title_is_en(it["title"]):
-                tz = str(v.get("title_zh", "")).strip() if isinstance(v, dict) else ""
+                tz = json_str(v, "title_zh") if isinstance(v, dict) else ""
                 if tz:
                     it["title_zh"] = tz[:80]
                     titles += 1
@@ -1444,6 +1468,8 @@ def ai_enrich(items):
 
 TRANS_MAX_PER_RUN = 8    # 每轮最多整篇翻译数: 防 cron 单轮跑太久, 积压靠增量缓存几轮清完
 TRANS_CHUNK = 2800       # 分段目标字符数(按块边界切, 单块超长时该段可超)
+TRANS_MAX_FAIL = 3       # 同一篇连续翻译失败上限: 超过就不再占用每轮名额(容忍瞬时失败重试几轮,
+                         # 但烂篇/长期抽不出中文的不能每轮霸占 8 个名额把后续英文全文饿死, Bugbot PR#100)
 
 
 def zh_content_path(item_id):
@@ -1463,12 +1489,20 @@ def ai_translate(items):
     todo = [i for i in visible_items(items)
             if title_is_en(i["title"]) and mirror_on(i["source"])
             and (CONTENT_DIR / f"{i['id']}.html").exists()
-            and not zh_content_path(i["id"]).exists()]
+            and not zh_content_path(i["id"]).exists()
+            and i.get("trans_fail", 0) < TRANS_MAX_FAIL]
     if not todo:
         return
     if not AI_KEY:
         print(f"[警告] 拿不到智谱 API key, {len(todo)} 篇全文翻译暂缺")
         return
+    benched = sum(1 for i in visible_items(items)
+                  if title_is_en(i["title"]) and mirror_on(i["source"])
+                  and (CONTENT_DIR / f"{i['id']}.html").exists()
+                  and not zh_content_path(i["id"]).exists()
+                  and i.get("trans_fail", 0) >= TRANS_MAX_FAIL)
+    if benched:
+        print(f"[AI 翻译] {benched} 篇连续失败达 {TRANS_MAX_FAIL} 次, 暂不再试(维持简报模式), 让出名额")
     if len(todo) > TRANS_MAX_PER_RUN:
         print(f"[AI 翻译] 待译 {len(todo)} 篇, 本轮只译 {TRANS_MAX_PER_RUN} 篇, 其余下轮接着译")
     done = 0
@@ -1507,8 +1541,11 @@ def ai_translate(items):
         joined = "\n".join(out)
         if ok and CJK_RE.search(joined):  # 整篇必须真的翻出了中文(逐段验会误伤纯代码段)
             zh_content_path(it["id"]).write_text(sanitize_fragment(joined), encoding="utf-8")
+            it.pop("trans_fail", None)  # 译成清计数
             done += 1
             print(f"  [翻译] {it['id']} {(it.get('title_zh') or it['title'])[:36]} ({len(chunks)} 段)")
+        else:  # 分段失败/输出过短/整篇无中文: 计一次失败, 到上限后让出名额不再霸占
+            it["trans_fail"] = it.get("trans_fail", 0) + 1
     print(f"[AI 翻译] 本轮译成 {done} 篇")
 
 
@@ -1625,9 +1662,9 @@ def ai_concepts(items, lib):
         for c in out.get("new") or []:
             if not isinstance(c, dict):
                 continue
-            raw_slug, term = slug_norm(c.get("slug")), str(c.get("term", "")).strip()
-            aliases = [str(a).strip() for a in (c.get("aliases") or []) if str(a).strip()][:6]
-            definition = str(c.get("def", "")).strip()
+            raw_slug, term = slug_norm(c.get("slug")), json_str(c, "term")
+            aliases = [a.strip() for a in (c.get("aliases") or []) if isinstance(a, str) and a.strip()][:6]
+            definition = json_str(c, "def")
             if not raw_slug or raw_slug in GENERIC_SLUGS or not term:
                 continue
             hit = amap.get(alias_key(term)) or next((amap[k] for a in aliases if (k := alias_key(a)) in amap), None)
@@ -2307,22 +2344,23 @@ def main():
         if it["source"] == "industry" and it.get("category") == "行业动态":
             it["category"] = "36氪"
 
-    # AI 加工结果沿用: --full 重抓回来的同 URL 条目继承旧判定/锐评/简报/译题/概念, 不重复花判定成本。
-    # 但 ai(去留判定)与 quip(锐评)是按源规则产出的——同一 URL 换了源(如曾被行业源判 keep=false,
-    # 本轮作为 HN 新条目入库)必须交给新源规则重判/重产, 不跨源继承旧结果, 否则会把旧否决写回、
-    # 跳过 ai_screen 的 hn 规则重判导致条目被错误隐藏(Bugbot PR#100)。brief/title_zh/concepts/hn
-    # 跟着 URL 内容走, 换源仍有效, 照常继承。
+    # AI 加工结果沿用: --full 重抓回来的同 URL 条目继承旧判定/锐评/简报/译题/概念/翻译失败计数,
+    # 不重复花判定成本。但 ai(去留判定)与 quip(锐评)是按源规则产出的——同一 URL 若换了源(文章从
+    # 一个源迁到另一个源), 旧判定按旧源规则得来、不该跨源沿用, 交新源规则重判/重产;
+    # brief/title_zh/concepts/hn/trans_fail 跟着 URL 内容走, 换源仍有效, 照常继承。
     for it in items:
         p = prev.get(it["url"])
         if not p:
             continue
         same_src = p.get("source") == it.get("source")
-        for k in ("ai", "quip", "brief", "brief_full", "title_zh", "title_zh_tried", "concepts", "concepts_full", "hn"):
+        for k in ("ai", "quip", "brief", "brief_full", "title_zh", "title_zh_tried",
+                  "concepts", "concepts_full", "hn", "trans_fail"):
             if k in ("ai", "quip") and not same_src:
                 continue
             if k not in it and k in p:
                 it[k] = p[k]
 
+    hn_rescue(items)  # 继承后、判定前: 被别源筛掉但登上 HN 的条目归 HN 源重判(--full 也生效, Bugbot PR#100)
     lib = load_concepts()
     ai_screen(items)
     mirror_items(items)  # 全源全文镜像先于简报/翻译/概念抽取——镜像正文是它们的首选输入
