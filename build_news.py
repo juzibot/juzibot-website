@@ -1110,8 +1110,14 @@ def sync_hn(src, old, limit):
                 if ex.get("ai", {}).get("keep") is False:
                     # 被别的源筛掉(keep=false)但登上 HN → 归到 HN 源并清旧筛选结果,
                     # 交 ai_screen 用 hn 规则重判, 别让 HN 值得的帖子被别源规则永久隐身(Bugbot PR#100)
+                    # 展示字段(源名/署名/二级分类)一并改成 HN 源约定, 与 make_item 新建的 HN 条目对齐;
+                    # 否则卡片仍挂旧源署名与二级分类徽章, 污染 HN 下的分类筛选(Bugbot PR#100)。
                     ex["source"] = src["id"]
+                    ex["source_name"] = src["name"]
+                    ex["author"] = src["author"]
+                    ex["category"] = src.get("default_category", "")
                     ex.pop("ai", None)
+                    ex.pop("quip", None)  # 锐评是行业源特产, 归 HN 后不该续挂
             continue
         if limit and len(got) >= limit:
             break
@@ -2301,12 +2307,19 @@ def main():
         if it["source"] == "industry" and it.get("category") == "行业动态":
             it["category"] = "36氪"
 
-    # AI 加工结果沿用: --full 重抓回来的同 URL 条目继承旧判定/锐评/简报/译题/概念, 不重复花判定成本
+    # AI 加工结果沿用: --full 重抓回来的同 URL 条目继承旧判定/锐评/简报/译题/概念, 不重复花判定成本。
+    # 但 ai(去留判定)与 quip(锐评)是按源规则产出的——同一 URL 换了源(如曾被行业源判 keep=false,
+    # 本轮作为 HN 新条目入库)必须交给新源规则重判/重产, 不跨源继承旧结果, 否则会把旧否决写回、
+    # 跳过 ai_screen 的 hn 规则重判导致条目被错误隐藏(Bugbot PR#100)。brief/title_zh/concepts/hn
+    # 跟着 URL 内容走, 换源仍有效, 照常继承。
     for it in items:
         p = prev.get(it["url"])
         if not p:
             continue
+        same_src = p.get("source") == it.get("source")
         for k in ("ai", "quip", "brief", "brief_full", "title_zh", "title_zh_tried", "concepts", "concepts_full", "hn"):
+            if k in ("ai", "quip") and not same_src:
+                continue
             if k not in it and k in p:
                 it[k] = p[k]
 
