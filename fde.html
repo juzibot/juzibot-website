@@ -19,6 +19,8 @@
   /* 标题断行策略：中文短语整体包 .nw（white-space:nowrap），断点只落在短语之间——
      keep-all + 20ch 压宽的老写法在无标点标题上会断出「的」字开头的行 */
   .nw{white-space:nowrap}
+  /* 窄屏(小手机)解除整段不断行, 否则长标题短语会被 overflow-x:hidden 裁掉尾字(Bugbot PR#101) */
+  @media(max-width:420px){.nw{white-space:normal}}
   .fde-hero h1{font-size:clamp(34px,5vw,64px);font-weight:850;letter-spacing:-.035em;line-height:1.12;
     text-wrap:balance;margin:6px 0 clamp(16px,2vw,22px)}
   /* site.css 对 .sec-head h2 没有字号规则（跌回浏览器默认 24px），与同页 .sec-top h2 的
