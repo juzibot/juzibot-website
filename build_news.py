@@ -1104,8 +1104,14 @@ def sync_hn(src, old, limit):
         url = (h.get("url") or "").strip() or disc  # Ask HN 等无外链帖: url 即讨论页
         if url in old:
             ex = old[url]  # 文章已被 voices/industry 收录、随后登上 HN → 把讨论链补进已有条目, 不永久丢入口(Bugbot PR#100)
-            if isinstance(ex, dict) and not ex.get("hn"):
-                ex["hn"] = disc
+            if isinstance(ex, dict):
+                if not ex.get("hn"):
+                    ex["hn"] = disc
+                if ex.get("ai", {}).get("keep") is False:
+                    # 被别的源筛掉(keep=false)但登上 HN → 归到 HN 源并清旧筛选结果,
+                    # 交 ai_screen 用 hn 规则重判, 别让 HN 值得的帖子被别源规则永久隐身(Bugbot PR#100)
+                    ex["source"] = src["id"]
+                    ex.pop("ai", None)
             continue
         if limit and len(got) >= limit:
             break
@@ -1633,7 +1639,10 @@ def ai_concepts(items, lib):
                if isinstance(a, dict) and a.get("id")}
         for it in batch:
             if it["id"] not in got:
-                continue  # 模型漏答的条目不落缓存标记, 下轮重抽
+                # 重做(已有 concepts)且全文可用但模型漏答: 已试全文, 封顶不再无限重抽(与简报侧对齐, Bugbot PR#100)
+                if "concepts" in it and bool(content_text(it["id"])):
+                    it["concepts_full"] = True
+                continue  # 首次抽取漏答的不落标记, 下轮重抽
             seen, slugs = set(), []
             for s in got[it["id"]]:
                 s = remap.get(slug_norm(s), slug_norm(s))
