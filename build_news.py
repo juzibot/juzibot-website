@@ -1409,21 +1409,24 @@ def ai_enrich(items):
             continue
         emap = {v["id"]: v for v in out if isinstance(v, dict) and v.get("id")}
         for it in batch:
+            has_full = bool(content_text(it["id"]))
+            redo = bool(it.get("brief"))  # 已有简报=本次是 stale 重做(非首抽)
             v = emap.get(it["id"])
-            if not v:
-                continue
-            b = str(v.get("brief", "")).strip()
+            b = str(v.get("brief", "")).strip() if isinstance(v, dict) else ""
             if b:
                 it["brief"] = b[:140]
-                it["brief_full"] = bool(content_text(it["id"]))  # 记录本次简报是否基于全文, 供 _brief_stale 判重做
+                it["brief_full"] = has_full  # 记录本次简报是否基于全文, 供 _brief_stale 判重做
                 briefs += 1
-            tz = str(v.get("title_zh", "")).strip()
+            elif redo and has_full:
+                # 重做但模型漏答/给空简报: 已用全文试过, 保留旧简报并封顶标记, 不再每轮无限重做烧配额(Bugbot PR#100)
+                it["brief_full"] = True
             if title_is_en(it["title"]):
+                tz = str(v.get("title_zh", "")).strip() if isinstance(v, dict) else ""
                 if tz:
                     it["title_zh"] = tz[:80]
                     titles += 1
-                else:
-                    it["title_zh_tried"] = True  # 这轮没给译题, 落标记不再无限重试
+                elif isinstance(v, dict):
+                    it["title_zh_tried"] = True  # 模型答了但没给译题, 落标记不再无限重试
     print(f"[AI 简报] 新写简报 {briefs} 条, 译题 {titles} 条")
 
 
