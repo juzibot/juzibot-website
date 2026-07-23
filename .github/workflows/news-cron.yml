@@ -1,58 +1,122 @@
 name: news-cron
 
-# 动态页定时同步(2026-07-22 三轮): 每 6 小时跑一轮 build_news.py, 有变更则
-# 提交推送到 stage-2 并显式 dispatch 部署 workflow。
+# 动态页定时同步(2026-07-23 方向重构, 佳芮裁决): 生成物不进 git。
+# 每 6 小时在 CI 里跑 build_news.py, 产物(news.html/news-c.html/news/)与管线状态(data/)
+# 直接 rsync 到服务器独立目录 /opt/www/jz-news/ ——不 commit、不 push、仓库零膨胀。
+#
+# 数据流(状态以服务器为准闭环):
+#   拉: 服务器 /opt/www/jz-news/{data,news}/ → CI 工作目录(增量管线的记忆:
+#       news.json 去重/判定缓存、concepts.json 概念库、render-cache.json 渲染签名、
+#       news-content/ 正文镜像、news/img/ 已下载图片、news/{p,c}/ 已生成页面)
+#   跑: python3 build_news.py (增量; 页面模板壳以仓库 checkout 为准, 手工改壳走 PR)
+#   推: rsync --delete 回 /opt/www/jz-news/ (下线页面/孤儿镜像同步清理)
+#
 # 注意:
-# - schedule 只认默认分支(main)上的 workflow 文件; 本文件需要同步到 main 定时才会生效,
-#   在那之前可用 workflow_dispatch 手动跑(Actions 页选 news-cron → Run workflow)。
-# - 智谱 GLM key 走仓库 Secret `ZHIPU_API_KEY`(配置见 README); 缺 Secret 时管线优雅降级,
-#   新条目 pending 暂缓上站, 下轮补判, 不会失败。
-# - 公众号源依赖本机 lark-cli, 在 CI 里必然单源失败——管线按设计沿用已有数据,
-#   公众号新文仍靠本机手动跑 build_news.py 同步。
-# - GITHUB_TOKEN 的 push 事件不会触发其它 workflow(GitHub 防递归), 所以 push 后
-#   用 `gh workflow run` 显式触发 deploy(workflow_dispatch 是官方豁免的例外)。
+# - schedule 只认默认分支(main)上的 workflow 文件; 进 main 前可用 workflow_dispatch 手动跑。
+# - 首次上线先跑一次 seed(Actions 页 Run workflow 勾 seed): 从 git 历史最后一个含全量
+#   产物的提交(SEED_REF, 图片在 LFS)把存量推上服务器; 之后常规轮才能增量续跑。
+#   常规轮拉不到服务器状态会直接失败(防止空状态全量重抓烧 API)——那就是还没 seed。
+# - 服务器 /opt/www/jz-news/ 与代码部署目录(/opt/www/jz-<branch>, git checkout -f + clean)
+#   完全隔离, deploy 不会清掉产物; 对外路由靠 nginx 把 /news.html、/news-c.html、/news/
+#   指到本目录(配置见 deploy/nginx-news.conf), data/ 是管线状态不对外。
+# - 智谱 GLM key 走仓库 Secret ZHIPU_API_KEY; 缺 Secret 管线优雅降级(新条目 pending 暂缓上站)。
+# - 公众号源依赖本机 lark-cli, CI 里必然单源失败——管线按设计沿用已有数据, 公众号新文靠本机
+#   手动跑 build_news.py 后手动 rsync(或等后续接入)。
 
 on:
   schedule:
     - cron: '23 */6 * * *'  # 每 6 小时; 避开整点(GitHub 整点排队延迟大)
   workflow_dispatch:
+    inputs:
+      seed:
+        description: '首次初始化: 把 git 历史存量产物全量推到服务器(仅需跑一次)'
+        type: boolean
+        default: false
 
 permissions:
-  contents: write  # commit + push 到 stage-2
-  actions: write   # dispatch deploy workflow
+  contents: read
 
 concurrency:
   group: news-cron
   cancel-in-progress: false
 
+env:
+  NEWS_DIR: /opt/www/jz-news
+  SEED_REF: 64bec20c8339efb85f880905e179500d3b67b094  # 最后一个仓库内含全量产物的提交(此后生成物不再入库)
+
 jobs:
-  sync:
+  seed:
+    if: github.event_name == 'workflow_dispatch' && inputs.seed
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: stage-2
-          fetch-depth: 0   # 拉全历史: 任务运行期间 stage-2 若有新推送, 浅克隆会让 pull --rebase/push 失败(Bugbot PR#100)
-          lfs: true        # news/img 已迁 Git LFS: 拉真图而非指针, 否则 localize_images 会把指针当已下载的图跳过重下(Bugbot PR#100)
+          ref: ${{ env.SEED_REF }}
+          lfs: true  # 该历史点 news/img 存在 LFS, 拉真图而非指针
+
+      - name: 装 SSH 凭据
+        env:
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+          HOST: ${{ secrets.HOST }}
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/id && chmod 600 ~/.ssh/id
+          ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts 2>/dev/null
+
+      - name: 全量推存量产物到服务器
+        env:
+          HOST: ${{ secrets.HOST }}
+          USER: ${{ secrets.USER }}
+        run: |
+          SSH="ssh -i ~/.ssh/id"
+          $SSH "$USER@$HOST" "mkdir -p $NEWS_DIR"
+          rsync -az -e "$SSH" data/  "$USER@$HOST:$NEWS_DIR/data/"
+          rsync -az -e "$SSH" news/  "$USER@$HOST:$NEWS_DIR/news/"
+          rsync -az -e "$SSH" news.html news-c.html "$USER@$HOST:$NEWS_DIR/"
+          echo "seed 完成: $NEWS_DIR 已就位, 之后常规轮增量续跑"
+
+  sync:
+    if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && !inputs.seed)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4  # 浅克隆即可: 只要代码与页面模板壳, 不再 commit/push
+
+      - name: 装 SSH 凭据
+        env:
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+          HOST: ${{ secrets.HOST }}
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/id && chmod 600 ~/.ssh/id
+          ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts 2>/dev/null
+
+      - name: 拉上一轮状态与产物
+        env:
+          HOST: ${{ secrets.HOST }}
+          USER: ${{ secrets.USER }}
+        run: |
+          SSH="ssh -i ~/.ssh/id"
+          # 种子文件(product-news/press-news)以仓库 checkout 为准, 不被服务器旧副本覆盖
+          rsync -az -e "$SSH" \
+            --exclude 'product-news.json' --exclude 'press-news.json' \
+            "$USER@$HOST:$NEWS_DIR/data/" data/ \
+            || { echo "::error::拉取服务器状态失败——若从未初始化, 先手动跑一次 seed(Run workflow 勾 seed)"; exit 1; }
+          rsync -az -e "$SSH" "$USER@$HOST:$NEWS_DIR/news/" news/ || true  # 产物缺失只影响增量跳过, 可重建
 
       - name: 跑动态管线(增量)
         env:
           ZHIPU_API_KEY: ${{ secrets.ZHIPU_API_KEY }}
         run: python3 build_news.py
 
-      - name: 有变更则提交推送并触发部署
+      - name: 推产物与状态回服务器
         env:
-          GH_TOKEN: ${{ github.token }}
+          HOST: ${{ secrets.HOST }}
+          USER: ${{ secrets.USER }}
         run: |
-          git add -A data news news.html news-c.html
-          if git diff --cached --quiet; then
-            echo "无变更, 本轮结束"
-            exit 0
-          fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "chore(news): 定时同步动态内容"
-          git pull --rebase origin stage-2
-          git push origin stage-2
-          gh workflow run deploy.yml --ref stage-2
+          SSH="ssh -i ~/.ssh/id"
+          rsync -az --delete -e "$SSH" news/ "$USER@$HOST:$NEWS_DIR/news/"
+          rsync -az --delete -e "$SSH" data/ "$USER@$HOST:$NEWS_DIR/data/"
+          rsync -az -e "$SSH" news.html news-c.html "$USER@$HOST:$NEWS_DIR/"
+          echo "同步完成 → $NEWS_DIR (nginx 对外路由见 deploy/nginx-news.conf)"
