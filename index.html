@@ -1624,11 +1624,11 @@ html{overflow-x:clip}
   <div class="wrap trust rv" id="trust">
     <div class="tlabel">已为下列行业的头部企业部署 AI 员工<span class="tlabel-hint">点击行业 · 查看标杆客户</span></div>
     <div class="logo-wall" role="tablist" aria-label="按行业查看标杆客户">
-      <button type="button" class="ind-tab active" role="tab" aria-selected="true" data-ind="edu">在线教育</button>
-      <button type="button" class="ind-tab" role="tab" aria-selected="false" data-ind="consumer">消费品电商</button>
+      <button type="button" class="ind-tab active" role="tab" aria-selected="true" data-ind="consumer">消费品电商</button>
       <button type="button" class="ind-tab" role="tab" aria-selected="false" data-ind="finance">银行 · 证券 · 保险</button>
       <button type="button" class="ind-tab" role="tab" aria-selected="false" data-ind="gov">政务 · 司法</button>
       <button type="button" class="ind-tab" role="tab" aria-selected="false" data-ind="internet">泛互联网</button>
+      <button type="button" class="ind-tab" role="tab" aria-selected="false" data-ind="edu">在线教育</button>
     </div>
     <div class="trust-progress" aria-hidden="true"><i></i></div>
     <div class="trust-logos" id="trustLogos" role="tabpanel" aria-live="polite"></div>
@@ -2506,7 +2506,7 @@ function openContact(){openModal('contactModal');}
   try{var raw=document.getElementById('trustMeta');if(raw)META=JSON.parse(raw.textContent)||{};}catch(e){META={};}
 
   var LABEL={edu:'在线教育',consumer:'消费品电商',finance:'银行 · 证券 · 保险',gov:'政务 · 司法',internet:'泛互联网'};
-  var ORDER=['edu','consumer','finance','gov','internet'];
+  var ORDER=['consumer','finance','gov','internet','edu'];
   function stems(prefix,rows){var a=[];rows.forEach(function(n,r){for(var c=0;c<n;c++){a.push(prefix+'-'+r+'-'+c);}});return a;}
   var DATA={
     edu:stems('edu',[8,8]),
