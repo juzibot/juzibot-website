@@ -98,10 +98,9 @@
   .fde-card:hover .fde-num{color:var(--ac,var(--blue))}
   .fde-card h4{font-size:17.5px}
 
-  /* —— sec-top 副文：恰好两行、两端对齐、末行也撑满（无孤尾）；窄屏回落左对齐 —— */
+  /* —— sec-top 副文：右对齐、text-wrap 均衡两行、窄屏回落左对齐（去 justify 稀疏） —— */
   .sec-top .sub{margin-left:auto;text-align:right;text-wrap:balance;max-width:42ch;font-size:14px;color:var(--ink-3)}
-  /* 角色画像副文：密实两端对齐（宽度贴合内容，末行也齐平，不稀疏无孤尾） */
-  /* 角色画像副文：两行左对齐（左对齐避免短文案 justify 稀疏） */
+  /* 角色画像副文：右对齐、贴合内容宽度（承基类；窄屏回落左对齐） */
   #role .sec-top .sub{max-width:42ch;flex-shrink:1}
   @media(max-width:760px){.sec-top .sub{margin-left:0!important;text-align:left!important;text-align-last:auto!important;max-width:none!important}}
   /* 角色画像：意向能力清单 */
