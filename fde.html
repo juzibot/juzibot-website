@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>FDE 交付结果 · 对结果负责的工程师 | 句子互动</title>
-<meta name="description" content="FDE（Forward Deployed Engineer，前端部署工程师）——前移到客户业务现场的工程师团队。不只装软件，对客户的业务结果负责：先搞懂这门生意，按结果收费，把现场踩出来的能力回流成产品。" />
+<meta name="description" content="FDE（Forward Deployed Engineer，前线部署工程师）——前移到客户业务现场的工程师团队。不只装软件，对客户的业务结果负责：先搞懂这门生意，按结果收费，把现场踩出来的能力回流成产品。" />
 <link rel="icon" href="logo.png" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="assets/site.css" />
@@ -16,8 +16,17 @@
   .crumbs a:hover{color:var(--blue)}
   .crumbs .sep{color:var(--line)}
   .crumbs .here{color:var(--ink);font-weight:700}
+  /* 标题断行策略：中文短语整体包 .nw（white-space:nowrap），断点只落在短语之间——
+     keep-all + 20ch 压宽的老写法在无标点标题上会断出「的」字开头的行 */
+  .nw{white-space:nowrap}
+  /* 窄屏(小手机)解除整段不断行, 否则长标题短语会被 overflow-x:hidden 裁掉尾字(Bugbot PR#101) */
+  @media(max-width:420px){.nw{white-space:normal}}
   .fde-hero h1{font-size:clamp(34px,5vw,64px);font-weight:850;letter-spacing:-.035em;line-height:1.12;
-    text-wrap:balance;max-width:20ch;word-break:keep-all;margin:6px 0 clamp(16px,2vw,22px)}
+    text-wrap:balance;margin:6px 0 clamp(16px,2vw,22px)}
+  /* site.css 对 .sec-head h2 没有字号规则（跌回浏览器默认 24px），与同页 .sec-top h2 的
+     clamp(28px,3.8vw,50px) 撞在一起——这里对齐成同一标题节奏 */
+  .sec-head h2{font-size:clamp(28px,3.8vw,50px);font-weight:840;letter-spacing:-.035em;line-height:1.2;text-wrap:balance}
+  .sec-head .sub{margin-top:16px}
   .fde-hero .lede{font-size:clamp(16px,1.4vw,19px);color:var(--ink-2);line-height:1.7;max-width:56ch}
   .fde-hero .lede strong{color:var(--ink);font-weight:700}
   .fde-pills{display:flex;flex-wrap:wrap;gap:10px;margin-top:clamp(20px,2.6vw,28px)}
@@ -29,10 +38,10 @@
   .fde-cmp{max-width:980px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-soft)}
   .fde-cmp .cmp-row{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}
   .fde-cmp .cmp-row:first-child{border-top:0}
-  .fde-cmp .cmp-h{padding:15px 22px;font-weight:800;font-size:13.5px}
+  .fde-cmp .cmp-h{padding:15px 22px;font-weight:800;font-size:14.5px}
   .fde-cmp .cmp-h.l{background:var(--line-2);color:var(--ink-2)}
   .fde-cmp .cmp-h.r{background:var(--blue-50);color:var(--blue)}
-  .fde-cmp .cmp-c{padding:14px 22px;font-size:14px;line-height:1.6}
+  .fde-cmp .cmp-c{padding:15px 22px;font-size:14.5px;line-height:1.65}
   .fde-cmp .cmp-c.l{color:var(--ink-2)}
   .fde-cmp .cmp-c.r{color:var(--ink);background:#FBFCFF}
 
@@ -53,42 +62,116 @@
   .fde-cite a{color:var(--blue);font-weight:750}
   .fde-cite a:hover{color:var(--blue-deep)}
 
-  /* 双栏 split（高价值场景） */
-  .fde-split{display:grid;grid-template-columns:1.02fr .98fr;gap:clamp(34px,5vw,68px);align-items:center}
-  .fde-split.rev .fde-split-text{order:2}
-  .fde-split h3{font-size:clamp(24px,2.6vw,34px);font-weight:840;letter-spacing:-.025em;line-height:1.25;margin:8px 0 16px}
-  .fde-split-text > p{font-size:15.5px;color:var(--ink-2);line-height:1.72;max-width:52ch}
-  .fde-split-text > p + p{margin-top:14px}
-  .fde-list{list-style:none;margin:22px 0 0;display:flex;flex-direction:column;gap:13px;padding:0}
-  .fde-list li{position:relative;padding-left:30px;font-size:14.5px;line-height:1.65;color:var(--ink-2)}
-  .fde-list li::before{content:"";position:absolute;left:0;top:6px;width:17px;height:17px;border-radius:50%;
-    background:var(--green-lt);border:1px solid color-mix(in srgb,var(--green) 40%,#fff)}
-  .fde-list li::after{content:"";position:absolute;left:5.5px;top:10px;width:6px;height:3.5px;
-    border-left:2px solid var(--orange-deep);border-bottom:2px solid var(--orange-deep);transform:rotate(-45deg)}
+  /* —— 高价值场景 · 场景选择台（点阵渐变工作台，呼应首页 flow-band/arch 质感） —— */
+  .hv-band{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:var(--radius-lg);
+    background:
+      radial-gradient(circle at center,rgba(67,56,202,.10) 1.2px,transparent 1.4px) 0 0/22px 22px,
+      linear-gradient(180deg,#FBFCFF,#F4F7FE);
+    box-shadow:0 1px 2px rgba(14,20,48,.05),0 30px 64px -34px rgba(67,56,202,.26);
+    padding:clamp(28px,3.6vw,48px) clamp(22px,3.2vw,46px) clamp(30px,3.6vw,46px)}
+  .hv-head{text-align:center;max-width:820px;margin:0 auto clamp(26px,3.2vw,40px)}
+  .hv-head h3{font-size:clamp(24px,2.8vw,36px);font-weight:840;letter-spacing:-.025em;line-height:1.25;margin:8px 0 14px}
+  .hv-lede{font-size:15px;color:var(--ink-2);line-height:1.74;max-width:56ch;margin:0 auto}
+  .hv-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(18px,2.4vw,28px);align-items:stretch}
+  .hv-scenes{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,1.4vw,16px);align-content:start}
+  .hv-scene{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid var(--line);border-radius:14px;
+    padding:17px 19px;box-shadow:0 1px 2px rgba(14,20,48,.05),0 14px 26px -18px rgba(14,20,48,.20);
+    transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
+  .hv-scene:hover{transform:translateY(-4px);box-shadow:0 1px 2px rgba(14,20,48,.05),0 22px 40px -20px rgba(67,56,202,.28)}
+  .hv-scene.t{--ac:var(--teal)}
+  .hv-scene.o{--ac:var(--orange-deep)}
+  .hv-ic{width:40px;height:40px;border-radius:12px;flex:0 0 40px;display:grid;place-items:center;
+    background:var(--ac,var(--blue));color:#fff;font-size:15px;
+    box-shadow:0 8px 16px -8px color-mix(in srgb,var(--ac,var(--blue)) 60%,transparent)}
+  .hv-scene-t{font-size:14px;line-height:1.62;color:var(--ink-2)}
+  .hv-scene-t b{color:var(--ink);font-weight:780}
+  .hv-rule{display:flex;align-items:center;gap:10px;padding:13px 16px;border-radius:12px;
+    border:1px dashed color-mix(in srgb,var(--blue) 28%,var(--line));background:rgba(255,255,255,.62);
+    font-size:13.5px;color:var(--ink-2);line-height:1.55}
+  .hv-rule i{color:var(--blue);font-size:13px;flex:0 0 auto}
+  .hv-rule:last-child i{color:var(--purple)}
+  .hv-steps{position:relative;background:rgba(255,255,255,.8);backdrop-filter:blur(2px);border:1px solid var(--line);
+    border-radius:var(--radius);padding:clamp(20px,2.4vw,26px);
+    box-shadow:0 1px 2px rgba(14,20,48,.04),0 18px 34px -22px rgba(14,20,48,.30)}
+  .hv-cap{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink-3);margin-bottom:16px;padding-bottom:12px;border-bottom:1px dashed var(--line)}
+  .hv-step{position:relative;display:flex;align-items:center;gap:12px;padding:13px 14px;border-radius:11px;
+    background:var(--line-2);font-size:13.5px;color:var(--ink-2);line-height:1.55}
+  .hv-step+.hv-step{margin-top:14px}
+  .hv-step+.hv-step::before{content:"";position:absolute;left:26px;top:-14px;width:2px;height:14px;
+    background:linear-gradient(180deg,var(--blue-200),var(--blue))}
+  .hn{width:26px;height:26px;border-radius:50%;flex:0 0 26px;display:grid;place-items:center;
+    font-family:var(--mono);font-size:11.5px;font-weight:800;
+    background:#fff;border:2px solid var(--blue-200);color:var(--blue)}
+  .hv-step.key{background:var(--blue-50);color:var(--blue);font-weight:650}
+  .hv-step.key .hn{background:var(--blue);border-color:var(--blue);color:#fff;
+    box-shadow:0 6px 14px -6px color-mix(in srgb,var(--blue) 60%,transparent)}
+  .hv-note{max-width:76ch;margin:clamp(24px,3vw,36px) auto 0;padding-top:18px;border-top:1px dashed var(--line);
+    text-align:center;font-size:14px;color:var(--ink-2);line-height:1.76}
 
-  /* 选场景三步面板 */
-  .fde-panel{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:clamp(20px,2.4vw,26px);box-shadow:var(--shadow-soft)}
-  .fde-panel .fp-cap{font-size:12px;font-weight:700;letter-spacing:.04em;color:var(--ink-3);margin-bottom:16px}
-  .fde-steps{display:flex;flex-direction:column;gap:10px}
-  .fde-step{display:flex;align-items:center;gap:11px;padding:12px 15px;background:var(--line-2);border-radius:10px;font-size:13.5px;color:var(--ink-2);line-height:1.5}
-  .fde-step .n{flex:0 0 auto;font-weight:800;color:var(--blue)}
-  .fde-step.key{background:var(--blue-50);color:var(--blue);font-weight:650}
-  .fde-step.key .n{color:var(--blue)}
+  /* —— sec-head（对照表 / 全球验证）：居中，与首页一致 —— */
+  .sec-head{margin-left:auto;margin-right:auto;text-align:center}
+  .sec-head .sub{margin-left:auto;margin-right:auto}
+
+  /* —— 四步方法卡片：覆盖 site.css 中为首页交互卡设计的默认态（常暗 opacity/蓝底），
+     对齐首页 fstep/pcard 质感：白底层叠阴影、彩色图标、小字号码右对齐胶囊、悬浮左侧彩条 —— */
+  .fde-card{opacity:1;cursor:default;background:#fff;border-radius:16px;
+    box-shadow:0 1px 2px rgba(14,20,48,.05),0 16px 30px -18px rgba(14,20,48,.18)}
+  .fde-card::before{background:var(--ac,var(--blue))}
+  .fde-card:hover::before{transform:scaleY(1)}
+  .fde-card:hover{transform:translateY(-5px);
+    box-shadow:0 1px 2px rgba(14,20,48,.05),0 26px 46px -20px rgba(67,56,202,.28)}
+  .fde-card.k1{--ac:var(--blue)}.fde-card.k2{--ac:var(--teal)}
+  .fde-card.k3{--ac:var(--orange)}.fde-card.k4{--ac:var(--purple)}
+  .fde-hd{display:flex;align-items:center;gap:10px;margin-bottom:15px}
+  .fde-ic{width:32px;height:32px;border-radius:10px;flex:0 0 32px;display:grid;place-items:center;
+    background:var(--ac,var(--blue));color:#fff;font-size:13.5px;
+    box-shadow:0 6px 14px -6px color-mix(in srgb,var(--ac,var(--blue)) 55%,transparent)}
+  .fde-card .fde-num{margin:0 0 0 auto;font-size:10.5px;color:var(--ink-3);
+    background:var(--blue-50);border:1px solid var(--line);border-radius:999px;padding:3px 10px;line-height:1.5}
+  .fde-card:hover .fde-num{color:var(--ac,var(--blue))}
+  .fde-card h4{font-size:17.5px}
+
+  /* —— sec-top 副文：小字 + 右对齐（呼应首页 tier-sub 的排布） —— */
+  .sec-top .sub{margin-left:auto;text-align:right;text-wrap:balance;max-width:42ch;font-size:14px;color:var(--ink-3)}
+  /* fde-how 副文：右对齐、放宽行宽（承基类） */
+  #fde-how .sec-top .sub{max-width:66ch;flex-shrink:1}
+  /* FDE 是什么 定义段：破折号另起一行，尾部匀成两行（共三行，末行不孤） */
+  .sec-head .sub.fde-def{text-wrap:balance;max-width:50ch}
+  @media(max-width:760px){.sec-head .sub.fde-def .db{display:none}}
+
+  /* —— Echo/Delta 双人卡：渐变底 + 图标 + 代号右对齐胶囊 + 顶部彩条 —— */
+  .fde-duo{max-width:1040px;gap:clamp(16px,2vw,24px)}
+  .duo-card{position:relative;overflow:hidden;border-radius:16px;
+    padding:clamp(26px,3vw,34px) clamp(24px,2.6vw,30px);
+    box-shadow:0 1px 2px rgba(14,20,48,.05),0 16px 30px -18px rgba(14,20,48,.18)}
+  .duo-card::before{content:"";position:absolute;left:0;top:0;right:0;height:3px;background:var(--ac,var(--blue));
+    transform:scaleX(0);transform-origin:left;transition:transform .45s var(--ease)}
+  .duo-card:hover{box-shadow:0 1px 2px rgba(14,20,48,.05),0 26px 46px -20px rgba(67,56,202,.28)}
+  .duo-card:hover::before{transform:scaleX(1)}
+  .duo-card.b{--ac:var(--blue);background:linear-gradient(180deg,var(--blue-50),#fff 60%)}
+  .duo-card.o{--ac:var(--orange-deep);background:linear-gradient(180deg,var(--orange-lt),#fff 60%)}
+  .duo-hd{display:flex;align-items:center;gap:11px;margin-bottom:15px}
+  .duo-ic{width:34px;height:34px;border-radius:10px;flex:0 0 34px;display:grid;place-items:center;
+    background:var(--ac);color:#fff;font-size:14px;
+    box-shadow:0 6px 14px -6px color-mix(in srgb,var(--ac) 55%,transparent)}
+  .duo-hd h4{font-size:18px;font-weight:820;letter-spacing:-.015em}
+  .duo-card .duo-tag{margin:0 0 0 auto;font-size:10.5px;letter-spacing:.08em;line-height:1.5;
+    padding:3px 10px;border-radius:999px;border:1px solid var(--line);background:#fff}
+  .fde-duo-note{max-width:none;margin-top:clamp(28px,3.4vw,40px);padding-top:18px;border-top:1px dashed var(--line)}
 
   @media(max-width:900px){
     /* 多列分栏 → 单列：对照表行 / 双人卡 / 高价值场景双栏（含 rev 顺序复位，文字在前） */
-    .fde-cmp .cmp-row,.fde-duo,.fde-split{grid-template-columns:1fr}
-    .fde-split,.fde-split.rev .fde-split-text{order:0}
+    .fde-cmp .cmp-row,.fde-duo,.hv-grid{grid-template-columns:1fr}
     .fde-cmp .cmp-h.l,.fde-cmp .cmp-c.l{border-bottom:1px solid var(--line)}
     /* sec-top 横排 flex（标题 + sub）→ 竖排堆叠，避免窄屏 sub 不收缩挤压/溢出 */
     .sec-top{flex-direction:column;align-items:flex-start;gap:14px}
-    .sec-top .sub{max-width:none;flex-shrink:1}
+    .sec-top .sub{max-width:none!important;flex-shrink:1;margin-left:0!important;text-align:left!important;text-align-last:auto!important}
   }
 
   @media(max-width:640px){
     /* —— 面包屑 / Hero —— */
     .crumbs{font-size:12.5px;gap:7px;flex-wrap:wrap}
-    .fde-hero h1{max-width:none}
     .fde-hero .lede{max-width:none}
     .fde-pills{gap:8px;margin-top:18px}
     .fde-pill{font-size:12.5px;padding:9px 14px}        /* 触控高度 ≥38px，含间距达 ≥44px 命中区 */
@@ -98,19 +181,18 @@
     .fde-cmp .cmp-h{padding:12px 16px;font-size:13px}
     .fde-cmp .cmp-c{padding:13px 16px;font-size:13.5px}
 
-    /* —— 双人卡 / 双栏文字 / 居中引用 —— */
+    /* —— 双人卡 / 居中引用 —— */
     .duo-card{padding:22px 20px}
     .duo-card p{font-size:13.5px}
     .fde-duo-note{font-size:13.5px;max-width:none}
     .fde-cite{font-size:14px;max-width:none}
-    .fde-split{gap:28px}
-    .fde-split-text > p{font-size:14.5px;max-width:none}
-    .fde-list li{font-size:14px}
 
-    /* —— 选场景三步面板：保留竖排步骤，收 padding，触控区 ≥44px —— */
-    .fde-panel{padding:20px 18px}
-    .fde-steps{gap:9px}
-    .fde-step{padding:13px 14px;font-size:13px;min-height:44px}
+    /* —— 高价值场景选择台：单列、收 padding，触控区 ≥44px —— */
+    .hv-band{padding:24px 18px 28px}
+    .hv-scenes{grid-template-columns:1fr}
+    .hv-lede,.hv-note{font-size:13.5px;max-width:none}
+    .hv-scene{padding:15px 16px}
+    .hv-step{padding:12px 13px;font-size:13px;min-height:44px}
   }
 </style>
 </head>
@@ -126,8 +208,8 @@
           <a href="index.html">首页</a><span class="sep">/</span><span class="here">FDE 交付结果</span>
         </nav>
         <span class="sec-eyebrow">FDE · 我们怎么交付</span>
-        <h1>一支<span class="hl"><span>对结果负责</span></span>的 FDE 团队</h1>
-        <p class="lede">传统软件交付完就结束，用得好不好是客户自己的事。句子互动派出的是 FDE——<strong>Forward Deployed Engineer，前端部署工程师</strong>，前移到客户业务现场：先理解客户的业务，再按结果收费。客户业绩增长，我们才有收入，因此现场积累的能力会回流到产品中。</p>
+        <h1><span class="nw">一支<span class="hl"><span>对结果负责</span></span>的</span> <span class="nw">FDE 团队</span></h1>
+        <p class="lede">传统软件交付完就结束，用得好不好是客户自己的事。句子互动派出的是 FDE——<strong>Forward Deployed Engineer，前线部署工程师</strong>，前移到客户业务现场：先理解客户的业务，再按结果收费。客户业绩增长，我们才有收入，因此现场积累的能力会回流到产品中。</p>
         <div class="fde-pills">
           <span class="fde-pill"><span class="dot"></span>前移到客户现场</span>
           <span class="fde-pill"><span class="dot"></span>对业务结果负责</span>
@@ -143,8 +225,8 @@
     <div class="wrap">
       <div class="sec-head rv">
         <span class="sec-eyebrow">FDE 是什么</span>
-        <h2>把工程师派到客户现场，对结果负责</h2>
-        <p class="sub">FDE，Forward Deployed Engineer（前端部署工程师）——前移到客户业务现场的工程师。不止于交付软件，而是与客户一起理解业务，让 AI 真正在其中产出结果。</p>
+        <h2><span class="nw">把工程师派到客户现场，</span><span class="nw">对结果负责</span></h2>
+        <p class="sub fde-def">FDE，Forward Deployed Engineer（前线部署工程师）<br class="db">——前移到客户业务现场的工程师。不止于交付软件，而是与客户一起理解业务，让 AI 真正在其中产出结果。</p>
       </div>
       <div class="fde-cmp rv rv-d1" style="margin:0 auto">
         <div class="cmp-row">
@@ -168,34 +250,34 @@
   </section>
 
   <!-- ════════ FDE 怎么干 · 四步方法 ════════ -->
-  <section class="sec pad">
+  <section class="sec pad" id="fde-how">
     <div class="wrap">
       <div class="sec-top rv">
         <div>
           <span class="sec-eyebrow">FDE 怎么干</span>
-          <h2>贴着客户的业务跑，<span class="hl"><span>把脏活在现场解决</span></span></h2>
+          <h2><span class="nw">贴着客户的业务跑，</span><span class="nw"><span class="hl"><span>把脏活在现场解决</span></span></span></h2>
         </div>
         <p class="sub">AI 落地的难点从来不是模型，而是客户各不相同的真实业务。FDE 正是去解决这一部分。</p>
       </div>
       <div class="fde-flow">
         <div class="fde-grid">
-          <div class="fde-card rv">
-            <div class="fde-num">01</div>
+          <div class="fde-card k1 rv">
+            <div class="fde-hd"><span class="fde-ic"><i class="fa-solid fa-magnifying-glass-chart"></i></span><div class="fde-num">01</div></div>
             <h4>先搞懂这门生意</h4>
             <p>不是先装软件，而是先与客户梳理清楚业务、流程与症结。AI 要承接的工作，必须先有人真正理解。</p>
           </div>
-          <div class="fde-card rv rv-d1">
-            <div class="fde-num">02</div>
+          <div class="fde-card k2 rv rv-d1">
+            <div class="fde-hd"><span class="fde-ic"><i class="fa-solid fa-handshake"></i></span><div class="fde-num">02</div></div>
             <h4>对结果负责</h4>
             <p>与客户签订对赌协议，按结果收费。客户的转化和人效确实改善，我们才收费。</p>
           </div>
-          <div class="fde-card rv rv-d2">
-            <div class="fde-num">03</div>
+          <div class="fde-card k3 rv rv-d2">
+            <div class="fde-hd"><span class="fde-ic"><i class="fa-solid fa-arrows-rotate"></i></span><div class="fde-num">03</div></div>
             <h4>能力回流产品</h4>
             <p>在一个客户现场踩出来的能力，抽象成产品里的标准能力，下一个客户起步就用得上。做一次，卖多次。</p>
           </div>
-          <div class="fde-card rv rv-d3">
-            <div class="fde-num">04</div>
+          <div class="fde-card k4 rv rv-d3">
+            <div class="fde-hd"><span class="fde-ic"><i class="fa-solid fa-user-group"></i></span><div class="fde-num">04</div></div>
             <h4>不一定是工程师</h4>
             <p>FDE 不限于会写代码的人——很多最好的 FDE 不写代码。真正重要的是理解业务、肯往一线钻，技术背景只是其次。</p>
           </div>
@@ -210,17 +292,17 @@
       <div class="sec-top rv">
         <div>
           <span class="sec-eyebrow">FDE 由两种人搭班子</span>
-          <h2>Echo 懂行业，<span class="hl warm"><span>Delta 写代码</span></span></h2>
+          <h2><span class="nw">Echo 懂行业，</span><span class="nw"><span class="hl warm"><span>Delta 写代码</span></span></span></h2>
         </div>
         <p class="sub">FDE 不是一个全才，而是两种能力的组合。后方还有产品团队，把现场的粗糙定制抽象成可复用的标准产品。</p>
       </div>
       <div class="fde-duo rv rv-d1" style="margin:0 auto">
         <div class="duo-card b">
-          <div class="duo-tag">ECHO · 懂行业</div>
+          <div class="duo-hd"><span class="duo-ic"><i class="fa-solid fa-compass"></i></span><h4>懂行业</h4><span class="duo-tag">ECHO</span></div>
           <p>钻进客户的生意里，找出真正该解决的问题。FDE 进场的第一件事不是写代码，是把这门生意先搞清楚。</p>
         </div>
         <div class="duo-card o">
-          <div class="duo-tag">DELTA · 写代码</div>
+          <div class="duo-hd"><span class="duo-ic"><i class="fa-solid fa-code"></i></span><h4>写代码</h4><span class="duo-tag">DELTA</span></div>
           <p>快速把现场需要的东西搭出来。Echo 定义问题，Delta 当场实现，两人扎进同一个客户。</p>
         </div>
       </div>
@@ -240,30 +322,36 @@
     </div>
   </section>
 
-  <!-- ════════ 从高价值场景切入 · 双栏 ════════ -->
+  <!-- ════════ 从高价值场景切入 · 场景选择台 ════════ -->
   <section class="sec pad">
     <div class="wrap">
-      <div class="fde-split rev rv">
-        <div class="fde-split-text">
+      <div class="hv-band rv">
+        <div class="hv-head">
           <span class="sec-eyebrow">从高价值场景切入</span>
           <h3>先从最影响业绩的场景做起</h3>
-          <p>AI 客服降本，AI 销售增收。FDE 进场的第一步，是帮客户找到对收入影响最大的场景——同一套底层能力，用在销售环节的价值，往往高于客服。</p>
-          <p>这也是 FDE 与单纯卖软件的根本区别：软件交付即结束，而 FDE 在客户业绩增长之后才获得收入。利益一致，才会有人把繁重的落地工作做到底。</p>
-          <ul class="fde-list">
-            <li>AI 客服：接住所有进线，把服务成本降下来</li>
-            <li>AI 销售：从建联到成交全程接管，直接带来增长</li>
-            <li>优先从高价值场景切入，再逐步向外扩展</li>
-            <li>按结果收费：业务结果产出后才收费</li>
-          </ul>
+          <p class="hv-lede">AI 客服降本，AI 销售增收。FDE 进场的第一步，是帮客户找到对收入影响最大的场景——同一套底层能力，用在销售环节的价值，往往高于客服。</p>
         </div>
-        <div class="fde-panel">
-          <div class="fp-cap">FDE 进场 · 如何选择场景</div>
-          <div class="fde-steps">
-            <div class="fde-step"><span class="n">1</span><span>先理清业务，找到最影响收入的环节</span></div>
-            <div class="fde-step"><span class="n">2</span><span>从高价值场景切入，跑出可量化的结果</span></div>
-            <div class="fde-step key"><span class="n">3</span><span>按结果收费，客户业绩增长我们才增长</span></div>
+        <div class="hv-grid">
+          <div class="hv-scenes">
+            <div class="hv-scene t">
+              <span class="hv-ic"><i class="fa-solid fa-headset"></i></span>
+              <div class="hv-scene-t"><b>AI 客服</b>：接住所有进线，把服务成本降下来</div>
+            </div>
+            <div class="hv-scene o">
+              <span class="hv-ic"><i class="fa-solid fa-chart-line"></i></span>
+              <div class="hv-scene-t"><b>AI 销售</b>：从建联到成交全程接管，直接带来增长</div>
+            </div>
+            <div class="hv-rule"><i class="fa-solid fa-route"></i>优先从高价值场景切入，再逐步向外扩展</div>
+            <div class="hv-rule"><i class="fa-solid fa-hand-holding-dollar"></i>按结果收费：业务结果产出后才收费</div>
           </div>
+          <aside class="hv-steps">
+            <div class="hv-cap">FDE 进场 · 如何选择场景</div>
+            <div class="hv-step"><span class="hn">1</span><span>先理清业务，找到最影响收入的环节</span></div>
+            <div class="hv-step"><span class="hn">2</span><span>从高价值场景切入，跑出可量化的结果</span></div>
+            <div class="hv-step key"><span class="hn">3</span><span>按结果收费，客户业绩增长我们才增长</span></div>
+          </aside>
         </div>
+        <p class="hv-note">这也是 FDE 与单纯卖软件的根本区别：软件交付即结束，而 FDE 在客户业绩增长之后才获得收入。利益一致，才会有人把繁重的落地工作做到底。</p>
       </div>
     </div>
   </section>
