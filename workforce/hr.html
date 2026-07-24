@@ -34,7 +34,7 @@
      981-1259 窄桌面左列仅 ~450-560px, 长胶囊组(HR/GEO/政务)一行必溢出叠到海报(Bugbot #101), 回退折行 */
   @media(min-width:1260px){.pill-row{flex-wrap:nowrap}}
   /* 右侧：人物海报舞台（index 长廊 gposter 同款配方）+ 悬浮控制台贴片 */
-  .sales-stage{position:relative;max-width:390px;margin:0 auto;padding:0 6px 20px}
+  .sales-stage{position:relative;max-width:352px;margin:0 auto;padding:0 6px 20px}
   .sales-poster{position:relative;border-radius:22px;overflow:hidden;aspect-ratio:3/4;isolation:isolate;
     background:radial-gradient(128% 84% at 50% -4%,color-mix(in srgb,var(--blue) 42%,#fff),color-mix(in srgb,var(--blue) 12%,#fff) 60%,#fff 92%);
     border:1px solid color-mix(in srgb,var(--blue) 24%,var(--line));
@@ -101,9 +101,9 @@
   .fde-card h4{font-size:17.5px}
 
   /* —— sec-top 副文：小字右对齐（与 fde / sales 页一致），窄屏回落左对齐 —— */
-  .sec-top .sub{margin-left:auto;text-align:justify;text-justify:inter-ideograph;text-wrap:balance;max-width:42ch;font-size:14px;color:var(--ink-3)}
+  .sec-top .sub{margin-left:auto;text-align:left;text-wrap:balance;max-width:42ch;font-size:14px;color:var(--ink-3)}
   /* 角色画像副文：密实两端对齐（宽度贴合内容，末行也齐平，不稀疏无孤尾） */
-  #role .sec-top .sub{max-width:62ch;text-align-last:justify;flex-shrink:1}
+  #role .sec-top .sub{max-width:62ch;flex-shrink:1}
   @media(max-width:760px){.sec-top .sub{margin-left:0!important;text-align:left!important;text-align-last:auto!important;max-width:none!important}}
   /* 角色画像：能力清单 */
   .role-split{display:block}
@@ -132,7 +132,7 @@
   }
   @media(max-width:640px){
     /* 人物海报舞台：收窄，贴片字号收，避免窄屏溢出 */
-    .sales-stage{max-width:320px}
+    .sales-stage{max-width:300px}
     .sp-chip .v{font-size:15px}
     .sp-chip.c4{font-size:11.5px;max-width:100%}
     /* 页头标题/导语字号与 pills 触控 */
