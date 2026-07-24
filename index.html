@@ -2411,6 +2411,14 @@ html{overflow-x:clip}
   "govfin-0-5":{"name":"昆仑银行","result":""},
   "govfin-0-6":{"name":"中国人寿","result":""},
   "govfin-0-7":{"name":"宁波银行","result":""},
+  "govfin-1-0":{"name":"蚂蚁集团","result":""},
+  "govfin-1-1":{"name":"中信银行","result":""},
+  "govfin-1-2":{"name":"广发银行","result":""},
+  "govfin-1-3":{"name":"平安银行","result":""},
+  "govfin-1-4":{"name":"微众银行","result":""},
+  "govfin-1-5":{"name":"深圳证券交易所","result":""},
+  "govfin-1-6":{"name":"华泰证券","result":""},
+  "govfin-1-7":{"name":"","result":""},
   "gov-0-0":{"name":"国家电网","result":""},
   "gov-0-1":{"name":"新华社","result":""},
   "gov-0-2":{"name":"中国电信","result":""},
@@ -2419,6 +2427,14 @@ html{overflow-x:clip}
   "gov-0-5":{"name":"杭州市临平区公安分局","result":""},
   "gov-0-6":{"name":"温州市公安反诈中心","result":""},
   "gov-0-7":{"name":"海淀区网信办","result":""},
+  "gov-1-0":{"name":"海淀区城市管理中心","result":""},
+  "gov-1-1":{"name":"东升镇人民政府","result":""},
+  "gov-1-2":{"name":"东升镇司法所","result":""},
+  "gov-1-3":{"name":"学院路街道","result":""},
+  "gov-1-4":{"name":"花园路街道","result":""},
+  "gov-1-5":{"name":"万寿路街道","result":""},
+  "gov-1-6":{"name":"北航社区","result":""},
+  "gov-1-7":{"name":"","result":""},
   "internet-0-0":{"name":"火山引擎","result":""},
   "internet-0-1":{"name":"腾讯广告","result":""},
   "internet-0-2":{"name":"腾讯智慧零售","result":""},
@@ -2426,7 +2442,15 @@ html{overflow-x:clip}
   "internet-0-4":{"name":"百度","result":""},
   "internet-0-5":{"name":"京东","result":""},
   "internet-0-6":{"name":"58同城","result":""},
-  "internet-0-7":{"name":"高德地图","result":""}
+  "internet-0-7":{"name":"高德地图","result":""},
+  "internet-1-0":{"name":"瓜子二手车","result":""},
+  "internet-1-1":{"name":"京东物流","result":""},
+  "internet-1-2":{"name":"微软","result":""},
+  "internet-1-3":{"name":"文心一言","result":""},
+  "internet-1-4":{"name":"1688","result":""},
+  "internet-1-5":{"name":"科大讯飞","result":""},
+  "internet-1-6":{"name":"转转","result":""},
+  "internet-1-7":{"name":"","result":""}
 }
 </script>
 
@@ -2487,9 +2511,9 @@ function openContact(){openModal('contactModal');}
   var DATA={
     edu:stems('edu',[8,8]),
     consumer:stems('consumer',[8,8]),
-    finance:stems('govfin',[8]),
-    gov:stems('gov',[8]),
-    internet:stems('internet',[8])
+    finance:stems('govfin',[8,8]),
+    gov:stems('gov',[8,8]),
+    internet:stems('internet',[8,8])
   };
   function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
   function tip(name,result){
