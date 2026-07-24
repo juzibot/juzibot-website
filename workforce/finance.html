@@ -30,9 +30,9 @@
   .pill{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:600;color:var(--ink-2);
     background:#fff;border:1px solid var(--line);padding:7px 13px;border-radius:999px;box-shadow:var(--shadow-soft);white-space:nowrap}
   .pill .dot{width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0}
-  /* 双列桌面胶囊行严格一行(佳芮 2026-07); 981-1199 临界带整体再收一档避免溢出 */
-  @media(min-width:981px){.pill-row{flex-wrap:nowrap}}
-  @media(min-width:981px) and (max-width:1199px){.pill-row{gap:6px}.pill{font-size:11.5px;padding:6px 10px;gap:6px}}
+  /* 胶囊行一行(佳芮 2026-07): 仅在真放得下的宽度(≥1260, 容器已到 1160 上限)强制;
+     981-1259 窄桌面左列仅 ~450-560px, 长胶囊组(HR/GEO/政务)一行必溢出叠到海报(Bugbot #101), 回退折行 */
+  @media(min-width:1260px){.pill-row{flex-wrap:nowrap}}
 
   /* 右侧：人物海报舞台（index 长廊 gposter 同款配方）+ 悬浮合规边界贴片 */
   .sales-stage{position:relative;max-width:390px;margin:0 auto;padding:0 6px 20px}
