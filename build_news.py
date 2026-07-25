@@ -505,6 +505,17 @@ def content_text(item_id):
 SITE_BASE = "https://juzibot.com"
 OWN_SOURCES = {s["id"] for s in SOURCES if s.get("own")}
 MIRROR_MODE = {s["id"]: s.get("mirror", "full") for s in SOURCES}
+# 公司相关源: 自家博客/公众号 + 产品动态 + 写公司的媒体报道。news.html 默认视图把这几类
+# 置顶(佳芮: 进来首屏要和公司相关, 不能一进来全是别的新闻); 外部资讯随后, 各组内保持时间序。
+COMPANY_SOURCES = {"rui-blog", "wechat-mp", "product", "press"}
+
+
+def company_first(items):
+    """稳定分区: 公司相关源置顶(保持各自时间序), 外部资讯(行业/大咖/HN/齐思)随后。
+    仅用于 news.html 卡片流; 聚合版 news-c.html 按月分组, 不能打乱时间序, 故不套用。"""
+    comp = [i for i in items if i["source"] in COMPANY_SOURCES]
+    rest = [i for i in items if i["source"] not in COMPANY_SOURCES]
+    return comp + rest
 MIRROR_MAX_PER_RUN = 60  # 每轮镜像抓取上限: 首轮存量分几轮清完, 防 cron 单轮超时
 MIRROR_GAP = 2.0         # 同域名两次抓取的最小间隔(秒), 礼貌限频
 RD_MIN = 350             # readability 正文长度下限(纯文本字符), 低于视为提取失败退导读
@@ -2341,7 +2352,7 @@ def write_concept_pages(lib, vis):
 # 两个平行版本均为全源(2026-07-07 用户裁决; 原列表版 B 于 2026-07-21 并入聚合版),
 # payload 均含 sources 元数据供来源筛选/面板使用
 PAGES = [
-    {"file": ROOT / "news.html", "render_list": lambda its: "\n".join(card_html(i) for i in its), "payload": "full", "only": None},
+    {"file": ROOT / "news.html", "render_list": lambda its: "\n".join(card_html(i) for i in its), "payload": "full", "only": None, "company_first": True},
     {"file": ROOT / "news-c.html", "render_list": lambda its: feed_list(its), "payload": "full", "only": None},
 ]
 
@@ -2361,6 +2372,8 @@ def inject_page(spec, items, sources_meta):
 
     if spec["only"]:
         items = [i for i in items if i["source"] in spec["only"]]
+    if spec.get("company_first"):
+        items = company_first(items)  # 公司相关置顶(仅 news.html; 预渲染前 N 条与内联数据同序)
     rendered = spec["render_list"](items[:PRERENDER])
     page = inject_between(page, "<!-- NEWS:LIST:BEGIN 此区块由 build_news.py 生成，勿手改 -->", "<!-- NEWS:LIST:END -->", rendered, f"{path.name} NEWS:LIST")
 
