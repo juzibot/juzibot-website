@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>动态 - 句子互动 | 公司动态与AI行业信息流</title>
-<meta name="description" content="句子互动动态页：聚合博客精选、官方公众号、产品动态、媒体报道、AI 行业资讯、技术大咖观点、Hacker News、齐思与企微生态更新，AI 筛选去噪并配一句短评，多源持续更新，每条可跳转原文。" />
+<meta name="description" content="句子互动动态页：聚合博客精选、官方公众号、产品动态、媒体报道、AI 行业资讯、技术大咖观点、Hacker News、齐思更新，AI 筛选去噪并配一句短评，多源持续更新，每条可跳转原文。" />
 <meta name="keywords" content="句子互动,FDE,AI员工,AI原生组织,公众号,AI行业动态" />
 <meta name="robots" content="index,follow" />
 <meta name="format-detection" content="telephone=no,email=no,address=no" />
@@ -91,7 +91,7 @@
   .nc-srcb{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:750;color:var(--sc,var(--blue));white-space:nowrap}
   .nc-srcb i{font-size:11px}
   .s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
-  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-wecom{--sc:#2563EB}.s-voices{--sc:#9333EA}
+  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-voices{--sc:#9333EA}
   .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
   .nc-cat{display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ink-3);
     background:#F6F7FB;border:1px solid var(--line-2);border-radius:6px;padding:2px 8px;white-space:nowrap}
@@ -152,7 +152,7 @@
       <p class="news-lede">博客在写的、公众号在发的、AI 行业在发生的，先筛一遍再按时间流在这一页更新。每条都能点开原文，也能按住 <strong>⌘K</strong> 直接问 AI。</p>
       <div class="news-meta">
         <span class="pill"><i class="fa-solid fa-newspaper"></i><b id="newsTotal">0</b>&nbsp;条内容</span>
-        <span class="pill"><i class="fa-solid fa-tower-broadcast"></i>博客 · 公众号 · 产品 · 媒体 · 行业 · 大咖 · 企微</span>
+        <span class="pill"><i class="fa-solid fa-tower-broadcast"></i>博客 · 公众号 · 产品 · 媒体 · 行业 · 大咖</span>
         <span class="pill"><i class="fa-solid fa-rotate"></i>持续更新</span>
         <a class="pill" href="news/c/index.html"><i class="fa-solid fa-book-open"></i>概念索引</a>
         <a class="pill" href="news-c.html"><i class="fa-solid fa-layer-group"></i>切换聚合版</a>
@@ -205,7 +205,7 @@
   var payload = {};
   try { payload = JSON.parse(document.getElementById('news-data').textContent.trim() || '{}') || {}; } catch (e) {}
   var data = payload.items || [], sources = payload.sources || [];
-  var ICON = { 'rui-blog': 'fa-solid fa-pen-nib', 'wechat-mp': 'fa-brands fa-weixin', 'product': 'fa-solid fa-rocket', 'press': 'fa-solid fa-bullhorn', 'industry': 'fa-solid fa-rss', 'voices': 'fa-solid fa-feather', 'hn': 'fa-brands fa-hacker-news', 'qisi': 'fa-solid fa-lightbulb', 'wecom': 'fa-solid fa-plug' };
+  var ICON = { 'rui-blog': 'fa-solid fa-pen-nib', 'wechat-mp': 'fa-brands fa-weixin', 'product': 'fa-solid fa-rocket', 'press': 'fa-solid fa-bullhorn', 'industry': 'fa-solid fa-rss', 'voices': 'fa-solid fa-feather', 'hn': 'fa-brands fa-hacker-news', 'qisi': 'fa-solid fa-lightbulb' };
 
   var list = document.getElementById('newsList'),
       srcs = document.getElementById('newsSrcs'),
