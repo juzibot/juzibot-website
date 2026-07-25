@@ -38,7 +38,7 @@
   .fd-tabs{position:sticky;top:10px;z-index:30;display:flex;align-items:center;gap:2px;
     background:rgba(255,255,255,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
     border:1px solid var(--line);border-radius:12px;padding:5px 8px;box-shadow:var(--shadow-soft);margin-bottom:12px}
-  .fd-tabrow{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0}
+  .fd-tabrow{display:flex;flex-wrap:wrap;gap:2px;flex:1;min-width:0}
   .fd-tabrow::-webkit-scrollbar{display:none}
   .fd-tab{flex:0 0 auto;position:relative;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:650;
     color:var(--ink-2);background:none;border:none;padding:9px 11px;white-space:nowrap;transition:color .2s var(--ease)}
