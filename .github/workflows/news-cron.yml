@@ -135,6 +135,9 @@ jobs:
           # 页面(p/c)由管线从 data/ 重建, --delete 清下线页; 但图片一次性下载不可重下
           # (localize 见正文里 ../img 相对路径即跳过), 故 img/ 不 --delete: 本地不全时也绝不
           # 清掉服务器已有真图(Bugbot PR#100)。孤儿图占用极小, 需要时另开清理不走这条热路径。
+          # img/ 可能不存在(拉取失败被 || true 吞 / 本轮未本地化新图): 补空目录防 set -e 中断,
+          # 空目录无 --delete 是无害空推; 不补则 p/c 已 --delete 推完而 data/ 没推回, 页与状态不一致(Bugbot PR#103)
+          mkdir -p news/img
           rsync -az --delete -e "$SSH" news/p/ "$USER@$HOST:$NEWS_DIR/news/p/"
           rsync -az --delete -e "$SSH" news/c/ "$USER@$HOST:$NEWS_DIR/news/c/"
           rsync -az           -e "$SSH" news/img/ "$USER@$HOST:$NEWS_DIR/news/img/"
