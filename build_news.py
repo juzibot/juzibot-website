@@ -2490,7 +2490,7 @@ def inject_between(text, begin, end, payload, label):
     return pattern.sub(begin + "\n" + payload + "\n" + end, text, count=1)
 
 
-def inject_page(spec, items, sources_meta):
+def inject_page(spec, items, sources_meta, now):
     path = spec["file"]
     page = path.read_text(encoding="utf-8")
 
@@ -2550,6 +2550,10 @@ def inject_page(spec, items, sources_meta):
                       page, count=1)
     if not n:
         sys.exit(f"[错误] {path.name} 里找不到 <b id=\"newsTotal\">")
+    # 诚实的新鲜度(2026-07-30): 原来 hero 挂「持续更新」——管线三天没跑它也这么写, 是在撒谎。
+    # 改成注入真实的本轮跑批时间, 让数据自己说话(也给内部补内容的压力)。
+    fresh = now[:16].replace("T", " ")  # 2026-07-30 01:02
+    page = re.sub(r'(<b id="newsFresh">)[^<]*(</b>)', lambda m: m.group(1) + fresh + m.group(2), page, count=1)
     page = re.sub(r'(<b id="newsRadar">)[^<]*(</b>)',
                   lambda m: m.group(1) + str(len(items) - n_comp) + m.group(2), page, count=1)
 
@@ -2714,7 +2718,7 @@ def main():
         encoding="utf-8",
     )
     for spec in PAGES:
-        inject_page(spec, vis, sources_meta)
+        inject_page(spec, vis, sources_meta, now)
     worthy = worthy_concepts(lib, vis)  # 门槛算一次, 详情页标注/概念页/sitemap 共用防死链
     write_detail_pages(vis, items, lib, worthy)
     write_concept_pages(lib, vis)
