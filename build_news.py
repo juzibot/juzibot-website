@@ -2197,7 +2197,15 @@ DETAIL_CSS = """
   .dp-quip{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.66;font-weight:600;color:var(--blue-deep);background:var(--blue-50);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:18px}
   .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
   .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
-  .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  .dp-brief b{display:flex;align-items:baseline;gap:8px;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  /* AI 产出物的就地标注(2026-07-30): 概念页的定义早就在页尾注明「由 AI 加工层生成、编辑
+     维护」, 而详情页的简报与锐评一直没标 —— 读者会把那句锐评当成编辑观点。283 页都有这两块,
+     不标就是 283 次误导。放在区块内而不是只放页尾: 页尾声明读者多半划不到, 而标注要落在
+     人实际阅读的位置才有意义。样式压到最小, 不抢正文。 */
+  .dp-brief b em,.dp-quip em{font-style:normal;font-family:var(--mono);font-size:10px;font-weight:600;
+    letter-spacing:0;color:var(--ink-3);white-space:nowrap}
+  .dp-brief b em{margin-left:auto}
+  .dp-quip em{display:block;margin-top:5px;opacity:.85}
   /* 长文目录(≥3 小标题且正文 ≥2000 字才出): <details> 原生可折叠, 不用一行 JS。
      默认 open —— 目录的用处是先看清结构再决定读哪段, 收起来就失去意义; 想收也一点即收。 */
   .dp-toc{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:24px;background:#FBFCFF}
@@ -2505,8 +2513,8 @@ b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';})
     {f'<p class="dp-orig">原题：{esc(it["title"])}</p>' if zh_title(it) else ""}
     <p class="dp-by">来源：{esc(origin)}</p>
     <div class="dp-notice">{notice}</div>
-    {f'<p class="dp-quip"><i class="fa-solid fa-quote-left"></i>{esc(it["quip"])}</p>' if it.get("quip") else ""}
-    {f'<div class="dp-brief"><b>简报</b>{esc(it["brief"])}</div>' if it.get("brief") else ""}
+    {f'<p class="dp-quip"><i class="fa-solid fa-quote-left"></i>{esc(it["quip"])}<em>AI 加工层生成</em></p>' if it.get("quip") else ""}
+    {f'<div class="dp-brief"><b>简报<em>AI 加工层生成</em></b>{esc(it["brief"])}</div>' if it.get("brief") else ""}
     {body}
     <div class="dp-actions">
       <a class="dp-btn pri" href="{safe_href(it["url"])}" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
