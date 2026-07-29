@@ -43,7 +43,7 @@ jobs:
           PY
       - name: 生成物不得入库
         run: |
-          for p in news/ data/news.json data/concepts.json data/render-cache.json data/news-content/ sitemap-news.xml news-radar.json; do
+          for p in news/ data/news.json data/concepts.json data/render-cache.json data/metrics.jsonl data/news-content/ sitemap-news.xml news-radar.json news-feed.xml; do
             if git ls-files --error-unmatch "$p" >/dev/null 2>&1; then
               echo "::error::$p 被提交进仓库了(生成物不入库)"; exit 1
             fi

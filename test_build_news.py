@@ -665,6 +665,87 @@ def test_related_change_invalidates_signature():
     check("新条目挤进列表 → 签名变化", rsig(pool3, cidx3) != before)
 
 
+# ---------------------------------------------------------------- 26
+def test_artifacts_ignored_and_guarded():
+    """生成物必须同时被 .gitignore 忽略、被 shell-clean 清单看住 —— 两道, 不是一道。
+
+    本轮真出过事: 在 feat 上跑完管线 `git add -A`, 一次提了 379 个产物、124818 行。
+    `.gitignore` 里当时一条生成物路径都没写, 全靠 CI 事后报红 —— **闸有效不等于防护有效**。
+    更难看的是 `news-feed.xml` 因此已经溜进仓库并带着四个提交跑了一路, 而它能溜过 shell-clean,
+    恰恰因为那份清单也漏了它(Bugbot PR#103 两处一起点出来)。
+
+    判据从源码推, 不写死清单(写死清单挡不住"新加的产物忘了加进去", 这个坑本轮栽过第五次):
+    根目录的 `.xml`/`.json` 一律是产物(模板壳是 `.html`), 管线的目录常量一律是产物目录;
+    产物 ⊆ shell-clean 清单 ⊆ .gitignore。反向也测: 两个模板壳绝不能被忽略, 否则改版丢失。
+    """
+    src = (ROOT / "build_news.py").read_text(encoding="utf-8")
+    root_files = {m for m in re.findall(r'ROOT / "([^"/]+\.(?:xml|json))"', src)}
+    # 只认**赋给模块级常量**的多段路径 = 管线自己的输出目录/状态文件。人工种子登记表是以
+    # `"file": ROOT / "data" / "product-news.json"` 写在 SOURCES 配置里的**输入**, 必须入库
+    # —— 一律按"data/ 下都是产物"推会把它们也要求忽略, 那就把配方本身赶出仓库了。
+    dirs = {"/".join(m[1:]) for m in
+            re.findall(r'^([A-Z_]+) *= *ROOT / "([^"/]+)" / "([^"/]+)"', src, re.M)}
+    gi_path, sc_path = ROOT / ".gitignore", ROOT / ".github" / "workflows" / "shell-clean.yml"
+    wf = ROOT / ".github" / "workflows" / "news-cron.yml"
+    if not (gi_path.exists() and sc_path.exists()) or "rsync" not in (
+            wf.read_text(encoding="utf-8") if wf.exists() else ""):
+        check("(跳过)当前分支是老架构/预览分支, 生成物按设计入库", True)
+        return
+    gi = [l.strip() for l in gi_path.read_text(encoding="utf-8").splitlines()
+          if l.strip() and not l.startswith("#")]
+    sc = sc_path.read_text(encoding="utf-8")
+    check(f"根目录产物({len(root_files)} 个)全在 .gitignore",
+          not [f for f in root_files if f not in gi],
+          f"缺 {[f for f in root_files if f not in gi]} —— 本地 git add -A 会把它带进仓库")
+    check(f"根目录产物({len(root_files)} 个)全在 shell-clean 清单",
+          not [f for f in root_files if f not in sc],
+          f"缺 {[f for f in root_files if f not in sc]} —— 溜进仓库时 CI 不会报")
+    miss_dir = [d for d in dirs if not any(g.rstrip("/") == d for g in gi)]
+    check(f"管线目录/状态文件({len(dirs)} 个)全在 .gitignore", not miss_dir, f"缺 {miss_dir}")
+    check("模板壳没被误忽略(否则改版会丢)",
+          not [s for s in ("news.html", "news-c.html") if s in gi])
+    # shell-clean 清单是最后一道: 它漏了什么, 就等于那样的产物可以无声入库
+    check("shell-clean 清单不比 .gitignore 松",
+          not [f for f in root_files if f in gi and f not in sc])
+
+
+# ---------------------------------------------------------------- 27
+def test_askbar_one_shot_context_reaches_request():
+    """卡片「问句子」的一次性上下文必须进 AI 请求, 而不是只改横幅文案。
+
+    栽的过程值得记: 原写法是改写全局 `window.PAGE_CTX` 再调无参 `openAskbar()`, 毛病是从不
+    还原(点过一张卡, 本页后续所有提问都被永久打上那篇文章的上下文)。我改成传参修掉了污染,
+    但只在 open() 的局部变量里用了它 —— 而 greet/suggest/askReal 各自去读全局, **上下文
+    从此根本到不了模型**。修了症状、废了功能, Bugbot PR#103 抓到。
+    根因还是判据分散: "当前上下文"有两条获取路径。收口成 oneShot + pageCtx() 一条路。
+    """
+    js_p = ROOT / "assets" / "askbar.js"
+    if not js_p.exists():
+        check("(跳过)askbar.js 不在本分支", True)
+        return
+    js = js_p.read_text(encoding="utf-8")
+    m = re.search(r"function pageCtx\(\)[^\n]*", js)
+    check("pageCtx 是取上下文的唯一入口且读一次性上下文", m and "oneShot" in m.group(0),
+          m.group(0) if m else "找不到 pageCtx")
+    for fn in ("greet", "suggest", "askReal"):
+        body = re.search(rf"function {fn}\(.*?\n  \}}", js, re.S)
+        check(f"{fn} 经 pageCtx 取上下文(不自己读全局)",
+              body and "pageCtx()" in body.group(0) and "window.PAGE_CTX" not in body.group(0),
+              fn)
+    close = re.search(r"function close\(\)[^\n]*", js)
+    check("关闭时清掉一次性上下文(否则污染后续提问)", close and "oneShot = null" in close.group(0),
+          close.group(0)[:80] if close else "")
+    # 两个列表页: 卡片入口必须传参, 不许在点击处改写全局
+    for page in ("news.html", "news-c.html"):
+        pp = ROOT / page
+        if not pp.exists():
+            continue
+        h = pp.read_text(encoding="utf-8")
+        bad = [l.strip()[:70] for l in h.splitlines()
+               if "window.PAGE_CTX" in l and "=" in l and "data-t" in l]
+        check(f"{page} 卡片入口不改写全局上下文", not bad, bad)
+        check(f"{page} 卡片入口传一次性上下文", "openAskbar(cardCtx)" in h)
+
 
 def main():
     tests = [v for k, v in sorted(globals().items()) if k.startswith("test_")]

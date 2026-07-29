@@ -12,3 +12,21 @@ __pycache__/
 
 # 本机 Dispatch 预览工具配置, 不入仓库
 .dispatch-preview.json
+
+# 动态页生成物与管线状态: 不入库(2026-07-23 方向重构, 佳芮裁决)。
+# 仓库只留配方(build_news.py + workflow + 页面模板壳 + 人工种子登记表), 产物与状态由 CI
+# rsync 到服务器 /opt/www/jz-news/ 闭环。此前这里一条都没写, 本地一次 git add -A 就把
+# 379 个产物、124818 行提了进来(shell-clean 事后报红才发现)——闸有效不等于防护有效,
+# 忽略规则是第一道, CI 是第二道(Bugbot PR#103)。
+# 注意: stage-2 是预览分支, 它那份 .gitignore 故意不忽略这些(产物要能看)。
+news/p/
+news/c/
+news/img/
+data/news.json
+data/concepts.json
+data/render-cache.json
+data/metrics.jsonl
+data/news-content/
+sitemap-news.xml
+news-radar.json
+news-feed.xml
