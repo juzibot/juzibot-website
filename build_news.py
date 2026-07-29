@@ -464,7 +464,15 @@ def sanitize_fragment(h):
     h = re.sub(r"<!--.*?-->", "", h or "", flags=re.S)
     h = re.sub(r"<(script|style|iframe|object|embed|form|frameset|noscript)\b[^>]*>.*?</\1\s*>", "", h, flags=re.S | re.I)
     h = re.sub(r"<(script|style|iframe|object|embed|form|link|meta|base)\b[^>]*/?>", "", h, flags=re.I)
-    h = re.sub(r"[\s/]+on[a-z]+\s*=\s*(\"[^\"]*\"|'[^']*'|[^\s>]+)", " ", h, flags=re.I)  # [\s/]: 挡 <img/onerror=> 无空白写法(Bugbot PR#100)
+    # 事件属性剥离。前导集合必须含引号: 属性值收尾的引号本身就是属性边界, 紧贴写法
+    # <img src="x"onerror="alert(1)"> 既无空白也无斜杠, 老正则 [\s/]+ 会整条放行——
+    # 第三方正文镜像在 juzibot.com 域名下, 放行等于让别人在我们域上执行 JS(2026-07-30 实测穿透)。
+    # 用捕获组把边界字符还回去, 否则会吃掉前一个属性的收尾引号、破坏标签结构。
+    # 宁可误伤(把正文里形如 title="… onclick=x" 的**文本**删掉)也不放过: 这是消毒层。
+    h = re.sub(r"""([\s/"'])on[a-z]+\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)""", r"\1", h, flags=re.I)
+    # style 属性一并剥: 镜像正文的排版本就该由 .dp-body 的 CSS 管, 而留着它, 第三方
+    # 正文可以用 position:fixed 铺一层全屏浮层, 在我们域名下做钓鱼或篡改页面。
+    h = re.sub(r"""([\s/"'])style\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)""", r"\1", h, flags=re.I)
     # 危险协议链接消毒: 解实体+去空白后判 javascript/vbscript/非白名单 data(挡实体编码绕过, Bugbot PR#100)
     h = _URL_ATTR_RX.sub(_neutralize_url, h)
     return h.strip()

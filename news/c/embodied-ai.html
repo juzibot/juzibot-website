@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>具身智能是什么？- 句子互动 AI 概念库</title>
+<meta name="description" content="指让AI拥有物理身体（如机器人），能在真实或仿真环境中感知、决策并执行动作。对企业而言，它意味着自动化从数字流程延伸到物理操作，是仓储、制造、服务等行业实现无人化升级的关键技术路径。" />
+<meta name="robots" content="index,follow" />
+<link rel="canonical" href="https://juzibot.com/news/c/embodied-ai.html" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="具身智能是什么？- 句子互动 AI 概念库" />
+<meta property="og:description" content="指让AI拥有物理身体（如机器人），能在真实或仿真环境中感知、决策并执行动作。对企业而言，它意味着自动化从数字流程延伸到物理操作，是仓储、制造、服务等行业实现无人化升级的关键技术路径。" />
+<meta property="og:url" content="https://juzibot.com/news/c/embodied-ai.html" />
+<meta property="og:site_name" content="句子互动" />
+<meta name="twitter:card" content="summary" />
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "DefinedTerm", "name": "具身智能", "description": "指让AI拥有物理身体（如机器人），能在真实或仿真环境中感知、决策并执行动作。对企业而言，它意味着自动化从数字流程延伸到物理操作，是仓储、制造、服务等行业实现无人化升级的关键技术路径。", "inLanguage": "zh-CN", "url": "https://juzibot.com/news/c/embodied-ai.html", "alternateName": ["具身人工智能", "Embodied AI"], "inDefinedTermSet": {"@type": "DefinedTermSet", "name": "句子互动 AI 概念库", "url": "https://juzibot.com/news/c/index.html"}}</script>
+<link rel="icon" href="../../logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../../assets/site.css" />
+<style>
+  /* 静态兜底导航: site.js 一执行就被 outerHTML 连同占位一起换掉, 访客几乎看不到它。
+     不隐藏也不 noscript 包裹——那会让爬虫拿不到, 而它存在的唯一理由就是给不跑 JS 的爬虫看。
+     样式做朴素一行, 万一 site.js 加载失败, 这排链接本身就是可用的降级导航。 */
+  .nav-fb{display:flex;flex-wrap:wrap;gap:6px 16px;padding:12px clamp(16px,4vw,40px);
+    border-bottom:1px solid var(--line-2);font-size:12.5px}
+  .nav-fb a{color:var(--ink-3);text-decoration:none}
+  .nav-fb a:hover{color:var(--blue)}
+
+  .cp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
+  .cp-wrap{max-width:760px;margin:0 auto}
+  .cp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
+  .cp-back:hover{color:var(--blue)}
+  .cp-kicker{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:750;letter-spacing:.08em;color:var(--blue);margin-bottom:10px}
+  .cp-title{font-size:clamp(26px,3.4vw,38px);font-weight:850;letter-spacing:-.03em;line-height:1.25;word-break:keep-all;overflow-wrap:anywhere;margin-bottom:8px}
+  .cp-alias{font-size:12.5px;color:var(--ink-3);margin-bottom:18px}
+  .cp-alias b{font-weight:650;color:var(--ink-2)}
+  .cp-def{font-size:15.5px;line-height:1.95;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:14px;padding:18px 22px;margin-bottom:26px}
+  .cp-sec{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--ink-2);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
+  .cp-sec i{color:var(--blue);font-size:12px}
+  .cp-item{display:flex;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-meta{display:flex;align-items:baseline;gap:8px;flex:0 0 auto}
+  .cp-body{min-width:0}
+  .cp-ev{margin:4px 0 0;font-size:12.5px;line-height:1.65;color:var(--ink-2);overflow-wrap:anywhere}
+  .cp-ev mark{background:rgba(37,99,235,.12);color:var(--blue);font-weight:650;padding:0 2px;border-radius:3px}
+  @media(max-width:560px){.cp-item{flex-direction:column;gap:4px}}
+  .cp-item time{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex:0 0 auto}
+  .cp-item .src{font-size:11px;font-weight:750;color:var(--sc,var(--blue));flex:0 0 auto}
+  .cp-item a.t{font-size:14px;font-weight:650;color:var(--ink);line-height:1.5;overflow-wrap:anywhere}
+  .cp-item a.t:hover{color:var(--blue)}
+  .cp-rel{display:flex;flex-wrap:wrap;gap:8px}
+  .cp-rel a{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;color:var(--ink-2);background:#F6F7FB;border:1px solid var(--line-2);border-radius:999px;padding:6px 13px;transition:color .2s var(--ease),border-color .2s var(--ease)}
+  .cp-rel a:hover{color:var(--blue);border-color:var(--blue)}
+  .cp-note{font-size:11.5px;line-height:1.7;color:var(--ink-3);margin-top:26px}
+  .cp-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;padding-top:20px;border-top:1px solid var(--line-2)}
+  .s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
+  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-voices{--sc:#9333EA}
+  .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
+  .dp-btn{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:750;border-radius:999px;padding:10px 20px;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+  .dp-btn.pri{background:var(--blue);color:#fff}
+  .dp-btn.pri:hover{background:var(--blue-deep)}
+  .dp-btn.sec{background:#fff;color:var(--ink-2);border:1px solid var(--line)}
+  .dp-btn.sec:hover{color:var(--blue);border-color:var(--blue)}
+  /* 总目录 */
+  .cx-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+  .cx-card{display:block;background:#fff;border:1px solid var(--line-2);border-radius:14px;padding:15px 17px;transition:border-color .2s var(--ease),box-shadow .2s var(--ease)}
+  .cx-card:hover{border-color:var(--blue);box-shadow:0 6px 20px rgba(37,99,235,.08)}
+  .cx-card b{display:block;font-size:15px;font-weight:800;color:var(--ink);margin-bottom:6px;overflow-wrap:anywhere}
+  .cx-card p{font-size:12.5px;line-height:1.7;color:var(--ink-3);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .cx-card span{display:inline-block;font-family:var(--mono);font-size:10.5px;color:var(--ink-3);margin-top:8px}
+  .cp-lede{font-size:14px;line-height:1.85;color:var(--ink-2);margin-bottom:24px;max-width:640px}
+</style>
+</head>
+<body>
+<div id="site-nav" class="nav-fb"><a href="../../index.html">句子互动</a><a href="../../products/miaodong.html">句子秒懂</a><a href="../../products/shouhu.html">句子守护</a><a href="../../products/canmou.html">句子问数</a><a href="../../products/dongxing.html">句子懂行</a><a href="../../products/miaohui.html">句子秒回</a><a href="../../products/cli.html">句子 CLI</a><a href="../../products/zhizao.html">句子制造</a><a href="../../fde.html">FDE</a><a href="../../enterprise.html">企业方案</a><a href="../../industries.html">行业</a><a href="../../about.html">关于我们</a><a href="../../news.html">动态</a></div>
+<main class="cp-main">
+  <div class="cp-wrap">
+    <a class="cp-back" href="index.html"><i class="fa-solid fa-arrow-left"></i>概念索引</a>
+    <div class="cp-kicker"><i class="fa-solid fa-book-open"></i>AI 概念库</div>
+    <h1 class="cp-title">具身智能</h1>
+    <p class="cp-alias"><b>也叫</b> 具身人工智能 / Embodied AI</p>
+    <div class="cp-def">指让AI拥有物理身体（如机器人），能在真实或仿真环境中感知、决策并执行动作。对企业而言，它意味着自动化从数字流程延伸到物理操作，是仓储、制造、服务等行业实现无人化升级的关键技术路径。</div>
+    <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（11）</div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-29">2026-07-29</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/a9f8663f1ee1.html">AI智能浪潮重塑母婴赛道，吸牛裤如何实现 “智能育儿”？</a><p class="cp-ev">导语： 凌晨三点，新手爸妈第三次起身，摸黑查看宝宝尿裤有无侧漏、臀部是否闷出红疹。依靠经验熬夜看护的传统育儿模式，已是无数家庭的共同困扰。而随着 AI 技术产业化落地，这一育儿痛点迎来全新解法。 2022 年 ChatGPT 问世，拉开生成式 AI 商业化序幕…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-26">2026-07-26</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/64e4cd7599eb.html">3万小时触觉数据补齐具身智能“手感”！新智具身&amp;复旦报告三连发</a></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-26">2026-07-26</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/3aa5d5d85d81.html">硬氪首发 | 复旦教授、前英特尔首席科学家做端侧具身大脑，「眸深智能」完成近亿元Pre-A轮追加融资</a><p class="cp-ev">作者 | 邱晓芬 编辑 | 袁斯来 硬氪获悉，「眸深智能」（Motion Brain）完成近亿元Pre-A轮追加融资，本轮投资方包括中国头部物业服务公司、香港财团、多家上市公司联合打造的产业投资平台瑾悦投资、创合汇资本，以及老股东徐汇资本。 这也是继2026年…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-25">2026-07-25</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/c15d933d3848.html">美国具身也没成熟！PI：中国公司何必总当“中国版XX”｜RSS 2026</a></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-25">2026-07-25</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/22668fba1dd4.html">具身智能的「ChatGPT时刻」还没到，科沃斯先把机器人拆开了</a></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-24">2026-07-24</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/3d250f1078ad.html">自变量登上APEC国际舞台，代表中国具身智能分享服务民生“最佳实践”</a><p class="cp-ev">7月16日-24日，亚太经合组织（APEC）“2026年数字和人工智能部长会议及数字周”系列活动在四川成都举行。 作为部长会议的重要配套活动，工业和信息化部于7月24日上午举办“APEC数智赋能高级别对话”，邀请APEC经济体部长及政府部门、企业、科研机构和国…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-24">2026-07-24</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/09a677ca007f.html">Acemate携手2026中国网球公开赛，AI网球训练机器人走进职业赛事场景</a><p class="cp-ev">2026年7月22日，Acemate与2026中国网球公开赛正式完成签约。根据合作内容，Acemate 将以 2026 中国网球公开赛唯一指定网球训练机器人供应商 的身份，进入中网合作场景。 这次合作的意义，并不止于一次赛事合作官宣。 对于Acemate来说，…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-22">2026-07-22</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/ff1c92abc4b8.html">凌迪科技携两大产品亮相WAIC 2026，展示物理AI仿真能力</a><p class="cp-ev">SynReal World面向<mark>具身智能</mark>，覆盖数据生成、虚拟训练与仿真评测；StyleWork面向服装等轻工业场景，以AI Agent能力支持设计、选品、营销和运营协同。</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-22">2026-07-22</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/ced4f41a8349.html">WAIC深度观察：具身数据，进入「开箱即用」时代</a><p class="cp-ev">作者 丨 高景辉 编辑丨马晓宁 “<mark>具身智能</mark>的数据需求，远没有摸到上限。</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-22">2026-07-22</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/c85907bd5c17.html">物理AI的闭环，终于有人跑通了：日冕+远图万台级部署计划官宣</a><p class="cp-ev">2027年完成百台级部署，未来实现万台级<mark>具身智能</mark>产品部署。</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-22">2026-07-22</time><span class="src s-qisi">齐思</span></div><div class="cp-body"><a class="t" href="../p/94c887401cd3.html">蚂蚁灵波首席科学家谈机器人基础模型与数据规模挑战</a><p class="cp-ev">这份报告探讨了人工智能从“数字表征”到“物理交互”时所遇到的挑战，特别是“<mark>具身智能</mark>”的认知。</p></div></div>
+    <div class="cp-sec"><i class="fa-solid fa-diagram-project"></i>相关概念</div>
+    <div class="cp-rel"><a href="agent-capability.html"><i class="fa-solid fa-diagram-project"></i>Agent能力</a><a href="physical-ai-loop.html"><i class="fa-solid fa-diagram-project"></i>物理AI闭环</a><a href="world-action-model.html"><i class="fa-solid fa-diagram-project"></i>世界动作模型</a><a href="agentic-infra.html"><i class="fa-solid fa-diagram-project"></i>智能体基础设施</a><a href="agentic-scaling.html"><i class="fa-solid fa-diagram-project"></i>智能体扩展</a><a href="ai-delivery.html"><i class="fa-solid fa-diagram-project"></i>AI交付</a><a href="diffusion-model.html"><i class="fa-solid fa-diagram-project"></i>扩散模型</a><a href="embodied-ai-cognition.html"><i class="fa-solid fa-diagram-project"></i>具身智能认知</a></div>
+    <div class="cp-actions">
+      <button type="button" class="dp-btn pri" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
+      <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
+    </div>
+    <p class="cp-note">概念定义由句子互动动态管线的 AI 加工层生成、编辑维护，供快速理解行业语境；如有不准确之处欢迎通过官网联系我们指正。</p>
+  </div>
+</main>
+<div id="site-footer"></div>
+<script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-concept", "type": "page", "title": "具身智能"};</script>
+<script src="../../assets/site.js"></script>
+</body>
+</html>

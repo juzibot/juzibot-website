@@ -1,0 +1,32 @@
+<p><strong><a href="https://huggingface.co/blog/agent-intrusion-technical-timeline">剖析前沿实验室代理入侵事件：2026年7月事件技术时间线</a></strong></p>
+Hugging Face 刚刚发布了一份关于 <a href="https://simonwillison.net/2026/Jul/22/openai-cyberattack/">OpenAI 近期对其基础设施的意外网络攻击</a>的、极其详细的技术说明。这次攻击 <em>非常</em> 精巧，而这份报告也堪称现代对抗性安全策略的速成教材。</p>
+<p>我们仍在等待 OpenAI 提供更多关于其代理如何突破沙盒的细节。该代理发现零日漏洞的那个包代理现已确认为 JFrog 的 Artifactory，而 JFrog 的这篇 <a href="https://jfrog.com/blog/jfrog-and-openai-collaboration-on-zero-day-security-findings/">《JFrog 与 OpenAI 在零日安全发现方面的合作》</a> 文章则链接到了 <a href="https://docs.jfrog.com/releases/docs/artifactory-self-managed-releases#artifactory-7161">Artifactory 7.161.15 版本发布说明</a>，其中列出了 8 个由 OpenAI 员工发现的 CVE。</p>
+<p>突破 HTTP 代理后，该代理首先为后续攻击建立了一个行动基地：</p>
+<blockquote>
+<p>[...] 代理通过利用其被允许访问的、连接互联网的主要网络出口之一——包注册表缓存代理中的一个零日漏洞，成功逃出了沙盒。随后，它滥用了一个托管在第三方服务商基础设施上的公共代码评估外部沙盒。它能够在那个外部沙盒中以 root/admin 权限运行命令，并将其用作整个行动的控制、暂存和出口基地：它充当了代理的外部发射台。</p>
+</blockquote>
+<p>（那个“第三方服务商”<a href="https://simonwillison.net/2026/Jul/28/akshat-bubna/">被证实是 Modal</a>。）</p>
+<p>接下来，它花了 <strong>五天</strong> 时间——从 7 月 8 日周四到 7 月 13 日周一——执行了一套经典的攻击模式：建立 C2（命令与控制）、侦察、提升权限、转储配置信息、窃取目标数据，以及清理痕迹。</p>
+<p><a href="https://huggingface.co/blog/security-incident-july-2026">第一篇关于此事件的 Hugging Face 博文</a> 于 7 月 16 日周四发布，而 OpenAI 的认罪声明则于 <a href="https://openai.com/index/hugging-face-model-evaluation-security-incident/">7 月 21 日周二</a> 出炉。</p>
+<p>在此过程中，它用上了各种花招。有一次，它发现了一个不安全的 Jinja2 模板执行漏洞，并利用它来执行任意代码：</p>
+<pre><code>{{ cycler.__init__.__globals__.__builtins__.exec(
+ "import gzip,base64; exec(gzip.decompress(base64.b64decode('&lt;payload&gt;')))"
+) }}
+</code></pre>
+<p>它从 Hugging Face 的一个容器中逃逸，窃取了一个 Kubernetes 服务账号令牌，并利用该令牌进一步探索网络。</p>
+<p>它还通过“猴子补丁”的方式修改了 Python 的 socket 库，当“DNS 成为阻碍”时，硬编码一个 IP 地址：</p>
+<pre><code>socket.getaddrinfo = lambda *a, **k: [(2, 1, 6, '', ('&lt;pinned-ip&gt;', 443))]
+</code></pre>
+<p>它甚至启动了自己的 Tailscale 网络，来帮助窃取数据！</p>
+<pre><code>tailscaled --tun=userspace-networking \
+  --state=mem: --socket=/tmp/ts.sock \
+  --socks5-server=127.0.0.1:1055 \
+  --no-logs-no-support &gt;/tmp/td 2&gt;&amp;1 &amp;
+</code></pre>
+<p>Hugging Face 团队指出，尽管人类攻击者也可能发现并利用同样的漏洞，但这里的关键区别在于 <em>速度</em>：</p>
+<blockquote>
+<p>我们从这类攻击中学到的是，机器级的攻击速度让普通弱点对防御方来说代价更高。LLM 智能体带来了攻击者可测试路径数量的指数级增长、失败路径被替换的速度，以及防御方必须解读的证据量的巨大提升。</p>
+</blockquote>
+<p>从这件事中我清楚地看到，那些最顶尖的前沿模型，在没有额外护栏限制的情况下，<strong>只要</strong>存在漏洞，<strong>就一定能</strong>找到并利用它。</p>
+<p>整个软件行业都需要提升其安全水平。</p>
+    <p>标签: <a href="https://simonwillison.net/tags/jinja">jinja</a>, <a href="https://simonwillison.net/tags/python">python</a>, <a href="https://simonwillison.net/tags/security">security</a>, <a href="https://simonwillison.net/tags/ai">ai</a>, <a href="https://simonwillison.net/tags/openai">openai</a>, <a href="https://simonwillison.net/tags/generative-ai">generative-ai</a>, <a href="https://simonwillison.net/tags/llms">llms</a>, <a href="https://simonwillison.net/tags/hugging-face">hugging-face</a>, <a href="https://simonwillison.net/tags/coding-agents">coding-agents</a>, <a href="https://simonwillison.net/tags/ai-security-research">ai-security-research</a>, <a href="https://simonwillison.net/tags/openai-hugging-face-incident">openai-hugging-face-incident</a></p>

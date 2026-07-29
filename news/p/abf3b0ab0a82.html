@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>A shell colon does nothing. Use it anyway - 句子·动态</title>
+<meta name="description" content="作者分享了一个用 shell 脚本中的冒号符号解决复杂问题的经历，展示了简单工具的巧妙用法。" />
+<meta name="robots" content="noindex,follow" />
+<link rel="canonical" href="https://refp.se/articles/your-shell-and-the-magic-colon" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="A shell colon does nothing. Use it anyway" />
+<meta property="og:description" content="作者分享了一个用 shell 脚本中的冒号符号解决复杂问题的经历，展示了简单工具的巧妙用法。" />
+<meta property="og:url" content="https://refp.se/articles/your-shell-and-the-magic-colon" />
+<meta property="og:site_name" content="句子互动" />
+<meta name="twitter:card" content="summary" />
+
+<link rel="icon" href="../../logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../../assets/site.css" />
+<style>
+  /* 静态兜底导航: site.js 一执行就被 outerHTML 连同占位一起换掉, 访客几乎看不到它。
+     不隐藏也不 noscript 包裹——那会让爬虫拿不到, 而它存在的唯一理由就是给不跑 JS 的爬虫看。
+     样式做朴素一行, 万一 site.js 加载失败, 这排链接本身就是可用的降级导航。 */
+  .nav-fb{display:flex;flex-wrap:wrap;gap:6px 16px;padding:12px clamp(16px,4vw,40px);
+    border-bottom:1px solid var(--line-2);font-size:12.5px}
+  .nav-fb a{color:var(--ink-3);text-decoration:none}
+  .nav-fb a:hover{color:var(--blue)}
+
+  .dp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
+  .dp-wrap{max-width:760px;margin:0 auto}
+  .dp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
+  .dp-back:hover{color:var(--blue)}
+  .dp-meta{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:14px}
+  .dp-srcb{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:750;color:var(--sc,var(--blue))}
+  .s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
+  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-voices{--sc:#9333EA}
+  .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
+  .dp-cat{display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ink-3);background:#F6F7FB;border:1px solid var(--line-2);border-radius:6px;padding:2px 8px}
+  .dp-date{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-3)}
+  .dp-title{font-size:clamp(24px,3.2vw,34px);font-weight:850;letter-spacing:-.03em;line-height:1.32;word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance;margin-bottom:10px}
+  .dp-orig{font-size:13px;color:var(--ink-3);overflow-wrap:anywhere;margin-bottom:8px}
+  .dp-by{font-size:12.5px;font-weight:600;color:var(--ink-3);margin-bottom:18px}
+  .dp-notice{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:1.7;color:var(--ink-2);background:#F6F7FB;border:1px solid var(--line-2);border-radius:10px;padding:10px 14px;margin-bottom:22px}
+  .dp-notice i{color:var(--blue);margin-top:4px;flex:0 0 auto}
+  .dp-notice a{color:var(--blue);font-weight:700;overflow-wrap:anywhere}
+  .dp-quip{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.66;font-weight:600;color:var(--blue-deep);background:var(--blue-50);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:18px}
+  .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
+  .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
+  .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
+  .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
+  .dp-body p{margin:0 0 1.05em}
+  .dp-body img{max-width:100%;height:auto;border-radius:10px;margin:.4em 0}
+  .dp-body pre{background:#0F172A;color:#E2E8F0;font-family:var(--mono);font-size:12.5px;line-height:1.7;padding:14px 16px;border-radius:10px;overflow-x:auto;margin:0 0 1.1em}
+  .dp-body code{font-family:var(--mono);font-size:.92em}
+  .dp-body :not(pre)>code{background:#F1F5F9;padding:1px 5px;border-radius:5px}
+  .dp-body blockquote{border-left:3px solid var(--line);padding:2px 0 2px 14px;color:var(--ink-3);margin:0 0 1.05em}
+  .dp-body a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+  .dp-body ul,.dp-body ol{padding-left:1.5em;margin:0 0 1.05em}
+  .dp-body table{display:block;overflow-x:auto;border-collapse:collapse;margin:0 0 1.1em}
+  .dp-body td,.dp-body th{border:1px solid var(--line);padding:6px 10px;font-size:.92em}
+  .dp-excerpt{font-size:15px;line-height:1.9;color:var(--ink-2);border-left:3px solid var(--line);padding:2px 0 2px 16px;margin-bottom:8px}
+  .dp-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;padding-top:20px;border-top:1px solid var(--line-2)}
+  .dp-btn{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:750;border-radius:999px;padding:10px 20px;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+  .dp-btn.pri{background:var(--blue);color:#fff}
+  .dp-btn.pri:hover{background:var(--blue-deep)}
+  .dp-btn.sec{background:#fff;color:var(--ink-2);border:1px solid var(--line)}
+  .dp-btn.sec:hover{color:var(--blue);border-color:var(--blue)}
+  .dp-note{font-size:11.5px;line-height:1.7;color:var(--ink-3);margin-top:18px}
+  .dp-langbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+  .dp-lang{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:750;color:var(--blue);
+    background:var(--blue-50);border:1px solid var(--blue-100);border-radius:999px;padding:7px 14px;
+    transition:background .2s var(--ease),border-color .2s var(--ease)}
+  .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
+  .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div id="site-nav" class="nav-fb"><a href="../../index.html">句子互动</a><a href="../../products/miaodong.html">句子秒懂</a><a href="../../products/shouhu.html">句子守护</a><a href="../../products/canmou.html">句子问数</a><a href="../../products/dongxing.html">句子懂行</a><a href="../../products/miaohui.html">句子秒回</a><a href="../../products/cli.html">句子 CLI</a><a href="../../products/zhizao.html">句子制造</a><a href="../../fde.html">FDE</a><a href="../../enterprise.html">企业方案</a><a href="../../industries.html">行业</a><a href="../../about.html">关于我们</a><a href="../../news.html">动态</a></div>
+<main class="dp-main">
+  <div class="dp-wrap">
+    <a class="dp-back" href="../../news.html"><i class="fa-solid fa-arrow-left"></i>返回动态</a>
+    <div class="dp-meta">
+      <span class="dp-srcb s-hn"><i class="fa-brands fa-hacker-news"></i>Hacker News</span>
+      
+      <time class="dp-date" datetime="2026-07-25">2026-07-25</time>
+    </div>
+    <h1 class="dp-title">A shell colon does nothing. Use it anyway</h1>
+    <p class="dp-orig">原题：A shell colon does nothing. Use it anyway</p>
+    <p class="dp-by">来源：Hacker News</p>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（Hacker News）所有 · <a href="https://refp.se/articles/your-shell-and-the-magic-colon" target="_blank" rel="noopener">阅读原文</a></span></div>
+    
+    <div class="dp-brief"><b>简报</b>作者分享了一个用 shell 脚本中的冒号符号解决复杂问题的经历，展示了简单工具的巧妙用法。</div>
+    <div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang"><i class="fa-solid fa-language"></i><span>翻译为中文</span></button><span class="dp-lang-note">中文由 AI 翻译，仅供参考</span></div><article class="dp-body" id="dpBodyOrig"><h2>
+            In a land far-far away.. #
+        </h2><p>... there was once a far too cold cup of coffee next to a freshly brewed
+far-too-hot one. Four different terminals where three could have been closed an
+hour ago, and a shell script which I really (really) did not want to write.</p>
+<p>Who would have thought a single colon would be the one to save the <code>day</code> night?</p>
+<blockquote>
+<p><strong>Note</strong>: Want your mind blown straight away? See more colons in the limelight.</p>
+</blockquote>
+<h2>
+            Checking for required arguments #
+        </h2><p>This is a familiar dance, it&#x27;s pretty much muscle memory by this point. You have
+a script, it takes a few arguments, and some of them are mandatory; alright, an
+if-statement like so many times before:</p>
+<pre><code>if [ -z &quot;$1&quot; ]; then
+   echo &quot;missing argument, aborting.&quot; 1&gt;&amp;2
+   exit 1
+fi
+
+echo &quot;Hello $1!&quot;
+</code></pre>
+<p>Though.. what if I told you the above four lines could be replaced by just... one?</p>
+<pre><code>: &quot;${1:?missing argument, aborting.}&quot;
+echo &quot;Hello $1!&quot;
+</code></pre>
+<pre><code>$ bash example.sh
+example.sh: line 1: 1: missing argument, aborting.
+
+$ bash example.sh refp
+Hello refp!
+</code></pre>
+<p>And look what happens if we refer to a variable with a proper name — it&#x27;s
+the same behavior as previously but easier to spot; the diagnostic includes
+the name of our variable!</p>
+<pre><code>: &quot;${GREET_NAME:?missing argument, aborting.}&quot;
+echo &quot;Hello $GREET_NAME!&quot;
+</code></pre>
+<pre><code>$ bash greet.sh
+greet.sh: line 1: GREET_NAME: missing argument, aborting.
+</code></pre>
+<h3>
+            Parameter expansion and the story of <code>:?</code> #
+        </h3><p>There are two things going on in the previous snippet, and you are correct in
+identifying that one part is using <a href="https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_06_02" target="_blank" rel="noopener nofollow">parameter expansion</a>:</p>
+<ul>
+<li><p>The syntax <code>${name:?diagnostic}</code> checks whether <code>$name</code> is unset or empty
+— if it is, the diagnostic is printed to <em>stderr</em> and the shell exits with a
+non-zero status, otherwise;</p>
+</li>
+<li><p>if the variable is set, it is equivalent to <code>$name</code>.</p>
+</li>
+</ul>
+<h2>
+            That.. other colon #
+        </h2><p>So that&#x27;s one colon, but what about that other one, the one who sits alone at
+the beginning of the line?</p>
+<ul>
+<li><p><code>:</code> is the <a href="https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_16" target="_blank" rel="noopener nofollow">null-command</a>
+— a builtin that does nothing but evaluate its arguments and discard the
+result.</p>
+</li>
+<li><p><code>:</code> is old — it goes all the way back to the <a href="https://en.wikipedia.org/wiki/Thompson_shell#Design" target="_blank" rel="noopener nofollow">1971 Thompson
+shell</a> where it doubled as a <a href="https://www.in-ulm.de/~mascheck/bourne/PWB/goto.1.html" target="_blank" rel="noopener nofollow">label</a> and Unix&#x27;s very first
+comment marker.</p>
+</li>
+<li><p><code>:</code> two eyes staring at you in the dark, with love.</p>
+</li>
+</ul>
+
+<h2>
+            More colons in the limelight #
+        </h2><p>Perhaps we have already established that there is more to <code>:</code> than meets the
+eye, but to prove the real magic of the <a href="https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_16" target="_blank" rel="noopener nofollow">null-command</a> —
+here are a few usages that blew my mind.</p>
+<pre><code>: &quot;${DATA_DIR:=/var/data}&quot;       
+: &quot;${RETRIES:=3}&quot;                
+</code></pre>
+<pre><code>: &gt; error.log                    
+: &gt; error.log &gt; access.log       
+</code></pre>
+<pre><code>( : &lt; dataset.json ) &amp;&amp; echo YES 
+( : &gt;&gt; result.json ) &amp;&amp; echo YES 
+</code></pre>
+<pre><code>trap : INT                       
+sleep 60                         
+</code></pre>
+<pre><code>set -u                           
+: &quot;$DEPLOY_ENV&quot; &quot;$HOST&quot;          
+</code></pre>
+<pre><code>if some-command; then
+    :                            
+else
+    echo &quot;command failed&quot;
+fi
+</code></pre>
+<h2>
+            Con-colon-sion #
+        </h2><p>So, if you are like me and prefer less typing (gotta go fast) — the
+<a href="https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_16" target="_blank" rel="noopener nofollow">null-command</a> and <a href="https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_06_02" target="_blank" rel="noopener nofollow">parameter expansion</a> are a pair
+worth studying before your coffee goes cold.</p>
+<p>And also.. isn&#x27;t this — magic?</p>
+<pre><code>set  : : : : : : : : : : : : : : : : : : : : :
+
+while : colons are more than &quot;${1:?magic}&quot;; do
+    echo &quot;$*&quot; &amp;&amp; shift
+done
+</code></pre>
+<blockquote>
+<p><strong>Note</strong>: The above example is safe to run locally, try it!</p>
+</blockquote>
+<h2>
+            Frequently Asked Questions #
+        </h2><p>After reading a few comments online, it seems I skipped over some things worth
+explaining. I will keep this section updated as questions come up.</p>
+<ul>
+<li><h3>
+            Why do I need the null-command? Doesn&#x27;t the expansion happen without the colon? #
+        </h3><p>The parameter expansion will happen regardless, but without a null-command or
+similar usage the shell will treat the resulting string as a command to run.</p>
+<pre><code>% ${HELLO:=123}
+zsh: command not found: 123
+</code></pre>
+<p>If we prefix our parameter-expansion with the null-command, the result is
+discarded, but the expression is still evaluated (setting <code>HELLO</code> to <code>123</code>).</p>
+<pre><code>% : ${HELLO:=123}
+% echo $HELLO
+123
+</code></pre>
+</li>
+<li><h3>
+            Why use the null-command when I could do <code>VAR=${VAR:-default-value}</code>? #
+        </h3><p>This at its core boils down to personal preference, but using our beloved
+colon we can shrink the number of potential typos to one (rather than two):</p>
+<pre><code>: &quot;${DATA_DIR:=/var/data}&quot;           
+DATA_DIR=&quot;${DATA_DRI:-/var/data}&quot;    
+</code></pre>
+</li>
+<li><h3>
+            Why would I do any of these when it hurts readability? #
+        </h3><p>There are a few common misconceptions about the — very contrived —
+examples presented in this article, questions regarding their usefulness,
+or if one should ever-ever use these things at all.</p>
+<p>Let&#x27;s take the below as an example.</p>
+<pre><code>if some-command; then
+    :                            
+else
+    echo &quot;command failed&quot;
+fi
+</code></pre>
+<p>Of course you can use <code>if ! some-command</code> and get rid of
+the branching, but that isn&#x27;t the point of the snippet
+— the point is to show that the null-command can be
+used in places where a command is required, but nothing is
+desired.</p>
+<p>It was never meant to be read as <em>&quot;oh, if I have an if-statement I should use
+null-command&quot;</em>, it is intended to be read as <em>&quot;oh, if I am in a context which
+requires a command, I can use the null-command to no-op it&quot;</em>.</p>
+<h4>
+            Clever real-world usage of <code>:</code> in the wild #
+        </h4><p>User
+<a href="https://news.ycombinator.com/user?id=fphilipe" target="_blank" rel="noopener nofollow">ifphilipe</a>
+posted what follows as <a href="https://news.ycombinator.com/item?id=49047453" target="_blank" rel="noopener nofollow">a comment</a> on
+<a href="https://news.ycombinator.com" target="_blank" rel="noopener nofollow">news.ycombinator.com</a>,
+which is the direct equivalent of needing a command which
+does absolutely nothing.</p>
+<blockquote>
+<p>I use the colon as EDITOR with Git when I want to do an
+interactive rebase combined with auto squash without
+having to edit the todo list. I have an alias[1] for that
+which I call a quick interactive rebase:</p>
+<p><code>riq = -c sequence.editor=: rebase --interactive</code></p>
+</blockquote>
+<p>Could this article have used the above rather than the so
+much debated if-statement? If I was clever enough to come
+up with it — yes.. but would it be as comprehensible
+in terms of understanding what <code>:</code> really is? I strongly
+suspect not.</p>
+</li>
+</ul></article><article class="dp-body" id="dpBodyZh" hidden><h2>
+            在一个遥远遥远的国度.. #
+        </h2><p>... 曾有一杯放得太久、凉透了的咖啡，旁边是一杯刚冲好的、烫得要命的新咖啡。四个本可以在一小时前就关掉的终端，还有一个我实在（实在）不想写的 shell 脚本。</p>
+<p>谁能想到，一个简单的冒号竟然会是拯救 <code>day</code>（白天）夜晚的关键呢？</p>
+<blockquote>
+<p><strong>注意</strong>：想立刻让你的世界观被颠覆？来看看更多冒号的高光时刻吧。</p>
+</blockquote>
+<h2>
+            检查必需参数 #
+        </h2><p>这操作是不是很熟悉？现在对我来说已经近乎肌肉记忆了。你有一个脚本，它需要几个参数，其中一些是必需的；好吧，就像以前无数次那样，来个 if 语句：</p>
+<pre><code>if [ -z &quot;$1&quot; ]; then
+   echo &quot;缺少参数，中止执行。&quot; 1&gt;&amp;2
+   exit 1
+fi
+
+echo &quot;你好 $1!&quot;
+</code></pre>
+<p>不过...如果我告诉你，上面这四行代码可以被替换成...仅仅一行呢？</p>
+<pre><code>: &quot;${1:?missing argument, aborting.}&quot;
+echo &quot;Hello $1!&quot;
+</code></pre>
+<pre><code>$ bash example.sh
+example.sh: line 1: 1: missing argument, aborting.
+
+$ bash example.sh refp
+Hello refp!
+</code></pre>
+<p>再看看如果我们用一个有意义的变量名会发生什么——行为和之前一样，但更容易发现；诊断信息里包含了我们变量的名字！</p>
+<pre><code>: &quot;${GREET_NAME:?missing argument, aborting.}&quot;
+echo &quot;Hello $GREET_NAME!&quot;
+</code></pre>
+<pre><code>$ bash greet.sh
+greet.sh: line 1: GREET_NAME: missing argument, aborting.
+</code></pre>
+<h3>
+            参数扩展与 <code>:?</code> 的故事 #
+        </h3><p>上一段代码里有两个知识点，你猜对了，其中一部分用到了 <a href="https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_06_02" target="_blank" rel="noopener nofollow">parameter expansion</a>（参数扩展）：</p>
+<ul>
+<li><p>语法 <code>${name:?diagnostic}</code> 会检查 <code>$name</code> 是否未设置或为空
+— 如果是，则诊断信息会被打印到 <em>stderr</em>（标准错误），然后 shell 以非零状态退出；否则；</p>
+</li>
+<li><p>如果变量已设置，它就等同于 <code>$name</code>。</p>
+</li>
+</ul>
+<h2>
+            那个.. 另一个冒号 #
+        </h2><p>这是一个冒号，但另一个呢？那个独自待在行首的？</p>
+<ul>
+<li>
+<p><code>:</code> 是 <a href="https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_16" target="_blank" rel="noopener nofollow">null-command</a>
+— 一个内置命令，它会计算参数的值，然后直接丢弃结果。</p>
+</li>
+<li><p><code>:</code> 历史悠久，它最早可以追溯到 <a href="https://en.wikipedia.org/wiki/Thompson_shell#Design" target="_blank" rel="noopener nofollow">1971 年的 Thompson shell</a>，当时它既可以用作 <a href="https://www.in-ulm.de/~mascheck/bourne/PWB/goto.1.html" target="_blank" rel="noopener nofollow">标签</a>，也是 Unix 最早的注释标记。</p>
+</li>
+<li><p><code>:</code> 就像黑暗中一双爱意满满的眼睛凝视着你。</p>
+</li>
+</ul>
+
+<h2>
+            更多冒号登场 #
+        </h2><p>也许我们已经证明了 <code>:</code> 远不止表面看起来那么简单，但为了展示 <a href="https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_16" target="_blank" rel="noopener nofollow">null-command</a> 的真正魔力——这里有几个让我大开眼界的用法。</p>
+<pre><code>: &quot;${DATA_DIR:=/var/data}&quot;       
+: &quot;${RETRIES:=3}&quot;                
+</code></pre>
+<pre><code>: &gt; error.log                    
+: &gt; error.log &gt; access.log       
+</code></pre>
+<pre><code>( : &lt; dataset.json ) &amp;&amp; echo YES 
+( : &gt;&gt; result.json ) &amp;&amp; echo YES 
+</code></pre>
+<pre><code>trap : INT                       
+sleep 60                         
+</code></pre>
+<pre><code>set -u                           
+: &quot;$DEPLOY_ENV&quot; &quot;$HOST&quot;          
+</code></pre>
+<pre><code>if some-command; then
+    :                            
+else
+    echo &quot;command failed&quot;
+fi
+</code></pre>
+<h2>
+            冒号奇谈 #
+        </h2><p>所以，如果你和我一样，更喜欢少打几个字（gotta go fast）——那么 <a href="https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_16" target="_blank" rel="noopener nofollow">null-command</a> 和 <a href="https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_06_02" target="_blank" rel="noopener nofollow">parameter expansion</a> 这对组合值得你在咖啡变凉前好好研究一下。</p>
+<p>而且.. 这难道不——很神奇吗？</p>
+<pre><code>set  : : : : : : : : : : : : : : : : : : : : :
+
+while : colons are more than &quot;${1:?magic}&quot;; do
+    echo &quot;$*&quot; &amp;&amp; shift
+done
+</code></pre>
+<blockquote>
+<p><strong>注意</strong>：上面的例子在本地运行是安全的，快去试试吧！</p>
+</blockquote>
+<h2>
+            常见问题 #
+        </h2>
+<p>在网上看了几条评论后，我发现我漏掉了一些值得解释的内容。我会随着问题的出现不断更新这部分内容。</p>
+<ul>
+<li><h3>
+            为什么我需要空命令？没有冒号参数展开不会发生吗？ #
+        </h3><p>参数展开无论如何都会发生，但如果没有空命令或类似的用法，shell 会将结果字符串当作要运行的命令来处理。</p>
+<pre><code>% ${HELLO:=123}
+zsh: command not found: 123
+</code></pre>
+<p>如果我们在参数展开前加上空命令，结果会被丢弃，但表达式仍然会被求值（将 <code>HELLO</code> 设置为 <code>123</code>）。</p>
+<pre><code>% : ${HELLO:=123}
+% echo $HELLO
+123
+</code></pre>
+</li>
+<li><h3>
+            为什么我可以用 <code>VAR=${VAR:-default-value}</code> 却还要用空命令？ #
+        </h3><p>这本质上归结于个人偏好，但使用我们心爱的冒号可以将潜在拼写错误数量减少到一个（而不是两个）：</p>
+<pre><code>: &quot;${DATA_DIR:=/var/data}&quot;           
+DATA_DIR=&quot;${DATA_DRI:-/var/data}&quot;    
+</code></pre>
+</li>
+<li><h3>
+            当这些做法会影响可读性时，我为什么还要用？ #
+        </h3><p>对于本文中提出的——非常刻意——的例子，存在一些常见的误解，有人质疑它们的实用性，或者根本不确定是否应该使用这些技巧。</p>
+<p>我们来看下面的例子。</p>
+<pre><code>if some-command; then
+    :                            
+else
+    echo &quot;command failed&quot;
+fi
+</code></pre>
+<p>当然，你可以用 <code>if ! some-command</code> 来消除分支，但这并不是这个代码片段的重点——重点在于展示空命令可以在需要命令但又不希望执行任何操作的地方使用。</p>
+<p>它的本意不是要被理解为 <em>&quot;哦，如果我有一个 if 语句，我就应该用空命令&quot;</em>，而是要被理解为 <em>&quot;哦，如果我处于一个需要命令的上下文中，我可以使用空命令来让它变成一个空操作（no-op）&quot;</em>。</p>
+<h4>
+            <code>:</code> 在现实世界中的巧妙用法 #
+        </h4><p>用户
+<a href="https://news.ycombinator.com/user?id=fphilipe" target="_blank" rel="noopener nofollow">ifphilipe</a>
+在 <a href="https://news.ycombinator.com/item?id=49047453" target="_blank" rel="noopener nofollow">评论</a>中发布了以下内容，
+发布于 <a href="https://news.ycombinator.com" target="_blank" rel="noopener nofollow">news.ycombinator.com</a>，
+这直接等同于需要一个什么都不做的命令。</p>
+<blockquote>
+<p>当我想执行一个自动压缩的交互式 rebase，又不想手动编辑待办事项列表时，我会使用冒号作为 Git 的 EDITOR。我为此设置了一个别名[1]，我称之为快速交互式 rebase：</p>
+<p><code>riq = -c sequence.editor=: rebase --interactive</code></p>
+</blockquote>
+<p>这篇文章是否可以用上面的方法，而不是那个引发大量讨论的 if 语句呢？如果我能想出这个方法——是的……但这样能让人更容易理解 <code>:</code> 的真正含义吗？我强烈怀疑不能。</p>
+</li>
+</ul></article>
+    <div class="dp-actions">
+      <a class="dp-btn pri" href="https://refp.se/articles/your-shell-and-the-magic-colon" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      <a class="dp-btn sec" href="https://news.ycombinator.com/item?id=49047453" target="_blank" rel="noopener"><i class="fa-brands fa-hacker-news"></i>HN 讨论</a>
+      <button type="button" class="dp-btn sec" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
+      <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
+    </div>
+    <p class="dp-note">本页由句子互动动态管线自动生成，聚合内容版权归各来源所有；如来源方希望调整或移除收录，请通过官网联系我们。</p>
+  </div>
+</main>
+<div id="site-footer"></div>
+<script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "A shell colon does nothing. Use it anyway"};</script>
+<script src="../../assets/site.js"></script>
+<script>
+(function(){var b=document.getElementById('dpLang');if(!b)return;
+var en=document.getElementById('dpBodyOrig'),zh=document.getElementById('dpBodyZh');
+b.addEventListener('click',function(){var on=zh.hidden;zh.hidden=!on;en.hidden=on;
+b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';});})();
+</script>
+</body>
+</html>

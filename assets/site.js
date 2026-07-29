@@ -45,6 +45,7 @@
     '    <div class="nav-item"><a href="' + REL + 'industries.html">客户与行业</a></div>' +
     '    <div class="nav-item"><a href="' + REL + 'enterprise.html">企业级能力</a></div>' +
     '    <div class="nav-item"><a href="' + REL + 'fde.html">FDE 交付结果</a></div>' +
+    '    <div class="nav-item"><a href="' + REL + 'news.html">动态</a></div>' +
     '    <div class="nav-item"><a href="' + REL + 'about.html">AI 原生组织</a></div>' +
     '    <div class="nav-item"><a href="' + REL + 'careers/index.html">加入我们</a></div>' +
     '  </div>' +
@@ -94,6 +95,7 @@
     '      <div><h6>公司</h6><ul>' +
     '        <li><a href="' + REL + 'fde.html">FDE 交付结果</a></li>' +
     '        <li><a href="' + REL + 'industries.html">客户与行业</a></li>' +
+    '        <li><a href="' + REL + 'news.html">动态</a></li>' +
     '        <li><a href="' + REL + 'about.html">AI 原生组织</a></li>' +
     '        <li><a href="' + REL + 'careers/index.html">加入我们</a></li>' +
     '      </ul></div>' +

@@ -1,0 +1,63 @@
+<h1>在8美元的微控制器上运行2890万参数的大语言模型</h1>
+<p>
+  求职中  · 
+  <a href="https://x.com/slvDev" target="_blank" rel="noopener nofollow">𝕏 slvDev</a>  · 
+  <a href="https://www.linkedin.com/in/slvdev/" target="_blank" rel="noopener nofollow">LinkedIn</a>
+</p>
+<p><a href="https://github.com/slvDev/esp32-ai/blob/main/media/esp32-ple-demo.gif" target="_blank" rel="noopener nofollow"><img src="https://github.com/slvDev/esp32-ai/raw/main/media/esp32-ple-demo.gif" alt="2890万参数大语言模型在ESP32-S3上运行" referrerpolicy="no-referrer" /></a></p>
+<p>这是一个拥有2890万参数的语言模型，运行在价值约8美元的ESP32-S3微控制器上。
+模型直接在芯片上运行，无需与服务器通信，并以每秒约9个token的速度将生成的词句写入连接到芯片的小屏幕。
+此前人们在这种芯片上运行的语言模型只有26万个参数，而这个模型的参数量大约是前者的100倍。
+它能实现这一点，是因为大部分模型参数存储在闪存而非RAM中，这借鉴了Google Gemma模型中的"分层嵌入"(Per-Layer Embeddings)理念。</p>
+<h2>技术规格</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>参数量</td>
+<td>2890万（其中2500万存储在闪存查找表中）</td>
+</tr>
+<tr>
+<td>芯片</td>
+<td>ESP32-S3，约8美元，配备512KB SRAM、8MB PSRAM和16MB闪存</td>
+</tr>
+<tr>
+<td>速度</td>
+<td>端到端约9.5 token/秒（纯计算部分9.7 token/秒）</td>
+</tr>
+<tr>
+<td>连接性</td>
+<td>无，所有运算都在设备本地完成</td>
+</tr>
+<tr>
+<td>模型大小</td>
+<td>4位量化下为14.9MB</td>
+</tr>
+</tbody>
+</table>
+<h2>为什么很难，以及如何实现</h2>
+<p>微控制器的快速内存非常有限。ESP32-S3只提供512KB的SRAM。
+通常整个模型必须能被这部分内存访问，这就限制了模型规模，这也是为什么此前类似芯片上的模型只有26万个参数。</p>
+<p>解决方案是干脆不把模型放在快速内存中。语言模型的大部分参数都位于嵌入表中，模型是读取这些参数而非直接计算它们。
+因此，你可以将那2500万行的嵌入表留在慢速闪存中，每次只提取当前token所需的少数几行（约450字节），而负责实际计算的小部分模型则保留在快速内存中。
+这样一来，运行大型模型的成本几乎为零，因为你从未加载大部分模型内容。它只是静静地待在闪存中，被少量地按需读取。</p>
+<p>这个理念就是Google的"分层嵌入"(Per-Layer Embeddings)，源自Gemma 3n和Gemma 4模型。在这里，它被应用到了微控制器的内存布局上，而非手机或GPU。
+据我所知，此前从未有人尝试在如此小的芯片上实现这一方案。</p>
+<pre><code>  SRAM  (快速、小巧)   “思考”核心，每个 token 都会用到
+  PSRAM (中等速度)     输出层和工作内存
+  FLASH (巨大、缓慢)   2500 万参数的表格，每个 token 读取约 6 行数据 (~450 字节)
+</code></pre>
+<h2>它能做什么，不能做什么</h2>
+<p>这个模型是在 TinyStories 数据集上训练的，所以它能写出简短、简单的故事，并且基本能保持故事的连贯性。它不会回答问题、遵循指令、编写代码，或者了解事实。这些限制来自于模型中负责推理的小部分，而内存技巧并不会改变这一点。这里真正有趣的是架构设计——如何将一个大模型塞进一个小芯片，而不是这个拥有 2890 万参数的模型能说出什么。</p>
+<h2>自己动手运行</h2>
+<p>固件、接线步骤和烧录方法都在 <a href="https://github.com/slvDev/esp32-ai/blob/main/firmware/esp32_llm/README.md" target="_blank" rel="noopener nofollow"><code>firmware/esp32_llm/README.md</code></a> 中。训练、消融实验和量化代码在 <code>src/</code> 和 <code>experiments/</code> 目录下。完整的方法、消融实验和芯片上的测量结果都记录在 <a href="https://github.com/slvDev/esp32-ai/blob/main/RESULTS.md" target="_blank" rel="noopener nofollow"><code>RESULTS.md</code></a> 中。</p>
+<h2>鸣谢</h2>
+<p>TinyStories 是本次训练所用的数据集：它是一组简短的合成故事，内容足够简单，以至于一个小模型也能学会连贯地写作（Ronen Eldan 和 Yuanzhi Li，微软研究院，<a href="https://arxiv.org/abs/2305.07759" target="_blank" rel="noopener nofollow">arXiv:2305.07759</a>）。另一半功劳来自 Per-Layer Embeddings，这是 Google 在 Gemma 模型中提出的设计，正是它让一个大模型能够适配在小芯片上运行。</p>
+<p>Andrej Karpathy 的 <a href="https://github.com/karpathy/llama2.c" target="_blank" rel="noopener nofollow">llama2.c</a> 让很多人（包括我）相信，你可以训练一个小型语言模型，并用纯 C 语言运行它。这个项目正是在他的基础上发展而来的。</p>
+<h2>实际开发过程</h2>
+<p>我特意把开发过程中的混乱历史留在了仓库里。这包括我发现的一个关于参数计数的 bug，它曾夸大了一个早期的数据，以及我修复后得出的正确结果。提交历史和 <code>RESULTS.md</code> 记录了数据的变化和原因。</p>

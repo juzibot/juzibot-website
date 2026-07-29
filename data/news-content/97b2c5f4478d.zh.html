@@ -1,0 +1,429 @@
+<p>以大型语言模型（LLM）作为核心控制器来构建智能体是个很酷的概念。一些概念验证演示，比如 <a href="https://github.com/Significant-Gravitas/Auto-GPT" target="_blank" rel="noopener nofollow">AutoGPT</a>、<a href="https://github.com/AntonOsika/gpt-engineer" target="_blank" rel="noopener nofollow">GPT-Engineer</a> 和 <a href="https://github.com/yoheinakajima/babyagi" target="_blank" rel="noopener nofollow">BabyAGI</a），就是非常鼓舞人心的例子。LLM 的潜力远不止于生成优秀的文案、故事、文章和程序；它可以被塑造成一个强大的通用问题解决器。</p>
+<h1>智能体系统概述#</h1>
+<p>在由 LLM 驱动的自主智能体系统中，LLM 充当智能体的大脑，并辅以几个关键组件：</p>
+<ul>
+<li><strong>规划</strong>
+<ul>
+<li>子目标与分解：智能体将大任务分解成更小、易于管理的子目标，从而能够高效地处理复杂任务。</li>
+<li>反思与优化：智能体可以对过去的行动进行自我批评和反思，从错误中学习并优化后续步骤，从而提高最终结果的质量。</li>
+</ul>
+</li>
+<li><strong>记忆</strong>
+<ul>
+<li>短期记忆：我认为所有上下文学习（参见 <a href="https://lilianweng.github.io/posts/2023-03-15-prompt-engineering/" target="_blank" rel="noopener nofollow">Prompt Engineering</a>）都是利用模型的短期记忆进行学习。</li>
+<li>长期记忆：这为智能体提供了在长时间内保留和召回（无限）信息的能力，通常通过利用外部向量存储和快速检索来实现。</li>
+</ul>
+</li>
+<li><strong>工具使用</strong>
+<ul>
+<li>智能体学会调用外部 API 来获取模型权重中缺失的额外信息（这些信息在预训练后通常很难更改），包括当前信息、代码执行能力、对专有信息源的访问等等。</li>
+</ul>
+</li>
+</ul>
+<figure>
+	<img src="https://lilianweng.github.io/posts/2023-06-23-agent/agent-overview.png" referrerpolicy="no-referrer" />
+	<figcaption>一个由 LLM 驱动的自主智能体系统概述。</figcaption>
+</figure>
+<h1>组件一：规划#</h1>
+<p>一个复杂的任务通常涉及很多步骤。智能体需要知道这些步骤是什么，并提前规划。</p>
+<h2>任务分解#</h2>
+<p><a href="https://lilianweng.github.io/posts/2023-03-15-prompt-engineering/#chain-of-thought-cot" target="_blank" rel="noopener nofollow"><strong>思维链</strong></a>（CoT；<a href="https://arxiv.org/abs/2201.11903" target="_blank" rel="noopener nofollow">Wei 等人 2022</a>）已成为一种标准的提示技术，用于提升模型在复杂任务上的表现。该方法指导模型“逐步思考”，从而利用更多的测试时计算能力，将艰巨的任务分解为更小、更简单的步骤。思维链将大任务转化为多个可管理的子任务，并为理解模型的思考过程提供了新的视角。</p>
+<p><strong>思维树</strong>（<a href="https://arxiv.org/abs/2305.10601" target="_blank" rel="noopener nofollow">Yao 等人 2023</a>）通过在每个步骤探索多种推理可能性，对思维链进行了扩展。它首先将问题分解为多个思考步骤，并在每一步生成多个思考内容，从而形成一个树状结构。搜索过程可以采用广度优先搜索（BFS）或深度优先搜索（DFS），并由分类器（通过提示实现）或多数投票来评估每个状态。</p>
+<p>任务分解可以通过以下方式实现：(1) 使用简单的提示让 LLM 完成，例如 <code>&quot;完成 XYZ 的步骤。\n1.&quot;</code> 或 <code>&quot;实现 XYZ 需要哪些子目标？&quot;</code>；(2) 使用特定任务的指令，例如为写小说提供 <code>&quot;撰写故事大纲。&quot;</code>；(3) 通过人工输入。</p>
+<p>另一种截然不同的方法是<strong>LLM+P</strong>（<a href="https://arxiv.org/abs/2304.11477" target="_blank" rel="noopener nofollow">Liu 等人 2023</a>），它依赖外部经典规划器进行长期规划。该方法利用规划域定义语言（PDDL）作为中间接口来描述规划问题。在这个过程中，LLM (1) 将问题转化为“问题 PDDL”，然后 (2) 请求经典规划器基于现有的“领域 PDDL”生成一个 PDDL 计划，最后 (3) 将 PDDL 计划翻译回自然语言。本质上，规划步骤被外包给了外部工具，这假设了特定领域的 PDDL 和合适的规划器是可用的——这在某些机器人设置中很常见，但在许多其他领域则不然。</p>
+<h2>自我反思#</h2>
+<p>自我反思是一个至关重要的方面，它使自主代理能够通过优化过去的行动决策和纠正之前的错误来持续改进。在试错在所难免的现实世界任务中，它扮演着关键角色。</p>
+<p><strong>ReAct</strong> (<a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener nofollow">Yao et al. 2023</a>) 通过将动作空间扩展为任务特定的离散动作与语言空间的组合，将推理和行动整合到大型语言模型（LLM）中。前者使LLM能够与环境交互（例如使用维基百科搜索API），而后者则促使LLM用自然语言生成推理轨迹。</p>
+<p>ReAct的提示模板包含了明确的步骤来引导LLM进行思考，大致格式如下：</p>
+<pre><code>Thought: ...
+Action: ...
+Observation: ...
+... (重复多次)
+</code></pre><figure>
+	<img src="https://lilianweng.github.io/posts/2023-06-23-agent/react.png" referrerpolicy="no-referrer" />
+	<figcaption>知识密集型任务（如HotpotQA、FEVER）和决策型任务（如AlfWorld Env、WebShop）的推理轨迹示例。（图片来源：<a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener nofollow">Yao et al. 2023</a>）</figcaption>
+</figure>
+<p>在知识密集型任务和决策型任务的实验中，<code>ReAct</code>的表现优于仅包含行动的<code>Act</code>基线模型（即移除了<code>Thought: …</code>步骤的模型）。</p>
+<p><strong>Reflexion</strong> (<a href="https://arxiv.org/abs/2303.11366" target="_blank" rel="noopener nofollow">Shinn &amp; Labash 2023</a>) 是一个为智能体配备动态记忆和自我反思能力的框架，旨在提升其推理能力。Reflexion采用标准的强化学习设置，其中奖励模型提供一个简单的二元奖励，而动作空间则遵循ReAct的设置，将任务特定的动作空间与语言相结合，以支持复杂的推理步骤。在每个动作 $a_t$ 之后，智能体会计算一个启发式值 $h_t$，并根据自我反思的结果，选择性地<em>决定重置</em>环境以开始新的尝试。</p>
+<figure>
+	<img src="https://lilianweng.github.io/posts/2023-06-23-agent/reflexion.png" referrerpolicy="no-referrer" />
+	<figcaption>Reflexion框架示意图。（图片来源：<a href="https://arxiv.org/abs/2303.11366" target="_blank" rel="noopener nofollow">Shinn &amp; Labash, 2023</a>）</figcaption>
+</figure>
+<p>启发式函数用于判断轨迹是否效率低下或包含幻觉，并决定是否应停止。效率低下的规划指的是那些耗时过长却未能成功的轨迹。幻觉则被定义为遇到一连串相同的动作，而这些动作在环境中产生了相同的观察结果。</p>
+<p>自我反思是通过向大语言模型展示双样本示例来实现的，每个示例都是一组（失败轨迹，用于指导未来计划变更的理想反思）。然后将反思内容添加到代理的工作记忆中，最多三条，作为查询大语言模型的上下文使用。</p>
+<figure>
+	<img src="https://lilianweng.github.io/posts/2023-06-23-agent/reflexion-exp.png" referrerpolicy="no-referrer" />
+	<figcaption>在AlfWorld环境和HotpotQA上的实验结果。在AlfWorld中，幻觉比低效规划更为常见的失败类型。（图片来源：<a href="https://arxiv.org/abs/2303.11366" target="_blank" rel="noopener nofollow">Shinn &amp; Labash, 2023</a>）</figcaption>
+</figure>
+<p><strong>后见之明链</strong>（CoH; <a href="https://arxiv.org/abs/2302.02676" target="_blank" rel="noopener nofollow">Liu et al. 2023</a>）通过明确展示一系列过去的输出（每个都带有反馈注释）来鼓励模型改进自身输出。人类反馈数据是一个集合$D_h = \{(x, y_i , r_i , z_i)\}_{i=1}^n$，其中$x$是提示，每个$y_i$是模型的完成输出，$r_i$是对$y_i$的人类评分，$z_i$是对应的人类后见之明反馈。假设反馈元组按奖励排序，即$r_n \geq r_{n-1} \geq \dots \geq r_1$。该过程是监督微调，数据形式为序列$\tau_h = (x, z_i, y_i, z_j, y_j, \dots, z_n, y_n)$，其中$\leq i \leq j \leq n$。模型在给定序列前缀的条件下被微调以只预测$y_n$，这样模型就能基于反馈序列进行自我反思以产生更好的输出。在测试时，模型可以选择性地与人工标注者进行多轮指令交互。</p>
+<p>为避免过拟合，CoH添加了一个正则化项来最大化预训练数据集的对数似然。为避免捷径和复制行为（因为反馈序列中有很多常见词汇），他们在训练过程中会随机屏蔽0%-5%的过去token。</p>
+<p>他们实验中的训练数据集是<a href="https://huggingface.co/datasets/openai/webgpt_comparisons" target="_blank" rel="noopener nofollow">WebGPT对比数据</a>、<a href="https://github.com/openai/summarize-from-feedback" target="_blank" rel="noopener nofollow">基于人类反馈的摘要</a>和<a href="https://github.com/anthropics/hh-rlhf" target="_blank" rel="noopener nofollow">人类偏好数据集</a>的组合。</p>
+<figure>
+	<img src="https://lilianweng.github.io/posts/2023-06-23-agent/CoH.png" referrerpolicy="no-referrer" />
+	<figcaption>经过 CoH 微调后，模型能够遵循指令，在一系列输出中逐步改进。 (图片来源: <a href="https://arxiv.org/abs/2302.02676" target="_blank" rel="noopener nofollow">Liu et al. 2023</a>)</figcaption>
+</figure>
+<p>CoH 的核心思想是在上下文中展示一系列逐步改进的输出，并训练模型遵循这种趋势以产生更好的输出。<strong>算法蒸馏</strong>（AD; <a href="https://arxiv.org/abs/2210.14215" target="_blank" rel="noopener nofollow">Laskin et al. 2023</a>）将同样的思想应用于强化学习任务中的跨回合轨迹，其中<em>算法</em>被封装在一个长历史条件策略中。考虑到智能体与环境进行多次交互，并且在每个回合中都会有所进步，AD 将这些学习历史拼接起来输入给模型。因此，我们可以期望下一个预测的动作能比之前的尝试带来更好的表现。其目标是学习强化学习的过程，而不是训练一个特定任务本身的策略。</p>
+<figure>
+	<img src="https://lilianweng.github.io/posts/2023-06-23-agent/algorithm-distillation.png" referrerpolicy="no-referrer" />
+	<figcaption>算法蒸馏 (AD) 工作原理示意图。<br />(图片来源: <a href="https://arxiv.org/abs/2210.14215" target="_blank" rel="noopener nofollow">Laskin et al. 2023</a>)。</figcaption>
+</figure>
+<p>该论文假设，任何能生成一组学习历史的算法，都可以通过对动作进行行为克隆来蒸馏成一个神经网络。历史数据由一组源策略生成，每个策略都针对特定任务进行训练。在训练阶段，每次强化学习运行时，会随机采样一个任务，并使用多回合历史的一个子序列进行训练，这样学到的策略就与任务无关。</p>
+<p>实际上，模型的上下文窗口长度是有限的，因此回合应该足够短，以便构建多回合历史。要学习一个接近最优的上下文强化学习算法，2-4 个回合的多回合上下文是必要的。上下文强化学习的出现需要足够长的上下文。</p>
+<p>与三个基线方法（包括 ED（专家蒸馏，使用专家轨迹而非学习历史的行为克隆）、源策略（通过 <a href="https://lilianweng.github.io/posts/2018-01-23-multi-armed-bandit/#upper-confidence-bounds" target="_blank" rel="noopener nofollow">UCB</a> 生成轨迹用于蒸馏）和 RL^2（<a href="https://arxiv.org/abs/1611.02779" target="_blank" rel="noopener nofollow">Duan et al. 2017</a>；由于需要在线 RL 而用作上限））相比，AD 展示了上下文 RL 的能力，其性能接近 RL^2，尽管仅使用离线 RL，并且比其他基线方法学习速度快得多。当基于源策略的部分训练历史进行条件化时，AD 的改进速度也比 ED 基线快得多。</p>
+<figure>
+	<img src="https://lilianweng.github.io/posts/2023-06-23-agent/algorithm-distillation-results.png" referrerpolicy="no-referrer" />
+	<figcaption>AD、ED、源策略和 RL^2 在需要记忆和探索的环境中的比较。仅分配二元奖励。源策略使用 <a href="https://lilianweng.github.io/posts/2018-04-08-policy-gradient/#a3c" target="_blank" rel="noopener nofollow">A3C</a> 训练用于 "dark" 环境，使用 <a href="http://lilianweng.github.io/posts/2018-02-19-rl-overview/#deep-q-network" target="_blank" rel="noopener nofollow">DQN</> 训练用于 watermaze 环境。<br />(图片来源: <a href="https://arxiv.org/abs/2210.14215" target="_blank" rel="noopener nofollow">Laskin et al. 2023</a>)</figcaption>
+</figure>
+<h1>组件二：记忆#</h1>
+<p>（非常感谢 ChatGPT 帮我起草本节。在与 ChatGPT 的 <a href="https://chat.openai.com/share/46ff149e-a4c7-4dd7-a800-fc4a642ea389" target="_blank" rel="noopener nofollow">对话</a> 中，我学到了很多关于人脑和快速 MIPS 数据结构的知识。）</p>
+<h2>记忆的类型#</h2>
+<p>记忆可以被定义为用于获取、存储、保留和 later 检索信息的过程。人脑中有多种类型的记忆。</p>
+<ol>
+<li>
+<p><strong>感觉记忆</strong>：这是记忆的最早阶段，能够在原始刺激结束后保留感官信息（视觉、听觉等）的印象。感觉记忆通常只持续几秒钟。子类别包括图像记忆（视觉）、回声记忆（听觉）和触觉记忆（触觉）。</p>
+</li>
+<li>
+<p><strong>短期记忆</strong>（STM）或<strong>工作记忆</strong>：它存储我们当前意识到的信息，这些信息是完成复杂认知任务（如学习和推理）所必需的。短期记忆的容量约为7个项目（<a href="https://lilianweng.github.io/posts/2023-06-23-agent/psychclassics.yorku.ca/Miller/" target="_blank" rel="noopener nofollow">Miller 1956</a>），持续时间约为20-30秒。</p>
+</li>
+<li>
+<p><strong>长期记忆</strong>（LTM）：长期记忆可以存储信息非常长的时间，从几天到几十年不等，并且具有基本上无限的存储容量。长期记忆有两种亚型：</p>
+<ul>
+<li>外显/陈述性记忆：这是对事实和事件的记忆，指那些可以被有意识回忆的记忆，包括情景记忆（事件和经历）和语义记忆（事实和概念）。</li>
+<li>内隐/程序性记忆：这种类型的记忆是无意识的，涉及自动执行的技能和常规，比如骑自行车或在键盘上打字。</li>
+</ul>
+</li>
+</ol>
+<figure>
+	<img src="https://lilianweng.github.io/posts/2023-06-23-agent/memory.png" referrerpolicy="no-referrer" />
+	<figcaption>人类记忆的分类。</figcaption>
+</figure>
+<p>我们可以大致考虑以下映射关系：</p>
+<ul>
+<li>将感觉记忆视为原始输入（包括文本、图像或其他模态）的学习嵌入表示；</li>
+<li>将短期记忆视为上下文学习。它是短暂且有限的，因为它受到 Transformer 有限上下文窗口长度的限制。</li>
+<li>将长期记忆视为代理在查询时可以关注的外部向量存储，可通过快速检索访问。</li>
+</ul>
+<h2>最大内积搜索 (MIPS)#</h2>
+<p>外部记忆可以缓解有限注意力范围的限制。一种标准做法是将信息的嵌入表示保存到支持快速最大内积搜索（<a href="https://en.wikipedia.org/wiki/Maximum_inner-product_search" target="_blank" rel="noopener nofollow">MIPS</a>）的向量存储数据库中。为了优化检索速度，常见的选择是使用<em>近似最近邻（ANN）</em>算法，返回近似的前k个最近邻，以牺牲少量准确性来换取巨大的速度提升。</p>
+<p>用于快速 MIPS 的一些常见 ANN 算法选择：</p>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Locality-sensitive_hashing" target="_blank" rel="noopener nofollow"><strong>LSH</strong></a> (局部敏感哈希)：它引入了一种<em>哈希</em>函数，使得相似的输入项有很高的概率被映射到同一个桶中，而桶的数量远小于输入的数量。</li>
+<li><a href="https://github.com/spotify/annoy" target="_blank" rel="noopener nofollow"><strong>ANNOY</strong></a> (近似最近邻搜索)：其核心数据结构是<em>随机投影树</em>，这是一组二叉树，其中每个非叶节点代表一个将输入空间分成两半的超平面，每个叶节点存储一个数据点。树是独立随机构建的，因此在某种程度上模拟了哈希函数。ANNOY的搜索会在所有树中进行，迭代查询最接近查询结果的一半，然后聚合结果。这个想法与KD树非常相似，但可扩展性要好得多。</li>
+<li><a href="https://arxiv.org/abs/1603.09320" target="_blank" rel="noopener nofollow"><strong>HNSW</strong></a> (分层可导航小世界)：它受到<em>小世界网络</em>的启发，在小世界网络中，大多数节点可以在很少的步骤内到达任何其他节点；例如社交网络中的“六度分隔”特性。HNSW构建了这些小世界图的分层结构，其中底层包含实际的数据点。中间层创建捷径以加速搜索。执行搜索时，HNSW从顶层的一个随机节点开始，向目标导航。当无法再接近时，它会移动到下一层，直到到达底层。在上层中的每一步都可能覆盖数据空间中的很大距离，而在下层中的每一步则优化搜索质量。</li>
+<li><a href="https://github.com/facebookresearch/faiss" target="_blank" rel="noopener nofollow"><strong>FAISS</strong></a> (Facebook AI相似性搜索)：它基于一个假设，即在多维空间中，节点之间的距离遵循高斯分布，因此应该存在数据点的<em>聚类</em>。FAISS通过将向量空间划分为聚类，然后在聚类内细化量化来应用向量量化。搜索首先通过粗略量化寻找候选聚类，然后通过更精细的量化进一步检查每个聚类。</li>
+<li><a href="https://github.com/google-research/google-research/tree/master/scann" target="_blank" rel="noopener nofollow"><strong>ScaNN</strong></a> (可扩展最近邻)：ScaNN的主要创新是<em>各向异性向量量化</em>。它将数据点 $x_i$ 量化为 $\tilde{x}_i$，使得内积 $\langle q, x_i \rangle$ 尽可能接近原始距离 $\angle q, \tilde{x}_i$，而不是选择最近的量化质心点。</li>
+</ul>
+<figure>
+	<img src="https://lilianweng.github.io/posts/2023-06-23-agent/mips.png" referrerpolicy="no-referrer" />
+	<figcaption>MIPS 算法对比，按 recall@10 指标衡量。（图片来源：<a href="https://ai.googleblog.com/2020/07/announcing-scann-efficient-vector.html" target="_blank" rel="noopener nofollow">Google Blog, 2020</a>）</figcaption>
+</figure>
+<p>在 <a href="https://ann-benchmarks.com/" target="_blank" rel="noopener nofollow">ann-benchmarks.com</a> 查看更多 MIPS 算法及其性能对比。</p>
+<h1>组件三：工具使用#</h1>
+<p>工具使用是人类一个显著且独特的特征。我们创造、改造和利用外部物品来完成超越我们身体和认知极限的事情。为大型语言模型配备外部工具可以显著扩展其能力。</p>
+<figure>
+	<img src="https://lilianweng.github.io/posts/2023-06-23-agent/sea-otter.png" referrerpolicy="no-referrer" />
+	<figcaption>一张海獭在水面上漂浮，用石头敲开贝壳的图片。虽然有些其他动物也会使用工具，但其复杂程度无法与人类相比。（图片来源：<a href="https://www.popularmechanics.com/science/animals/g39714258/animals-using-tools/" target="_blank" rel="noopener nofollow">Animals using tools</a>）</figcaption>
+</figure>
+<p><strong>MRKL</strong>（<a href="https://arxiv.org/abs/2205.00445" target="_blank" rel="noopener nofollow">Karpas et al. 2022</a>）是“Modular Reasoning, Knowledge and Language”（模块化推理、知识与语言）的缩写，它是一种自主体的神经符号架构。MRKL 系统包含一系列“专家”模块，通用大型语言模型充当路由器，将查询路由到最合适的专家模块。这些模块可以是神经网络的（例如深度学习模型），也可以是符号的（例如数学计算器、货币转换器、天气 API）。</p>
+<p>他们进行了一项微调大型语言模型以调用计算器的实验，使用算术作为测试案例。实验表明，解决口头数学问题比解决明确表述的数学问题更困难，因为大型语言模型（7B Jurassic1-large 模型）无法可靠地提取基本运算的正确参数。这些结果表明，当外部符号工具能够可靠工作时，<em>知道何时以及如何使用这些工具至关重要</em>，而这取决于大型语言模型的能力。</p>
+<p>无论是 <strong>TALM</strong>（工具增强语言模型；<a href="https://arxiv.org/abs/2205.12255" target="_blank" rel="noopener nofollow">Parisi 等人，2022</a>）还是 <strong>Toolformer</strong>（<a href="https://arxiv.org/abs/2302.04761" target="_blank" rel="noopener nofollow">Schick 等人，2023</a>），都是通过微调一个语言模型，让它学会使用外部工具 API。数据集的扩展取决于新添加的 API 调用标注能否提升模型输出的质量。更多细节请参阅《提示工程》中的 <a href="https://lilianweng.github.io/posts/2023-03-15-prompt-engineering/#external-apis" target="_blank" rel="noopener nofollow">“外部 API”章节</a>。</p>
+<p>ChatGPT 的 <a href="https://openai.com/blog/chatgpt-plugins" target="_blank" rel="noopener nofollow">插件</a> 和 OpenAI API 的 <a href="https://platform.openai.com/docs/guides/gpt/function-calling" target="_blank" rel="noopener nofollow">函数调用</a> 功能，是大型语言模型在实践中成功融入工具使用能力的绝佳范例。工具 API 的集合可以由其他开发者提供（如插件模式），也可以自行定义（如函数调用模式）。</p>
+<p><strong>HuggingGPT</strong>（<a href="https://arxiv.org/abs/2303.17580" target="_blank" rel="noopener nofollow">Shen 等人，2023</a>）是一个框架，它利用 ChatGPT 作为任务规划器，根据模型描述从 HuggingFace 平台选择合适的模型，并基于执行结果汇总响应。</p>
+<figure>
+	<img src="https://lilianweng.github.io/posts/2023-06-23-agent/hugging-gpt.png" referrerpolicy="no-referrer" />
+	<figcaption>HuggingGPT 工作原理示意图。（图片来源：<a href="https://arxiv.org/abs/2303.17580" target="_blank" rel="noopener nofollow">Shen 等人，2023</a>）</figcaption>
+</figure>
+<p>该系统包含四个阶段：</p>
+<p><strong>(1) 任务规划</strong>：语言模型充当大脑，将用户的请求解析为多个任务。每个任务都关联四个属性：任务类型、ID、依赖关系和参数。他们使用少样本示例来引导语言模型进行任务解析和规划。</p>
+<p>指令：</p>
+<p>
+AI 助手可以将用户输入解析为多个任务：[{&quot;task&quot;: task, &quot;id&quot;, task_id, &quot;dep&quot;: dependency_task_ids, &quot;args&quot;: {&quot;text&quot;: text, &quot;image&quot;: URL, &quot;audio&quot;: URL, &quot;video&quot;: URL}}]。其中 &quot;dep&quot; 字段表示当前任务所依赖的前一个任务的 ID。特殊标签 &quot;-task_id&quot; 指代 ID 为 task_id 的依赖任务中生成的文本、图像、音频和视频。任务必须从以下选项中选择：{{ 可用任务列表 }}。任务之间存在逻辑关系，请注意它们的顺序。如果无法解析用户输入，你需要回复空 JSON。以下是几个供你参考的案例：{{ 示例 }}。聊天记录记录为 {{ 聊天历史 }}。你可以从聊天历史中找到用户提到的资源路径，用于你的任务规划。
+</p>
+<p><strong>(2) 模型选择</strong>：LLM 将任务分配给专家模型，请求被构造成多选题形式。LLM 会被提供一个模型列表供选择。由于上下文长度有限，需要进行基于任务类型的筛选。</p>
+<p>指令：</p>
+<p>
+根据用户请求和调用命令，AI 助手帮助用户从模型列表中选择一个合适的模型来处理用户请求。AI 助手只需输出最合适模型的 ID。输出必须采用严格的 JSON 格式：&quot;id&quot;: &quot;id&quot;, &quot;reason&quot;: &quot;你选择的详细理由&quot;。我们为你提供了一个模型列表供选择 {{ 候选模型 }}。请从列表中选择一个模型。
+</p>
+<p><strong>(3) 任务执行</strong>：专家模型执行特定任务并记录结果。</p>
+<p>指令：</p>
+<p>
+根据输入和推理结果，AI 助手需要描述过程和结果。前面的阶段可以组织为 - 用户输入：{{ 用户输入 }}，任务规划：{{ 任务 }}，模型选择：{{ 模型分配 }}，任务执行：{{ 预测 }}。你必须首先直接回答用户的问题。然后以第一人称向用户描述任务过程，展示你的分析和模型推理结果。如果推理结果包含文件路径，必须告诉用户完整的文件路径。
+</p>
+<p><strong>(4) 响应生成</strong>：LLM 接收执行结果并向用户提供总结性回复。</p>
+<p>要将 HuggingGPT 投入实际应用，需要解决几个挑战：(1) 效率提升是必要的，因为 LLM 推理轮次与其他模型的交互都会拖慢整体流程；(2) 它依赖长上下文窗口来处理复杂的任务内容；(3) 需要改进 LLM 输出和外部模型服务的稳定性。</p>
+<p><strong>API-Bank</strong> (<a href="https://arxiv.org/abs/2304.08244" target="_blank" rel="noopener nofollow">Li et al. 2023</a>) 是一个用于评估工具增强型 LLM 性能的基准测试。它包含 53 个常用 API 工具、完整的工具增强型 LLM 工作流程，以及 264 个涉及 568 次 API 调用的标注对话。API 的选择相当多样化，包括搜索引擎、计算器、日历查询、智能家居控制、日程管理、健康数据管理、账户认证流程等。由于 API 数量众多，LLM 首先需要通过 API 搜索引擎找到合适的 API 进行调用，然后使用相应的文档来完成调用。</p>
+<figure>
+	<img src="https://lilianweng.github.io/posts/2023-06-23-agent/api-bank-process.png" referrerpolicy="no-referrer" />
+	<figcaption>API-Bank 中 LLM 进行 API 调用的伪代码。（图片来源：<a href="https://arxiv.org/abs/2304.08244" target="_blank" rel="noopener nofollow">Li et al. 2023</a>）</figcaption>
+</figure>
+<p>在 API-Bank 的工作流程中，LLM 需要做出多项决策，我们可以在每个步骤评估这些决策的准确性。决策包括：</p>
+<ol>
+<li>是否需要调用 API。</li>
+<li>识别要调用的正确 API：如果不够理想，LLM 需要迭代修改 API 输入（例如为搜索引擎 API 决定搜索关键词）。</li>
+<li>基于 API 结果做出响应：如果结果不满意，模型可以选择优化后再次调用。</li>
+</ol>
+<p>该基准测试从三个层次评估代理的工具使用能力：</p>
+<ul>
+<li>第一层次评估<em>调用 API</em>的能力。给定 API 的描述，模型需要判断是否调用给定 API、正确调用 API，并对 API 返回做出适当响应。</li>
+<li>第二层次考察<em>检索 API</em>的能力。模型需要搜索可能解决用户需求的 API，并通过阅读文档学习如何使用它们。</li>
+<li>第三层次评估<em>超越检索和调用的 API 规划能力</em>。面对模糊的用户请求（如安排团队会议、预订旅行中的航班/酒店/餐厅），模型可能需要进行多次 API 调用来解决问题。</li>
+</ul>
+<h1>案例研究#</h1>
+<h2>科学发现代理#</h2>
+<p><strong>ChemCrow</strong> (<a href="https://arxiv.org/abs/2304.05376" target="_blank" rel="noopener nofollow">Bran et al. 2023</a>) 是一个领域内的典型案例，它将大型语言模型与13个专家设计的工具相结合，用于完成有机合成、药物发现和材料设计等任务。该工作流在 <a href="https://github.com/hwchase17/langchain" target="_blank" rel="noopener nofollow">LangChain</a> 中实现，反映了先前在 ReAct 和 MRKLs 中描述的内容，并将思维链推理与任务相关的工具相结合：</p>
+<ul>
+<li>LLM 会获得一个工具列表，包含它们的用途描述以及预期的输入/输出详情。</li>
+<li>随后，它会根据指令在必要时使用提供的工具来回答用户给出的提示。该指令建议模型遵循 ReAct 格式——<code>思考, 行动, 行动输入, 观察</code>。</li>
+</ul>
+<p>一个有趣的发现是，虽然基于 LLM 的评估得出 GPT-4 和 ChemCrow 的表现几乎相当，但专家进行的人工评估（侧重于解决方案的完成度和化学正确性）显示，ChemCrow 以较大优势优于 GPT-4。这表明，在需要深厚专业知识的领域使用 LLM 来评估自身性能可能存在潜在问题。专业知识的缺乏可能导致 LLM 无法认识到自身的缺陷，因而无法很好地判断任务结果的正确性。</p>
+<p><a href="https://arxiv.org/abs/2304.05332" target="_blank" rel="noopener nofollow">Boiko et al. (2023)</a> 也研究了用于科学发现的 LLM 赋能智能体，以处理复杂科学实验的自主设计、规划和执行。该智能体可以使用工具浏览互联网、阅读文档、执行代码、调用机器人实验 API 并利用其他 LLM。</p>
+<p>例如，当被要求 <code>"开发一种新型抗癌药物"</code> 时，模型提出了以下推理步骤：</p>
+<ol>
+<li>查询了当前抗癌药物发现的趋势；</li>
+<li>选择了一个靶点；</li>
+<li>请求了针对这些化合物的分子骨架；</li>
+<li>一旦化合物被确定，模型便尝试对其进行合成。</li>
+</ol>
+<p>他们还讨论了相关风险，特别是涉及非法药物和生物武器的情况。他们开发了一个包含已知化学战剂列表的测试集，并要求智能体合成这些物质。在 11 个请求中，有 4 个（36%）被接受并获得了合成方案，智能体还尝试查阅文档以执行该流程。其余 7 个请求被拒绝，在这 7 个被拒绝的案例中，有 5 个是在网络搜索后发生的，另外 2 个则仅基于提示内容被拒绝。</p>
+<h2>生成式智能体模拟#</h2>
+<p><strong>生成式智能体</strong> (<a href="https://arxiv.org/abs/2304.03442" target="_blank" rel="noopener nofollow">Park, et al. 2023</a>) 是一个非常有趣的实验，其中25个虚拟角色，每个都由一个基于大语言模型的智能体控制，在一个受《模拟人生》启发的沙盒环境中生活互动。生成式智能体能为交互式应用创造出逼真的人类行为模拟。</p>
+<p>生成式智能体的设计将大语言模型与记忆、规划和反思机制相结合，使智能体能够基于过往经验做出行为，并与其他智能体互动。</p>
+<ul>
+<li><strong>记忆</strong>流：是一个长期记忆模块（外部数据库），用自然语言记录智能体全面的经历列表。
+<ul>
+<li>每个元素都是一个<em>观察</em>，即由智能体直接提供的事件。
+- 智能体间的通信可以触发新的自然语言表述。</li>
+</ul>
+</li>
+<li><strong>检索</strong>模型：根据相关性、时效性和重要性，将相关上下文呈现给智能体，以指导其行为。
+<ul>
+<li>时效性：近期事件得分更高</li>
+<li>重要性：区分日常记忆与核心记忆。直接询问语言模型。</li>
+<li>相关性：基于与当前情况/查询的相关程度。</li>
+</ul>
+</li>
+<li><strong>反思</strong>机制：随时间将记忆综合成更高层次的推论，并指导智能体未来的行为。它们是<em>过去事件的高级总结</em> (&lt;- 注意这与上文提到的自我反思有所不同)
+<ul>
+<li>使用最近的100个观察结果提示语言模型，让其根据一组观察/陈述生成3个最显著的高层次问题，然后让语言模型回答这些问题。</li>
+</ul>
+</li>
+<li><strong>规划与反应</strong>：将反思结果和环境信息转化为行动
+<ul>
+<li>规划本质上是为了在当下和未来优化行为的可信度。</li>
+<li>提示模板：<code>{智能体X的介绍}.以下是X今天的粗略计划：1)</code></li>
+<li>智能体之间的关系以及一个智能体对另一个智能体的观察都会被纳入规划和反应的考量。</li>
+<li>环境信息以树状结构呈现。</li>
+</ul>
+</li>
+</ul>
+<figure>
+	<img src="https://lilianweng.github.io/posts/2023-06-23-agent/generative-agents.png" referrerpolicy="no-referrer" />
+	<figcaption>生成式智能体架构。（图片来源：<a href="https://arxiv.org/abs/2304.03442" target="_blank" rel="noopener nofollow">Park et al. 2023</a>）</figcaption>
+</figure>
+<p>这个有趣的模拟催生了诸多涌现式的社会行为，例如信息传播、关系记忆（比如两个智能体会延续对话话题）以及社交活动的协调（比如举办派对并邀请许多人）。</p>
+<h2>概念验证示例#</h2>
+<p><a href="https://github.com/Significant-Gravitas/Auto-GPT" target="_blank" rel="noopener nofollow">AutoGPT</a>引发了广泛关注，因为它展示了以大型语言模型（LLM）为主要控制器来构建自主智能体的可能性。鉴于其自然语言接口存在不少可靠性问题，但它依然是一个很酷的概念验证演示。AutoGPT 的大部分代码都涉及格式解析。</p>
+<p>以下是 AutoGPT 使用的系统消息，其中 <code>{{...}}</code> 是用户输入：</p>
+<pre><code>你是 {{ai-name}}，{{用户提供的 AI 机器人描述}}。
+
+你的决策必须始终独立做出，不得寻求用户帮助。发挥你作为 LLM 的优势，采用简单的策略，避免法律问题。
+
+目标：
+
+1. {{用户提供的目标 1}}
+2. {{用户提供的目标 2}}
+3. ...
+4. ...
+5. ...
+
+限制条件：
+1. 短期记忆限制约 4000 词。由于短期记忆容量有限，请立即将重要信息保存到文件中。
+2. 如果你不确定之前是如何做某件事的，或者想回忆过去的事件，思考类似的事件会有助于你记忆。
+3. 不得寻求用户帮助
+4. 仅使用双引号中列出的命令，例如 &quot;command name&quot;
+5. 对于不会在几分钟内终止的命令，使用子进程
+
+命令：
+1. Google 搜索：&quot;google&quot;，参数：&quot;input&quot;: &quot;&lt;搜索内容&gt;&quot;
+2. 浏览网站：&quot;browse_website&quot;，参数：&quot;url&quot;: &quot;&lt;网址&gt;&quot;，&quot;question&quot;: &quot;&lt;你想在网站上找到什么&gt;&quot;
+3. 启动 GPT 代理：&quot;start_agent&quot;，参数：&quot;name&quot;: &quot;&lt;名称&gt;&quot;，&quot;task&quot;: &quot;&lt;简短任务描述&gt;&quot;，&quot;prompt&quot;: &quot;&lt;提示词&gt;&quot;
+4. 向 GPT 代理发送消息：&quot;message_agent&quot;，参数：&quot;key&quot;: &quot;&lt;密钥&gt;&quot;，&quot;message&quot;: &quot;&lt;消息&gt;&quot;
+5. 列出 GPT 代理：&quot;list_agents&quot;，参数：
+6. 删除 GPT 代理：&quot;delete_agent&quot;，参数：&quot;key&quot;: &quot;&lt;密钥&gt;&quot;
+7. 克隆仓库：&quot;clone_repository&quot;，参数：&quot;repository_url&quot;: &quot;&lt;网址&gt;&quot;，&quot;clone_path&quot;: &quot;&lt;目录&gt;&quot;
+8. 写入文件：&quot;write_to_file&quot;，参数：&quot;file&quot;: &quot;&lt;文件&gt;&quot;，&quot;text&quot;: &quot;&lt;文本&gt;&quot;
+9. 读取文件：&quot;read_file&quot;，参数：&quot;file&quot;: &quot;&lt;文件&gt;&quot;
+10. 追加到文件：&quot;append_to_file&quot;，参数：&quot;file&quot;: &quot;&lt;文件&gt;&quot;，&quot;text&quot;: &quot;&lt;文本&gt;&quot;
+11. 删除文件：&quot;delete_file&quot;，参数：&quot;file&quot;: &quot;&lt;文件&gt;&quot;
+12. 搜索文件：&quot;search_files&quot;，参数：&quot;directory&quot;: &quot;&lt;目录&gt;&quot;
+13. 分析代码：&quot;analyze_code&quot;，参数：&quot;code&quot;: &quot;&lt;完整代码字符串&gt;&quot;
+14. 获取改进后的代码：&quot;improve_code&quot;，参数：&quot;suggestions&quot;: &quot;&lt;建议列表&gt;&quot;，&quot;code&quot;: &quot;&lt;完整代码字符串&gt;&quot;
+15. 编写测试：&quot;write_tests&quot;，参数：&quot;code&quot;: &quot;&lt;完整代码字符串&gt;&quot;，&quot;focus&quot;: &quot;&lt;重点领域列表&gt;&quot;
+16. 执行 Python 文件：&quot;execute_python_file&quot;，参数：&quot;file&quot;: &quot;&lt;文件&gt;&quot;
+17. 生成图像：&quot;generate_image&quot;，参数：&quot;prompt&quot;: &quot;&lt;提示词&gt;&quot;
+18. 发送推文：&quot;send_tweet&quot;，参数：&quot;text&quot;: &quot;&lt;文本&gt;&quot;
+19. 什么都不做：&quot;do_nothing&quot;，参数：
+20. 任务完成（关闭）：&quot;task_complete&quot;，参数：&quot;reason&quot;: &quot;&lt;原因&gt;&quot;
+
+资源：
+1. 互联网访问，用于搜索和信息收集。
+2. 长期记忆管理。
+3. 由 GPT-3.5 驱动的代理，用于委托简单任务。
+4. 文件输出。
+
+性能评估：
+1. 不断审查和分析你的行动，确保你发挥出最佳能力。
+2. 不断从宏观角度建设性地自我批评。
+3. 反思过去的决策和策略，以改进你的方法。
+4. 每个命令都有成本，所以要聪明高效。力求用最少的步骤完成任务。
+
+你只能按照如下描述的 JSON 格式进行回复
+回复格式：
+{
+    &quot;thoughts&quot;: {
+        &quot;text&quot;: &quot;思考内容&quot;,
+        &quot;reasoning&quot;: &quot;推理过程&quot;,
+        &quot;plan&quot;: &quot;- 简短的\n- 项目列表\n- 表达长期计划&quot;,
+        &quot;criticism&quot;: &quot;建设性自我批评&quot;,
+        &quot;speak&quot;: &quot;对用户说的思考总结&quot;
+    },
+    &quot;command&quot;: {
+        &quot;name&quot;: &quot;命令名称&quot;,
+        &quot;args&quot;: {
+            &quot;参数名&quot;: &quot;值&quot;
+        }
+    }
+}
+确保回复可以被 Python json.loads 解析
+</code></pre>
+<p><a href="https://github.com/AntonOsika/gpt-engineer" target="_blank" rel="noopener nofollow">GPT-Engineer</a> 是另一个项目，可以根据自然语言描述的任务生成完整的代码仓库。GPT-Engineer 会被指示思考一系列需要构建的小组件，并在需要时向用户提问以澄清问题。</p>
+<p>以下是 GPT-Engineer 使用的 OpenAI ChatCompletion 端点收到的任务澄清示例对话。用户输入用 <code>{{user input text}}</code> 标记。</p>
+<pre><code>[
+  {
+    &quot;role&quot;: &quot;system&quot;,
+    &quot;content&quot;: &quot;You will read instructions and not carry them out, only seek to clarify them.\nSpecifically you will first summarise a list of super short bullets of areas that need clarification.\nThen you will pick one clarifying question, and wait for an answer from the user.\n&quot;
+  },
+  {
+    &quot;role&quot;: &quot;user&quot;,
+    &quot;content&quot;: &quot;We are writing {{a Super Mario game in python. MVC components split in separate files. Keyboard control.}}\n&quot;
+  },
+  {
+    &quot;role&quot;: &quot;assistant&quot;,
+    &quot;content&quot;: &quot;Summary of areas that need clarification:\n1. Specifics of the Super Mario game (e.g. level design, characters, gameplay mechanics)\n2. Details about the MVC components (e.g. which components are in each file)\n3. Keyboard control implementation (e.g. which keys to use, how to handle input)\n\nClarifying question:\nCan you provide more details about the Super Mario game, such as level design, characters, and gameplay mechanics?&quot;
+  },
+  {
+    &quot;role&quot;: &quot;user&quot;,
+    &quot;content&quot;: &quot;{{There are 10 levels in total. The main character is a plumber named Mario, who can walk and jump. It is a classical platform game just like Super Mario. The main character moves from left to right, trying to get to the destination, where there are many obstacles and attacks from enemies in the process.}}\n\nIs anything else unclear? If yes, only answer in the form:\n{remaining unclear areas} remaining questions.\n{Next question}\nIf everything is sufficiently clear, only answer \&quot;Nothing more to clarify.\&quot;.&quot;
+  },
+  {
+    &quot;role&quot;: &quot;assistant&quot;,
+    &quot;content&quot;: &quot;Remaining unclear areas: 2 remaining questions.\nCan you provide more information about how the MVC components are split into separate files?&quot;
+  },
+  {
+    &quot;role&quot;: &quot;user&quot;,
+    &quot;content&quot;: &quot;{{Make your own assumptions and state them explicitly before starting}}&quot;
+  }
+]
+</code></pre>
+<p>在这些说明之后，代理程序切换到代码编写模式，并使用了不同的系统消息。
+系统消息：</p>
+
+<p>您将收到编写代码的指令。
+您需要编写一个非常长的回答。请确保架构的每个细节最终都以代码形式实现。
+请确保架构的每个细节最终都以代码形式实现。
+<p>请逐步思考并推理出正确的决策，以确保我们能够正确实现。
+您首先需要列出必要的核心类、函数、方法的名称，并简要说明它们的目的。</p>
+<p>然后您将输出每个文件的内容，包括所有代码。
+每个文件必须严格遵循 markdown 代码块格式，其中以下标记必须被替换，使得
+FILENAME 是包含文件扩展名的小写文件名，
+LANG 是代码语言的标记代码块语言，而 CODE 是代码：</p>
+<p>FILENAME</p>
+<pre><code>CODE
+</code></pre><p>您将从“入口点”文件开始，然后处理该文件导入的其他文件，依此类推。
+请注意，代码应该是完全可用的，不能使用占位符。</p>
+<p>请遵循语言和框架的适当最佳实践文件命名约定。
+确保文件包含所有导入、类型等。确保不同文件中的代码相互兼容。
+请确保实现所有代码，如果不确定，请编写一个合理的实现。
+包含模块依赖或包管理器依赖定义文件。
+完成前，请再次检查架构的所有部分是否都存在于文件中。</p>
+<p>有用的信息：
+您通常会将不同的类放在不同的文件中。
+对于 Python，您总是创建一个合适的 requirements.txt 文件。
+对于 NodeJS，您总是创建一个合适的 package.json 文件。
+您总是添加注释简要描述函数定义的目的。
+您尝试添加注释解释非常复杂的逻辑部分。
+您始终遵循所请求语言的最佳实践，以将编写的代码描述为已定义的包/项目。</p>
+<p>Python 工具包偏好：</p>
+<ul>
+<li>pytest</li>
+<li>dataclasses</li>
+</ul>
+
+<p>对话示例：</p>
+<pre><code>[
+  {
+    &quot;role&quot;: &quot;system&quot;,
+    &quot;content&quot;: &quot;你会收到编写代码的指令。\n你需要写一个非常详细的回答。确保架构的每个细节最终都能以代码形式实现。\n确保架构的每个细节最终都能以代码形式实现。\n\n请一步步思考，通过推理做出正确的决定，确保我们能把事情做对。\n首先，你需要列出所有必需的核心类、函数和方法，并简要说明它们的作用。\n\n然后，你需要输出每个文件的完整内容，包括所有代码。\n每个文件必须严格遵循 Markdown 代码块格式，其中需要替换以下标记：\nFILENAME 是包含文件扩展名的小写文件名，\nLANG 是代码的标记代码块语言，CODE 是代码本身：\n\nFILENAME\n```LANG\nCODE\n```\n\n你需要从“入口”文件开始，然后处理该文件导入的其他文件，依此类推。\n请注意，代码必须完全可用，不能使用占位符。\n\n请遵循语言和框架的最佳实践文件命名约定。\n确保文件包含所有导入、类型等。确保不同文件中的代码相互兼容。\n如果不确定某些部分，请编写一个合理的实现。\n包含模块依赖或包管理器依赖定义文件。\n完成前，请再次检查所有架构部分是否都包含在文件中。\n\n有用信息：\n你通常会将不同的类放在不同的文件中。\n对于 Python，你总是创建一个合适的 requirements.txt 文件。\n对于 NodeJS，你总是创建一个合适的 package.json 文件。\n你总是添加注释简要说明函数定义的目的。\n你会尝试添加注释解释非常复杂的逻辑部分。\n你总是遵循请求语言的最佳实践，将编写的代码描述为已定义的包/项目。\n\n\nPython 工具偏好：\n- pytest\n- dataclasses
+&quot;
+  },
+ #  … 与之前的对话相同，以“做出你自己的假设并在开始前明确说明”结束。
+  {
+    &quot;role&quot;: &quot;assistant&quot;,
+    &quot;content&quot;: &quot;假设：\n1. 模型：模型将包含游戏数据，如关卡信息、角色状态和敌人位置。\n2. 视图：视图将处理游戏的视觉效果，包括渲染游戏对象、背景和更新显示。\n3. 控制器：控制器将管理用户输入，如键盘控制，并相应地更新模型。\n\n基于这些假设，关于键盘控制的实现，有什么具体方面需要我进一步说明吗？&quot;
+  },
+  {
+    &quot;role&quot;: &quot;user&quot;,
+    &quot;content&quot;: &quot;请记住以下步骤：\n\n请一步步思考，通过推理做出正确的决定，确保我们能把事情做对。\n首先，列出所有必需的核心类、函数和方法，并简要说明它们的作用。\n\n然后，你需要输出每个文件的完整内容，包括所有代码。\n每个文件必须严格遵循 Markdown 代码块格式，其中需要替换以下标记：\nFILENAME 是包含文件扩展名的小写文件名，\nLANG 是代码的标记代码块语言，CODE 是代码本身：\n\nFILENAME\n```LANG\nCODE\n```\n\n请注意，代码必须完全可用，不能使用占位符。\n\n你需要从“入口”文件开始，然后处理该文件导入的其他文件，依此类推。\n请遵循语言和框架的最佳实践文件命名约定。\n确保文件包含所有导入、类型等。代码必须完全可用。确保不同文件中的代码相互兼容。\n完成前，请再次检查所有架构部分是否都包含在文件中。\n&quot;
+  }
+]
+</code></pre>
+<h1>挑战#</h1>
+<p>在了解了构建以大语言模型（LLM）为核心的智能体的关键理念和演示后，我开始看到一些常见的局限性：</p>
+<ul>
+<li>
+<p><strong>有限的上下文长度</strong>：受限的上下文容量限制了历史信息、详细指令、API调用上下文和响应的包含。系统设计必须在这种有限的通信带宽下工作，而像自我反思这样的机制，如果能拥有长或无限的上下文窗口，将能从过去的错误中学习到更多。尽管向量存储和检索可以访问更大的知识库，但它们的表征能力不如完整的注意力机制强大。</p>
+</li>
+<li>
+<p><strong>长期规划和任务分解的挑战</strong>：在漫长的历史中进行规划并有效地探索解决方案空间仍然具有挑战性。当面对意外错误时，大语言模型难以调整计划，这使得它们相比通过试错学习的人类来说，鲁棒性较差。</p>
+</li>
+<li>
+<p><strong>自然语言接口的可靠性</strong>：当前的智能体系统依赖自然语言作为大语言模型与内存、工具等外部组件之间的接口。然而，模型输出的可靠性值得怀疑，因为大语言模型可能会出现格式错误，并偶尔表现出叛逆行为（例如，拒绝遵循指令）。因此，许多智能体演示代码都专注于解析模型的输出。</p>
+</li>
+</ul>
+<h1>引用#</h1>
+<p>引用格式如下：</p>
+<blockquote>
+<p>Weng, Lilian. (2023年6月). “LLM驱动的自主智能体”. Lil’Log. https://lilianweng.github.io/posts/2023-06-23-agent/.</p>
+</blockquote>
+<p>或</p>
+<pre><code>@article{weng2023agent,
+  title   = &quot;LLM-powered Autonomous Agents&quot;,
+  author  = &quot;Weng, Lilian&quot;,
+  journal = &quot;lilianweng.github.io&quot;,
+  year    = &quot;2023&quot;,
+  month   = &quot;Jun&quot;,
+  url     = &quot;https://lilianweng.github.io/posts/2023-06-23-agent/&quot;
+}
+</code></pre><h1>参考文献#</h1>
+<p>[1] Wei et al. <a href="https://arxiv.org/abs/2201.11903" target="_blank" rel="noopener nofollow">“思维链提示促使大语言模型进行推理。”</a> NeurIPS 2022</p>
+<p>[2] Yao et al. <a href="https://arxiv.org/abs/2305.10601" target="_blank" rel="noopener nofollow">“思维树：使用大语言模型进行深思熟虑的问题解决。”</a> arXiv 预印本 arXiv:2305.10601 (2023)。</p>
+<p>[3] Liu et al. <a href="https://arxiv.org/abs/2302.02676" target="_blank" rel="noopener nofollow">“后见之链：通过反馈对齐语言模型”
+</a> arXiv 预印本 arXiv:2302.02676 (2023)。</p>
+<p>[4] Liu 等人 <a href="https://arxiv.org/abs/2304.11477" target="_blank" rel="noopener nofollow">“LLM+P：赋予大型语言模型最优规划能力”</a> arXiv 预印本 arXiv:2304.11477 (2023)。</p>
+<p>[5] Yao 等人 <a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener nofollow">“ReAct：语言模型中的推理与行动协同”</a> ICLR 2023。</p>
+<p>[6] Google 博客 <a href="https://ai.googleblog.com/2020/07/announcing-scann-efficient-vector.html" target="_blank" rel="noopener nofollow">“推出 ScaNN：高效的向量相似性搜索”</a> 2020年7月28日。</p>
+<p>[7] <a href="https://chat.openai.com/share/46ff149e-a4c7-4dd7-a800-fc4a642ea389" target="_blank" rel="noopener nofollow">https://chat.openai.com/share/46ff149e-a4c7-4dd7-a800-fc4a642ea389</a></p>
+<p>[8] Shinn &amp; Labash <a href="https://arxiv.org/abs/2303.11366" target="_blank" rel="noopener nofollow">“Reflexion：具有动态记忆和自我反思的自主智能体”</a> arXiv 预印本 arXiv:2303.11366 (2023)。</p>
+<p>[9] Laskin 等人 <a href="https://arxiv.org/abs/2210.14215" target="_blank" rel="noopener nofollow">“基于上下文的强化学习与算法蒸馏”</a> ICLR 2023。</p>
+<p>[10] Karpas 等人 <a href="https://arxiv.org/abs/2205.00445" target="_blank" rel="noopener nofollow">“MRKL 系统：一种结合大型语言模型、外部知识源和离散推理的模块化神经符号架构”</a> arXiv 预印本 arXiv:2205.00445 (2022)。</p>
+<p>[11] Nakano 等人 <a href="https://arxiv.org/abs/2112.09332" target="_blank" rel="noopener nofollow">“WebGPT：基于浏览器的人类反馈问答系统”</a> arXiv 预印本 arXiv:2112.09332 (2021)。</p>
+<p>[12] Parisi 等人 <a href="https://arxiv.org/abs/2205.12255" target="_blank" rel="noopener nofollow">“TALM：工具增强型语言模型”</a></p>
+<p>[13] Schick 等人 <a href="https://arxiv.org/abs/2302.04761" target="_blank" rel="noopener nofollow">“Toolformer：语言模型可以自学使用工具”</a> arXiv 预印本 arXiv:2302.04761 (2023)。</p>
+<p>[14] Weaviate 博客 <a href="https://weaviate.io/blog/why-is-vector-search-so-fast" target="_blank" rel="noopener nofollow">为什么向量搜索如此快速？</a> 2022年9月13日。</p>
+<p>[15] Li 等人 <a href="https://arxiv.org/abs/2304.08244" target="_blank" rel="noopener nofollow">“API-Bank：工具增强型 LLM 的基准测试”</a> arXiv 预印本 arXiv:2304.08244 (2023)。</p>
+<p>[16] Shen 等人 <a href="https://arxiv.org/abs/2303.17580" target="_blank" rel="noopener nofollow">“HuggingGPT：利用 ChatGPT 及 HuggingFace 中的朋友解决 AI 任务”</a> arXiv 预印本 arXiv:2303.17580 (2023)。</p>
+<p>[17] Bran 等人 <a href="https://arxiv.org/abs/2304.05376" target="_blank" rel="noopener nofollow">“ChemCrow：通过化学工具增强大型语言模型。”</a> arXiv 预印本 arXiv:2304.05376 (2023)。</p>
+<p>[18] Boiko 等人 <a href="https://arxiv.org/abs/2304.05332" target="_blank" rel="noopener nofollow">“大型语言模型涌现的自主科学研究能力。”</a> arXiv 预印本 arXiv:2304.05332 (2023)。</p>
+<p>[19] Joon Sung Park 等人 <a href="https://arxiv.org/abs/2304.03442" target="_blank" rel="noopener nofollow">“生成式智能体：人类行为的交互式模拟。”</a> arXiv 预印本 arXiv:2304.03442 (2023)。</p>
+<p>[20] AutoGPT。<a href="https://github.com/Significant-Gravitas/Auto-GPT" target="_blank" rel="noopener nofollow">https://github.com/Significant-Gravitas/Auto-GPT</a></p>
+<p>[21] GPT-Engineer。<a href="https://github.com/AntonOsika/gpt-engineer" target="_blank" rel="noopener nofollow">https://github.com/AntonOsika/gpt-engineer</a></p>
