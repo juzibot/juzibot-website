@@ -170,9 +170,11 @@ def test_render_ver_tracks_template_source():
     orig = B.detail_html
     try:
         B.detail_html = lambda *a, **k: "changed"   # 模拟改模板
+        B._TPL_CACHE.clear()   # 指纹按进程记忆化(一轮管线里要取 284 次); 换模板须显式失效
         check("改模板后版本键随之变化", B.render_ver() != v1, f"{v1} -> {B.render_ver()}")
     finally:
         B.detail_html = orig
+        B._TPL_CACHE.clear()
     check("还原后版本键回到原值", B.render_ver() == v1)
 
 
@@ -488,23 +490,43 @@ def test_toc_thresholds_and_anchors():
 
 
 # ---------------------------------------------------------------- 20
-def test_all_render_fns_registered_in_fingerprint():
-    """参与渲染的函数必须登记进 _TPL_FNS, 否则改它不触发缓存重算 —— 页面停在旧版。
+def test_render_fingerprint_covers_call_graph():
+    """指纹必须覆盖所有参与渲染的函数, 否则改它不触发重算 —— 页面停在旧版。
 
-    这个坑今天栽过三次(Article schema、概念索引页文案、以及加 build_toc 时忘了登记)。
-    **指纹机制本身防不住「忘了把新函数纳入指纹」**, 所以这里正反两面都测:
-    ①列表里的名字都能在模块里找到(防写错名或删了函数没删登记)
-    ②几个已知的渲染函数确实在列表里(防加了新渲染函数忘登记)
+    这个坑栽过四次(Article schema / 概念索引页文案 / build_toc / read_time), 每次都是
+    「忘了往登记表里加一个名字」。**上一版测试也没能拦住第四次**: 它查的是一份手写 must 清单,
+    而手写清单里永远不会有"我刚忘掉的那个函数"—— 验证手段与被验证的错误同源, 等于没验。
+    改成从根模板函数取调用图闭包后, 这里测的是**机制**而不是清单:
+    ①闭包自动抓到了那些从没被手工登记过的函数(read_time 就是第四次栽的那个)
+    ②闭包不过度膨胀: 不含网络/AI 层, 否则改抓取逻辑就全量重算, 增量缓存等于废掉
+    ③确定性: 同一份代码两次调用给同一个指纹(连跑字节稳定依赖这条)
+    ④成员变化会改指纹(函数移出闭包也算模板变了)
     """
-    missing = [f for f in B._TPL_FNS if not hasattr(B, f)]
-    check("_TPL_FNS 里的名字都存在", not missing, f"找不到 {missing}")
-    must = ["detail_html", "concept_html", "build_toc", "breadcrumb_ld", "ld_json",
-            "annotate_concepts", "normalize_links", "nav_fallback"]
-    unreg = [f for f in must if f not in B._TPL_FNS]
-    check("已知渲染函数全部登记在册", not unreg,
-          f"未登记 {unreg} —— 改它们不会触发缓存重算")
-    v = B.render_ver()
-    check("版本键形如 <人工版本>.<指纹>", re.fullmatch(r"[\w.]+\.[0-9a-f]{10}", v), v)
+    fns = B._tpl_fns()
+    check("闭包非空且含根函数", fns and all(r in fns for r in B._TPL_ROOTS), f"{len(fns)} 个")
+    # 手工表时代漏掉的 14 个中挑几个: 全是本轮亲手动过、改了却不会触发重算的
+    auto = ["read_time", "breadcrumb_html", "disp_title", "zh_title", "concept_rx", "safe_href"]
+    lost = [f for f in auto if f not in fns]
+    check("自动抓到手工表漏掉的渲染函数", not lost, f"闭包没抓到 {lost}")
+    leak = [f for f in fns if re.search(r"fetch|sync_|ai_|http|urlopen|llm|mirror_items|zhipu", f)]
+    check("闭包不含网络/AI 层(否则改抓取就全量重算)", not leak, f"混入 {leak}")
+    check("闭包规模合理(<40 个)", len(fns) < 40, f"{len(fns)} 个 —— 过大说明跟进条件太宽")
+    check("闭包已排序(确定性)", list(fns) == sorted(fns))
+    v1 = B.render_ver()
+    B._TPL_CACHE.clear()
+    check("两次调用同一指纹", B.render_ver() == v1, f"{v1} vs {B.render_ver()}")
+    check("版本键形如 <人工版本>.<指纹>", re.fullmatch(r"[\w.]+\.[0-9a-f]{10}", v1), v1)
+    # ④ 成员变化必须改指纹: 换掉一个闭包成员(替身来自本测试模块, 会被"只跟进本模块函数"过滤掉,
+    #    等价于该函数移出闭包), 指纹应当变化; 用完立刻还原, 不污染后续用例
+    orig = B.read_time
+    try:
+        B.read_time = lambda body: ""
+        B._TPL_CACHE.clear()
+        check("闭包成员变化会改指纹", B.render_ver() != v1, f"仍是 {v1}")
+    finally:
+        B.read_time = orig
+        B._TPL_CACHE.clear()
+    check("还原后指纹回到原值", B.render_ver() == v1)
 
 
 # ---------------------------------------------------------------- 22

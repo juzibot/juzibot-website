@@ -2601,21 +2601,65 @@ RENDER_VER = "8"  # 2026-07-30: 概念页证据改读原文镜像(原先只读�
 # 这个坑我栽过两次(Article schema 没生效那次、概念索引页文案没生效那次), 而规则就写在上面
 # 那行注释里。与其依赖人记得, 不如让签名自己感知模板变化: 把渲染函数的源码一起哈希进去。
 # RENDER_VER 保留作人工总开关(想强制全量重算时改它), 日常改模板不再需要动它。
-# 新增任何参与渲染的函数, 都要登记到这里 —— 否则改它不触发缓存重算, 页面停在旧版。
-# 这个坑今天栽过三次: Article schema 没生效、概念索引页文案没生效、以及加 build_toc 时
-# 又忘了登记(靠测试查出来)。指纹机制本身防不住「忘了把新函数纳入指纹」。
-_TPL_FNS = ("detail_html", "concept_html", "concept_index_html", "concept_page_shell",
-            "concept_evidence", "annotate_concepts", "img_render", "normalize_links",
-            "ld_json", "breadcrumb_ld", "build_toc", "nav_fallback")
+# 登记表不再手工维护。手工列表防不住「新加的渲染函数忘登记」——这个坑栽过四次
+# (Article schema 没生效、概念索引页文案没生效、build_toc 忘登记、read_time 忘登记),
+# 每次都是漏一个名字, 而"记得加名字"恰好就是会失效的那一环; 连"已知函数在册"的测试也
+# 只能查手写清单里有的, 抓不到新函数。改为从根模板函数出发沿调用图取传递闭包: 谁参与渲染
+# 由代码算出来, 人记不记得都一样。
+# 实测闭包 26 个函数, 手工表只有 12 个——漏登记 14 个, 含 breadcrumb_html / disp_title /
+# zh_title / concept_rx / read_time 等本轮亲手动过的函数(改它们此前都不触发重算)。
+# 闭包占模块函数约 21%, 且不含任何网络/AI 层函数: 抓取逻辑改动不会误触发全量重算。
+_TPL_ROOTS = ("detail_html", "concept_html", "concept_index_html", "concept_page_shell")
+_TPL_CACHE = {}   # 签名在每条目的循环里都要取一次(284 次), 闭包与哈希都只算一遍
+
+
+def _tpl_fns():
+    """参与渲染的函数名 = 根模板函数的调用图闭包(只跟进本模块定义的普通函数)。
+
+    排序后返回, 保证同一份代码永远给出同一个指纹(连跑字节稳定这条不能破)。
+    """
+    if "fns" in _TPL_CACHE:
+        return _TPL_CACHE["fns"]
+    import ast
+    import inspect
+    import textwrap
+    g = globals()
+    seen, stack = set(), list(_TPL_ROOTS)
+    while stack:
+        fn = stack.pop()
+        if fn in seen:
+            continue
+        o = g.get(fn)
+        # 只跟进本模块定义的函数: 标准库/第三方函数随解释器版本固定, 纳进来只是噪声
+        if not (inspect.isfunction(o) and getattr(o, "__module__", None) == __name__):
+            continue
+        seen.add(fn)
+        try:
+            tree = ast.parse(textwrap.dedent(inspect.getsource(o)))
+        except (OSError, TypeError, SyntaxError):
+            continue   # 单个函数源码不可得就跳过, 整体退化由 _template_sig 兜
+        for n in ast.walk(tree):
+            if isinstance(n, ast.Call) and isinstance(n.func, ast.Name):
+                stack.append(n.func.id)
+    _TPL_CACHE["fns"] = tuple(sorted(seen))
+    return _TPL_CACHE["fns"]
 
 
 def _template_sig():
+    if "sig" in _TPL_CACHE:
+        return _TPL_CACHE["sig"]
     try:
         import inspect
         g = globals()
-        return _sha(*(inspect.getsource(g[f]) for f in _TPL_FNS if f in g))[:10]
+        fns = _tpl_fns()
+        if not fns:
+            raise OSError("闭包为空")
+        # 名字一起进哈希: 函数增删/改名也算模板变化(只哈源码则"删一个加一个"可能撞上)
+        sig = _sha(*(f"{f}\x1f{inspect.getsource(g[f])}" for f in fns))[:10]
     except (OSError, TypeError):   # 源码不可得(打包/exec 场景)时退回纯人工版本号
-        return "nosrc"
+        sig = "nosrc"
+    _TPL_CACHE["sig"] = sig
+    return sig
 
 
 def render_ver():
