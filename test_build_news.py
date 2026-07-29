@@ -544,6 +544,25 @@ def test_both_renderers_smoke():
     check("concept_index_html 完整渲染不抛错", len(idx) > 500, f"{len(idx)} 字节")
 
 
+# ---------------------------------------------------------------- 23
+def test_read_time_thresholds():
+    """阅读时长: 边界与单位切换。
+
+    实测时长跨度 148 倍(212 字 ≈1 分钟 / 59293 字 ≈148 分钟), 分布很散(20 分钟以上 48 页),
+    读者点进来前无从判断这是两分钟还是两小时。
+    """
+    check("正文太短不显示(摘要没有「读多久」可言)", B.read_time("<p>" + "字" * 150 + "</p>") == "")
+    check("空正文安全", B.read_time("") == "" and B.read_time(None) == "")
+    check("短文按分钟", B.read_time("<p>" + "字" * 400 + "</p>") == "约 1 分钟")
+    check("中位长度约 8 分钟", B.read_time("<p>" + "字" * 3259 + "</p>") == "约 8 分钟")
+    # 超一小时改小时: 「约 148 分钟」要读者自己换算, 「约 2.5 小时」才是人话
+    long_ = B.read_time("<p>" + "字" * 59293 + "</p>")
+    check("超一小时改用小时表述", "小时" in long_, long_)
+    check("不足一小时不用小时", "小时" not in B.read_time("<p>" + "字" * 20000 + "</p>"))
+    check("标签不计入字数(HTML 被剥离)",
+          B.read_time("<p><b>" + "字" * 400 + "</b></p>") == B.read_time("<p>" + "字" * 400 + "</p>"))
+
+
 def main():
     tests = [v for k, v in sorted(globals().items()) if k.startswith("test_")]
     for fn in tests:
