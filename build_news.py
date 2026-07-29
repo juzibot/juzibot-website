@@ -2010,6 +2010,23 @@ def detail_html(it, lib):
         robots, canonical = "index,follow", f"{SITE_BASE}/news/p/{it['id']}.html"
     else:
         robots, canonical = "noindex,follow", it["url"]
+    # 结构化数据(2026-07-29): 只给允许收录的自家内容发 Article——官网自己卖 GEO 优化师,
+    # 自家动态页该是样板间; 外部转载页 noindex, 发 schema 无益且易被判内容剽窃。
+    schema = ""
+    if own and full:
+        schema = '<script type="application/ld+json">' + json.dumps({
+            "@context": "https://schema.org", "@type": "Article",
+            "headline": title[:110], "description": desc[:300],
+            "datePublished": it["date"], "inLanguage": "zh-CN",
+            "url": f"{SITE_BASE}/news/p/{it['id']}.html",
+            "author": {"@type": "Person" if it["source"] == "rui-blog" else "Organization",
+                       "name": it.get("author") or "句子互动"},
+            "publisher": {"@type": "Organization", "name": "句子互动", "url": f"{SITE_BASE}/"},
+            "isPartOf": {"@type": "CollectionPage", "name": "句子·动态",
+                         "url": f"{SITE_BASE}/news.html"},
+            "about": [{"@type": "DefinedTerm", "name": lib[s]["term"],
+                       "url": f"{SITE_BASE}/news/c/{s}.html"} for s in slugs if s in lib][:5],
+        }, ensure_ascii=False).replace("</", "<\\/") + "</script>"
     if zh:
         body = (
             '<div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang">'
@@ -2040,6 +2057,7 @@ b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';})
 <meta name="description" content="{esc(desc)}" />
 <meta name="robots" content="{robots}" />
 <link rel="canonical" href="{esc(canonical)}" />
+{schema}
 <link rel="icon" href="../../logo.png" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="../../assets/site.css" />
@@ -2214,7 +2232,7 @@ CONCEPT_CSS = """
 """
 
 
-def concept_page_shell(title, desc, canonical, inner, ctx_title):
+def concept_page_shell(title, desc, canonical, inner, ctx_title, schema=""):
     """概念页/总目录的公共壳: 原创内容, index,follow + canonical 指自身。"""
     ctx = json.dumps({"entity": "news-concept", "type": "page", "title": ctx_title}, ensure_ascii=False).replace("</", "<\\/")
     return f"""<!DOCTYPE html>
@@ -2226,6 +2244,7 @@ def concept_page_shell(title, desc, canonical, inner, ctx_title):
 <meta name="description" content="{esc(desc)}" />
 <meta name="robots" content="index,follow" />
 <link rel="canonical" href="{esc(canonical)}" />
+{schema}
 <link rel="icon" href="../../logo.png" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="../../assets/site.css" />
@@ -2271,8 +2290,18 @@ def concept_html(slug, c, refs, related, lib):
           '    </div>\n'
           '    <p class="cp-note">概念定义由句子互动动态管线的 AI 加工层生成、编辑维护，供快速理解行业语境；如有不准确之处欢迎通过官网联系我们指正。</p>'
     )
+    # DefinedTerm schema(2026-07-29): 概念页是自家原创且 index, 是 GEO 的主力资产——
+    # 给 AI 引擎一个可直接引用的术语定义结构(名称/别名/定义/所属术语集)。
+    schema = '<script type="application/ld+json">' + json.dumps({
+        "@context": "https://schema.org", "@type": "DefinedTerm",
+        "name": c["term"], "description": c["def"][:300], "inLanguage": "zh-CN",
+        "url": f"{SITE_BASE}/news/c/{slug}.html",
+        "alternateName": [a for a in c.get("aliases", []) if a != c["term"]][:6],
+        "inDefinedTermSet": {"@type": "DefinedTermSet", "name": "句子互动 AI 概念库",
+                             "url": f"{SITE_BASE}/news/c/index.html"},
+    }, ensure_ascii=False).replace("</", "<\\/") + "</script>"
     return concept_page_shell(f"{c['term']}是什么？- 句子互动 AI 概念库", c["def"][:150],
-                              f"{SITE_BASE}/news/c/{slug}.html", inner, c["term"])
+                              f"{SITE_BASE}/news/c/{slug}.html", inner, c["term"], schema)
 
 
 def concept_index_html(lib, refs_map):
@@ -2407,6 +2436,27 @@ def inject_page(spec, items, sources_meta):
         sys.exit(f"[错误] {path.name} 里找不到 <b id=\"newsTotal\">")
     page = re.sub(r'(<b id="newsRadar">)[^<]*(</b>)',
                   lambda m: m.group(1) + str(len(items) - n_comp) + m.group(2), page, count=1)
+
+    # ItemList schema(2026-07-29, 仅卡片版): 让 AI 引擎能解析出「句子最近发生了什么」这张
+    # 清单——只列自家条目, 外部转载不进(它们 noindex, 列进来等于替别人做 SEO)。
+    if spec.get("company_first"):
+        comp = [i for i in items if i["source"] in COMPANY_SOURCES][:20]
+        il = json.dumps({
+            "@context": "https://schema.org", "@type": "ItemList",
+            "name": "句子互动最新动态", "inLanguage": "zh-CN",
+            "numberOfItems": len(comp),
+            "itemListElement": [{
+                "@type": "ListItem", "position": n + 1,
+                "url": f"{SITE_BASE}/news/p/{i['id']}.html",
+                "name": disp_title(i)[:110],
+            } for n, i in enumerate(comp)],
+        }, ensure_ascii=False).replace("</", "<\\/")
+        block = f'<script type="application/ld+json" id="news-itemlist">{il}</script>'
+        if 'id="news-itemlist"' in page:
+            page = re.sub(r'<script type="application/ld\+json" id="news-itemlist">.*?</script>',
+                          lambda m: block, page, count=1, flags=re.S)
+        else:  # 首次: 挂在既有 CollectionPage schema 之后
+            page = page.replace('</script>\n<style>', '</script>\n' + block + '\n<style>', 1)
 
     path.write_text(page, encoding="utf-8")
 
