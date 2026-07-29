@@ -1557,6 +1557,27 @@ def retire_unlisted(items):
     return n
 
 
+def write_atomic(path, text):
+    """原子写文本: 先写同目录临时文件, fsync 落盘, 再 os.replace 覆盖。
+
+    write_text() 是先截断再写: 进程在中途被杀(cron 超时被 kill、磁盘写满、机器重启)就留下
+    一个**被截断的半截文件**。对 data/news.json 这种存量库尤其致命——它是 600 多条的累积
+    记忆, 损坏后下轮读取直接失败, 而新闻源 feed 窗口只有 1 天, 丢掉的历史条目重抓不回来。
+    os.replace 在同一文件系统内是原子的: 要么看到旧文件, 要么看到完整新文件, 不存在中间态。
+    同目录临时文件是必须的——跨文件系统 rename 会退化成拷贝, 就不原子了。
+    """
+    tmp = path.with_name(path.name + ".tmp")
+    try:
+        with tmp.open("w", encoding="utf-8") as f:
+            f.write(text)
+            f.flush()
+            os.fsync(f.fileno())     # 元数据落盘前断电仍可能丢内容, 显式 fsync
+        os.replace(tmp, path)
+    except OSError:
+        tmp.unlink(missing_ok=True)  # 别留下 .tmp 垃圾让下轮困惑
+        raise
+
+
 def visible_items(items):
     """页面只注入过筛条目: 配了 ai_filter 的源里, 未判(pending)或 keep=false 的都不上站。
     再过一道同源同标题去重(多源撞车)。"""
@@ -1808,7 +1829,7 @@ def load_concepts():
 
 def save_concepts(lib):
     CONCEPTS_FILE.parent.mkdir(exist_ok=True)
-    CONCEPTS_FILE.write_text(json.dumps({
+    write_atomic(CONCEPTS_FILE, json.dumps({
         "_readme": "概念库(概念层 v1, build_news.py 维护): 唯一事实源, 同概念只定义一次。"
                    "def 由管线 AI 层原创生成(企业口吻 80~120 字), 人工可直接改字段(管线不覆盖已有概念); "
                    "aliases 用于同义归一与详情页正文匹配。删除概念请连同各条目 concepts 字段里的引用一起清。",
@@ -2493,7 +2514,7 @@ def _load_render_cache():
 
 def _save_render_cache(cache):
     cache["_readme"] = "build_news.py 增量渲染缓存: 页面输入签名, 供 CI 跳过未变页; 脚本维护, 勿手改"
-    RENDER_CACHE.write_text(json.dumps(cache, ensure_ascii=False, indent=0), encoding="utf-8")
+    write_atomic(RENDER_CACHE, json.dumps(cache, ensure_ascii=False, indent=0))
 
 
 def write_detail_pages(vis, items, lib, worthy):
@@ -3293,11 +3314,11 @@ def main():
         m["count"] = sum(1 for i in vis if i["source"] == m["id"])
 
     DATA_FILE.parent.mkdir(exist_ok=True)
-    DATA_FILE.write_text(
-        json.dumps({"generated_by": "build_news.py", "generated_at": now, "count": len(items),
-                    "visible": len(vis), "sources": sources_meta, "items": items}, ensure_ascii=False, indent=1),
-        encoding="utf-8",
-    )
+    # 原子写: 这是 600+ 条的累积存量库, 半截文件会让下轮读取直接失败, 而新闻源 feed
+    # 窗口只有 1 天, 丢掉的历史条目重抓不回来(见 write_atomic)。
+    write_atomic(DATA_FILE, json.dumps(
+        {"generated_by": "build_news.py", "generated_at": now, "count": len(items),
+         "visible": len(vis), "sources": sources_meta, "items": items}, ensure_ascii=False, indent=1))
     for spec in PAGES:
         inject_page(spec, vis, sources_meta, now)
     worthy = worthy_concepts(lib, vis)  # 门槛算一次, 详情页标注/概念页/sitemap 共用防死链
