@@ -2192,6 +2192,8 @@ DETAIL_CSS = """
   .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-voices{--sc:#9333EA}
   .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
   .dp-cat{display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ink-3);background:#F6F7FB;border:1px solid var(--line-2);border-radius:6px;padding:2px 8px}
+  .dp-read{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .dp-read i{font-size:10px;opacity:.7}
   .dp-date{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-3)}
   .dp-title{font-size:clamp(24px,3.2vw,34px);font-weight:850;letter-spacing:-.03em;line-height:1.32;word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance;margin-bottom:10px}
   .dp-orig{font-size:13px;color:var(--ink-3);overflow-wrap:anywhere;margin-bottom:8px}
@@ -2408,6 +2410,26 @@ def build_toc(body):
     return "".join(out), toc
 
 
+READ_CPM = 400             # 中文阅读速度(字/分钟), 取 300~500 的中值
+
+
+def read_time(body):
+    """正文的估算阅读时长文案, 无正文返回 ''。
+
+    实测时长跨度 **148 倍**(最短 212 字 ≈1 分钟, 最长 59293 字 ≈148 分钟), 且分布很散:
+    1-2 分 31 页 / 3-5 分 64 / 6-10 分 71 / 11-20 分 55 / **20 分钟以上 48 页**。
+    读者点进来之前无从判断这是两分钟还是两小时 —— 时长直接决定「现在读还是收藏」。
+    超过一小时改用小时表述: 「约 148 分钟」读者要自己换算, 「约 2.5 小时」才是人话。
+    只在详情页显示(正文字数现成); 卡片上不显示 —— 那需要给条目新增字段并牵动缓存签名,
+    成本远高于收益。
+    """
+    n = len(re.sub(r"\s+", "", re.sub(r"<[^>]+>", "", body or "")))
+    if n < 200:
+        return ""
+    m = max(1, round(n / READ_CPM))
+    return f"约 {m} 分钟" if m < 60 else f"约 {round(m / 60, 1)} 小时"
+
+
 def detail_html(it, lib, worthy):
     """静态详情页(整页由本脚本生成, 每次可整体重写, 页内无时间戳保证连跑字节稳定)。
     所有权分档(2026-07-22 四轮): own 源(自家内容)全文镜像+允许 index+canonical 指自身;
@@ -2466,6 +2488,7 @@ def detail_html(it, lib, worthy):
     crumb = breadcrumb_ld([("句子互动", f"{SITE_BASE}/"), ("动态", f"{SITE_BASE}/news.html"),
                            (title[:60], f"{SITE_BASE}/news/p/{it['id']}.html")]) if own and full else ""
     dp_crumb = breadcrumb_html(dp_trail, "dp-crumb")
+    rt = read_time(full or zh)   # 导读模式(无正文镜像)不显示 —— 摘要没有"读多久"可言
     # 结构化数据(2026-07-29): 只给允许收录的自家内容发 Article——官网自己卖 GEO 优化师,
     # 自家动态页该是样板间; 外部转载页 noindex, 发 schema 无益且易被判内容剽窃。
     schema = ""
@@ -2540,6 +2563,7 @@ b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';})
       <span class="dp-srcb s-{esc(it["source"])}"><i class="{icon}"></i>{esc(it["source_name"])}</span>
       {f'<span class="dp-cat">{esc(it["category"])}</span>' if it["category"] else ""}
       <time class="dp-date" datetime="{esc(it["date"])}">{esc(it["date"])}</time>
+      {f'<span class="dp-read"><i class="fa-regular fa-clock"></i>{rt}</span>' if rt else ""}
     </div>
     <h1 class="dp-title">{esc(title)}</h1>
     {f'<p class="dp-orig">原题：{esc(it["title"])}</p>' if zh_title(it) else ""}
