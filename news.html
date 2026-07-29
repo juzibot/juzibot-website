@@ -235,6 +235,7 @@
       sentinel = document.getElementById('newsSentinel');
 
   var radarLoaded = !((payload.radar_rest || 0) > 0), radarLoading = false;
+  var navGen = 0;  // 每次分区切换/搜索 +1, 供异步回调判断自己是否已过期
   var state = { group: 'company', src: 'all', cat: 'all', time: 'all', cut: '', q: '', shown: list.querySelectorAll('.news-card').length };
   var GROUPS = [{ k: 'company', n: '句子动态', i: 'fa-solid fa-house-chimney' },
                 { k: 'radar', n: '行业雷达', i: 'fa-solid fa-satellite-dish' },
@@ -335,9 +336,13 @@
     // 空源不出 tab(公众号/媒体报道暂无内容时不该摆个 0 在脸上); 数据源面板仍照实显示
     var inb = sources.filter(function (s) { return (state.group === 'all' || (s.group || 'radar') === state.group) && s.count > 0; });
     var tot = groupCount(state.group);
-    var html = '<button type="button" class="cat-btn on" data-src="all" role="tab" aria-selected="true">全部<small>' + tot + '</small></button>';
+    // 选中态必须读 state.src: 搜索路径调 ensureRadar 时并不重置 state.src/state.cat,
+    // 无条件把「全部」写成选中会让筛选条与实际结果脱钩——UI 说「全部」, 列表却只有某一源。
+    var allOn = state.src === 'all';
+    var html = '<button type="button" class="cat-btn' + (allOn ? ' on' : '') + '" data-src="all" role="tab" aria-selected="' + allOn + '">全部<small>' + tot + '</small></button>';
     inb.forEach(function (s) {
-      html += '<button type="button" class="cat-btn" data-src="' + esc(s.id) + '" role="tab" aria-selected="false"><i class="' + (ICON[s.id] || 'fa-solid fa-newspaper') + '"></i>' + esc(s.name) + '<small>' + s.count + '</small></button>';
+      var on = state.src === s.id;
+      html += '<button type="button" class="cat-btn' + (on ? ' on' : '') + '" data-src="' + esc(s.id) + '" role="tab" aria-selected="' + on + '"><i class="' + (ICON[s.id] || 'fa-solid fa-newspaper') + '"></i>' + esc(s.name) + '<small>' + s.count + '</small></button>';
     });
     srcs.innerHTML = html;
   }
@@ -388,13 +393,31 @@
     function ensureRadar(after) {
       if (radarLoaded || radarLoading) { after(); return; }
       radarLoading = true;
+      // 状态代数: 记下发起时的 navGen。分片是一次冷网络请求(146KB), 弱网下几秒量级,
+      // 这期间用户完全可能切走。迟到的回调若无条件跑 after(=render(true)), 会 innerHTML=''
+      // 把用户此间「加载更多」展开的列表整个推倒、滚动位置一并作废。
+      var gen = navGen;
+      setBusy(true);
       fetch('news-radar.json').then(function (r) { return r.json(); }).then(function (j) {
         if (j && j.items && j.items.length) { data = data.concat(j.items); }
-        radarLoaded = true; radarLoading = false; buildGroups(); buildSrcs(); after();
-      }).catch(function () { radarLoaded = true; radarLoading = false; after(); });
+        radarLoaded = true; radarLoading = false; setBusy(false);
+        buildGroups();                       // 计数刷新与当前视图无关, 总要做
+        if (gen !== navGen) { return; }      // 用户已切走: 数据留下, 但别动他现在的列表
+        buildSrcs(); after();
+      }).catch(function () {
+        radarLoaded = true; radarLoading = false; setBusy(false);
+        if (gen !== navGen) { return; }
+        after();
+      });
+    }
+    function setBusy(on) {
+      // 点了没反应正是诱发用户额外操作、把竞态窗口填满的原因, 给个明确的进行中反馈
+      list.setAttribute('aria-busy', on ? 'true' : 'false');
+      if (on) { count.textContent = '正在加载行业雷达…'; }
     }
     document.getElementById('newsGroups').addEventListener('click', function (e) {
       var b = e.target.closest('[data-group]'); if (!b) return;
+      navGen++;  // 本次切换作废此前所有在飞的分片回调
       state.group = b.getAttribute('data-group'); state.src = 'all'; state.cat = 'all';
       mark(document.getElementById('newsGroups'), 'data-group', state.group);
       var go = function () { buildSrcs(); buildCats(); render(true); };
