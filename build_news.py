@@ -2179,6 +2179,11 @@ DETAIL_CSS = """
 
   .dp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
   .dp-wrap{max-width:760px;margin:0 auto}
+  .dp-crumb{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:12.5px;color:var(--ink-3);margin-bottom:20px;min-width:0}
+  .dp-crumb a{color:var(--ink-3);text-decoration:none}
+  .dp-crumb a:hover{color:var(--blue)}
+  .dp-crumb i{font-style:normal;opacity:.5;font-size:11px}
+  .dp-crumb [aria-current]{color:var(--ink-2);font-weight:650;overflow-wrap:anywhere}
   .dp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
   .dp-back:hover{color:var(--blue)}
   .dp-meta{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:14px}
@@ -2320,6 +2325,25 @@ def _bare_host(u):
     return h[4:] if h.startswith("www.") else h
 
 
+def breadcrumb_html(trail, cls="cp-crumb"):
+    """可见面包屑 —— **与 breadcrumb_ld 用同一份 trail**。
+
+    此前只发了 BreadcrumbList schema: 搜索引擎知道「句子互动 › 动态 › AI 概念库 › MoE模型」,
+    而页面上只有一个「← 概念索引」返回链接, **访客看不到自己在哪**。告诉机器却不告诉人,
+    是把 SEO 当目的、把读者当副产品。
+    两者共用 trail 而不是各写一遍: 「同一语义两处实现必然漂移」这轮已撞到六次, 不再重犯。
+    末项是当前页, 不给链接(点自己没意义, 也是 a11y 惯例)。
+    """
+    if len(trail) < 2:
+        return ""
+    parts = []
+    for n, (name, url) in enumerate(trail):
+        last = n == len(trail) - 1
+        parts.append(f'<span aria-current="page">{esc(name)}</span>' if last
+                     else f'<a href="{esc(url)}">{esc(name)}</a>')
+    return f'<nav class="{cls}" aria-label="面包屑">' + '<i aria-hidden="true">›</i>'.join(parts) + '</nav>'
+
+
 def breadcrumb_ld(trail):
     """BreadcrumbList schema——让搜索结果显示层级路径而不是裸 URL。
 
@@ -2432,8 +2456,11 @@ def detail_html(it, lib, worthy):
             same_site = False
         canonical = f"{SITE_BASE}/news/p/{it['id']}.html" if same_site else it["url"]
     # 面包屑: 只给允许收录的页发(noindex 页发 schema 无意义)
+    # 一份 trail 出两样: schema 给机器、面包屑给人。共用避免「机器看到的路径与人看到的不一致」。
+    dp_trail = [("句子互动", "../../index.html"), ("动态", "../../news.html"), (title[:40], "")]
     crumb = breadcrumb_ld([("句子互动", f"{SITE_BASE}/"), ("动态", f"{SITE_BASE}/news.html"),
                            (title[:60], f"{SITE_BASE}/news/p/{it['id']}.html")]) if own and full else ""
+    dp_crumb = breadcrumb_html(dp_trail, "dp-crumb")
     # 结构化数据(2026-07-29): 只给允许收录的自家内容发 Article——官网自己卖 GEO 优化师,
     # 自家动态页该是样板间; 外部转载页 noindex, 发 schema 无益且易被判内容剽窃。
     schema = ""
@@ -2503,7 +2530,7 @@ b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';})
 {nav_fallback()}
 <main class="dp-main">
   <div class="dp-wrap">
-    <a class="dp-back" href="../../news.html"><i class="fa-solid fa-arrow-left"></i>返回动态</a>
+    {dp_crumb}
     <div class="dp-meta">
       <span class="dp-srcb s-{esc(it["source"])}"><i class="{icon}"></i>{esc(it["source_name"])}</span>
       {f'<span class="dp-cat">{esc(it["category"])}</span>' if it["category"] else ""}
@@ -2671,6 +2698,11 @@ CONCEPT_CSS = """
 
   .cp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
   .cp-wrap{max-width:760px;margin:0 auto}
+  .cp-crumb{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:12.5px;color:var(--ink-3);margin-bottom:20px;min-width:0}
+  .cp-crumb a{color:var(--ink-3);text-decoration:none}
+  .cp-crumb a:hover{color:var(--blue)}
+  .cp-crumb i{font-style:normal;opacity:.5;font-size:11px}
+  .cp-crumb [aria-current]{color:var(--ink-2);font-weight:650;overflow-wrap:anywhere}
   .cp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
   .cp-back:hover{color:var(--blue)}
   .cp-kicker{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:750;letter-spacing:.08em;color:var(--blue);margin-bottom:10px}
@@ -2812,11 +2844,14 @@ def concept_html(slug, c, refs, related, lib, worthy=None):
     def_hits = [s for s in sorted(worthy or ())
                 if s != slug and s in lib
                 and (rx := concept_rx_cached(s, lib[s])) and rx.search(c["def"])]
+    # 可见面包屑与下方 breadcrumb_ld 共用同一份 trail(机器看到的路径 = 人看到的路径)
+    cp_crumb = breadcrumb_html([("句子互动", "../../index.html"), ("动态", "../../news.html"),
+                                ("AI 概念库", "index.html"), (c["term"], "")])
     rel_links = "".join(
         f'<a href="{s}.html"><i class="fa-solid fa-diagram-project"></i>{esc(lib[s]["term"])}</a>'
         for s in related)
     inner = (
-        '    <a class="cp-back" href="index.html"><i class="fa-solid fa-arrow-left"></i>概念索引</a>\n'
+        f'    {cp_crumb}\n'
         '    <div class="cp-kicker"><i class="fa-solid fa-book-open"></i>AI 概念库</div>\n'
         f'    <h1 class="cp-title">{esc(c["term"])}</h1>\n'
         + (f'    <p class="cp-alias"><b>也叫</b> {esc(alias_line)}</p>\n' if alias_line else "")
@@ -3329,7 +3364,12 @@ def record_metrics(vis, items, sources_meta, failed, now):
             if o and (n == 0 or n < o * (100 - METRIC_DROP_PCT) / 100):
                 warn.append(f"{sid} {o} → {n}")
         if warn:
-            print(f"[指标告警] 较上一轮({prev.get('at', '?')[:16]})明显下滑: " + "; ".join(warn))
+            msg = f"较上一轮({prev.get('at', '?')[:16]})明显下滑: " + "; ".join(warn)
+            # ::warning:: 是 GitHub Actions 的注解语法, 会在 workflow 摘要页高亮成黄条。
+            # 只 print 的话告警躺在几百行日志里没人看 —— 而这个机制存在的全部意义就是让人知道。
+            # 不用 ::error:: 是因为内容下滑多半是上游源的问题, 不该让整轮构建失败、连带产物不推。
+            print(f"::warning title=动态页指标下滑::{msg}")
+            print(f"[指标告警] {msg}")
             print("  → 多半是某源 feed 改版/被封后静默返回空, 不是内容真的少了; 查该源的 status 与抓取日志")
     try:
         old_lines = ([x for x in METRICS_FILE.read_text(encoding="utf-8").splitlines() if x.strip()]

@@ -28,6 +28,11 @@
 
   .cp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
   .cp-wrap{max-width:760px;margin:0 auto}
+  .cp-crumb{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:12.5px;color:var(--ink-3);margin-bottom:20px;min-width:0}
+  .cp-crumb a{color:var(--ink-3);text-decoration:none}
+  .cp-crumb a:hover{color:var(--blue)}
+  .cp-crumb i{font-style:normal;opacity:.5;font-size:11px}
+  .cp-crumb [aria-current]{color:var(--ink-2);font-weight:650;overflow-wrap:anywhere}
   .cp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
   .cp-back:hover{color:var(--blue)}
   .cp-kicker{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:750;letter-spacing:.08em;color:var(--blue);margin-bottom:10px}
@@ -74,7 +79,7 @@
 <div id="site-nav" class="nav-fb"><a href="../../index.html">句子互动</a><a href="../../products/miaodong.html">句子秒懂</a><a href="../../products/shouhu.html">句子守护</a><a href="../../products/canmou.html">句子问数</a><a href="../../products/dongxing.html">句子懂行</a><a href="../../products/miaohui.html">句子秒回</a><a href="../../products/cli.html">句子 CLI</a><a href="../../products/zhizao.html">句子制造</a><a href="../../fde.html">FDE</a><a href="../../enterprise.html">企业方案</a><a href="../../industries.html">行业</a><a href="../../about.html">关于我们</a><a href="../../news.html">动态</a></div>
 <main class="cp-main">
   <div class="cp-wrap">
-    <a class="cp-back" href="index.html"><i class="fa-solid fa-arrow-left"></i>概念索引</a>
+    <nav class="cp-crumb" aria-label="面包屑"><a href="../../index.html">句子互动</a><i aria-hidden="true">›</i><a href="../../news.html">动态</a><i aria-hidden="true">›</i><a href="index.html">AI 概念库</a><i aria-hidden="true">›</i><span aria-current="page">扩散模型视频生成</span></nav>
     <div class="cp-kicker"><i class="fa-solid fa-book-open"></i>AI 概念库</div>
     <h1 class="cp-title">扩散模型视频生成</h1>
     <p class="cp-alias"><b>也叫</b> Diffusion Model for Video Generation / 视频扩散模型</p>

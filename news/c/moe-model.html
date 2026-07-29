@@ -28,6 +28,11 @@
 
   .cp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
   .cp-wrap{max-width:760px;margin:0 auto}
+  .cp-crumb{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:12.5px;color:var(--ink-3);margin-bottom:20px;min-width:0}
+  .cp-crumb a{color:var(--ink-3);text-decoration:none}
+  .cp-crumb a:hover{color:var(--blue)}
+  .cp-crumb i{font-style:normal;opacity:.5;font-size:11px}
+  .cp-crumb [aria-current]{color:var(--ink-2);font-weight:650;overflow-wrap:anywhere}
   .cp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
   .cp-back:hover{color:var(--blue)}
   .cp-kicker{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:750;letter-spacing:.08em;color:var(--blue);margin-bottom:10px}
@@ -74,12 +79,13 @@
 <div id="site-nav" class="nav-fb"><a href="../../index.html">句子互动</a><a href="../../products/miaodong.html">句子秒懂</a><a href="../../products/shouhu.html">句子守护</a><a href="../../products/canmou.html">句子问数</a><a href="../../products/dongxing.html">句子懂行</a><a href="../../products/miaohui.html">句子秒回</a><a href="../../products/cli.html">句子 CLI</a><a href="../../products/zhizao.html">句子制造</a><a href="../../fde.html">FDE</a><a href="../../enterprise.html">企业方案</a><a href="../../industries.html">行业</a><a href="../../about.html">关于我们</a><a href="../../news.html">动态</a></div>
 <main class="cp-main">
   <div class="cp-wrap">
-    <a class="cp-back" href="index.html"><i class="fa-solid fa-arrow-left"></i>概念索引</a>
+    <nav class="cp-crumb" aria-label="面包屑"><a href="../../index.html">句子互动</a><i aria-hidden="true">›</i><a href="../../news.html">动态</a><i aria-hidden="true">›</i><a href="index.html">AI 概念库</a><i aria-hidden="true">›</i><span aria-current="page">MoE模型</span></nav>
     <div class="cp-kicker"><i class="fa-solid fa-book-open"></i>AI 概念库</div>
     <h1 class="cp-title">MoE模型</h1>
     <p class="cp-alias"><b>也叫</b> 混合专家模型 / Mixture of Experts</p>
     <div class="cp-def">一种模型架构，内含多个“专家”子网络，每次推理只激活其中一部分来处理任务。它能在保持甚至提升<a class="cpt" href="model-capability.html" data-def="指AI模型在特定任务上的性能表现，如准确率、速度等，直接影响产品效果">模型能力</a>的同时，显著降低计算成本，是平衡模型性能与推理效率的关键技术路径。</div>
-    <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（15）</div>
+    <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（16）</div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-30">2026-07-30</time><span class="src s-qisi">齐思</span></div><div class="cp-body"><a class="t" href="../p/ab67ea7aae68.html">齐思洞见2026/07/30「Kimi K3用动态1-bit量化把2.8T MoE模型压缩并实现高端本地运行；前沿自治Agent沙盒逃逸展现跨云、持久自愈入侵风险，推动最小权限与可审计防护；开放推理内核需端到端基准与硬件适配以落地低延迟部署」</a><p class="cp-ev">…LfQoEBiHPs 🧠 深度解读 动态、分层的极限量化和智能离线/分页技术使得数TB级的<mark>MoE模型</mark>可以在高端台式机或笔记本上运行，保留大部分能力。这推动了前沿模型的本地化应用，促进了低延迟、隐私友好的智能代理和长上下文应用的开发。 🔗 查看原文 --- 💡…</p></div></div>
       <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-30">2026-07-30</time><span class="src s-qisi">齐思</span></div><div class="cp-body"><a class="t" href="../p/9c26bb8761e2.html">齐思头条2026/07/30「Kimi K3（2.8T MoE）本地化运行与 vLLM/1‑bit 压缩突破, 现货 GPU 租赁价约翻倍推高算力成本并驱动数据中心扩产, 自治 agent 横向攻破 Hugging Face 窃取生产密钥复盘」</a><p class="cp-ev">Twitter Kimi K3（Moonshot AI 发布 2.8T MoE，vLLM 与本地化运行突破） ：Moonshot AI 公布 Kimi K3，为约 2.8 万亿参数的 Mixture‑of‑Experts（每 token 激活 16/896 个…</p></div></div>
       <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-29">2026-07-29</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/c57c419013a8.html">九章云极Alaya Token完成Kimi K3适配 全球首个开源3T级模型入驻Token工厂</a></div></div>
       <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-29">2026-07-29</time><span class="src s-qisi">齐思</span></div><div class="cp-body"><a class="t" href="../p/4cb3cca2a335.html">齐思洞见2026/07/29「Kimi K3用“领域×推理努力”九专家、token预算化RL与多教师在线策略蒸馏（MOPD）整合2.8T MoE；$500低成本RL微调使9B模型在特定任务超越顶级API；StateAct以“state‑over‑pixels”显著提升智能体成功率并降低成本」</a><p class="cp-ev">K3 是一个 2.8T 参数的开放权重 MoE（<mark>Mixture of Experts</mark>，专家混合模型）模型。</p></div></div>
@@ -96,7 +102,7 @@
       <div class="cp-item"><div class="cp-meta"><time datetime="2026-06-12">2026-06-12</time><span class="src s-voices">大咖观点</span></div><div class="cp-body"><a class="t" href="../p/9d0d798da4d2.html">North Mini Code and Agentic Coding Benchmarks</a><p class="cp-ev">根据其发布文章，它是一个拥有 300 亿参数、30 亿活跃参数的<mark>混合专家模型</mark>，采用 Apache 2.0 许可证。</p></div></div>
       <div class="cp-item"><div class="cp-meta"><time datetime="2026-05-23">2026-05-23</time><span class="src s-voices">大咖观点</span></div><div class="cp-body"><a class="t" href="../p/3fd20a6f05c4.html">DeepSeek 的 10 万亿美元大战略</a><p class="cp-ev">当大家都在死磕稠密模型（Dense Models，所有参数都参与计算的传统大模型结构）时，DeepSeek 却迎难而上，选择了极难训练的<mark>混合专家模型</mark>（MoE, Mixture of Experts）。</p></div></div>
     <div class="cp-sec"><i class="fa-solid fa-diagram-project"></i>相关概念</div>
-    <div class="cp-rel"><a href="long-context-window.html"><i class="fa-solid fa-diagram-project"></i>长上下文窗口</a><a href="multi-agent-orchestration.html"><i class="fa-solid fa-diagram-project"></i>多智能体编排</a><a href="open-source-model.html"><i class="fa-solid fa-diagram-project"></i>开源模型</a><a href="agentic-coding.html"><i class="fa-solid fa-diagram-project"></i>智能体编程</a><a href="computing-fuse.html"><i class="fa-solid fa-diagram-project"></i>算力熔断</a><a href="inference-deployment.html"><i class="fa-solid fa-diagram-project"></i>推理部署</a><a href="model-benchmark.html"><i class="fa-solid fa-diagram-project"></i>模型基准测试</a><a href="model-routing.html"><i class="fa-solid fa-diagram-project"></i>模型路由</a></div>
+    <div class="cp-rel"><a href="long-context-window.html"><i class="fa-solid fa-diagram-project"></i>长上下文窗口</a><a href="multi-agent-orchestration.html"><i class="fa-solid fa-diagram-project"></i>多智能体编排</a><a href="open-source-model.html"><i class="fa-solid fa-diagram-project"></i>开源模型</a><a href="agent-smartphone.html"><i class="fa-solid fa-diagram-project"></i>智能体手机</a><a href="agentic-coding.html"><i class="fa-solid fa-diagram-project"></i>智能体编程</a><a href="agentic-security-harness.html"><i class="fa-solid fa-diagram-project"></i>智能体安全测试工具</a><a href="computing-fuse.html"><i class="fa-solid fa-diagram-project"></i>算力熔断</a><a href="inference-deployment.html"><i class="fa-solid fa-diagram-project"></i>推理部署</a></div>
     <div class="cp-actions">
       <button type="button" class="dp-btn pri" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
       <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>

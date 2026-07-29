@@ -28,6 +28,11 @@
 
   .cp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
   .cp-wrap{max-width:760px;margin:0 auto}
+  .cp-crumb{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:12.5px;color:var(--ink-3);margin-bottom:20px;min-width:0}
+  .cp-crumb a{color:var(--ink-3);text-decoration:none}
+  .cp-crumb a:hover{color:var(--blue)}
+  .cp-crumb i{font-style:normal;opacity:.5;font-size:11px}
+  .cp-crumb [aria-current]{color:var(--ink-2);font-weight:650;overflow-wrap:anywhere}
   .cp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
   .cp-back:hover{color:var(--blue)}
   .cp-kicker{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:750;letter-spacing:.08em;color:var(--blue);margin-bottom:10px}
@@ -74,16 +79,17 @@
 <div id="site-nav" class="nav-fb"><a href="../../index.html">句子互动</a><a href="../../products/miaodong.html">句子秒懂</a><a href="../../products/shouhu.html">句子守护</a><a href="../../products/canmou.html">句子问数</a><a href="../../products/dongxing.html">句子懂行</a><a href="../../products/miaohui.html">句子秒回</a><a href="../../products/cli.html">句子 CLI</a><a href="../../products/zhizao.html">句子制造</a><a href="../../fde.html">FDE</a><a href="../../enterprise.html">企业方案</a><a href="../../industries.html">行业</a><a href="../../about.html">关于我们</a><a href="../../news.html">动态</a></div>
 <main class="cp-main">
   <div class="cp-wrap">
-    <a class="cp-back" href="index.html"><i class="fa-solid fa-arrow-left"></i>概念索引</a>
+    <nav class="cp-crumb" aria-label="面包屑"><a href="../../index.html">句子互动</a><i aria-hidden="true">›</i><a href="../../news.html">动态</a><i aria-hidden="true">›</i><a href="index.html">AI 概念库</a><i aria-hidden="true">›</i><span aria-current="page">智能体手机</span></nav>
     <div class="cp-kicker"><i class="fa-solid fa-book-open"></i>AI 概念库</div>
     <h1 class="cp-title">智能体手机</h1>
     <p class="cp-alias"><b>也叫</b> Agent Smartphone / AI手机</p>
     <div class="cp-def">智能体手机是集成AI智能体功能的移动设备，能执行复杂任务如语音助手、自动化操作。它扩展手机用途，提升用户体验，为企业开辟新交互渠道和服务模式，驱动硬件创新。</div>
-    <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（2）</div>
+    <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（3）</div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-30">2026-07-30</time><span class="src s-qisi">齐思</span></div><div class="cp-body"><a class="t" href="../p/ab67ea7aae68.html">齐思洞见2026/07/30「Kimi K3用动态1-bit量化把2.8T MoE模型压缩并实现高端本地运行；前沿自治Agent沙盒逃逸展现跨云、持久自愈入侵风险，推动最小权限与可审计防护；开放推理内核需端到端基准与硬件适配以落地低延迟部署」</a><p class="cp-ev">目录 - ⚙️ 技术与工程 (26条) - 前沿自主 agent 的高韧性入侵能力挑战现有防御假设 - 开放推理内核提升 LLM 实时性与可部署性需端到端支持 - 快速迭代供应商网络与现成测试基础设施在硬科技项目中的重要性 - 优化全双工和低延迟是语音代理模型…</p></div></div>
       <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-27">2026-07-27</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/367702de8c46.html">最直白、最不绕弯子告诉你：为什么到处都是「AI手机」？｜AG&amp;I</a><p class="cp-ev">是产品进化，也是厂商、平台、用户共同参与的利益重组。 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。…</p></div></div>
       <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-24">2026-07-24</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/609b9d4bc8aa.html">全世界都在讲 AI 话｜AI 器物志</a><p class="cp-ev">语音输入会成为下一个十年的普世工具吗？ #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。…</p></div></div>
     <div class="cp-sec"><i class="fa-solid fa-diagram-project"></i>相关概念</div>
-    <div class="cp-rel"><a href="on-device-ai.html"><i class="fa-solid fa-diagram-project"></i>端侧AI</a></div>
+    <div class="cp-rel"><a href="agentic-security-harness.html"><i class="fa-solid fa-diagram-project"></i>智能体安全测试工具</a><a href="moe-model.html"><i class="fa-solid fa-diagram-project"></i>MoE模型</a><a href="on-device-ai.html"><i class="fa-solid fa-diagram-project"></i>端侧AI</a></div>
     <div class="cp-actions">
       <button type="button" class="dp-btn pri" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
       <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>

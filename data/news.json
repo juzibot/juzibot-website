@@ -1,8 +1,8 @@
 {
  "generated_by": "build_news.py",
- "generated_at": "2026-07-30T06:52:31+08:00",
- "count": 605,
- "visible": 283,
+ "generated_at": "2026-07-30T07:03:18+08:00",
+ "count": 607,
+ "visible": 284,
  "sources": [
   {
    "id": "rui-blog",
@@ -10,7 +10,7 @@
    "type": "sitemap",
    "home": "https://rui.juzi.bot/",
    "status": "ok",
-   "last_sync": "2026-07-30T06:52:31+08:00",
+   "last_sync": "2026-07-30T07:03:18+08:00",
    "group": "company",
    "ai": true,
    "count": 37
@@ -21,7 +21,7 @@
    "type": "feishu-base",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T06:52:31+08:00",
+   "last_sync": "2026-07-30T07:03:18+08:00",
    "group": "company",
    "ai": false,
    "count": 0
@@ -32,7 +32,7 @@
    "type": "manual",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T06:52:31+08:00",
+   "last_sync": "2026-07-30T07:03:18+08:00",
    "group": "company",
    "ai": false,
    "count": 5
@@ -43,7 +43,7 @@
    "type": "manual",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T06:52:31+08:00",
+   "last_sync": "2026-07-30T07:03:18+08:00",
    "group": "company",
    "ai": false,
    "count": 0
@@ -54,7 +54,7 @@
    "type": "rss",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T06:52:31+08:00",
+   "last_sync": "2026-07-30T07:03:18+08:00",
    "group": "radar",
    "ai": true,
    "count": 99
@@ -65,7 +65,7 @@
    "type": "rss",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T06:52:31+08:00",
+   "last_sync": "2026-07-30T07:03:18+08:00",
    "group": "radar",
    "ai": true,
    "count": 87
@@ -76,7 +76,7 @@
    "type": "hn-algolia",
    "home": "https://news.ycombinator.com/",
    "status": "ok",
-   "last_sync": "2026-07-30T06:52:31+08:00",
+   "last_sync": "2026-07-30T07:03:18+08:00",
    "group": "radar",
    "ai": true,
    "count": 29
@@ -87,13 +87,29 @@
    "type": "qisi-list",
    "home": "https://news.miracleplus.com/",
    "status": "ok",
-   "last_sync": "2026-07-30T06:52:31+08:00",
+   "last_sync": "2026-07-30T07:03:18+08:00",
    "group": "radar",
    "ai": true,
-   "count": 26
+   "count": 27
   }
  ],
  "items": [
+  {
+   "id": "e12bfe5fedf9",
+   "title": "美联储宣布维持利率不变",
+   "url": "https://36kr.com/newsflashes/3917304458734984?f=rss",
+   "summary": "当地时间7月29日，美国联邦储备委员会结束为期两天的议息会议，宣布将联邦基金利率目标区间维持在3.5%至3.75%之间不变，这也是美联储今年以来第五次维持利率不变。（央视财经）",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-07-30",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-30"
+   }
+  },
   {
    "id": "ab67ea7aae68",
    "title": "齐思洞见2026/07/30「Kimi K3用动态1-bit量化把2.8T MoE模型压缩并实现高端本地运行；前沿自治Agent沙盒逃逸展现跨云、持久自愈入侵风险，推动最小权限与可审计防护；开放推理内核需端到端基准与硬件适配以落地低延迟部署」",
@@ -104,7 +120,19 @@
    "date": "2026-07-30",
    "source": "qisi",
    "source_name": "齐思",
-   "author": "奇绩创坛"
+   "author": "奇绩创坛",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-30"
+   },
+   "concepts": [
+    "1-bit-quantization",
+    "agent-smartphone",
+    "agentic-security-harness",
+    "moe-model",
+    "tpu"
+   ],
+   "concepts_full": true
   },
   {
    "id": "9c26bb8761e2",
@@ -153,6 +181,23 @@
     "long-context-window"
    ],
    "concepts_full": true
+  },
+  {
+   "id": "391c670e68a8",
+   "title": "美股三大指数集体收跌，存储板块大跌",
+   "url": "https://36kr.com/newsflashes/3917311099825794?f=rss",
+   "summary": "36氪获悉，7月19日收盘，美股三大指数集体下跌，道指跌2.19%，纳指跌1.74%，标普500指数跌1.52%。存储板块大跌，美光科技跌近10%，闪迪跌超7%，迈威尔科技跌超6%，英特尔跌超5%；科技股普跌，英伟达跌超3%，特斯拉跌超2%，亚马逊、Meta跌超1%。热门中概股多数上涨，理想汽车涨超4%，拼多多涨超3%，小鹏集团、哔哩哔…",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-07-30",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-30",
+    "kw": true
+   }
   },
   {
    "id": "36a0402fa3bd",

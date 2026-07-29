@@ -498,6 +498,43 @@ def test_all_render_fns_registered_in_fingerprint():
     check("版本键形如 <人工版本>.<指纹>", re.fullmatch(r"[\w.]+\.[0-9a-f]{10}", v), v)
 
 
+# ---------------------------------------------------------------- 22
+def test_both_renderers_smoke():
+    """两个主渲染函数各跑一遍完整渲染 —— 补的是一个真实盲区。
+
+    加可见面包屑时把 cp_crumb 的定义放在了使用之后, 结果 concept_html 运行时抛
+    UnboundLocalError。而当时 **py_compile 通过、94 项测试也全过** —— 因为 py_compile 只查
+    语法(UnboundLocalError 是运行时错误), 而测试里 detail_html 被 noindex/canonical 那几组
+    间接调用过, concept_html 却**从没被完整渲染过**。两个主渲染函数只测了一个。
+    这类「定义在使用之后」「拼错变量名」的错误, 只要函数被完整调用一次就会暴露。
+    """
+    lib, worthy = fake_lib(), {"moe-model"}
+    it = fixture_item(concepts=["moe-model"])
+    dp = B.detail_html(it, lib, worthy)
+    check("detail_html 完整渲染不抛错", len(dp) > 1000, f"{len(dp)} 字节")
+    check("详情页含可见面包屑", 'class="dp-crumb"' in dp)
+    cp = B.concept_html("moe-model", lib["moe-model"], [it], ["thin-one"], lib, worthy)
+    check("concept_html 完整渲染不抛错", len(cp) > 1000, f"{len(cp)} 字节")
+    check("概念页含可见面包屑", 'class="cp-crumb"' in cp)
+    # 可见面包屑与 schema 路径必须同源(共用 trail 的意义)
+    import json as J
+    m = re.search(r'"@type": "BreadcrumbList".*?"itemListElement": (\[.*?\])\}', cp, re.S)
+    if m:
+        sch = [e["name"] for e in J.loads(m.group(1))]
+        nav = re.search(r'<nav class="cp-crumb"[^>]*>(.*?)</nav>', cp, re.S)
+        # html.unescape 是必须的: 可见面包屑在 HTML 里转义过(& → &amp;), schema 在 JSON 里
+        # 是原字符 —— 两边都正确, 不反转义就比字符串会把含 & 的标题误判成不一致(实测踩过)。
+        import html as _h
+        vis = [_h.unescape(re.sub(r"<[^>]+>", "", x)) for x in
+               re.findall(r'<(?:a[^>]*|span[^>]*)>(.*?)</(?:a|span)>', nav.group(1))] if nav else []
+        check("可见面包屑与 schema 路径一致", [v[:30] for v in vis] == [s[:30] for s in sch],
+              f"{vis} vs {sch}")
+    check("面包屑末项标 aria-current", 'aria-current="page"' in cp)
+    # 索引页也过一遍
+    idx = B.concept_index_html(lib, {"moe-model": [it]}, worthy)
+    check("concept_index_html 完整渲染不抛错", len(idx) > 500, f"{len(idx)} 字节")
+
+
 def main():
     tests = [v for k, v in sorted(globals().items()) if k.startswith("test_")]
     for fn in tests:
