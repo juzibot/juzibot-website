@@ -3180,11 +3180,50 @@ def record_metrics(vis, items, sources_meta, failed, now):
         print(f"  [提示] 指标未落盘({e}), 不影响本轮产物")
 
 
+def clean_shells():
+    """把两个列表页还原成干净模板壳(清空注入区)——`--clean-shell` 的实现。
+
+    「生成物不入库」是架构裁决, 但注入过数据的页面被拷回 PR 分支已经发生**两次**
+    (eafb0e3 那批 223KB, 以及 2026-07-30 从预览分支拷 ARIA 改动时又带回 103KB/245KB)。
+    两次的根因相同: **拷贝方向反了**。
+
+    正确方向只有一个 —— 源码(build_news.py 与模板壳)在 PR 分支改, 拷到预览分支跑管线
+    验证, 验证通过后就在 PR 分支提交; 源码本来就在 PR 分支, 所以**永远不需要**从预览分支
+    往回拷。反向拷贝这条路上今天丢过一次安全修复、带回过一次注入数据。
+
+    万一还是拷回来了, 跑 `python3 build_news.py --clean-shell` 一次即可, 别手改正则。
+    """
+    for spec in PAGES:
+        p = spec["file"]
+        if not p.exists():
+            print(f"  [跳过] {p.name} 不存在")
+            continue
+        t = p.read_text(encoding="utf-8")
+        before = len(t.encode()) // 1024
+        t = re.sub(r'(<script id="news-data" type="application/json">).*?(</script>)',
+                   r'\1{"sources":[],"items":[]}\2', t, count=1, flags=re.S)
+        t = re.sub(r'(<!-- NEWS:LIST:BEGIN 此区块由 build_news.py 生成，勿手改 -->).*?(<!-- NEWS:LIST:END -->)',
+                   r'\1\n\2', t, count=1, flags=re.S)
+        for tag, val in (("newsTotal", "0"), ("newsRadar", "0"), ("newsFresh", "—")):
+            t = re.sub(rf'(<b id="{tag}">)[^<]*(</b>)', rf'\g<1>{val}\2', t, count=1)
+        t = re.sub(r'<script type="application/ld\+json" id="news-itemlist">.*?</script>\n?', "", t, flags=re.S)
+        p.write_text(t, encoding="utf-8")
+        print(f"  {p.name}: {before}KB → {len(t.encode()) // 1024}KB")
+    print("[干净壳] 注入区已清空; 提交前可用 .github/workflows/shell-clean.yml 的同款检查自查")
+
+
 def main():
     ap = argparse.ArgumentParser(description="多源抓取、AI 筛选并更新动态页(卡片版/聚合版)与 data/news.json")
     ap.add_argument("--full", action="store_true", help="忽略已有数据, 全量重抓")
     ap.add_argument("--limit", type=int, default=0, help="每源本次最多收 N 条新内容(调试)")
+    ap.add_argument("--clean-shell", action="store_true",
+                    help="把两个列表页还原成干净模板壳(清空注入区), 不跑管线。"
+                         "从预览分支拷页面回 PR 分支后跑一次即可——生成物不入库(见 CLAUDE.md)")
     args = ap.parse_args()
+
+    if args.clean_shell:
+        clean_shells()
+        return
 
     prev = {}  # 已有数据始终留底; --full 只决定"要不要跳过已抓过的", 不决定"能不能回退"
     if DATA_FILE.exists():
