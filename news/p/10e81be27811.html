@@ -18,6 +18,14 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="../../assets/site.css" />
 <style>
+  /* 静态兜底导航: site.js 一执行就被 outerHTML 连同占位一起换掉, 访客几乎看不到它。
+     不隐藏也不 noscript 包裹——那会让爬虫拿不到, 而它存在的唯一理由就是给不跑 JS 的爬虫看。
+     样式做朴素一行, 万一 site.js 加载失败, 这排链接本身就是可用的降级导航。 */
+  .nav-fb{display:flex;flex-wrap:wrap;gap:6px 16px;padding:12px clamp(16px,4vw,40px);
+    border-bottom:1px solid var(--line-2);font-size:12.5px}
+  .nav-fb a{color:var(--ink-3);text-decoration:none}
+  .nav-fb a:hover{color:var(--blue)}
+
   .dp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
   .dp-wrap{max-width:760px;margin:0 auto}
   .dp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
@@ -73,7 +81,7 @@
 </style>
 </head>
 <body>
-<div id="site-nav"></div>
+<div id="site-nav" class="nav-fb"><a href="../../index.html">句子互动</a><a href="../../products/miaodong.html">句子秒懂</a><a href="../../products/shouhu.html">句子守护</a><a href="../../products/canmou.html">句子问数</a><a href="../../products/dongxing.html">句子懂行</a><a href="../../products/miaohui.html">句子秒回</a><a href="../../products/cli.html">句子 CLI</a><a href="../../products/zhizao.html">句子制造</a><a href="../../fde.html">FDE</a><a href="../../enterprise.html">企业方案</a><a href="../../industries.html">行业</a><a href="../../about.html">关于我们</a><a href="../../news.html">动态</a></div>
 <main class="dp-main">
   <div class="dp-wrap">
     <a class="dp-back" href="../../news.html"><i class="fa-solid fa-arrow-left"></i>返回动态</a>
@@ -99,19 +107,19 @@
       </tr>
     </table>
 <h3>Proposal A Proposer</h3>
-    <p>Matthias Geiger [<a href="mailto:werdahias@debian.org" target="_blank" rel="noopener nofollow">werdahias@debian.org</a>]
+    <p>Matthias Geiger [werdahias@debian.org]
 	[<a href="https://lists.debian.org/debian-vote/2026/07/msg00117.html" target="_blank" rel="noopener nofollow">text of proposal</a>]
     </p>
 <h3>Proposal A Seconds</h3>
     <ol>
-	<li>Johannes Schauer Marin Rodrigues [<a href="mailto:josch@debian.org" target="_blank" rel="noopener nofollow">josch@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00001.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
-	<li>Antoine Le Gonidec [<a href="mailto:vv221@debian.org" target="_blank" rel="noopener nofollow">vv221@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00002.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
-	<li>Simon Richter [<a href="mailto:sjr@debian.org" target="_blank" rel="noopener nofollow">sjr@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00005.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
-	<li>David Bremner [<a href="mailto:bremner@debian.org" target="_blank" rel="noopener nofollow">bremner@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00088.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
-	<li>Pierre-Elliott Bécue [<a href="mailto:peb@debian.org" target="_blank" rel="noopener nofollow">peb@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00092.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
-	<li>Ian Jackson [<a href="mailto:iwj@debian.org" target="_blank" rel="noopener nofollow">iwj@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00122.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
-	<li>Amin Bandali [<a href="mailto:bandali@debian.org" target="_blank" rel="noopener nofollow">bandali@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00135.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
-	<li>Thorsten Glaser [<a href="mailto:tg@debian.org" target="_blank" rel="noopener nofollow">tg@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00144.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
+	<li>Johannes Schauer Marin Rodrigues [josch@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00001.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
+	<li>Antoine Le Gonidec [vv221@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00002.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
+	<li>Simon Richter [sjr@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00005.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
+	<li>David Bremner [bremner@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00088.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
+	<li>Pierre-Elliott Bécue [peb@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00092.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
+	<li>Ian Jackson [iwj@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00122.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
+	<li>Amin Bandali [bandali@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00135.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
+	<li>Thorsten Glaser [tg@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00144.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
     </ol>
 <h3>Proposal A</h3>
 <h3>Choice 1</h3>
@@ -286,22 +294,22 @@ with input from Sledge and josch, organically and without language model
 assistance.
 </p>
 <h3>Proposal B Proposer</h3>
-    <p>Lucas Nussbaum [<a href="mailto:lucas@debian.org" target="_blank" rel="noopener nofollow">lucas@debian.org</a>]
+    <p>Lucas Nussbaum [lucas@debian.org]
 	[<a href="https://lists.debian.org/debian-vote/2026/07/msg00018.html" target="_blank" rel="noopener nofollow">text of proposal</a>]
 	[<a href="https://lists.debian.org/debian-vote/2026/07/msg00048.html" target="_blank" rel="noopener nofollow">text of amendment</a>]
 	[<a href="https://lists.debian.org/debian-vote/2026/07/msg00083.html" target="_blank" rel="noopener nofollow">text of amendment</a>]
     </p>
 <h3>Proposal B Seconds</h3>
     <ol>
-	<li>Andrey Rahmatullin [<a href="mailto:wrar@debian.org" target="_blank" rel="noopener nofollow">wrar@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00019.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
-	<li>Christian Kastner [<a href="mailto:ckk@debian.org" target="_blank" rel="noopener nofollow">ckk@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00028.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
-	<li>Anton Gladky [<a href="mailto:gladk@debian.org" target="_blank" rel="noopener nofollow">gladk@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00032.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
-	<li>Stefano Zacchiroli [<a href="mailto:zack@debian.org" target="_blank" rel="noopener nofollow">zack@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00040.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
-	<li>Simon Quigley [<a href="mailto:tsimonq2@debian.org" target="_blank" rel="noopener nofollow">tsimonq2@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00091.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
-	<li>Soren Stoutner [<a href="mailto:soren@debian.org" target="_blank" rel="noopener nofollow">soren@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00093.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
-	<li>Julian Andres Klode [<a href="mailto:jak@debian.org" target="_blank" rel="noopener nofollow">jak@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00104.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
-	<li>Andreas Tille [<a href="mailto:tille@debian.org" target="_blank" rel="noopener nofollow">tille@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00146.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
-	<li>Philipp Kern <a href="mailto:pkern@debian.org" target="_blank" rel="noopener nofollow">pkern@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00155.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
+	<li>Andrey Rahmatullin [wrar@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00019.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
+	<li>Christian Kastner [ckk@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00028.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
+	<li>Anton Gladky [gladk@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00032.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
+	<li>Stefano Zacchiroli [zack@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00040.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
+	<li>Simon Quigley [tsimonq2@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00091.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
+	<li>Soren Stoutner [soren@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00093.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
+	<li>Julian Andres Klode [jak@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00104.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
+	<li>Andreas Tille [tille@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00146.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
+	<li>Philipp Kern pkern@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00155.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
     </ol>
 <h3>Proposal B</h3>
 <h3>Choice 2</h3>
@@ -363,17 +371,17 @@ confidential data.</li>
 </ol>
 </p>
 <h3>Proposal C Proposer</h3>
-	    <p>Ian Jackson [<a href="mailto:iwj@debian.org" target="_blank" rel="noopener nofollow">iwj@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00118.html" target="_blank" rel="noopener nofollow">text of proposal</a>]</p>
+	    <p>Ian Jackson [iwj@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00118.html" target="_blank" rel="noopener nofollow">text of proposal</a>]</p>
 <h3>Proposal C Seconds</h3>
     <ol>
-	<li>Matthias Geiger [<a href="mailto:werdahias@debian.org" target="_blank" rel="noopener nofollow">werdahias@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00119.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
-	<li>Andrea Pappacoda [<a href="mailto:tachi@debian.org" target="_blank" rel="noopener nofollow">tachi@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00130.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
-	<li>Simon Richter [<a href="mailto:sjr@debian.org" target="_blank" rel="noopener nofollow">sjr@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00132.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
-	<li>Antoine Le Gonidec [<a href="mailto:vv221@debian.org" target="_blank" rel="noopener nofollow">vv221@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00133.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
-	<li>Amin Bandali [<a href="mailto:bandali@debian.org" target="_blank" rel="noopener nofollow">bandali@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00135.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
-	<li>Bill Blough [<a href="mailto:bblough@debian.org" target="_blank" rel="noopener nofollow">bblough@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00141.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
-	<li>Enrico Zini [<a href="mailto:enrico@debian.org" target="_blank" rel="noopener nofollow">enrico@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00152.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
-	<li>Sean Whitton [<a href="mailto:spwhitton@debian.org" target="_blank" rel="noopener nofollow">spwhitton@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00159.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
+	<li>Matthias Geiger [werdahias@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00119.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
+	<li>Andrea Pappacoda [tachi@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00130.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
+	<li>Simon Richter [sjr@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00132.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
+	<li>Antoine Le Gonidec [vv221@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00133.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
+	<li>Amin Bandali [bandali@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00135.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
+	<li>Bill Blough [bblough@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00141.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
+	<li>Enrico Zini [enrico@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00152.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
+	<li>Sean Whitton [spwhitton@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00159.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
     </ol>
 <h3>Proposal C</h3>
 <h3>Choice 3</h3>
@@ -421,15 +429,15 @@ output as part of Debian is currently impractical.</p>
    required. In any case we promise not to shame anyone for any
    linguistic mistakes.</p>
 <h3>Proposal D Proposer</h3>
-	    <p>Pierre-Elliott Bécue [<a href="mailto:peb@debian.org" target="_blank" rel="noopener nofollow">peb@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00089.html" target="_blank" rel="noopener nofollow">text of proposal</a>]</p>
+	    <p>Pierre-Elliott Bécue [peb@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00089.html" target="_blank" rel="noopener nofollow">text of proposal</a>]</p>
 <h3>Proposal D Seconds</h3>
     <ol>
-	<li>Russ Allbery [<a href="mailto:rra@debian.org" target="_blank" rel="noopener nofollow">rra@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00090.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
-	<li>Johannes Schauer Marin Rodrigues [<a href="mailto:josch@debian.org" target="_blank" rel="noopener nofollow">josch@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00129.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
-	<li>Jonathan Carter [<a href="mailto:jcc@debian.org" target="_blank" rel="noopener nofollow">jcc@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00143.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
-	<li>Gunnar Wolf [<a href="mailto:gwolf@debian.org" target="_blank" rel="noopener nofollow">gwolf@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00145.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
-	<li>Tiago Bortoletto Vaz [<a href="mailto:tiago@debian.org" target="_blank" rel="noopener nofollow">tiago@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00154.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
-	<li>Jeremy Sowden [<a href="mailto:azazel@debian.org" target="_blank" rel="noopener nofollow">azazel@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00156.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
+	<li>Russ Allbery [rra@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00090.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
+	<li>Johannes Schauer Marin Rodrigues [josch@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00129.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
+	<li>Jonathan Carter [jcc@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00143.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
+	<li>Gunnar Wolf [gwolf@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00145.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
+	<li>Tiago Bortoletto Vaz [tiago@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00154.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
+	<li>Jeremy Sowden [azazel@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00156.html" target="_blank" rel="noopener nofollow">mail</a>]</li>
     </ol>
 <h3>Proposal D</h3>
 <h3>Choice 4</h3>
@@ -473,7 +481,7 @@ refers to the contributions done specifically for the Debian project.
 </p>
     <hr />
       
-        <a href="mailto:secretary@debian.org" target="_blank" rel="noopener nofollow">Debian Project Secretary</a>
+        Debian Project Secretary
       
 </p></article><article class="dp-body" id="dpBodyZh" hidden><h1>通用决议：Debian 中的 LLM 使用</h1>
 
@@ -486,19 +494,19 @@ refers to the contributions done specifically for the Debian project.
       </tr>
     </table>
 <h3>提案 A 提案人</h3>
-    <p>Matthias Geiger [<a href="mailto:werdahias@debian.org" target="_blank" rel="noopener nofollow">werdahias@debian.org</a>]
+    <p>Matthias Geiger [werdahias@debian.org]
 	[<a href="https://lists.debian.org/debian-vote/2026/07/msg00117.html" target="_blank" rel="noopener nofollow">提案全文</a>]
     </p>
 <h3>提案 A 附议人</h3>
     <ol>
-	<li>Johannes Schauer Marin Rodrigues [<a href="mailto:josch@debian.org" target="_blank" rel="noopener nofollow">josch@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00001.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
-	<li>Antoine Le Gonidec [<a href="mailto:vv221@debian.org" target="_blank" rel="noopener nofollow">vv221@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00002.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
-	<li>Simon Richter [<a href="mailto:sjr@debian.org" target="_blank" rel="noopener nofollow">sjr@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00005.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
-	<li>David Bremner [<a href="mailto:bremner@debian.org" target="_blank" rel="noopener nofollow">bremner@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00088.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
-	<li>Pierre-Elliott Bécue [<a href="mailto:peb@debian.org" target="_blank" rel="noopener nofollow">peb@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00092.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
-	<li>Ian Jackson [<a href="mailto:iwj@debian.org" target="_blank" rel="noopener nofollow">iwj@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00122.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
-	<li>Amin Bandali [<a href="mailto:bandali@debian.org" target="_blank" rel="noopener nofollow">bandali@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00135.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
-	<li>Thorsten Glaser [<a href="mailto:tg@debian.org" target="_blank" rel="noopener nofollow">tg@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00144.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Johannes Schauer Marin Rodrigues [josch@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00001.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Antoine Le Gonidec [vv221@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00002.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Simon Richter [sjr@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00005.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>David Bremner [bremner@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00088.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Pierre-Elliott Bécue [peb@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00092.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Ian Jackson [iwj@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00122.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Amin Bandali [bandali@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00135.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Thorsten Glaser [tg@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00144.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
     </ol>
 <h3>提案 A</h3>
 <h3>选项 1</h3>
@@ -608,22 +616,22 @@ https://codeberg.org/Codeberg/org/pulls/1253#issuecomment-19820434<br />
 本文由 Matthias Geiger 和 Jesse Rhodes 在 Sledge 和 josch 的参与下撰写，整个过程自然完成，未使用语言模型协助。
 </p>
 <h3>提案 B 提出者</h3>
-<p>Lucas Nussbaum [<a href="mailto:lucas@debian.org" target="_blank" rel="noopener nofollow">lucas@debian.org</a>]
+<p>Lucas Nussbaum [lucas@debian.org]
 	[<a href="https://lists.debian.org/debian-vote/2026/07/msg00018.html" target="_blank" rel="noopener nofollow">提案原文</a>]
 	[<a href="https://lists.debian.org/debian-vote/2026/07/msg00048.html" target="_blank" rel="noopener nofollow">修正案原文</a>]
 	[<a href="https://lists.debian.org/debian-vote/2026/07/msg00083.html" target="_blank" rel="noopener nofollow">修正案原文</a>]
     </p>
 <h3>提案 B 的附议者</h3>
     <ol>
-	<li>Andrey Rahmatullin [<a href="mailto:wrar@debian.org" target="_blank" rel="noopener nofollow">wrar@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00019.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
-	<li>Christian Kastner [<a href="mailto:ckk@debian.org" target="_blank" rel="noopener nofollow">ckk@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00028.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
-	<li>Anton Gladky [<a href="mailto:gladk@debian.org" target="_blank" rel="noopener nofollow">gladk@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00032.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
-	<li>Stefano Zacchiroli [<a href="mailto:zack@debian.org" target="_blank" rel="noopener nofollow">zack@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00040.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
-	<li>Simon Quigley [<a href="mailto:tsimonq2@debian.org" target="_blank" rel="noopener nofollow">tsimonq2@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00091.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
-	<li>Soren Stoutner [<a href="mailto:soren@debian.org" target="_blank" rel="noopener nofollow">soren@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00093.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
-	<li>Julian Andres Klode [<a href="mailto:jak@debian.org" target="_blank" rel="noopener nofollow">jak@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00104.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
-	<li>Andreas Tille [<a href="mailto:tille@debian.org" target="_blank" rel="noopener nofollow">tille@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00146.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
-	<li>Philipp Kern <a href="mailto:pkern@debian.org" target="_blank" rel="noopener nofollow">pkern@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00155.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Andrey Rahmatullin [wrar@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00019.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Christian Kastner [ckk@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00028.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Anton Gladky [gladk@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00032.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Stefano Zacchiroli [zack@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00040.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Simon Quigley [tsimonq2@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00091.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Soren Stoutner [soren@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00093.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Julian Andres Klode [jak@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00104.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Andreas Tille [tille@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00146.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Philipp Kern pkern@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00155.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
     </ol>
 <h3>提案 B</h3>
 <h3>选项 2</h3>
@@ -643,17 +651,17 @@ https://codeberg.org/Codeberg/org/pulls/1253#issuecomment-19820434<br />
 </ol>
 </p>
 <h3>提案 C 提议人</h3>
-	    <p>Ian Jackson [<a href="mailto:iwj@debian.org" target="_blank" rel="noopener nofollow">iwj@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00118.html" target="_blank" rel="noopener nofollow">提案全文</a>]</p>
+	    <p>Ian Jackson [iwj@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00118.html" target="_blank" rel="noopener nofollow">提案全文</a>]</p>
 <h3>提案 C 附议人</h3>
 <ol>
-	<li>Matthias Geiger [<a href="mailto:werdahias@debian.org" target="_blank" rel="noopener nofollow">werdahias@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00119.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
-	<li>Andrea Pappacoda [<a href="mailto:tachi@debian.org" target="_blank" rel="noopener nofollow">tachi@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00130.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
-	<li>Simon Richter [<a href="mailto:sjr@debian.org" target="_blank" rel="noopener nofollow">sjr@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00132.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
-	<li>Antoine Le Gonidec [<a href="mailto:vv221@debian.org" target="_blank" rel="noopener nofollow">vv221@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00133.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
-	<li>Amin Bandali [<a href="mailto:bandali@debian.org" target="_blank" rel="noopener nofollow">bandali@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00135.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
-	<li>Bill Blough [<a href="mailto:bblough@debian.org" target="_blank" rel="noopener nofollow">bblough@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00141.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
-	<li>Enrico Zini [<a href="mailto:enrico@debian.org" target="_blank" rel="noopener nofollow">enrico@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00152.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
-	<li>Sean Whitton [<a href="mailto:spwhitton@debian.org" target="_blank" rel="noopener nofollow">spwhitton@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00159.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Matthias Geiger [werdahias@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00119.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Andrea Pappacoda [tachi@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00130.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Simon Richter [sjr@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00132.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Antoine Le Gonidec [vv221@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00133.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Amin Bandali [bandali@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00135.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Bill Blough [bblough@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00141.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Enrico Zini [enrico@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00152.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Sean Whitton [spwhitton@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00159.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
     </ol>
 <h3>提案 C</h3>
 <h3>选择 3</h3>
@@ -673,15 +681,15 @@ https://codeberg.org/Codeberg/org/pulls/1253#issuecomment-19820434<br />
 <p>7. 对这些要求的违规行为应被视为对行为准则的违规，并应迅速且适度地采取纪律处分。</p>
 <p>8. 任何认为自己无法在没有帮助的情况下用英语书写的贡献者，可以用自己的母语书写，并期望读者使用他们选择的翻译工具。在这种情况下，一份由人类撰写的英文摘要将非常受欢迎，但并非必需。在任何情况下，我们都不会因任何语言错误而羞辱任何人。</p>
 <h3>提案 D 提出者</h3>
-	    <p>Pierre-Elliott Bécue [<a href="mailto:peb@debian.org" target="_blank" rel="noopener nofollow">peb@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00089.html" target="_blank" rel="noopener nofollow">提案原文</a>]</p>
+	    <p>Pierre-Elliott Bécue [peb@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00089.html" target="_blank" rel="noopener nofollow">提案原文</a>]</p>
 <h3>提案 D 附议者</h3>
 <ol>
-	<li>Russ Allbery [<a href="mailto:rra@debian.org" target="_blank" rel="noopener nofollow">rra@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00090.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
-	<li>Johannes Schauer Marin Rodrigues [<a href="mailto:josch@debian.org" target="_blank" rel="noopener nofollow">josch@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00129.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
-	<li>Jonathan Carter [<a href="mailto:jcc@debian.org" target="_blank" rel="noopener nofollow">jcc@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00143.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
-	<li>Gunnar Wolf [<a href="mailto:gwolf@debian.org" target="_blank" rel="noopener nofollow">gwolf@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00145.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
-	<li>Tiago Bortoletto Vaz [<a href="mailto:tiago@debian.org" target="_blank" rel="noopener nofollow">tiago@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00154.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
-	<li>Jeremy Sowden [<a href="mailto:azazel@debian.org" target="_blank" rel="noopener nofollow">azazel@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00156.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Russ Allbery [rra@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00090.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Johannes Schauer Marin Rodrigues [josch@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00129.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Jonathan Carter [jcc@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00143.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Gunnar Wolf [gwolf@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00145.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Tiago Bortoletto Vaz [tiago@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00154.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Jeremy Sowden [azazel@debian.org] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00156.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
     </ol>
 <h3>提案 D</h3>
 <h3>选项 4</h3>
@@ -704,7 +712,7 @@ https://codeberg.org/Codeberg/org/pulls/1253#issuecomment-19820434<br />
 </p>
     <hr />
       
-        <a href="mailto:secretary@debian.org" target="_blank" rel="noopener nofollow">Debian Project Secretary</a>
+        Debian Project Secretary
       
 </p></article>
     <div class="dp-actions">
