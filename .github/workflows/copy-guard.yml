@@ -1,0 +1,49 @@
+name: copy-guard
+# 官网文案口径闸(2026-07-30)。「企微 / 企业微信」不出现在任何页面是用户 2026-07-27 拍板的
+# 硬口径, 但它已经被破了三次: PR#101 的 workforce/geo.html、动态页概念页的逐字引用、
+# 以及首页 index.html 存量 7 处(含 FAQ 文案与二维码 alt)。人眼守不住, 交给 CI。
+#
+# 扫描面: 入库的页面与一方数据登记表。
+# 不扫: news/(生成物不入库, 由 build_news.py 的 BANNED_TERMS 闸在渲染层拦);
+#      *.md(CLAUDE.md / NEWS_HANDOFF.md 里写的是规则本身, 属元文本)。
+# 替代口径(沿用已合并的 8000197): 承接语境→私域, 二维码/客服语境→微信客服。
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+
+jobs:
+  banned-terms:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: 页面与一方数据不得出现「企微 / 企业微信」
+        run: |
+          python3 - <<'PY'
+          import pathlib, re, sys
+          BANNED = ("企业微信", "企微")
+          targets = [p for p in pathlib.Path(".").rglob("*.html")
+                     if not str(p).startswith(("news/", "node_modules/", ".git/"))]
+          targets += [p for p in pathlib.Path("data").glob("*.json")
+                      if p.name not in ("news.json", "concepts.json", "render-cache.json")]
+          hits = []
+          for p in sorted(targets):
+              try:
+                  lines = p.read_text(encoding="utf-8").splitlines()
+              except (OSError, UnicodeDecodeError):
+                  continue
+              for i, ln in enumerate(lines, 1):
+                  for b in BANNED:
+                      if b in ln:
+                          hits.append((str(p), i, ln.strip()[:110]))
+                          break
+          if hits:
+              print(f"::error::官网口径破了: {len(hits)} 处「企微 / 企业微信」")
+              for f, i, s in hits:
+                  print(f"::error file={f},line={i}::{s}")
+              print("::error::替代口径: 承接语境→私域; 二维码/客服语境→微信客服")
+              sys.exit(1)
+          print(f"扫了 {len(targets)} 个文件, 口径干净 ✓")
+          PY
