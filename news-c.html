@@ -35,7 +35,7 @@
   .fd-switch i{font-size:11px}
 
   /* 源 tab 条（吸顶）+ 二级分类 chips + 搜索 */
-  .fd-tabs{position:sticky;top:10px;z-index:30;display:flex;align-items:center;gap:2px;
+  .fd-tabs{position:sticky;top:10px;z-index:30;display:flex;flex-wrap:wrap;align-items:center;gap:2px;
     background:rgba(255,255,255,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
     border:1px solid var(--line);border-radius:12px;padding:5px 8px;box-shadow:var(--shadow-soft);margin-bottom:12px}
   .fd-tabrow{display:flex;flex-wrap:wrap;gap:2px;flex:1;min-width:0}
@@ -48,6 +48,11 @@
   .fd-tab.on{color:var(--blue);font-weight:800}
   .fd-tab.on::after{content:'';position:absolute;left:9px;right:9px;bottom:3px;height:3px;border-radius:2px;
     background:linear-gradient(90deg,var(--blue),var(--blue-2))}
+  /* 双区分区(2026-07-29, 与卡片版同架构): 句子动态(主) / 行业雷达(次) */
+  .fd-grp{flex:1 0 100%;order:-1;border-bottom:1px solid var(--line-2);margin-bottom:2px;padding-bottom:2px}
+  .fd-grp .fd-tab{font-size:13.5px;font-weight:800}
+  .fd-grp .fd-tab.on{color:var(--ink)}
+  .fd-grp .fd-tab.on::after{background:var(--ink)}
   .fd-subcats{display:flex;flex-wrap:wrap;gap:7px;margin:-2px 0 12px 4px}
   .fd-subcats[hidden]{display:none}
   .fd-subcat{font-size:12px;font-weight:650;color:var(--ink-3);background:#fff;border:1px solid var(--line);
@@ -177,6 +182,7 @@
 
   <div class="fd-main">
     <div class="fd-tabs">
+      <div class="fd-tabrow fd-grp" id="newsGroups" role="tablist" aria-label="分区"></div>
       <div class="fd-tabrow" id="newsSrcs" role="tablist" aria-label="按来源筛选"></div>
       <label class="fd-search"><i class="fa-solid fa-magnifying-glass"></i>
         <input type="search" id="newsSearch" placeholder="搜内容…" aria-label="搜索" autocomplete="off" />
@@ -247,7 +253,13 @@
       sentinel = document.getElementById('newsSentinel');
 
   var shownInit = list.querySelectorAll('.fd-item').length;
-  var state = { src: 'all', cat: 'all', time: 'all', cut: '', q: '', shown: shownInit,
+  var GROUPS = [{ k: 'company', n: '句子动态', i: 'fa-solid fa-house-chimney' },
+                { k: 'radar', n: '行业雷达', i: 'fa-solid fa-satellite-dish' },
+                { k: 'all', n: '全部', i: 'fa-solid fa-layer-group' }];
+  function grpOf(id) { var s = sources.filter(function (x) { return x.id === id; })[0]; return (s && s.group) || 'radar'; }
+  function inGroup(it) { return state.group === 'all' || grpOf(it.source) === state.group; }
+  function groupCount(g) { return data.filter(function (it) { return g === 'all' || grpOf(it.source) === g; }).length; }
+  var state = { group: 'company', src: 'all', cat: 'all', time: 'all', cut: '', q: '', shown: shownInit,
                 lastMonth: shownInit > 0 && data[shownInit - 1] ? data[shownInit - 1].date.slice(0, 7) : '' };
 
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
@@ -290,6 +302,7 @@
   function filtered() {
     var kw = state.q.toLowerCase();
     return data.filter(function (it) {
+      if (!inGroup(it)) return false;
       if (state.src !== 'all' && it.source !== state.src) return false;
       if (state.cat !== 'all' && it.category !== state.cat) return false;
       if (state.cut && it.date < state.cut) return false;
@@ -322,9 +335,17 @@
     });
   }
 
+  function buildGroups() {
+    var el = document.getElementById('newsGroups');
+    el.innerHTML = GROUPS.map(function (g) {
+      return '<button type="button" class="fd-tab' + (g.k === state.group ? ' on' : '') + '" data-group="' + g.k +
+             '" role="tab" aria-selected="' + (g.k === state.group) + '"><i class="' + g.i + '"></i>' + g.n +
+             '<small>' + groupCount(g.k) + '</small></button>';
+    }).join('');
+  }
   function buildSrcs() {
-    var html = '<button type="button" class="fd-tab on" data-src="all" role="tab" aria-selected="true">全部<small>' + data.length + '</small></button>';
-    sources.forEach(function (s) {
+    var html = '<button type="button" class="fd-tab on" data-src="all" role="tab" aria-selected="true">全部<small>' + groupCount(state.group) + '</small></button>';
+    sources.filter(function (s) { return state.group === 'all' || (s.group || 'radar') === state.group; }).forEach(function (s) {
       html += '<button type="button" class="fd-tab" data-src="' + esc(s.id) + '" role="tab" aria-selected="false">' +
         '<i class="' + (ICON[s.id] || 'fa-solid fa-newspaper') + '"></i>' + esc(s.name) + '<small>' + s.count + '</small></button>';
     });
@@ -336,7 +357,7 @@
     if (state.src === 'all') return;
     var seen = {}, order = [];
     data.forEach(function (it) {
-      if (it.source !== state.src || !it.category) return;
+      if (!inGroup(it) || it.source !== state.src || !it.category) return;
       if (!seen[it.category]) { seen[it.category] = 0; order.push(it.category); }
       seen[it.category]++;
     });
@@ -370,12 +391,20 @@
   function init() {
     if (!data.length) { document.querySelector('.fd-tabs').style.display = 'none'; return; } // 数据缺失：保留预渲染兜底
     total.textContent = data.length;
-    buildSrcs(); buildTimes(); buildPanel();
+    buildGroups(); buildSrcs(); buildTimes(); buildPanel();
     sideLatest.innerHTML = data.slice(0, 5).map(function (it, i) {
       return '<a href="news/p/' + esc(it.id) + '.html"><span class="no">0' + (i + 1) + '</span><span class="tt">' + esc(it.title_zh || it.title) + '</span></a>';
     }).join('');
     more.hidden = state.shown >= data.length;
+    // 默认视图是「句子动态」而预渲染是全量: 首帧必须按分区重渲一次, 否则用户看到的仍是混排(2026-07-29)
+    render(true);
 
+    document.getElementById('newsGroups').addEventListener('click', function (e) {
+      var b = e.target.closest('[data-group]'); if (!b) return;
+      state.group = b.getAttribute('data-group'); state.src = 'all'; state.cat = 'all';
+      mark(document.getElementById('newsGroups'), 'data-group', state.group);
+      buildSrcs(); buildCats(); render(true);
+    });
     srcs.addEventListener('click', function (e) {
       var b = e.target.closest('[data-src]'); if (!b) return;
       state.src = b.getAttribute('data-src'); state.cat = 'all';
