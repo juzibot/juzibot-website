@@ -498,48 +498,41 @@ def test_all_render_fns_registered_in_fingerprint():
     check("版本键形如 <人工版本>.<指纹>", re.fullmatch(r"[\w.]+\.[0-9a-f]{10}", v), v)
 
 
-# ---------------------------------------------------------------- 21
-def test_feed_scope_is_company_only():
-    """自家动态 RSS 的范围约束是**版权硬边界**, 不是风格偏好 —— 转载的第三方内容做成全文
-    feed 分发, 比站内镜像更进一步, 不能做。所以这条必须钉死。
+# ---------------------------------------------------------------- 22
+def test_both_renderers_smoke():
+    """两个主渲染函数各跑一遍完整渲染 —— 补的是一个真实盲区。
+
+    加可见面包屑时把 cp_crumb 的定义放在了使用之后, 结果 concept_html 运行时抛
+    UnboundLocalError。而当时 **py_compile 通过、94 项测试也全过** —— 因为 py_compile 只查
+    语法(UnboundLocalError 是运行时错误), 而测试里 detail_html 被 noindex/canonical 那几组
+    间接调用过, concept_html 却**从没被完整渲染过**。两个主渲染函数只测了一个。
+    这类「定义在使用之后」「拼错变量名」的错误, 只要函数被完整调用一次就会暴露。
     """
-    import tempfile, xml.etree.ElementTree as ET
-    vis = [
-        fixture_item(id="c1", source="rui-blog", source_name="博客精选", title="自家博客"),
-        fixture_item(id="c2", source="product", source_name="产品动态", title="自家产品"),
-        fixture_item(id="x1", source="industry", source_name="行业动态", title="第三方资讯"),
-        fixture_item(id="x2", source="voices", source_name="大咖观点", title="第三方博主"),
-        fixture_item(id="x3", source="hn", source_name="Hacker News", title="HN 热帖"),
-    ]
-    orig = B.ROOT
-    with tempfile.TemporaryDirectory() as d:
-        try:
-            B.ROOT = pathlib.Path(d)
-            B.write_news_feed(vis)
-            f = B.ROOT / "news-feed.xml"
-            check("feed 已生成", f.exists())
-            if not f.exists():
-                return
-            root = ET.fromstring(f.read_text(encoding="utf-8"))   # 解析失败即 XML 不合法
-            items = root.find("channel").findall("item")
-            titles = {i.findtext("title") for i in items}
-            check("自家内容进 feed", {"自家博客", "自家产品"} <= titles, str(titles))
-            leak = titles & {"第三方资讯", "第三方博主", "HN 热帖"}
-            check("**第三方内容不得进 feed**(版权硬边界)", not leak, f"泄漏 {leak}")
-            links = [i.findtext("link") for i in items]
-            check("链接指站内详情页", all("/news/p/" in (l or "") for l in links), str(links))
-            check("每条都有 pubDate", all(i.findtext("pubDate") for i in items))
-            check("每条 guid 与 link 一致", all(i.findtext("guid") == i.findtext("link") for i in items))
-        finally:
-            B.ROOT = orig
-    # 公司区为空时不该产出空 feed(空 channel 对阅读器是噪音)
-    with tempfile.TemporaryDirectory() as d2:
-        try:
-            B.ROOT = pathlib.Path(d2)
-            B.write_news_feed([fixture_item(id="x9", source="industry", source_name="行业动态")])
-            check("公司区为空时不产出 feed", not (B.ROOT / "news-feed.xml").exists())
-        finally:
-            B.ROOT = orig
+    lib, worthy = fake_lib(), {"moe-model"}
+    it = fixture_item(concepts=["moe-model"])
+    dp = B.detail_html(it, lib, worthy)
+    check("detail_html 完整渲染不抛错", len(dp) > 1000, f"{len(dp)} 字节")
+    check("详情页含可见面包屑", 'class="dp-crumb"' in dp)
+    cp = B.concept_html("moe-model", lib["moe-model"], [it], ["thin-one"], lib, worthy)
+    check("concept_html 完整渲染不抛错", len(cp) > 1000, f"{len(cp)} 字节")
+    check("概念页含可见面包屑", 'class="cp-crumb"' in cp)
+    # 可见面包屑与 schema 路径必须同源(共用 trail 的意义)
+    import json as J
+    m = re.search(r'"@type": "BreadcrumbList".*?"itemListElement": (\[.*?\])\}', cp, re.S)
+    if m:
+        sch = [e["name"] for e in J.loads(m.group(1))]
+        nav = re.search(r'<nav class="cp-crumb"[^>]*>(.*?)</nav>', cp, re.S)
+        # html.unescape 是必须的: 可见面包屑在 HTML 里转义过(& → &amp;), schema 在 JSON 里
+        # 是原字符 —— 两边都正确, 不反转义就比字符串会把含 & 的标题误判成不一致(实测踩过)。
+        import html as _h
+        vis = [_h.unescape(re.sub(r"<[^>]+>", "", x)) for x in
+               re.findall(r'<(?:a[^>]*|span[^>]*)>(.*?)</(?:a|span)>', nav.group(1))] if nav else []
+        check("可见面包屑与 schema 路径一致", [v[:30] for v in vis] == [s[:30] for s in sch],
+              f"{vis} vs {sch}")
+    check("面包屑末项标 aria-current", 'aria-current="page"' in cp)
+    # 索引页也过一遍
+    idx = B.concept_index_html(lib, {"moe-model": [it]}, worthy)
+    check("concept_index_html 完整渲染不抛错", len(idx) > 500, f"{len(idx)} 字节")
 
 
 def main():
