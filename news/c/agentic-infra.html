@@ -29,7 +29,12 @@
   .cp-def{font-size:15.5px;line-height:1.95;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:14px;padding:18px 22px;margin-bottom:26px}
   .cp-sec{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--ink-2);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
   .cp-sec i{color:var(--blue);font-size:12px}
-  .cp-item{display:flex;align-items:baseline;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-item{display:flex;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-meta{display:flex;align-items:baseline;gap:8px;flex:0 0 auto}
+  .cp-body{min-width:0}
+  .cp-ev{margin:4px 0 0;font-size:12.5px;line-height:1.65;color:var(--ink-2);overflow-wrap:anywhere}
+  .cp-ev mark{background:rgba(37,99,235,.12);color:var(--blue);font-weight:650;padding:0 2px;border-radius:3px}
+  @media(max-width:560px){.cp-item{flex-direction:column;gap:4px}}
   .cp-item time{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex:0 0 auto}
   .cp-item .src{font-size:11px;font-weight:750;color:var(--sc,var(--blue));flex:0 0 auto}
   .cp-item a.t{font-size:14px;font-weight:650;color:var(--ink);line-height:1.5;overflow-wrap:anywhere}
@@ -67,11 +72,11 @@
     <p class="cp-alias"><b>也叫</b> Agentic Infrastructure / 智能体基础架构 / Agentic Infra</p>
     <div class="cp-def">智能体基础设施是为AI智能体提供运行环境、通信和协调的底层系统。它像智能体的‘操作系统’，使不同模型厂商能协同工作，加速AGI时代应用落地，降低企业集成复杂度。</div>
     <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（5）</div>
-      <div class="cp-item"><time datetime="2026-07-29">2026-07-29</time><span class="src s-industry">行业动态</span><a class="t" href="../p/1ccc493419dd.html">36氪研究院 | 2026年中国智能硬件行业发展研究报告</a></div>
-      <div class="cp-item"><time datetime="2026-07-26">2026-07-26</time><span class="src s-industry">行业动态</span><a class="t" href="../p/d722833a8981.html">【数智周报】  OpenAI证实模型测试出现失控，引发史无前例入侵；阿里千问发布 Qwen-Image-3.0；华为首次完整展示全系列计算模组产品；英特尔将在数据中心部门裁员</a></div>
-      <div class="cp-item"><time datetime="2026-07-26">2026-07-26</time><span class="src s-industry">行业动态</span><a class="t" href="../p/06761b22bd33.html">Codex也断了:OpenAI三线齐崩，Agent时代的宕机账单怎么算</a></div>
-      <div class="cp-item"><time datetime="2026-07-25">2026-07-25</time><span class="src s-industry">行业动态</span><a class="t" href="../p/53ae954806d8.html">全新统一流式架构，Vivix灵动时刻正式发布首个实时互动模型</a></div>
-      <div class="cp-item"><time datetime="2026-07-25">2026-07-25</time><span class="src s-industry">行业动态</span><a class="t" href="../p/22668fba1dd4.html">具身智能的「ChatGPT时刻」还没到，科沃斯先把机器人拆开了</a></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-29">2026-07-29</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/1ccc493419dd.html">36氪研究院 | 2026年中国智能硬件行业发展研究报告</a><p class="cp-ev">当前，AI技术正加速向实体经济各领域渗透深化，智能硬件作为AI能力落地实体场景的核心载体，已进入产品能力升级与产业价值提升的关键发展阶段。腾讯研究院2026年3月的调研数据显示，国内已有80.8%的消费者购买或使用过至少一类AI相关硬件产品，其中32.0%的用…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-26">2026-07-26</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/d722833a8981.html">【数智周报】  OpenAI证实模型测试出现失控，引发史无前例入侵；阿里千问发布 Qwen-Image-3.0；华为首次完整展示全系列计算模组产品；英特尔将在数据中心部门裁员</a><p class="cp-ev">（7月20日~7月26日）中科类脑发布全球首款算电一体化平台；英伟达发布Vera Rubin平台进展；谷歌研发新型“Frozen”芯片，大幅提升Gemini AI模型运行效率；腾讯混元推出智能体Hyra-1.0…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-26">2026-07-26</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/06761b22bd33.html">Codex也断了:OpenAI三线齐崩，Agent时代的宕机账单怎么算</a><p class="cp-ev">OpenAI三线齐崩，Agent时代的宕机账单怎么算…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-25">2026-07-25</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/53ae954806d8.html">全新统一流式架构，Vivix灵动时刻正式发布首个实时互动模型</a><p class="cp-ev">单卡突破10000 video tokens/s，Vivix打通实时多模态生成全链路…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-25">2026-07-25</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/22668fba1dd4.html">具身智能的「ChatGPT时刻」还没到，科沃斯先把机器人拆开了</a></div></div>
     <div class="cp-sec"><i class="fa-solid fa-diagram-project"></i>相关概念</div>
     <div class="cp-rel"><a href="agent-capability.html"><i class="fa-solid fa-diagram-project"></i>Agent能力</a><a href="agentic-scaling.html"><i class="fa-solid fa-diagram-project"></i>智能体扩展</a><a href="embodied-ai.html"><i class="fa-solid fa-diagram-project"></i>具身智能</a><a href="foundation-model.html"><i class="fa-solid fa-diagram-project"></i>基座模型</a><a href="inference-deployment.html"><i class="fa-solid fa-diagram-project"></i>推理部署</a><a href="long-context-window.html"><i class="fa-solid fa-diagram-project"></i>长上下文窗口</a><a href="model-routing.html"><i class="fa-solid fa-diagram-project"></i>模型路由</a><a href="on-device-ai.html"><i class="fa-solid fa-diagram-project"></i>端侧AI</a></div>
     <div class="cp-actions">

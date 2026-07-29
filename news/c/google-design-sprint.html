@@ -29,7 +29,12 @@
   .cp-def{font-size:15.5px;line-height:1.95;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:14px;padding:18px 22px;margin-bottom:26px}
   .cp-sec{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--ink-2);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
   .cp-sec i{color:var(--blue);font-size:12px}
-  .cp-item{display:flex;align-items:baseline;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-item{display:flex;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-meta{display:flex;align-items:baseline;gap:8px;flex:0 0 auto}
+  .cp-body{min-width:0}
+  .cp-ev{margin:4px 0 0;font-size:12.5px;line-height:1.65;color:var(--ink-2);overflow-wrap:anywhere}
+  .cp-ev mark{background:rgba(37,99,235,.12);color:var(--blue);font-weight:650;padding:0 2px;border-radius:3px}
+  @media(max-width:560px){.cp-item{flex-direction:column;gap:4px}}
   .cp-item time{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex:0 0 auto}
   .cp-item .src{font-size:11px;font-weight:750;color:var(--sc,var(--blue));flex:0 0 auto}
   .cp-item a.t{font-size:14px;font-weight:650;color:var(--ink);line-height:1.5;overflow-wrap:anywhere}
@@ -67,7 +72,7 @@
     <p class="cp-alias"><b>也叫</b> 谷歌设计冲刺 / 设计冲刺 / GDS</p>
     <div class="cp-def">一套为期五天的结构化流程，帮助团队快速将想法转化为可测试的原型并获取用户反馈。它通过设定明确的时间盒，强制团队在极短时间内完成从定义问题到验证方案的闭环，能有效降低创新风险，加速产品迭代。</div>
     <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（1）</div>
-      <div class="cp-item"><time datetime="2019-05-26">2019-05-26</time><span class="src s-rui-blog">博客精选</span><a class="t" href="../p/4a2445dd5338.html">做完Google Design Sprint 的后续</a></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2019-05-26">2019-05-26</time><span class="src s-rui-blog">博客精选</span></div><div class="cp-body"><a class="t" href="../p/4a2445dd5338.html">做完Google Design Sprint 的后续</a><p class="cp-ev"><mark>Google Design Sprint</mark> 是Google Venture 发明的一个方法论，让团队在五天之内快速解决一个问题，设计研发新产品，完成用户测试并进行总结。</p></div></div>
     <div class="cp-sec"><i class="fa-solid fa-diagram-project"></i>相关概念</div>
     <div class="cp-rel"><a href="brainstorming.html"><i class="fa-solid fa-diagram-project"></i>头脑风暴</a><a href="product-iteration.html"><i class="fa-solid fa-diagram-project"></i>产品迭代</a></div>
     <div class="cp-actions">

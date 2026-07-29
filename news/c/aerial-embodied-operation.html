@@ -29,7 +29,12 @@
   .cp-def{font-size:15.5px;line-height:1.95;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:14px;padding:18px 22px;margin-bottom:26px}
   .cp-sec{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--ink-2);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
   .cp-sec i{color:var(--blue);font-size:12px}
-  .cp-item{display:flex;align-items:baseline;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-item{display:flex;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-meta{display:flex;align-items:baseline;gap:8px;flex:0 0 auto}
+  .cp-body{min-width:0}
+  .cp-ev{margin:4px 0 0;font-size:12.5px;line-height:1.65;color:var(--ink-2);overflow-wrap:anywhere}
+  .cp-ev mark{background:rgba(37,99,235,.12);color:var(--blue);font-weight:650;padding:0 2px;border-radius:3px}
+  @media(max-width:560px){.cp-item{flex-direction:column;gap:4px}}
   .cp-item time{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex:0 0 auto}
   .cp-item .src{font-size:11px;font-weight:750;color:var(--sc,var(--blue));flex:0 0 auto}
   .cp-item a.t{font-size:14px;font-weight:650;color:var(--ink);line-height:1.5;overflow-wrap:anywhere}
@@ -67,8 +72,8 @@
     <p class="cp-alias"><b>也叫</b> 空中操作 / 飞行机械臂 / 带臂无人机</p>
     <div class="cp-def">指飞行平台与高自由度机械臂结合，实现三维空间中非地面场景的精细操作。它突破了传统机器人受限于地面的约束，能解决高空、危险等人类难以触及的作业需求。对业务意味着，它将解锁千亿级基础设施运维市场，但需攻克操作即扰动的动力学耦合难题，是具身智能从实验室走向规模化的关键。</div>
     <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（2）</div>
-      <div class="cp-item"><time datetime="2026-07-29">2026-07-29</time><span class="src s-industry">行业动态</span><a class="t" href="../p/ee1b83497fe0.html">空中具身操作：让蜘蛛侠们安全落地</a></div>
-      <div class="cp-item"><time datetime="2026-07-28">2026-07-28</time><span class="src s-industry">行业动态</span><a class="t" href="../p/da3d67be97d2.html">空中具身操作：让蜘蛛侠们安全落地</a></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-29">2026-07-29</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/ee1b83497fe0.html">空中具身操作：让蜘蛛侠们安全落地</a></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-28">2026-07-28</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/da3d67be97d2.html">空中具身操作：让蜘蛛侠们安全落地</a><p class="cp-ev">这是最好的时代，许多从前不敢想的事情都正在变为现实。 这也是最坏的时代，每一个领域都在承受随时被颠覆的焦虑。 过去两年，具身智能大概是最能承载这种双重情绪的领域，全球资本和科技新贵都在押注人形机器人与具身操作赛道。 尽管人形、轮式、四足机器人形态各异，它们却有…</p></div></div>
     <div class="cp-sec"><i class="fa-solid fa-diagram-project"></i>相关概念</div>
     <div class="cp-rel"><a href="embodied-ai.html"><i class="fa-solid fa-diagram-project"></i>具身智能</a><a href="physical-ai-loop.html"><i class="fa-solid fa-diagram-project"></i>物理AI闭环</a></div>
     <div class="cp-actions">

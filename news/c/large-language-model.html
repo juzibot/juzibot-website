@@ -29,7 +29,12 @@
   .cp-def{font-size:15.5px;line-height:1.95;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:14px;padding:18px 22px;margin-bottom:26px}
   .cp-sec{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--ink-2);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
   .cp-sec i{color:var(--blue);font-size:12px}
-  .cp-item{display:flex;align-items:baseline;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-item{display:flex;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-meta{display:flex;align-items:baseline;gap:8px;flex:0 0 auto}
+  .cp-body{min-width:0}
+  .cp-ev{margin:4px 0 0;font-size:12.5px;line-height:1.65;color:var(--ink-2);overflow-wrap:anywhere}
+  .cp-ev mark{background:rgba(37,99,235,.12);color:var(--blue);font-weight:650;padding:0 2px;border-radius:3px}
+  @media(max-width:560px){.cp-item{flex-direction:column;gap:4px}}
   .cp-item time{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex:0 0 auto}
   .cp-item .src{font-size:11px;font-weight:750;color:var(--sc,var(--blue));flex:0 0 auto}
   .cp-item a.t{font-size:14px;font-weight:650;color:var(--ink);line-height:1.5;overflow-wrap:anywhere}
@@ -67,18 +72,18 @@
     <p class="cp-alias"><b>也叫</b> LLM / Large Language Model / 大语言模型</p>
     <div class="cp-def">大型语言模型是基于海量文本数据训练的AI模型，能理解和生成自然语言。企业可用它构建聊天机器人、内容生成等应用，但需注意其推理成本和输出可控性。</div>
     <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（12）</div>
-      <div class="cp-item"><time datetime="2026-07-22">2026-07-22</time><span class="src s-industry">行业动态</span><a class="t" href="../p/ba701eac986e.html">AI内容全球化：短剧、影视与互动内容的下一程 ｜WAIC2026</a></div>
-      <div class="cp-item"><time datetime="2026-07-18">2026-07-18</time><span class="src s-voices">大咖观点</span><a class="t" href="../p/28c7ee44d88b.html">控制 LLM 中的推理努力</a></div>
-      <div class="cp-item"><time datetime="2026-06-26">2026-06-26</time><span class="src s-voices">大咖观点</span><a class="t" href="../p/e7c67241bdfa.html">编码工具中的本地开放权重 LLM</a></div>
-      <div class="cp-item"><time datetime="2026-06-06">2026-06-06</time><span class="src s-voices">大咖观点</span><a class="t" href="../p/f3d1448df6a6.html">LLM 研究论文：2026 年列表（1 月至 5 月）</a></div>
-      <div class="cp-item"><time datetime="2025-12-19">2025-12-19</time><span class="src s-voices">大咖观点</span><a class="t" href="../p/a5f012fc82c1.html">2025 LLM 年度回顾</a></div>
-      <div class="cp-item"><time datetime="2025-12-10">2025-12-10</time><span class="src s-voices">大咖观点</span><a class="t" href="../p/84a03fe3e0b8.html">用后见之明自动评分十年旧的 Hacker News 讨论</a></div>
-      <div class="cp-item"><time datetime="2025-11-17">2025-11-17</time><span class="src s-voices">大咖观点</span><a class="t" href="../p/e4717274827e.html">可验证性</a></div>
-      <div class="cp-item"><time datetime="2025-10-01">2025-10-01</time><span class="src s-voices">大咖观点</span><a class="t" href="../p/d006fe49e0b0.html">动物 vs 幽灵</a></div>
-      <div class="cp-item"><time datetime="2024-07-07">2024-07-07</time><span class="src s-voices">大咖观点</span><a class="t" href="../p/f341118d2274.html">LLM中的外部幻觉</a></div>
-      <div class="cp-item"><time datetime="2023-10-25">2023-10-25</time><span class="src s-voices">大咖观点</span><a class="t" href="../p/ce68292451aa.html">对LLM的对抗性攻击</a></div>
-      <div class="cp-item"><time datetime="2023-06-23">2023-06-23</time><span class="src s-voices">大咖观点</span><a class="t" href="../p/97b2c5f4478d.html">LLM驱动的自主代理</a></div>
-      <div class="cp-item"><time datetime="2023-03-15">2023-03-15</time><span class="src s-voices">大咖观点</span><a class="t" href="../p/1d65254430ae.html">提示工程</a></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-22">2026-07-22</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/ba701eac986e.html">AI内容全球化：短剧、影视与互动内容的下一程 ｜WAIC2026</a><p class="cp-ev">AI重塑内容生产，商业化走向全球化叙事与细分市场。…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-18">2026-07-18</time><span class="src s-voices">大咖观点</span></div><div class="cp-body"><a class="t" href="../p/28c7ee44d88b.html">控制 LLM 中的推理努力</a><p class="cp-ev">这些资源主要关注如何将传统 <mark>LLM</mark> 转化为推理模型。</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-06-26">2026-06-26</time><span class="src s-voices">大咖观点</span></div><div class="cp-body"><a class="t" href="../p/e7c67241bdfa.html">编码工具中的本地开放权重 LLM</a><p class="cp-ev">我一直在不同的工具框架（Qwen-Code、Codex、Claude Code）中试用各种本地开源权重 <mark>LLM</mark>。</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-06-06">2026-06-06</time><span class="src s-voices">大咖观点</span></div><div class="cp-body"><a class="t" href="../p/f3d1448df6a6.html">LLM 研究论文：2026 年列表（1 月至 5 月）</a><p class="cp-ev"><mark>LLM</mark> 研究论文：2026 年清单（一月至五月）正如一些人所知，我有一个长期保持的习惯，即维护一份我想在未来文章和项目中阅读、回顾或引用的研究论文清单。</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2025-12-19">2025-12-19</time><span class="src s-voices">大咖观点</span></div><div class="cp-body"><a class="t" href="../p/a5f012fc82c1.html">2025 LLM 年度回顾</a><p class="cp-ev">2025 年 <mark>LLM</mark> 年度回顾 2025年12月19日 2025 年是 LLM 领域进展强劲且大事频发的一年。</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2025-12-10">2025-12-10</time><span class="src s-voices">大咖观点</span></div><div class="cp-body"><a class="t" href="../p/84a03fe3e0b8.html">用后见之明自动评分十年旧的 Hacker News 讨论</a><p class="cp-ev">我正在阅读十年前的讨论，并在心里评估它们的预见性时，突然意识到 <mark>LLM</mark> 可能更擅长这个任务。</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2025-11-17">2025-11-17</time><span class="src s-voices">大咖观点</span></div><div class="cp-body"><a class="t" href="../p/e4717274827e.html">可验证性</a><p class="cp-ev">这正是推动<mark>大语言模型</mark>进展呈现“锯齿状”前沿的原因。</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2025-10-01">2025-10-01</time><span class="src s-voices">大咖观点</span></div><div class="cp-body"><a class="t" href="../p/d006fe49e0b0.html">动物 vs 幽灵</a><p class="cp-ev">背景是，Sutton 的“苦涩的教训”一文，在前沿 <mark>LLM</mark> 圈子里几乎成了圣经般的文本。</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2024-07-07">2024-07-07</time><span class="src s-voices">大咖观点</span></div><div class="cp-body"><a class="t" href="../p/f341118d2274.html">LLM中的外部幻觉</a><p class="cp-ev"><mark>大型语言模型</mark>中的幻觉通常指模型生成不忠实、虚构、不一致或无意义的内容。</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2023-10-25">2023-10-25</time><span class="src s-voices">大咖观点</span></div><div class="cp-body"><a class="t" href="../p/ce68292451aa.html">对LLM的对抗性攻击</a><p class="cp-ev">随着 ChatGPT 的发布，<mark>大型语言模型</mark>在现实世界中的应用得到了显著加速。</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2023-06-23">2023-06-23</time><span class="src s-voices">大咖观点</span></div><div class="cp-body"><a class="t" href="../p/97b2c5f4478d.html">LLM驱动的自主代理</a><p class="cp-ev">以<mark>大型语言模型</mark>（LLM）作为核心控制器来构建智能体是个很酷的概念。</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2023-03-15">2023-03-15</time><span class="src s-voices">大咖观点</span></div><div class="cp-body"><a class="t" href="../p/1d65254430ae.html">提示工程</a><p class="cp-ev">提示工程，也称为上下文提示，指的是如何与<mark>大型语言模型</mark>（LLM）沟通以引导其行为，从而获得预期结果的方法，而无需更新模型权重。</p></div></div>
     <div class="cp-sec"><i class="fa-solid fa-diagram-project"></i>相关概念</div>
     <div class="cp-rel"><a href="adversarial-attacks.html"><i class="fa-solid fa-diagram-project"></i>对抗性攻击</a><a href="autonomous-agents.html"><i class="fa-solid fa-diagram-project"></i>自主代理</a><a href="coding-agent.html"><i class="fa-solid fa-diagram-project"></i>编码代理</a><a href="context-management.html"><i class="fa-solid fa-diagram-project"></i>上下文管理</a><a href="extrinsic-hallucination.html"><i class="fa-solid fa-diagram-project"></i>外部幻觉</a><a href="open-source-model.html"><i class="fa-solid fa-diagram-project"></i>开源模型</a><a href="prompt-engineering.html"><i class="fa-solid fa-diagram-project"></i>提示工程</a><a href="reasoning-effort.html"><i class="fa-solid fa-diagram-project"></i>推理努力</a></div>
     <div class="cp-actions">

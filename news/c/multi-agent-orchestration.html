@@ -29,7 +29,12 @@
   .cp-def{font-size:15.5px;line-height:1.95;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:14px;padding:18px 22px;margin-bottom:26px}
   .cp-sec{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--ink-2);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
   .cp-sec i{color:var(--blue);font-size:12px}
-  .cp-item{display:flex;align-items:baseline;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-item{display:flex;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-meta{display:flex;align-items:baseline;gap:8px;flex:0 0 auto}
+  .cp-body{min-width:0}
+  .cp-ev{margin:4px 0 0;font-size:12.5px;line-height:1.65;color:var(--ink-2);overflow-wrap:anywhere}
+  .cp-ev mark{background:rgba(37,99,235,.12);color:var(--blue);font-weight:650;padding:0 2px;border-radius:3px}
+  @media(max-width:560px){.cp-item{flex-direction:column;gap:4px}}
   .cp-item time{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex:0 0 auto}
   .cp-item .src{font-size:11px;font-weight:750;color:var(--sc,var(--blue));flex:0 0 auto}
   .cp-item a.t{font-size:14px;font-weight:650;color:var(--ink);line-height:1.5;overflow-wrap:anywhere}
@@ -67,13 +72,13 @@
     <p class="cp-alias"><b>也叫</b> Multi-Agent Orchestration / 多Agent协同 / 智能体编排</p>
     <div class="cp-def">协调多个AI智能体分工协作以完成复杂任务的技术框架。如同交响乐指挥，它负责任务分解、分配、通信与结果整合，是构建能处理企业级复杂工作流（如跨部门项目）的AI系统的核心能力。</div>
     <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（7）</div>
-      <div class="cp-item"><time datetime="2026-07-29">2026-07-29</time><span class="src s-industry">行业动态</span><a class="t" href="../p/a3a32287c049.html">Opus 5游戏提示词爆火！24小时复刻3A巨作</a></div>
-      <div class="cp-item"><time datetime="2026-07-29">2026-07-29</time><span class="src s-industry">行业动态</span><a class="t" href="../p/784e31a8b096.html">首个鸿蒙PC开源AI统一工作台JiuwenSwarm，办公编程一站式搞定</a></div>
-      <div class="cp-item"><time datetime="2026-07-26">2026-07-26</time><span class="src s-qisi">齐思</span><a class="t" href="../p/cdbdce1a6c31.html">齐思头条2026/07/26「NVIDIA 发起行业联名呼吁保留开源权重构建“强开放生态”、Ling‑3.0‑flash 124B MoE（激活5.1B、原生256K上下文）发布、Anthropic 推出 Claude Opus 5 并在多项基准显著提升」</a></div>
-      <div class="cp-item"><time datetime="2026-07-26">2026-07-26</time><span class="src s-qisi">齐思</span><a class="t" href="../p/2b8c6b5acaa9.html">齐思洞见2026/07/26「8美元ESP32离线运行≈29M参数LLM；稀疏专家路由/混合专家（MoE）与百万级上下文重塑模型经济学；OpenForgeRL在真实控制框架内实现大规模智能体训练；Rapid-MLX以解码约束提升工具调用可靠性；美拟立法要求高风险AI配终止开关」</a></div>
-      <div class="cp-item"><time datetime="2026-07-24">2026-07-24</time><span class="src s-industry">行业动态</span><a class="t" href="../p/929fed9c5c2c.html">腾讯混元组织架构再升级，合并大语言模型和多模态团队，加速模型研发</a></div>
-      <div class="cp-item"><time datetime="2026-07-24">2026-07-24</time><span class="src s-industry">行业动态</span><a class="t" href="../p/1ee6bd52b583.html">带着AI去前线！36氪逛透WAIC，带你看懂2026全行业AI最真实走向！</a></div>
-      <div class="cp-item"><time datetime="2026-07-11">2026-07-11</time><span class="src s-voices">大咖观点</span><a class="t" href="../p/7860154da5f0.html">一文看懂ChatGPT、Codex、Work 的差别</a></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-29">2026-07-29</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/a3a32287c049.html">Opus 5游戏提示词爆火！24小时复刻3A巨作</a></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-29">2026-07-29</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/784e31a8b096.html">首个鸿蒙PC开源AI统一工作台JiuwenSwarm，办公编程一站式搞定</a></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-26">2026-07-26</time><span class="src s-qisi">齐思</span></div><div class="cp-body"><a class="t" href="../p/cdbdce1a6c31.html">齐思头条2026/07/26「NVIDIA 发起行业联名呼吁保留开源权重构建“强开放生态”、Ling‑3.0‑flash 124B MoE（激活5.1B、原生256K上下文）发布、Anthropic 推出 Claude Opus 5 并在多项基准显著提升」</a><p class="cp-ev">Twitter 行业联名呼吁“开放权重/强开放生态”（NVIDIA 等企业与社区领袖） ：NVIDIA 发起并广泛传播的行业联名信得到 Microsoft、Palantir、ServiceNow、Box、Replit、Crowdstrike、Dell 等多家机…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-26">2026-07-26</time><span class="src s-qisi">齐思</span></div><div class="cp-body"><a class="t" href="../p/2b8c6b5acaa9.html">齐思洞见2026/07/26「8美元ESP32离线运行≈29M参数LLM；稀疏专家路由/混合专家（MoE）与百万级上下文重塑模型经济学；OpenForgeRL在真实控制框架内实现大规模智能体训练；Rapid-MLX以解码约束提升工具调用可靠性；美拟立法要求高风险AI配终止开关」</a><p class="cp-ev">目录 - ⚙️ 技术与工程 (21条) - 8美元微控制器上运行近3千万参数语言模型的突破性实现 - OpenForgeRL实现智能体在真实控制框架中的大规模训练突破 - 代码审查应根据任务重要性调整审查深度而非逐行检查 - 理解作为工程质量目标需通过解释性材…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-24">2026-07-24</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/929fed9c5c2c.html">腾讯混元组织架构再升级，合并大语言模型和多模态团队，加速模型研发</a><p class="cp-ev">7 月 23 日，腾讯宣布混元多模态模型部门与大语言模型部门合并，成立基础模型部，统一由腾讯首席 AI 科学家姚顺雨管理，以进一步提升模型研发和协同效率，探索全模态模型的智能上限。 以大语言模型为基础，腾讯混元构建了图像、视频、语音、3D 生成模型等完整的模型…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-24">2026-07-24</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/1ee6bd52b583.html">带着AI去前线！36氪逛透WAIC，带你看懂2026全行业AI最真实走向！</a><p class="cp-ev">7月17日至20日，2026世界人工智能大会暨人工智能全球治理高级别会议在上海落下帷幕。黄浦江畔，热浪与人潮一起涌动。本届大会以“智能伙伴，共创未来”为主题，在世博、张江、西岸三地四馆展开。作为年度人工智能产业观察窗口，WAIC 2026留下的关键信号，不在于…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-11">2026-07-11</time><span class="src s-voices">大咖观点</span></div><div class="cp-body"><a class="t" href="../p/7860154da5f0.html">一文看懂ChatGPT、Codex、Work 的差别</a><p class="cp-ev">Chat 回答问题，Work 帮你干活，Codex 帮你写代码：一篇讲清三者区别、共享额度、价格，以及与 Claude Cowork 的差异。…</p></div></div>
     <div class="cp-sec"><i class="fa-solid fa-diagram-project"></i>相关概念</div>
     <div class="cp-rel"><a href="long-context-window.html"><i class="fa-solid fa-diagram-project"></i>长上下文窗口</a><a href="model-benchmark.html"><i class="fa-solid fa-diagram-project"></i>模型基准测试</a><a href="moe-model.html"><i class="fa-solid fa-diagram-project"></i>MoE模型</a><a href="task-agent.html"><i class="fa-solid fa-diagram-project"></i>任务Agent</a><a href="agentic-organization.html"><i class="fa-solid fa-diagram-project"></i>智能体组织</a><a href="ai-delivery.html"><i class="fa-solid fa-diagram-project"></i>AI交付</a><a href="ai-office-assistant.html"><i class="fa-solid fa-diagram-project"></i>AI办公助理</a><a href="autonomous-agents.html"><i class="fa-solid fa-diagram-project"></i>自主代理</a></div>
     <div class="cp-actions">

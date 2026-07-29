@@ -29,7 +29,12 @@
   .cp-def{font-size:15.5px;line-height:1.95;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:14px;padding:18px 22px;margin-bottom:26px}
   .cp-sec{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--ink-2);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
   .cp-sec i{color:var(--blue);font-size:12px}
-  .cp-item{display:flex;align-items:baseline;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-item{display:flex;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-meta{display:flex;align-items:baseline;gap:8px;flex:0 0 auto}
+  .cp-body{min-width:0}
+  .cp-ev{margin:4px 0 0;font-size:12.5px;line-height:1.65;color:var(--ink-2);overflow-wrap:anywhere}
+  .cp-ev mark{background:rgba(37,99,235,.12);color:var(--blue);font-weight:650;padding:0 2px;border-radius:3px}
+  @media(max-width:560px){.cp-item{flex-direction:column;gap:4px}}
   .cp-item time{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex:0 0 auto}
   .cp-item .src{font-size:11px;font-weight:750;color:var(--sc,var(--blue));flex:0 0 auto}
   .cp-item a.t{font-size:14px;font-weight:650;color:var(--ink);line-height:1.5;overflow-wrap:anywhere}
@@ -67,10 +72,10 @@
     <p class="cp-alias"><b>也叫</b> Reasoning Model / 推理AI模型</p>
     <div class="cp-def">专注于逻辑推理和问题解决的AI模型，通过强化学习等技术训练，能处理复杂决策任务。企业利用推理模型提升自动化水平，如在金融分析或医疗诊断中提供精准建议。</div>
     <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（4）</div>
-      <div class="cp-item"><time datetime="2026-07-29">2026-07-29</time><span class="src s-industry">行业动态</span><a class="t" href="../p/7a46f32d4020.html">中科院院士对话北电数智AI专家：以 AI 与数学 “乘法效应” 开辟产业落地新路径</a></div>
-      <div class="cp-item"><time datetime="2026-07-25">2026-07-25</time><span class="src s-industry">行业动态</span><a class="t" href="../p/9d3cc9b4b37e.html">半价干翻Fable 5？Opus 5实测炸场，网友：差点从椅子上摔下来</a></div>
-      <div class="cp-item"><time datetime="2026-06-30">2026-06-30</time><span class="src s-voices">大咖观点</span><a class="t" href="../p/fe39f43c087c.html">《从头构建推理模型》已发布</a></div>
-      <div class="cp-item"><time datetime="2025-09-09">2025-09-09</time><span class="src s-voices">大咖观点</span><a class="t" href="../p/1293596c82dd.html">Jakub 和 Szymon</a></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-29">2026-07-29</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/7a46f32d4020.html">中科院院士对话北电数智AI专家：以 AI 与数学 “乘法效应” 开辟产业落地新路径</a></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-25">2026-07-25</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/9d3cc9b4b37e.html">半价干翻Fable 5？Opus 5实测炸场，网友：差点从椅子上摔下来</a><p class="cp-ev">模型变强，Claude Code系统提示词都精简了…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-06-30">2026-06-30</time><span class="src s-voices">大咖观点</span></div><div class="cp-body"><a class="t" href="../p/fe39f43c087c.html">《从头构建推理模型》已发布</a><p class="cp-ev">预计几周后开始发货： Amazon preorder for Build a Reasoning Model (From Scratch) 我希望这本书能成为一份有用的资源，帮助任何想了解<mark>推理模型</mark>（它们现在是许多现代 AI 智能体的关键组件）底层工作原理的人。</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2025-09-09">2025-09-09</time><span class="src s-voices">大咖观点</span></div><div class="cp-body"><a class="t" href="../p/1293596c82dd.html">Jakub 和 Szymon</a><p class="cp-ev">AI has gotten remarkably better in recent years; ChatGPT can do amazing things that we take for granted. This is as it should be, …</p></div></div>
     <div class="cp-sec"><i class="fa-solid fa-diagram-project"></i>相关概念</div>
     <div class="cp-rel"><a href="reinforcement-learning.html"><i class="fa-solid fa-diagram-project"></i>强化学习</a><a href="foundation-model.html"><i class="fa-solid fa-diagram-project"></i>基座模型</a><a href="long-context-window.html"><i class="fa-solid fa-diagram-project"></i>长上下文窗口</a><a href="mathematical-reasoning.html"><i class="fa-solid fa-diagram-project"></i>数学推理</a><a href="model-benchmark.html"><i class="fa-solid fa-diagram-project"></i>模型基准测试</a><a href="model-distillation.html"><i class="fa-solid fa-diagram-project"></i>模型蒸馏</a><a href="numerical-reasoning.html"><i class="fa-solid fa-diagram-project"></i>数值推理</a><a href="pre-training.html"><i class="fa-solid fa-diagram-project"></i>预训练</a></div>
     <div class="cp-actions">

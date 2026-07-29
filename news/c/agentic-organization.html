@@ -29,7 +29,12 @@
   .cp-def{font-size:15.5px;line-height:1.95;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:14px;padding:18px 22px;margin-bottom:26px}
   .cp-sec{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--ink-2);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
   .cp-sec i{color:var(--blue);font-size:12px}
-  .cp-item{display:flex;align-items:baseline;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-item{display:flex;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-meta{display:flex;align-items:baseline;gap:8px;flex:0 0 auto}
+  .cp-body{min-width:0}
+  .cp-ev{margin:4px 0 0;font-size:12.5px;line-height:1.65;color:var(--ink-2);overflow-wrap:anywhere}
+  .cp-ev mark{background:rgba(37,99,235,.12);color:var(--blue);font-weight:650;padding:0 2px;border-radius:3px}
+  @media(max-width:560px){.cp-item{flex-direction:column;gap:4px}}
   .cp-item time{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex:0 0 auto}
   .cp-item .src{font-size:11px;font-weight:750;color:var(--sc,var(--blue));flex:0 0 auto}
   .cp-item a.t{font-size:14px;font-weight:650;color:var(--ink);line-height:1.5;overflow-wrap:anywhere}
@@ -67,9 +72,9 @@
     <p class="cp-alias"><b>也叫</b> Agentic Organization / AI原生组织</p>
     <div class="cp-def">智能体组织指以AI智能体为核心运作单元的企业形态，人类员工负责监督和战略决策，日常运营由AI自主执行，它重新定义了人机协作边界，对企业意味着运营效率的质变和组织结构的根本性重塑。</div>
     <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（3）</div>
-      <div class="cp-item"><time datetime="2026-07-29">2026-07-29</time><span class="src s-industry">行业动态</span><a class="t" href="../p/784e31a8b096.html">首个鸿蒙PC开源AI统一工作台JiuwenSwarm，办公编程一站式搞定</a></div>
-      <div class="cp-item"><time datetime="2026-07-24">2026-07-24</time><span class="src s-industry">行业动态</span><a class="t" href="../p/bbfc987f03b7.html">你的下一位面试官，可能不是人</a></div>
-      <div class="cp-item"><time datetime="2026-07-06">2026-07-06</time><span class="src s-rui-blog">博客精选</span><a class="t" href="../p/62f2f79db696.html">做一家 Anthropic 一样的公司</a></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-29">2026-07-29</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/784e31a8b096.html">首个鸿蒙PC开源AI统一工作台JiuwenSwarm，办公编程一站式搞定</a></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-24">2026-07-24</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/bbfc987f03b7.html">你的下一位面试官，可能不是人</a><p class="cp-ev">谁能保证超级数字员工不是下一个AI落地的窗口 撰文 | 李嘉星 编辑 | 张薇 封面来源 | 元企AI 七月初，秋招开始预热。你投出去的下一份简历，可能不是先被HR看到，而是先被一个AI员工读完。 机器筛简历并不新鲜。真正有意思的是，如果这个AI不只是帮HR筛…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-06">2026-07-06</time><span class="src s-rui-blog">博客精选</span></div><div class="cp-body"><a class="t" href="../p/62f2f79db696.html">做一家 Anthropic 一样的公司</a><p class="cp-ev">今天公司双月会，最后一个环节我讲了「做一家 Anthropic 一样的公司」。三代组织形态：华为把公司当流程跑，字节把公司当产品做，Anthropic 把公司设计成一张并行的网络。真正值得学的不是 Anthropic 的打法，是它的文化——不信 hype、re…</p></div></div>
     <div class="cp-sec"><i class="fa-solid fa-diagram-project"></i>相关概念</div>
     <div class="cp-rel"><a href="1-plus-n.html"><i class="fa-solid fa-diagram-project"></i>1+N模式</a><a href="ai-hr.html"><i class="fa-solid fa-diagram-project"></i>AI HR</a><a href="hits-paradigm.html"><i class="fa-solid fa-diagram-project"></i>HITS范式</a><a href="multi-agent-orchestration.html"><i class="fa-solid fa-diagram-project"></i>多智能体编排</a><a href="parallel-network.html"><i class="fa-solid fa-diagram-project"></i>并行网络</a><a href="process-reengineering.html"><i class="fa-solid fa-diagram-project"></i>流程重塑</a><a href="task-agent.html"><i class="fa-solid fa-diagram-project"></i>任务Agent</a></div>
     <div class="cp-actions">

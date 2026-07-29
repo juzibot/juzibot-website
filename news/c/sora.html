@@ -29,7 +29,12 @@
   .cp-def{font-size:15.5px;line-height:1.95;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:14px;padding:18px 22px;margin-bottom:26px}
   .cp-sec{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--ink-2);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
   .cp-sec i{color:var(--blue);font-size:12px}
-  .cp-item{display:flex;align-items:baseline;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-item{display:flex;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-meta{display:flex;align-items:baseline;gap:8px;flex:0 0 auto}
+  .cp-body{min-width:0}
+  .cp-ev{margin:4px 0 0;font-size:12.5px;line-height:1.65;color:var(--ink-2);overflow-wrap:anywhere}
+  .cp-ev mark{background:rgba(37,99,235,.12);color:var(--blue);font-weight:650;padding:0 2px;border-radius:3px}
+  @media(max-width:560px){.cp-item{flex-direction:column;gap:4px}}
   .cp-item time{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex:0 0 auto}
   .cp-item .src{font-size:11px;font-weight:750;color:var(--sc,var(--blue));flex:0 0 auto}
   .cp-item a.t{font-size:14px;font-weight:650;color:var(--ink);line-height:1.5;overflow-wrap:anywhere}
@@ -67,8 +72,8 @@
     <p class="cp-alias"><b>也叫</b> Sora模型 / Sora视频生成 / Sora AI</p>
     <div class="cp-def">Sora是OpenAI开发的视频生成模型，能根据文本描述创建高质量、连贯的视频内容。它代表了生成式AI在创意领域的突破，使企业能快速制作营销视频、产品演示或娱乐内容，大幅降低视频生产成本和时间，激发创意产业创新，并可能重塑内容创作工作流。</div>
     <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（2）</div>
-      <div class="cp-item"><time datetime="2025-10-04">2025-10-04</time><span class="src s-voices">大咖观点</span><a class="t" href="../p/b782186650d2.html">Sora 更新 #1</a></div>
-      <div class="cp-item"><time datetime="2025-09-30">2025-09-30</time><span class="src s-voices">大咖观点</span><a class="t" href="../p/6f8a89c343ef.html">Sora 2</a></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2025-10-04">2025-10-04</time><span class="src s-voices">大咖观点</span></div><div class="cp-body"><a class="t" href="../p/b782186650d2.html">Sora 更新 #1</a><p class="cp-ev">我们一直在快速学习用户如何使用 <mark>Sora</mark>，并积极收集来自用户、版权方及其他相关群体的反馈。</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2025-09-30">2025-09-30</time><span class="src s-voices">大咖观点</span></div><div class="cp-body"><a class="t" href="../p/6f8a89c343ef.html">Sora 2</a><p class="cp-ev">我们正在推出一款名为 <mark>Sora</mark> 的新应用。</p></div></div>
     <div class="cp-actions">
       <button type="button" class="dp-btn pri" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
       <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>

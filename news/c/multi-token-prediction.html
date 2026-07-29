@@ -29,7 +29,12 @@
   .cp-def{font-size:15.5px;line-height:1.95;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:14px;padding:18px 22px;margin-bottom:26px}
   .cp-sec{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--ink-2);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
   .cp-sec i{color:var(--blue);font-size:12px}
-  .cp-item{display:flex;align-items:baseline;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-item{display:flex;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-meta{display:flex;align-items:baseline;gap:8px;flex:0 0 auto}
+  .cp-body{min-width:0}
+  .cp-ev{margin:4px 0 0;font-size:12.5px;line-height:1.65;color:var(--ink-2);overflow-wrap:anywhere}
+  .cp-ev mark{background:rgba(37,99,235,.12);color:var(--blue);font-weight:650;padding:0 2px;border-radius:3px}
+  @media(max-width:560px){.cp-item{flex-direction:column;gap:4px}}
   .cp-item time{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex:0 0 auto}
   .cp-item .src{font-size:11px;font-weight:750;color:var(--sc,var(--blue));flex:0 0 auto}
   .cp-item a.t{font-size:14px;font-weight:650;color:var(--ink);line-height:1.5;overflow-wrap:anywhere}
@@ -67,8 +72,8 @@
     <p class="cp-alias"><b>也叫</b> Multi-Token Prediction / MTP</p>
     <div class="cp-def">训练技术让模型同时预测多个后续Token，提高训练效率和生成速度。企业采用此技术可加速模型开发，降低推理延迟，优化用户体验。</div>
     <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（2）</div>
-      <div class="cp-item"><time datetime="2026-07-26">2026-07-26</time><span class="src s-qisi">齐思</span><a class="t" href="../p/4b664fa5afe5.html">LM Studio 0.4.14 Beta 增加支持 MTP 推测解码功能</a></div>
-      <div class="cp-item"><time datetime="2026-05-23">2026-05-23</time><span class="src s-voices">大咖观点</span><a class="t" href="../p/3fd20a6f05c4.html">DeepSeek 的 10 万亿美元大战略</a></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-26">2026-07-26</time><span class="src s-qisi">齐思</span></div><div class="cp-body"><a class="t" href="../p/4b664fa5afe5.html">LM Studio 0.4.14 Beta 增加支持 MTP 推测解码功能</a><p class="cp-ev">内容简介 原帖通报 LM Studio 在 0.4.14 Build 2（Beta）中新增了对 <mark>MTP</mark>（多阶段/投机解码，speculative decoding）的支持。</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-05-23">2026-05-23</time><span class="src s-voices">大咖观点</span></div><div class="cp-body"><a class="t" href="../p/3fd20a6f05c4.html">DeepSeek 的 10 万亿美元大战略</a><p class="cp-ev">你有没有想过，DeepSeek 可能怎么赚钱，而且赚很多钱？…</p></div></div>
     <div class="cp-sec"><i class="fa-solid fa-diagram-project"></i>相关概念</div>
     <div class="cp-rel"><a href="grpo-algorithm.html"><i class="fa-solid fa-diagram-project"></i>GRPO算法</a><a href="inference-deployment.html"><i class="fa-solid fa-diagram-project"></i>推理部署</a><a href="moe-model.html"><i class="fa-solid fa-diagram-project"></i>MoE模型</a><a href="rlvr.html"><i class="fa-solid fa-diagram-project"></i>基于验证奖励的强化学习</a><a href="token-cost.html"><i class="fa-solid fa-diagram-project"></i>Token成本</a></div>
     <div class="cp-actions">

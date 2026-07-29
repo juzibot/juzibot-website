@@ -29,7 +29,12 @@
   .cp-def{font-size:15.5px;line-height:1.95;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:14px;padding:18px 22px;margin-bottom:26px}
   .cp-sec{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--ink-2);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
   .cp-sec i{color:var(--blue);font-size:12px}
-  .cp-item{display:flex;align-items:baseline;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-item{display:flex;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-meta{display:flex;align-items:baseline;gap:8px;flex:0 0 auto}
+  .cp-body{min-width:0}
+  .cp-ev{margin:4px 0 0;font-size:12.5px;line-height:1.65;color:var(--ink-2);overflow-wrap:anywhere}
+  .cp-ev mark{background:rgba(37,99,235,.12);color:var(--blue);font-weight:650;padding:0 2px;border-radius:3px}
+  @media(max-width:560px){.cp-item{flex-direction:column;gap:4px}}
   .cp-item time{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex:0 0 auto}
   .cp-item .src{font-size:11px;font-weight:750;color:var(--sc,var(--blue));flex:0 0 auto}
   .cp-item a.t{font-size:14px;font-weight:650;color:var(--ink);line-height:1.5;overflow-wrap:anywhere}
@@ -67,9 +72,9 @@
     <p class="cp-alias"><b>也叫</b> Specialized AI Model / 领域模型 / 垂直模型 / 专用模型</p>
     <div class="cp-def">针对特定行业或任务优化训练的AI模型，相比通用大模型，在专业领域内精度更高、成本更低。企业采用专项模型可避免同质化竞争，保持业务独特性，同时降低对单一通用AI的依赖风险。</div>
     <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（3）</div>
-      <div class="cp-item"><time datetime="2026-07-26">2026-07-26</time><span class="src s-qisi">齐思</span><a class="t" href="../p/31fb13dffa33.html">OpenAI和Anthropic面临Kimi与中国开源模型的威胁？如何影响美国市场？</a></div>
-      <div class="cp-item"><time datetime="2026-07-22">2026-07-22</time><span class="src s-qisi">齐思</span><a class="t" href="../p/28f69fe65b4f.html">OpenAI、Anthropic估值过高？未来AI将以专项模型为主流</a></div>
-      <div class="cp-item"><time datetime="2026-07-21">2026-07-21</time><span class="src s-hn">Hacker News</span><a class="t" href="../p/8fd735d60318.html">Gemini 3.6 Flash、3.5 Flash-Lite与3.5 Flash Cyber</a></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-26">2026-07-26</time><span class="src s-qisi">齐思</span></div><div class="cp-body"><a class="t" href="../p/31fb13dffa33.html">OpenAI和Anthropic面临Kimi与中国开源模型的威胁？如何影响美国市场？</a><p class="cp-ev">这篇文章从认知科学和复杂系统的角度，提炼了对AI模型、资本博弈和商业演化的洞察。其核心主张包括：当前前沿通用大模型（如GPT-4）只是“平庸知识的平均值”，并非智能的最终形态。真正的智能突破在于通过微型高质量数据集，由顶尖专家创造的专有微型模型。…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-22">2026-07-22</time><span class="src s-qisi">齐思</span></div><div class="cp-body"><a class="t" href="../p/28f69fe65b4f.html">OpenAI、Anthropic估值过高？未来AI将以专项模型为主流</a><p class="cp-ev">这篇分析从认知科学和复杂系统视角探讨了AI时代企业的生存与进化逻辑，提出核心观点：AGI并非终极解决方案，而是企业进化的瓶颈。依赖统一的通用大模型会导致认知集权，削弱企业的独特性和基因多样性，使其陷入同质化。企业的价值在于独特的判断力和品味，而非单纯追求接入最…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-21">2026-07-21</time><span class="src s-hn">Hacker News</span></div><div class="cp-body"><a class="t" href="../p/8fd735d60318.html">Gemini 3.6 Flash、3.5 Flash-Lite与3.5 Flash Cyber</a><p class="cp-ev">我们推出了一款全新的、高效的、专注于网络安全的<mark>专用模型</mark>，并与我们的 CodeMender 代码安全智能体相结合，在前沿领域实现了具有竞争力的性能。</p></div></div>
     <div class="cp-sec"><i class="fa-solid fa-diagram-project"></i>相关概念</div>
     <div class="cp-rel"><a href="foundation-model.html"><i class="fa-solid fa-diagram-project"></i>基座模型</a><a href="model-routing.html"><i class="fa-solid fa-diagram-project"></i>模型路由</a></div>
     <div class="cp-actions">

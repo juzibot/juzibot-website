@@ -29,7 +29,12 @@
   .cp-def{font-size:15.5px;line-height:1.95;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:14px;padding:18px 22px;margin-bottom:26px}
   .cp-sec{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--ink-2);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
   .cp-sec i{color:var(--blue);font-size:12px}
-  .cp-item{display:flex;align-items:baseline;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-item{display:flex;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-meta{display:flex;align-items:baseline;gap:8px;flex:0 0 auto}
+  .cp-body{min-width:0}
+  .cp-ev{margin:4px 0 0;font-size:12.5px;line-height:1.65;color:var(--ink-2);overflow-wrap:anywhere}
+  .cp-ev mark{background:rgba(37,99,235,.12);color:var(--blue);font-weight:650;padding:0 2px;border-radius:3px}
+  @media(max-width:560px){.cp-item{flex-direction:column;gap:4px}}
   .cp-item time{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex:0 0 auto}
   .cp-item .src{font-size:11px;font-weight:750;color:var(--sc,var(--blue));flex:0 0 auto}
   .cp-item a.t{font-size:14px;font-weight:650;color:var(--ink);line-height:1.5;overflow-wrap:anywhere}
@@ -67,9 +72,9 @@
     <p class="cp-alias"><b>也叫</b> System Prompt / 系统提示 / 初始提示</p>
     <div class="cp-def">系统提示词是预设给AI模型的指令，用于引导其行为和输出风格。企业可通过定制系统提示词来控制AI助手的响应方式，确保符合品牌调性和业务需求。</div>
     <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（3）</div>
-      <div class="cp-item"><time datetime="2026-07-21">2026-07-21</time><span class="src s-voices">大咖观点</span><a class="t" href="../p/009d8ac6eee7.html">与Claude Code团队的Cat和Thariq的炉边谈话</a></div>
-      <div class="cp-item"><time datetime="2026-07-17">2026-07-17</time><span class="src s-voices">大咖观点</span><a class="t" href="../p/103bc7df9c87.html">引用 Kimi K3</a></div>
-      <div class="cp-item"><time datetime="2026-07-06">2026-07-06</time><span class="src s-voices">大咖观点</span><a class="t" href="../p/195d0bebc5a4.html">从零开始玩转循环 (Getting started with loops)</a></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-21">2026-07-21</time><span class="src s-voices">大咖观点</span></div><div class="cp-body"><a class="t" href="../p/009d8ac6eee7.html">与Claude Code团队的Cat和Thariq的炉边谈话</a><p class="cp-ev">在<mark>系统提示词</mark>中添加示例不再是最佳实践，对于像 Fable 5 甚至 Opus 4.8 这样的模型来说。</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-17">2026-07-17</time><span class="src s-voices">大咖观点</span></div><div class="cp-body"><a class="t" href="../p/103bc7df9c87.html">引用 Kimi K3</a><p class="cp-ev">— Kimi K3，在拒绝泄露其<mark>系统提示词</mark>之后 近期文章 与 Claude Code 团队的 Cat 和 Thariq 的炉边谈话 - 2026年7月21日 Kimi K3，以及我们仍能从鹈鹕基准测试中学到什么 - 2026年7月16日 全新的 GPT-5.…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-06">2026-07-06</time><span class="src s-voices">大咖观点</span></div><div class="cp-body"><a class="t" href="../p/195d0bebc5a4.html">从零开始玩转循环 (Getting started with loops)</a><p class="cp-ev">最近大家都在热议“设计循环 (designing loops)”，而不是简单地给你的写代码的 AI 智能体 (AI Agent) 下提示词。如果你在 X（原 Twitter）上逛一逛，想搞清楚“循环”到底是个啥，你会看到五花八门的答案。…</p></div></div>
     <div class="cp-sec"><i class="fa-solid fa-diagram-project"></i>相关概念</div>
     <div class="cp-rel"><a href="agentic-loop.html"><i class="fa-solid fa-diagram-project"></i>智能体循环</a><a href="ai-code-security.html"><i class="fa-solid fa-diagram-project"></i>AI代码安全</a><a href="autonomous-agents.html"><i class="fa-solid fa-diagram-project"></i>自主代理</a><a href="fable-5.html"><i class="fa-solid fa-diagram-project"></i>Fable 5</a><a href="model-benchmark.html"><i class="fa-solid fa-diagram-project"></i>模型基准测试</a><a href="model-personality.html"><i class="fa-solid fa-diagram-project"></i>模型个性</a><a href="prompt-engineering.html"><i class="fa-solid fa-diagram-project"></i>提示工程</a></div>
     <div class="cp-actions">

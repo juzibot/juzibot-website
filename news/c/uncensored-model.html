@@ -29,7 +29,12 @@
   .cp-def{font-size:15.5px;line-height:1.95;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:14px;padding:18px 22px;margin-bottom:26px}
   .cp-sec{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--ink-2);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
   .cp-sec i{color:var(--blue);font-size:12px}
-  .cp-item{display:flex;align-items:baseline;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-item{display:flex;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-meta{display:flex;align-items:baseline;gap:8px;flex:0 0 auto}
+  .cp-body{min-width:0}
+  .cp-ev{margin:4px 0 0;font-size:12.5px;line-height:1.65;color:var(--ink-2);overflow-wrap:anywhere}
+  .cp-ev mark{background:rgba(37,99,235,.12);color:var(--blue);font-weight:650;padding:0 2px;border-radius:3px}
+  @media(max-width:560px){.cp-item{flex-direction:column;gap:4px}}
   .cp-item time{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex:0 0 auto}
   .cp-item .src{font-size:11px;font-weight:750;color:var(--sc,var(--blue));flex:0 0 auto}
   .cp-item a.t{font-size:14px;font-weight:650;color:var(--ink);line-height:1.5;overflow-wrap:anywhere}
@@ -67,8 +72,8 @@
     <p class="cp-alias"><b>也叫</b> 无审查模型 / 去审查模型 / uncensored ai / 拒绝消除模型</p>
     <div class="cp-def">未审查模型是移除了内容安全限制的AI模型，不再拒绝回答敏感或争议性问题。好比拆除图书馆的“禁书区”，允许用户自由探索更广泛的知识边界。对企业来说，这类模型能提升特定场景下的灵活性和实用性，如多语言处理或专业研究，但也需警惕潜在滥用风险，需配合内容审核机制使用。</div>
     <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（2）</div>
-      <div class="cp-item"><time datetime="2026-07-26">2026-07-26</time><span class="src s-qisi">齐思</span><a class="t" href="../p/ced6a65f4577.html">Qwen3.5-9B模型：完全解锁且无审查的强大选项</a></div>
-      <div class="cp-item"><time datetime="2026-07-26">2026-07-26</time><span class="src s-qisi">齐思</span><a class="t" href="../p/bd63c2356b2b.html">Gemma-4-E4B无审查模型：突破性改进与下载指南</a></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-26">2026-07-26</time><span class="src s-qisi">齐思</span></div><div class="cp-body"><a class="t" href="../p/ced6a65f4577.html">Qwen3.5-9B模型：完全解锁且无审查的强大选项</a><p class="cp-ev">内容简介 HauhauCS推出的Qwen3.5-9B模型是一款去掉了拒绝响应的未审查版本，保留了所有原始功能。其中，“Aggressive Variant” 变体在拒绝消除方面表现更强，但可能在回应中加入免责声明。该模型支持多模态任务，包括文本、图像和视频输入…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-26">2026-07-26</time><span class="src s-qisi">齐思</span></div><div class="cp-body"><a class="t" href="../p/bd63c2356b2b.html">Gemma-4-E4B无审查模型：突破性改进与下载指南</a><p class="cp-ev">内容简介 这份资料介绍了 HauhauCS 发布的「Gemma-4-E4B-IT」去拒答（uncensored）版本——Aggressive 变体，主打“完全解锁、不再拒绝提示词”，在不改变原始数据集与能力的前提下，仅移除拒答机制，力求做到“无损去审查”。作者…</p></div></div>
     <div class="cp-sec"><i class="fa-solid fa-diagram-project"></i>相关概念</div>
     <div class="cp-rel"><a href="long-context-window.html"><i class="fa-solid fa-diagram-project"></i>长上下文窗口</a><a href="on-device-ai.html"><i class="fa-solid fa-diagram-project"></i>端侧AI</a><a href="open-source-model.html"><i class="fa-solid fa-diagram-project"></i>开源模型</a></div>
     <div class="cp-actions">

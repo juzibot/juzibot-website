@@ -29,7 +29,12 @@
   .cp-def{font-size:15.5px;line-height:1.95;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:14px;padding:18px 22px;margin-bottom:26px}
   .cp-sec{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--ink-2);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
   .cp-sec i{color:var(--blue);font-size:12px}
-  .cp-item{display:flex;align-items:baseline;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-item{display:flex;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-meta{display:flex;align-items:baseline;gap:8px;flex:0 0 auto}
+  .cp-body{min-width:0}
+  .cp-ev{margin:4px 0 0;font-size:12.5px;line-height:1.65;color:var(--ink-2);overflow-wrap:anywhere}
+  .cp-ev mark{background:rgba(37,99,235,.12);color:var(--blue);font-weight:650;padding:0 2px;border-radius:3px}
+  @media(max-width:560px){.cp-item{flex-direction:column;gap:4px}}
   .cp-item time{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex:0 0 auto}
   .cp-item .src{font-size:11px;font-weight:750;color:var(--sc,var(--blue));flex:0 0 auto}
   .cp-item a.t{font-size:14px;font-weight:650;color:var(--ink);line-height:1.5;overflow-wrap:anywhere}
@@ -67,8 +72,8 @@
     <p class="cp-alias"><b>也叫</b> VLM / Vision-Language Model</p>
     <div class="cp-def">视觉语言模型是一种能同时理解图像和文本的多模态AI，就像人能看图说话一样。对企业来说，它解锁了从图像中提取信息、自动生成描述等能力，可用于电商产品识别、医疗影像分析等场景，提升自动化水平。</div>
     <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（2）</div>
-      <div class="cp-item"><time datetime="2026-07-24">2026-07-24</time><span class="src s-industry">行业动态</span><a class="t" href="../p/4263095b36d2.html">合肥又押中AI独角兽：多模态赛道，3个月融了21亿</a></div>
-      <div class="cp-item"><time datetime="2026-07-21">2026-07-21</time><span class="src s-voices">大咖观点</span><a class="t" href="../p/99e42382ba86.html">Nativ: 在Mac上本地运行AI模型</a></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-24">2026-07-24</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/4263095b36d2.html">合肥又押中AI独角兽：多模态赛道，3个月融了21亿</a></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-21">2026-07-21</time><span class="src s-voices">大咖观点</span></div><div class="cp-body"><a class="t" href="../p/99e42382ba86.html">Nativ: 在Mac上本地运行AI模型</a><p class="cp-ev">2026年7月21日 - 链接博客 Nativ：在你的 Mac 上本地运行 AI 模型 (via) Prince Canuma 是出色的 MLX-<mark>VLM</mark> Python 库的开发者，该库用于在 Mac 上使用 MLX 运行视觉-语言模型。</p></div></div>
     <div class="cp-sec"><i class="fa-solid fa-diagram-project"></i>相关概念</div>
     <div class="cp-rel"><a href="agentic-scaling.html"><i class="fa-solid fa-diagram-project"></i>智能体扩展</a><a href="foundation-model.html"><i class="fa-solid fa-diagram-project"></i>基座模型</a><a href="on-device-ai.html"><i class="fa-solid fa-diagram-project"></i>端侧AI</a></div>
     <div class="cp-actions">

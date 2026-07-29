@@ -29,7 +29,12 @@
   .cp-def{font-size:15.5px;line-height:1.95;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:14px;padding:18px 22px;margin-bottom:26px}
   .cp-sec{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--ink-2);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
   .cp-sec i{color:var(--blue);font-size:12px}
-  .cp-item{display:flex;align-items:baseline;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-item{display:flex;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-meta{display:flex;align-items:baseline;gap:8px;flex:0 0 auto}
+  .cp-body{min-width:0}
+  .cp-ev{margin:4px 0 0;font-size:12.5px;line-height:1.65;color:var(--ink-2);overflow-wrap:anywhere}
+  .cp-ev mark{background:rgba(37,99,235,.12);color:var(--blue);font-weight:650;padding:0 2px;border-radius:3px}
+  @media(max-width:560px){.cp-item{flex-direction:column;gap:4px}}
   .cp-item time{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex:0 0 auto}
   .cp-item .src{font-size:11px;font-weight:750;color:var(--sc,var(--blue));flex:0 0 auto}
   .cp-item a.t{font-size:14px;font-weight:650;color:var(--ink);line-height:1.5;overflow-wrap:anywhere}
@@ -67,8 +72,8 @@
     <p class="cp-alias"><b>也叫</b> 企业级绩效 / 公司级ROI</p>
     <div class="cp-def">衡量AI应用是否成功的终极标尺，关注AI投入是否转化为整体营收增长、成本结构优化或市场份额扩大等企业级成果。它区别于个人效率提升，强调跨部门协同与核心业务流程的实质性改善。</div>
     <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（2）</div>
-      <div class="cp-item"><time datetime="2026-07-22">2026-07-22</time><span class="src s-industry">行业动态</span><a class="t" href="../p/ee4d369e55a5.html">AI在企业中为什么没有体现价值？丨WAIC2026</a></div>
-      <div class="cp-item"><time datetime="2026-05-12">2026-05-12</time><span class="src s-voices">大咖观点</span><a class="t" href="../p/d886987181ce.html">AI 时代到底该怎么管一个工程团队</a></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-22">2026-07-22</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/ee4d369e55a5.html">AI在企业中为什么没有体现价值？丨WAIC2026</a><p class="cp-ev">AI不会替代管理者，会用AI的管理者会替代不会用AI的。…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-05-12">2026-05-12</time><span class="src s-voices">大咖观点</span></div><div class="cp-body"><a class="t" href="../p/d886987181ce.html">AI 时代到底该怎么管一个工程团队</a><p class="cp-ev">Fiona Fung 以 Claude Code 团队实践说明，AI 时代的软件工程不再卡在写代码，而是卡在验证、评审、跨职能协作和安全边界。真正需要重构的是流程、组织结构、知识共享方式和衡量指标。…</p></div></div>
     <div class="cp-sec"><i class="fa-solid fa-diagram-project"></i>相关概念</div>
     <div class="cp-rel"><a href="process-reengineering.html"><i class="fa-solid fa-diagram-project"></i>流程重塑</a></div>
     <div class="cp-actions">

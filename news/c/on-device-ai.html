@@ -29,7 +29,12 @@
   .cp-def{font-size:15.5px;line-height:1.95;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:14px;padding:18px 22px;margin-bottom:26px}
   .cp-sec{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--ink-2);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
   .cp-sec i{color:var(--blue);font-size:12px}
-  .cp-item{display:flex;align-items:baseline;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-item{display:flex;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-meta{display:flex;align-items:baseline;gap:8px;flex:0 0 auto}
+  .cp-body{min-width:0}
+  .cp-ev{margin:4px 0 0;font-size:12.5px;line-height:1.65;color:var(--ink-2);overflow-wrap:anywhere}
+  .cp-ev mark{background:rgba(37,99,235,.12);color:var(--blue);font-weight:650;padding:0 2px;border-radius:3px}
+  @media(max-width:560px){.cp-item{flex-direction:column;gap:4px}}
   .cp-item time{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex:0 0 auto}
   .cp-item .src{font-size:11px;font-weight:750;color:var(--sc,var(--blue));flex:0 0 auto}
   .cp-item a.t{font-size:14px;font-weight:650;color:var(--ink);line-height:1.5;overflow-wrap:anywhere}
@@ -67,15 +72,15 @@
     <p class="cp-alias"><b>也叫</b> 终端AI / 边缘AI / On-Device AI</p>
     <div class="cp-def">指在手机、PC、汽车、IoT设备等本地终端上直接运行的AI模型与应用。它能保护数据隐私、实现低延迟响应并离线工作，是AI无处不在的关键。其挑战在于在有限的功耗、内存和算力下实现足够强的性能。</div>
     <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（9）</div>
-      <div class="cp-item"><time datetime="2026-07-29">2026-07-29</time><span class="src s-industry">行业动态</span><a class="t" href="../p/eb684f46c433.html">端侧智能体不再只缺算力，个人AI还差什么？</a></div>
-      <div class="cp-item"><time datetime="2026-07-29">2026-07-29</time><span class="src s-industry">行业动态</span><a class="t" href="../p/a9f8663f1ee1.html">AI智能浪潮重塑母婴赛道，吸牛裤如何实现 “智能育儿”？</a></div>
-      <div class="cp-item"><time datetime="2026-07-29">2026-07-29</time><span class="src s-industry">行业动态</span><a class="t" href="../p/1ccc493419dd.html">36氪研究院 | 2026年中国智能硬件行业发展研究报告</a></div>
-      <div class="cp-item"><time datetime="2026-07-26">2026-07-26</time><span class="src s-qisi">齐思</span><a class="t" href="../p/bd63c2356b2b.html">Gemma-4-E4B无审查模型：突破性改进与下载指南</a></div>
-      <div class="cp-item"><time datetime="2026-07-26">2026-07-26</time><span class="src s-hn">Hacker News</span><a class="t" href="../p/16b138d9f3a3.html">Inflect-Micro-v2: complete voice in 9.36M parameters</a></div>
-      <div class="cp-item"><time datetime="2026-07-25">2026-07-25</time><span class="src s-industry">行业动态</span><a class="t" href="../p/c84e5590a1f5.html">100%开源！吴恩达做了个个人桌面Agent</a></div>
-      <div class="cp-item"><time datetime="2026-07-24">2026-07-24</time><span class="src s-industry">行业动态</span><a class="t" href="../p/609b9d4bc8aa.html">全世界都在讲 AI 话｜AI 器物志</a></div>
-      <div class="cp-item"><time datetime="2026-07-22">2026-07-22</time><span class="src s-industry">行业动态</span><a class="t" href="../p/d7fe4a113671.html">安谋科技公开新一代NPU架构 并牵头发起开源AI操作系统联盟</a></div>
-      <div class="cp-item"><time datetime="2026-07-21">2026-07-21</time><span class="src s-voices">大咖观点</span><a class="t" href="../p/99e42382ba86.html">Nativ: 在Mac上本地运行AI模型</a></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-29">2026-07-29</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/eb684f46c433.html">端侧智能体不再只缺算力，个人AI还差什么？</a><p class="cp-ev">这就不可避免地要回答云端AI和<mark>端侧AI</mark>的协同问题。</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-29">2026-07-29</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/a9f8663f1ee1.html">AI智能浪潮重塑母婴赛道，吸牛裤如何实现 “智能育儿”？</a><p class="cp-ev">导语： 凌晨三点，新手爸妈第三次起身，摸黑查看宝宝尿裤有无侧漏、臀部是否闷出红疹。依靠经验熬夜看护的传统育儿模式，已是无数家庭的共同困扰。而随着 AI 技术产业化落地，这一育儿痛点迎来全新解法。 2022 年 ChatGPT 问世，拉开生成式 AI 商业化序幕…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-29">2026-07-29</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/1ccc493419dd.html">36氪研究院 | 2026年中国智能硬件行业发展研究报告</a><p class="cp-ev">当前，AI技术正加速向实体经济各领域渗透深化，智能硬件作为AI能力落地实体场景的核心载体，已进入产品能力升级与产业价值提升的关键发展阶段。腾讯研究院2026年3月的调研数据显示，国内已有80.8%的消费者购买或使用过至少一类AI相关硬件产品，其中32.0%的用…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-26">2026-07-26</time><span class="src s-qisi">齐思</span></div><div class="cp-body"><a class="t" href="../p/bd63c2356b2b.html">Gemma-4-E4B无审查模型：突破性改进与下载指南</a><p class="cp-ev">内容简介 这份资料介绍了 HauhauCS 发布的「Gemma-4-E4B-IT」去拒答（uncensored）版本——Aggressive 变体，主打“完全解锁、不再拒绝提示词”，在不改变原始数据集与能力的前提下，仅移除拒答机制，力求做到“无损去审查”。作者…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-26">2026-07-26</time><span class="src s-hn">Hacker News</span></div><div class="cp-body"><a class="t" href="../p/16b138d9f3a3.html">Inflect-Micro-v2: complete voice in 9.36M parameters</a></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-25">2026-07-25</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/c84e5590a1f5.html">100%开源！吴恩达做了个个人桌面Agent</a></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-24">2026-07-24</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/609b9d4bc8aa.html">全世界都在讲 AI 话｜AI 器物志</a><p class="cp-ev">语音输入会成为下一个十年的普世工具吗？ #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-22">2026-07-22</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/d7fe4a113671.html">安谋科技公开新一代NPU架构 并牵头发起开源AI操作系统联盟</a></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-21">2026-07-21</time><span class="src s-voices">大咖观点</span></div><div class="cp-body"><a class="t" href="../p/99e42382ba86.html">Nativ: 在Mac上本地运行AI模型</a><p class="cp-ev">Nativ: Run AI models locally on your Mac Prince Canuma is the developer behind the excellent MLX-VLM Python library for running vi…</p></div></div>
     <div class="cp-sec"><i class="fa-solid fa-diagram-project"></i>相关概念</div>
     <div class="cp-rel"><a href="agent-smartphone.html"><i class="fa-solid fa-diagram-project"></i>智能体手机</a><a href="agentic-infra.html"><i class="fa-solid fa-diagram-project"></i>智能体基础设施</a><a href="ai-for-device.html"><i class="fa-solid fa-diagram-project"></i>AI for device</a><a href="ai-for-user.html"><i class="fa-solid fa-diagram-project"></i>AI for user</a><a href="ai-natural-interaction.html"><i class="fa-solid fa-diagram-project"></i>AI自然交互</a><a href="computing-in-memory.html"><i class="fa-solid fa-diagram-project"></i>存内计算</a><a href="context-management.html"><i class="fa-solid fa-diagram-project"></i>上下文管理</a><a href="embodied-ai.html"><i class="fa-solid fa-diagram-project"></i>具身智能</a></div>
     <div class="cp-actions">

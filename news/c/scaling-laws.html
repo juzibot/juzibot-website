@@ -29,7 +29,12 @@
   .cp-def{font-size:15.5px;line-height:1.95;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:14px;padding:18px 22px;margin-bottom:26px}
   .cp-sec{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--ink-2);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
   .cp-sec i{color:var(--blue);font-size:12px}
-  .cp-item{display:flex;align-items:baseline;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-item{display:flex;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-meta{display:flex;align-items:baseline;gap:8px;flex:0 0 auto}
+  .cp-body{min-width:0}
+  .cp-ev{margin:4px 0 0;font-size:12.5px;line-height:1.65;color:var(--ink-2);overflow-wrap:anywhere}
+  .cp-ev mark{background:rgba(37,99,235,.12);color:var(--blue);font-weight:650;padding:0 2px;border-radius:3px}
+  @media(max-width:560px){.cp-item{flex-direction:column;gap:4px}}
   .cp-item time{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex:0 0 auto}
   .cp-item .src{font-size:11px;font-weight:750;color:var(--sc,var(--blue));flex:0 0 auto}
   .cp-item a.t{font-size:14px;font-weight:650;color:var(--ink);line-height:1.5;overflow-wrap:anywhere}
@@ -67,9 +72,9 @@
     <p class="cp-alias"><b>也叫</b> Scaling Laws / 规模定律 / 缩放法则</p>
     <div class="cp-def">深度学习模型性能随参数、数据和计算量增加而可预测提升的经验规律。就像工厂扩大生产规模能降低单位成本，AI模型通过扩大规模能持续提升智能水平。对业务意味着：投资更大模型和算力能获得可预期的回报，但需权衡成本与收益，避免盲目扩张。</div>
     <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（3）</div>
-      <div class="cp-item"><time datetime="2026-07-24">2026-07-24</time><span class="src s-industry">行业动态</span><a class="t" href="../p/25387e1d931c.html">DeepSeek不是理想主义公司，它只是把现实服务于理想</a></div>
-      <div class="cp-item"><time datetime="2026-07-09">2026-07-09</time><span class="src s-voices">大咖观点</span><a class="t" href="../p/1decf4a05f9b.html">GPT 5.6 有 72 种可能配置。什么是好的默认设置？</a></div>
-      <div class="cp-item"><time datetime="2026-06-24">2026-06-24</time><span class="src s-voices">大咖观点</span><a class="t" href="../p/2462892d260e.html">谨慎的缩放定律</a></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-24">2026-07-24</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/25387e1d931c.html">DeepSeek不是理想主义公司，它只是把现实服务于理想</a><p class="cp-ev">DeepSeek的答案，不是只仰望星空，也不是只脚踏实地，而是用现实问题去支撑一个足够远的目标。 撰文 | 李嘉星 刘辰艺 编辑 | 张薇 头图来源 | DeepSeek 封面来源 | DeepSeek DeepSeek又一次被推到聚光灯下。 这家公司一度几乎…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-09">2026-07-09</time><span class="src s-voices">大咖观点</span></div><div class="cp-body"><a class="t" href="../p/1decf4a05f9b.html">GPT 5.6 有 72 种可能配置。什么是好的默认设置？</a><p class="cp-ev">Short note on how GPT 5.6 model and effort choices map onto training-time and inference-time scaling, producing 72 configurations.…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-06-24">2026-06-24</time><span class="src s-voices">大咖观点</span></div><div class="cp-body"><a class="t" href="../p/2462892d260e.html">谨慎的缩放定律</a><p class="cp-ev"><mark>缩放定律</mark>是深度学习领域最重要的经验性发现之一。</p></div></div>
     <div class="cp-sec"><i class="fa-solid fa-diagram-project"></i>相关概念</div>
     <div class="cp-rel"><a href="agent-capability.html"><i class="fa-solid fa-diagram-project"></i>Agent能力</a><a href="agi.html"><i class="fa-solid fa-diagram-project"></i>通用人工智能</a><a href="inference-deployment.html"><i class="fa-solid fa-diagram-project"></i>推理部署</a><a href="reasoning-effort.html"><i class="fa-solid fa-diagram-project"></i>推理努力</a><a href="reinforcement-learning.html"><i class="fa-solid fa-diagram-project"></i>强化学习</a></div>
     <div class="cp-actions">

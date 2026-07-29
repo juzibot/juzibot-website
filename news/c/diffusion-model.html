@@ -29,7 +29,12 @@
   .cp-def{font-size:15.5px;line-height:1.95;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:14px;padding:18px 22px;margin-bottom:26px}
   .cp-sec{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--ink-2);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
   .cp-sec i{color:var(--blue);font-size:12px}
-  .cp-item{display:flex;align-items:baseline;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-item{display:flex;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-meta{display:flex;align-items:baseline;gap:8px;flex:0 0 auto}
+  .cp-body{min-width:0}
+  .cp-ev{margin:4px 0 0;font-size:12.5px;line-height:1.65;color:var(--ink-2);overflow-wrap:anywhere}
+  .cp-ev mark{background:rgba(37,99,235,.12);color:var(--blue);font-weight:650;padding:0 2px;border-radius:3px}
+  @media(max-width:560px){.cp-item{flex-direction:column;gap:4px}}
   .cp-item time{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex:0 0 auto}
   .cp-item .src{font-size:11px;font-weight:750;color:var(--sc,var(--blue));flex:0 0 auto}
   .cp-item a.t{font-size:14px;font-weight:650;color:var(--ink);line-height:1.5;overflow-wrap:anywhere}
@@ -67,8 +72,8 @@
     <p class="cp-alias"><b>也叫</b> Diffusion Model / 扩散生成模型</p>
     <div class="cp-def">一种生成式AI模型，通过逐步去噪过程从随机噪声中生成高质量数据，如图像或视频。在视频生成领域，它能创建逼真内容，对企业而言，在营销、娱乐和产品设计中开启新可能性，但需要大量计算资源和训练数据。</div>
     <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（2）</div>
-      <div class="cp-item"><time datetime="2026-07-26">2026-07-26</time><span class="src s-industry">行业动态</span><a class="t" href="../p/3aa5d5d85d81.html">硬氪首发 | 复旦教授、前英特尔首席科学家做端侧具身大脑，「眸深智能」完成近亿元Pre-A轮追加融资</a></div>
-      <div class="cp-item"><time datetime="2024-04-12">2024-04-12</time><span class="src s-voices">大咖观点</span><a class="t" href="../p/38eb95b0e9e6.html">用于视频生成的扩散模型</a></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-26">2026-07-26</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/3aa5d5d85d81.html">硬氪首发 | 复旦教授、前英特尔首席科学家做端侧具身大脑，「眸深智能」完成近亿元Pre-A轮追加融资</a><p class="cp-ev">作者 | 邱晓芬 编辑 | 袁斯来 硬氪获悉，「眸深智能」（Motion Brain）完成近亿元Pre-A轮追加融资，本轮投资方包括中国头部物业服务公司、香港财团、多家上市公司联合打造的产业投资平台瑾悦投资、创合汇资本，以及老股东徐汇资本。 这也是继2026年…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2024-04-12">2024-04-12</time><span class="src s-voices">大咖观点</span></div><div class="cp-body"><a class="t" href="../p/38eb95b0e9e6.html">用于视频生成的扩散模型</a><p class="cp-ev"><mark>扩散模型</mark>近年来在图像合成领域展现出了强大的效果。</p></div></div>
     <div class="cp-sec"><i class="fa-solid fa-diagram-project"></i>相关概念</div>
     <div class="cp-rel"><a href="agent-capability.html"><i class="fa-solid fa-diagram-project"></i>Agent能力</a><a href="embodied-ai.html"><i class="fa-solid fa-diagram-project"></i>具身智能</a><a href="physical-ai-loop.html"><i class="fa-solid fa-diagram-project"></i>物理AI闭环</a><a href="world-action-model.html"><i class="fa-solid fa-diagram-project"></i>世界动作模型</a></div>
     <div class="cp-actions">

@@ -29,7 +29,12 @@
   .cp-def{font-size:15.5px;line-height:1.95;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:14px;padding:18px 22px;margin-bottom:26px}
   .cp-sec{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--ink-2);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
   .cp-sec i{color:var(--blue);font-size:12px}
-  .cp-item{display:flex;align-items:baseline;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-item{display:flex;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-meta{display:flex;align-items:baseline;gap:8px;flex:0 0 auto}
+  .cp-body{min-width:0}
+  .cp-ev{margin:4px 0 0;font-size:12.5px;line-height:1.65;color:var(--ink-2);overflow-wrap:anywhere}
+  .cp-ev mark{background:rgba(37,99,235,.12);color:var(--blue);font-weight:650;padding:0 2px;border-radius:3px}
+  @media(max-width:560px){.cp-item{flex-direction:column;gap:4px}}
   .cp-item time{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex:0 0 auto}
   .cp-item .src{font-size:11px;font-weight:750;color:var(--sc,var(--blue));flex:0 0 auto}
   .cp-item a.t{font-size:14px;font-weight:650;color:var(--ink);line-height:1.5;overflow-wrap:anywhere}
@@ -67,9 +72,9 @@
     <p class="cp-alias"><b>也叫</b> prompt-injectability / 提示注入 / 指令注入 / 越狱风险</p>
     <div class="cp-def">提示注入风险指用户通过恶意输入绕过AI系统预设规则，迫使模型执行非预期行为。对业务意味着：这可能导致数据泄露、内容失控或服务滥用，企业需通过安全对齐、沙箱隔离等技术，确保AI在开放环境中仍能坚守核心指令。</div>
     <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（3）</div>
-      <div class="cp-item"><time datetime="2026-07-28">2026-07-28</time><span class="src s-industry">行业动态</span><a class="t" href="../p/0046227ea539.html">苹果 AI 眼镜明年 WWDC 见，但这次「隐私」不好做</a></div>
-      <div class="cp-item"><time datetime="2026-07-25">2026-07-25</time><span class="src s-voices">大咖观点</span><a class="t" href="../p/9e10b8bb9cb2.html">引用Boris Cherny的话</a></div>
-      <div class="cp-item"><time datetime="2026-07-24">2026-07-24</time><span class="src s-voices">大咖观点</span><a class="t" href="../p/3a60f07223b3.html">推出Claude Opus 5</a></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-28">2026-07-28</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/0046227ea539.html">苹果 AI 眼镜明年 WWDC 见，但这次「隐私」不好做</a><p class="cp-ev">这一次，苹果又走到了科技与人文的十字路口。 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-25">2026-07-25</time><span class="src s-voices">大咖观点</span></div><div class="cp-body"><a class="t" href="../p/9e10b8bb9cb2.html">引用Boris Cherny的话</a><p class="cp-ev">比起任何这些评估分数，最让我兴奋的是另一件事：Opus 5 是我们迄今为止最难被<mark>提示注入</mark>（prompt inject）的模型。</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-24">2026-07-24</time><span class="src s-voices">大咖观点</span></div><div class="cp-body"><a class="t" href="../p/3a60f07223b3.html">推出Claude Opus 5</a><p class="cp-ev">Introducing Claude Opus 5 I&#x27;ve been offline kayaking with sea otters for much of today so I haven&#x27;t had a chance to put Anthropic&#x27;…</p></div></div>
     <div class="cp-sec"><i class="fa-solid fa-diagram-project"></i>相关概念</div>
     <div class="cp-rel"><a href="model-jailbreak.html"><i class="fa-solid fa-diagram-project"></i>模型越狱</a></div>
     <div class="cp-actions">

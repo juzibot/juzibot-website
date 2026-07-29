@@ -29,7 +29,12 @@
   .cp-def{font-size:15.5px;line-height:1.95;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:14px;padding:18px 22px;margin-bottom:26px}
   .cp-sec{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--ink-2);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
   .cp-sec i{color:var(--blue);font-size:12px}
-  .cp-item{display:flex;align-items:baseline;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-item{display:flex;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-meta{display:flex;align-items:baseline;gap:8px;flex:0 0 auto}
+  .cp-body{min-width:0}
+  .cp-ev{margin:4px 0 0;font-size:12.5px;line-height:1.65;color:var(--ink-2);overflow-wrap:anywhere}
+  .cp-ev mark{background:rgba(37,99,235,.12);color:var(--blue);font-weight:650;padding:0 2px;border-radius:3px}
+  @media(max-width:560px){.cp-item{flex-direction:column;gap:4px}}
   .cp-item time{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex:0 0 auto}
   .cp-item .src{font-size:11px;font-weight:750;color:var(--sc,var(--blue));flex:0 0 auto}
   .cp-item a.t{font-size:14px;font-weight:650;color:var(--ink);line-height:1.5;overflow-wrap:anywhere}
@@ -67,8 +72,8 @@
     <p class="cp-alias"><b>也叫</b> 世界模型 / World Model</p>
     <div class="cp-def">一种旨在让AI像人类一样理解物理世界运行规律、预测变化并据此行动的基座模型。它超越了生成内容，目标是构建对世界的统一表征，是连接数字内容生成（如视频）与物理世界交互（如机器人）的桥梁。</div>
     <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（2）</div>
-      <div class="cp-item"><time datetime="2026-07-22">2026-07-22</time><span class="src s-industry">行业动态</span><a class="t" href="../p/e395444a5f52.html">从生成到行动，生数科技用通用世界模型连接「两个世界」</a></div>
-      <div class="cp-item"><time datetime="2026-07-22">2026-07-22</time><span class="src s-industry">行业动态</span><a class="t" href="../p/d6f0965bc142.html">地平线与大众汽车集团达成合作</a></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-22">2026-07-22</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/e395444a5f52.html">从生成到行动，生数科技用通用世界模型连接「两个世界」</a><p class="cp-ev">但在生数科技创始人、清华大学人工智能研究院副院长朱军看来，<mark>通用世界模型</mark>并不…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-22">2026-07-22</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/d6f0965bc142.html">地平线与大众汽车集团达成合作</a><p class="cp-ev">地平线的AI基座大模型将与酷睿程在研的系统级芯片C7H、以及GAIA<mark>世界模型</mark>数据平台紧密协同，全面赋能大众汽车集团L3和L4级自动驾驶能力落地。</p></div></div>
     <div class="cp-sec"><i class="fa-solid fa-diagram-project"></i>相关概念</div>
     <div class="cp-rel"><a href="autonomous-driving-levels.html"><i class="fa-solid fa-diagram-project"></i>自动驾驶级别</a><a href="world-action-model.html"><i class="fa-solid fa-diagram-project"></i>世界动作模型</a></div>
     <div class="cp-actions">

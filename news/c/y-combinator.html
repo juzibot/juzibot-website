@@ -29,7 +29,12 @@
   .cp-def{font-size:15.5px;line-height:1.95;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:14px;padding:18px 22px;margin-bottom:26px}
   .cp-sec{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--ink-2);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
   .cp-sec i{color:var(--blue);font-size:12px}
-  .cp-item{display:flex;align-items:baseline;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-item{display:flex;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-meta{display:flex;align-items:baseline;gap:8px;flex:0 0 auto}
+  .cp-body{min-width:0}
+  .cp-ev{margin:4px 0 0;font-size:12.5px;line-height:1.65;color:var(--ink-2);overflow-wrap:anywhere}
+  .cp-ev mark{background:rgba(37,99,235,.12);color:var(--blue);font-weight:650;padding:0 2px;border-radius:3px}
+  @media(max-width:560px){.cp-item{flex-direction:column;gap:4px}}
   .cp-item time{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex:0 0 auto}
   .cp-item .src{font-size:11px;font-weight:750;color:var(--sc,var(--blue));flex:0 0 auto}
   .cp-item a.t{font-size:14px;font-weight:650;color:var(--ink);line-height:1.5;overflow-wrap:anywhere}
@@ -67,8 +72,8 @@
     <p class="cp-alias"><b>也叫</b> YC / Y Combinator孵化器</p>
     <div class="cp-def">全球最知名的创业孵化器与加速器之一。它为极早期的初创公司提供种子资金、密集的创业指导以及强大的校友网络，通过为期三个月的高强度训练营，帮助团队打磨产品、商业模式并最终在“演示日”向大量投资人展示，极大提升了初创公司的成功率和估值。</div>
     <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（2）</div>
-      <div class="cp-item"><time datetime="2019-05-01">2019-05-01</time><span class="src s-rui-blog">博客精选</span><a class="t" href="../p/a4be01375d9f.html">资本寒冬下是如何成功融资的：从YC毕业，到TSVC和阿尔法公社的投资</a></div>
-      <div class="cp-item"><time datetime="2019-03-19">2019-03-19</time><span class="src s-rui-blog">博客精选</span><a class="t" href="../p/a29f9779bcfa.html">【独家专访】2019 YC冬季班中国团队－进YC是一种怎样的体验</a></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2019-05-01">2019-05-01</time><span class="src s-rui-blog">博客精选</span></div><div class="cp-body"><a class="t" href="../p/a4be01375d9f.html">资本寒冬下是如何成功融资的：从YC毕业，到TSVC和阿尔法公社的投资</a><p class="cp-ev">今年1月到3月，句子互动参加了 <mark>Y Combinator</mark> W19 batch. 这是一段非常美好的旅程，在Demo Day 结束后，我们迅速拿到了TSVC(清谷资本) 和阿尔法公社的投资。</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2019-03-19">2019-03-19</time><span class="src s-rui-blog">博客精选</span></div><div class="cp-body"><a class="t" href="../p/a29f9779bcfa.html">【独家专访】2019 YC冬季班中国团队－进YC是一种怎样的体验</a><p class="cp-ev">一向以公平著称的美国高等教育界，这几天被集体打脸了：美国联邦检察官周二对50人提出指控，因为他们涉嫌参与通过行贿“购买”耶鲁、斯坦福、南加大等名校新生入学资格。这些人中间，除了考试工作人员、体育教练、私人招生顾问，还有进行贿赂的富豪家长们，其中不乏好莱坞明星和…</p></div></div>
     <div class="cp-sec"><i class="fa-solid fa-diagram-project"></i>相关概念</div>
     <div class="cp-rel"><a href="demo-day.html"><i class="fa-solid fa-diagram-project"></i>Demo Day</a><a href="elevator-pitch.html"><i class="fa-solid fa-diagram-project"></i>电梯演讲</a></div>
     <div class="cp-actions">

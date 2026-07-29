@@ -29,7 +29,12 @@
   .cp-def{font-size:15.5px;line-height:1.95;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:14px;padding:18px 22px;margin-bottom:26px}
   .cp-sec{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--ink-2);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
   .cp-sec i{color:var(--blue);font-size:12px}
-  .cp-item{display:flex;align-items:baseline;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-item{display:flex;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-meta{display:flex;align-items:baseline;gap:8px;flex:0 0 auto}
+  .cp-body{min-width:0}
+  .cp-ev{margin:4px 0 0;font-size:12.5px;line-height:1.65;color:var(--ink-2);overflow-wrap:anywhere}
+  .cp-ev mark{background:rgba(37,99,235,.12);color:var(--blue);font-weight:650;padding:0 2px;border-radius:3px}
+  @media(max-width:560px){.cp-item{flex-direction:column;gap:4px}}
   .cp-item time{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex:0 0 auto}
   .cp-item .src{font-size:11px;font-weight:750;color:var(--sc,var(--blue));flex:0 0 auto}
   .cp-item a.t{font-size:14px;font-weight:650;color:var(--ink);line-height:1.5;overflow-wrap:anywhere}
@@ -67,8 +72,8 @@
     <p class="cp-alias"><b>也叫</b> Business Cycle / 业务迭代</p>
     <div class="cp-def">企业通过尝试、反馈和学习持续降低不确定性的过程，核心是快速迭代和市场验证。企业应用业务循环可适应变化，优化产品并提升市场竞争力。</div>
     <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（2）</div>
-      <div class="cp-item"><time datetime="2026-07-24">2026-07-24</time><span class="src s-industry">行业动态</span><a class="t" href="../p/7c958178c9a5.html">对话曾鸣教授：AI时代，企业竞争的关键是构建智能复利，让AI真正进入业务流程</a></div>
-      <div class="cp-item"><time datetime="2026-05-12">2026-05-12</time><span class="src s-voices">大咖观点</span><a class="t" href="../p/33b2a5b84730.html">为什么资深开发者讲不清自己的专业能力</a></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-24">2026-07-24</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/7c958178c9a5.html">对话曾鸣教授：AI时代，企业竞争的关键是构建智能复利，让AI真正进入业务流程</a><p class="cp-ev">7月17日，2026世界人工智能大会在上海开幕。作为36氪连续第三年深入WAIC现场的重要内容窗口，「氪话未来」直播间也在大会首日同步开启现场对话。曾鸣教授在WAIC现场接受36氪「氪话未来」特邀专访，围绕AI时代企业增长、组织变革、智能复利、AI原生业务以及…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-05-12">2026-05-12</time><span class="src s-voices">大咖观点</span></div><div class="cp-body"><a class="t" href="../p/33b2a5b84730.html">为什么资深开发者讲不清自己的专业能力</a><p class="cp-ev">资深开发者习惯用复杂度来解释问题，而业务里的其他人真正担心的是不确定性；以及在 AI 已经进入视野之后，这件事该怎么办。…</p></div></div>
     <div class="cp-sec"><i class="fa-solid fa-diagram-project"></i>相关概念</div>
     <div class="cp-rel"><a href="agentic-loop.html"><i class="fa-solid fa-diagram-project"></i>智能体循环</a><a href="ai-native-enterprise.html"><i class="fa-solid fa-diagram-project"></i>AI原生企业</a><a href="software-complexity.html"><i class="fa-solid fa-diagram-project"></i>软件复杂性</a></div>
     <div class="cp-actions">

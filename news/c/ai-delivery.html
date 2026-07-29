@@ -29,7 +29,12 @@
   .cp-def{font-size:15.5px;line-height:1.95;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:14px;padding:18px 22px;margin-bottom:26px}
   .cp-sec{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--ink-2);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
   .cp-sec i{color:var(--blue);font-size:12px}
-  .cp-item{display:flex;align-items:baseline;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-item{display:flex;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-meta{display:flex;align-items:baseline;gap:8px;flex:0 0 auto}
+  .cp-body{min-width:0}
+  .cp-ev{margin:4px 0 0;font-size:12.5px;line-height:1.65;color:var(--ink-2);overflow-wrap:anywhere}
+  .cp-ev mark{background:rgba(37,99,235,.12);color:var(--blue);font-weight:650;padding:0 2px;border-radius:3px}
+  @media(max-width:560px){.cp-item{flex-direction:column;gap:4px}}
   .cp-item time{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex:0 0 auto}
   .cp-item .src{font-size:11px;font-weight:750;color:var(--sc,var(--blue));flex:0 0 auto}
   .cp-item a.t{font-size:14px;font-weight:650;color:var(--ink);line-height:1.5;overflow-wrap:anywhere}
@@ -67,15 +72,15 @@
     <p class="cp-alias"><b>也叫</b> AI实施 / AI落地 / AI Delivery</p>
     <div class="cp-def">AI交付指将人工智能模型或解决方案实际部署到业务场景中，并确保其产生可衡量的业务价值。这包括模型训练、集成、监控和优化全过程。对企业而言，成功的AI交付意味着从概念验证转向规模化应用，直接提升运营效率或创造新收入流，是AI投资回报的核心环节。</div>
     <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（9）</div>
-      <div class="cp-item"><time datetime="2026-07-29">2026-07-29</time><span class="src s-industry">行业动态</span><a class="t" href="../p/cb61eb1c5387.html">OceanBase回应融资报道：全力投入AI数据创新，与资本市场保持开放沟通</a></div>
-      <div class="cp-item"><time datetime="2026-07-29">2026-07-29</time><span class="src s-industry">行业动态</span><a class="t" href="../p/b4a23c617634.html">让AI先吃，这个国民级健康难题有解了</a></div>
-      <div class="cp-item"><time datetime="2026-07-29">2026-07-29</time><span class="src s-industry">行业动态</span><a class="t" href="../p/83e3e103f6fe.html">美团，正在退到AI身后</a></div>
-      <div class="cp-item"><time datetime="2026-07-25">2026-07-25</time><span class="src s-industry">行业动态</span><a class="t" href="../p/4c0121a5d10e.html">早报｜Claude Opus 5发布,半价追平Fable 5/小鹏人形机器人开启小批量试产/曝英伟达将上调显卡价格</a></div>
-      <div class="cp-item"><time datetime="2026-07-25">2026-07-25</time><span class="src s-industry">行业动态</span><a class="t" href="../p/3cfd4d51a1d0.html">从月之暗面出走，他用AI技术帮人找对象，徐新投资 | 涌现新项目</a></div>
-      <div class="cp-item"><time datetime="2026-07-24">2026-07-24</time><span class="src s-industry">行业动态</span><a class="t" href="../p/3d250f1078ad.html">自变量登上APEC国际舞台，代表中国具身智能分享服务民生“最佳实践”</a></div>
-      <div class="cp-item"><time datetime="2026-07-24">2026-07-24</time><span class="src s-industry">行业动态</span><a class="t" href="../p/1ee6bd52b583.html">带着AI去前线！36氪逛透WAIC，带你看懂2026全行业AI最真实走向！</a></div>
-      <div class="cp-item"><time datetime="2026-01-31">2026-01-31</time><span class="src s-rui-blog">博客精选</span><a class="t" href="../p/f90eb8da9d3a.html">写在句子互动的 2026 年</a></div>
-      <div class="cp-item"><time datetime="2020-04-17">2020-04-17</time><span class="src s-rui-blog">博客精选</span><a class="t" href="../p/0a1ea2a22ead.html">Microsoft Online Tech Forum 微软在线技术峰会 - 李佳芮专访</a></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-29">2026-07-29</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/cb61eb1c5387.html">OceanBase回应融资报道：全力投入AI数据创新，与资本市场保持开放沟通</a></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-29">2026-07-29</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/b4a23c617634.html">让AI先吃，这个国民级健康难题有解了</a><p class="cp-ev">在科学减重这件事上，继战略投资薄荷健康之后，蚂蚁阿福又放了个大招。 7月29日，蚂蚁阿福宣布升级上线“AI拍饮食”功能，用户拍食物照片发给阿福，就能自动估算营养和热量信息，获得健康饮食搭配建议和运动消耗计划等，还支持一健存入个人健康档案，建立“热量账户”。吃得…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-29">2026-07-29</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/83e3e103f6fe.html">美团，正在退到AI身后</a></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-25">2026-07-25</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/4c0121a5d10e.html">早报｜Claude Opus 5发布,半价追平Fable 5/小鹏人形机器人开启小批量试产/曝英伟达将上调显卡价格</a><p class="cp-ev">· 菲尔兹奖得主 Jacob Tsimerman 将加入 OpenAI 安全部门 · 腾讯 WXG 员工因泄露敏感信息被辞退，年末激励约 317 万元 · Patreon 裁减 20% 员工，CEO 强调重组并非因为 AI 替代人类 #欢迎关注爱范儿官方微信公…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-25">2026-07-25</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/3cfd4d51a1d0.html">从月之暗面出走，他用AI技术帮人找对象，徐新投资 | 涌现新项目</a><p class="cp-ev">文｜温丽虹 编辑｜张雨忻 Kimi K3上线前夕，曾歆勋算了算，离职时放弃的那笔期权的价值，在他离开这段时间涨了10倍。 从月之暗面离职前，曾歆勋是Kimi的AI搜索技术负责人。2025年8月，他离职创办“良配科技”，核心产品“良配”，一个AI驱动的婚恋匹配应…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-24">2026-07-24</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/3d250f1078ad.html">自变量登上APEC国际舞台，代表中国具身智能分享服务民生“最佳实践”</a><p class="cp-ev">7月16日-24日，亚太经合组织（APEC）“2026年数字和人工智能部长会议及数字周”系列活动在四川成都举行。 作为部长会议的重要配套活动，工业和信息化部于7月24日上午举办“APEC数智赋能高级别对话”，邀请APEC经济体部长及政府部门、企业、科研机构和国…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-24">2026-07-24</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/1ee6bd52b583.html">带着AI去前线！36氪逛透WAIC，带你看懂2026全行业AI最真实走向！</a><p class="cp-ev">7月17日至20日，2026世界人工智能大会暨人工智能全球治理高级别会议在上海落下帷幕。黄浦江畔，热浪与人潮一起涌动。本届大会以“智能伙伴，共创未来”为主题，在世博、张江、西岸三地四馆展开。作为年度人工智能产业观察窗口，WAIC 2026留下的关键信号，不在于…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-01-31">2026-01-31</time><span class="src s-rui-blog">博客精选</span></div><div class="cp-body"><a class="t" href="../p/f90eb8da9d3a.html">写在句子互动的 2026 年</a><p class="cp-ev">句子互动的小伙伴们， 开工大吉！ 2025 年，是我们的「AI 破局年」。 我们在 AI 交付上迈出了里程碑式的一步：在在线教育的销售转化环节用 AI 交付了结果，并让用户愿意按结果付费，实现了 AI 的真正落地，甚至 PK 掉了某头部在线教育公司自研一年的成…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2020-04-17">2020-04-17</time><span class="src s-rui-blog">博客精选</span></div><div class="cp-body"><a class="t" href="../p/0a1ea2a22ead.html">Microsoft Online Tech Forum 微软在线技术峰会 - 李佳芮专访</a><p class="cp-ev">看点 最贴心的、完善的程序员成长路径 一款智能对话机器人从0到1的搭建历程 全球人工智能技术的实践落地情况 内容 1. 自我介绍 大家好，我是李佳芮，句子互动的联合创始人 &amp; CEO，句子互动围绕微信生态为客户提供智能营销和销售服务，帮助企业引流并实现转化，客…</p></div></div>
     <div class="cp-sec"><i class="fa-solid fa-diagram-project"></i>相关概念</div>
     <div class="cp-rel"><a href="agent-payment.html"><i class="fa-solid fa-diagram-project"></i>智能体支付</a><a href="agent-plugin-ecosystem.html"><i class="fa-solid fa-diagram-project"></i>智能体插件生态</a><a href="ai-nutrition-analysis.html"><i class="fa-solid fa-diagram-project"></i>AI营养分析</a><a href="ai-recommendation.html"><i class="fa-solid fa-diagram-project"></i>AI推荐</a><a href="chatbot.html"><i class="fa-solid fa-diagram-project"></i>聊天机器人</a><a href="computing-infrastructure.html"><i class="fa-solid fa-diagram-project"></i>算力基础设施</a><a href="embodied-ai.html"><i class="fa-solid fa-diagram-project"></i>具身智能</a><a href="enterprise-ai-agent.html"><i class="fa-solid fa-diagram-project"></i>企业级AI员工</a></div>
     <div class="cp-actions">

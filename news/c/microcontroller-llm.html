@@ -29,7 +29,12 @@
   .cp-def{font-size:15.5px;line-height:1.95;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:14px;padding:18px 22px;margin-bottom:26px}
   .cp-sec{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--ink-2);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
   .cp-sec i{color:var(--blue);font-size:12px}
-  .cp-item{display:flex;align-items:baseline;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-item{display:flex;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-meta{display:flex;align-items:baseline;gap:8px;flex:0 0 auto}
+  .cp-body{min-width:0}
+  .cp-ev{margin:4px 0 0;font-size:12.5px;line-height:1.65;color:var(--ink-2);overflow-wrap:anywhere}
+  .cp-ev mark{background:rgba(37,99,235,.12);color:var(--blue);font-weight:650;padding:0 2px;border-radius:3px}
+  @media(max-width:560px){.cp-item{flex-direction:column;gap:4px}}
   .cp-item time{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex:0 0 auto}
   .cp-item .src{font-size:11px;font-weight:750;color:var(--sc,var(--blue));flex:0 0 auto}
   .cp-item a.t{font-size:14px;font-weight:650;color:var(--ink);line-height:1.5;overflow-wrap:anywhere}
@@ -67,8 +72,8 @@
     <p class="cp-alias"><b>也叫</b> microcontroller LLM / MCU LLM / 端侧大模型</p>
     <div class="cp-def">微控制器大语言模型是指能在资源受限的微控制器上运行的大语言模型。这类模型通过技术创新（如参数压缩、分层存储）实现了在极低成本硬件上的本地化推理，无需依赖云端服务器。对企业来说，这意味着可以将AI能力部署到物联网设备、传感器等边缘场景，实现低延迟、高隐私的智能应用，是AI普惠化的重要一步。</div>
     <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（2）</div>
-      <div class="cp-item"><time datetime="2026-07-29">2026-07-29</time><span class="src s-hn">Hacker News</span><a class="t" href="../p/97854c7d008d.html">Show HN: 在任何 M 系列 Mac 的 2GB RAM 上运行开源的 Gemma 4 26B 引擎</a></div>
-      <div class="cp-item"><time datetime="2026-07-25">2026-07-25</time><span class="src s-hn">Hacker News</span><a class="t" href="../p/5f284decdfa5.html">Running a 28.9M parameter LLM on an $8 microcontroller</a></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-29">2026-07-29</time><span class="src s-hn">Hacker News</span></div><div class="cp-body"><a class="t" href="../p/97854c7d008d.html">Show HN: 在任何 M 系列 Mac 的 2GB RAM 上运行开源的 Gemma 4 26B 引擎</a><p class="cp-ev">Hi HN, I built a specialized inference engine for running 4-bit Gemma 4 26B-A4B-IT on any M-series Mac using about 2 GB of RAM. It…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-25">2026-07-25</time><span class="src s-hn">Hacker News</span></div><div class="cp-body"><a class="t" href="../p/5f284decdfa5.html">Running a 28.9M parameter LLM on an $8 microcontroller</a></div></div>
     <div class="cp-sec"><i class="fa-solid fa-diagram-project"></i>相关概念</div>
     <div class="cp-rel"><a href="inference-deployment.html"><i class="fa-solid fa-diagram-project"></i>推理部署</a><a href="token-consumption.html"><i class="fa-solid fa-diagram-project"></i>Token消耗</a><a href="turbofieldfare.html"><i class="fa-solid fa-diagram-project"></i>TurboFieldfare</a></div>
     <div class="cp-actions">

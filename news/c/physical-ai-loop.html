@@ -29,7 +29,12 @@
   .cp-def{font-size:15.5px;line-height:1.95;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:14px;padding:18px 22px;margin-bottom:26px}
   .cp-sec{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--ink-2);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
   .cp-sec i{color:var(--blue);font-size:12px}
-  .cp-item{display:flex;align-items:baseline;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-item{display:flex;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-meta{display:flex;align-items:baseline;gap:8px;flex:0 0 auto}
+  .cp-body{min-width:0}
+  .cp-ev{margin:4px 0 0;font-size:12.5px;line-height:1.65;color:var(--ink-2);overflow-wrap:anywhere}
+  .cp-ev mark{background:rgba(37,99,235,.12);color:var(--blue);font-weight:650;padding:0 2px;border-radius:3px}
+  @media(max-width:560px){.cp-item{flex-direction:column;gap:4px}}
   .cp-item time{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex:0 0 auto}
   .cp-item .src{font-size:11px;font-weight:750;color:var(--sc,var(--blue));flex:0 0 auto}
   .cp-item a.t{font-size:14px;font-weight:650;color:var(--ink);line-height:1.5;overflow-wrap:anywhere}
@@ -67,9 +72,9 @@
     <p class="cp-alias"><b>也叫</b> 物理世界AI闭环 / Physical AI Loop</p>
     <div class="cp-def">将AI模型部署到物理设备（如机器人）中，通过感知、决策和执行形成闭环反馈系统。企业实现物理AI闭环能推动自动化落地，但面临数据稀缺、仿真到现实差距等挑战，是具身智能商业化的关键步骤。</div>
     <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（3）</div>
-      <div class="cp-item"><time datetime="2026-07-29">2026-07-29</time><span class="src s-industry">行业动态</span><a class="t" href="../p/ee1b83497fe0.html">空中具身操作：让蜘蛛侠们安全落地</a></div>
-      <div class="cp-item"><time datetime="2026-07-26">2026-07-26</time><span class="src s-industry">行业动态</span><a class="t" href="../p/3aa5d5d85d81.html">硬氪首发 | 复旦教授、前英特尔首席科学家做端侧具身大脑，「眸深智能」完成近亿元Pre-A轮追加融资</a></div>
-      <div class="cp-item"><time datetime="2026-07-22">2026-07-22</time><span class="src s-industry">行业动态</span><a class="t" href="../p/c85907bd5c17.html">物理AI的闭环，终于有人跑通了：日冕+远图万台级部署计划官宣</a></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-29">2026-07-29</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/ee1b83497fe0.html">空中具身操作：让蜘蛛侠们安全落地</a></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-26">2026-07-26</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/3aa5d5d85d81.html">硬氪首发 | 复旦教授、前英特尔首席科学家做端侧具身大脑，「眸深智能」完成近亿元Pre-A轮追加融资</a><p class="cp-ev">作者 | 邱晓芬 编辑 | 袁斯来 硬氪获悉，「眸深智能」（Motion Brain）完成近亿元Pre-A轮追加融资，本轮投资方包括中国头部物业服务公司、香港财团、多家上市公司联合打造的产业投资平台瑾悦投资、创合汇资本，以及老股东徐汇资本。 这也是继2026年…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-22">2026-07-22</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/c85907bd5c17.html">物理AI的闭环，终于有人跑通了：日冕+远图万台级部署计划官宣</a><p class="cp-ev">按照规划，日冕和远图将首先在服务器制造场景验证超级工站能力，随后向更多生产环节扩展。2027年完成百台级部署，未来实现万台级具身智能产品部署。…</p></div></div>
     <div class="cp-sec"><i class="fa-solid fa-diagram-project"></i>相关概念</div>
     <div class="cp-rel"><a href="embodied-ai.html"><i class="fa-solid fa-diagram-project"></i>具身智能</a><a href="aerial-embodied-operation.html"><i class="fa-solid fa-diagram-project"></i>空中具身操作</a><a href="agent-capability.html"><i class="fa-solid fa-diagram-project"></i>Agent能力</a><a href="diffusion-model.html"><i class="fa-solid fa-diagram-project"></i>扩散模型</a><a href="world-action-model.html"><i class="fa-solid fa-diagram-project"></i>世界动作模型</a></div>
     <div class="cp-actions">

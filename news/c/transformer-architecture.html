@@ -29,7 +29,12 @@
   .cp-def{font-size:15.5px;line-height:1.95;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:14px;padding:18px 22px;margin-bottom:26px}
   .cp-sec{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--ink-2);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
   .cp-sec i{color:var(--blue);font-size:12px}
-  .cp-item{display:flex;align-items:baseline;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-item{display:flex;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-meta{display:flex;align-items:baseline;gap:8px;flex:0 0 auto}
+  .cp-body{min-width:0}
+  .cp-ev{margin:4px 0 0;font-size:12.5px;line-height:1.65;color:var(--ink-2);overflow-wrap:anywhere}
+  .cp-ev mark{background:rgba(37,99,235,.12);color:var(--blue);font-weight:650;padding:0 2px;border-radius:3px}
+  @media(max-width:560px){.cp-item{flex-direction:column;gap:4px}}
   .cp-item time{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex:0 0 auto}
   .cp-item .src{font-size:11px;font-weight:750;color:var(--sc,var(--blue));flex:0 0 auto}
   .cp-item a.t{font-size:14px;font-weight:650;color:var(--ink);line-height:1.5;overflow-wrap:anywhere}
@@ -67,8 +72,8 @@
     <p class="cp-alias"><b>也叫</b> Transformer Architecture / Transformer模型架构 / Transformer网络</p>
     <div class="cp-def">Transformer架构是一种基于自注意力机制的神经网络设计，擅长并行处理序列数据，是当前大语言模型和图像生成模型的核心。它大幅提升了AI的训练和推理效率，使企业能快速部署高性能AI应用，推动业务创新。</div>
     <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（2）</div>
-      <div class="cp-item"><time datetime="2023-01-27">2023-01-27</time><span class="src s-voices">大咖观点</span><a class="t" href="../p/bd2a1c61491f.html">Transformer 家族版本 2.0</a></div>
-      <div class="cp-item"><time datetime="2023-01-10">2023-01-10</time><span class="src s-voices">大咖观点</span><a class="t" href="../p/4dab64a7e3ce.html">大型 Transformer 模型推理优化</a></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2023-01-27">2023-01-27</time><span class="src s-voices">大咖观点</span></div><div class="cp-body"><a class="t" href="../p/bd2a1c61491f.html">Transformer 家族版本 2.0</a><p class="cp-ev">Many new Transformer architecture improvements have been proposed since my last post on “The Transformer Family” about three years…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2023-01-10">2023-01-10</time><span class="src s-voices">大咖观点</span></div><div class="cp-body"><a class="t" href="../p/4dab64a7e3ce.html">大型 Transformer 模型推理优化</a><p class="cp-ev">[Updated on 2023-01-24: add a small section on Distillation .] Large transformer models are mainstream nowadays, creating SoTA res…</p></div></div>
     <div class="cp-sec"><i class="fa-solid fa-diagram-project"></i>相关概念</div>
     <div class="cp-rel"><a href="inference-deployment.html"><i class="fa-solid fa-diagram-project"></i>推理部署</a><a href="model-distillation.html"><i class="fa-solid fa-diagram-project"></i>模型蒸馏</a></div>
     <div class="cp-actions">

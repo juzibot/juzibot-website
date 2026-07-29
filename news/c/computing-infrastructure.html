@@ -29,7 +29,12 @@
   .cp-def{font-size:15.5px;line-height:1.95;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:14px;padding:18px 22px;margin-bottom:26px}
   .cp-sec{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--ink-2);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
   .cp-sec i{color:var(--blue);font-size:12px}
-  .cp-item{display:flex;align-items:baseline;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-item{display:flex;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-meta{display:flex;align-items:baseline;gap:8px;flex:0 0 auto}
+  .cp-body{min-width:0}
+  .cp-ev{margin:4px 0 0;font-size:12.5px;line-height:1.65;color:var(--ink-2);overflow-wrap:anywhere}
+  .cp-ev mark{background:rgba(37,99,235,.12);color:var(--blue);font-weight:650;padding:0 2px;border-radius:3px}
+  @media(max-width:560px){.cp-item{flex-direction:column;gap:4px}}
   .cp-item time{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex:0 0 auto}
   .cp-item .src{font-size:11px;font-weight:750;color:var(--sc,var(--blue));flex:0 0 auto}
   .cp-item a.t{font-size:14px;font-weight:650;color:var(--ink);line-height:1.5;overflow-wrap:anywhere}
@@ -67,9 +72,9 @@
     <p class="cp-alias"><b>也叫</b> AI计算基础设施 / GPU集群 / Computing Infrastructure</p>
     <div class="cp-def">支撑AI模型训练和推理的硬件与软件系统，包括GPU、服务器、网络和软件生态如CUDA。企业投资算力基础设施能加速AI应用开发，但需考虑成本、能耗和供应商锁定，是AI竞争的核心资源。</div>
     <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（3）</div>
-      <div class="cp-item"><time datetime="2026-07-29">2026-07-29</time><span class="src s-industry">行业动态</span><a class="t" href="../p/cb61eb1c5387.html">OceanBase回应融资报道：全力投入AI数据创新，与资本市场保持开放沟通</a></div>
-      <div class="cp-item"><time datetime="2026-07-22">2026-07-22</time><span class="src s-industry">行业动态</span><a class="t" href="../p/d000b9187960.html">AI竞争，为什么先比算力？</a></div>
-      <div class="cp-item"><time datetime="2026-07-22">2026-07-22</time><span class="src s-qisi">齐思</span><a class="t" href="../p/5a46aefff7c3.html">Mark Cuban 谈AI泡沫：谁将面临巨大损失？</a></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-29">2026-07-29</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/cb61eb1c5387.html">OceanBase回应融资报道：全力投入AI数据创新，与资本市场保持开放沟通</a></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-22">2026-07-22</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/d000b9187960.html">AI竞争，为什么先比算力？</a><p class="cp-ev">AI越接近落地，<mark>算力基础设施</mark>越重要。</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-22">2026-07-22</time><span class="src s-qisi">齐思</span></div><div class="cp-body"><a class="t" href="../p/5a46aefff7c3.html">Mark Cuban 谈AI泡沫：谁将面临巨大损失？</a><p class="cp-ev">这是关于认知科学和跨领域思维框架的深度分析报告，主要探讨技术演进、资本博弈和人类认知的底层逻辑。报告的核心观点是基于“隐形泡沫”与基础设施的均值回归，指出当前的AI泡沫与2000年互联网泡沫不同，更像是私人资本的投机行为。巨头公司在为理想化的未来行情投入巨资建…</p></div></div>
     <div class="cp-sec"><i class="fa-solid fa-diagram-project"></i>相关概念</div>
     <div class="cp-rel"><a href="ai-delivery.html"><i class="fa-solid fa-diagram-project"></i>AI交付</a><a href="computing-fuse.html"><i class="fa-solid fa-diagram-project"></i>算力熔断</a><a href="computing-utilization.html"><i class="fa-solid fa-diagram-project"></i>算力利用率</a><a href="model-ready-data.html"><i class="fa-solid fa-diagram-project"></i>Model-Ready Data</a></div>
     <div class="cp-actions">

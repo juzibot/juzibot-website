@@ -29,7 +29,12 @@
   .cp-def{font-size:15.5px;line-height:1.95;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:14px;padding:18px 22px;margin-bottom:26px}
   .cp-sec{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--ink-2);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
   .cp-sec i{color:var(--blue);font-size:12px}
-  .cp-item{display:flex;align-items:baseline;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-item{display:flex;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-meta{display:flex;align-items:baseline;gap:8px;flex:0 0 auto}
+  .cp-body{min-width:0}
+  .cp-ev{margin:4px 0 0;font-size:12.5px;line-height:1.65;color:var(--ink-2);overflow-wrap:anywhere}
+  .cp-ev mark{background:rgba(37,99,235,.12);color:var(--blue);font-weight:650;padding:0 2px;border-radius:3px}
+  @media(max-width:560px){.cp-item{flex-direction:column;gap:4px}}
   .cp-item time{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex:0 0 auto}
   .cp-item .src{font-size:11px;font-weight:750;color:var(--sc,var(--blue));flex:0 0 auto}
   .cp-item a.t{font-size:14px;font-weight:650;color:var(--ink);line-height:1.5;overflow-wrap:anywhere}
@@ -67,8 +72,8 @@
     <p class="cp-alias"><b>也叫</b> Sandbox / 隔离环境 / 安全沙箱</p>
     <div class="cp-def">一个与生产环境隔离的安全测试空间，允许AI模型或代码在其中自由运行而不会影响真实系统。对于AI安全至关重要，它像“数字隔离病房”，用于安全地测试模型能力、评估风险或进行对抗性攻击演练。</div>
     <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（2）</div>
-      <div class="cp-item"><time datetime="2026-07-21">2026-07-21</time><span class="src s-hn">Hacker News</span><a class="t" href="../p/f29a04d123ca.html">OpenAI与Hugging Face处理模型评估期间的安全事件</a></div>
-      <div class="cp-item"><time datetime="2026-07-21">2026-07-21</time><span class="src s-product">产品动态</span><a class="t" href="../p/ba0b5ccb68f5.html">句子守护上线新版质量中心</a></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-21">2026-07-21</time><span class="src s-hn">Hacker News</span></div><div class="cp-body"><a class="t" href="../p/f29a04d123ca.html">OpenAI与Hugging Face处理模型评估期间的安全事件</a><p class="cp-ev">https://www.axios.com/2026/07/21/openai-says-hugging-face-br... See also Security incident disclosure – July 2026 - https://news.y…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-21">2026-07-21</time><span class="src s-product">产品动态</span></div><div class="cp-body"><a class="t" href="../p/ba0b5ccb68f5.html">句子守护上线新版质量中心</a><p class="cp-ev">AI 生成测试用例、批量验收、灰度测试、回归测试、AI 工单、AI 质检——Agent 上线前测过、上线后管着，没人点头就不上线，每一步留痕、能查。…</p></div></div>
     <div class="cp-sec"><i class="fa-solid fa-diagram-project"></i>相关概念</div>
     <div class="cp-rel"><a href="adversarial-attacks.html"><i class="fa-solid fa-diagram-project"></i>对抗性攻击</a><a href="autonomous-agents.html"><i class="fa-solid fa-diagram-project"></i>自主代理</a><a href="simulation-evaluation.html"><i class="fa-solid fa-diagram-project"></i>仿真评测</a><a href="task-agent.html"><i class="fa-solid fa-diagram-project"></i>任务Agent</a></div>
     <div class="cp-actions">

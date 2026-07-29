@@ -29,7 +29,12 @@
   .cp-def{font-size:15.5px;line-height:1.95;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:14px;padding:18px 22px;margin-bottom:26px}
   .cp-sec{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--ink-2);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
   .cp-sec i{color:var(--blue);font-size:12px}
-  .cp-item{display:flex;align-items:baseline;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-item{display:flex;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-meta{display:flex;align-items:baseline;gap:8px;flex:0 0 auto}
+  .cp-body{min-width:0}
+  .cp-ev{margin:4px 0 0;font-size:12.5px;line-height:1.65;color:var(--ink-2);overflow-wrap:anywhere}
+  .cp-ev mark{background:rgba(37,99,235,.12);color:var(--blue);font-weight:650;padding:0 2px;border-radius:3px}
+  @media(max-width:560px){.cp-item{flex-direction:column;gap:4px}}
   .cp-item time{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex:0 0 auto}
   .cp-item .src{font-size:11px;font-weight:750;color:var(--sc,var(--blue));flex:0 0 auto}
   .cp-item a.t{font-size:14px;font-weight:650;color:var(--ink);line-height:1.5;overflow-wrap:anywhere}
@@ -67,9 +72,9 @@
     <p class="cp-alias"><b>也叫</b> AI Code Security / 智能代码安全</p>
     <div class="cp-def">AI代码安全指利用人工智能技术自动检测、修复和预防代码中的安全漏洞，通过理解代码语义和上下文实现实时防护，它弥补了传统扫描工具的不足，对企业意味着降低安全风险、提升开发效率并满足合规要求。</div>
     <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（3）</div>
-      <div class="cp-item"><time datetime="2026-07-29">2026-07-29</time><span class="src s-industry">行业动态</span><a class="t" href="../p/49fd0b5ee1e4.html">上交所投保专委会三大调研齐发，全面覆盖防非打非、AI应用与纠纷化解</a></div>
-      <div class="cp-item"><time datetime="2026-07-29">2026-07-29</time><span class="src s-industry">行业动态</span><a class="t" href="../p/081ddb5dc330.html">成立1年融资3轮，前字节女高管创业，跑赢GPT-5登顶编程榜</a></div>
-      <div class="cp-item"><time datetime="2026-07-21">2026-07-21</time><span class="src s-voices">大咖观点</span><a class="t" href="../p/009d8ac6eee7.html">与Claude Code团队的Cat和Thariq的炉边谈话</a></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-29">2026-07-29</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/49fd0b5ee1e4.html">上交所投保专委会三大调研齐发，全面覆盖防非打非、AI应用与纠纷化解</a><p class="cp-ev">7月29日从业内获悉，上海证券交易所理事会投资者教育和保护专门委员会今年确定三项重点研究课题——非法证券活动的防控机制建设、人工智能在证券服务中的应用边界与合规治理、证券公司投诉典型情形识别与纠纷化解机制。目前，对应三份专项调研问卷已陆续发至各会员单位，一场覆…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-29">2026-07-29</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/081ddb5dc330.html">成立1年融资3轮，前字节女高管创业，跑赢GPT-5登顶编程榜</a></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-21">2026-07-21</time><span class="src s-voices">大咖观点</span></div><div class="cp-body"><a class="t" href="../p/009d8ac6eee7.html">与Claude Code团队的Cat和Thariq的炉边谈话</a><p class="cp-ev">Earlier this month I hosted a fireside chat session at the AI Engineer World&#x27;s Fair with Cat Wu and Thariq Shihipar from Anthropic…</p></div></div>
     <div class="cp-sec"><i class="fa-solid fa-diagram-project"></i>相关概念</div>
     <div class="cp-rel"><a href="coding-agent.html"><i class="fa-solid fa-diagram-project"></i>编码代理</a><a href="fable-5.html"><i class="fa-solid fa-diagram-project"></i>Fable 5</a><a href="infcode-programming-agent.html"><i class="fa-solid fa-diagram-project"></i>InfCode编程智能体</a><a href="model-benchmark.html"><i class="fa-solid fa-diagram-project"></i>模型基准测试</a><a href="model-jailbreak.html"><i class="fa-solid fa-diagram-project"></i>模型越狱</a><a href="system-prompt.html"><i class="fa-solid fa-diagram-project"></i>系统提示词</a></div>
     <div class="cp-actions">

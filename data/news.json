@@ -1,7 +1,7 @@
 {
  "generated_by": "build_news.py",
- "generated_at": "2026-07-30T01:07:42+08:00",
- "count": 587,
+ "generated_at": "2026-07-30T01:42:35+08:00",
+ "count": 590,
  "visible": 278,
  "sources": [
   {
@@ -10,7 +10,7 @@
    "type": "sitemap",
    "home": "https://rui.juzi.bot/",
    "status": "ok",
-   "last_sync": "2026-07-30T01:07:42+08:00",
+   "last_sync": "2026-07-30T01:42:35+08:00",
    "group": "company",
    "ai": true,
    "count": 37
@@ -21,7 +21,7 @@
    "type": "feishu-base",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T01:07:42+08:00",
+   "last_sync": "2026-07-30T01:42:35+08:00",
    "group": "company",
    "ai": false,
    "count": 0
@@ -32,7 +32,7 @@
    "type": "manual",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T01:07:42+08:00",
+   "last_sync": "2026-07-30T01:42:35+08:00",
    "group": "company",
    "ai": false,
    "count": 5
@@ -43,7 +43,7 @@
    "type": "manual",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T01:07:42+08:00",
+   "last_sync": "2026-07-30T01:42:35+08:00",
    "group": "company",
    "ai": false,
    "count": 0
@@ -54,7 +54,7 @@
    "type": "rss",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T01:07:42+08:00",
+   "last_sync": "2026-07-30T01:42:35+08:00",
    "group": "radar",
    "ai": true,
    "count": 100
@@ -65,7 +65,7 @@
    "type": "rss",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T01:07:42+08:00",
+   "last_sync": "2026-07-30T01:42:35+08:00",
    "group": "radar",
    "ai": true,
    "count": 86
@@ -76,7 +76,7 @@
    "type": "hn-algolia",
    "home": "https://news.ycombinator.com/",
    "status": "ok",
-   "last_sync": "2026-07-30T01:07:42+08:00",
+   "last_sync": "2026-07-30T01:42:35+08:00",
    "group": "radar",
    "ai": true,
    "count": 26
@@ -87,7 +87,7 @@
    "type": "qisi-list",
    "home": "https://news.miracleplus.com/",
    "status": "ok",
-   "last_sync": "2026-07-30T01:07:42+08:00",
+   "last_sync": "2026-07-30T01:42:35+08:00",
    "group": "radar",
    "ai": true,
    "count": 24
@@ -775,6 +775,23 @@
    "concepts_full": true
   },
   {
+   "id": "8e67caa3b283",
+   "title": "Superlogical – Mitchell Hashimoto",
+   "url": "https://mitchellh.com/writing/superlogical",
+   "summary": "",
+   "category": "",
+   "tags": [],
+   "date": "2026-07-29",
+   "source": "hn",
+   "source_name": "Hacker News",
+   "author": "Hacker News",
+   "hn": "https://news.ycombinator.com/item?id=49099015",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-30"
+   }
+  },
+  {
    "id": "83e3e103f6fe",
    "title": "美团，正在退到AI身后",
    "url": "https://www.tmtpost.com/8082998.html",
@@ -984,6 +1001,23 @@
    "ai": {
     "keep": false,
     "at": "2026-07-29"
+   }
+  },
+  {
+   "id": "5add1a91f28e",
+   "title": "Amiga Graphics Archive",
+   "url": "https://amiga.lychesis.net/index.html",
+   "summary": "",
+   "category": "",
+   "tags": [],
+   "date": "2026-07-29",
+   "source": "hn",
+   "source_name": "Hacker News",
+   "author": "Hacker News",
+   "hn": "https://news.ycombinator.com/item?id=49095511",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-30"
    }
   },
   {
@@ -1237,6 +1271,23 @@
    "title_zh": "User Interfaces of the Demo Scene",
    "concepts": [],
    "concepts_full": true
+  },
+  {
+   "id": "3e956dbc749f",
+   "title": "Superlogical",
+   "url": "https://www.superlogical.com/",
+   "summary": "https://mitchellh.com/writing/superlogical",
+   "category": "",
+   "tags": [],
+   "date": "2026-07-29",
+   "source": "hn",
+   "source_name": "Hacker News",
+   "author": "Hacker News",
+   "hn": "https://news.ycombinator.com/item?id=49098965",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-30"
+   }
   },
   {
    "id": "3a1a36a4ad24",
@@ -8176,7 +8227,7 @@
    "id": "86a34b395b91",
    "title": "AI 员工阵容新增「GEO 优化师」：AI 时代的 SEO",
    "url": "https://juzibot.com/workforce/geo.html",
-   "summary": "专管品牌在豆包、DeepSeek 等 AI 答案里的位置：GEO 监测诊断、内容生产、渠道发布、公域承接，再把意向沉到企业微信接着跟进。",
+   "summary": "专管品牌在豆包、DeepSeek 等 AI 答案里的位置：GEO 监测诊断、内容生产、渠道发布、公域承接，再把意向沉到自有阵地接着跟进。",
    "category": "AI 员工",
    "tags": [],
    "date": "2026-06-27",
@@ -8602,7 +8653,7 @@
    "id": "25f60418af43",
    "title": "句子互动新版官网上线：五套产品同场亮相",
    "url": "https://juzibot.com/",
-   "summary": "秒回、秒懂、守护、参谋、智造五套产品一次讲清，每套各管数字员工的一个环节，从接待、转化到交付都落在微信与企业微信里。",
+   "summary": "秒回、秒懂、守护、参谋、智造五套产品一次讲清，每套各管数字员工的一个环节，从接待、转化到交付都落在微信生态里。",
    "category": "官网",
    "tags": [],
    "date": "2026-05-18",

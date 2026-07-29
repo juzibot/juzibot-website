@@ -29,7 +29,12 @@
   .cp-def{font-size:15.5px;line-height:1.95;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:14px;padding:18px 22px;margin-bottom:26px}
   .cp-sec{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--ink-2);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
   .cp-sec i{color:var(--blue);font-size:12px}
-  .cp-item{display:flex;align-items:baseline;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-item{display:flex;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-meta{display:flex;align-items:baseline;gap:8px;flex:0 0 auto}
+  .cp-body{min-width:0}
+  .cp-ev{margin:4px 0 0;font-size:12.5px;line-height:1.65;color:var(--ink-2);overflow-wrap:anywhere}
+  .cp-ev mark{background:rgba(37,99,235,.12);color:var(--blue);font-weight:650;padding:0 2px;border-radius:3px}
+  @media(max-width:560px){.cp-item{flex-direction:column;gap:4px}}
   .cp-item time{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex:0 0 auto}
   .cp-item .src{font-size:11px;font-weight:750;color:var(--sc,var(--blue));flex:0 0 auto}
   .cp-item a.t{font-size:14px;font-weight:650;color:var(--ink);line-height:1.5;overflow-wrap:anywhere}
@@ -67,13 +72,13 @@
     <p class="cp-alias"><b>也叫</b> Model Benchmark / AI基准测试</p>
     <div class="cp-def">模型基准测试是通过标准化任务和数据集评估AI模型性能的方法，它提供客观比较不同模型能力的指标，对企业意味着在选型和部署AI模型时有可靠依据，帮助优化投资决策和应用效果。</div>
     <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（7）</div>
-      <div class="cp-item"><time datetime="2026-07-29">2026-07-29</time><span class="src s-industry">行业动态</span><a class="t" href="../p/d5500493b419.html">超越OpenAI、Anthropic！国产AI安全智能体杀进全球前四、国内第一</a></div>
-      <div class="cp-item"><time datetime="2026-07-26">2026-07-26</time><span class="src s-qisi">齐思</span><a class="t" href="../p/cdbdce1a6c31.html">齐思头条2026/07/26「NVIDIA 发起行业联名呼吁保留开源权重构建“强开放生态”、Ling‑3.0‑flash 124B MoE（激活5.1B、原生256K上下文）发布、Anthropic 推出 Claude Opus 5 并在多项基准显著提升」</a></div>
-      <div class="cp-item"><time datetime="2026-07-25">2026-07-25</time><span class="src s-industry">行业动态</span><a class="t" href="../p/9d3cc9b4b37e.html">半价干翻Fable 5？Opus 5实测炸场，网友：差点从椅子上摔下来</a></div>
-      <div class="cp-item"><time datetime="2026-07-25">2026-07-25</time><span class="src s-industry">行业动态</span><a class="t" href="../p/4c0121a5d10e.html">早报｜Claude Opus 5发布,半价追平Fable 5/小鹏人形机器人开启小批量试产/曝英伟达将上调显卡价格</a></div>
-      <div class="cp-item"><time datetime="2026-07-24">2026-07-24</time><span class="src s-industry">行业动态</span><a class="t" href="../p/929fed9c5c2c.html">腾讯混元组织架构再升级，合并大语言模型和多模态团队，加速模型研发</a></div>
-      <div class="cp-item"><time datetime="2026-07-21">2026-07-21</time><span class="src s-hn">Hacker News</span><a class="t" href="../p/162a22c492bc.html">Kimi K3与Fable竞争力相当；Kimi K3与Fable组合达到当前最佳水平</a></div>
-      <div class="cp-item"><time datetime="2026-07-21">2026-07-21</time><span class="src s-voices">大咖观点</span><a class="t" href="../p/009d8ac6eee7.html">与Claude Code团队的Cat和Thariq的炉边谈话</a></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-29">2026-07-29</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/d5500493b419.html">超越OpenAI、Anthropic！国产AI安全智能体杀进全球前四、国内第一</a></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-26">2026-07-26</time><span class="src s-qisi">齐思</span></div><div class="cp-body"><a class="t" href="../p/cdbdce1a6c31.html">齐思头条2026/07/26「NVIDIA 发起行业联名呼吁保留开源权重构建“强开放生态”、Ling‑3.0‑flash 124B MoE（激活5.1B、原生256K上下文）发布、Anthropic 推出 Claude Opus 5 并在多项基准显著提升」</a><p class="cp-ev">Twitter 行业联名呼吁“开放权重/强开放生态”（NVIDIA 等企业与社区领袖） ：NVIDIA 发起并广泛传播的行业联名信得到 Microsoft、Palantir、ServiceNow、Box、Replit、Crowdstrike、Dell 等多家机…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-25">2026-07-25</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/9d3cc9b4b37e.html">半价干翻Fable 5？Opus 5实测炸场，网友：差点从椅子上摔下来</a><p class="cp-ev">模型变强，Claude Code系统提示词都精简了…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-25">2026-07-25</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/4c0121a5d10e.html">早报｜Claude Opus 5发布,半价追平Fable 5/小鹏人形机器人开启小批量试产/曝英伟达将上调显卡价格</a><p class="cp-ev">· 菲尔兹奖得主 Jacob Tsimerman 将加入 OpenAI 安全部门 · 腾讯 WXG 员工因泄露敏感信息被辞退，年末激励约 317 万元 · Patreon 裁减 20% 员工，CEO 强调重组并非因为 AI 替代人类 #欢迎关注爱范儿官方微信公…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-24">2026-07-24</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/929fed9c5c2c.html">腾讯混元组织架构再升级，合并大语言模型和多模态团队，加速模型研发</a><p class="cp-ev">7 月 23 日，腾讯宣布混元多模态模型部门与大语言模型部门合并，成立基础模型部，统一由腾讯首席 AI 科学家姚顺雨管理，以进一步提升模型研发和协同效率，探索全模态模型的智能上限。 以大语言模型为基础，腾讯混元构建了图像、视频、语音、3D 生成模型等完整的模型…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-21">2026-07-21</time><span class="src s-hn">Hacker News</span></div><div class="cp-body"><a class="t" href="../p/162a22c492bc.html">Kimi K3与Fable竞争力相当；Kimi K3与Fable组合达到当前最佳水平</a><p class="cp-ev">Also: Kimi K3: second only to Fable 5 on AA-Briefcase https://artificialanalysis.ai/articles/kimi-k3-agentic-knowl...…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-21">2026-07-21</time><span class="src s-voices">大咖观点</span></div><div class="cp-body"><a class="t" href="../p/009d8ac6eee7.html">与Claude Code团队的Cat和Thariq的炉边谈话</a><p class="cp-ev">Earlier this month I hosted a fireside chat session at the AI Engineer World&#x27;s Fair with Cat Wu and Thariq Shihipar from Anthropic…</p></div></div>
     <div class="cp-sec"><i class="fa-solid fa-diagram-project"></i>相关概念</div>
     <div class="cp-rel"><a href="long-context-window.html"><i class="fa-solid fa-diagram-project"></i>长上下文窗口</a><a href="multi-agent-orchestration.html"><i class="fa-solid fa-diagram-project"></i>多智能体编排</a><a href="open-source-model.html"><i class="fa-solid fa-diagram-project"></i>开源模型</a><a href="ai-code-security.html"><i class="fa-solid fa-diagram-project"></i>AI代码安全</a><a href="ai-delivery.html"><i class="fa-solid fa-diagram-project"></i>AI交付</a><a href="ai-swarm-security.html"><i class="fa-solid fa-diagram-project"></i>AI群体安全</a><a href="closed-source-model.html"><i class="fa-solid fa-diagram-project"></i>闭源模型</a><a href="coding-agent.html"><i class="fa-solid fa-diagram-project"></i>编码代理</a></div>
     <div class="cp-actions">

@@ -29,7 +29,12 @@
   .cp-def{font-size:15.5px;line-height:1.95;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:14px;padding:18px 22px;margin-bottom:26px}
   .cp-sec{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--ink-2);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
   .cp-sec i{color:var(--blue);font-size:12px}
-  .cp-item{display:flex;align-items:baseline;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-item{display:flex;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-meta{display:flex;align-items:baseline;gap:8px;flex:0 0 auto}
+  .cp-body{min-width:0}
+  .cp-ev{margin:4px 0 0;font-size:12.5px;line-height:1.65;color:var(--ink-2);overflow-wrap:anywhere}
+  .cp-ev mark{background:rgba(37,99,235,.12);color:var(--blue);font-weight:650;padding:0 2px;border-radius:3px}
+  @media(max-width:560px){.cp-item{flex-direction:column;gap:4px}}
   .cp-item time{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex:0 0 auto}
   .cp-item .src{font-size:11px;font-weight:750;color:var(--sc,var(--blue));flex:0 0 auto}
   .cp-item a.t{font-size:14px;font-weight:650;color:var(--ink);line-height:1.5;overflow-wrap:anywhere}
@@ -67,8 +72,8 @@
     <p class="cp-alias"><b>也叫</b> 软件即服务产品 / SaaS应用 / Software as a Service</p>
     <div class="cp-def">一种通过互联网以订阅方式提供软件服务的商业模式。企业无需自行开发和维护复杂的IT系统，即可快速获得最新功能，将固定成本转化为可变运营成本，从而更灵活地响应业务需求。</div>
     <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（2）</div>
-      <div class="cp-item"><time datetime="2020-06-25">2020-06-25</time><span class="src s-rui-blog">博客精选</span><a class="t" href="../p/f897290fa419.html">一位90后女CEO的创业信条：相信时间看得见</a></div>
-      <div class="cp-item"><time datetime="2019-02-03">2019-02-03</time><span class="src s-rui-blog">博客精选</span><a class="t" href="../p/447eaeb3b5e7.html">写在2018年的最后一天</a></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2020-06-25">2020-06-25</time><span class="src s-rui-blog">博客精选</span></div><div class="cp-body"><a class="t" href="../p/f897290fa419.html">一位90后女CEO的创业信条：相信时间看得见</a><p class="cp-ev">作为一个90后连续创业者，李佳芮始终坚持去做一件长期有价值的事情，并且相信，只要长期有价值就要果断去做，然后慢慢在后面等着收果。 和句子互动创始人&amp;CEO李佳芮的第一次见面，是在两年前百度的一次活动上，当时她作为百度AI加速器的成员在会上做了演讲；…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2019-02-03">2019-02-03</time><span class="src s-rui-blog">博客精选</span></div><div class="cp-body"><a class="t" href="../p/447eaeb3b5e7.html">写在2018年的最后一天</a><p class="cp-ev">2018年的最后一天，我来了美国，倒时差，不熟悉环境，加上YC的压力，拖到现在终于启动了这篇《写在2018年的最后一天》。明天应该就是国内的春节了，总应该仪式感一点的在春节之前完成这篇2018年的最后一天。 新的一年，唯有对前一年的回顾总结，才能有新的一年的展…</p></div></div>
     <div class="cp-sec"><i class="fa-solid fa-diagram-project"></i>相关概念</div>
     <div class="cp-rel"><a href="chatbot.html"><i class="fa-solid fa-diagram-project"></i>聊天机器人</a><a href="open-source-model.html"><i class="fa-solid fa-diagram-project"></i>开源模型</a><a href="scrm.html"><i class="fa-solid fa-diagram-project"></i>SCRM</a></div>
     <div class="cp-actions">

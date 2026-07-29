@@ -29,7 +29,12 @@
   .cp-def{font-size:15.5px;line-height:1.95;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:14px;padding:18px 22px;margin-bottom:26px}
   .cp-sec{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--ink-2);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
   .cp-sec i{color:var(--blue);font-size:12px}
-  .cp-item{display:flex;align-items:baseline;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-item{display:flex;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-meta{display:flex;align-items:baseline;gap:8px;flex:0 0 auto}
+  .cp-body{min-width:0}
+  .cp-ev{margin:4px 0 0;font-size:12.5px;line-height:1.65;color:var(--ink-2);overflow-wrap:anywhere}
+  .cp-ev mark{background:rgba(37,99,235,.12);color:var(--blue);font-weight:650;padding:0 2px;border-radius:3px}
+  @media(max-width:560px){.cp-item{flex-direction:column;gap:4px}}
   .cp-item time{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex:0 0 auto}
   .cp-item .src{font-size:11px;font-weight:750;color:var(--sc,var(--blue));flex:0 0 auto}
   .cp-item a.t{font-size:14px;font-weight:650;color:var(--ink);line-height:1.5;overflow-wrap:anywhere}
@@ -67,8 +72,8 @@
     <p class="cp-alias"><b>也叫</b> 模型就绪数据 / 开箱即用数据</p>
     <div class="cp-def">经过清洗、标注和结构化，可直接用于AI模型训练的数据，无需二次加工。对企业来说，这能大幅缩短数据准备时间，加速模型迭代，尤其在具身智能等数据稀缺领域，是提升AI落地效率的关键。</div>
     <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（2）</div>
-      <div class="cp-item"><time datetime="2026-07-29">2026-07-29</time><span class="src s-industry">行业动态</span><a class="t" href="../p/cb61eb1c5387.html">OceanBase回应融资报道：全力投入AI数据创新，与资本市场保持开放沟通</a></div>
-      <div class="cp-item"><time datetime="2026-07-22">2026-07-22</time><span class="src s-industry">行业动态</span><a class="t" href="../p/ced4f41a8349.html">WAIC深度观察：具身数据，进入「开箱即用」时代</a></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-29">2026-07-29</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/cb61eb1c5387.html">OceanBase回应融资报道：全力投入AI数据创新，与资本市场保持开放沟通</a></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-22">2026-07-22</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/ced4f41a8349.html">WAIC深度观察：具身数据，进入「开箱即用」时代</a><p class="cp-ev">真正的「<mark>Model-Ready Data</mark>」，高精度、多模态、多样性缺一不可。</p></div></div>
     <div class="cp-sec"><i class="fa-solid fa-diagram-project"></i>相关概念</div>
     <div class="cp-rel"><a href="ai-delivery.html"><i class="fa-solid fa-diagram-project"></i>AI交付</a><a href="computing-infrastructure.html"><i class="fa-solid fa-diagram-project"></i>算力基础设施</a><a href="embodied-ai.html"><i class="fa-solid fa-diagram-project"></i>具身智能</a></div>
     <div class="cp-actions">

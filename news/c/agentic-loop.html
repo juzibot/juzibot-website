@@ -29,7 +29,12 @@
   .cp-def{font-size:15.5px;line-height:1.95;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:14px;padding:18px 22px;margin-bottom:26px}
   .cp-sec{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--ink-2);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
   .cp-sec i{color:var(--blue);font-size:12px}
-  .cp-item{display:flex;align-items:baseline;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-item{display:flex;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-meta{display:flex;align-items:baseline;gap:8px;flex:0 0 auto}
+  .cp-body{min-width:0}
+  .cp-ev{margin:4px 0 0;font-size:12.5px;line-height:1.65;color:var(--ink-2);overflow-wrap:anywhere}
+  .cp-ev mark{background:rgba(37,99,235,.12);color:var(--blue);font-weight:650;padding:0 2px;border-radius:3px}
+  @media(max-width:560px){.cp-item{flex-direction:column;gap:4px}}
   .cp-item time{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex:0 0 auto}
   .cp-item .src{font-size:11px;font-weight:750;color:var(--sc,var(--blue));flex:0 0 auto}
   .cp-item a.t{font-size:14px;font-weight:650;color:var(--ink);line-height:1.5;overflow-wrap:anywhere}
@@ -67,9 +72,9 @@
     <p class="cp-alias"><b>也叫</b> agentic loop / 设计循环</p>
     <div class="cp-def">指AI智能体重复执行任务周期直到达成目标的模式，通过迭代优化提升输出质量，减少人工干预。企业应用此模式可自动化复杂流程，如代码审查或数据分析，提高效率并降低错误率。</div>
     <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（3）</div>
-      <div class="cp-item"><time datetime="2026-07-24">2026-07-24</time><span class="src s-industry">行业动态</span><a class="t" href="../p/7c958178c9a5.html">对话曾鸣教授：AI时代，企业竞争的关键是构建智能复利，让AI真正进入业务流程</a></div>
-      <div class="cp-item"><time datetime="2026-07-22">2026-07-22</time><span class="src s-qisi">齐思</span><a class="t" href="../p/9a46dc564eea.html">商汤发布SenseNova两大旗舰模型，推动多模态进入新阶段</a></div>
-      <div class="cp-item"><time datetime="2026-07-06">2026-07-06</time><span class="src s-voices">大咖观点</span><a class="t" href="../p/195d0bebc5a4.html">从零开始玩转循环 (Getting started with loops)</a></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-24">2026-07-24</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/7c958178c9a5.html">对话曾鸣教授：AI时代，企业竞争的关键是构建智能复利，让AI真正进入业务流程</a><p class="cp-ev">7月17日，2026世界人工智能大会在上海开幕。作为36氪连续第三年深入WAIC现场的重要内容窗口，「氪话未来」直播间也在大会首日同步开启现场对话。曾鸣教授在WAIC现场接受36氪「氪话未来」特邀专访，围绕AI时代企业增长、组织变革、智能复利、AI原生业务以及…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-22">2026-07-22</time><span class="src s-qisi">齐思</span></div><div class="cp-body"><a class="t" href="../p/9a46dc564eea.html">商汤发布SenseNova两大旗舰模型，推动多模态进入新阶段</a><p class="cp-ev">商汤科技在2026年WAIC大会上发布了SenseNova U1 Pro和SenseNova-Vision两大模型，推动多模态智能的发展。U1 Pro通过NEO-unify架构实现理解、生成和行动的统一，支持复杂任务的高效交付，推动视觉AI向系统化交付发展。S…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-06">2026-07-06</time><span class="src s-voices">大咖观点</span></div><div class="cp-body"><a class="t" href="../p/195d0bebc5a4.html">从零开始玩转循环 (Getting started with loops)</a><p class="cp-ev">最近大家都在热议“<mark>设计循环</mark> (designing loops)”，而不是简单地给你的写代码的 AI 智能体 (AI Agent) 下提示词。</p></div></div>
     <div class="cp-sec"><i class="fa-solid fa-diagram-project"></i>相关概念</div>
     <div class="cp-rel"><a href="ai-native-enterprise.html"><i class="fa-solid fa-diagram-project"></i>AI原生企业</a><a href="autonomous-agents.html"><i class="fa-solid fa-diagram-project"></i>自主代理</a><a href="business-cycle.html"><i class="fa-solid fa-diagram-project"></i>业务循环</a><a href="mixture-of-transformer.html"><i class="fa-solid fa-diagram-project"></i>Mixture-of-Transformer</a><a href="neo-unify-architecture.html"><i class="fa-solid fa-diagram-project"></i>NEO-unify架构</a><a href="prompt-engineering.html"><i class="fa-solid fa-diagram-project"></i>提示工程</a><a href="system-prompt.html"><i class="fa-solid fa-diagram-project"></i>系统提示词</a></div>
     <div class="cp-actions">

@@ -29,7 +29,12 @@
   .cp-def{font-size:15.5px;line-height:1.95;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:14px;padding:18px 22px;margin-bottom:26px}
   .cp-sec{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--ink-2);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
   .cp-sec i{color:var(--blue);font-size:12px}
-  .cp-item{display:flex;align-items:baseline;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-item{display:flex;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-meta{display:flex;align-items:baseline;gap:8px;flex:0 0 auto}
+  .cp-body{min-width:0}
+  .cp-ev{margin:4px 0 0;font-size:12.5px;line-height:1.65;color:var(--ink-2);overflow-wrap:anywhere}
+  .cp-ev mark{background:rgba(37,99,235,.12);color:var(--blue);font-weight:650;padding:0 2px;border-radius:3px}
+  @media(max-width:560px){.cp-item{flex-direction:column;gap:4px}}
   .cp-item time{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex:0 0 auto}
   .cp-item .src{font-size:11px;font-weight:750;color:var(--sc,var(--blue));flex:0 0 auto}
   .cp-item a.t{font-size:14px;font-weight:650;color:var(--ink);line-height:1.5;overflow-wrap:anywhere}
@@ -67,9 +72,9 @@
     <p class="cp-alias"><b>也叫</b> Vibe Coding / 感觉编程</p>
     <div class="cp-def">凭感觉编程是一种依赖直觉和即时反馈的软件开发方式，开发者跳过详细规划和测试，快速迭代代码。对业务而言，它可能加速原型开发，但会增加技术债务和维护成本，适合探索性项目，不适合关键系统。在AI辅助编码工具普及的背景下，凭感觉编程让开发者更专注于创意表达，但企业需权衡速度与质量，避免长期风险。</div>
     <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（3）</div>
-      <div class="cp-item"><time datetime="2026-05-17">2026-05-17</time><span class="src s-voices">大咖观点</span><a class="t" href="../p/1c8592fbafab.html">为什么我不“凭感觉编程”</a></div>
-      <div class="cp-item"><time datetime="2025-12-10">2025-12-10</time><span class="src s-voices">大咖观点</span><a class="t" href="../p/84a03fe3e0b8.html">用后见之明自动评分十年旧的 Hacker News 讨论</a></div>
-      <div class="cp-item"><time datetime="2025-04-27">2025-04-27</time><span class="src s-voices">大咖观点</span><a class="t" href="../p/d56d55ab7d15.html">Vibe coding MenuGen</a></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-05-17">2026-05-17</time><span class="src s-voices">大咖观点</span></div><div class="cp-body"><a class="t" href="../p/1c8592fbafab.html">为什么我不“凭感觉编程”</a><p class="cp-ev">这篇文章从成本、经验、抽象、数据、摩擦、责任和创作乐趣等角度，解释作者为什么始终无法真正接受 vibe coding。…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2025-12-10">2025-12-10</time><span class="src s-voices">大咖观点</span></div><div class="cp-body"><a class="t" href="../p/84a03fe3e0b8.html">用后见之明自动评分十年旧的 Hacker News 讨论</a><p class="cp-ev">A vibe coding thought exercise on what it might look like for LLMs to scour human historical data at scale and in retrospect.…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2025-04-27">2025-04-27</time><span class="src s-voices">大咖观点</span></div><div class="cp-body"><a class="t" href="../p/d56d55ab7d15.html">Vibe coding MenuGen</a><p class="cp-ev">Work log of vibe coding menugen app…</p></div></div>
     <div class="cp-sec"><i class="fa-solid fa-diagram-project"></i>相关概念</div>
     <div class="cp-rel"><a href="large-language-model.html"><i class="fa-solid fa-diagram-project"></i>大型语言模型</a></div>
     <div class="cp-actions">

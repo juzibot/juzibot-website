@@ -29,7 +29,12 @@
   .cp-def{font-size:15.5px;line-height:1.95;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:14px;padding:18px 22px;margin-bottom:26px}
   .cp-sec{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--ink-2);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
   .cp-sec i{color:var(--blue);font-size:12px}
-  .cp-item{display:flex;align-items:baseline;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-item{display:flex;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-meta{display:flex;align-items:baseline;gap:8px;flex:0 0 auto}
+  .cp-body{min-width:0}
+  .cp-ev{margin:4px 0 0;font-size:12.5px;line-height:1.65;color:var(--ink-2);overflow-wrap:anywhere}
+  .cp-ev mark{background:rgba(37,99,235,.12);color:var(--blue);font-weight:650;padding:0 2px;border-radius:3px}
+  @media(max-width:560px){.cp-item{flex-direction:column;gap:4px}}
   .cp-item time{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex:0 0 auto}
   .cp-item .src{font-size:11px;font-weight:750;color:var(--sc,var(--blue));flex:0 0 auto}
   .cp-item a.t{font-size:14px;font-weight:650;color:var(--ink);line-height:1.5;overflow-wrap:anywhere}
@@ -67,8 +72,8 @@
     <p class="cp-alias"><b>也叫</b> Open Source Strategy / 开源战略</p>
     <div class="cp-def">开源策略是企业将AI模型或软件以开放源代码形式发布，通过社区协作加速创新，同时构建生态和商业模式。例如，通过提供专业服务或增值功能盈利，扩大市场影响力。</div>
     <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（2）</div>
-      <div class="cp-item"><time datetime="2026-07-20">2026-07-20</time><span class="src s-voices">大咖观点</span><a class="t" href="../p/b5d7973c852a.html">引用Sam Altman</a></div>
-      <div class="cp-item"><time datetime="2026-06-22">2026-06-22</time><span class="src s-rui-blog">博客精选</span><a class="t" href="../p/97755488d8f1.html">公司里 GitHub 讲得最好的，是个高三刚毕业的实习生</a></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-20">2026-07-20</time><span class="src s-voices">大咖观点</span></div><div class="cp-body"><a class="t" href="../p/b5d7973c852a.html">引用Sam Altman</a><p class="cp-ev">我们围绕<mark>开源战略</mark>进行了深入讨论。</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-06-22">2026-06-22</time><span class="src s-rui-blog">博客精选</span></div><div class="cp-body"><a class="t" href="../p/97755488d8f1.html">公司里 GitHub 讲得最好的，是个高三刚毕业的实习生</a><p class="cp-ev">今天管培生例会，给全公司讲 GitHub 的是郭骐畅——高三刚毕业，来公司不到一个月。两周前他连 PR 是什么都不知道，跟 Claude 学会发 PR，今天就站上去讲了一堂。这篇把他讲的内容整理出来：不教命令行，只解决看懂项目、基本操作、开源生态三件事。Git…</p></div></div>
     <div class="cp-sec"><i class="fa-solid fa-diagram-project"></i>相关概念</div>
     <div class="cp-rel"><a href="ai-native-enterprise.html"><i class="fa-solid fa-diagram-project"></i>AI原生企业</a></div>
     <div class="cp-actions">

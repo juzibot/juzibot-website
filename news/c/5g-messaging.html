@@ -29,7 +29,12 @@
   .cp-def{font-size:15.5px;line-height:1.95;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:14px;padding:18px 22px;margin-bottom:26px}
   .cp-sec{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--ink-2);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
   .cp-sec i{color:var(--blue);font-size:12px}
-  .cp-item{display:flex;align-items:baseline;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-item{display:flex;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-meta{display:flex;align-items:baseline;gap:8px;flex:0 0 auto}
+  .cp-body{min-width:0}
+  .cp-ev{margin:4px 0 0;font-size:12.5px;line-height:1.65;color:var(--ink-2);overflow-wrap:anywhere}
+  .cp-ev mark{background:rgba(37,99,235,.12);color:var(--blue);font-weight:650;padding:0 2px;border-radius:3px}
+  @media(max-width:560px){.cp-item{flex-direction:column;gap:4px}}
   .cp-item time{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex:0 0 auto}
   .cp-item .src{font-size:11px;font-weight:750;color:var(--sc,var(--blue));flex:0 0 auto}
   .cp-item a.t{font-size:14px;font-weight:650;color:var(--ink);line-height:1.5;overflow-wrap:anywhere}
@@ -67,9 +72,9 @@
     <p class="cp-alias"><b>也叫</b> 5G Messaging / RCS消息</p>
     <div class="cp-def">5G消息是基于5G网络的富媒体消息服务，支持图文、视频、交互卡片等多种形式，无需安装APP即可使用。它升级了传统短信，为企业提供更丰富的营销、客服和通知渠道，提升用户体验和互动效率。</div>
     <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（3）</div>
-      <div class="cp-item"><time datetime="2021-12-16">2021-12-16</time><span class="src s-rui-blog">博客精选</span><a class="t" href="../p/9fc1477a5efd.html">入局5G消息！句子互动与来也、亚信、东信北邮等入驻硬核桃5G开发者社区</a></div>
-      <div class="cp-item"><time datetime="2021-09-19">2021-09-19</time><span class="src s-rui-blog">博客精选</span><a class="t" href="../p/984994474692.html">中关村U30榜单发布，句子互动CEO李佳芮入选</a></div>
-      <div class="cp-item"><time datetime="2021-07-30">2021-07-30</time><span class="src s-rui-blog">博客精选</span><a class="t" href="../p/db875b6c755b.html">Wechaty 社区 &amp; 硬核桃社区：大学生玩转5G消息？So Easy！</a></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2021-12-16">2021-12-16</time><span class="src s-rui-blog">博客精选</span></div><div class="cp-body"><a class="t" href="../p/9fc1477a5efd.html">入局5G消息！句子互动与来也、亚信、东信北邮等入驻硬核桃5G开发者社区</a><p class="cp-ev"><mark>5G消息</mark>商用即将开启，越来越多产业链企业加入布局。</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2021-09-19">2021-09-19</time><span class="src s-rui-blog">博客精选</span></div><div class="cp-body"><a class="t" href="../p/984994474692.html">中关村U30榜单发布，句子互动CEO李佳芮入选</a><p class="cp-ev">9月24日，在2021中关村论坛平行论坛、开源创新发展论坛上，创青春-中关村U30发布2021年度优胜者榜单，句子互动CEO李佳芮入围榜单。 创青春-中关村U30由中国科协科学技术传播中心，北京市科学技术委员会、中关村科技园区管理委员会，共青团北京市委员会，北…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2021-07-30">2021-07-30</time><span class="src s-rui-blog">博客精选</span></div><div class="cp-body"><a class="t" href="../p/db875b6c755b.html">Wechaty 社区 &amp; 硬核桃社区：大学生玩转5G消息？So Easy！</a><p class="cp-ev">” 大二学生张瑞宁和邵琦在硬核桃社区的环境中成功发出了他们的第一条<mark>5G消息</mark>。</p></div></div>
     <div class="cp-sec"><i class="fa-solid fa-diagram-project"></i>相关概念</div>
     <div class="cp-rel"><a href="chatbot.html"><i class="fa-solid fa-diagram-project"></i>聊天机器人</a><a href="private-domain-operations.html"><i class="fa-solid fa-diagram-project"></i>私域运营</a></div>
     <div class="cp-actions">

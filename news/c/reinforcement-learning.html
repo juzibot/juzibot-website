@@ -29,7 +29,12 @@
   .cp-def{font-size:15.5px;line-height:1.95;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:14px;padding:18px 22px;margin-bottom:26px}
   .cp-sec{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--ink-2);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
   .cp-sec i{color:var(--blue);font-size:12px}
-  .cp-item{display:flex;align-items:baseline;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-item{display:flex;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-meta{display:flex;align-items:baseline;gap:8px;flex:0 0 auto}
+  .cp-body{min-width:0}
+  .cp-ev{margin:4px 0 0;font-size:12.5px;line-height:1.65;color:var(--ink-2);overflow-wrap:anywhere}
+  .cp-ev mark{background:rgba(37,99,235,.12);color:var(--blue);font-weight:650;padding:0 2px;border-radius:3px}
+  @media(max-width:560px){.cp-item{flex-direction:column;gap:4px}}
   .cp-item time{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex:0 0 auto}
   .cp-item .src{font-size:11px;font-weight:750;color:var(--sc,var(--blue));flex:0 0 auto}
   .cp-item a.t{font-size:14px;font-weight:650;color:var(--ink);line-height:1.5;overflow-wrap:anywhere}
@@ -67,10 +72,10 @@
     <p class="cp-alias"><b>也叫</b> Reinforcement Learning / RL</p>
     <div class="cp-def">一种机器学习方法，通过奖励机制训练模型做出最优决策，适用于动态环境。企业应用强化学习优化推荐系统、游戏AI等，实现自适应和高效决策。</div>
     <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（4）</div>
-      <div class="cp-item"><time datetime="2026-07-29">2026-07-29</time><span class="src s-qisi">齐思</span><a class="t" href="../p/4cb3cca2a335.html">齐思洞见2026/07/29「Kimi K3用“领域×推理努力”九专家、token预算化RL与多教师在线策略蒸馏（MOPD）整合2.8T MoE；$500低成本RL微调使9B模型在特定任务超越顶级API；StateAct以“state‑over‑pixels”显著提升智能体成功率并降低成本」</a></div>
-      <div class="cp-item"><time datetime="2026-07-24">2026-07-24</time><span class="src s-industry">行业动态</span><a class="t" href="../p/25387e1d931c.html">DeepSeek不是理想主义公司，它只是把现实服务于理想</a></div>
-      <div class="cp-item"><time datetime="2026-06-30">2026-06-30</time><span class="src s-voices">大咖观点</span><a class="t" href="../p/fe39f43c087c.html">《从头构建推理模型》已发布</a></div>
-      <div class="cp-item"><time datetime="2025-09-09">2025-09-09</time><span class="src s-voices">大咖观点</span><a class="t" href="../p/1293596c82dd.html">Jakub 和 Szymon</a></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-29">2026-07-29</time><span class="src s-qisi">齐思</span></div><div class="cp-body"><a class="t" href="../p/4cb3cca2a335.html">齐思洞见2026/07/29「Kimi K3用“领域×推理努力”九专家、token预算化RL与多教师在线策略蒸馏（MOPD）整合2.8T MoE；$500低成本RL微调使9B模型在特定任务超越顶级API；StateAct以“state‑over‑pixels”显著提升智能体成功率并降低成本」</a><p class="cp-ev">…(19条) - Kimi K3通过多专家模型与在线蒸馏实现高效整合与性能优化 - 低成本 <mark>RL</mark> 微调让中等规模模型在特定任务上超越前沿 API - 微软通过编排系统提升 AI 安全自动化能力与模型替换灵活性 - 三步优化实现超快长上下文编码器在 CPU 上的高…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-24">2026-07-24</time><span class="src s-industry">行业动态</span></div><div class="cp-body"><a class="t" href="../p/25387e1d931c.html">DeepSeek不是理想主义公司，它只是把现实服务于理想</a><p class="cp-ev">DeepSeek的答案，不是只仰望星空，也不是只脚踏实地，而是用现实问题去支撑一个足够远的目标。 撰文 | 李嘉星 刘辰艺 编辑 | 张薇 头图来源 | DeepSeek 封面来源 | DeepSeek DeepSeek又一次被推到聚光灯下。 这家公司一度几乎…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-06-30">2026-06-30</time><span class="src s-voices">大咖观点</span></div><div class="cp-body"><a class="t" href="../p/fe39f43c087c.html">《从头构建推理模型》已发布</a><p class="cp-ev">…在一个小型的 Qwen3 base model 上实现现代推理技术，重点包括： 推理扩展 <mark>强化学习</mark> 蒸馏 《Build a Large Language Model (From Scratch)》侧重于构建和预训练一个 LLM，而本书则承接前作，讲述接下来的内…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2025-09-09">2025-09-09</time><span class="src s-voices">大咖观点</span></div><div class="cp-body"><a class="t" href="../p/1293596c82dd.html">Jakub 和 Szymon</a><p class="cp-ev">他们尚未获得足够的公众认可，但当普遍观点认为<mark>强化学习</mark>无法扩展时，他们决定将其作为基线进行扩展，以观察它在何处会失效，这最终促成了我们的 Dota 成果；他们构建了支撑我们许多科学发现的基础设施；领导了 GPT-4 的预训练工作；与 Ilya 和 Lukasz…</p></div></div>
     <div class="cp-sec"><i class="fa-solid fa-diagram-project"></i>相关概念</div>
     <div class="cp-rel"><a href="reasoning-model.html"><i class="fa-solid fa-diagram-project"></i>推理模型</a><a href="agent-capability.html"><i class="fa-solid fa-diagram-project"></i>Agent能力</a><a href="agi.html"><i class="fa-solid fa-diagram-project"></i>通用人工智能</a><a href="foundation-model.html"><i class="fa-solid fa-diagram-project"></i>基座模型</a><a href="model-distillation.html"><i class="fa-solid fa-diagram-project"></i>模型蒸馏</a><a href="moe-model.html"><i class="fa-solid fa-diagram-project"></i>MoE模型</a><a href="pre-training.html"><i class="fa-solid fa-diagram-project"></i>预训练</a><a href="scaling-laws.html"><i class="fa-solid fa-diagram-project"></i>缩放定律</a></div>
     <div class="cp-actions">

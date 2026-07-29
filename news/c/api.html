@@ -29,7 +29,12 @@
   .cp-def{font-size:15.5px;line-height:1.95;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:14px;padding:18px 22px;margin-bottom:26px}
   .cp-sec{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--ink-2);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
   .cp-sec i{color:var(--blue);font-size:12px}
-  .cp-item{display:flex;align-items:baseline;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-item{display:flex;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-meta{display:flex;align-items:baseline;gap:8px;flex:0 0 auto}
+  .cp-body{min-width:0}
+  .cp-ev{margin:4px 0 0;font-size:12.5px;line-height:1.65;color:var(--ink-2);overflow-wrap:anywhere}
+  .cp-ev mark{background:rgba(37,99,235,.12);color:var(--blue);font-weight:650;padding:0 2px;border-radius:3px}
+  @media(max-width:560px){.cp-item{flex-direction:column;gap:4px}}
   .cp-item time{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex:0 0 auto}
   .cp-item .src{font-size:11px;font-weight:750;color:var(--sc,var(--blue));flex:0 0 auto}
   .cp-item a.t{font-size:14px;font-weight:650;color:var(--ink);line-height:1.5;overflow-wrap:anywhere}
@@ -67,7 +72,7 @@
     <p class="cp-alias"><b>也叫</b> 应用程序接口 / Application Programming Interface</p>
     <div class="cp-def">API是应用程序之间通信的接口规范，允许不同软件系统交换数据和功能。企业通过API可以快速集成第三方服务，如支付、地图或AI能力，无需从头开发，从而加速产品迭代、降低开发成本，并构建更丰富的生态系统。在数字化转型中，API是连接孤岛、实现业务自动化的关键桥梁。</div>
     <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（1）</div>
-      <div class="cp-item"><time datetime="2020-04-17">2020-04-17</time><span class="src s-rui-blog">博客精选</span><a class="t" href="../p/ae0f2eaa2be8.html">微软在线技术峰会 · 李佳芮专访</a></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2020-04-17">2020-04-17</time><span class="src s-rui-blog">博客精选</span></div><div class="cp-body"><a class="t" href="../p/ae0f2eaa2be8.html">微软在线技术峰会 · 李佳芮专访</a><p class="cp-ev">在微软在线技术峰会上，分享了基于微软认知服务（QnAMaker、LUIS、Azure ML）搭建 Chatbot 的经验，Wechaty 开源社区的来历，以及对微软收购 GitHub 的看法。…</p></div></div>
     <div class="cp-sec"><i class="fa-solid fa-diagram-project"></i>相关概念</div>
     <div class="cp-rel"><a href="chatbot.html"><i class="fa-solid fa-diagram-project"></i>聊天机器人</a></div>
     <div class="cp-actions">

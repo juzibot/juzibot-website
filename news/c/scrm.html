@@ -29,7 +29,12 @@
   .cp-def{font-size:15.5px;line-height:1.95;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:14px;padding:18px 22px;margin-bottom:26px}
   .cp-sec{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--ink-2);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
   .cp-sec i{color:var(--blue);font-size:12px}
-  .cp-item{display:flex;align-items:baseline;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-item{display:flex;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-meta{display:flex;align-items:baseline;gap:8px;flex:0 0 auto}
+  .cp-body{min-width:0}
+  .cp-ev{margin:4px 0 0;font-size:12.5px;line-height:1.65;color:var(--ink-2);overflow-wrap:anywhere}
+  .cp-ev mark{background:rgba(37,99,235,.12);color:var(--blue);font-weight:650;padding:0 2px;border-radius:3px}
+  @media(max-width:560px){.cp-item{flex-direction:column;gap:4px}}
   .cp-item time{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex:0 0 auto}
   .cp-item .src{font-size:11px;font-weight:750;color:var(--sc,var(--blue));flex:0 0 auto}
   .cp-item a.t{font-size:14px;font-weight:650;color:var(--ink);line-height:1.5;overflow-wrap:anywhere}
@@ -67,11 +72,11 @@
     <p class="cp-alias"><b>也叫</b> Social CRM / 社交客户关系管理 / 社会化CRM</p>
     <div class="cp-def">SCRM是社交化客户关系管理，整合社交媒体和私域渠道，实现与客户的实时互动和精准营销。它帮助企业从单向广告转向双向对话，提升用户参与度和忠诚度，在微信等生态中尤其有效，驱动销售增长。</div>
     <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（5）</div>
-      <div class="cp-item"><time datetime="2021-12-25">2021-12-25</time><span class="src s-rui-blog">博客精选</span><a class="t" href="../p/0d9d55f5a217.html">社交裂变、私域运营…爆发式增长的SCRM行业——专访句子互动创始人李佳芮</a></div>
-      <div class="cp-item"><time datetime="2020-06-25">2020-06-25</time><span class="src s-rui-blog">博客精选</span><a class="t" href="../p/f897290fa419.html">一位90后女CEO的创业信条：相信时间看得见</a></div>
-      <div class="cp-item"><time datetime="2020-04-17">2020-04-17</time><span class="src s-rui-blog">博客精选</span><a class="t" href="../p/0a1ea2a22ead.html">Microsoft Online Tech Forum 微软在线技术峰会 - 李佳芮专访</a></div>
-      <div class="cp-item"><time datetime="2019-06-20">2019-06-20</time><span class="src s-rui-blog">博客精选</span><a class="t" href="../p/1038aa71a01e.html">微信封杀营销外挂：我对微信生态的思考</a></div>
-      <div class="cp-item"><time datetime="2019-03-01">2019-03-01</time><span class="src s-rui-blog">博客精选</span><a class="t" href="../p/f20eca54399c.html">基于微信生态的 Intercom | 我为什么做句客宝</a></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2021-12-25">2021-12-25</time><span class="src s-rui-blog">博客精选</span></div><div class="cp-body"><a class="t" href="../p/0d9d55f5a217.html">社交裂变、私域运营…爆发式增长的SCRM行业——专访句子互动创始人李佳芮</a><p class="cp-ev">本文为播客节目《产品相对论》对句子互动CEO李佳芮的专访逐字稿，阐述了句子互动视角下的<mark>SCRM</mark>行业、基于微信生态的企业营销趋势、企业数字化转型、私域流量运营等。</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2020-06-25">2020-06-25</time><span class="src s-rui-blog">博客精选</span></div><div class="cp-body"><a class="t" href="../p/f897290fa419.html">一位90后女CEO的创业信条：相信时间看得见</a><p class="cp-ev">作为一个90后连续创业者，李佳芮始终坚持去做一件长期有价值的事情，并且相信，只要长期有价值就要果断去做，然后慢慢在后面等着收果。 和句子互动创始人&amp;CEO李佳芮的第一次见面，是在两年前百度的一次活动上，当时她作为百度AI加速器的成员在会上做了演讲；…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2020-04-17">2020-04-17</time><span class="src s-rui-blog">博客精选</span></div><div class="cp-body"><a class="t" href="../p/0a1ea2a22ead.html">Microsoft Online Tech Forum 微软在线技术峰会 - 李佳芮专访</a><p class="cp-ev">看点 最贴心的、完善的程序员成长路径 一款智能对话机器人从0到1的搭建历程 全球人工智能技术的实践落地情况 内容 1. 自我介绍 大家好，我是李佳芮，句子互动的联合创始人 &amp; CEO，句子互动围绕微信生态为客户提供智能营销和销售服务，帮助企业引流并实现转化，客…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2019-06-20">2019-06-20</time><span class="src s-rui-blog">博客精选</span></div><div class="cp-body"><a class="t" href="../p/1038aa71a01e.html">微信封杀营销外挂：我对微信生态的思考</a><p class="cp-ev">前几天，微信安全中心发布了《关于打击”微信营销”外挂的公告》，明确指出了各种恶意营销行为： 严厉禁止：暴力加粉、群发消息、自动回复、虚拟定位、微信群推广、批量增删好友 官方发文后，很多客户和朋友跑来问我对这件事的看法，在这里我简单聊一聊。…</p></div></div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2019-03-01">2019-03-01</time><span class="src s-rui-blog">博客精选</span></div><div class="cp-body"><a class="t" href="../p/f20eca54399c.html">基于微信生态的 Intercom | 我为什么做句客宝</a><p class="cp-ev">我希望能像 Intercom 那样，帮助企业高效管理用户，快速获客并提高转化。 2016 年，我做了 舞哩 ，这是一个舞蹈视频教学平台，帮助热爱舞蹈的人快速找到一个渠道学习成品舞舞蹈。…</p></div></div>
     <div class="cp-sec"><i class="fa-solid fa-diagram-project"></i>相关概念</div>
     <div class="cp-rel"><a href="private-domain-operations.html"><i class="fa-solid fa-diagram-project"></i>私域运营</a><a href="chatbot.html"><i class="fa-solid fa-diagram-project"></i>聊天机器人</a><a href="ai-delivery.html"><i class="fa-solid fa-diagram-project"></i>AI交付</a><a href="open-source-model.html"><i class="fa-solid fa-diagram-project"></i>开源模型</a><a href="saas-product.html"><i class="fa-solid fa-diagram-project"></i>SaaS产品</a></div>
     <div class="cp-actions">
