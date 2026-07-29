@@ -1970,6 +1970,14 @@ def annotate_concepts(frag, slugs, lib, rel="../c/"):
 DETAIL_DIR = ROOT / "news" / "p"
 
 DETAIL_CSS = """
+  /* 静态兜底导航: site.js 一执行就被 outerHTML 连同占位一起换掉, 访客几乎看不到它。
+     不隐藏也不 noscript 包裹——那会让爬虫拿不到, 而它存在的唯一理由就是给不跑 JS 的爬虫看。
+     样式做朴素一行, 万一 site.js 加载失败, 这排链接本身就是可用的降级导航。 */
+  .nav-fb{display:flex;flex-wrap:wrap;gap:6px 16px;padding:12px clamp(16px,4vw,40px);
+    border-bottom:1px solid var(--line-2);font-size:12.5px}
+  .nav-fb a{color:var(--ink-3);text-decoration:none}
+  .nav-fb a:hover{color:var(--blue)}
+
   .dp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
   .dp-wrap{max-width:760px;margin:0 auto}
   .dp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
@@ -2025,6 +2033,36 @@ DETAIL_CSS = """
 """
 
 
+def normalize_links(h, base):
+    """镜像正文的链接规范化——sanitize_fragment 只管安全(去活动内容/危险协议), 这里管可用性。
+
+    三类问题都来自"把第三方正文原样搬过来":
+      ① 相对路径(/thought/xxx.html、/files/slides/xxx.pdf): 原样保留会按 juzibot.com
+         根目录解析, 访客点了是**我们站上**的 404。按原文 URL urljoin 补成绝对地址。
+      ② mailto: 76 个第三方开发者邮箱(Debian 邮件列表镜像)被公开挂在官网上供爬虫收割,
+         拆成纯文本——文字留着, 链接去掉。
+      ③ 协议畸形(照搬原文错别字, 如 ttps://36kr.com): 同样拆成纯文本, 不做猜测性修复
+         (补个 h 看着对, 但那是替原作者猜, 猜错就是我们造的错链)。
+
+    必须在 annotate_concepts 之前调用: 之后跑会把我们自己插的 ../c/xxx.html 概念链接
+    也 urljoin 掉。
+    """
+    if not h:
+        return h
+    h = re.sub(r'<a\b[^>]*?href\s*=\s*"mailto:[^"]*"[^>]*>(.*?)</a>', r"\1", h, flags=re.S | re.I)
+    h = re.sub(r'<a\b[^>]*?href\s*=\s*"(?!https?://)[^":]*://[^"]*"[^>]*>(.*?)</a>', r"\1", h, flags=re.S | re.I)
+
+    def _abs(m):
+        u = m.group(2).strip()
+        if not u or re.match(r"^(?:https?:)?//|^#|^mailto:|^data:|^javascript:", u, re.I):
+            return m.group(0)
+        try:
+            return f'{m.group(1)}{urljoin(base, u)}{m.group(3)}'
+        except ValueError:
+            return m.group(0)
+    return re.sub(r'(href\s*=\s*")([^"]*)(")', _abs, h, flags=re.I)
+
+
 def detail_html(it, lib, worthy):
     """静态详情页(整页由本脚本生成, 每次可整体重写, 页内无时间戳保证连跑字节稳定)。
     所有权分档(2026-07-22 四轮): own 源(自家内容)全文镜像+允许 index+canonical 指自身;
@@ -2041,8 +2079,8 @@ def detail_html(it, lib, worthy):
     zh_p = zh_content_path(it["id"])
     zh = zh_p.read_text(encoding="utf-8") if full and title_is_en(it["title"]) and zh_p.exists() else ""
     slugs = [s for s in (it.get("concepts") or []) if s in worthy]  # 只标有页的概念, 防死链
-    full = img_render(annotate_concepts(full, slugs, lib))
-    zh = img_render(annotate_concepts(zh, slugs, lib))
+    full = img_render(annotate_concepts(normalize_links(full, it["url"]), slugs, lib))
+    zh = img_render(annotate_concepts(normalize_links(zh, it["url"]), slugs, lib))
     desc = it.get("brief") or it["summary"] or title
     ctx = json.dumps({"entity": "news-article", "type": "article", "title": title}, ensure_ascii=False).replace("</", "<\\/")
     origin = f"{it['author']} · {it['source_name']}" if it["author"] != it["source_name"] else it["source_name"]
@@ -2124,7 +2162,7 @@ b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';})
 <style>{DETAIL_CSS}</style>
 </head>
 <body>
-<div id="site-nav"></div>
+{nav_fallback()}
 <main class="dp-main">
   <div class="dp-wrap">
     <a class="dp-back" href="../../news.html"><i class="fa-solid fa-arrow-left"></i>返回动态</a>
@@ -2163,7 +2201,7 @@ b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';})
 # 「输入签名」——签名不变则跳过重算。签名过度捕获(条目全字段 + 概念库 + 正文/译文镜像 + 模板
 # 版本), 任一输入变即重算, 绝不产生陈旧页。签名落 data/render-cache.json(随仓库提交, 供 CI
 # 跨轮增量; 不进任何内联/公开 HTML)。改模板结构时递增 RENDER_VER 触发全量重算。
-RENDER_VER = "4"  # 2026-07-30: 概念页引用行加原文证据(<mark> 标注命中词) → 全量重算
+RENDER_VER = "6"  # 2026-07-30: 详情页/概念页加静态兜底导航(给不跑 JS 的 AI 爬虫) → 全量重算
 RENDER_CACHE = ROOT / "data" / "render-cache.json"
 
 
@@ -2258,6 +2296,14 @@ def write_detail_pages(vis, items, lib, worthy):
 # canonical 指自身。反向索引列提到该概念的上站条目, 相关概念按共现次数取。
 
 CONCEPT_CSS = """
+  /* 静态兜底导航: site.js 一执行就被 outerHTML 连同占位一起换掉, 访客几乎看不到它。
+     不隐藏也不 noscript 包裹——那会让爬虫拿不到, 而它存在的唯一理由就是给不跑 JS 的爬虫看。
+     样式做朴素一行, 万一 site.js 加载失败, 这排链接本身就是可用的降级导航。 */
+  .nav-fb{display:flex;flex-wrap:wrap;gap:6px 16px;padding:12px clamp(16px,4vw,40px);
+    border-bottom:1px solid var(--line-2);font-size:12.5px}
+  .nav-fb a{color:var(--ink-3);text-decoration:none}
+  .nav-fb a:hover{color:var(--blue)}
+
   .cp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
   .cp-wrap{max-width:760px;margin:0 auto}
   .cp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
@@ -2303,6 +2349,36 @@ CONCEPT_CSS = """
 """
 
 
+# 静态兜底导航(2026-07-30)。全站导航由 assets/site.js 运行时注入(挂载点 #site-nav /
+# #site-footer, mount() 用 outerHTML 整体替换), 对浏览器访客没问题。但这批生成页是给
+# 搜索与 AI 引擎看的 SEO/GEO 入口, 而多数 AI 爬虫不执行 JS —— 不跑 JS 时详情页只剩
+# 1 个站内链接(回动态列表), 278 个页面等于孤岛; 概念页的 23 个也全在动态页体系内循环,
+# 没有一条通向产品或公司。
+#
+# 兜底放在挂载点内部: site.js 一执行就连同占位一起被 outerHTML 换掉, 访客侧零影响;
+# 不执行 JS 的一方(爬虫/禁用 JS)才看得到。链接集合与 site.js 的 NAV 保持一致, 不另立一套。
+# 站内已有静态 nav 的先例(index.html、workforce/geo.html), 这不是新架构。
+NAV_FALLBACK = (
+    '<a href="{rel}index.html">句子互动</a>'
+    '<a href="{rel}products/miaodong.html">句子秒懂</a>'
+    '<a href="{rel}products/shouhu.html">句子守护</a>'
+    '<a href="{rel}products/canmou.html">句子问数</a>'
+    '<a href="{rel}products/dongxing.html">句子懂行</a>'
+    '<a href="{rel}products/miaohui.html">句子秒回</a>'
+    '<a href="{rel}products/cli.html">句子 CLI</a>'
+    '<a href="{rel}products/zhizao.html">句子制造</a>'
+    '<a href="{rel}fde.html">FDE</a>'
+    '<a href="{rel}enterprise.html">企业方案</a>'
+    '<a href="{rel}industries.html">行业</a>'
+    '<a href="{rel}about.html">关于我们</a>'
+    '<a href="{rel}news.html">动态</a>'
+)
+
+
+def nav_fallback(rel="../../"):
+    return f'<div id="site-nav" class="nav-fb">{NAV_FALLBACK.format(rel=rel)}</div>'
+
+
 def concept_page_shell(title, desc, canonical, inner, ctx_title, schema=""):
     """概念页/总目录的公共壳: 原创内容, index,follow + canonical 指自身。"""
     ctx = json.dumps({"entity": "news-concept", "type": "page", "title": ctx_title}, ensure_ascii=False).replace("</", "<\\/")
@@ -2328,7 +2404,7 @@ def concept_page_shell(title, desc, canonical, inner, ctx_title, schema=""):
 <style>{CONCEPT_CSS}</style>
 </head>
 <body>
-<div id="site-nav"></div>
+{nav_fallback()}
 <main class="cp-main">
   <div class="cp-wrap">
 {inner}
