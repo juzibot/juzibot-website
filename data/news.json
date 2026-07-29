@@ -1,7 +1,7 @@
 {
  "generated_by": "build_news.py",
- "generated_at": "2026-07-30T06:24:15+08:00",
- "count": 604,
+ "generated_at": "2026-07-30T06:36:39+08:00",
+ "count": 605,
  "visible": 283,
  "sources": [
   {
@@ -10,7 +10,7 @@
    "type": "sitemap",
    "home": "https://rui.juzi.bot/",
    "status": "ok",
-   "last_sync": "2026-07-30T06:24:15+08:00",
+   "last_sync": "2026-07-30T06:36:39+08:00",
    "group": "company",
    "ai": true,
    "count": 37
@@ -21,7 +21,7 @@
    "type": "feishu-base",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T06:24:15+08:00",
+   "last_sync": "2026-07-30T06:36:39+08:00",
    "group": "company",
    "ai": false,
    "count": 0
@@ -32,7 +32,7 @@
    "type": "manual",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T06:24:15+08:00",
+   "last_sync": "2026-07-30T06:36:39+08:00",
    "group": "company",
    "ai": false,
    "count": 5
@@ -43,7 +43,7 @@
    "type": "manual",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T06:24:15+08:00",
+   "last_sync": "2026-07-30T06:36:39+08:00",
    "group": "company",
    "ai": false,
    "count": 0
@@ -54,7 +54,7 @@
    "type": "rss",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T06:24:15+08:00",
+   "last_sync": "2026-07-30T06:36:39+08:00",
    "group": "radar",
    "ai": true,
    "count": 99
@@ -65,7 +65,7 @@
    "type": "rss",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T06:24:15+08:00",
+   "last_sync": "2026-07-30T06:36:39+08:00",
    "group": "radar",
    "ai": true,
    "count": 87
@@ -76,7 +76,7 @@
    "type": "hn-algolia",
    "home": "https://news.ycombinator.com/",
    "status": "ok",
-   "last_sync": "2026-07-30T06:24:15+08:00",
+   "last_sync": "2026-07-30T06:36:39+08:00",
    "group": "radar",
    "ai": true,
    "count": 29
@@ -87,13 +87,25 @@
    "type": "qisi-list",
    "home": "https://news.miracleplus.com/",
    "status": "ok",
-   "last_sync": "2026-07-30T06:24:15+08:00",
+   "last_sync": "2026-07-30T06:36:39+08:00",
    "group": "radar",
    "ai": true,
    "count": 26
   }
  ],
  "items": [
+  {
+   "id": "ab67ea7aae68",
+   "title": "齐思洞见2026/07/30「Kimi K3用动态1-bit量化把2.8T MoE模型压缩并实现高端本地运行；前沿自治Agent沙盒逃逸展现跨云、持久自愈入侵风险，推动最小权限与可审计防护；开放推理内核需端到端基准与硬件适配以落地低延迟部署」",
+   "url": "https://news.miracleplus.com/share_link/145718",
+   "summary": "目录 - ⚙️ 技术与工程 (26条) - 前沿自主 agent 的高韧性入侵能力挑战现有防御假设 - 开放推理内核提升 LLM 实时性与可部署性需端到端支持 - 快速迭代供应商网络与现成测试基础设施在硬科技项目中的重要性 - 优化全双工和低延迟是语音代理模型的关键策略 - 多模态组合工作流将提升创作者生态价值 - 小型团队通过替代架构…",
+   "category": "洞见",
+   "tags": [],
+   "date": "2026-07-30",
+   "source": "qisi",
+   "source_name": "齐思",
+   "author": "奇绩创坛"
+  },
   {
    "id": "9c26bb8761e2",
    "title": "齐思头条2026/07/30「Kimi K3（2.8T MoE）本地化运行与 vLLM/1‑bit 压缩突破, 现货 GPU 租赁价约翻倍推高算力成本并驱动数据中心扩产, 自治 agent 横向攻破 Hugging Face 窃取生产密钥复盘」",

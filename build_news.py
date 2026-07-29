@@ -2763,7 +2763,20 @@ def concept_page_shell(title, desc, canonical, inner, ctx_title, schema=""):
 """
 
 
-def concept_html(slug, c, refs, related, lib):
+_CRX_CACHE = {}
+
+
+def concept_rx_cached(slug, c):
+    """concept_rx 的缓存版 —— 概念页逐个渲染, 每页都要拿全部 worthy 的正则去扫定义,
+    不缓存等于把同一批正则编译上万次。"""
+    rx = _CRX_CACHE.get(slug, ...)
+    if rx is ...:
+        rx = concept_rx(c)
+        _CRX_CACHE[slug] = rx
+    return rx
+
+
+def concept_html(slug, c, refs, related, lib, worthy=None):
     """单个概念页: 定义 + 提到它的动态反向索引 + 相关概念链。"""
     alias_line = " / ".join(a for a in c.get("aliases", []) if a != c["term"])
     ref_rows = "\n".join(  # 列表只铺前 30 条(控页面体积), 计数仍用全量 len(refs)(与索引页一致, Bugbot PR#100)
@@ -2773,6 +2786,12 @@ def concept_html(slug, c, refs, related, lib):
         + (f'<p class="cp-ev">{ev}</p>' if (ev := concept_evidence(it, c)) else "")
         + '</div></div>'
         for it in refs[:30])
+    # 定义里实际出现的概念(annotate_concepts 内部会切 slugs[:CONCEPT_MAX_PER_ITEM],
+    # 所以必须**先筛出真正命中的**再传进去 —— 直接把整个 worthy 丢给它, 它只取前 5 个,
+    # 而那 5 个几乎不可能正好出现在这段定义里, 结果一条链接都标不出来(第一版就是这么错的)。
+    def_hits = [s for s in sorted(worthy or ())
+                if s != slug and s in lib
+                and (rx := concept_rx_cached(s, lib[s])) and rx.search(c["def"])]
     rel_links = "".join(
         f'<a href="{s}.html"><i class="fa-solid fa-diagram-project"></i>{esc(lib[s]["term"])}</a>'
         for s in related)
@@ -2781,7 +2800,11 @@ def concept_html(slug, c, refs, related, lib):
         '    <div class="cp-kicker"><i class="fa-solid fa-book-open"></i>AI 概念库</div>\n'
         f'    <h1 class="cp-title">{esc(c["term"])}</h1>\n'
         + (f'    <p class="cp-alias"><b>也叫</b> {esc(alias_line)}</p>\n' if alias_line else "")
-        + f'    <div class="cp-def">{esc(c["def"])}</div>\n'
+        # 定义文本里就地标注其他概念 —— 读者看到「大型语言模型」这类词时能点进去。
+        # 详情页正文一直有这层标注, 概念页的定义却没有, 是两处对同一件事的做法不一致。
+        # rel="" 因为概念页之间同目录; 排除自己(自链接无意义); 只标 worthy 的(防死链,
+        # 与 worthy_concepts 的四处共用同一份判据)。
+        + f'    <div class="cp-def">{annotate_concepts(esc(c["def"]), def_hits, lib, rel="")}</div>\n'
         + (f'    <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（{len(refs)}）</div>\n{ref_rows}\n' if refs else "")
         + (f'    <div class="cp-sec"><i class="fa-solid fa-diagram-project"></i>相关概念</div>\n    <div class="cp-rel">{rel_links}</div>\n' if related else "")
         + '    <div class="cp-actions">\n'
@@ -3048,12 +3071,15 @@ def write_concept_pages(lib, vis):
             f"{int((CONTENT_DIR / (r['id'] + '.html')).exists())}{int((CONTENT_DIR / (r['id'] + '.zh.html')).exists())}"
             for r in refs[:30])
         rel_repr = "|".join(f"{o}={lib.get(o, {}).get('term')}" for o in related)
-        sig = _sha(render_ver(),f"{c.get('term')}|{c.get('def')}|{'/'.join(c.get('aliases') or [])}", ref_repr, rel_repr)
+        # 定义里标注哪些概念取决于 worthy 全集: 某概念升格后, 别人定义里该多出的链接
+        # 必须触发重算, 所以把 worthy 的指纹也纳进签名(只取哈希, 不塞全量)
+        sig = _sha(render_ver(), f"{c.get('term')}|{c.get('def')}|{'/'.join(c.get('aliases') or [])}",
+                   ref_repr, rel_repr, _sha(*sorted(worthy))[:10])
         new_sigs[name] = sig
         if (CONCEPT_DIR / name).exists() and old_sigs.get(name) == sig:
             skipped += 1
             continue
-        _emit(name, concept_html(slug, c, refs, related, lib))
+        _emit(name, concept_html(slug, c, refs, related, lib, worthy))
     cache["concept"] = new_sigs
     _save_render_cache(cache)
     stale = [p for p in CONCEPT_DIR.glob("*.html") if p.name not in want]
