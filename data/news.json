@@ -1,6 +1,6 @@
 {
  "generated_by": "build_news.py",
- "generated_at": "2026-07-30T03:28:55+08:00",
+ "generated_at": "2026-07-30T03:35:30+08:00",
  "count": 596,
  "visible": 280,
  "sources": [
@@ -10,7 +10,7 @@
    "type": "sitemap",
    "home": "https://rui.juzi.bot/",
    "status": "ok",
-   "last_sync": "2026-07-30T03:28:55+08:00",
+   "last_sync": "2026-07-30T03:35:30+08:00",
    "group": "company",
    "ai": true,
    "count": 37
@@ -21,7 +21,7 @@
    "type": "feishu-base",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T03:28:55+08:00",
+   "last_sync": "2026-07-30T03:35:30+08:00",
    "group": "company",
    "ai": false,
    "count": 0
@@ -32,7 +32,7 @@
    "type": "manual",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T03:28:55+08:00",
+   "last_sync": "2026-07-30T03:35:30+08:00",
    "group": "company",
    "ai": false,
    "count": 5
@@ -43,7 +43,7 @@
    "type": "manual",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T03:28:55+08:00",
+   "last_sync": "2026-07-30T03:35:30+08:00",
    "group": "company",
    "ai": false,
    "count": 0
@@ -54,7 +54,7 @@
    "type": "rss",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T03:28:55+08:00",
+   "last_sync": "2026-07-30T03:35:30+08:00",
    "group": "radar",
    "ai": true,
    "count": 99
@@ -65,7 +65,7 @@
    "type": "rss",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T03:28:55+08:00",
+   "last_sync": "2026-07-30T03:35:30+08:00",
    "group": "radar",
    "ai": true,
    "count": 87
@@ -76,7 +76,7 @@
    "type": "hn-algolia",
    "home": "https://news.ycombinator.com/",
    "status": "ok",
-   "last_sync": "2026-07-30T03:28:55+08:00",
+   "last_sync": "2026-07-30T03:35:30+08:00",
    "group": "radar",
    "ai": true,
    "count": 27
@@ -87,7 +87,7 @@
    "type": "qisi-list",
    "home": "https://news.miracleplus.com/",
    "status": "ok",
-   "last_sync": "2026-07-30T03:28:55+08:00",
+   "last_sync": "2026-07-30T03:35:30+08:00",
    "group": "radar",
    "ai": true,
    "count": 25
@@ -9059,7 +9059,13 @@
    "title": "soluna 外挂 C 模块",
    "source_name": "大咖观点",
    "brief": "soluna 默认静态链接 lua 库导致无法外挂 C 扩展，文章解释了技术原因及解决方案。",
-   "brief_full": true
+   "brief_full": true,
+   "concepts": [
+    "lua-vm",
+    "lua-vm-dynamic-linking",
+    "api-wrapper"
+   ],
+   "concepts_full": true
   },
   {
    "id": "918f52cb3741",
@@ -9089,7 +9095,12 @@
    "title": "用 AI 辅助读书",
    "source_name": "大咖观点",
    "brief": "作者用 AI 辅助读书，通过 Gemini 推荐小说，提升阅读体验并探索新类型。",
-   "brief_full": true
+   "brief_full": true,
+   "concepts": [
+    "ai-translation-reading",
+    "personal-ai"
+   ],
+   "concepts_full": true
   },
   {
    "id": "9904f11bcdc9",
@@ -9184,7 +9195,14 @@
    "source_name": "大咖观点",
    "brief": "2025 年 LLM 领域取得显著进展，包括强化学习可验证奖励等范式转变。",
    "brief_full": true,
-   "title_zh": "2025 LLM 年度回顾"
+   "title_zh": "2025 LLM 年度回顾",
+   "concepts": [
+    "rlvr",
+    "reinforcement-learning",
+    "foundation-model",
+    "model-capability"
+   ],
+   "concepts_full": true
   },
   {
    "id": "377c0f5b2232",
@@ -9215,7 +9233,12 @@
    "source_name": "大咖观点",
    "brief": "作者回顾十年前 Hacker News 讨论并自动评分，对比历史预测与实际发展。",
    "brief_full": true,
-   "title_zh": "用后见之明自动评分十年前的 Hacker News 讨论"
+   "title_zh": "用后见之明自动评分十年前的 Hacker News 讨论",
+   "concepts": [
+    "hindsight-evaluation",
+    "large-language-model"
+   ],
+   "concepts_full": true
   },
   {
    "id": "cce64b2db70f",
@@ -9246,7 +9269,13 @@
    "source_name": "大咖观点",
    "brief": "AI 被比作新计算范式，任务的可指定性是预测其就业影响的关键特征。",
    "brief_full": true,
-   "title_zh": "可验证性"
+   "title_zh": "可验证性",
+   "concepts": [
+    "verifiability",
+    "ai-decision-making",
+    "model-capability"
+   ],
+   "concepts_full": true
   },
   {
    "id": "b782186650d2",
@@ -9261,7 +9290,13 @@
    "source_name": "大咖观点",
    "brief": "Sora 将为版权所有者提供更精细的角色生成控制，并优化模型训练数据。",
    "brief_full": true,
-   "title_zh": "Sora 更新 #1"
+   "title_zh": "Sora 更新 #1",
+   "concepts": [
+    "character-consistency",
+    "model-jailbreak",
+    "ai-digital-asset-library"
+   ],
+   "concepts_full": true
   },
   {
    "id": "d006fe49e0b0",
@@ -9276,7 +9311,13 @@
    "source_name": "大咖观点",
    "brief": "文章讨论 Sutton 的“苦涩教训”理论，分析其在前沿 LLM 研究中的影响。",
    "brief_full": true,
-   "title_zh": "动物 vs 幽灵"
+   "title_zh": "动物 vs 幽灵",
+   "concepts": [
+    "reinforcement-learning",
+    "scaling-laws",
+    "foundation-model"
+   ],
+   "concepts_full": true
   },
   {
    "id": "6f8a89c343ef",
@@ -9291,7 +9332,13 @@
    "source_name": "大咖观点",
    "brief": "Sora 2 新应用发布，结合模型与产品，旨在推动创意领域的“寒武纪大爆发”。",
    "brief_full": true,
-   "title_zh": "Sora 2"
+   "title_zh": "Sora 2",
+   "concepts": [
+    "character-consistency",
+    "diffusion-model-video-generation",
+    "personal-ai"
+   ],
+   "concepts_full": true
   },
   {
    "id": "464d152e82d8",
@@ -9306,7 +9353,13 @@
    "source_name": "大咖观点",
    "brief": "AI 服务增长惊人，未来算力需求将成为经济驱动力，可能成为基本人权。",
    "brief_full": true,
-   "title_zh": "丰富的智能"
+   "title_zh": "丰富的智能",
+   "concepts": [
+    "ai-infrastructure-factory",
+    "computing-infrastructure",
+    "model-capability"
+   ],
+   "concepts_full": true
   },
   {
    "id": "1293596c82dd",
@@ -9321,7 +9374,13 @@
    "source_name": "大咖观点",
    "brief": "ChatGPT 的进步背后是无数人的努力，展现了人类在不可能时间框架内实现突破的智慧。",
    "brief_full": true,
-   "title_zh": "Jakub 和 Szymon"
+   "title_zh": "Jakub 和 Szymon",
+   "concepts": [
+    "reinforcement-learning",
+    "model-capability",
+    "foundation-model"
+   ],
+   "concepts_full": true
   },
   {
    "id": "d3cd7669dd32",
@@ -9393,7 +9452,12 @@
    "source_name": "大咖观点",
    "brief": "文章探讨LLM如何颠覆技术扩散的传统自上而下路径，指出新技术不再局限于政府或企业，而是更直接惠及个人，改变了技术普及的模式。",
    "brief_full": true,
-   "title_zh": "Power to the people: How LLMs flip the script on technology diffusion"
+   "title_zh": "Power to the people: How LLMs flip the script on technology diffusion",
+   "concepts": [
+    "technology-diffusion",
+    "large-language-model"
+   ],
+   "concepts_full": true
   },
   {
    "id": "5f7a82b4d0ce",
@@ -9424,7 +9488,11 @@
    "source_name": "大咖观点",
    "brief": "作者反思AGI（通用人工智能）的发展，强调AGI定义虽模糊，但应能解决多领域复杂问题，并指出人类创造工具的本性推动世界进步。",
    "brief_full": true,
-   "title_zh": "Three Observations"
+   "title_zh": "Three Observations",
+   "concepts": [
+    "agi"
+   ],
+   "concepts_full": true
   },
   {
    "id": "5b5ee5ab83ad",
@@ -9461,7 +9529,11 @@
    "source_name": "大咖观点",
    "brief": "ChatGPT发布仅两月后，模型已进入复杂推理新阶段。作者分享个人感悟，认为接近AGI之际，需审视公司进展，但仍有许多未知领域。",
    "brief_full": true,
-   "title_zh": "Reflections"
+   "title_zh": "Reflections",
+   "concepts": [
+    "agi"
+   ],
+   "concepts_full": true
   },
   {
    "id": "6385c4cbef5b",
@@ -9554,7 +9626,11 @@
    "source_name": "大咖观点",
    "brief": "OpenAI宣布将全球最佳模型免费提供给用户，强调其使命是让强大AI工具惠及大众，并回顾公司从创造AI到直接应用的转变。",
    "brief_full": true,
-   "title_zh": "GPT-4o"
+   "title_zh": "GPT-4o",
+   "concepts": [
+    "gpt-4o"
+   ],
+   "concepts_full": true
   },
   {
    "id": "38eb95b0e9e6",
