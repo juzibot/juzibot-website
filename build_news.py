@@ -2361,6 +2361,7 @@ def breadcrumb_ld(trail):
 
 TOC_MIN_HEADS = 3          # 少于这么多小标题不出目录(两三段的短文加目录只是噪音)
 TOC_MIN_CHARS = 2000       # 正文不够长也不出——目录的价值在于长文里定位
+TOC_OPEN_MAX = 12          # 超过这么多节默认收起(手机上长目录会占掉整屏)
 
 
 def build_toc(body):
@@ -2398,7 +2399,11 @@ def build_toc(body):
     out.append(body[last:])
     lis = "".join(f'<li class="lv{lvl}"><a href="#{esc(aid)}">{esc(label[:60])}</a></li>'
                   for lvl, aid, label in items)
-    toc = ('<details class="dp-toc" open><summary><i class="fa-solid fa-list-ul"></i>'
+    # 默认展开与否按节数定: 短目录(≤TOC_OPEN_MAX 节)展开, 一眼看清结构; 长目录收起,
+    # 否则手机上会占掉整屏 —— 实测最长的一页有 68 节, 12 页 ≥15 节, 默认全展开等于让目录
+    # 挡住正文。收起时仍显示「N 节」, 读者知道有目录可点。
+    op = " open" if len(items) <= TOC_OPEN_MAX else ""
+    toc = (f'<details class="dp-toc"{op}><summary><i class="fa-solid fa-list-ul"></i>'
            f'目录<span>{len(items)} 节</span></summary><ol>{lis}</ol></details>')
     return "".join(out), toc
 

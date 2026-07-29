@@ -476,6 +476,15 @@ def test_toc_thresholds_and_anchors():
     a2, t2 = B.build_toc(keep)
     check("原文自带 id 被保留", 'id="orig-1"' in a2 and 'href="#orig-1"' in t2, t2[:80])
     check("空正文安全", B.build_toc("") == ("", ""))
+    # 默认展开状态按节数: 短目录展开(一眼看清结构), 长目录收起(实测最长一页 68 节、
+    # 12 页 ≥15 节, 手机上默认全展开等于让目录挡住正文)。
+    # 注意 fixture 要**同时**过两道门槛(≥3 节 且 正文 ≥2000 字)—— 今天三次栽在 fixture
+    # 不满足前提: src 缺 name、正文不够长、以及这次 5 节×300 字只有 1500 字压根没出目录。
+    _, t_short = B.build_toc("".join(f"<h2>节{i}</h2><p>{'字' * 600}</p>" for i in range(1, 6)))
+    _, t_long = B.build_toc("".join(f"<h2>节{i}</h2><p>{'字' * 300}</p>" for i in range(1, 21)))
+    check(f"≤{B.TOC_OPEN_MAX} 节默认展开", 'dp-toc" open>' in t_short, t_short[:50])
+    check(f">{B.TOC_OPEN_MAX} 节默认收起", t_long and 'dp-toc" open>' not in t_long, t_long[:50])
+    check("收起时仍显示节数(读者知道有目录可点)", "20 节" in t_long)
 
 
 # ---------------------------------------------------------------- 20
