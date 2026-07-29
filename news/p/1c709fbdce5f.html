@@ -82,10 +82,13 @@
     <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（Simon Willison · 大咖观点）所有 · <a href="https://simonwillison.net/2026/Jul/22/thomas-ptacek/#atom-everything" target="_blank" rel="noopener">阅读原文</a></span></div>
     
     <div class="dp-brief"><b>简报</b>Thomas Ptacek 认为，2025 年的开放权重模型可能通过 pentest harness 实现沙箱逃逸并扫描黑客网络，这并不需要前沿模型。</div>
-    <article class="dp-body"><blockquote cite="https://twitter.com/tqbf/status/2080045032162173329"><p>I genuinely believe that if you took an open weights model from 2025 and built a pentest harness for it, it could do this kind of sandbox escape and scan/hack in most networks. This is only surprising because you assume OpenAI has sounder sandboxes.</p></blockquote>
+    <div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang"><i class="fa-solid fa-language"></i><span>翻译为中文</span></button><span class="dp-lang-note">中文由 AI 翻译，仅供参考</span></div><article class="dp-body" id="dpBodyOrig"><blockquote cite="https://twitter.com/tqbf/status/2080045032162173329"><p>I genuinely believe that if you took an open weights model from 2025 and built a pentest harness for it, it could do this kind of sandbox escape and scan/hack in most networks. This is only surprising because you assume OpenAI has sounder sandboxes.</p></blockquote>
 <p class="cite">&mdash; <a href="https://twitter.com/tqbf/status/2080045032162173329">Thomas Ptacek</a>, doesn't think <a href="https://simonwillison.net/2026/Jul/22/openai-cyberattack/#resist-the-temptation-to-write-this-off-as-a-stunt">this even needs</a> a frontier model</p>
 
-    <p>Tags: <a href="https://simonwillison.net/tags/thomas-ptacek">thomas-ptacek</a>, <a href="https://simonwillison.net/tags/openai">openai</a>, <a href="https://simonwillison.net/tags/security">security</a>, <a href="https://simonwillison.net/tags/generative-ai">generative-ai</a>, <a href="https://simonwillison.net/tags/ai-security-research">ai-security-research</a>, <a href="https://simonwillison.net/tags/ai">ai</a>, <a href="https://simonwillison.net/tags/llms">llms</a>, <a href="https://simonwillison.net/tags/sandboxing">sandboxing</a></p></article>
+    <p>Tags: <a href="https://simonwillison.net/tags/thomas-ptacek">thomas-ptacek</a>, <a href="https://simonwillison.net/tags/openai">openai</a>, <a href="https://simonwillison.net/tags/security">security</a>, <a href="https://simonwillison.net/tags/generative-ai">generative-ai</a>, <a href="https://simonwillison.net/tags/ai-security-research">ai-security-research</a>, <a href="https://simonwillison.net/tags/ai">ai</a>, <a href="https://simonwillison.net/tags/llms">llms</a>, <a href="https://simonwillison.net/tags/sandboxing">sandboxing</a></p></article><article class="dp-body" id="dpBodyZh" hidden><blockquote cite="https://twitter.com/tqbf/status/2080045032162173329"><p>我真心相信，如果你拿一个2025年的开源权重模型，为它构建一个渗透测试工具套件，它就能实现这种沙箱逃逸，并在大多数网络中进行扫描和黑客攻击。这之所以令人惊讶，只是因为你默认 OpenAI 的沙箱更安全可靠。</p></blockquote>
+<p class="cite">&mdash; <a href="https://twitter.com/tqbf/status/2080045032162173329">Thomas Ptacek</a>，认为<a href="https://simonwillison.net/2026/Jul/22/openai-cyberattack/#resist-the-temptation-to-write-this-off-as-a-stunt">这甚至不需要</a>一个前沿模型</p>
+
+    <p>标签: <a href="https://simonwillison.net/tags/thomas-ptacek">thomas-ptacek</a>, <a href="https://simonwillison.net/tags/openai">openai</a>, <a href="https://simonwillison.net/tags/security">security</a>, <a href="https://simonwillison.net/tags/generative-ai">generative-ai</a>, <a href="https://simonwillison.net/tags/ai-security-research">ai-security-research</a>, <a href="https://simonwillison.net/tags/ai">ai</a>, <a href="https://simonwillison.net/tags/llms">llms</a>, <a href="https://simonwillison.net/tags/sandboxing">sandboxing</a></p></article>
     <div class="dp-actions">
       <a class="dp-btn pri" href="https://simonwillison.net/2026/Jul/22/thomas-ptacek/#atom-everything" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
       
@@ -98,5 +101,11 @@
 <div id="site-footer"></div>
 <script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "Quoting Thomas Ptacek"};</script>
 <script src="../../assets/site.js"></script>
+<script>
+(function(){var b=document.getElementById('dpLang');if(!b)return;
+var en=document.getElementById('dpBodyOrig'),zh=document.getElementById('dpBodyZh');
+b.addEventListener('click',function(){var on=zh.hidden;zh.hidden=!on;en.hidden=on;
+b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';});})();
+</script>
 </body>
 </html>

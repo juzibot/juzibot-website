@@ -1,8 +1,8 @@
 {
  "generated_by": "build_news.py",
- "generated_at": "2026-07-29T23:56:25+08:00",
- "count": 585,
- "visible": 277,
+ "generated_at": "2026-07-30T00:19:44+08:00",
+ "count": 587,
+ "visible": 278,
  "sources": [
   {
    "id": "rui-blog",
@@ -10,7 +10,7 @@
    "type": "sitemap",
    "home": "https://rui.juzi.bot/",
    "status": "ok",
-   "last_sync": "2026-07-29T23:56:25+08:00",
+   "last_sync": "2026-07-30T00:19:44+08:00",
    "group": "company",
    "ai": true,
    "count": 37
@@ -21,7 +21,7 @@
    "type": "feishu-base",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-29T23:56:25+08:00",
+   "last_sync": "2026-07-30T00:19:44+08:00",
    "group": "company",
    "ai": false,
    "count": 0
@@ -32,7 +32,7 @@
    "type": "manual",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-29T23:56:25+08:00",
+   "last_sync": "2026-07-30T00:19:44+08:00",
    "group": "company",
    "ai": false,
    "count": 5
@@ -43,7 +43,7 @@
    "type": "manual",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-29T23:56:25+08:00",
+   "last_sync": "2026-07-30T00:19:44+08:00",
    "group": "company",
    "ai": false,
    "count": 0
@@ -54,7 +54,7 @@
    "type": "rss",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-29T23:56:25+08:00",
+   "last_sync": "2026-07-30T00:19:44+08:00",
    "group": "radar",
    "ai": true,
    "count": 100
@@ -65,7 +65,7 @@
    "type": "rss",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-29T23:56:25+08:00",
+   "last_sync": "2026-07-30T00:19:44+08:00",
    "group": "radar",
    "ai": true,
    "count": 86
@@ -76,10 +76,10 @@
    "type": "hn-algolia",
    "home": "https://news.ycombinator.com/",
    "status": "ok",
-   "last_sync": "2026-07-29T23:56:25+08:00",
+   "last_sync": "2026-07-30T00:19:44+08:00",
    "group": "radar",
    "ai": true,
-   "count": 25
+   "count": 26
   },
   {
    "id": "qisi",
@@ -87,7 +87,7 @@
    "type": "qisi-list",
    "home": "https://news.miracleplus.com/",
    "status": "ok",
-   "last_sync": "2026-07-29T23:56:25+08:00",
+   "last_sync": "2026-07-30T00:19:44+08:00",
    "group": "radar",
    "ai": true,
    "count": 24
@@ -234,7 +234,15 @@
    },
    "quip": "端侧AI协同云端，企业级员工需平衡温度与能力",
    "brief": "端侧AI需与云端协同，才能成为真正理解个人的智能体。新型终端如智能眼镜、Mini PC正在增长，IDC称当前产业变化为“AI超级大周期”。",
-   "brief_full": true
+   "brief_full": true,
+   "concepts": [
+    "personal-ai",
+    "ai-for-device",
+    "ai-for-user",
+    "on-device-ai",
+    "context-management"
+   ],
+   "concepts_full": true
   },
   {
    "id": "e4ca2f08ded1",
@@ -693,6 +701,33 @@
    }
   },
   {
+   "id": "97854c7d008d",
+   "title": "Show HN: Open-source engine running Gemma 4 26B in 2 GB RAM on any M-series Mac",
+   "url": "https://github.com/drumih/turbo-fieldfare",
+   "summary": "Hi HN, I built a specialized inference engine for running 4-bit Gemma 4 26B-A4B-IT on any M-series Mac using about 2 GB of RAM. It is called TurboFieldfare and is writte…",
+   "category": "",
+   "tags": [],
+   "date": "2026-07-29",
+   "source": "hn",
+   "source_name": "Hacker News",
+   "author": "Hacker News",
+   "hn": "https://news.ycombinator.com/item?id=49098510",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-30"
+   },
+   "brief": "TurboFieldfare 是一个开源引擎，能在仅 2GB RAM 的 M 系列 Mac 上运行 Gemma 4 26B 模型。它通过不加载完整模型，仅保留核心和缓存来实现。",
+   "brief_full": true,
+   "title_zh": "Show HN: 在任何 M 系列 Mac 的 2GB RAM 上运行开源的 Gemma 4 26B 引擎",
+   "concepts": [
+    "turbofieldfare",
+    "inference-deployment",
+    "microcontroller-llm",
+    "token-consumption"
+   ],
+   "concepts_full": true
+  },
+  {
    "id": "964bc4fba97c",
    "title": "SQLite in Production: Optimizing WAL Mode, Concurrency, and VFS Layers",
    "url": "https://micrologics.org/blog/sqlite-in-production-optimizing-wal-mode-concurrency-and-vfs-layers-for-low-latency-app-servers",
@@ -756,7 +791,14 @@
    },
    "quip": "美团退居AI身后，暗示企业级员工代理模式可行",
    "brief": "美团与腾讯元宝合作，让AI智能体“小美”调用其外卖和本地生活服务。美团正从APP转向API，未来可能服务AI Agent，但面临入口角色弱化的风险。",
-   "brief_full": true
+   "brief_full": true,
+   "concepts": [
+    "enterprise-ai-agent",
+    "agent-plugin-ecosystem",
+    "ai-delivery",
+    "intent-based-agent"
+   ],
+   "concepts_full": true
   },
   {
    "id": "82b6ed79dd43",
@@ -1195,6 +1237,23 @@
    "title_zh": "User Interfaces of the Demo Scene",
    "concepts": [],
    "concepts_full": true
+  },
+  {
+   "id": "3a1a36a4ad24",
+   "title": "Darktable",
+   "url": "https://www.darktable.org/",
+   "summary": "",
+   "category": "",
+   "tags": [],
+   "date": "2026-07-29",
+   "source": "hn",
+   "source_name": "Hacker News",
+   "author": "Hacker News",
+   "hn": "https://news.ycombinator.com/item?id=49096654",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-30"
+   }
   },
   {
    "id": "2bf255e88f24",
