@@ -132,23 +132,29 @@
   var inp = ov.querySelector('.jzab-in'), body = ov.querySelector('.jzab-body'), ctx = ov.querySelector('.jzab-ctx');
   var busy = false, lastFocus = null, started = false;
 
-  function pageCtx() { var c = window.PAGE_CTX; return (c && c.entity) ? c : null; }
+  // 「当前上下文」只能有一条获取路径。上一版把一次性上下文只用在 open() 的局部变量里,
+  // 而 greet/suggest/askReal 各自去读 window.PAGE_CTX ——卡片传进来的文章上下文只改了顶部
+  // 横幅文案, 根本没进 AI 请求(Bugbot PR#103 抓到)。修的是症状、废掉了功能本身: 旧写法
+  // 改写全局虽然会永久污染, 上下文倒是真送到了模型。改成存一份 oneShot 供 pageCtx() 统一读、
+  // 关闭时清空: 既不污染后续提问, 上下文也真的送进请求。判据分散是这个库栽过五次的坑。
+  var oneShot = null;
+  function pageCtx() { var c = oneShot || window.PAGE_CTX; return (c && c.entity) ? c : null; }
   function scroll() { body.scrollTop = body.scrollHeight; }
 
   function open(ctxOverride) {
-    // ctxOverride: 一次性上下文(如动态页每张卡的「问句子」)。此前这类入口只能改写
-    // window.PAGE_CTX, 而它不会还原——点过一张卡之后, 该页所有提问都被永久打上那篇
-    // 文章的上下文。加个可选参数即可, 不传时行为与原先完全一致(向后兼容)。
+    // ctxOverride: 一次性上下文(如动态页每张卡的「问句子」)。不传时行为与原先完全一致(向后兼容);
+    // 带 .entity 校验, 防止被当事件监听器时把 MouseEvent 当上下文。
     if (ov.classList.contains('open')) return;
     lastFocus = document.activeElement;
-    var c = (ctxOverride && ctxOverride.entity) ? ctxOverride : pageCtx();
+    oneShot = (ctxOverride && ctxOverride.entity) ? ctxOverride : null;
+    var c = pageCtx();
     if (c) { ctx.hidden = false; ctx.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i> 正在看：<b>' + esc(c.title || c.entity) + '</b> · 可直接就它追问'; }
     else { ctx.hidden = true; }
     if (!started) { greet(); started = true; }
     ov.classList.add('open'); document.body.style.overflow = 'hidden';
     setTimeout(function () { inp.focus(); }, 30);
   }
-  function close() { ov.classList.remove('open'); document.body.style.overflow = ''; if (lastFocus && lastFocus.focus) lastFocus.focus(); }
+  function close() { oneShot = null; ov.classList.remove('open'); document.body.style.overflow = ''; if (lastFocus && lastFocus.focus) lastFocus.focus(); }
 
   function greet() {
     var c = pageCtx();

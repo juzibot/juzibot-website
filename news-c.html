@@ -468,9 +468,11 @@
       }
       var ask = e.target.closest('.fd-ask');
       if (ask) {
-        window.PAGE_CTX = { entity: 'news-article', type: 'article', title: ask.getAttribute('data-t') };
-        if (window.openAskbar) window.openAskbar();
-        else setTimeout(function () { if (window.openAskbar) window.openAskbar(); }, 450);
+        // 一次性上下文走参数, 不改写 window.PAGE_CTX——后者从不还原, 点过一条之后本页
+        // 所有提问(含右下角常驻入口)都被永久打上那篇文章的上下文(Bugbot PR#103)
+        var cardCtx = { entity: 'news-article', type: 'article', title: ask.getAttribute('data-t') };
+        if (window.openAskbar) window.openAskbar(cardCtx);
+        else setTimeout(function () { if (window.openAskbar) window.openAskbar(cardCtx); }, 450); // askbar 异步注入的兜底
       }
     });
   }
