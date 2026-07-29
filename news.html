@@ -88,6 +88,14 @@
   .news-sec{padding:clamp(26px,3.6vw,44px) var(--gut) clamp(56px,7vw,96px);background:#fff}
   .news-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(14px,1.8vw,20px)}
   @media(max-width:900px){.news-grid{grid-template-columns:1fr}}
+  /* 年份分隔标(仅「句子动态」区): 公司内容跨 2018-2026 八年, 纯时间倒序会让 2022 年的空档
+     看起来像「沉寂了四年」, 而实情是那几年的产出在公众号/媒体渠道、没接进来。按年分组后
+     空年份直接跳过不显示, 老内容也拿回了上下文——不再是「突然冒出的旧东西」, 而是八年履历。 */
+  .yr-mark{grid-column:1/-1;display:flex;align-items:baseline;gap:10px;margin:14px 0 -4px;min-width:0}
+  .yr-mark:first-child{margin-top:0}
+  .yr-mark b{font-family:var(--mono);font-size:15px;font-weight:800;color:var(--ink);letter-spacing:.02em}
+  .yr-mark small{font-size:11.5px;color:var(--ink-3);flex:0 0 auto}
+  .yr-mark i{flex:1;height:1px;background:var(--line-2);min-width:12px}
   .news-card{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:var(--radius-sm);
     padding:clamp(18px,2.2vw,24px);box-shadow:var(--shadow-soft);
     transition:transform .3s var(--ease),border-color .3s var(--ease),box-shadow .3s var(--ease)}
@@ -281,9 +289,26 @@
 
   function render(resetList) {
     var f = filtered();
-    if (resetList) { list.innerHTML = ''; state.shown = 0; }
+    if (resetList) { list.innerHTML = ''; state.shown = 0; state.lastYear = ''; }
     var next = f.slice(state.shown, state.shown + BATCH);
-    if (next.length) list.insertAdjacentHTML('beforeend', next.map(cardHTML).join(''));
+    if (next.length) {
+      // 公司区按年分组: 每年首张卡前插年份标(横跨两列)。雷达区不分——它 87% 是近 30 天,
+      // 按年分毫无信息量。年份标不计入 state.shown(那是卡片游标, 决定「加载更多」的边界)。
+      var yearMode = state.group === 'company', cnt = {};
+      if (yearMode) f.forEach(function (it) { var y = it.date.slice(0, 4); cnt[y] = (cnt[y] || 0) + 1; });
+      var html = '';
+      next.forEach(function (it) {
+        if (yearMode) {
+          var y = it.date.slice(0, 4);
+          if (y !== state.lastYear) {
+            html += '<div class="yr-mark"><b>' + y + '</b><i></i><small>' + cnt[y] + ' 篇</small></div>';
+            state.lastYear = y;
+          }
+        }
+        html += cardHTML(it);
+      });
+      list.insertAdjacentHTML('beforeend', html);
+    }
     state.shown += next.length;
     var isFiltered = state.src !== 'all' || state.cat !== 'all' || state.time !== 'all' || state.q;
     count.textContent = isFiltered ? (f.length + ' / ' + groupCount(state.group) + ' 条') : ('共 ' + groupCount(state.group) + ' 条');
