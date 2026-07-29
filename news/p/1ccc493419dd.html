@@ -46,7 +46,15 @@
   .dp-quip{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.66;font-weight:600;color:var(--blue-deep);background:var(--blue-50);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:18px}
   .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
   .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
-  .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  .dp-brief b{display:flex;align-items:baseline;gap:8px;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  /* AI 产出物的就地标注(2026-07-30): 概念页的定义早就在页尾注明「由 AI 加工层生成、编辑
+     维护」, 而详情页的简报与锐评一直没标 —— 读者会把那句锐评当成编辑观点。283 页都有这两块,
+     不标就是 283 次误导。放在区块内而不是只放页尾: 页尾声明读者多半划不到, 而标注要落在
+     人实际阅读的位置才有意义。样式压到最小, 不抢正文。 */
+  .dp-brief b em,.dp-quip em{font-style:normal;font-family:var(--mono);font-size:10px;font-weight:600;
+    letter-spacing:0;color:var(--ink-3);white-space:nowrap}
+  .dp-brief b em{margin-left:auto}
+  .dp-quip em{display:block;margin-top:5px;opacity:.85}
   /* 长文目录(≥3 小标题且正文 ≥2000 字才出): <details> 原生可折叠, 不用一行 JS。
      默认 open —— 目录的用处是先看清结构再决定读哪段, 收起来就失去意义; 想收也一点即收。 */
   .dp-toc{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:24px;background:#FBFCFF}
@@ -110,8 +118,8 @@
     
     <p class="dp-by">来源：36氪 · 行业动态</p>
     <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（36氪 · 行业动态）所有 · <a href="https://36kr.com/p/3915066350327176?f=rss" target="_blank" rel="noopener">阅读原文</a></span></div>
-    <p class="dp-quip"><i class="fa-solid fa-quote-left"></i>智能硬件普及加速AI员工在实体场景的渗透</p>
-    <div class="dp-brief"><b>简报</b>36氪报告指出，AI技术推动智能硬件升级，但面临竞争碎片化、成本压力等挑战，行业迈入AI原生阶段。</div>
+    <p class="dp-quip"><i class="fa-solid fa-quote-left"></i>智能硬件普及加速AI员工在实体场景的渗透<em>AI 加工层生成</em></p>
+    <div class="dp-brief"><b>简报<em>AI 加工层生成</em></b>36氪报告指出，AI技术推动智能硬件升级，但面临竞争碎片化、成本压力等挑战，行业迈入AI原生阶段。</div>
     <article class="dp-body"><p>当前，AI技术正加速向实体经济各领域渗透深化，智能硬件作为AI能力落地实体场景的核心载体，已进入产品能力升级与产业价值提升的关键发展阶段。腾讯研究院2026年3月的调研数据显示，国内已有80.8%的消费者购买或使用过至少一类AI相关硬件产品，其中32.0%的用户表示将在未来三个月增加相关消费支出，消费端市场需求具备稳步向上的支撑基础。与此同时，<a class="cpt" href="../c/on-device-ai.html" data-def="指在手机、PC、汽车、IoT设备等本地终端上直接运行的AI模型与应用">端侧AI</a>芯片、轻量化大模型、多传感融合等底层技术不断取得突破，推动智能硬件逐步降低对云端算力的依赖，本地自主感知、分析决策与功能迭代的能力持续增强，产业端的数字化赋能效果也得到了较为明显的改善与提升。然而，行业发展仍面临碎片化竞争加剧、供应链成本承压、场景规模化落地不足、数据安全合规要求升级等现实挑战。传统依托硬件参数堆砌、低价代工走量的增长路径，已难以适配AI原生阶段的竞争要求。基于上述行业背景，36氪研究院发布《2026年中国智能硬件行业发展研究报告》，系统梳理行业发展脉络与产业生态格局，拆解产业链上中下游的升级方向，并结合典型企业实践，研判未来技术演进、场景拓展与全球化布局趋势，为行业各方参与者提供多维度的决策参考。</p>
   <h2><strong>中国智能硬件迈入AI原生发展初期，端侧自主智能正在重构产品核心逻辑</strong></h2>
   <p>国内智能硬件已完整走完单品智能化阶段，当前正从场景互联向AI原生智能阶段过渡。新一代智能硬件在研发阶段即内嵌本地AI算力单元，可脱离云端自主完成环境感知、多模态交互与动态决策，打破了传统固定联动指令的局限。产品核心竞争力从硬件规格参数转向端侧AI体验，消费端与产业端均围绕本地自主智能能力展开差异化创新，行业整体进入智能范式切换的关键节点。</p>

@@ -46,7 +46,15 @@
   .dp-quip{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.66;font-weight:600;color:var(--blue-deep);background:var(--blue-50);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:18px}
   .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
   .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
-  .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  .dp-brief b{display:flex;align-items:baseline;gap:8px;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  /* AI 产出物的就地标注(2026-07-30): 概念页的定义早就在页尾注明「由 AI 加工层生成、编辑
+     维护」, 而详情页的简报与锐评一直没标 —— 读者会把那句锐评当成编辑观点。283 页都有这两块,
+     不标就是 283 次误导。放在区块内而不是只放页尾: 页尾声明读者多半划不到, 而标注要落在
+     人实际阅读的位置才有意义。样式压到最小, 不抢正文。 */
+  .dp-brief b em,.dp-quip em{font-style:normal;font-family:var(--mono);font-size:10px;font-weight:600;
+    letter-spacing:0;color:var(--ink-3);white-space:nowrap}
+  .dp-brief b em{margin-left:auto}
+  .dp-quip em{display:block;margin-top:5px;opacity:.85}
   /* 长文目录(≥3 小标题且正文 ≥2000 字才出): <details> 原生可折叠, 不用一行 JS。
      默认 open —— 目录的用处是先看清结构再决定读哪段, 收起来就失去意义; 想收也一点即收。 */
   .dp-toc{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:24px;background:#FBFCFF}
@@ -110,8 +118,8 @@
     
     <p class="dp-by">来源：36氪 · 行业动态</p>
     <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（36氪 · 行业动态）所有 · <a href="https://36kr.com/newsflashes/3916706867867009?f=rss" target="_blank" rel="noopener">阅读原文</a></span></div>
-    <p class="dp-quip"><i class="fa-solid fa-quote-left"></i>AI证券服务合规边界明确，企业级应用需谨慎</p>
-    <div class="dp-brief"><b>简报</b>上交所投保专委会调研防非打非、AI应用及纠纷化解，关注机制实际效能和跨部门协同。</div>
+    <p class="dp-quip"><i class="fa-solid fa-quote-left"></i>AI证券服务合规边界明确，企业级应用需谨慎<em>AI 加工层生成</em></p>
+    <div class="dp-brief"><b>简报<em>AI 加工层生成</em></b>上交所投保专委会调研防非打非、AI应用及纠纷化解，关注机制实际效能和跨部门协同。</div>
     <article class="dp-body"><h1>上交所投保专委会三大调研齐发，全面覆盖防非打非、AI应用与纠纷化解</h1>2026-07-29 20:40分享至<a href="https://service.weibo.com/share/share.php?appkey=595885820&amp;url=https://36kr.com/newsflashes/3916706867867009&amp;title=上交所投保专委会三大调研齐发，全面覆盖防非打非、AI应用与纠纷化解" target="_blank" rel="noopener nofollow"> </a><pre>7月29日从业内获悉，上海证券交易所理事会投资者教育和保护专门委员会今年确定三项重点研究课题——非法证券活动的防控机制建设、人工智能在证券服务中的应用边界与合规治理、证券公司投诉典型情形识别与纠纷化解机制。目前，对应三份专项调研问卷已陆续发至各会员单位，一场覆盖证券行业的投保体系“深度体检”正在展开。券商人士表示，从问卷设计来看，监管思路正从“有没有”转向“好不好”——不再满足于建章立制，而是深入到机制运转的实际效能、技术手段的真实效果、跨部门协同的堵点打通层面。相关调研成果有望为后续行业政策制定与最佳实践推广提供一手依据。（中证报）</pre><h3>下一篇</h3><p>美国商务部7月29日宣布，根据《芯片与科学法案》，已与7家公司签署意向书，拟提供总额8.74亿美元的联邦激励资金，用于支持集成光子、计算架构、先进封装、基板、材料和存储等领域的半导体研发。（新浪财经）</p><p>3小时前</p></article>
     <div class="dp-actions">
       <a class="dp-btn pri" href="https://36kr.com/newsflashes/3916706867867009?f=rss" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>

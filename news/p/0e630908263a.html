@@ -46,7 +46,15 @@
   .dp-quip{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.66;font-weight:600;color:var(--blue-deep);background:var(--blue-50);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:18px}
   .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
   .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
-  .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  .dp-brief b{display:flex;align-items:baseline;gap:8px;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  /* AI 产出物的就地标注(2026-07-30): 概念页的定义早就在页尾注明「由 AI 加工层生成、编辑
+     维护」, 而详情页的简报与锐评一直没标 —— 读者会把那句锐评当成编辑观点。283 页都有这两块,
+     不标就是 283 次误导。放在区块内而不是只放页尾: 页尾声明读者多半划不到, 而标注要落在
+     人实际阅读的位置才有意义。样式压到最小, 不抢正文。 */
+  .dp-brief b em,.dp-quip em{font-style:normal;font-family:var(--mono);font-size:10px;font-weight:600;
+    letter-spacing:0;color:var(--ink-3);white-space:nowrap}
+  .dp-brief b em{margin-left:auto}
+  .dp-quip em{display:block;margin-top:5px;opacity:.85}
   /* 长文目录(≥3 小标题且正文 ≥2000 字才出): <details> 原生可折叠, 不用一行 JS。
      默认 open —— 目录的用处是先看清结构再决定读哪段, 收起来就失去意义; 想收也一点即收。 */
   .dp-toc{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:24px;background:#FBFCFF}
@@ -110,8 +118,8 @@
     
     <p class="dp-by">来源：爱范儿 · 行业动态</p>
     <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（爱范儿 · 行业动态）所有 · <a href="https://www.ifanr.com/1672938?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=" target="_blank" rel="noopener">阅读原文</a></span></div>
-    <p class="dp-quip"><i class="fa-solid fa-quote-left"></i>自建AI生态成为企业应对API垄断的必然选择</p>
-    <div class="dp-brief"><b>简报</b>王虹、邓煜获2026年菲尔兹奖，中国籍数学家首次获此荣誉。极氪车主跨境后车机被锁，苹果Apple Store将上线AI购物助手。</div>
+    <p class="dp-quip"><i class="fa-solid fa-quote-left"></i>自建AI生态成为企业应对API垄断的必然选择<em>AI 加工层生成</em></p>
+    <div class="dp-brief"><b>简报<em>AI 加工层生成</em></b>王虹、邓煜获2026年菲尔兹奖，中国籍数学家首次获此荣誉。极氪车主跨境后车机被锁，苹果Apple Store将上线AI购物助手。</div>
     <details class="dp-toc" open><summary><i class="fa-solid fa-list-ul"></i>目录<span>29 节</span></summary><ol><li class="lv3"><a href="#h1">王虹、邓煜获 2026 年菲尔兹奖，中国籍数学家首次获此荣誉</a></li><li class="lv3"><a href="#h2">iOS 27 代码：iPhone 分期逾期后可能限制应用使用</a></li><li class="lv3"><a href="#h3">多款高端手机涨价 1000 元以上，存储芯片成本挤压终端定价</a></li><li class="lv3"><a href="#h4">荣耀官宣新 Logo，Robot Phone 8 月亮相</a></li><li class="lv3"><a href="#h5">极氪车主跨境进入哈萨克斯坦后车机被锁约 30 小时</a></li><li class="lv3"><a href="#h6">ChatGPT 与 Claude 同日更新语音功能</a></li><li class="lv3"><a href="#h7">腾讯混元多模态理解负责人胡瀚离职，原团队或转向世界模型研究</a></li><li class="lv3"><a href="#h8">字节跳动 Seed 启动 STEM 科学家计划，首期招募 100 位学者参与 AI 科研</a></li><li class="lv3"><a href="#h9">特斯拉进入大型投资周期：年资本开支超 250 亿美元，自由现金流预计持续为负</a></li><li class="lv3"><a href="#h10">约 200 家美国小型科技公司联署，反对全面封禁中国开源模型</a></li><li class="lv3"><a href="#h11">英特尔、AMD 与中国服务器客户讨论长期供货协议，部分 CPU 年内涨价超 40%</a></li><li class="lv3"><a href="#h12">牧师称 ChatGPT 健康建议险些致命，起诉 OpenAI</a></li><li class="lv3"><a href="#h13">苹果 Apple Store 应用准备上线「AI 购物助手」，辅助用户挑选商品</a></li><li class="lv3"><a href="#h14">Uber 裁减 10% 客服岗位：将「拥抱」人工智能</a></li><li class="lv3"><a href="#h15">Alphabet 二季度营收增长 24%，AI 基础设施支出预期上调至 1950 亿～2050 亿美元</a></li><li class="lv3"><a href="#h16">IBM 二季度营收 171.62 亿美元，主机业务收入下滑 42%</a></li><li class="lv3"><a href="#h17">💡 梁文锋：DeepSeek 不追求成为下一个字节或腾讯，克制、开源与低成本是实现 AGI 的核心策略</a></li><li class="lv3"><a href="#h18">三星发布 Galaxy Watch Ultra2 与 Watch9</a></li><li class="lv3"><a href="#h19">Cursor Router 上线：按任务自动选择模型，官方称可节省 60% 成本</a></li><li class="lv3"><a href="#h20">飞书 aily 升级为团队 Agent，可在群聊、文档和表格中直接执行任务</a></li><li class="lv3"><a href="#h21">大众汽车集团与中国企业合作开发自动驾驶系统</a></li><li class="lv3"><a href="#h22">PRIMA 视网膜芯片获欧洲销售许可，通过植入物与摄像眼镜恢复中央视野</a></li><li class="lv3"><a href="#h23">谷歌 Pixel 11/Pro/ Pro XL 手机渲染图曝光：均配 4 种颜色</a></li><li class="lv3"><a href="#h24">Steam 送礼功能重大更新：低价区赠高价区自动按对方价格计算，愿望单功能优化</a></li><li class="lv3"><a href="#h25">男子用 AI 伪造烂果图骗取「仅退款」，4 个月涉案 1.6 万余元</a></li><li class="lv3"><a href="#h26">任天堂《斯普拉遁：涂击队》正式发售：港区定价 379 港币起，同捆 Switch 2 及 Joycon2 手柄同步上市</a></li><li class="lv3"><a href="#h27">马斯克称将用 Grok 制作《奥德赛》，《奇异博士》导演：他不懂电影</a></li><li class="lv3"><a href="#h28">《生活大爆炸》新衍生剧主创：Stuart 是最差也最合适的主角</a></li><li class="lv3"><a href="#h29">Netflix 与延相浩重新合作拍摄《寄生虫：田宫》系列</a></li></ol></details><article class="dp-body"><p>🇨🇳</p>
 
 <p>王虹、邓煜获 2026 年菲尔兹奖，中国籍数学家首次获此荣誉</p>

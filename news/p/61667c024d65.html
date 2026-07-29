@@ -46,7 +46,15 @@
   .dp-quip{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.66;font-weight:600;color:var(--blue-deep);background:var(--blue-50);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:18px}
   .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
   .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
-  .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  .dp-brief b{display:flex;align-items:baseline;gap:8px;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  /* AI 产出物的就地标注(2026-07-30): 概念页的定义早就在页尾注明「由 AI 加工层生成、编辑
+     维护」, 而详情页的简报与锐评一直没标 —— 读者会把那句锐评当成编辑观点。283 页都有这两块,
+     不标就是 283 次误导。放在区块内而不是只放页尾: 页尾声明读者多半划不到, 而标注要落在
+     人实际阅读的位置才有意义。样式压到最小, 不抢正文。 */
+  .dp-brief b em,.dp-quip em{font-style:normal;font-family:var(--mono);font-size:10px;font-weight:600;
+    letter-spacing:0;color:var(--ink-3);white-space:nowrap}
+  .dp-brief b em{margin-left:auto}
+  .dp-quip em{display:block;margin-top:5px;opacity:.85}
   /* 长文目录(≥3 小标题且正文 ≥2000 字才出): <details> 原生可折叠, 不用一行 JS。
      默认 open —— 目录的用处是先看清结构再决定读哪段, 收起来就失去意义; 想收也一点即收。 */
   .dp-toc{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:24px;background:#FBFCFF}
@@ -111,7 +119,7 @@
     <p class="dp-by">来源：云风 · 大咖观点</p>
     <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（云风 · 大咖观点）所有 · <a href="https://blog.codingnow.com/2026/06/powersort.html" target="_blank" rel="noopener">阅读原文</a></span></div>
     
-    <div class="dp-brief"><b>简报</b>分析快速排序与插入排序的稳定性差异，插入排序对有序序列效率高但对逆序序列性能退化。</div>
+    <div class="dp-brief"><b>简报<em>AI 加工层生成</em></b>分析快速排序与插入排序的稳定性差异，插入排序对有序序列效率高但对逆序序列性能退化。</div>
     <article class="dp-body"><p>quicksort 是基于比较的排序中表现最好的算法，它在大多数情况下都能接近时间复杂度 O(n log n) ，所以 qsort() 也是 C 标准库中排序的默认实现。但是，quicksort 是非稳定排序，即当原始序列中出现相同的元素时，经过 qsort ，这些相同元素的次序可能被调整。即两个 key 相同的元素，经过排序可能调换次序。</p>
 
 <p>在某些场合，我们希望排序是稳定 stable 的。因为元素的 key 相同，但元素本身可以不相同。这些有着相同 key 的元素一开始以某种次序放入序列，我们不希望对 key 排序后，打乱原有的次序。当需要稳定性时，还有许多经典排序算法可供选择，例如插入排序，它非常简单，每次从无序序列中选择一个元素和有序序列的最后一个元素比较，要么追加在最后，要么向前依次比较，直到找到合适的位置插入。对已经有序的序列，插入排序的时间复杂度为 O(n) ，但对于逆序的序列，它会退化到 O(n^2) ，因为每个元素都要和之前所有元素比较一次，插入到最前。所以插入排序对于非特定场景（无特定规律的数据）的平均时间复杂度接近 O(n^2) 超过快速排序的 O(n log n) 。</p>

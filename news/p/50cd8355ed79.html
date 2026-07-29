@@ -46,7 +46,15 @@
   .dp-quip{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.66;font-weight:600;color:var(--blue-deep);background:var(--blue-50);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:18px}
   .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
   .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
-  .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  .dp-brief b{display:flex;align-items:baseline;gap:8px;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  /* AI 产出物的就地标注(2026-07-30): 概念页的定义早就在页尾注明「由 AI 加工层生成、编辑
+     维护」, 而详情页的简报与锐评一直没标 —— 读者会把那句锐评当成编辑观点。283 页都有这两块,
+     不标就是 283 次误导。放在区块内而不是只放页尾: 页尾声明读者多半划不到, 而标注要落在
+     人实际阅读的位置才有意义。样式压到最小, 不抢正文。 */
+  .dp-brief b em,.dp-quip em{font-style:normal;font-family:var(--mono);font-size:10px;font-weight:600;
+    letter-spacing:0;color:var(--ink-3);white-space:nowrap}
+  .dp-brief b em{margin-left:auto}
+  .dp-quip em{display:block;margin-top:5px;opacity:.85}
   /* 长文目录(≥3 小标题且正文 ≥2000 字才出): <details> 原生可折叠, 不用一行 JS。
      默认 open —— 目录的用处是先看清结构再决定读哪段, 收起来就失去意义; 想收也一点即收。 */
   .dp-toc{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:24px;background:#FBFCFF}
@@ -110,8 +118,8 @@
     
     <p class="dp-by">来源：雷锋网 · 行业动态</p>
     <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（雷锋网 · 行业动态）所有 · <a href="https://www.leiphone.com/category/industrynews/NUlmI6oIv8mgLWxI.html" target="_blank" rel="noopener">阅读原文</a></span></div>
-    <p class="dp-quip"><i class="fa-solid fa-quote-left"></i>企业AI化需老板带头，验证了决策链的重要性</p>
-    <div class="dp-brief"><b>简报</b>周鸿祎用纳米Work改造360内部工作流，推动AI原生转型。他作为“试验对象”搭建CEO超级助理，通过组织级系统改造验证AI原生路径。</div>
+    <p class="dp-quip"><i class="fa-solid fa-quote-left"></i>企业AI化需老板带头，验证了决策链的重要性<em>AI 加工层生成</em></p>
+    <div class="dp-brief"><b>简报<em>AI 加工层生成</em></b>周鸿祎用纳米Work改造360内部工作流，推动AI原生转型。他作为“试验对象”搭建CEO超级助理，通过组织级系统改造验证AI原生路径。</div>
     <article class="dp-body"><p>7月28日，360集团创始人周鸿祎在纳米Work发布会上披露，过去30天，他带头用纳米Work改造360，推动智能体进入真实办公和业务流程，重构企业工作流及组织方式。目前，这套由360自身验证的AI原生改造方法，正通过纳米Work向更多企业开放。</p><p><img loading="lazy" onerror="this.style.display='none'" src="https://static.leiphone.com/uploads/new/images/20260729/6a698a177e511.jpg?imageMogr2/quality/90" alt="周鸿祎用纳米Work 30天改造360：企业AI化，老板要先用" referrerpolicy="no-referrer" /></p><p>“AI越来越强，你的公司真的变快了吗？”周鸿祎认为，真正的AI原生转型，不是全员跟风堆砌AI工具，而是让智能体进入真实业务、参与协作、承担任务，进而重构企业的工作流和组织方式。目前，硅谷一些AI原生公司已跑出新的组织模式，对于业务复杂、组织成熟的中国企业，如何在原有体系中完成AI原生改造，仍缺少一条经过验证的路径。</p><p>为了验证这条路，周鸿祎决定先拿360做实验。过去30天，他带头启动360内部改造，按照“构想、纠偏、实施、跑通”四个阶段推进，让智能体正式进入办公网，并推动全员参与，把员工零散使用AI的个人行为，变成一场组织级的系统改造。其间，360召开50多场产品讨论会，相关方案迭代166版。</p><p>据悉，周鸿祎也率先把自己作为“试验对象”，用纳米Work搭建CEO超级助理。会议结束后，AI自动形成纪要、拆解任务并持续跟进。面对项目进展和外部情报，AI能够筛选重点、分析影响，帮助管理者更快掌握一线情况。</p><p>随着智能体进入真实工作，360的信息传递、任务协同和知识沉淀方式也随之改变：信息不再完全依赖层层汇报，任务不再只靠人工催办，员工训练出的专家、Skill和跑通的方法被沉淀为组织记忆，实现共享、复用和持续迭代。</p><p>这场改造也让周鸿祎得出一个结论：企业AI化，老板要先用。从管理者开始，推动AI进入企业的核心流程。只有老板真正使用，才能带动高管和员工共同参与，把分散的超级个体组织起来，推动企业从个人提效走向组织升级，最终进化为“超级组织”。</p><p>周鸿祎表示，企业AI化不能停留在采购工具或鼓励员工零散使用AI，而要真正重构工作流和组织方式。360先拿自己改造，再将跑通的方法沉淀进纳米Work，帮助更多企业从个人提效走向组织升级。</p><p>雷峰网 雷峰网(公众号：雷峰网)</p></article>
     <div class="dp-actions">
       <a class="dp-btn pri" href="https://www.leiphone.com/category/industrynews/NUlmI6oIv8mgLWxI.html" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
