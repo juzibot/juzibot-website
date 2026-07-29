@@ -47,6 +47,22 @@
   .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
   .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
   .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  /* 长文目录(≥3 小标题且正文 ≥2000 字才出): <details> 原生可折叠, 不用一行 JS。
+     默认 open —— 目录的用处是先看清结构再决定读哪段, 收起来就失去意义; 想收也一点即收。 */
+  .dp-toc{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:24px;background:#FBFCFF}
+  .dp-toc summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--ink-2);display:flex;align-items:center;gap:7px;list-style:none}
+  .dp-toc summary::-webkit-details-marker{display:none}
+  .dp-toc summary i{font-size:11px;color:var(--blue)}
+  .dp-toc summary span{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-3);margin-left:auto}
+  .dp-toc ol{list-style:none;margin:10px 0 2px;padding:0;counter-reset:toc}
+  .dp-toc li{counter-increment:toc;font-size:13px;line-height:1.7;padding:2px 0}
+  .dp-toc li::before{content:counter(toc) ". ";font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .dp-toc li.lv3{padding-left:16px}
+  .dp-toc li.lv4{padding-left:32px}
+  .dp-toc a{color:var(--ink-2);text-decoration:none;overflow-wrap:anywhere}
+  .dp-toc a:hover{color:var(--blue)}
+  /* 锚点跳转时标题别贴到视口顶端(站点顶栏会盖住) */
+  .dp-body h2[id],.dp-body h3[id],.dp-body h4[id]{scroll-margin-top:76px}
   .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
   .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
   .dp-body p{margin:0 0 1.05em}
@@ -96,7 +112,7 @@
     <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（阮一峰 · 大咖观点）所有 · <a href="http://www.ruanyifeng.com/blog/2026/07/weekly-issue-405.html" target="_blank" rel="noopener">阅读原文</a></span></div>
     
     <div class="dp-brief"><b>简报</b>科技爱好者周刊探讨资源、社会公平与算力的关系。哲学家认为人均用电量超过阈值后，能源增长会牺牲社会公平。</div>
-    <article class="dp-body"><h1>科技爱好者周刊（第 405 期）：资源，社会公平与算力</h1>
+    <details class="dp-toc" open><summary><i class="fa-solid fa-list-ul"></i>目录<span>12 节</span></summary><ol><li class="lv2"><a href="#h1">封面图</a></li><li class="lv2"><a href="#h2">资源，社会公平与算力</a></li><li class="lv2"><a href="#h3">如何破坏一个组织</a></li><li class="lv2"><a href="#h4">科技动态</a></li><li class="lv2"><a href="#h5">文章</a></li><li class="lv2"><a href="#h6">工具</a></li><li class="lv2"><a href="#h7">AI 相关</a></li><li class="lv2"><a href="#h8">资源</a></li><li class="lv2"><a href="#h9">图片</a></li><li class="lv2"><a href="#h10">文摘</a></li><li class="lv2"><a href="#h11">言论</a></li><li class="lv2"><a href="#h12">往年回顾</a></li></ol></details><article class="dp-body"><h1>科技爱好者周刊（第 405 期）：资源，社会公平与算力</h1>
 
 
 
@@ -121,13 +137,13 @@
                                     
                                         <p>本杂志<a href="https://github.com/ruanyf/weekly" target="_blank" rel="noopener nofollow">开源</a>，欢迎<a href="https://github.com/ruanyf/weekly/issues" target="_blank" rel="noopener nofollow">投稿</a>。另有<a href="https://github.com/ruanyf/weekly/issues/10517" target="_blank" rel="noopener nofollow">《谁在招人》</a>服务，发布程序员招聘信息。合作请<a href="http://www.ruanyifeng.com/cdn-cgi/l/email-protection#225b4b44474c450c5057434c62454f434b4e0c414d4f" target="_blank" rel="noopener nofollow">邮件联系</a>（<a href="http://www.ruanyifeng.com/cdn-cgi/l/email-protection" target="_blank" rel="noopener nofollow">[email protected]</a>）。</p>
 
-<h2>封面图</h2>
+<h2 id="h1">封面图</h2>
 
 <p><img loading="lazy" onerror="this.style.display='none'" src="https://cdn.beekka.com/blogimg/asset/202607/bg2026072311.webp" referrerpolicy="no-referrer" /></p>
 
 <p>西安大明宫遗址，使用亚克力透明板绘制古代建筑，让游客在原址体验当年的场景。（<a href="https://www.zhihu.com/pin/1951269113574958756" target="_blank" rel="noopener nofollow">via</a>）</p>
 
-<h2>资源，社会公平与算力</h2>
+<h2 id="h2">资源，社会公平与算力</h2>
 
 <p>分享一个有趣的观点：<strong>资源太多，会造成社会不公平</strong>。我谈不上同意这个观点，就是觉得思路很奇特。</p>
 
@@ -171,7 +187,7 @@
 
 <p>老实说，我有点悲观，觉得做不到，为了提高经济效率，就不可能保证资源的平均分配。</p>
 
-<h2>如何破坏一个组织</h2>
+<h2 id="h3">如何破坏一个组织</h2>
 
 <p>1944年，第二次世界大战正在进行。</p>
 
@@ -204,7 +220,7 @@
 
 <p>只要坚持做到上面六点，就可以破坏一个组织，大到国家，小到团队。</p>
 
-<h2>科技动态</h2>
+<h2 id="h4">科技动态</h2>
 
 <p>1、<a href="https://tris.sherliker.net/blog/obfuscated-self-evaluating-bash-script-by-cdn-akamai-being-supplied-to-consumers-via-retail-stores/" target="_blank" rel="noopener nofollow">Bash 汗衫</a></p>
 
@@ -272,7 +288,7 @@
 
 <p>随着火箭发射能力不断变强，太空中奇奇怪怪的创新项目估计会越来越多。</p>
 
-<h2>文章</h2>
+<h2 id="h5">文章</h2>
 
 <p>1、<a href="https://www.myzaker.com/article/6a60252f8e9f094b4d106689" target="_blank" rel="noopener nofollow">图灵奖得主姚期智最新演讲</a>（中文）</p>
 
@@ -310,7 +326,7 @@
 
 <p>如果要把网页打印出来，CSS 的打印样式应该怎么设置，本文教你入门。</p>
 
-<h2>工具</h2>
+<h2 id="h6">工具</h2>
 
 <p>1、<a href="https://github.com/bruits/satteri" target="_blank" rel="noopener nofollow">Satteri</a></p>
 
@@ -372,7 +388,7 @@
 
 <p>邮件模板的 React 拖拽编辑器，<a href="https://heiheihoho1213.github.io/monto-email-builder/" target="_blank" rel="noopener nofollow">在线试用</a>。（<a href="https://github.com/ruanyf/weekly/issues/10807" target="_blank" rel="noopener nofollow">@akira0912</a> 投稿）</p>
 
-<h2>AI 相关</h2>
+<h2 id="h7">AI 相关</h2>
 
 <p>1、<a href="https://github.com/MartinDelophy/ai-video-editor" target="_blank" rel="noopener nofollow">Timeline Studio</a> </p>
 
@@ -398,7 +414,7 @@
 
 <p>AI 笔记本，谷歌 NotebookLM 的开源替代品。</p>
 
-<h2>资源</h2>
+<h2 id="h8">资源</h2>
 
 <p>1、<a href="https://www.window-swap.com/" target="_blank" rel="noopener nofollow">窗口交换</a>（WindowsSwap）</p>
 
@@ -422,7 +438,7 @@
 
 <p>一个练习 CSS Flex 布局的网站，可以调整各种参数，实时预览效果。</p>
 
-<h2>图片</h2>
+<h2 id="h9">图片</h2>
 
 <p>1、<a href="https://www.thisiscolossal.com/2026/07/daniel-gonzalez-matthew-reinhart-popup-book-los-anglees-library-world-record/" target="_blank" rel="noopener nofollow">世界最大立体书</a></p>
 
@@ -452,7 +468,7 @@
 
 <p>但是，有些公司的联系页是上图右边那样，潜台词就是&quot;快滚，别来联系我&quot;。</p>
 
-<h2>文摘</h2>
+<h2 id="h10">文摘</h2>
 
 <p>1、<a href="https://unchartedterritories.tomaspueyo.com/p/geohistory-dispatch" target="_blank" rel="noopener nofollow">宗族对文明不利</a></p>
 
@@ -464,7 +480,7 @@
 
 <p>而且，宗族会扼杀人的雄心，因为你的成功会被整个宗族分享，同时你也能分享族人的成功，这会抑制个人奋斗和努力工作。</p>
 
-<h2>言论</h2>
+<h2 id="h11">言论</h2>
 
 <p>1、</p>
 
@@ -496,7 +512,7 @@
 
 <p>-- <a href="https://0x1.pt/2025/04/06/the-insanity-of-being-a-software-engineer/" target="_blank" rel="noopener nofollow">《做一个软件工程师的疯狂》</a></p>
 
-<h2>往年回顾</h2>
+<h2 id="h12">往年回顾</h2>
 
 <p><a href="https://www.ruanyifeng.com/blog/2025/07/weekly-issue-358.html" target="_blank" rel="noopener nofollow">如何拯救一家濒临倒闭的创业公司</a>（#358）</p>
 

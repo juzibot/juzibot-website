@@ -47,6 +47,22 @@
   .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
   .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
   .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  /* 长文目录(≥3 小标题且正文 ≥2000 字才出): <details> 原生可折叠, 不用一行 JS。
+     默认 open —— 目录的用处是先看清结构再决定读哪段, 收起来就失去意义; 想收也一点即收。 */
+  .dp-toc{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:24px;background:#FBFCFF}
+  .dp-toc summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--ink-2);display:flex;align-items:center;gap:7px;list-style:none}
+  .dp-toc summary::-webkit-details-marker{display:none}
+  .dp-toc summary i{font-size:11px;color:var(--blue)}
+  .dp-toc summary span{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-3);margin-left:auto}
+  .dp-toc ol{list-style:none;margin:10px 0 2px;padding:0;counter-reset:toc}
+  .dp-toc li{counter-increment:toc;font-size:13px;line-height:1.7;padding:2px 0}
+  .dp-toc li::before{content:counter(toc) ". ";font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .dp-toc li.lv3{padding-left:16px}
+  .dp-toc li.lv4{padding-left:32px}
+  .dp-toc a{color:var(--ink-2);text-decoration:none;overflow-wrap:anywhere}
+  .dp-toc a:hover{color:var(--blue)}
+  /* 锚点跳转时标题别贴到视口顶端(站点顶栏会盖住) */
+  .dp-body h2[id],.dp-body h3[id],.dp-body h4[id]{scroll-margin-top:76px}
   .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
   .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
   .dp-body p{margin:0 0 1.05em}
@@ -96,7 +112,7 @@
     <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（36氪 · 行业动态）所有 · <a href="https://36kr.com/p/3916202023660929?f=rss" target="_blank" rel="noopener">阅读原文</a></span></div>
     <p class="dp-quip"><i class="fa-solid fa-quote-left"></i>持续学习能力决定企业级AI员工的服务深度</p>
     <div class="dp-brief"><b>简报</b>Mind Lab押注持续学习方向，与强化学习之父Sutton观点一致，团队来自xAI、DeepMind等企业。</div>
-    <article class="dp-body"><p><strong>文｜王欣逸</strong></p>
+    <details class="dp-toc" open><summary><i class="fa-solid fa-list-ul"></i>目录<span>3 节</span></summary><ol><li class="lv3"><a href="#h1">经验的智能：让模型越来越懂你</a></li><li class="lv3"><a href="#h2">协作的智能：用Mixture of LoRA突破智能的上限</a></li><li class="lv3"><a href="#h3">从后训练，到持续学习</a></li></ol></details><article class="dp-body"><p><strong>文｜王欣逸</strong></p>
   <p><strong>编辑｜张雨忻</strong></p>
   <p>见到Mind Lab创始人陈锴杰，是在北京的晚上9点半，他已经见了一天的投资人。</p>
   <p>陈锴杰是一位连续创业者，从杜克大学休学，做过AI互动故事平台MidReal，也推出了Personal Agent应用Macaron（马卡龙），上线当天就登顶了Product Hunt日榜；2025年10月，Mind Lab成立，团队约30余人，Mind Lab创始人Andrew Chen曾和姚顺雨共同发表FireAct论文，团队主要来自xAI、DeepMind、DeepSeek、字节跳动Seed、MIT和清华大学等企业与高校。他们以Neo Lab的形象再度出现在大众的视野里。</p>
@@ -111,7 +127,7 @@
   <p>这也意味着，<strong>仅仅改变4B参数，这支团队让GLM-5.2实现了超越自身的能力。</strong></p>
   <p>对Mind Lab来说，创业是无数次保持主线与推翻重做的过程。剥去外部的各种喧嚣，在团队内部，一条更为深远的技术路线在不断进化当中——持续学习。</p>
   <p>与此同时，一线资本也纷纷押注。<strong>成立以来，Mind Lab母公司Mindverse（心洲科技）累计获得6000万美元融资。</strong>2026年年初，完成由美团战投领投的近5000万美元A轮融资，元禾璞华、韶音科技、变量资本及老股东追加跟投。历史股东包括蚂蚁集团、红杉中国、源一、真格、高榕等。</p>
-  <h3><strong>经验的智能：让模型越来越懂你</strong></h3>
+  <h3 id="h1"><strong>经验的智能：让模型越来越懂你</strong></h3>
   <p>最初的出发点，可以追溯到2023年Mind Lab联合创始人Andrew和姚顺雨合作的一篇FireAct论文。那时他们认为，想要提升Agent的任务表现，与其做提示词工程，不如把相关的数据直接训进模型里。</p>
   <p>这是他们押注持续学习和后训练的起点，当时，这还不算一个广受关注的技术路线。“当我们开始做持续学习的时候，我们都不知道它叫持续学习。”陈锴杰说。</p>
   <p>已有技术存在的问题是，一个通用大模型难以做好对所有场景的适配，在模型训练结束后，其参数往往是固定的，不会因为具体的场景而改变模型的参数，从头训模型的成本又非常高。</p>
@@ -136,7 +152,7 @@
   <p>基于这个理解，陈锴杰认为要把模型放进不同的经验之中，让它不断去成长。</p>
   <p>Mind Lab将这套思路总结为“经验智能”（Experiential Intelligence）：模型可以从自己的经历中学习，经验转化为新能力，新能力让它能解决更难的问题，更难的问题又带来更丰富的经验，智能由此成为了一个持续生长的过程。不仅如此，这个过程是自动化的，模型需要不断的自进化、自迭代，这样才能做到真正的“持续学习”。这一方向，也与Sutton的“经验驱动”路线不谋而合。</p>
   <p>Macaron-V1-Preview和Macaron-V1的相继推出与市场化验证，也让大众看到了经验智能的可能性。</p>
-  <h3><strong>协作的智能：用Mixture of LoRA突破智能的上限</strong></h3>
+  <h3 id="h2"><strong>协作的智能：用Mixture of LoRA突破智能的上限</strong></h3>
   <p>在陈锴杰看来，后训练正在逐渐成为一个赛道。目前，行业内出现了一批专门承接预训练完成后的模型、聚焦后训练方向的创业公司。其中，有不少玩家聚焦在小模型场景，做垂直细分领域的后训练、数据处理相关工作。</p>
   <p>在LoRA路线上，Mind Lab并非孤军奋战，陈锴杰告诉我们，他们的技术和Thinking Machines Lab是高度一致的，尤其是在选取LoRA训练的路线上。TML在其论文《LoRA Without Regret》中也独立印证了同一结论：<strong>在足够大的MoE模型上用LoRA做强化学习，性能没有任何损失。</strong></p>
   <p>不过，强化学习还需要和模型架构耦合。由于架构的不同，Thinking Machine s Lab和Mind Lab能训练的模型有一定的差异。比如GLM-5系列引入了MTP（多Token预测）和DSA（动态稀疏注意力）等高效推理架构，这些设计对训练框架有特定的适配要求，而Thinking Machines Lab的整个技术栈是为DeepSeek-V3标准架构打造的，因此难以兼容GLM。</p>
@@ -147,7 +163,7 @@
   <p>二是，相比用这200份数据训出的一个LoRA，让200个LoRA共同协作后的模型表现会更好，较前者能提升约25%的能力。</p>
   <p>这也让Mind Lab看到了模型协作能突破的智能上限，单一的LoRA是不够的，MoL（Mixture of LoRA）可能是更为有效的办法。“这也是一个需要持续探索的话题，比如多少数量的LoRA协作是更有意义的，LoRA与LoRA之间的协作如何分工，什么时候需要协作以及什么时候一个LoRA就足够了。”</p>
   <p>国内后训练的竞争也在加速。赛道内的玩家各有所长，但能在万亿参数规模上同时跑通LoRA-RL、构建百万级LoRA管理基础设施、并将持续学习落地到商业场景的团队，仍然不多。</p>
-  <h3><strong>从后训练，到持续学习</strong></h3>
+  <h3 id="h3"><strong>从后训练，到持续学习</strong></h3>
   <p>Mind Lab目前的业务被划分成了三个部分：持续做Infra系统和后训练的前沿研究；做C端产品Macaron（马卡龙）的更新和迭代；以及在B端做好客户服务，一方面是为微软云、华为云等企业部署更便宜的训练Infra，另一方面是提供MinT及持续学习的LoRA模型。</p>
   <p>其中，Macaron App的定位是一个生活场景的个人Agent，用户可以通过自然语言生成专属小应用，基于长记忆与日常对话，提供日常生活辅助以及情感陪伴等功能作为C端场景的应用，Macaron积累的用户交互数据对模型训练同样具有重要价值，这些真实使用场景中的行为表现，能帮助团队更深入地理解用户与模型的互动方式。</p>
   <p>值得一提的是，B端客户中，有不少是智能硬件厂商，而智能硬件恰好是持续学习模型落地的天然场景，不同用户使用中积累的数据几乎都不相同，个人化、差异化的数据，对模型垂直领域的个性化持续学习很有价值。</p>

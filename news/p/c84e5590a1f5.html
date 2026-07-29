@@ -47,6 +47,22 @@
   .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
   .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
   .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  /* 长文目录(≥3 小标题且正文 ≥2000 字才出): <details> 原生可折叠, 不用一行 JS。
+     默认 open —— 目录的用处是先看清结构再决定读哪段, 收起来就失去意义; 想收也一点即收。 */
+  .dp-toc{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:24px;background:#FBFCFF}
+  .dp-toc summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--ink-2);display:flex;align-items:center;gap:7px;list-style:none}
+  .dp-toc summary::-webkit-details-marker{display:none}
+  .dp-toc summary i{font-size:11px;color:var(--blue)}
+  .dp-toc summary span{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-3);margin-left:auto}
+  .dp-toc ol{list-style:none;margin:10px 0 2px;padding:0;counter-reset:toc}
+  .dp-toc li{counter-increment:toc;font-size:13px;line-height:1.7;padding:2px 0}
+  .dp-toc li::before{content:counter(toc) ". ";font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .dp-toc li.lv3{padding-left:16px}
+  .dp-toc li.lv4{padding-left:32px}
+  .dp-toc a{color:var(--ink-2);text-decoration:none;overflow-wrap:anywhere}
+  .dp-toc a:hover{color:var(--blue)}
+  /* 锚点跳转时标题别贴到视口顶端(站点顶栏会盖住) */
+  .dp-body h2[id],.dp-body h3[id],.dp-body h4[id]{scroll-margin-top:76px}
   .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
   .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
   .dp-body p{margin:0 0 1.05em}
@@ -96,7 +112,7 @@
     <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（量子位 · 行业动态）所有 · <a href="https://www.qbitai.com/2026/07/460892.html" target="_blank" rel="noopener">阅读原文</a></span></div>
     <p class="dp-quip"><i class="fa-solid fa-quote-left"></i>吴恩达桌面Agent的隐私设计值得企业参考</p>
     <div class="dp-brief"><b>简报</b>吴恩达开源个人桌面Agent项目OpenWorker，支持跨文件、日历等工具操作，主打开放、本地优先和隐私保护。</div>
-    <article class="dp-body"><h1>100%开源！吴恩达做了个个人桌面Agent</h1>
+    <details class="dp-toc" open><summary><i class="fa-solid fa-list-ul"></i>目录<span>5 节</span></summary><ol><li class="lv2"><a href="#h1">吴恩达，开始造AI同事了</a></li><li class="lv2"><a href="#h2">不给建议，直接给成品</a></li><li class="lv2"><a href="#h3">能干活，也能主动请示、不自作主张</a></li><li class="lv2"><a href="#h4">模型随便换，数据可以留在本地</a></li><li class="lv2"><a href="#h5">AI Agent要会交活</a></li></ol></details><article class="dp-body"><h1>100%开源！吴恩达做了个个人桌面Agent</h1>
     			   
              <img loading="lazy" onerror="this.style.display='none'" src="http://www.qbitai.com/wp-content/themes/liangziwei/imagesnew/head.jpg" referrerpolicy="no-referrer" /><em><a href="https://www.qbitai.com/author/wenting" target="_blank" rel="noopener nofollow">文婷</a></em>
                           2026-07-25
@@ -125,7 +141,7 @@
 <p>这次OpenWorker开源，某种意义上也把这个判断又往前推了一步：Agent的下一站，不只在浏览器里，也不只在代码编辑器里，而是在我们的桌面上。</p>
 <p>那么，这个OpenWorker到底能干什么？为什么它值得关注？真正的看点在哪？</p>
 <p>一起来看<img loading="lazy" onerror="this.style.display='none'" src="https://i.qbitai.com/wp-content/uploads/2026/07/8530d5e5a7a750061db57367edd55585.webp" referrerpolicy="no-referrer" />：</p>
-<h2>吴恩达，开始造AI同事了</h2>
+<h2 id="h1">吴恩达，开始造AI同事了</h2>
 <p>OpenWorker的一大看点，在于其开源者是<strong>吴恩达</strong>。</p>
 <img loading="lazy" onerror="this.style.display='none'" src="https://i.qbitai.com/wp-content/uploads/2026/07/2da97e12027bd9cfc8b29e85f9613e3d.webp" referrerpolicy="no-referrer" />
 <p>他是<strong>DeepLearning.AI创始人</strong>、<strong>Coursera联合创始人</strong>，也是<strong>斯坦福大学计算机科学系兼职教授</strong>。</p>
@@ -139,7 +155,7 @@
 <p>吴恩达这一次瞄准的，仍然是<strong>降低AI的使用门槛。</strong></p>
 <p>只不过，<strong>过去交付的是课程；</strong></p>
 <p><strong>这一次，交付的是一个AI同事。</strong></p>
-<h2>不给建议，直接给成品</h2>
+<h2 id="h2">不给建议，直接给成品</h2>
 <p>OpenWorker与普通聊天机器人最直接的区别，可以用<strong>“交付”</strong>一词概括。</p>
 <p>之前使用大模型，通常需要经历一条漫长的任务链，即先让AI分析需求，再让它生成文本，然后自己查找文件、核对数据、调整格式，最后打开Slack、邮箱或者日历，把结果发出去。</p>
 <p>在这个过程中，AI虽然参与了工作，但我们仍然需要在不同软件之间来回倒腾、收拾残局。</p>
@@ -159,7 +175,7 @@
 <p><strong>大模型负责思考，OpenWorker负责让它真正动手。</strong></p>
 <p>听起来真像一对配合默契的工作伙伴！</p>
 <img loading="lazy" onerror="this.style.display='none'" src="https://i.qbitai.com/wp-content/uploads/2026/07/a472b29eb33dbde2afb274093b5eebf5.webp" referrerpolicy="no-referrer" />
-<h2>能干活，也能主动请示、不自作主张</h2>
+<h2 id="h3">能干活，也能主动请示、不自作主张</h2>
 <p>不过，当AI从回答问题走向操作电脑，风险也跟着变了。</p>
 <p>一段回答写错了，可以重新生成。</p>
 <p>但如果AI把你准备发给朋友的吐槽发给领导、删错没有备份的重要文件、改错日程，事情就没有那么简单了。</p>
@@ -171,7 +187,7 @@
 <p>这条设计看起来不起眼，却决定了AI Agent能不能真正进入办公场景。</p>
 <p>毕竟，一个合格的AI同事可以勤快，但不能擅作主张。</p>
 <p><strong>它既要有能力把工作推进下去，也要知道哪些事情必须由人拍板。</strong></p>
-<h2>模型随便换，数据可以留在本地</h2>
+<h2 id="h4">模型随便换，数据可以留在本地</h2>
 <p>除了直接交活，OpenWorker还强调四个特点：<strong>开源、本地优先、隐私保护以及模型无关。</strong></p>
 <p>OpenWorker整个项目<strong>已采用MIT许可证开源</strong>，开发者可以查看代码、修改功能，也可以按照自己的工作流程进行部署。</p>
 <p>它也<strong>不把用户绑定在某一家模型厂商上</strong>。</p>
@@ -186,7 +202,7 @@
 <p>只不过，这两个Windows版本还没有完成代码签名，安装时可能会触发SmartScreen提醒。</p>
 <img loading="lazy" onerror="this.style.display='none'" src="https://i.qbitai.com/wp-content/uploads/2026/07/8e864a7ba269f7d217b23462a8a9c1a0.webp" referrerpolicy="no-referrer" />
 <p>这表示<strong>OpenWorker确实能用了，只是很多边角还在打磨。</strong>感兴趣的小伙伴可以蹲一波后续更新。</p>
-<h2>AI Agent要会交活</h2>
+<h2 id="h5">AI Agent要会交活</h2>
 <p>Anyway，OpenWorker把AI Agent的一个发展方向说清楚了：</p>
 <blockquote><p><strong>AI Agent不能永远停留在聊天框里，要真正参与工作、交付成果，并把模型选择权、工具调用权和最终决定权交还给用户。</strong></p></blockquote>
 <p>下一阶段的AI应用，核心是<strong>谁更能跨工具理解上下文，生成可交付成果，并在关键动作前把控制权交还给人。</strong></p>

@@ -47,6 +47,22 @@
   .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
   .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
   .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  /* 长文目录(≥3 小标题且正文 ≥2000 字才出): <details> 原生可折叠, 不用一行 JS。
+     默认 open —— 目录的用处是先看清结构再决定读哪段, 收起来就失去意义; 想收也一点即收。 */
+  .dp-toc{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:24px;background:#FBFCFF}
+  .dp-toc summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--ink-2);display:flex;align-items:center;gap:7px;list-style:none}
+  .dp-toc summary::-webkit-details-marker{display:none}
+  .dp-toc summary i{font-size:11px;color:var(--blue)}
+  .dp-toc summary span{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-3);margin-left:auto}
+  .dp-toc ol{list-style:none;margin:10px 0 2px;padding:0;counter-reset:toc}
+  .dp-toc li{counter-increment:toc;font-size:13px;line-height:1.7;padding:2px 0}
+  .dp-toc li::before{content:counter(toc) ". ";font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .dp-toc li.lv3{padding-left:16px}
+  .dp-toc li.lv4{padding-left:32px}
+  .dp-toc a{color:var(--ink-2);text-decoration:none;overflow-wrap:anywhere}
+  .dp-toc a:hover{color:var(--blue)}
+  /* 锚点跳转时标题别贴到视口顶端(站点顶栏会盖住) */
+  .dp-body h2[id],.dp-body h3[id],.dp-body h4[id]{scroll-margin-top:76px}
   .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
   .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
   .dp-body p{margin:0 0 1.05em}
@@ -96,7 +112,7 @@
     <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（量子位 · 行业动态）所有 · <a href="https://www.qbitai.com/2026/07/460253.html" target="_blank" rel="noopener">阅读原文</a></span></div>
     <p class="dp-quip"><i class="fa-solid fa-quote-left"></i>模型能力提升让提示词工程变得更为简化</p>
     <div class="dp-brief"><b>简报</b>Anthropic发布Opus 5模型，多项评测反超Fable 5且价格仅一半。其性能是上一代两倍，官方演示展示实时风洞和3D细胞结构。</div>
-    <article class="dp-body"><h1>半价干翻Fable 5？Opus 5实测炸场，网友：差点从椅子上摔下来</h1>
+    <details class="dp-toc" open><summary><i class="fa-solid fa-list-ul"></i>目录<span>5 节</span></summary><ol><li class="lv2"><a href="#h1">网友已开启疯玩模式</a></li><li class="lv2"><a href="#h2">更硬核的自检流程</a></li><li class="lv2"><a href="#h3">一半价格咬住fable 5</a></li><li class="lv2"><a href="#h4">CC系统提示词也改了</a></li><li class="lv2"><a href="#h5">One More Thing</a></li></ol></details><article class="dp-body"><h1>半价干翻Fable 5？Opus 5实测炸场，网友：差点从椅子上摔下来</h1>
     			   
              <img loading="lazy" onerror="this.style.display='none'" src="http://www.qbitai.com/wp-content/themes/liangziwei/imagesnew/head.jpg" referrerpolicy="no-referrer" /><em><a href="https://www.qbitai.com/author/keleixi" target="_blank" rel="noopener nofollow">克雷西</a></em>
                           2026-07-25
@@ -121,7 +137,7 @@
 <p>更耐人寻味的是，为了配上这代模型的判断力，Anthropic把自己给Claude Code写的系统提示词删掉了八成，成绩却没掉。</p>
 <p>之前泄露的时候有网友感叹Opus 5简直就像fable 6，现在Opus 5正式发布之后，有人更赞同这个说法了。</p>
 <img loading="lazy" onerror="this.style.display='none'" src="https://i.qbitai.com/wp-content/uploads/2026/07/793b39ba36ead8644c757117c0bb612d.webp" referrerpolicy="no-referrer" />
-<h2>网友已开启疯玩模式</h2>
+<h2 id="h1">网友已开启疯玩模式</h2>
 <p>Opus 5上线不过半天，网友们就已经开启了疯玩模式，接下来就来看看网友们都整出了什么活。</p>
 <p>博主am.will本来觉得Opus 5不过是一个便宜版Fable，测完直接改口，说自己「大错特错」。</p>
 <p>他只用了5倍Max订阅额度的27%，就让Opus 5搭出了他见过最好的一个Rocket League克隆版，游戏能玩，代码还开源在了评论区。</p>
@@ -164,7 +180,7 @@
 <p>GPT 5.6最便宜，0.14美元，但锤子压根没碰到楼，同期的Kimi K3和GPT 5.6水平相当。</p>
 <img loading="lazy" onerror="this.style.display='none'" src="https://mmbiz.qpic.cn/mmbiz_png/A6fTew8FFGGQ9Dp51cHVduROZfiahu96BMuTd3r4j002AMt1TZJElFyqsfSMiaRibTkpbMicypg4AlibgoAOu1wlZFDYJKKRIPN9dHrs7Y73vnXk/640?wx_fmt=png&amp;from=appmsg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1#imgIndex=17" alt="img" referrerpolicy="no-referrer" />
 <p>之前Opus 5泄露时，有人怀疑它虽然单价低但token烧太多，综合下来并不比fable便宜，现在看来可能只是个例。</p>
-<h2>更硬核的自检流程</h2>
+<h2 id="h2">更硬核的自检流程</h2>
 <p>博主Victor M做了一次更硬核的自检演示，题目是照着波音747的公开数据，用代码在浏览器里重建出一架能转能看的3D模型。</p>
 <p>Fable 5用42分钟交了活，4个文件、约1000行代码，搭了一套Puppeteer渲染管线，跑了17轮渲染，检查了54张截图，验证方式只靠肉眼看图对不对。</p>
 <p>Opus 5花了71分钟，写出20个模块、约4000行代码，换成Playwright渲染管线，25套镜头预设，还多写了一个测量脚本。</p>
@@ -178,7 +194,7 @@
 <p>它索性自己写了一套计算机视觉管道，从像素里提取几何数据，把零件重建了出来，而且反复成功，同样的设定下，其他模型试了五次都没做出来。</p>
 <p>还有一个开源包管理器的真实bug，社区提交的补丁只处理了表面症状，Opus 5顺藤摸瓜找到了底层原因，把边缘情况一起修了。</p>
 <p>另外，一位量化交易工程师用它给新交易所搭实时行情源，之前的模型全部做不出来，Opus 5发现没有实时数据可以验证，干脆自己搭了一套测试环境，专门检查代码解析交易所数据对不对。</p>
-<h2>一半价格咬住fable 5</h2>
+<h2 id="h3">一半价格咬住fable 5</h2>
 <p>看完这些demo，再来通过数据感受一下Opus 5的性价比。</p>
 <p>价格上，Opus 5和前一代的Opus 4.8相比是提质不加价，依然是每百万token输入5美元、输出25美元，只要Fable 5的一半。</p>
 <p>同时Opus 5也照旧配备了Fast模式，和之前一样是两倍价格换2.5倍速度。</p>
@@ -203,7 +219,7 @@
 <p>另外，Opus 5也不像fable 5那么的守口如瓶了，其预计触发拦截的频率比后者降了约85%。</p>
 <img loading="lazy" onerror="this.style.display='none'" src="https://mmbiz.qpic.cn/sz_mmbiz_png/A6fTew8FFGFe2XYlfxxPyccayOHZ7wnicJmicxHSFSzJx9mAaA1biazcmVicIjxKeLksknJgHCxCQ8OCYibLIYz3wtDYAdYbGcib9R8Skzmhem5Tk/640?wx_fmt=png&amp;from=appmsg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1#imgIndex=27" alt="img" referrerpolicy="no-referrer" />
 <p>之前fable 5近乎变态的安全护栏确实让人感到头疼，现在有了Opus，或许就能缓解了。</p>
-<h2>CC系统提示词也改了</h2>
+<h2 id="h4">CC系统提示词也改了</h2>
 <p>Opus 5发布的同一天，Anthropic工程师Thariq写了一篇文章，讲他们怎么给Claude Code这类产品设计上下文。</p>
 <p>文章里最扎眼的一条是，Claude Code的系统提示词被删掉了超过80%，编码评测成绩却没有任何下降。</p>
 <p>这80%的删减，就是专门针对Opus 5、Fable 5这代模型做的。</p>
@@ -221,7 +237,7 @@
 <p>系统提示词从一开始就把所有场景的说明塞进去，改成了「渐进式披露」，把代码审查这类不常用的说明单独拆成一个技能文件，模型判断需要时才自己去调用。</p>
 <p>记忆也不例外，以前靠用户手动把信息写进CLAUDE.md，现在Claude能自己判断哪些信息值得记下来，直接存成记忆。</p>
 <p>这些变化背后是同一个判断，规则、例子、记忆，本来都是给判断力不够的模型搭的脚手架，现在脚手架被一根根拆掉，因为模型自己就能接得住。</p>
-<h2>One More Thing</h2>
+<h2 id="h5">One More Thing</h2>
 <p>Opus 5发布之后，马斯克也来蹭了波热闹。</p>
 <p>他放了一张FrontierCode的性价比截图，表示只有Grok 4.5和Opus 5处于帕累托前沿，也就是多目标优化问题中所有“最优权衡解”构成的一条边界线。</p>
 <img loading="lazy" onerror="this.style.display='none'" src="https://mmbiz.qpic.cn/sz_mmbiz_png/A6fTew8FFGGiazZVWPsmkHpHz7glibpKfNWOMxq9WjxlWgDIRSYjCR4wGJNiaANZYwrfjBlRPFnZ1IXmhB40T4GHD8rBxsztzKeayLOV24M7ME/640?wx_fmt=png&amp;from=appmsg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1#imgIndex=31" alt="img" referrerpolicy="no-referrer" />

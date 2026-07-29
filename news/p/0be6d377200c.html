@@ -47,6 +47,22 @@
   .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
   .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
   .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  /* 长文目录(≥3 小标题且正文 ≥2000 字才出): <details> 原生可折叠, 不用一行 JS。
+     默认 open —— 目录的用处是先看清结构再决定读哪段, 收起来就失去意义; 想收也一点即收。 */
+  .dp-toc{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:24px;background:#FBFCFF}
+  .dp-toc summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--ink-2);display:flex;align-items:center;gap:7px;list-style:none}
+  .dp-toc summary::-webkit-details-marker{display:none}
+  .dp-toc summary i{font-size:11px;color:var(--blue)}
+  .dp-toc summary span{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-3);margin-left:auto}
+  .dp-toc ol{list-style:none;margin:10px 0 2px;padding:0;counter-reset:toc}
+  .dp-toc li{counter-increment:toc;font-size:13px;line-height:1.7;padding:2px 0}
+  .dp-toc li::before{content:counter(toc) ". ";font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .dp-toc li.lv3{padding-left:16px}
+  .dp-toc li.lv4{padding-left:32px}
+  .dp-toc a{color:var(--ink-2);text-decoration:none;overflow-wrap:anywhere}
+  .dp-toc a:hover{color:var(--blue)}
+  /* 锚点跳转时标题别贴到视口顶端(站点顶栏会盖住) */
+  .dp-body h2[id],.dp-body h3[id],.dp-body h4[id]{scroll-margin-top:76px}
   .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
   .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
   .dp-body p{margin:0 0 1.05em}
@@ -96,7 +112,7 @@
     <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（爱范儿 · 行业动态）所有 · <a href="https://www.ifanr.com/1672867?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=" target="_blank" rel="noopener">阅读原文</a></span></div>
     <p class="dp-quip"><i class="fa-solid fa-quote-left"></i>专用AI硬件将推动企业级应用落地，提升销售客服效率</p>
     <div class="dp-brief"><b>简报</b>苹果Mac将迎来全线换代，部分产品专为AI设计。基础款Mac mini缺货，高端Mac Pro将加入OLED屏和触控屏。</div>
-    <article class="dp-body"><p>Mark Gurman 披露了一份苹果直到 2028 年的 Mac 路线图。</p>
+    <details class="dp-toc" open><summary><i class="fa-solid fa-list-ul"></i>目录<span>4 节</span></summary><ol><li class="lv2"><a href="#h1">过去的 Mac，都假设人在屏幕前</a></li><li class="lv2"><a href="#h2">AI 主机先看内存，再看芯片名字</a></li><li class="lv2"><a href="#h3">以后买 Mac，先问 AI 在哪里</a></li><li class="lv2"><a href="#h4">Mac 的新分类，本质上是内存等级</a></li></ol></details><article class="dp-body"><p>Mark Gurman 披露了一份苹果直到 2028 年的 Mac 路线图。</p>
 <p>按照他的说法，<strong>苹果准备在未来两年更新几乎所有仍在销售的 Mac，包括快两年没更新的 iMac，以及给 MacBook Pro 加上 OLED 屏和触控屏。</strong></p>
 <p><img loading="lazy" onerror="this.style.display='none'" src="https://s3.ifanr.com/wp-content/uploads/2026/07/ChatGPT10_31_02.png!720" referrerpolicy="no-referrer" /></p>
 <p>今年秋季，基础款 14 英寸 MacBook Pro 可能率先搭载 M6，新 iMac 也会到来。年底到明年初，<strong>高端 MacBook Pro 将加入 OLED 和触控屏</strong>。</p>
@@ -110,7 +126,7 @@
 <blockquote><p>这两台电脑正在被用户当成 AI 和 Agent 工具的平台，市场意识到这一点的速度，比苹果预测得更快。</p></blockquote>
 <p>一边，苹果准备给 MacBook 加上触控屏，让人更直接地操作电脑；另一边，市场正在追逐没有屏幕、适合全天运行的 Mac。</p>
 <p>Mac 开始在 AI 的影响下，有了新的分类方式：<strong>一种给人用，一种给 AI 用。</strong></p>
-<h2>过去的 Mac，都假设人在屏幕前</h2>
+<h2 id="h1">过去的 Mac，都假设人在屏幕前</h2>
 <p>传统 Mac 产品线虽然性能、价格和形态不同，但都共享一个基本前提：人坐在屏幕前，打开 App，操作电脑，然后完成工作。</p>
 <p>MacBook Air 面向普通用户，MacBook Pro 面向专业用户；Mac mini、iMac、Mac Studio 只是桌面端对应的不同性能档位。</p>
 <p>在这个体系里：更强的芯片意味着软件运行更快；更大内存意味着能多开几个软件；Pro、Max、Ultra 代表专业程度逐级上升；屏幕、键盘、触控板是人与电脑交互的中心。</p>
@@ -129,7 +145,7 @@
 
 <p>过去我们习惯按「消费级」和「专业级」理解 Mac。Agent 出现后，分类的标准变成了：<strong>一边是由人持续操作的 AI 终端，另一边是替人持续工作的 AI 节点</strong>。</p>
 <p>而这也是当下「个人电脑」的新定义：<strong>它不必被人持续使用，但必须替人持续工作</strong>。</p>
-<h2>AI 主机先看内存，再看芯片名字</h2>
+<h2 id="h2">AI 主机先看内存，再看芯片名字</h2>
 <p>除了改变分类方式，本地 AI 让一个过去常被当成加价选项的参数，第一次升级为直接的门槛：<strong>内存</strong>。</p>
 <p>普通软件遇到内存不足，常见结果是卡顿、交换文件增加，或者多开几个 App 后速度下降。本地大模型面对的门槛更直接：模型权重首先得装进内存。</p>
 <p>一个 700 亿参数模型即使压缩到 4-bit，仅权重的理论体积也接近 35GB。真正运行时，还要给量化数据、上下文缓存、系统进程，以及 Agent 调用的浏览器和开发工具留下空间。</p>
@@ -143,7 +159,7 @@
 <p>内存之外，AI 也开始改变苹果的芯片更新节奏。</p>
 <p>苹果据称只会推出基础款 M6，不再继续做 M6 Pro、M6 Max 和 M6 Ultra，而是把高端芯片直接推进到 M7。原因是 M7 计划中的神经网络升级足够重要，苹果决定缩短 M6 周期。</p>
 <p>如果消息准确，新的 OLED 触控 MacBook Pro 会继续使用 M5 Pro 和 M5 Max，基础款 MacBook Pro 却先后换上 M6 和 M7。「这颗芯片有多少核心」的问题，大概也会逐渐变成：这台 Mac 能容纳多大的模型，又能同时养活多少个 Agent？</p>
-<h2>以后买 Mac，先问 AI 在哪里</h2>
+<h2 id="h3">以后买 Mac，先问 AI 在哪里</h2>
 <p>顺着 AI 的运行位置和使用方式，Mark Gurman 披露的这批产品可以拼出一张新的 Mac 地图。</p>
 <p><img loading="lazy" onerror="this.style.display='none'" src="https://s3.ifanr.com/wp-content/uploads/2026/07/ChatGPT-Image-10_14_36.png!720" referrerpolicy="no-referrer" /></p>
 <p>MacBook Neo 和 MacBook Air 仍然是最典型的 AI 终端。它们的核心价值是价格、重量、续航、屏幕和键盘。本地小模型可以处理隐私敏感、低延迟的任务，复杂推理则更多交给云端。</p>
@@ -159,7 +175,7 @@
 <p>作为 AI 终端，它没有 MacBook Air 的便携性；作为长期运行的 AI 节点，集成屏幕又增加了整机成本和后续更换成本。用户更换 Mac mini 时还能留下显示器，iMac 则把计算设备和显示设备绑在了一起。</p>
 <p>当然，iMac 大概不会因为夹在这两种新类别之间就出局。摄像头、麦克风、扬声器和大屏幕也可以把它变成家庭共享 AI、教室终端或公司前台。问题在于，苹果需要给这块屏幕找到新的使用理由——只换一颗芯片，不算回答。</p>
 <p>如果 iMac 能从「一体式电脑」变成一个真正的共享 AI 入口，兴许下一波 AI 浪潮带来的桌面端 Mac 回暖里，会有它的名字。</p>
-<h2>Mac 的新分类，本质上是内存等级</h2>
+<h2 id="h4">Mac 的新分类，本质上是内存等级</h2>
 <p>苹果接下来面对的麻烦是，无论是给人用还是给 AI 用，两边都要内存，后者尤其能吃内存。</p>
 <p><img loading="lazy" onerror="this.style.display='none'" src="https://s3.ifanr.com/wp-content/uploads/2026/07/PixPin_2026-07-23_14-36-31.png!720" referrerpolicy="no-referrer" /></p>
 <p>而 AI 数据中心正在争抢 HBM、服务器 DRAM 和企业级 SSD。</p>

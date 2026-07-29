@@ -47,6 +47,22 @@
   .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
   .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
   .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  /* 长文目录(≥3 小标题且正文 ≥2000 字才出): <details> 原生可折叠, 不用一行 JS。
+     默认 open —— 目录的用处是先看清结构再决定读哪段, 收起来就失去意义; 想收也一点即收。 */
+  .dp-toc{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:24px;background:#FBFCFF}
+  .dp-toc summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--ink-2);display:flex;align-items:center;gap:7px;list-style:none}
+  .dp-toc summary::-webkit-details-marker{display:none}
+  .dp-toc summary i{font-size:11px;color:var(--blue)}
+  .dp-toc summary span{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-3);margin-left:auto}
+  .dp-toc ol{list-style:none;margin:10px 0 2px;padding:0;counter-reset:toc}
+  .dp-toc li{counter-increment:toc;font-size:13px;line-height:1.7;padding:2px 0}
+  .dp-toc li::before{content:counter(toc) ". ";font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .dp-toc li.lv3{padding-left:16px}
+  .dp-toc li.lv4{padding-left:32px}
+  .dp-toc a{color:var(--ink-2);text-decoration:none;overflow-wrap:anywhere}
+  .dp-toc a:hover{color:var(--blue)}
+  /* 锚点跳转时标题别贴到视口顶端(站点顶栏会盖住) */
+  .dp-body h2[id],.dp-body h3[id],.dp-body h4[id]{scroll-margin-top:76px}
   .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
   .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
   .dp-body p{margin:0 0 1.05em}
@@ -96,7 +112,7 @@
     <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（宝玉 · 大咖观点）所有 · <a href="https://baoyu.io/blog/2026-05-15/forward-deployed-engineer" target="_blank" rel="noopener">阅读原文</a></span></div>
     
     <div class="dp-brief"><b>简报</b>Google 正在大力投入 Forward Deployed Engineer 岗位，并简化面试流程。OpenAI 也成立了估值 140 亿美元的部署公司，同样重视 FDE 的职责。</div>
-    <article class="dp-body"><h2>一场 AI 岗位的“军备竞赛”</h2>
+    <details class="dp-toc" open><summary><i class="fa-solid fa-list-ul"></i>目录<span>8 节</span></summary><ol><li class="lv2"><a href="#h1">一场 AI 岗位的“军备竞赛”</a></li><li class="lv2"><a href="#h2">用大白话给你讲清楚 FDE 到底是啥</a></li><li class="lv2"><a href="#h3">其实，Palantir 才是鼻祖</a></li><li class="lv2"><a href="#h4">同样押注 FDE，三家公司走了三条不同的路</a></li><li class="lv2"><a href="#h5">给你翻译一下 Google FDE 招聘启事背后的“人话”</a></li><li class="lv2"><a href="#h6">灵魂拷问：FDE 到底还是不是咨询？</a></li><li class="lv2"><a href="#h7">谁该关注 FDE？</a></li><li class="lv2"><a href="#h8">AI 行业的竞赛，已经悄然转向</a></li></ol></details><article class="dp-body"><h2 id="h1">一场 AI 岗位的“军备竞赛”</h2>
 <p>先看看最近 AI 圈的一个关于新职位 Forward Deployed Engineer（FDE）的新闻。</p>
 <p>Google 正在 FDE 岗位上加倍投入，并且大幅简化了面试流程。Google Cloud 的 CEO 托马斯·库里安（Thomas Kurian）<a href="https://www.linkedin.com/posts/thomas-kurian-469b6219_today-we-announced-a-new-ai-focused-organization-share-7460023646418489344-5xWp?utm_source=share&amp;utm_medium=member_desktop&amp;rcm=ACoAAAIk0KwBsmE3oBadWSg2ettxmEyKbqZKG34" target="_blank" rel="noopener nofollow">宣布</a>，他们在市场营销（Go-To-Market）团队下成立了一个全新的、以 AI 为核心的部门，并且正在为此疯狂招募 FDE。</p>
 <p><img loading="lazy" onerror="this.style.display='none'" src="https://s.baoyu.io/imgs/2026-05-15/forward-deployed-engineer/06-screenshot-google-linkedin-news.png" alt="Thomas Kurian 关于 Google Cloud 扩招 FDE 的 LinkedIn 动态截图" referrerpolicy="no-referrer" /></p>
@@ -111,7 +127,7 @@
 <p><img loading="lazy" onerror="this.style.display='none'" src="https://s.baoyu.io/imgs/2026-05-15/forward-deployed-engineer/09-screenshot-anthropic-enterprise-news.png" alt="Anthropic 企业 AI 服务公司官方公告截图" referrerpolicy="no-referrer" /></p>
 <p>已知的投资方包括 Anthropic 本身、黑石（Blackstone）、Hellman &amp; Friedman 以及高盛（Goldman Sachs）。这家新公司的使命是与“各行各业的中型企业合作，将大语言模型（LLM）Claude 引入他们最重要的业务运营中”。</p>
 <p>Anthropic 的算盘似乎和 OpenAI 打得一模一样：拉外资建个独立公司，让里面的 FDE 帮企业把 Claude 整合进系统。可以预见，这么一来，这些企业购买的 Claude Token 数量绝对会创下历史新高。</p>
-<h2>用大白话给你讲清楚 FDE 到底是啥</h2>
+<h2 id="h2">用大白话给你讲清楚 FDE 到底是啥</h2>
 <p>那么 FDE 到底是啥？全称是 Forward Deployed Engineer，简称 FDE。这个名字直译过来是“前线部署工程师”，但光看名字很难理解它到底干什么。</p>
 <blockquote>
 <p>一句话版：<strong>驻扎在客户公司现场写代码的工程师。</strong></p>
@@ -120,18 +136,18 @@
 <p>你可能会问，这不就是咨询顾问？还真不太一样。顾问通常给你 PPT，告诉你“怎么做最好”，<strong>FDE 直接给你代码，帮你做到最好</strong>。方案架构师一般画架构图、写技术方案，FDE 除了这些，还得上手敲代码、调接口、现场 debug。</p>
 <p>如果要给具体的比例，大概是：25% 写代码，50% 集成和调试，25% 开会和沟通。实际上，真正安静写代码的时间可能更少。</p>
 <p><img loading="lazy" onerror="this.style.display='none'" src="https://s.baoyu.io/imgs/2026-05-15/forward-deployed-engineer/01-infographic-fde-role.png" alt="FDE 岗位职责比例示意图" referrerpolicy="no-referrer" /></p>
-<h2>其实，Palantir 才是鼻祖</h2>
+<h2 id="h3">其实，Palantir 才是鼻祖</h2>
 <p>说起 FDE，这其实不是 AI 时代新冒出来的，而是 Palantir 在 2010 年代就玩熟的招数。</p>
 <p>Palantir 做数据分析平台，早期服务的全是美军和情报部门，客户需求都是机密，根本不能用常规方法沟通。于是 Palantir 干脆把工程师派到客户那里常驻，近距离观察客户需求，现场快速迭代。</p>
 <p>这些驻场工程师（Palantir 叫他们 Delta）干得不仅仅是交付项目，还有更重要的任务：<strong>在客户端提炼出通用需求，反馈回产品团队做成标准化功能</strong>。</p>
 <p>到 2016 年，Palantir 的 FDE 已经比普通工程师还多了，真正定义了这个岗位。</p>
 <p><img loading="lazy" onerror="this.style.display='none'" src="https://s.baoyu.io/imgs/2026-05-15/forward-deployed-engineer/02-framework-palantir-loop.png" alt="Palantir FDE 现场反馈环示意图" referrerpolicy="no-referrer" /></p>
-<h2>同样押注 FDE，三家公司走了三条不同的路</h2>
+<h2 id="h4">同样押注 FDE，三家公司走了三条不同的路</h2>
 <p><strong>OpenAI 最猛。</strong>成立 OpenAI Deployment Company，TPG、麦肯锡、贝恩、凯捷全来了，连估值都搞到 140 亿美元，直接买了一家英国公司，150 名 FDE 到位即用。承诺 17.5% 的最低回报率，更像在投基建。</p>
 <p><strong>Anthropic 稳一些。</strong>找了黑石、高盛、Apollo 等华尔街巨头成立合资公司，先期投入 15 亿美元，主攻中型企业市场。这些投资方手里一大堆企业，天然就是 Claude 模型最好的用户池。</p>
 <p><strong>Google 最传统。</strong>自己雇人，FDE 岗位分布全球，薪资还不低——在美国高阶的总包能到 40 万美元以上。但最大的区别是，Google 的 FDE 拿的是 Google 股票，OpenAI 和 Anthropic 的 FDE 则在独立公司，跟母公司利益没直接关系。</p>
 <p><img loading="lazy" onerror="this.style.display='none'" src="https://s.baoyu.io/imgs/2026-05-15/forward-deployed-engineer/03-comparison-three-paths.png" alt="OpenAI Anthropic Google 的 FDE 路线对比" referrerpolicy="no-referrer" /></p>
-<h2>给你翻译一下 Google FDE 招聘启事背后的“人话”</h2>
+<h2 id="h5">给你翻译一下 Google FDE 招聘启事背后的“人话”</h2>
 <p>企业招聘启事这种东西，经常让人看不懂，咱们翻译一下：</p>
 <p><img loading="lazy" onerror="this.style.display='none'" src="https://s.baoyu.io/imgs/2026-05-15/forward-deployed-engineer/10-screenshot-google-jd.png" alt="Google FDE JD 原文截图" referrerpolicy="no-referrer" /></p>
 <table>
@@ -170,7 +186,7 @@
 </table>
 <p>虽然听起来有点吐槽，但实际上每家公司的 JD 都类似。有个心理准备，才更清楚自己适不适合。</p>
 <p><img loading="lazy" onerror="this.style.display='none'" src="https://s.baoyu.io/imgs/2026-05-15/forward-deployed-engineer/04-comparison-jd-translation.png" alt="Google FDE 招聘启事人话翻译图" referrerpolicy="no-referrer" /></p>
-<h2>灵魂拷问：FDE 到底还是不是咨询？</h2>
+<h2 id="h6">灵魂拷问：FDE 到底还是不是咨询？</h2>
 <p>看三个维度。</p>
 <ol>
 <li>
@@ -184,14 +200,14 @@
 </li>
 </ol>
 <p><strong>结论就是，OpenAI 和 Anthropic 的 FDE 已经更接近咨询，Google 则更接近传统的 FDE 模式。</strong></p>
-<h2>谁该关注 FDE？</h2>
+<h2 id="h7">谁该关注 FDE？</h2>
 <p>分三类人看：</p>
 <ul>
 <li><strong>新毕业生</strong>：绝佳机会，大厂的软件岗越来越少，但 FDE 大量招人，你能快速接触到企业级 AI 项目，成长更快。</li>
 <li><strong>资深工程师</strong>：可能会觉得“降级”，客户换得勤，缺乏长期归属感；但如果你正想创业或者更接近业务，FDE 是个深入企业需求的绝佳窗口。</li>
 <li><strong>非技术背景</strong>：门槛仍然挺高，不是学几个月 Python 就能搞定的事。</li>
 </ul>
-<h2>AI 行业的竞赛，已经悄然转向</h2>
+<h2 id="h8">AI 行业的竞赛，已经悄然转向</h2>
 <p>过去三年，AI 行业一直拼的是模型大小、跑分高低。现在问题变了——<strong>大多数企业不缺模型，缺的是有人帮他们把模型接进业务</strong>。</p>
 <p>OpenAI 一出手就是 40 亿美元，Anthropic 也拿了 15 亿，Google 招聘流程压到两天。这些巨额投入表明：<strong>AI 公司的赚钱方式变了，从卖模型到卖落地</strong>。</p>
 <p>往大了说，每花 1 块钱训练模型，就可能得再花 1 块钱让模型真正跑起来。</p>

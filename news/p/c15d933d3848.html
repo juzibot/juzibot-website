@@ -47,6 +47,22 @@
   .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
   .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
   .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  /* 长文目录(≥3 小标题且正文 ≥2000 字才出): <details> 原生可折叠, 不用一行 JS。
+     默认 open —— 目录的用处是先看清结构再决定读哪段, 收起来就失去意义; 想收也一点即收。 */
+  .dp-toc{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:24px;background:#FBFCFF}
+  .dp-toc summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--ink-2);display:flex;align-items:center;gap:7px;list-style:none}
+  .dp-toc summary::-webkit-details-marker{display:none}
+  .dp-toc summary i{font-size:11px;color:var(--blue)}
+  .dp-toc summary span{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-3);margin-left:auto}
+  .dp-toc ol{list-style:none;margin:10px 0 2px;padding:0;counter-reset:toc}
+  .dp-toc li{counter-increment:toc;font-size:13px;line-height:1.7;padding:2px 0}
+  .dp-toc li::before{content:counter(toc) ". ";font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .dp-toc li.lv3{padding-left:16px}
+  .dp-toc li.lv4{padding-left:32px}
+  .dp-toc a{color:var(--ink-2);text-decoration:none;overflow-wrap:anywhere}
+  .dp-toc a:hover{color:var(--blue)}
+  /* 锚点跳转时标题别贴到视口顶端(站点顶栏会盖住) */
+  .dp-body h2[id],.dp-body h3[id],.dp-body h4[id]{scroll-margin-top:76px}
   .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
   .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
   .dp-body p{margin:0 0 1.05em}
@@ -96,7 +112,7 @@
     <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（量子位 · 行业动态）所有 · <a href="https://www.qbitai.com/2026/07/460542.html" target="_blank" rel="noopener">阅读原文</a></span></div>
     <p class="dp-quip"><i class="fa-solid fa-quote-left"></i>具身智能避免模仿路径才能找到真实需求</p>
     <div class="dp-brief"><b>简报</b>RSS 2026上，有观点认为北美具身智能公司尚未成熟，中国公司不必急于成为“中国版XX”。中国真正领先的是机器人硬件。</div>
-    <article class="dp-body"><h1>美国具身也没成熟！PI：中国公司何必总当“中国版XX”｜RSS 2026</h1>
+    <details class="dp-toc" open><summary><i class="fa-solid fa-list-ul"></i>目录<span>7 节</span></summary><ol><li class="lv2"><a href="#h1">世界模型和VLA，我全都要</a></li><li class="lv2"><a href="#h2">数据量很重要，但Curation更重要</a></li><li class="lv4"><a href="#h3">机器人Data Poor，但Model Rich</a></li><li class="lv4"><a href="#h4">数据决定硬件</a></li><li class="lv2"><a href="#h5">迈向全身智能</a></li><li class="lv2"><a href="#h6">硬件先出海，智能再跟上</a></li><li class="lv2"><a href="#h7">等你的Conference Buddy成为大佬</a></li></ol></details><article class="dp-body"><h1>美国具身也没成熟！PI：中国公司何必总当“中国版XX”｜RSS 2026</h1>
     			   
              <img loading="lazy" onerror="this.style.display='none'" src="http://www.qbitai.com/wp-content/themes/liangziwei/imagesnew/head.jpg" referrerpolicy="no-referrer" /><em><a href="https://www.qbitai.com/author/henry" target="_blank" rel="noopener nofollow">henry</a></em>
                           2026-07-25
@@ -173,7 +189,7 @@
 </ul>
 <p>这些判断未必代表行业共识，其中一些甚至彼此冲突。</p>
 <p>但也正是这些分歧，让我们重新思考VLA、世界模型、数据、本体与产业之间的关系。</p>
-<h2>世界模型和VLA，我全都要</h2>
+<h2 id="h1">世界模型和VLA，我全都要</h2>
 <p>数据，已经被公认为当前具身智能领域里最重要的话题。</p>
 <p>但毋庸讳言，无论是在审稿人亦或是投资人眼中，<strong>模型依旧性感</strong>。</p>
 <img loading="lazy" onerror="this.style.display='none'" src="https://i.qbitai.com/wp-content/uploads/2026/07/a8fe547c78bf90d5229aa5d1c8185ea0.webp" referrerpolicy="no-referrer" />
@@ -216,7 +232,7 @@
 <p>总结来看，世界模型固然重要，但对具身智能而言，它并不是VLA的简单替代，两种方法也并不矛盾。</p>
 <p>真正的问题在于，世界模型应该预测什么，以及这些预测如何服务于机器人动作。</p>
 <p>值得一提的是，在RSS会场内外，已经有不少研究者开始探索VLA与世界模型结合的混合架构，前面提到的π0.7正是其中之一。</p>
-<h2>数据量很重要，但Curation更重要</h2>
+<h2 id="h2">数据量很重要，但Curation更重要</h2>
 <p>虽然模型上的创新可能好发论文，也更吸引眼球，但数据已经毫无争议的成为了具身领域最重要的问题。</p>
 <p>在poster环节，我们也排队问了Simar几个数据问题。</p>
 <p>Simar这几年从EgoMimic一路做到EgoVerse，研究的都是怎么把第一视角人类数据用到机器人上。照理说，他应该是最看好Egocentric Data的那批人。</p>
@@ -262,7 +278,7 @@
 <p>机器人数据和任务对齐的人类数据共同提供了“锚点”，告诉模型人类行为与机器人动作空间怎样对应。</p>
 <p>所以，数据多样性并不是把不同来源的数据倒进同一个池子。真正决定效果的，可能是Data Mixture中有没有足够的对齐区域。</p>
 <p>但不管怎么筛，真实机器人数据和具身人类数据都很难无限采集。那能不能换一种思路，让模型自己生产数据？</p>
-<h4>机器人Data Poor，但Model Rich</h4>
+<h4 id="h3">机器人Data Poor，但Model Rich</h4>
 <p>在Karen Liu的闭幕演讲<strong>Data Poor，Model Rich</strong>中，这位来自斯坦福大学计算机系、从计算机图形学和物理仿真一路做到人形机器人控制的教授，就回应了上面这个问题。</p>
 <img loading="lazy" onerror="this.style.display='none'" src="https://i.qbitai.com/wp-content/uploads/2026/07/f5b44d2a51833739d317e4029a1e6ee1.webp" referrerpolicy="no-referrer" />
 <p>Karen提到，机器人虽然Data Poor，却并不缺模型。</p>
@@ -280,7 +296,7 @@
 <p>整套系统不需要人类示范，在重建的室内环境中自动合成了4.8万条视觉、语言和全身运动学轨迹，训练出的策略还能迁移到真实的Unitree G1上，完成导航和物体搬运。</p>
 <p>虽然这还不能彻底取代真实数据，但至少证明了一件事：</p>
 <p>机器人Scaling的起点，未必只能是招更多人遥操作机器人，也可以让过去积累的模型先把数据飞轮转起来。</p>
-<h4>数据决定硬件</h4>
+<h4 id="h4">数据决定硬件</h4>
 <p>那么再往前一步，如果数据如此重要，机器人是不是也应该围绕数据采集来设计？</p>
 <p>Sunday Robotics先设计Skill Capture Glove和机器人手，再围绕这只手设计整台机器人，可能就是最具体的回答。</p>
 <img loading="lazy" onerror="this.style.display='none'" src="https://i.qbitai.com/wp-content/uploads/2026/07/bf5904f3481d595de315ce3a0833f581.webp" referrerpolicy="no-referrer" />
@@ -295,7 +311,7 @@
 <img loading="lazy" onerror="this.style.display='none'" src="https://i.qbitai.com/wp-content/uploads/2026/07/19fa3e6e454625e4b3239e437c76f58a.webp" referrerpolicy="no-referrer" />
 <p>从手臂、躯干到双腿，机器人要学习的不再只是怎样抓住物体，还包括怎样移动、保持平衡，并在接触中协调全身。</p>
 <p>这也引出了本届RSS上另一个不可忽视的方向：全身智能。</p>
-<h2>迈向全身智能</h2>
+<h2 id="h5">迈向全身智能</h2>
 <p>在今年RSS Early Career Spotlight的演讲中，来自香港大学、源策未来的李弘扬教授提出了一个新的方向：全身智能（whole-body intelligence，WBI）。</p>
 <p><em>（注：全身智能是指让人形机器人从异构的人类与机器人经验中学习可复用的全身协同先验，并据此在真实环境中生成安全、自适应、可执行的行为。详情可参考https://www.archon.tech/blog/whole-body-intelligence）</em></p>
 <img loading="lazy" onerror="this.style.display='none'" src="https://i.qbitai.com/wp-content/uploads/2026/07/1ff522872bbece41caa7cb681c76aebd.webp" referrerpolicy="no-referrer" />
@@ -331,7 +347,7 @@
 <p>模型可以端到端，系统仍然需要有层次。</p>
 <p>从这个角度看，全身智能不只是把机器人的腿和手接到同一个模型上。</p>
 <p>具身智能的下一步，或许也不只是给机器人换一个更聪明的大脑，而是搭出一套能让大脑真正调动整具身体的系统。</p>
-<h2>硬件先出海，智能再跟上</h2>
+<h2 id="h6">硬件先出海，智能再跟上</h2>
 <p>说完了学术，咱们聊聊背后的产业。</p>
 <p>一位来自Physical Intelligence的人士告诉我们，美国在冒出几家具身公司后，很快进入了一个相对平静的阶段，国内（中国）却几乎每天都有新公司出现，而且大多还能拿到融资。</p>
 <p>按照他的观察，如果只看创业热度、硬件供给和出海进度，<strong>中国具身智能已经明显超过美国。</strong></p>
@@ -369,7 +385,7 @@
 <p>另一位来自Physical Intelligence的人士告诉我们，包括Physical Intelligence在内，北美头部具身公司距离成熟都还有一段距离，整个领域也没有出现真正的奠基性工作。</p>
 <p>所以当我们提到中国具身公司总爱对标美国、把自己称为“中国版XX”时，他的第一反应反而是不解。</p>
 <p>在他的印象里，中国真正领先的恰恰是机器人硬件。既然美国的答案同样没有成熟，中国公司又何必急着把自己定义成谁的复制品？</p>
-<h2>等你的Conference Buddy成为大佬</h2>
+<h2 id="h7">等你的Conference Buddy成为大佬</h2>
 <p>回到开头的问题，我们为什么要来RSS？</p>
 <img loading="lazy" onerror="this.style.display='none'" src="https://i.qbitai.com/wp-content/uploads/2026/07/0fd49726a22efe48cc6e50d0456590f3.webp" referrerpolicy="no-referrer" />
 <p>Matei Ciocarlie在开幕式上讲得很好，在结尾与大家分享原文：</p>

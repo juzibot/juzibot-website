@@ -47,6 +47,22 @@
   .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
   .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
   .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  /* 长文目录(≥3 小标题且正文 ≥2000 字才出): <details> 原生可折叠, 不用一行 JS。
+     默认 open —— 目录的用处是先看清结构再决定读哪段, 收起来就失去意义; 想收也一点即收。 */
+  .dp-toc{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:24px;background:#FBFCFF}
+  .dp-toc summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--ink-2);display:flex;align-items:center;gap:7px;list-style:none}
+  .dp-toc summary::-webkit-details-marker{display:none}
+  .dp-toc summary i{font-size:11px;color:var(--blue)}
+  .dp-toc summary span{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-3);margin-left:auto}
+  .dp-toc ol{list-style:none;margin:10px 0 2px;padding:0;counter-reset:toc}
+  .dp-toc li{counter-increment:toc;font-size:13px;line-height:1.7;padding:2px 0}
+  .dp-toc li::before{content:counter(toc) ". ";font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .dp-toc li.lv3{padding-left:16px}
+  .dp-toc li.lv4{padding-left:32px}
+  .dp-toc a{color:var(--ink-2);text-decoration:none;overflow-wrap:anywhere}
+  .dp-toc a:hover{color:var(--blue)}
+  /* 锚点跳转时标题别贴到视口顶端(站点顶栏会盖住) */
+  .dp-body h2[id],.dp-body h3[id],.dp-body h4[id]{scroll-margin-top:76px}
   .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
   .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
   .dp-body p{margin:0 0 1.05em}
@@ -96,7 +112,7 @@
     <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（阮一峰 · 大咖观点）所有 · <a href="http://www.ruanyifeng.com/blog/2026/07/weekly-issue-403.html" target="_blank" rel="noopener">阅读原文</a></span></div>
     
     <div class="dp-brief"><b>简报</b>科技爱好者周刊第403期探讨Dropbox未能取得更大成功的原因，分享每周科技资讯。</div>
-    <article class="dp-body"><h1>科技爱好者周刊（第 403 期）：为什么 Dropbox 不成功</h1>
+    <details class="dp-toc" open><summary><i class="fa-solid fa-list-ul"></i>目录<span>12 节</span></summary><ol><li class="lv2"><a href="#h1">封面图</a></li><li class="lv2"><a href="#h2">为什么 Dropbox 不成功</a></li><li class="lv2"><a href="#h3">AI 的成本超过了工程师</a></li><li class="lv2"><a href="#h4">科技动态</a></li><li class="lv2"><a href="#h5">文章</a></li><li class="lv2"><a href="#h6">工具</a></li><li class="lv2"><a href="#h7">AI 相关</a></li><li class="lv2"><a href="#h8">资源</a></li><li class="lv2"><a href="#h9">图片</a></li><li class="lv2"><a href="#h10">文摘</a></li><li class="lv2"><a href="#h11">言论</a></li><li class="lv2"><a href="#h12">往年回顾</a></li></ol></details><article class="dp-body"><h1>科技爱好者周刊（第 403 期）：为什么 Dropbox 不成功</h1>
 
 
 
@@ -121,13 +137,13 @@
                                     
                                         <p>本杂志<a href="https://github.com/ruanyf/weekly" target="_blank" rel="noopener nofollow">开源</a>，欢迎<a href="https://github.com/ruanyf/weekly/issues" target="_blank" rel="noopener nofollow">投稿</a>。另有<a href="https://github.com/ruanyf/weekly/issues/10517" target="_blank" rel="noopener nofollow">《谁在招人》</a>服务，发布程序员招聘信息。合作请<a href="http://www.ruanyifeng.com/cdn-cgi/l/email-protection#c6bfafa0a3a8a1e8b4b3a7a886a1aba7afaae8a5a9ab" target="_blank" rel="noopener nofollow">邮件联系</a>（<a href="http://www.ruanyifeng.com/cdn-cgi/l/email-protection" target="_blank" rel="noopener nofollow">[email protected]</a>）。</p>
 
-<h2>封面图</h2>
+<h2 id="h1">封面图</h2>
 
 <p><img loading="lazy" onerror="this.style.display='none'" src="https://cdn.beekka.com/blogimg/asset/202607/bg2026070704.webp" referrerpolicy="no-referrer" /></p>
 
 <p>贵州修文县的&quot;穹岛·天坑咖啡&quot;，咖啡店建在巨大的溶洞之中。（<a href="https://mp.weixin.qq.com/s/zL5X2Lbz2EbZiDGzcLLSGg" target="_blank" rel="noopener nofollow">via</a>）</p>
 
-<h2>为什么 Dropbox 不成功</h2>
+<h2 id="h2">为什么 Dropbox 不成功</h2>
 
 <p>Dropbox，大家都知道吧？</p>
 
@@ -177,7 +193,7 @@
 
 <p>C 端软件的主要商业模式，要么是帮助消费者更好地消磨时间，要么就是依附于消费者注意力的广告模式。当他用你的软件消磨时间，你就可以向广告主出售他的注意力，让他分出一部分时间看广告。</p>
 
-<h2>AI 的成本超过了工程师</h2>
+<h2 id="h3">AI 的成本超过了工程师</h2>
 
 <p>AI 编程的成本到底有多大？现在终于有精确数字了。</p>
 
@@ -191,7 +207,7 @@
 
 <p>根据以上数字，<strong>AI 使得程序员的用人成本增加了40%到230%</strong>。如果程序员的产出不能同等幅度增长，对公司来说，AI 带来的效益是负的。</p>
 
-<h2>科技动态</h2>
+<h2 id="h4">科技动态</h2>
 
 <p>（1）国内某公司推出的<a href="https://www.dcfever.com/news/readnews.php?id=41649" target="_blank" rel="noopener nofollow">无屏幕相机</a>，只有一个透明取景窗。</p>
 
@@ -223,7 +239,7 @@
 
 <p>如果你长时间低头看手机，不看路，车内的警告灯会闪烁并发出警报。下一步，可能就是自动上传给警察，为你的车内行为开罚单。</p>
 
-<h2>文章</h2>
+<h2 id="h5">文章</h2>
 
 <p>1、<a href="https://elm-lang.org/news/faster-builds" target="_blank" rel="noopener nofollow">通往 Elm 1.0 之路</a>（英文）</p>
 
@@ -265,7 +281,7 @@
 
 <p>现在，所有主流浏览器都已经支持 CSS 的锚点定位 API，可以很方便地指定一个元素相对于另一个元素的位置（上下左右）。</p>
 
-<h2>工具</h2>
+<h2 id="h6">工具</h2>
 
 <p>1、<a href="https://voidzero.dev/posts/announcing-vite-plus-beta" target="_blank" rel="noopener nofollow">Vite+</a></p>
 
@@ -329,7 +345,7 @@
 
 <p>这个工具将 Typst 文档，装成三种格式的电子书：HTML、EPUB、PDF。</p>
 
-<h2>AI 相关</h2>
+<h2 id="h7">AI 相关</h2>
 
 <p>1、<a href="https://github.com/gokuscraper/claude-tester" target="_blank" rel="noopener nofollow">Claude 中国用户检测工具</a></p>
 
@@ -361,7 +377,7 @@
 
 <p>一个命令行工具，使用大模型（默认是 DeepSeek）翻译 epub 文件。（<a href="https://github.com/ruanyf/weekly/issues/10615" target="_blank" rel="noopener nofollow">@BigDawnGhost</a> 投稿）</p>
 
-<h2>资源</h2>
+<h2 id="h8">资源</h2>
 
 <p>1、<a href="https://github.com/laoma2053/awesome-zhuiju-free" target="_blank" rel="noopener nofollow">Awesome Zhuiju Free</a></p>
 
@@ -377,7 +393,7 @@
 
 <p>背景音网站，提供日本铁路山手线行进中的声音，包括铁轨声、车厢广播、人声、门铃声等。</p>
 
-<h2>图片</h2>
+<h2 id="h9">图片</h2>
 
 <p>1、<a href="https://www.wsj.com/business/white-line-road-invention-america-250-8ce6bb89?st=313dcx&amp;mod=1440&amp;user_id=66c4c9305d78644b3ac5df9c" target="_blank" rel="noopener nofollow">路肩线</a></p>
 
@@ -413,7 +429,7 @@
 
 <p>更多照片可以看<a href="https://www.rmg.co.uk/stories/space-astronomy/zwo-astronomy-photographer-year-2026-shortlist" target="_blank" rel="noopener nofollow">标题链接</a>。</p>
 
-<h2>文摘</h2>
+<h2 id="h10">文摘</h2>
 
 <p>1、<a href="https://www.mooreds.com/wordpress/archives/3734" target="_blank" rel="noopener nofollow">定期会议是必要的</a></p>
 
@@ -435,7 +451,7 @@
 
 <p>你要记住的是，会议可以作为一种强制手段，确保人们真正抽出时间来推进项目。</p>
 
-<h2>言论</h2>
+<h2 id="h11">言论</h2>
 
 <p>1、</p>
 
@@ -473,7 +489,7 @@
 
 <p>-- <a href="https://www.chatterpulseai.com/blog/building-a-saas-product-with-htmx/" target="_blank" rel="noopener nofollow">《使用 HTMX 构建 SaaS 产品》</a></p>
 
-<h2>往年回顾</h2>
+<h2 id="h12">往年回顾</h2>
 
 <p><a href="https://www.ruanyifeng.com/blog/2025/07/weekly-issue-356.html" target="_blank" rel="noopener nofollow">公司强推 AI 编程，我该怎么办</a>（#356）</p>
 

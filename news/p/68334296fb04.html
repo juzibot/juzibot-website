@@ -47,6 +47,22 @@
   .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
   .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
   .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  /* 长文目录(≥3 小标题且正文 ≥2000 字才出): <details> 原生可折叠, 不用一行 JS。
+     默认 open —— 目录的用处是先看清结构再决定读哪段, 收起来就失去意义; 想收也一点即收。 */
+  .dp-toc{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:24px;background:#FBFCFF}
+  .dp-toc summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--ink-2);display:flex;align-items:center;gap:7px;list-style:none}
+  .dp-toc summary::-webkit-details-marker{display:none}
+  .dp-toc summary i{font-size:11px;color:var(--blue)}
+  .dp-toc summary span{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-3);margin-left:auto}
+  .dp-toc ol{list-style:none;margin:10px 0 2px;padding:0;counter-reset:toc}
+  .dp-toc li{counter-increment:toc;font-size:13px;line-height:1.7;padding:2px 0}
+  .dp-toc li::before{content:counter(toc) ". ";font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .dp-toc li.lv3{padding-left:16px}
+  .dp-toc li.lv4{padding-left:32px}
+  .dp-toc a{color:var(--ink-2);text-decoration:none;overflow-wrap:anywhere}
+  .dp-toc a:hover{color:var(--blue)}
+  /* 锚点跳转时标题别贴到视口顶端(站点顶栏会盖住) */
+  .dp-body h2[id],.dp-body h3[id],.dp-body h4[id]{scroll-margin-top:76px}
   .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
   .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
   .dp-body p{margin:0 0 1.05em}
@@ -96,10 +112,10 @@
     <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>句子互动自家内容，首发于李佳芮的博客，本页为官网收录版 · <a href="https://rui.juzi.bot/interview/2026-06-23-cuiniuhui-fde-interview.html" target="_blank" rel="noopener">看原发布</a></span></div>
     
     
-    <article class="dp-body"><blockquote>
+    <details class="dp-toc" open><summary><i class="fa-solid fa-list-ul"></i>目录<span>8 节</span></summary><ol><li class="lv2"><a href="#h1">一、FDE 这个词，和一个没打算做 FDE 的起点</a></li><li class="lv2"><a href="#h2">二、为什么是一个新角色，不是&quot;让更好的人上&quot;</a></li><li class="lv2"><a href="#h3">三、FDE 到底是什么，它怎么反过来塑造了你们</a></li><li class="lv2"><a href="#h4">四、谁在干，从哪来，怎么练</a></li><li class="lv2"><a href="#h5">五、一个完整的案例，和按结果收费踩过的坑</a></li><li class="lv2"><a href="#h6">六、七大产品基建：现场每撞一堵墙，产品就长一块</a></li><li class="lv2"><a href="#h7">七、什么客户最需要，规模化卡在哪</a></li><li class="lv2"><a href="#h8">八、重来一次，和&quot;CEO 是天花板&quot;</a></li></ol></details><article class="dp-body"><blockquote>
 <p>这是崔牛会基于《硅谷今年最火的岗位 FDE，我们闷头干了三年》做的一小时深访。崔强约访时说得很直接：他想看 FDE 照进中国的落地现实到底长什么样，能不能抽出一套给中国 AI 公司、SaaS 转型公司用得上的打法。所以这次不复述文章，只追问那些一笔带过、当时觉得"不好展开"的地方。下面按对话整理，问题做了合并，金句做了高亮。</p>
 </blockquote>
-<h2>一、FDE 这个词，和一个没打算做 FDE 的起点</h2>
+<h2 id="h1">一、FDE 这个词，和一个没打算做 FDE 的起点</h2>
 <p><strong>崔牛会：你最早注意到 FDE 这个词是什么时候？是前年 10 月 Palantir 把它讲火的时候吗？</strong></p>
 <p>更早，具体哪天记不清了，但一定在 2023 年之前。Palantir 这个角色搞了二十多年，我很早就盯着这家公司。</p>
 <p>但有意思的是，2023 年我自己下场的时候，出发点根本不是 FDE。我们几乎是跟 dify、coze 同一时间做那套低代码平台的。我在 SaaS 行业创业了十多年，太清楚上一代低代码平台的毛病了：技术看不上，觉得这东西 low，不屑于用；非技术又没那个逻辑能力，用不起来。每家低代码公司本质上都在发明一种自己的语言，可你这门语言凭什么能标准化到所有人都认？这就跟"PHP 是世界上最好的语言"一样，是个吵了二十年也没结果的梗。</p>
@@ -107,7 +123,7 @@
 <p><strong>崔牛会：那会儿招 PE 是什么光景？</strong></p>
 <p>巨贵，还傲慢。一个应届生两万多。我印象特别深，面一个人鼻孔朝天，我多问几个细节，他觉得我在窃取他的方案——我就问了他一个 RAG 的原理，他转头找 HR 投诉，说你们公司想偷我的知识产权。</p>
 <p>现在回头看挺可笑，但那就是当时的风气：大家对 AI 没什么真认知，懂一点点就觉得自己是大佬。这事现在完全不存在了。说它只是想说明，我们是从一个很糙的起点摸出来的。后来我才发现，当时纯属自救折腾出来的这些东西，OpenAI 后来也在做——真没想到。</p>
-<h2>二、为什么是一个新角色，不是"让更好的人上"</h2>
+<h2 id="h2">二、为什么是一个新角色，不是"让更好的人上"</h2>
 <p><strong>崔牛会：你最早是怎么意识到，需要的是一个新角色，而不是把现有的人换成更厉害的？</strong></p>
 <p>是被客户的不满意逼出来的。</p>
 <p>最早交付全靠 PE。他能照着客户说的把提示词、把流程搭出来，活儿不差。但那一年半，我有一半时间在救火。火分两类。</p>
@@ -125,7 +141,7 @@
 <p>以前只能忍这份损耗，没有 AI，一个人确实干不完这么多事。今天不一样：写代码、搭流程、跑测试这些工序，AI 都能当手脚使，一个 FDE 借着这套工具，能把原来一条流水线上几个人接力的活，自己并行做完。人少了，交接少了，上下文就留住了。一根线拉到底不是因为我们要求 FDE 是全才，是 AI 把那些原本必须拆开的工序，重新收拢回了一个人手里。</p>
 <p><strong>崔牛会：这听起来像是 OPC（一人公司）的逻辑。</strong></p>
 <p>我有个暴论：<mark>OPC 是个伪命题，可每家公司里，每个人又都该是 OPC。</mark>只有这样组织效率才提得上去。Anthropic 后来的访谈里讲的也是这件事——职位的边界会模糊掉，因为当每个人都为结果负责，沟通产生的信息熵就少了。说白了有点像 OKR 和 KPI：当大家的 O 真的统一了，你就没必要再去拆那一堆 KPI 了。</p>
-<h2>三、FDE 到底是什么，它怎么反过来塑造了你们</h2>
+<h2 id="h3">三、FDE 到底是什么，它怎么反过来塑造了你们</h2>
 <p><strong>崔牛会：用你自己的话定义 FDE。</strong></p>
 <p><mark>一个客户，很多能力，对客户身上的真实成果负责。</mark></p>
 <p>拆开就三件：读懂客户的生意，把要交付的成果设计出来，用工程手段把质量兜住。具体到我们，就是 FDE 拿着七大产品基建，直接给客户交付结果。写代码只是其中一道工序，不是目的。衡量他的不是写了多少代码、交了几份文档，是这套系统到底有没有人在用、客户的生意有没有变好。</p>
@@ -149,7 +165,7 @@
 <p>第二代是字节，把公司当产品做，整个组织像软件一样迭代——develop a company as a product。</p>
 <p>第三代我看的是 Anthropic：<mark>design a company as a parallel network——把公司设计成一张并行的网络，不停把串行的瓶颈压掉。</mark></p>
 <p>前两代再强，人和人之间还是串行的：你等我交接，我等你审批。AI 第一次让协作可以并行，组织的最小单元不再是一支团队，是"一个人加一支 Agent 团队"，我叫它 1+N。<mark>一家 AI native 公司，如果人均做不到 FDE，那就说明这个员工不合格</mark>——这事在 Anthropic 内部已经发生了，在我们公司我还在努力。</p>
-<h2>四、谁在干，从哪来，怎么练</h2>
+<h2 id="h4">四、谁在干，从哪来，怎么练</h2>
 <p><strong>崔牛会：现在 FDE 团队谁在带，结构什么样？多大规模？</strong></p>
 <p>负责人是个学法学的 00 后女生。一开始没想让她当 leader，选她是因为两点：一是责任心极强，客户结果不好她会焦虑，甚至有点内耗；二是热心，我们开玩笑叫她鸡妈妈，新人进来她特别愿意教——这其实很少见，教人很费精力。她现在也面临新课题，带的人多了，太年轻，还需要更有资历、更懂客户和管理的人补上来，团队一直在迭代。但这个选择背后我想说的是：<mark>FDE 真正稀缺的不是写代码的人，是有极强责任心、又足够 AI native 的人。</mark></p>
 <p>规模上，公司现在七八十人，三分之一是 FDE，二十多个。这是核心部门，未来人数可能超过产研。画像很杂：基本是 00 后，也有从腾讯、百度、比亚迪挖来的资深测试开发，还有我们自己的产品转岗的——中间出去创过业，做 Geo 拿了 TS，团队也组得不错，后来又回来了。我挺喜欢硅谷 PayPal 黑帮那种气质——Palantir 自己就是从那帮人里长出来的，反叛的人能做好 founder，也能做好 FDE。所以我们不强求统一画像，核心就是责任心、AI native、好奇心、执行力。</p>
@@ -168,7 +184,7 @@
 <p>会，而且挑的是最难的那摊——带着 AI 管培生，把我们自己的内部业务流重做一遍。我在革自己的命，第一刀先冲着我自己的工作流来。这种改造最难啃、杠杆也最高：它动的是流程本身、是谁干什么、是出了事谁担，这种决定只有我拍得了，所以我得自己先下场。</p>
 <p>我先把自己一天的活搬上 Agent——调研、写文档、看数据、盯几条线并行。我一个人每天就烧掉几百万 token，把模型推到极限，所以我很清楚现在模型最强能到哪、边界在哪。<mark>所以 FDE 不大敢跟我说"这是模型幻觉"，他知道我会把他骂回去，而且会给一个更好的解法。</mark></p>
 <p>我自己趟通一条，就带着 AI 管培生照着把它铺到对应部门，一条业务流一条业务流地重做。</p>
-<h2>五、一个完整的案例，和按结果收费踩过的坑</h2>
+<h2 id="h5">五、一个完整的案例，和按结果收费踩过的坑</h2>
 <p><strong>崔牛会：挑一个最典型的，从头到尾讲一遍。</strong></p>
 <p>就讲那个头部在线教育客户。</p>
 <p>第一阶段，诊断。一位懂这行的前辈带着行业经验驻场三五天，把客户的 SOP、知识库、整条获客转化链路摸清楚：他从哪获客，怎么转化，钱卡在哪个环节。不上来装软件，先搞明白这门生意。</p>
@@ -187,7 +203,7 @@
 <p><strong>崔牛会：做了 FDE 之后，项目成功率提高了吗？怎么定义成功？</strong></p>
 <p>提高了，但不是每个都成。成功的定义就是上面那个 AB Test：AI 组打赢对照组，客户业务指标真涨，然后他愿意续约、愿意把单子做大。从世俗的 SaaS 口径看，我们的 NDR 是 112%，recurring 收入占 92%——老客户每年不光续，还在扩，单个合同越做越大。这是用脚投票的结果。</p>
 <p>做不动的也有，两类。一类是数据和系统基建太烂，底层是散的，AI 在上面跑不起来；另一类是组织本身不愿意用，老板想要、下面的人不配合。这两类我们后面都有了对应的解法，下面讲。</p>
-<h2>六、七大产品基建：现场每撞一堵墙，产品就长一块</h2>
+<h2 id="h6">六、七大产品基建：现场每撞一堵墙，产品就长一块</h2>
 <p><strong>崔牛会：这种"现场的苦变成产品"，挑几个最典型的讲讲？</strong></p>
 <p>七个产品基建，每一个背后都是一堵现场撞过的墙。</p>
 <p><strong>句子守护</strong>，我最看重的一个。它管的是 Agent 的质量。Agent 改一行就可能带坏另一处，靠人一遍遍手测根本测不全、测不准，上线前心里没底。我们的办法是把传统软件工程那一套搬过来，管 Agent 的健康度。我们内部叫六道关：AI 生成测试用例、批量验收跑回归、灰度上线、AI 工单、上线后 AI 质检——每改一行全量重考，回归不到标准不放行；上线后还有一个 AI 盯着所有 AI，定期抽检真实对话出健康度报告。这套东西在 PE 时代根本做不起来：全靠人的手感，没有自动化回归兜底，测漏是常态。现在它是产品，下一个客户进场质量这道关开箱就有。我们给它一句定位：<mark>像管软件一样管 Agent。</mark>我特别想做的事，本质是 <mark>AI 守护人，因为人本来就不靠谱。</mark>它也理顺了销售和 FDE 的协作。销售不懂技术，过去 Agent 到底好不好全靠嘴上掰扯，掰不清就来找我断官司。现在句子守护直接出一份测试报告，质量结果全在上面，是量化的——销售一看就知道 FDE 交付的 Agent 行不行，报告不达标就是 FDE 没搞好。这份报告甚至能直接摊给客户看。</p>
@@ -197,7 +213,7 @@
 <p><strong>崔牛会：刚才提到两类做不动的客户，后来怎么解的？</strong></p>
 <p>第一类，基建太烂，就是上面说的句子制造，直接下场帮他把数字化系统补上。</p>
 <p>第二类更微妙——老板和执行层有 gap，老板聊得很好，下面的人就是不配合。我们最早觉得自己有底气按结果收费，就不收咨询费，直接下场吭哧吭哧干。后来发现不行，不收咨询费他就不重视。所以现在反过来：先收一笔咨询费，老板交了钱，下面的人才会觉得"这东西我们交了钱，得用起来"，后面再收按结果付费的 AI 员工费用。<mark>先收咨询费再按结果收费，成功率反而更高。</mark></p>
-<h2>七、什么客户最需要，规模化卡在哪</h2>
+<h2 id="h7">七、什么客户最需要，规模化卡在哪</h2>
 <p><strong>崔牛会：在你的认知里，哪类客户最需要 FDE？</strong></p>
 <p><mark>所有非 AI native 的公司，都需要 FDE。</mark></p>
 <p>判断一家公司 AI native 不 native，有个暴论式的标准：看 00 后比例，看 founder 背景。如果 founder 是 00 后、又在做 AI，大概率挺 native；如果 founder 不是 00 后、又没技术背景，很难。我自己是把命革掉半条，加上原本就写程序出身——我的开源框架上个时代有两万多 star，影响过上百万开发者——我才长成一个还算 AI native 的人。今天的 vibe coding，其实你得懂程序，才知道怎么设计架构、怎么部署。没技术背景的销售型创始人，补这个认知要花不少时间。</p>
@@ -213,7 +229,7 @@
 <p>Agent 没有现成的样子。SaaS 你一上来就知道要做成什么样，照着做个更好的去抢市场；Agent 不是，没人知道一个销售 Agent、客服 Agent、甚至我们做的那个能接案子的律师 Agent，最后该长成什么样，只能钻进客户真实业务里一点点试。<mark>谁想在 Agent 时代找到 PMF，FDE 大概绕不开。</mark></p>
 </blockquote>
 <p>硅谷今年集体做 FDE，巨头一边自建一边拉麦肯锡、德勤，说到底是认了同一件事：<mark>客户认的是结果，不是过程。</mark></p>
-<h2>八、重来一次，和"CEO 是天花板"</h2>
+<h2 id="h8">八、重来一次，和"CEO 是天花板"</h2>
 <p><strong>崔牛会：如果重来一次，你会怎么设计 FDE？</strong></p>
 <p>三件事，两件照做，一件会改。</p>
 <p>照做的：第一天就按结果收费，2023 年就定下来，扛住了同行都按人头按工时收的压力。还有一句——<mark>第一天就别招算法，招懂生意的人。</mark>这条我们只做对了一半：确实第一天就没招算法，但也没招到懂生意的人，招的是一批 00 后 PE。不过那个时候我没那么多资源，再来一遍大概率还是这么走，还是得从零培养。这其实是个资源匹配的问题——换成今天的我，有资源了，第一天就会去招懂生意的人。</p>

@@ -47,6 +47,22 @@
   .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
   .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
   .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  /* 长文目录(≥3 小标题且正文 ≥2000 字才出): <details> 原生可折叠, 不用一行 JS。
+     默认 open —— 目录的用处是先看清结构再决定读哪段, 收起来就失去意义; 想收也一点即收。 */
+  .dp-toc{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:24px;background:#FBFCFF}
+  .dp-toc summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--ink-2);display:flex;align-items:center;gap:7px;list-style:none}
+  .dp-toc summary::-webkit-details-marker{display:none}
+  .dp-toc summary i{font-size:11px;color:var(--blue)}
+  .dp-toc summary span{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-3);margin-left:auto}
+  .dp-toc ol{list-style:none;margin:10px 0 2px;padding:0;counter-reset:toc}
+  .dp-toc li{counter-increment:toc;font-size:13px;line-height:1.7;padding:2px 0}
+  .dp-toc li::before{content:counter(toc) ". ";font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .dp-toc li.lv3{padding-left:16px}
+  .dp-toc li.lv4{padding-left:32px}
+  .dp-toc a{color:var(--ink-2);text-decoration:none;overflow-wrap:anywhere}
+  .dp-toc a:hover{color:var(--blue)}
+  /* 锚点跳转时标题别贴到视口顶端(站点顶栏会盖住) */
+  .dp-body h2[id],.dp-body h3[id],.dp-body h4[id]{scroll-margin-top:76px}
   .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
   .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
   .dp-body p{margin:0 0 1.05em}
@@ -96,7 +112,7 @@
     <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（量子位 · 行业动态）所有 · <a href="https://www.qbitai.com/2026/07/460234.html" target="_blank" rel="noopener">阅读原文</a></span></div>
     <p class="dp-quip"><i class="fa-solid fa-quote-left"></i>非人形机器人更贴近实际业务场景的痛点</p>
     <div class="dp-brief"><b>简报</b>科沃斯开源具身智能机器人平台八界，面向开发者和企业开放硬件和系统。该机器人不做人形，专注于真实用户需求。</div>
-    <article class="dp-body"><h1>具身智能的「ChatGPT时刻」还没到，科沃斯先把机器人拆开了</h1>
+    <details class="dp-toc" open><summary><i class="fa-solid fa-list-ul"></i>目录<span>3 节</span></summary><ol><li class="lv2"><a href="#h1">八界机器人，全面开源</a></li><li class="lv2"><a href="#h2">不做人形，八界的选择题</a></li><li class="lv2"><a href="#h3">八界生态，随时随地可接入</a></li></ol></details><article class="dp-body"><h1>具身智能的「ChatGPT时刻」还没到，科沃斯先把机器人拆开了</h1>
     			   
              <img loading="lazy" onerror="this.style.display='none'" src="http://www.qbitai.com/wp-content/themes/liangziwei/imagesnew/head.jpg" referrerpolicy="no-referrer" /><em><a href="https://www.qbitai.com/author/keleixi" target="_blank" rel="noopener nofollow">克雷西</a></em>
                           2026-07-25
@@ -124,7 +140,7 @@
 <p>Robot这个概念最早跑出来的时候，它就是干苦力的。干苦力的，不一定是人。<br />
 我们在考虑这些问题的时候，要解决的是它切入家庭到底能干什么，而不是它的外观是什么样子。</p>
 </blockquote>
-<h2>八界机器人，全面开源</h2>
+<h2 id="h1">八界机器人，全面开源</h2>
 <p>八界是科沃斯今年推出的一款具身智能机器人。科沃斯做了二十几年地面清洁机器人，这一次把这套技术从平面扩展到立体空间。</p>
 <p>它有六个自由度的机械臂，臂展800毫米，覆盖范围广，上可抵达高处、下可拾取地上的东西。</p>
 <p>它还配了一个静音移动底盘，走起来听不出声响，它的身体能升降44厘米，高处低处都够得着。</p>
@@ -155,7 +171,7 @@
 <p>这些细节堆在一起，是科沃斯二十多年攒下的对「家里到底需要什么」的理解。</p>
 <p>硬件、软件，连这些藏在细节里的设计都打开了，是科沃斯这次交出去的诚意。</p>
 <p>机器人长成现在这个样子，走轮式底盘这条路，也是一个更早做下的决定。</p>
-<h2>不做人形，八界的选择题</h2>
+<h2 id="h2">不做人形，八界的选择题</h2>
 <p>八界没有走人形这条路，它的身体由轮式底盘加一条机械臂构成，没有腿，也没有脸。</p>
 <p>科沃斯很早就给出过机器人的发展路线图，在这张路线图中，机器人要先做工具，再做管家，最后做伴侣。</p>
 <p>八界对应的，是「工具到管家」这一段。</p>
@@ -180,7 +196,7 @@
 <p>他认为今天的很多尝试还处在早期，这些尝试谈不上真正形成商业闭环。</p>
 <p>但这种阶段性的热闹也有它的价值，没有先锋在前面探路，市场只会显得死气沉沉。</p>
 <p>科沃斯自己不打算凑这个热闹，还是计划按自己的节奏一步步走。</p>
-<h2>八界生态，随时随地可接入</h2>
+<h2 id="h3">八界生态，随时随地可接入</h2>
 <p>这次开源，背后其实有一个行业共识在撑腰。</p>
 <p>具身智能距离自己的「ChatGPT时刻」还有一段距离，仿真环境到真实机器的迁移、场景数据的积累，这些工作量太大，一家公司很难独自补齐。</p>
 <p>所以这件事需要更多开发者一起来做，一点点地提升机器人对环境的理解和对场景的适配能力。</p>

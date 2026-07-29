@@ -47,6 +47,22 @@
   .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
   .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
   .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  /* 长文目录(≥3 小标题且正文 ≥2000 字才出): <details> 原生可折叠, 不用一行 JS。
+     默认 open —— 目录的用处是先看清结构再决定读哪段, 收起来就失去意义; 想收也一点即收。 */
+  .dp-toc{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:24px;background:#FBFCFF}
+  .dp-toc summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--ink-2);display:flex;align-items:center;gap:7px;list-style:none}
+  .dp-toc summary::-webkit-details-marker{display:none}
+  .dp-toc summary i{font-size:11px;color:var(--blue)}
+  .dp-toc summary span{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-3);margin-left:auto}
+  .dp-toc ol{list-style:none;margin:10px 0 2px;padding:0;counter-reset:toc}
+  .dp-toc li{counter-increment:toc;font-size:13px;line-height:1.7;padding:2px 0}
+  .dp-toc li::before{content:counter(toc) ". ";font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .dp-toc li.lv3{padding-left:16px}
+  .dp-toc li.lv4{padding-left:32px}
+  .dp-toc a{color:var(--ink-2);text-decoration:none;overflow-wrap:anywhere}
+  .dp-toc a:hover{color:var(--blue)}
+  /* 锚点跳转时标题别贴到视口顶端(站点顶栏会盖住) */
+  .dp-body h2[id],.dp-body h3[id],.dp-body h4[id]{scroll-margin-top:76px}
   .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
   .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
   .dp-body p{margin:0 0 1.05em}
@@ -96,18 +112,18 @@
     <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>句子互动自家内容，首发于李佳芮的博客，本页为官网收录版 · <a href="https://rui.juzi.bot/presentation/2021-06-23-the-wechaty-way.html" target="_blank" rel="noopener">看原发布</a></span></div>
     
     
-    <article class="dp-body"><p>Wechaty (Conversational RPA SDK) 2016 年发布于 GitHub，是一个基于 Apache-2.0 许可证的开源项目。经过5年多的发展，现在 Wechaty 开源社区已经拥有数十位 Committers，百余位 Contributors ，并被超过一万名 GitHub 开发者 Star。目前，使用 Wechaty 的开发者已覆盖数万人，并拥有基于微信群的数千人活跃开发者群。</p>
+    <details class="dp-toc" open><summary><i class="fa-solid fa-list-ul"></i>目录<span>21 节</span></summary><ol><li class="lv2"><a href="#h1">Wechaty 介绍 PPT</a></li><li class="lv2"><a href="#h2">社区沟通</a></li><li class="lv2"><a href="#h3">Wechaty 更多链接</a></li><li class="lv2"><a href="#h4">Wechaty 会议流程最佳实践指南</a></li><li class="lv3"><a href="#h5">1. Wechaty Meeting Notes</a></li><li class="lv3"><a href="#h6">Zoom 会议</a></li><li class="lv3"><a href="#h7">会议视频</a></li><li class="lv3"><a href="#h8">会议博客</a></li><li class="lv4"><a href="#h9">会议博客例子</a></li><li class="lv2"><a href="#h10">Wechaty 博客发布流程指南</a></li><li class="lv3"><a href="#h11">在博客中插入视频</a></li><li class="lv3"><a href="#h12">小白入门发布博客</a></li><li class="lv2"><a href="#h13">Wechaty Issue 发布流程指南</a></li><li class="lv3"><a href="#h14">1. 报 Bug</a></li><li class="lv3"><a href="#h15">2. 提新需求</a></li><li class="lv3"><a href="#h16">3. 问问题</a></li><li class="lv2"><a href="#h17">Wechaty PR 发布流程指南</a></li><li class="lv2"><a href="#h18">Wechaty RFC</a></li><li class="lv2"><a href="#h19">进阶，了解 Apache Way，知道如何更好的参与开源项目</a></li><li class="lv3"><a href="#h20">官方内容</a></li><li class="lv3"><a href="#h21">佳芮推荐：</a></li></ol></details><article class="dp-body"><p>Wechaty (Conversational RPA SDK) 2016 年发布于 GitHub，是一个基于 Apache-2.0 许可证的开源项目。经过5年多的发展，现在 Wechaty 开源社区已经拥有数十位 Committers，百余位 Contributors ，并被超过一万名 GitHub 开发者 Star。目前，使用 Wechaty 的开发者已覆盖数万人，并拥有基于微信群的数千人活跃开发者群。</p>
 <p>Wechaty 社区的 Contributors 遍布全球多个国家地区，和各大互联网公司，职业背景从程序员到设计师，从大学教授到创业者，非常多样化。GitHub 上有千余个开源项目基于 Wechaty 构建了聊天机器人，这些开发者用户也极大地促进了社区的活跃和发展。</p>
 <p>Wechaty自身对代码质量的管理，使用了 GitHub Actions 的 DevOps 工具完成了 CI/CD 工作流，从自动化单元测试到自动打包集成测试，从自动发布 NPM 包到自动构建和发布对应版本的 Docker Image ，实现了全自动的社区代码发布，极大的提高了社区的协同效率。</p>
 <p>在开源社区管理上，Wechaty 遵循 The Apache Way ，拥有 PMC / Committer 管理制度，和完善的 Issue / PR / Release 等管理制度。截止2021年，Wechaty 已经有近百万次 NPM 安装下载，并由社区自发推动了 Python, Go, Java, Scala, .NET, PHP, Rust 等语言的适配和发布，是国内最活跃的 Conversational AI Chatbot 开发者社区。</p>
-<h2>Wechaty 介绍 PPT</h2>
+<h2 id="h1">Wechaty 介绍 PPT</h2>
 <p>通过阅读下面3个PPT，你可以对Wechaty及其发展历程有一个基础的了解。</p>
 <ul>
 <li>2016: <a href="https://docs.google.com/presentation/d/13oUOIEnzdLWO6KZWztD_pMuu22AQ3SIMjk2wp8f-f18/edit#slide=id.g194ee6e600_0_51" target="_blank" rel="noopener">Wechaty 101: from v0.0 to v0.7</a></li>
 <li>2016-2020: <a href="https://docs.google.com/presentation/d/1eRNrKnCpdnsmplTwtZzmtGZgrPoNCmOnitmHKVc6iVU/edit#slide=id.g8568e8a985_3_8" target="_blank" rel="noopener">Open-source Wechaty: 2016 to 2020</a></li>
 <li>2021: <a href="https://docs.google.com/presentation/d/1aJ9j0VoRk0Dkyyajy3Z-zEI0QcpmpTjcCcabEXxo4JM/edit#slide=id.p" target="_blank" rel="noopener">Wechaty 2021</a></li>
 </ul>
-<h2>社区沟通</h2>
+<h2 id="h2">社区沟通</h2>
 <p>Wechaty 社区持续秉承信息开放透明：</p>
 <ul>
 <li>首选沟通渠道是 <a href="https://gitter.im/wechaty/wechaty" target="_blank" rel="noopener">Gitter</a>, 因为 Gitter 保存了所有的历史沟通记录，即使你是刚刚加入社区的开发者，你也能追溯到第一天社区成员都讨论过哪些内容。</li>
@@ -123,7 +139,7 @@
 <li><a href="https://t.me/wechaty" target="_blank" rel="noopener">Telegram</a></li>
 <li><a href="https://twitter.com/chatieio" target="_blank" rel="noopener">Twitter</a></li>
 </ul>
-<h2>Wechaty 更多链接</h2>
+<h2 id="h3">Wechaty 更多链接</h2>
 <p>除了社区沟通的渠道，你也可以在这里了解更多 Wechaty 相关内容。</p>
 <ul>
 <li><a href="https://wechaty.js.org/blog/" target="_blank" rel="noopener">Blog</a>： 这里是可以看到 Wechaty 的所有博客</li>
@@ -136,9 +152,9 @@
 <li><a href="https://photos.google.com/share/AF1QipOWKUfUkjw-VzE0skrjmCwbwIWwuBiI7Li4UCbdXH62n8iH2ITnvDbPTsx4eBl8dw?key=cy1NdWFoUGpXanVmczVHSm84TVg1LXJWeW5HTDhR" target="_blank" rel="noopener">Photo Album</a>：Wechaty 活动的精选照片</li>
 <li><a href="https://docs.google.com/document/d/1fVCk8qRYc4RKGMf2UY5HOe07hEhPUOpGC34v88GEFJg/edit#heading=h.64c95c3y2l4v" target="_blank" rel="noopener">Hall of Fame</a>：了解 Wechaty 名人堂</li>
 </ul>
-<h2>Wechaty 会议流程最佳实践指南</h2>
+<h2 id="h4">Wechaty 会议流程最佳实践指南</h2>
 <p>Wechaty 社区希望每一次会议尽可能让所有参与者都能专注参与，并且获得正向产出，保证会议简洁高效和社区透明，Wechaty 的会议有以下三个重要工具及使用指南。</p>
-<h3>1. Wechaty Meeting Notes</h3>
+<h3 id="h5">1. Wechaty Meeting Notes</h3>
 <p>Meeting Notes 有以下几个价值：</p>
 <ul>
 <li><strong>透明</strong>：社区开的每一个会都会记录在 <a href="https://docs.google.com/document/d/1fVCk8qRYc4RKGMf2UY5HOe07hEhPUOpGC34v88GEFJg/edit#heading=h.64c95c3y2l4v" target="_blank" rel="noopener">Meeting Notes</a> 中，即使你刚刚加入社区，你也可以在 Meeting Notes 里面看到过去的会议内容。</li>
@@ -160,14 +176,14 @@
 <li>我们非常鼓励在开会其他人发表意见的时候，你同步在 Meeting Notes 在议题下发表评论，因为你写的内容大家都会看到，越多的讨论就会有越多的产出。</li>
 <li>需要注意的是，Agenda 和 Question 是一定要在会议开始前写进去的，这样保证参会者能提前了解内容； 但是评论是可以在任何时候（会议前&amp;会议中）写进去的，这样保证会议的内容都可被存档。</li>
 </ol>
-<h3>Zoom 会议</h3>
+<h3 id="h6">Zoom 会议</h3>
 <p>社区在条件允许的情况下，尽可能保证每一次会议都可以线上参与，参与的方式是使用 Zoom 会议，每次zoom会议都会进行视频录制，这样没有参会的人也可以看会议的视频回放。</p>
 <ul>
 <li>Zoom 下载地址：<a href="https://zoom.us/download#client_4meeting" target="_blank" rel="noopener">Download</a></li>
 <li>参会链接：<a href="https://zoom.us/j/6505033788" target="_blank" rel="noopener">https://zoom.us/j/6505033788</a></li>
 <li>参会密码：huan</li>
 </ul>
-<h3>会议视频</h3>
+<h3 id="h7">会议视频</h3>
 <p>为了保证会议的沉淀，重大线上会议会要求的主持者在会议结束后将会议视频上传到 <a href="https://www.youtube.com/playlist?list=PL8hd9KDTdarDXf_Rxtr8meKhxtgcXMInh" target="_blank" rel="noopener">Youtube</a> 同时完成以下内容：</p>
 <ul>
 <li>在<strong>公开范围</strong>里设置成 <code>公开</code></li>
@@ -178,7 +194,7 @@
 <p><a href="https://www.youtube.com/watch?v=hTkM_XPpFfU&amp;list=PL8hd9KDTdarDXf_Rxtr8meKhxtgcXMInh&amp;index=43" target="_blank" rel="noopener">Wechaty ❤️ Google Season of Docs: Kick-off meeting with 20 Technical Writers!</a> 就是一个很好的示例。因为一次会议的时间很长，其他人看视频的时候就可以很容易根据下图介绍知道 <strong>视频中 0:01:41 的时候讲的内容是 Introducing the Meeting Agenda</strong>， 同时点击 <strong>0:01:41</strong> 可以快速跳转到视频播放的地方。</p>
 <p><img referrerpolicy="no-referrer" onerror="this.style.display='none'" alt="youtube-example" src="../img/311dac744b17/291f255b77db.jpg" / loading="lazy" decoding="async"></p>
 <p>上传视频以后，主持人要去社区发布一个会议的博客，并嵌入视频内容，这样就能保证这次会议进行了存档并可以共享个社区的任何开发者。</p>
-<h3>会议博客</h3>
+<h3 id="h8">会议博客</h3>
 <p>为了保证社区的每一次会议都能够有内容沉淀，重大会议后需要些会议博客，<a href="#Wechaty 博客发布规范">博客撰写</a>会在下一个小节介绍。 一次会议博客至少要包括下面的内容：</p>
 <ul>
 <li>会议背景介绍</li>
@@ -187,9 +203,9 @@
 <li>Zoom 会议视频</li>
 <li>会议议程（不要把Meeting Notes 的会议议程粘进去，而是用 Youtube 中做好的视频切割链接，这样方便读者可以快速的看自己关注的会议内容）</li>
 </ul>
-<h4>会议博客例子</h4>
+<h4 id="h9">会议博客例子</h4>
 <p>Wechaty 社区组织 Google Season Of Docs 的 Tech Writer 的会议博客 <a href="https://wechaty.js.org/2021/05/08/gsod-2021-selected-technical-writers/" target="_blank" rel="noopener">Hello Wechaty GSoD’21 Technical Writers</a> 是一个很好的会议博客案例，完整的包含了上面的要求，建议第一次写会议博客的人先来看下这个案例。</p>
-<h2>Wechaty 博客发布流程指南</h2>
+<h2 id="h10">Wechaty 博客发布流程指南</h2>
 <p>任何人都可以通过在 <a href="https://github.com/wechaty/wechaty.js.org" target="_blank" rel="noopener">wechaty.js.org</a> Repo 下面通过发布 PR 的方式发布博客。</p>
 <ul>
 <li><a href="https://github.com/wechaty/wechaty.js.org#how-to-post-a-blog" target="_blank" rel="noopener">如何发布一篇 Wechaty 博客</a></li>
@@ -197,18 +213,18 @@
 <li><a href="https://github.com/wechaty/wechaty.js.org#how-to-run-tests" target="_blank" rel="noopener">本地测试保证博客内容没有问题</a></li>
 <li><a href="https://github.com/wechaty/wechaty.js.org#how-to-preview-your-changes" target="_blank" rel="noopener">本地预览</a></li>
 </ul>
-<h3>在博客中插入视频</h3>
+<h3 id="h11">在博客中插入视频</h3>
 <p>下面是在会议博客中嵌入视频的代码的简单案例，作为<code>include</code>标签的src参数传入视频链接即可。</p>
 <p>undefined</p>
 <p><a href="https://wechaty.js.org/contributors/univerone/" target="_blank" rel="noopener">univerone</a> 写了一篇非常详细的博客<a href="https://wechaty.js.org/2020/08/24/add-video-to-wechaty-blog/" target="_blank" rel="noopener">使用jekyll include在wechaty博客中快速插入视频</a>，介绍了如何优雅的在博客中插入视频，有兴趣的同学也可以深入博客研究。</p>
-<h3>小白入门发布博客</h3>
+<h3 id="h12">小白入门发布博客</h3>
 <p>如果你是完全小白，可以参考 <a href="https://wechaty.js.org/contributors/atorber/" target="_blank" rel="noopener">atorber</a> 的这篇博客: <a href="https://wechaty.js.org/2021/04/22/how-to-publish-blog-on-wechaty/" target="_blank" rel="noopener">入门：小白如何在wechaty社区发布自己的第一篇博客（一）</a> 通过大量的截图一步一步告诉你如何发布Wechaty博客。</p>
-<h2>Wechaty Issue 发布流程指南</h2>
+<h2 id="h13">Wechaty Issue 发布流程指南</h2>
 <p>社区希望遇到任何代码问题，都通过 issue 进行交流。</p>
 <p>强烈反对把代码截图或者日志截图直接发到微信群里，问大家为什么运行不了，或者直接问这事什么错误。一个截图是无法给出全面信息的，而且非常不利于归档传播给更多的开发者。当你提出一个有价值的 issue 的时候，实际上可以极大的避免其他开发者踩坑。</p>
 <p>当然，在发布 issue 之前，也强烈建议你在 issue 列表中进行搜索，看这个 issue 是不是别人已经提过了，甚至已经有人给出了很好的解决办法。</p>
 <p>发布 issue 的时候，建议按照 issue 模板发布 issue， 这样方便社区里的人更好的为你提供帮助。issue 分为3个类别：</p>
-<h3>1. 报 Bug</h3>
+<h3 id="h14">1. 报 Bug</h3>
 <p>模板内容见：<a href="https://github.com/wechaty/wechaty/blob/master/.github/ISSUE_TEMPLATE/wechaty-bug-report.md" target="_blank" rel="noopener">Bug Report</a></p>
 <p>报 Bug 最重要的事情是<strong>复现</strong>，只有可复现的bug，才可被解决。具体来讲，至少需要你给出以下的信息：</p>
 <ul>
@@ -219,14 +235,14 @@
 <li>按照你的步骤操作后，实际出现的现象</li>
 <li>相关的完整日志</li>
 </ul>
-<h3>2. 提新需求</h3>
+<h3 id="h15">2. 提新需求</h3>
 <p>模板内容见：<a href="https://github.com/wechaty/wechaty/blob/master/.github/ISSUE_TEMPLATE/wechaty-feature-request.md" target="_blank" rel="noopener">Feature Request</a></p>
 <p>当你提出希望社区增加一个新的功能的时候，你需要详细的描述出为什么需要，以及你期待的这个需求具体的样子。你描述的越详细，越容易得到其他开发者的支持。被其他开发者支持的多的需求，越容易被提到更高的优先级上。</p>
-<h3>3. 问问题</h3>
+<h3 id="h16">3. 问问题</h3>
 <p>模板内容见：<a href="https://github.com/wechaty/wechaty/blob/master/.github/ISSUE_TEMPLATE/wechaty-question.md" target="_blank" rel="noopener">Question</a></p>
 <p>社区不希望你在 issue 中提问，最好的方式是去 <a href="https://stackoverflow.com/questions/tagged/wechaty" target="_blank" rel="noopener">StackOverflow</a> 上提问。</p>
 <p>Wechaty 的 Contributor <a href="https://stackoverflow.com/users/2125837/xpt" target="_blank" rel="noopener">xpt</a> 在 StackOverflow 有超过 10K 的 reputation, 他专门为 wechaty 创建了 tag，所以你在 StackOverflow 上通过搜索 wechaty 是能看到所有关于wechaty的问题的。同时，也建议开发者去 <a href="https://stackoverflow.com/questions/tagged/wechaty" target="_blank" rel="noopener">StackOverflow</a> 提问并打上 wechaty 的标签，方便其他开发者搜索相关问题。</p>
-<h2>Wechaty PR 发布流程指南</h2>
+<h2 id="h17">Wechaty PR 发布流程指南</h2>
 <p>如果你不是 PR 一个博客，在 wechaty PR 之前一定要新建一个 issue，说清楚你要解决的问题，然后再发一个 PR， 并在这个 PR 中关联对应的 issue 链接，这样做的目的是明确告诉大家你提这个 PR 在解决什么问题，而不是只是提交一堆代码。</p>
 <p>此外，开发者在提交 PR 之前一定要按照 PR 模板的要求：</p>
 <ul>
@@ -237,18 +253,18 @@
 <li>关联相关的 Issue 链接</li>
 </ul>
 <p><img referrerpolicy="no-referrer" onerror="this.style.display='none'" alt="pr" src="../img/311dac744b17/1493602d9600.png" / loading="lazy" decoding="async"></p>
-<h2>Wechaty RFC</h2>
+<h2 id="h18">Wechaty RFC</h2>
 <p>如果是一个比较大的提案，建议先提一个 proposal，描述一下你要干什么、为什么要干这个事情、它能带来什么收益、方案是什么以及分析备选方案的优缺点等，我们会让你提个 Issue 进行讨论，最后以讨论后的 proposal 为基础，开始后面的开发。</p>
 <p>如这是 Wechaty Commiter <a href="https://wechaty.js.org/contributors/windmemory/" target="_blank" rel="noopener">高原</a> 发布的<a href="https://github.com/wechaty/wechaty/issues/1776" target="_blank" rel="noopener">提案</a>：</p>
 <p><img referrerpolicy="no-referrer" onerror="this.style.display='none'" alt="rfc" src="../img/311dac744b17/3a59c36a146b.png" / loading="lazy" decoding="async"></p>
-<h2>进阶，了解 Apache Way，知道如何更好的参与开源项目</h2>
+<h2 id="h19">进阶，了解 Apache Way，知道如何更好的参与开源项目</h2>
 <p>最后，在这里为大家推荐一系列 Apache Way 的资料，让你更好的理解开源项目的运作，也欢迎你以 Apache Way 的方式参与到社区的建设中。</p>
-<h3>官方内容</h3>
+<h3 id="h20">官方内容</h3>
 <ul>
 <li><a href="http://incubator.apache.org/" target="_blank" rel="noopener">孵化场的地址</a></li>
 <li><a href="http://incubator.apache.org/cookbook/" target="_blank" rel="noopener">生命周期</a></li>
 </ul>
-<h3>佳芮推荐：</h3>
+<h3 id="h21">佳芮推荐：</h3>
 <ul>
 <li><a href="http://www.apache.org/foundation/" target="_blank" rel="noopener">Apache 介绍</a></li>
 <li><a href="http://apache.org/theapacheway/" target="_blank" rel="noopener">什么是 Apache Way，Apache Way 是指 Apache 管理和运营项目的方法</a></li>

@@ -47,6 +47,22 @@
   .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
   .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
   .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  /* 长文目录(≥3 小标题且正文 ≥2000 字才出): <details> 原生可折叠, 不用一行 JS。
+     默认 open —— 目录的用处是先看清结构再决定读哪段, 收起来就失去意义; 想收也一点即收。 */
+  .dp-toc{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:24px;background:#FBFCFF}
+  .dp-toc summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--ink-2);display:flex;align-items:center;gap:7px;list-style:none}
+  .dp-toc summary::-webkit-details-marker{display:none}
+  .dp-toc summary i{font-size:11px;color:var(--blue)}
+  .dp-toc summary span{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-3);margin-left:auto}
+  .dp-toc ol{list-style:none;margin:10px 0 2px;padding:0;counter-reset:toc}
+  .dp-toc li{counter-increment:toc;font-size:13px;line-height:1.7;padding:2px 0}
+  .dp-toc li::before{content:counter(toc) ". ";font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .dp-toc li.lv3{padding-left:16px}
+  .dp-toc li.lv4{padding-left:32px}
+  .dp-toc a{color:var(--ink-2);text-decoration:none;overflow-wrap:anywhere}
+  .dp-toc a:hover{color:var(--blue)}
+  /* 锚点跳转时标题别贴到视口顶端(站点顶栏会盖住) */
+  .dp-body h2[id],.dp-body h3[id],.dp-body h4[id]{scroll-margin-top:76px}
   .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
   .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
   .dp-body p{margin:0 0 1.05em}
@@ -96,7 +112,7 @@
     <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（36氪 · 行业动态）所有 · <a href="https://36kr.com/p/3909499179767169?f=rss" target="_blank" rel="noopener">阅读原文</a></span></div>
     <p class="dp-quip"><i class="fa-solid fa-quote-left"></i>AI面试官落地预示着企业服务场景的深度渗透</p>
     <div class="dp-brief"><b>简报</b>元企AI推出超级HR产品，能像员工一样拆解岗位需求、找人、打分并汇报。该产品由清华和北大博士创办，旨在解决企业招聘效率问题。</div>
-    <article class="dp-body"><p><img loading="lazy" onerror="this.style.display='none'" src="https://img.36krcdn.com/hsossms/20260724/v2_9351a356135b4be2b1b32f9d9a06d2f9@6314151_oswg1197231oswg900oswg1030_img_000?x-oss-process=image/format,jpg/interlace,1" referrerpolicy="no-referrer" /></p>
+    <details class="dp-toc" open><summary><i class="fa-solid fa-list-ul"></i>目录<span>3 节</span></summary><ol><li class="lv2"><a href="#h1">工具解决环节，员工解决任务</a></li><li class="lv2"><a href="#h2">唯一你会觉得它像AI的地方，可能是它回得太快</a></li><li class="lv2"><a href="#h3">越像员工，越需要被管理、审计和限制</a></li></ol></details><article class="dp-body"><p><img loading="lazy" onerror="this.style.display='none'" src="https://img.36krcdn.com/hsossms/20260724/v2_9351a356135b4be2b1b32f9d9a06d2f9@6314151_oswg1197231oswg900oswg1030_img_000?x-oss-process=image/format,jpg/interlace,1" referrerpolicy="no-referrer" /></p>
   
   <p><strong>谁能保证超级数字员工不是下一个AI落地的窗口</strong></p>
   <p><img loading="lazy" onerror="this.style.display='none'" src="https://img.36krcdn.com/hsossms/20260724/v2_6e242d7cc0d94a1085c79adf6b3ef6f3@6314151_oswg560oswg900oswg30_img_000?x-oss-process=image/format,jpg/interlace,1" referrerpolicy="no-referrer" /></p>
@@ -130,7 +146,7 @@
   <p>以下是“未来人类实验室”与元企AI创始人陈猛的对话，经整理发布——</p>
   <p><img loading="lazy" onerror="this.style.display='none'" src="https://img.36krcdn.com/hsossms/20260724/v2_62d6098357c648be8f160fff85f540ee@6314151_oswg1788oswg430oswg430_img_000?x-oss-process=image/format,jpg/format,jpg/interlace,1" referrerpolicy="no-referrer" /></p>
   
-  <h2><strong>工具解决环节，员工解决任务</strong><br /> </h2>
+  <h2 id="h1"><strong>工具解决环节，员工解决任务</strong><br /> </h2>
   <p><strong>未来：你们为什么一定要把它叫数字员工，而不是<a class="cpt" href="../c/ai-hr.html" data-def="AI HR 是利用任务智能体自动化招聘中的简历筛选、初步面试等重复性工作，让HR专家专注于战略决策">AI招聘</a>工具？</strong></p>
   <p><strong>元企AI</strong>：工具解决的是环节，员工解决的是任务。</p>
   <p>普通工具可能帮你做一个环节，比如筛一下简历、写一段话、生成一份报告。但数字员工是任务导向的。你不是让它“帮我筛一下简历”，而是告诉它“我要招一个电子工程师”。它需要围绕这个目标，自己去拆解任务、找人、筛选、沟通、打分、总结，并把结果交付给人。</p>
@@ -161,7 +177,7 @@
   <p>目前AI可以通过简历和初步沟通帮你兜住底线，但上限判断仍然需要人。比如你希望销售是严谨型、数据型，还是春风化雨型，这种偏好需要人做最终决策。</p>
   <p><img loading="lazy" onerror="this.style.display='none'" src="https://img.36krcdn.com/hsossms/20260724/v2_36a52e3ef05a4ae7aa5247d71e42c28a@6314151_oswg2308oswg430oswg430_img_000?x-oss-process=image/format,jpg/format,jpg/interlace,1" referrerpolicy="no-referrer" /></p>
   
-  <h2><strong>唯一你会觉得它像AI的地方，可能是它回得太快</strong></h2>
+  <h2 id="h2"><strong>唯一你会觉得它像AI的地方，可能是它回得太快</strong></h2>
   
   <p><strong>未来：现在外面很多AI产品都能聊天。你们怎么判断一个数字员工是不是真的落地？</strong></p>
   <p><strong>元企AI：</strong>我觉得不能只看它会不会聊天，而要看它能不能进入真实业务流。</p>
@@ -198,7 +214,7 @@
   <p>未来可能被淘汰的，不是HR这个岗位，而是不会用AI的人，或者用AI比较晚的人。用得早的人，会先享受到效率提升。</p>
   <p><img loading="lazy" onerror="this.style.display='none'" src="https://img.36krcdn.com/hsossms/20260724/v2_dc6b836130a54f61a8885963e2a5e178@6314151_oswg2380oswg900oswg181_img_000?x-oss-process=image/format,jpg/interlace,1" referrerpolicy="no-referrer" /></p>
   
-  <h2><strong>越像员工，越需要被管理、审计和限制</strong></h2>
+  <h2 id="h3"><strong>越像员工，越需要被管理、审计和限制</strong></h2>
   <p><strong>未来：数字员工越像人，是不是也越需要被管理？</strong></p>
   <p><strong>元企AI：</strong>是。尤其是商用产品，安全性非常重要，甚至是生命线。</p>
   <p>免费产品出错，大家可能觉得好笑。但如果用户一年花3万块钱买一个AI产品，它出错，轻则退款，重则产生声誉风险。</p>

@@ -47,6 +47,22 @@
   .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
   .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
   .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  /* 长文目录(≥3 小标题且正文 ≥2000 字才出): <details> 原生可折叠, 不用一行 JS。
+     默认 open —— 目录的用处是先看清结构再决定读哪段, 收起来就失去意义; 想收也一点即收。 */
+  .dp-toc{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:24px;background:#FBFCFF}
+  .dp-toc summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--ink-2);display:flex;align-items:center;gap:7px;list-style:none}
+  .dp-toc summary::-webkit-details-marker{display:none}
+  .dp-toc summary i{font-size:11px;color:var(--blue)}
+  .dp-toc summary span{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-3);margin-left:auto}
+  .dp-toc ol{list-style:none;margin:10px 0 2px;padding:0;counter-reset:toc}
+  .dp-toc li{counter-increment:toc;font-size:13px;line-height:1.7;padding:2px 0}
+  .dp-toc li::before{content:counter(toc) ". ";font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .dp-toc li.lv3{padding-left:16px}
+  .dp-toc li.lv4{padding-left:32px}
+  .dp-toc a{color:var(--ink-2);text-decoration:none;overflow-wrap:anywhere}
+  .dp-toc a:hover{color:var(--blue)}
+  /* 锚点跳转时标题别贴到视口顶端(站点顶栏会盖住) */
+  .dp-body h2[id],.dp-body h3[id],.dp-body h4[id]{scroll-margin-top:76px}
   .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
   .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
   .dp-body p{margin:0 0 1.05em}
@@ -96,7 +112,7 @@
     <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（阮一峰 · 大咖观点）所有 · <a href="http://www.ruanyifeng.com/blog/2026/07/weekly-issue-402.html" target="_blank" rel="noopener">阅读原文</a></span></div>
     
     <div class="dp-brief"><b>简报</b>科技爱好者周刊第 402 期分享智念 AI 工作体验小说，收录开源投稿与招聘信息，封面为内蒙古草原方舟文化空间。</div>
-    <article class="dp-body"><h1>科技爱好者周刊（第 402 期）：我在智念 AI 的日子（小说）</h1>
+    <details class="dp-toc" open><summary><i class="fa-solid fa-list-ul"></i>目录<span>11 节</span></summary><ol><li class="lv2"><a href="#h1">封面图</a></li><li class="lv2"><a href="#h2">我在智念 AI 的日子（小说）</a></li><li class="lv2"><a href="#h3">科技动态</a></li><li class="lv2"><a href="#h4">文章</a></li><li class="lv2"><a href="#h5">工具</a></li><li class="lv2"><a href="#h6">AI 相关</a></li><li class="lv2"><a href="#h7">资源</a></li><li class="lv2"><a href="#h8">图片</a></li><li class="lv2"><a href="#h9">文摘</a></li><li class="lv2"><a href="#h10">言论</a></li><li class="lv2"><a href="#h11">往年回顾</a></li></ol></details><article class="dp-body"><h1>科技爱好者周刊（第 402 期）：我在智念 AI 的日子（小说）</h1>
 
 
 
@@ -121,13 +137,13 @@
                                     
                                         <p>本杂志<a href="https://github.com/ruanyf/weekly" target="_blank" rel="noopener nofollow">开源</a>，欢迎<a href="https://github.com/ruanyf/weekly/issues" target="_blank" rel="noopener nofollow">投稿</a>。另有<a href="https://github.com/ruanyf/weekly/issues/10517" target="_blank" rel="noopener nofollow">《谁在招人》</a>服务，发布程序员招聘信息。合作请<a href="http://www.ruanyifeng.com/cdn-cgi/l/email-protection#cdb4a4aba8a3aae3bfb8aca38daaa0aca4a1e3aea2a0" target="_blank" rel="noopener nofollow">邮件联系</a>（<a href="http://www.ruanyifeng.com/cdn-cgi/l/email-protection" target="_blank" rel="noopener nofollow">[email protected]</a>）。</p>
 
-<h2>封面图</h2>
+<h2 id="h1">封面图</h2>
 
 <p><img loading="lazy" onerror="this.style.display='none'" src="https://cdn.beekka.com/blogimg/asset/202607/bg2026070202.webp" referrerpolicy="no-referrer" /></p>
 
 <p>内蒙古乌兰察布的&quot;草原方舟&quot;，内部是一个文化空间，举办艺术展览、文化交流、商业活动等。（<a href="https://www.gooood.cn/prairie-ark-and-nomads-beacon-tower-by-buzz-buro-ziyu-zhuang.htm" target="_blank" rel="noopener nofollow">via</a>）</p>
 
-<h2>我在智念 AI 的日子（小说）</h2>
+<h2 id="h2">我在智念 AI 的日子（小说）</h2>
 
 <p>下面是一篇老外写的<a href="https://nlkw.de/en/blog/getting-fried-part-1-cogentiv/" target="_blank" rel="noopener nofollow">超短篇小说</a>，也可能是 AI 写的，我不确定，但觉得很有趣，分享给大家。</p>
 
@@ -215,7 +231,7 @@
 
 <p>&quot;非常大，&quot;我说。</p>
 
-<h2>科技动态</h2>
+<h2 id="h3">科技动态</h2>
 
 <p>1、<a href="https://www.scientificamerican.com/article/raccoons-are-showing-early-signs-of-domestication/" target="_blank" rel="noopener nofollow">驯化浣熊</a></p>
 
@@ -287,7 +303,7 @@
 
 <p>如需超过限额，需要获得批准。这说明美国大厂也受不了 AI 的巨额支出了。</p>
 
-<h2>文章</h2>
+<h2 id="h4">文章</h2>
 
 <p>1、<a href="https://luminousmen.com/post/design-patterns-suck/" target="_blank" rel="noopener nofollow">设计模式糟透了</a>（英文）</p>
 
@@ -323,7 +339,7 @@
 
 <p>动画代码有一个平滑函数，用来模拟运动的加速/减速，本文介绍这个函数的实现。</p>
 
-<h2>工具</h2>
+<h2 id="h5">工具</h2>
 
 <p>1、<a href="https://deno.com/blog/v2.9#deno-desktop" target="_blank" rel="noopener nofollow">Deno Desktop</a></p>
 
@@ -381,7 +397,7 @@
 
 <p>一个命令行工具，下载播客的音频文件。（<a href="https://github.com/ruanyf/weekly/issues/10526" target="_blank" rel="noopener nofollow">@xiaoleiy</a> 投稿）</p>
 
-<h2>AI 相关</h2>
+<h2 id="h6">AI 相关</h2>
 
 <p>1、<a href="https://github.com/Blue-B/WhisperSubTranslate" target="_blank" rel="noopener nofollow">WhisperSubTranslate</a></p>
 
@@ -397,7 +413,7 @@
 
 <p>一个玩笑项目，让 AI 模拟12星座人格，然后看看不同星座对同一个事件如何反应。</p>
 
-<h2>资源</h2>
+<h2 id="h7">资源</h2>
 
 <p>1、<a href="https://howtotestfrontend.com/courses/jest-vitest-fundamentals" target="_blank" rel="noopener nofollow">Jest/Vitest 测试入门教程</a>（英文）</p>
 
@@ -411,7 +427,7 @@
 
 <p>一本面向初学者的 C 语言小教程。</p>
 
-<h2>图片</h2>
+<h2 id="h8">图片</h2>
 
 <p>1、<a href="https://www.xda-developers.com/staggered-keyboard-layouts-have-overstayed-their-welcome/" target="_blank" rel="noopener nofollow">键盘的按键排列</a></p>
 
@@ -431,7 +447,7 @@
 
 <p>大家喜欢哪一种键盘？</p>
 
-<h2>文摘</h2>
+<h2 id="h9">文摘</h2>
 
 <p>1、<a href="https://charity.wtf/2022/01/29/how-can-you-tell-if-the-company-youre-interviewing-with-is-rotten-on-the-inside/" target="_blank" rel="noopener nofollow">当你对公司产生怀疑</a></p>
 
@@ -460,7 +476,7 @@
 
 <p>他们值得拥有这些吗？他们的成功会让世界变得更美好吗？如果没有，请停止用你的工作支持他们，并将你的力量给予值得拥有你的付出的其它公司。</p>
 
-<h2>言论</h2>
+<h2 id="h10">言论</h2>
 
 <p>1、</p>
 
@@ -492,7 +508,7 @@
 
 <p>-- <a href="https://www.goodreads.com/work/quotes/96704571-how-big-things-get-done-the-surprising-factors-that-determine-the-fate" target="_blank" rel="noopener nofollow">《如何完成大型项目》</a></p>
 
-<h2>往年回顾</h2>
+<h2 id="h11">往年回顾</h2>
 
 <p><a href="https://www.ruanyifeng.com/blog/2025/07/weekly-issue-355.html" target="_blank" rel="noopener nofollow">两本《芯片战争》</a>（#355）</p>
 

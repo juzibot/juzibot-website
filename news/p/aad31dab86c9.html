@@ -47,6 +47,22 @@
   .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
   .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
   .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  /* 长文目录(≥3 小标题且正文 ≥2000 字才出): <details> 原生可折叠, 不用一行 JS。
+     默认 open —— 目录的用处是先看清结构再决定读哪段, 收起来就失去意义; 想收也一点即收。 */
+  .dp-toc{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:24px;background:#FBFCFF}
+  .dp-toc summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--ink-2);display:flex;align-items:center;gap:7px;list-style:none}
+  .dp-toc summary::-webkit-details-marker{display:none}
+  .dp-toc summary i{font-size:11px;color:var(--blue)}
+  .dp-toc summary span{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-3);margin-left:auto}
+  .dp-toc ol{list-style:none;margin:10px 0 2px;padding:0;counter-reset:toc}
+  .dp-toc li{counter-increment:toc;font-size:13px;line-height:1.7;padding:2px 0}
+  .dp-toc li::before{content:counter(toc) ". ";font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .dp-toc li.lv3{padding-left:16px}
+  .dp-toc li.lv4{padding-left:32px}
+  .dp-toc a{color:var(--ink-2);text-decoration:none;overflow-wrap:anywhere}
+  .dp-toc a:hover{color:var(--blue)}
+  /* 锚点跳转时标题别贴到视口顶端(站点顶栏会盖住) */
+  .dp-body h2[id],.dp-body h3[id],.dp-body h4[id]{scroll-margin-top:76px}
   .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
   .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
   .dp-body p{margin:0 0 1.05em}
@@ -96,7 +112,7 @@
     <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>句子互动自家内容，首发于李佳芮的博客，本页为官网收录版 · <a href="https://rui.juzi.bot/thought/2023-01-31-juzibot-2023.html" target="_blank" rel="noopener">看原发布</a></span></div>
     
     
-    <article class="dp-body"><blockquote>
+    <details class="dp-toc" open><summary><i class="fa-solid fa-list-ul"></i>目录<span>5 节</span></summary><ol><li class="lv2"><a href="#h1">客户第一</a></li><li class="lv2"><a href="#h2">持续创新</a></li><li class="lv2"><a href="#h3">开放中立</a></li><li class="lv2"><a href="#h4">写在最后</a></li><li class="lv2"><a href="#h5">参考文档</a></li></ol></details><article class="dp-body"><blockquote>
 <p>2023 年是句子的蛰伏年，我们要为未来的 2-3 年新一轮爆发做充足准备。<br />
 耐住寂寞，稳健前行，蓄势待发。</p>
 </blockquote>
@@ -107,7 +123,7 @@
 另一个巨大的不确定性来自团队，句子在 2022 年进行了较大的扩张，在<a href="http://rui.juzi.bot/thought/2022-2-4-juzibot-2022.html" target="_blank" rel="noopener">写在句子互动的 2022 年</a>里，我从迷信经验，到相信自己和团队，开始“只要年轻人”。然而作为企微生态最年轻的团队，我们也走了年轻人躲不掉的弯路。<br />
 好在跌跌撞撞，在下半年终于逐渐走上正轨，我也越发坚信：今天句子团队里的每一个人都是<strong>善良的人，坚定的人，有所担当的人</strong>。你们一直和句子在一起，持续为客户提供自动化效率工具，持续帮助客户实现业务增长。<strong>你们相信，通过帮助客户，你们正在以句子的方式“改变世界”</strong>。</p>
 <p>2023 年，我希望再和大家聊三个关键词 —— <strong>「客户第一」、「持续创新」、「开放中立」</strong>。</p>
-<h2>客户第一</h2>
+<h2 id="h1">客户第一</h2>
 <p>首先，恭喜我们度过了早期的产品打磨阶段，进入了一个新的纪元。我们持续服务了行业上私域做的最好的头部客户，比如 babycare、58 同城、泡泡玛特等等<br />
 当然这一年，我知道很多同学在服务大客户的过程中感受到强烈的压力，比如 XX、XX、XX 等等，XX 不靠谱的运维，XX 不懂数字化的代运营，XX 动不动就原地爆炸的运营团队。。。<br />
 我经常听到大家很痛苦的声音，XX 客户真是太挑剔了。<br />
@@ -129,7 +145,7 @@
 <p>最持久的公司是那些不断从客户那里获得反馈，并在公司的整个生命周期中根据反馈采取行动的公司。这些公司花时间与客户交谈、倾听客户的想法，并努力开发出客户想要的产品。<br />
 我们和客户的关系不是零和对立，而是实现共赢。<br />
 当产品给客户带来问题的时候，当客户抱怨产品的时候，当客户“莫名其妙”发火的时候，我们要得不只是理解，更应该和他们一样着急，然后想尽办法帮助他们解决问题并提供良好体验。少一些抱怨和吐槽，多一些在解决方案上的思考。<strong>持续聚焦客户在营销场景希望解决的问题，持续思考如何帮助客户打造场景的闭环</strong>。虽然友商很多，当前仍然没有很好的解决方案，我们的空间是非常大的。</p>
-<h2>持续创新</h2>
+<h2 id="h2">持续创新</h2>
 <p>接下来我想聊聊创新。<br />
 任何产品能力的创新都不会一劳永逸，即使是颠覆式创新，也不过只有两年的时间差。创业公司由于资源有限，时间不过半年或者一年。<br />
 我不是在否定一个产品创新的意义，实际上没有这个创新，可能压根没有后面持续创新和商业化的机会。如果句子没有产品技术的创新能力，是走不到今天的：</p>
@@ -143,7 +159,7 @@
 <p>关于创新需要补充一点，大家不要狭义地理解成创新只是获得突破式的发明或者一个高端的技术突破。创新是一个永恒的过程，创新是在寻找更好的解决方案。我们的团队需要持续思考，<strong>如何用更高效率、更省资源的去解决现实世界的难题，去找到更好的解决方案</strong>。我们需要持续思考这些大客户本质上需要的是什么，如何能提供更稳定的服务，如何能降低成本。</p>
 <p>很难有公司不靠创新可以生存下来，但创新是指在用户导向前提下的创新，而不是为了不同而不同的创新。盲目创新是危险的，<strong>而客户导向前提下的创新是企业生存的一个重要基础</strong>。如果一个公司缺乏创新，不是永远追求更好的解决方案，那么它的存在，就没有任何意义，这个公司就要做好中途夭折的准备。<br />
 生活与世界都在变化，我们需要能感知这些变化，并且认为可以从变化中找到商机。这个世界有越多的不确定性，就会有越多的商机。</p>
-<h2>开放中立</h2>
+<h2 id="h3">开放中立</h2>
 <p>新的一年，句子会更加开放，一方面是足够开放拥抱新鲜事物，另一方面则是对行业的开放，足够开放和合作伙伴做数据打通，用开放的心态与合作伙伴用各种方式合作。<br />
 其他人做的好的，我们没必要重复造轮子，我们聚焦在我们做的好的地方，把这个东西做专，做透，做到绝对领先。基于开放，后续我们会持续聚焦做对话式营销云：</p>
 <ul>
@@ -169,7 +185,7 @@
 另外就是要持续给合作伙伴留出价值，双赢很重要的是“双”，只有句子赚钱，而合作伙伴一直亏钱的生意是不长久的。当然反过来也同理，我们也要用同样的方式选择我们的合作伙伴，建立在公平合理的前提下。</p>
 <p>在森林里，每一个局部树和树的竞争是激烈的，不同局部的较量是异常丰富、曲折变化的。但如果我们看整个森林，最终所有树的方向又是一致的，那就是向着阳光的方向。向着阳光的力量是异常强大的，他将改造很多事物，或为改造事物开辟道路。<br />
 接下来让我们一起向着早晨七八点钟太阳的方向前进，因为那才是新生的方向 — <strong>摒弃零和竞争的思维，转变为以持续创新为基础，和行业合作伙伴共同为客户和社会创造增量价值的共赢思维，这就是我们看到的阳光。</strong></p>
-<h2>写在最后</h2>
+<h2 id="h4">写在最后</h2>
 <p>2022 年是大环境不太好的一年，2023 年面对期待已久的开放，所有公司都在铆足劲期待大干一场。我们必须谨慎乐观，2023 年不会特别容易，面对困难，我们要学会不只克服困难，而是习惯困难，在困难中寻找机遇。</p>
 <p>之前看过的一篇文章的观点很有意思：在全球金融危机之后的两三年里，大概是2012年到2014年，美国有一大批SaaS公司走向了资本市场，包括 ServiceNow，Workday，HubSpot 等。它们上市时的收入大概在1亿到2亿美金，也不算很高，而在其上市之后的十年里，这一批SaaS公司很多都实现了10倍甚至20倍的增长，证明了SaaS的业务模式、商业模式是成功的，现金流也可以是非常好的。<br />
 我们现在这几年，有点类似美国的2009年，是个经济下行的周期。如果句子能够穿越这段下行周期保持稳健成长，保持耐心，未来十年同样也有机会实现持续复利增长。</p>
@@ -186,7 +202,7 @@
    没有套路，如此重复这一过程。</li>
 </ol>
 <p>句子希望和大家一起打造一个伟大的产品，做一家伟大的公司。</p>
-<h2>参考文档</h2>
+<h2 id="h5">参考文档</h2>
 <ul>
 <li><a href="https://juzihudong.feishu.cn/docs/doccnCSiJL2Dj8umrunAFVMcRAf" target="_blank" rel="noopener">句子互动需要什么样的人</a></li>
 <li><a href="http://rui.juzi.bot/thought/2022-2-4-juzibot-2022.html" target="_blank" rel="noopener">写在句子互动的 2022 年</a></li>

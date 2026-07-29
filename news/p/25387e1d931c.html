@@ -47,6 +47,22 @@
   .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
   .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
   .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  /* 长文目录(≥3 小标题且正文 ≥2000 字才出): <details> 原生可折叠, 不用一行 JS。
+     默认 open —— 目录的用处是先看清结构再决定读哪段, 收起来就失去意义; 想收也一点即收。 */
+  .dp-toc{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:24px;background:#FBFCFF}
+  .dp-toc summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--ink-2);display:flex;align-items:center;gap:7px;list-style:none}
+  .dp-toc summary::-webkit-details-marker{display:none}
+  .dp-toc summary i{font-size:11px;color:var(--blue)}
+  .dp-toc summary span{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-3);margin-left:auto}
+  .dp-toc ol{list-style:none;margin:10px 0 2px;padding:0;counter-reset:toc}
+  .dp-toc li{counter-increment:toc;font-size:13px;line-height:1.7;padding:2px 0}
+  .dp-toc li::before{content:counter(toc) ". ";font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .dp-toc li.lv3{padding-left:16px}
+  .dp-toc li.lv4{padding-left:32px}
+  .dp-toc a{color:var(--ink-2);text-decoration:none;overflow-wrap:anywhere}
+  .dp-toc a:hover{color:var(--blue)}
+  /* 锚点跳转时标题别贴到视口顶端(站点顶栏会盖住) */
+  .dp-body h2[id],.dp-body h3[id],.dp-body h4[id]{scroll-margin-top:76px}
   .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
   .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
   .dp-body p{margin:0 0 1.05em}
@@ -96,7 +112,7 @@
     <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（36氪 · 行业动态）所有 · <a href="https://36kr.com/p/3909084356433025?f=rss" target="_blank" rel="noopener">阅读原文</a></span></div>
     <p class="dp-quip"><i class="fa-solid fa-quote-left"></i>现实问题导向的AI研发更符合企业级需求</p>
     <div class="dp-brief"><b>简报</b>DeepSeek被曝光内部录音，展现其矛盾性：一面是远大愿景，一面是务实运营。公司靠愿景而非KPI运转，研究员有大量自由探索时间。</div>
-    <article class="dp-body"><p><img loading="lazy" onerror="this.style.display='none'" src="https://img.36krcdn.com/hsossms/20260724/v2_c75ed5fe57204a49aa1df4e0ae18c89b@6314151_oswg595807oswg900oswg1030_img_000?x-oss-process=image/format,jpg/interlace,1" referrerpolicy="no-referrer" /></p>
+    <details class="dp-toc" open><summary><i class="fa-solid fa-list-ul"></i>目录<span>4 节</span></summary><ol><li class="lv2"><a href="#h1">看得很远，但拆成台阶</a></li><li class="lv2"><a href="#h2">不是无组织，而是动态组织</a></li><li class="lv2"><a href="#h3">开源是理想，也是商业机制</a></li><li class="lv2"><a href="#h4">低价不是慈善，而是长期胜率</a></li></ol></details><article class="dp-body"><p><img loading="lazy" onerror="this.style.display='none'" src="https://img.36krcdn.com/hsossms/20260724/v2_c75ed5fe57204a49aa1df4e0ae18c89b@6314151_oswg595807oswg900oswg1030_img_000?x-oss-process=image/format,jpg/interlace,1" referrerpolicy="no-referrer" /></p>
   
   <p><strong>DeepSeek的答案，不是只仰望星空，也不是只脚踏实地，而是用现实问题去支撑一个足够远的目标。</strong></p>
   
@@ -115,7 +131,7 @@
   <p>根据网络上流出的“梁文锋投资者交流会录音文字稿”，“未来人类实验室”做了以下的梳理。<br /> </p>
   <p><img loading="lazy" onerror="this.style.display='none'" src="https://img.36krcdn.com/hsossms/20260724/v2_5acda02057074072aa019db14f666299@6314151_oswg2451oswg900oswg181_img_000?x-oss-process=image/format,jpg/interlace,1" referrerpolicy="no-referrer" /></p>
   
-  <h2><strong>看得很远，但拆成台阶</strong></h2>
+  <h2 id="h1"><strong>看得很远，但拆成台阶</strong></h2>
   
   <p><strong>长期目标是AGI，但不是空喊远方，而是拆成连续台阶</strong><br /> </p>
   <p>梁文锋把长期目标定义为AGI，但他没有把AGI讲成一个悬浮概念，而是拆成一条连续路线：语言模型、CoT、Agent、持续学习、自我迭代、具身智能。目标足够远，但每一步都能落到当前技术问题上。<br /> </p>
@@ -175,7 +191,7 @@
   
   <p><img loading="lazy" onerror="this.style.display='none'" src="https://img.36krcdn.com/hsossms/20260724/v2_0507915438944e64ab28a647c6f2bedf@6314151_oswg2470oswg900oswg181_img_000?x-oss-process=image/format,jpg/interlace,1" referrerpolicy="no-referrer" /></p>
   
-  <h2><strong>不是无组织，而是动态组织</strong></h2>
+  <h2 id="h2"><strong>不是无组织，而是动态组织</strong></h2>
   
   <p><strong>不是不要组织，而是动态长组织</strong><br /> </p>
   <p>在寻找技术路线时，梁文锋的思路出其不意，他说做这个路线图可以不用加班，于是这个做起来最轻松的路线成为他们的技术路线。这种对轻松和灵活的追求，同样体现在他对团队的组织和管理中，梁文锋说，他们没有组织架构，团队不加班，没有Kpi，至少有一半的时间，团队成员在做自己的事。</p>
@@ -212,7 +228,7 @@
   </blockquote>
   <p><img loading="lazy" onerror="this.style.display='none'" src="https://img.36krcdn.com/hsossms/20260724/v2_d7a5ded7ad8948679af55d8329dbff9c@6314151_oswg2380oswg900oswg181_img_000?x-oss-process=image/format,jpg/interlace,1" referrerpolicy="no-referrer" /></p>
   
-  <h2><strong>开源是理想，也是商业机制</strong></h2>
+  <h2 id="h3"><strong>开源是理想，也是商业机制</strong></h2>
   
   <p><strong>开源不是放弃壁垒，而是把壁垒从模型转移到成本和工程效率</strong></p>
   <p>梁文锋谈开源时，不是单纯讲理想主义，也不是单纯讲营销。他的判断是：AI这件事足够大，不可能由一家公司独占；开源有利于生态接受，也不会天然伤害商业模式，因为真正的壁垒不只是模型本身，而是部署成本、工程效率和组织能力。</p>
@@ -267,7 +283,7 @@
   </blockquote>
   <p><img loading="lazy" onerror="this.style.display='none'" src="https://img.36krcdn.com/hsossms/20260724/v2_13c67b3473264cb6ba3b0f482b4fe110@6314151_oswg2613oswg900oswg181_img_000?x-oss-process=image/format,jpg/interlace,1" referrerpolicy="no-referrer" /></p>
   
-  <h2><strong>低价不是慈善，而是长期胜率</strong></h2>
+  <h2 id="h4"><strong>低价不是慈善，而是长期胜率</strong></h2>
   <p><strong>不抢当下机会，但也不拒绝顺手接住</strong></p>
   <p>DeepSeek要不要商业化？要，但商业化不再是最终目的。DeepSeek的目标是做AGI，途中，梁文锋看到商业化的机会，他不排斥，果断抓住。“既然是随手能够拿到的，我们就会顺手拿到。”梁文锋说。他将这比喻成一个“捡芝麻”和“拿西瓜”的事情：</p>
   <blockquote>

@@ -47,6 +47,22 @@
   .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
   .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
   .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  /* 长文目录(≥3 小标题且正文 ≥2000 字才出): <details> 原生可折叠, 不用一行 JS。
+     默认 open —— 目录的用处是先看清结构再决定读哪段, 收起来就失去意义; 想收也一点即收。 */
+  .dp-toc{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:24px;background:#FBFCFF}
+  .dp-toc summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--ink-2);display:flex;align-items:center;gap:7px;list-style:none}
+  .dp-toc summary::-webkit-details-marker{display:none}
+  .dp-toc summary i{font-size:11px;color:var(--blue)}
+  .dp-toc summary span{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-3);margin-left:auto}
+  .dp-toc ol{list-style:none;margin:10px 0 2px;padding:0;counter-reset:toc}
+  .dp-toc li{counter-increment:toc;font-size:13px;line-height:1.7;padding:2px 0}
+  .dp-toc li::before{content:counter(toc) ". ";font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .dp-toc li.lv3{padding-left:16px}
+  .dp-toc li.lv4{padding-left:32px}
+  .dp-toc a{color:var(--ink-2);text-decoration:none;overflow-wrap:anywhere}
+  .dp-toc a:hover{color:var(--blue)}
+  /* 锚点跳转时标题别贴到视口顶端(站点顶栏会盖住) */
+  .dp-body h2[id],.dp-body h3[id],.dp-body h4[id]{scroll-margin-top:76px}
   .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
   .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
   .dp-body p{margin:0 0 1.05em}
@@ -96,11 +112,11 @@
     <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（爱范儿 · 行业动态）所有 · <a href="https://www.ifanr.com/1673147?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=" target="_blank" rel="noopener">阅读原文</a></span></div>
     <p class="dp-quip"><i class="fa-solid fa-quote-left"></i>苹果AI眼镜的隐私挑战是行业共同课题</p>
     <div class="dp-brief"><b>简报</b>苹果AI眼镜推迟至2027年发布，内部正权衡摄像头方案，既要保留视觉AI功能又需规避隐私伦理风险。</div>
-    <article class="dp-body"><p>苹果的第一副 AI 眼镜，也许会在明年 6 月和我们见面。</p>
+    <details class="dp-toc" open><summary><i class="fa-solid fa-list-ul"></i>目录<span>3 节</span></summary><ol><li class="lv3"><a href="#h1">摄像头「保留还是取消」，是个大问题</a></li><li class="lv3"><a href="#h2">隐私问题，AI 时代的回旋镖</a></li><li class="lv3"><a href="#h3">苹果的私有云，能给陌生人安全感吗？</a></li></ol></details><article class="dp-body"><p>苹果的第一副 AI 眼镜，也许会在明年 6 月和我们见面。</p>
 <p>彭博社记者 Mark Gurman 在最新的《Power On》新闻通讯中爆料，苹果打算把代号 N50 的智能眼镜推迟到 2027 年 6 月的 WWDC 上发布，正式发售更是要等到当年年底——相比此前流出的「今年预览、明年开卖」，这个节奏明显放慢了。</p>
 <p><img loading="lazy" onerror="this.style.display='none'" src="https://s3.ifanr.com/images/ep/uploads/lark2pad_upload/bb718273-f246-41e2-8a01-726c740b9d0f.png!720" referrerpolicy="no-referrer" /></p>
 <p>除了硬件还没磨利索，苹果内部也在反复权衡：<strong>把摄像头架在人脸上，到底怎样才能不冒犯别人？</strong></p>
-<h3>摄像头「保留还是取消」，是个大问题</h3>
+<h3 id="h1">摄像头「保留还是取消」，是个大问题</h3>
 <p>围绕这副智能眼镜，苹果内部其实一直在经历一场「To be, or not to be」式的权衡，并在三种截然不同的技术路线之间摇摆。</p>
 <p>第一种方案最为保守，也最安全——完全取消摄像头。这样一来，设备可以保留声音交互、第一视角音频 AI 助手以及音乐播放，直接避开所有关于偷拍和面部识别的伦理风暴。但这也意味着，眼镜将失去对周围物理世界的视觉感知能力，直接退化成一副戴在脸上的蓝牙耳机。</p>
 <p><img loading="lazy" onerror="this.style.display='none'" src="https://s3.ifanr.com/images/ep/uploads/lark2pad_upload/327c6dbe-b658-43ed-b73b-23ec1cb1c64e.png!720" referrerpolicy="no-referrer" /></p>
@@ -109,7 +125,7 @@
 <p>因此，商业逻辑决定了苹果大概率只能选择第三种——与 Meta Ray-Ban 类似，同时支持摄录与 AI 功能。</p>
 <p><img loading="lazy" onerror="this.style.display='none'" src="https://s3.ifanr.com/images/ep/uploads/lark2pad_upload/2ed34d83-6370-43f5-8073-29529d1d3ea0.png!720" referrerpolicy="no-referrer" /></p>
 <p>但这也就意味着，苹果必须把自己引以为傲的「隐私至上」招牌，押上这条充满争议的赛道。一旦镜头长在眼镜上，它影响的就远不止戴眼镜的那个人，还有出现在他视野里的每一个人。</p>
-<h3>隐私问题，AI 时代的回旋镖</h3>
+<h3 id="h2">隐私问题，AI 时代的回旋镖</h3>
 <p>即便是不断营销自己在隐私方面安全与克制、甚至将其视作核心资产的苹果，也并不是没有翻过车。</p>
 <p>从当年引发设备端监控质疑而作废的相册 CSAM 机制，到导致 9500 万美元和解的 Siri 录音门，再到被滥用为跟踪工具而被迫连续修补提醒防线 的 AirTag，都证明了一件事：<strong>当一款产品获得了</strong><strong>进入</strong>现实的能力，管控力的轻微失效都会引发剧烈的反弹。</p>
 <p><img loading="lazy" onerror="this.style.display='none'" src="https://s3.ifanr.com/images/ep/uploads/lark2pad_upload/7e78aba7-b78d-4edc-b465-a150cb5fe529.png!720" referrerpolicy="no-referrer" /></p>
@@ -135,7 +151,7 @@
 <p><img loading="lazy" onerror="this.style.display='none'" src="https://s3.ifanr.com/images/ep/uploads/lark2pad_upload/f511111c-bc79-4904-811f-87922142dd56.png!720" referrerpolicy="no-referrer" /></p>
 <p>一位标注员在案卷里回忆，他审过一段很尴尬的视频：男主人把眼镜顺手放在卧室床头柜上就出去了，随后不知情的妻子进屋换衣服，整个画面被眼镜完整拍下，最后跨越半个地球呈现在陌生人的电脑屏幕上。</p>
 <p>购买者以为自己买到的是免手持的便利，但镜头下的伴侣、路人和陌生人，在不知不觉中被剥夺了知情权，甚至被迫沦为 AI 模型训练的免费素材。</p>
-<h3>苹果的私有云，能给陌生人安全感吗？</h3>
+<h3 id="h3">苹果的私有云，能给陌生人安全感吗？</h3>
 <p>面对智能眼镜这种形态，苹果最可能的解法，是沿用 Apple Intelligence 的安全框架——依靠自建的私有云计算（Private Cloud Compute），配合本地芯片，保证传感器采集的数据在端到端加密下运行，绝不上报给第三方或用于训练模型。</p>
 <p><img loading="lazy" onerror="this.style.display='none'" src="https://s3.ifanr.com/images/ep/uploads/lark2pad_upload/e3d32688-5f0c-4fb7-a6b6-d224e3c4b0d4.png!720" referrerpolicy="no-referrer" /></p>
 <p>但这一套技术组合拳，依然有打不中的地方。</p>

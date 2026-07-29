@@ -47,6 +47,22 @@
   .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
   .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
   .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  /* 长文目录(≥3 小标题且正文 ≥2000 字才出): <details> 原生可折叠, 不用一行 JS。
+     默认 open —— 目录的用处是先看清结构再决定读哪段, 收起来就失去意义; 想收也一点即收。 */
+  .dp-toc{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:24px;background:#FBFCFF}
+  .dp-toc summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--ink-2);display:flex;align-items:center;gap:7px;list-style:none}
+  .dp-toc summary::-webkit-details-marker{display:none}
+  .dp-toc summary i{font-size:11px;color:var(--blue)}
+  .dp-toc summary span{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-3);margin-left:auto}
+  .dp-toc ol{list-style:none;margin:10px 0 2px;padding:0;counter-reset:toc}
+  .dp-toc li{counter-increment:toc;font-size:13px;line-height:1.7;padding:2px 0}
+  .dp-toc li::before{content:counter(toc) ". ";font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .dp-toc li.lv3{padding-left:16px}
+  .dp-toc li.lv4{padding-left:32px}
+  .dp-toc a{color:var(--ink-2);text-decoration:none;overflow-wrap:anywhere}
+  .dp-toc a:hover{color:var(--blue)}
+  /* 锚点跳转时标题别贴到视口顶端(站点顶栏会盖住) */
+  .dp-body h2[id],.dp-body h3[id],.dp-body h4[id]{scroll-margin-top:76px}
   .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
   .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
   .dp-body p{margin:0 0 1.05em}
@@ -96,21 +112,21 @@
     <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（36氪 · 行业动态）所有 · <a href="https://36kr.com/p/3909033052722310?f=rss" target="_blank" rel="noopener">阅读原文</a></span></div>
     <p class="dp-quip"><i class="fa-solid fa-quote-left"></i>WAIC展示的AI落地趋势印证了微信生态的适配性</p>
     <div class="dp-brief"><b>简报</b>WAIC 2026显示AI叙事重心转向真实场景和商业价值。36氪氪话未来通过直播探展，捕捉AI从方案到交付的细节，展现AI系统化趋势。</div>
-    <article class="dp-body"><p><img loading="lazy" onerror="this.style.display='none'" src="https://img.36krcdn.com/hsossms/20260724/v2_a0337e21c3484b939472cf87ffcfe860@6381723_oswg1386357oswg1124oswg576_img_png?x-oss-process=image/quality,q_90/format,jpg/interlace,1" referrerpolicy="no-referrer" /></p>
+    <details class="dp-toc" open><summary><i class="fa-solid fa-list-ul"></i>目录<span>6 节</span></summary><ol><li class="lv3"><a href="#h1">一 、圆桌对话直击：猎头 Agent 全新发布，行业智能体开启协同时代</a></li><li class="lv3"><a href="#h2">二 、暴走探展团实地巡馆：解锁全产业链落地样本</a></li><li class="lv2"><a href="#h3">H3具身智能馆：机器人告别展台表演，化身线下服务智能伙伴</a></li><li class="lv2"><a href="#h4">H1 应用生态馆：算力、汽车 AI、视觉模型全栈落地，打造产业专属智能伙伴</a></li><li class="lv3"><a href="#h5">三、原创短视频矩阵：覆盖社交、算力、数据、机器人全赛道，多元智能伙伴全景呈现</a></li><li class="lv3"><a href="#h6">四、三年「氪话未来」观察：WAIC2026三大核心行业趋势，紧扣“智能伙伴，共创未来”内核</a></li></ol></details><article class="dp-body"><p><img loading="lazy" onerror="this.style.display='none'" src="https://img.36krcdn.com/hsossms/20260724/v2_a0337e21c3484b939472cf87ffcfe860@6381723_oswg1386357oswg1124oswg576_img_png?x-oss-process=image/quality,q_90/format,jpg/interlace,1" referrerpolicy="no-referrer" /></p>
   <p>7月17日至20日，2026世界人工智能大会暨人工智能全球治理高级别会议在上海落下帷幕。黄浦江畔，热浪与人潮一起涌动。本届大会以“智能伙伴，共创未来”为主题，在世博、张江、西岸三地四馆展开。作为年度人工智能产业观察窗口，WAIC 2026留下的关键信号，不在于展陈规模本身，而在于AI叙事的重心变化：技术展示正在退居幕后，真实场景、系统交付与商业价值被推到台前。</p>
   <p>这也是36氪“氪话未来”连续第三年走进WAIC现场。过去三年，AI产业经历了从模型竞速到应用试炼的转向。参数、榜单和Demo曾经定义行业热度；到今年，更多企业开始回答一个更具体的问题：AI如何进入业务流程，如何与人协同完成任务，如何在真实场景中被持续使用。</p>
   <p>基于这样的行业变化，今年“氪话未来”将内容主线定为“带着AI去前线”。直播间深入展馆与企业展位，面对创始人、技术负责人和一线产品团队，捕捉AI从方案走向交付的现场细节。圆桌对话、现场探展、原创短视频和实时直播共同构成了这次内容记录的不同切面。</p>
   <p>在今年WAIC现场，AI不再只是一个能够生成答案的模型，而是正在变成一套可以理解目标、调动资源、感知环境并交付结果的系统。从算力底座、具身智能，到行业Agent、消费AI硬件，今年WAIC更集中地指向同一个问题：当AI走出实验室和发布会，它能否成为可交付、可复用，并最终创造商业价值的智能伙伴。</p>
-  <h3><strong>一 、圆桌对话直击：猎头 Agent 全新发布，行业智能体开启协同时代</strong></h3>
+  <h3 id="h1"><strong>一 、圆桌对话直击：猎头 Agent 全新发布，行业智能体开启协同时代</strong></h3>
   <p>本届「氪话未来」重磅开设人力资源垂直专场，聚焦招聘行业数字化痛点，禾蛙平台携猎头行业Agent——Domi完成全球首发，完整拆解垂直智能体重塑猎头全工作流的落地路径。</p>
   <p><img loading="lazy" onerror="this.style.display='none'" src="https://img.36krcdn.com/hsossms/20260724/v2_26d8152ac59445e6b3cf261c7e20c135@6381723_oswg1775842oswg1470oswg834_img_png?x-oss-process=image/quality,q_90/format,jpg/interlace,1" referrerpolicy="no-referrer" /></p>
   <p>直播间对话中，禾蛙CEO何洪锴结合近二十年行业从业经验，拆解当下人才市场结构性矛盾：一面大量求职者难以匹配适配岗位，一面企业常年招不到专业人才，简历筛选、JD拆解、候选人回访、推荐报告撰写等重复性事务占据猎头八成工作时间，通用大模型缺少猎头行业专属业务话术、业务闭环数据与完整交易流程逻辑，很难适配真实猎头协作场景。依托自研HWE猎头行业大模型、Match System智能匹配引擎，Domi打通从岗位解析、简历匹配、报告生成到跨企业Agent协同全链路，搭建A2A智能交易网络，不同猎头智能体可自主对接岗位与人才资源，大幅降低行业协作门槛。</p>
   <p>何洪锴在直播中抛出核心观点：“我们不是用AI替代猎头，而是让从业者骑着AI跑赢AI。”</p>
   <p>他进一步解释，Domi承接全部标准化机械工作，猎头得以抽身聚焦人才价值判断、客户深度沟通等高价值环节；平台同步开放Skill开发者生态，资深猎头、行业专家可将从业经验封装为可调用智能工具，普通从业者也能依托AI放大个人专业能力，催生人力资源赛道大量 “超级个体”。整场对话跳出AI替代人力的焦虑叙事，清晰展现人机分工、Agent协同的全新产业模式，深度呼应大会 “智能伙伴，共创未来” 核心主旨。Domi依托平台真实入职、回款全闭环交易数据训练的垂直模型，也解决了通用大模型数据断层、推理失真的行业通病，搭配本地数据脱敏、全流程可审计机制，兼顾效率与信息安全，为招聘行业提供合规可用的AI协同方案。</p>
-  <h3><strong>二 、暴走探展团实地巡馆：解锁全产业链落地样本</strong></h3>
+  <h3 id="h2"><strong>二 、暴走探展团实地巡馆：解锁全产业链落地样本</strong></h3>
   <p>7月18日一早，36氪暴走团分时段穿梭H3具身智能馆、H1应用与生态馆，从早间9:50 持续到下午直播收官，先后走访穹彻智能、华沿机器人、易鑫集团、Om AI联汇、PPIO、十方境生六大重点企业，现场上手演示、与负责人面对面深度交流，触摸从底层算力、具身模型、空间智能到产业垂直AI的完整技术链条，直观看见各类AI智能伙伴走进工厂、门店、金融、设计等真实场景。</p>
   <p><img loading="lazy" onerror="this.style.display='none'" src="https://img.36krcdn.com/hsossms/20260724/v2_6041e98736054e72a874d1d98109e955@6381723_oswg3456588oswg2173oswg1084_img_png?x-oss-process=image/quality,q_80/format,jpg/interlace,1" referrerpolicy="no-referrer" /></p>
-  <h2><strong>H3具身智能馆：机器人告别展台表演，化身线下服务智能伙伴</strong></h2>
+  <h2 id="h3"><strong>H3具身智能馆：机器人告别展台表演，化身线下服务智能伙伴</strong></h2>
   <p><strong>穹彻智能：搭建具身智能进化完整飞轮</strong></p>
   <p>作为H3馆首站，穹彻智能没有单纯展示机器人炫酷动作，而是完整呈现<strong>“真实数据采集 — 具身大模型 — 商业场景落地”</strong>闭环技术路线，传递“Robot Service Everywhere” 的核心理念，让机器人成为药房、酒店里稳定可靠的服务伙伴。</p>
   <p><img loading="lazy" onerror="this.style.display='none'" src="https://img.36krcdn.com/hsossms/20260724/v2_62da38cb9fe3457a8789853d072d4bed@6381723_oswg5311000oswg2306oswg1307_img_png?x-oss-process=image/quality,q_80/format,jpg/interlace,1" referrerpolicy="no-referrer" /></p>
@@ -121,7 +137,7 @@
   <p><img loading="lazy" onerror="this.style.display='none'" src="https://img.36krcdn.com/hsossms/20260724/v2_6eff29e43b4941439b32fbb22948252f@6381723_oswg5919027oswg2315oswg1310_img_png?x-oss-process=image/quality,q_80/format,jpg/interlace,1" referrerpolicy="no-referrer" /></p>
   <p>不同于展会常见的人形表演机器人，品牌不仅聚焦高频工业场景，也进一步延伸到商超、园区、餐饮等线下商用场景。华沿HY、Echo系列七轴人形手臂能像人胳膊一样灵活避障、精确感知微小外力，现场可完成精细操作、人机交互等操作；华沿机器人基于阻抗控制、空间跟随、VR遥操三项技术深度结合打造的全新一代数据采集方案，实现简单、沉浸式操作体验；在按摩理疗场景，将华沿机器人的灵活性、力觉精度与系统协调能力与中医大模型的“自主感知”能力深度融合，能够复刻大师级的理疗手法与体验。</p>
   <p>在规模落地方面，华沿机器人基于20年工业经验，进一步解决机器人部署成本高、多机协同难、场景适配慢等行业难题，WAIC展会现场，华沿机器人通过核心部件、标准产品、应用场景三位一体的方式，面向专业客户展示机器人在真实线下环境的稳定作业能力。</p>
-  <h2><strong>H1 应用生态馆：算力、汽车 AI、视觉模型全栈落地，打造产业专属智能伙伴</strong></h2>
+  <h2 id="h4"><strong>H1 应用生态馆：算力、汽车 AI、视觉模型全栈落地，打造产业专属智能伙伴</strong></h2>
   <p><strong>易鑫集团：汽车金融Agent压缩九成业务流程</strong></p>
   <p>转场H1应用馆，易鑫带来业内首个规模化落地的汽车金融 Agentic 大模型，直击汽车贷款手续繁琐、审核周期长的行业痛点。AI 智能一体机将原本90分钟的线下业务流程压缩至十几分钟，全流程自动核验材料、解析金融条款、风险预判。</p>
   <p><img loading="lazy" onerror="this.style.display='none'" src="https://img.36krcdn.com/hsossms/20260724/v2_f5c62f2454cc428bbdacf9f2024cd35c@6381723_oswg4079277oswg2372oswg1310_img_png?x-oss-process=image/quality,q_80/format,jpg/interlace,1" referrerpolicy="no-referrer" /></p>
@@ -150,12 +166,12 @@
   <p>午后14:00，暴走团锁定H1馆C101阿里云专属直播，专场完整展示阿里云全栈AI产品矩阵，覆盖算力集群、行业大模型、企业智能体、工业数字化工具全链条，面向政企、制造、互联网企业提供一站式AI转型方案，作为企业数字化转型的底层智能伙伴，结合现场设备演示，拆解大型企业落地AI全流程的技术路径与成本优化方案。</p>
   <p><img loading="lazy" onerror="this.style.display='none'" src="https://img.36krcdn.com/hsossms/20260724/v2_91cd9aea835f49de9ef910d9fa72b9e9@6381723_oswg3328528oswg2101oswg955_img_png?x-oss-process=image/quality,q_80/format,jpg/interlace,1" referrerpolicy="no-referrer" /></p>
   <p>“芯-云-模型-推理-应用”五层全栈架构作为一次企图奠定&quot;面向Agent时代&quot;基础设施标准的&quot;秀肌肉&quot;，覆盖算力集群、行业大模型、企业智能体、工业数字化工具全链条：阿里平头哥自研的真武M890芯片与配套磐久AI超节点作为基底，为大规模Agent推理提供了物理保障；云端的Agentic Cloud通过全面Skill化云产品简化Agent构建，实现运维、分析、安全管理的自动化；展区展示从模型层到应用层，千问大模型系列登顶Arena全球盲测国产榜首，企业级推理平台百炼已接入150多款模型，千问云则让零代码用户也能搭建智能体。展区还集中呈现了Qoder、Agent Playground等产品。</p>
-  <h3><strong>三、原创短视频矩阵：覆盖社交、算力、数据、机器人全赛道，多元智能伙伴全景呈现</strong></h3>
+  <h3 id="h5"><strong>三、原创短视频矩阵：覆盖社交、算力、数据、机器人全赛道，多元智能伙伴全景呈现</strong></h3>
   <p>围绕本届WAIC 2026各大参展品牌与赛道趋势，“氪话未来”同步产出多条深度解读视频，聚焦不同企业核心技术优势与产业落地价值，覆盖消费交互、终端芯片、数据基建、算力调度、具身智能、空间设计、工业智造、实体数字化、跨境营销等多个细分领域，全方位呈现本届大会多元AI智能伙伴的产业形态与创新亮点。</p>
   <p>立足年轻人情感交互赛道的Soul，其短片围绕AI长期陪伴展开解读，SoulX实时数字人的出现，补齐了行业数字人表情、口型、对话断层等短板，同步亮相的星频通讯AI硬件，将线上数字陪伴延伸至线下随身场景，提出维系长久的人机关系才是陪伴类AI的核心壁垒；高通的短片则从终端芯片底层视角解读AI轻量化落地逻辑；深耕物理AI数据基础建设的恺望数据，其视频详细拆解“数据拼车”共享模式，依托自动化全链路数据产线大幅提升自动驾驶、机器人领域的高质量数据供给效率，目前面向具身智能的业务订单规模已实现反超。</p>
   <p>算力赛道的梵数智算（天罡智算）直面行业算力闲置、供需错配的痛点，依托Token工厂异构调度平台盘活分散闲置算力，重新定义算力行业下半场的竞争标准；专注第一视角人体动作采集的星忆智能，短片带来Ego Kit多模态穿戴设备，设备可同步采集视觉、触觉、姿态多维信息，补齐机器人实操训练的数据短板，同时探讨了技术助力非遗传承的人文价值。</p>
   <p>他山科技、凌迪科技分别围绕实体感知、数字设计输出空间智能相关行业案例；节卡、西湖、共绩三款工业机器人短片，分别从柔性操作、园区调度、产线协同多个维度展现工业<a class="cpt" href="../c/ai-delivery.html" data-def="AI交付指将人工智能模型或解决方案实际部署到业务场景中，并确保其产生可衡量的业务价值">AI落地</a>形态；滴普、物启科技聚焦线下实体产业数字化改造；飞书深诺的短片则聚焦跨境场景AI营销智能体，拆解出海企业流量运营与客户转化的提效方案。</p>
-  <h3><strong>四、三年「氪话未来」观察：WAIC2026三大核心行业趋势，紧扣“智能伙伴，共创未来”内核</strong></h3>
+  <h3 id="h6"><strong>四、三年「氪话未来」观察：WAIC2026三大核心行业趋势，紧扣“智能伙伴，共创未来”内核</strong></h3>
   <p>从2024年初次落地直播间，到2025年升级内容板块，再到今年以“带着AI去前线”深入场景一线，36氪连续三年在WAIC现场观察AI产业的变化。三年时间里，一个清晰的转向正在发生：AI不再只需要证明自己“足够聪明”，而是必须回答它如何进入流程、如何参与协作、如何产生可衡量的产业价值。</p>
   <p><strong>赛道重心切换：从“大模型军备竞赛”转向“垂直智能伙伴落地”</strong></p>
   <p>前两年，行业的注意力更多集中在模型能力、参数规模、多模态生成效果上；到了2026年，越来越多企业开始把AI放进具体业务流程里。禾蛙Domi猎头Agent切入招聘服务，把AI带入岗位理解、人才匹配和顾问协作；易鑫集团围绕汽车消费服务，展示AI在贷款预审、身份认证、审核放款等流程中的应用；群核科技则把AI视频、空间智能与3D场景结合，让AI从生成内容进一步走向理解空间、构建场景。</p>

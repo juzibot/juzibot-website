@@ -47,6 +47,22 @@
   .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
   .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
   .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  /* 长文目录(≥3 小标题且正文 ≥2000 字才出): <details> 原生可折叠, 不用一行 JS。
+     默认 open —— 目录的用处是先看清结构再决定读哪段, 收起来就失去意义; 想收也一点即收。 */
+  .dp-toc{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:24px;background:#FBFCFF}
+  .dp-toc summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--ink-2);display:flex;align-items:center;gap:7px;list-style:none}
+  .dp-toc summary::-webkit-details-marker{display:none}
+  .dp-toc summary i{font-size:11px;color:var(--blue)}
+  .dp-toc summary span{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-3);margin-left:auto}
+  .dp-toc ol{list-style:none;margin:10px 0 2px;padding:0;counter-reset:toc}
+  .dp-toc li{counter-increment:toc;font-size:13px;line-height:1.7;padding:2px 0}
+  .dp-toc li::before{content:counter(toc) ". ";font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .dp-toc li.lv3{padding-left:16px}
+  .dp-toc li.lv4{padding-left:32px}
+  .dp-toc a{color:var(--ink-2);text-decoration:none;overflow-wrap:anywhere}
+  .dp-toc a:hover{color:var(--blue)}
+  /* 锚点跳转时标题别贴到视口顶端(站点顶栏会盖住) */
+  .dp-body h2[id],.dp-body h3[id],.dp-body h4[id]{scroll-margin-top:76px}
   .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
   .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
   .dp-body p{margin:0 0 1.05em}
@@ -96,7 +112,7 @@
     <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（阮一峰 · 大咖观点）所有 · <a href="http://www.ruanyifeng.com/blog/2026/07/weekly-issue-404.html" target="_blank" rel="noopener">阅读原文</a></span></div>
     
     <div class="dp-brief"><b>简报</b>科技爱好者周刊第404期发布，本期重点介绍了与 AI 相关的内存知识，帮助读者理解大模型运行背后的硬件基础。</div>
-    <article class="dp-body"><h1>科技爱好者周刊（第 404 期）：你需要知道的 AI 内存知识</h1>
+    <details class="dp-toc" open><summary><i class="fa-solid fa-list-ul"></i>目录<span>12 节</span></summary><ol><li class="lv2"><a href="#h1">封面图</a></li><li class="lv2"><a href="#h2">你需要知道的 AI 内存知识</a></li><li class="lv2"><a href="#h3">布尔变量如何起名</a></li><li class="lv2"><a href="#h4">科技动态</a></li><li class="lv2"><a href="#h5">文章</a></li><li class="lv2"><a href="#h6">工具</a></li><li class="lv2"><a href="#h7">AI 相关</a></li><li class="lv2"><a href="#h8">资源</a></li><li class="lv2"><a href="#h9">图片</a></li><li class="lv2"><a href="#h10">文摘</a></li><li class="lv2"><a href="#h11">言论</a></li><li class="lv2"><a href="#h12">往年回顾</a></li></ol></details><article class="dp-body"><h1>科技爱好者周刊（第 404 期）：你需要知道的 AI 内存知识</h1>
 
 
 
@@ -121,13 +137,13 @@
                                     
                                         <p>本杂志<a href="https://github.com/ruanyf/weekly" target="_blank" rel="noopener nofollow">开源</a>，欢迎<a href="https://github.com/ruanyf/weekly/issues" target="_blank" rel="noopener nofollow">投稿</a>。另有<a href="https://github.com/ruanyf/weekly/issues/10517" target="_blank" rel="noopener nofollow">《谁在招人》</a>服务，发布程序员招聘信息。合作请<a href="http://www.ruanyifeng.com/cdn-cgi/l/email-protection#3940505f5c575e174b4c5857795e54585055175a5654" target="_blank" rel="noopener nofollow">邮件联系</a>（<a href="http://www.ruanyifeng.com/cdn-cgi/l/email-protection" target="_blank" rel="noopener nofollow">[email protected]</a>）。</p>
 
-<h2>封面图</h2>
+<h2 id="h1">封面图</h2>
 
 <p><img loading="lazy" onerror="this.style.display='none'" src="https://cdn.beekka.com/blogimg/asset/202607/bg2026071603.webp" referrerpolicy="no-referrer" /></p>
 
 <p>上海某商场正在举办的&quot;海绵宝宝&quot;展览。（<a href="https://m.thepaper.cn/newsDetail_forward_33450995" target="_blank" rel="noopener nofollow">via</a>）</p>
 
-<h2>你需要知道的 AI 内存知识</h2>
+<h2 id="h2">你需要知道的 AI 内存知识</h2>
 
 <p>自己在家运行 AI 模型，可以选择两种硬件。</p>
 
@@ -194,7 +210,7 @@
 
 <p>总之，现阶段想在本地电脑运行大模型，无论是独立显卡还是板载芯片组，都有缺陷。你最多只能运行一些中等规模的 MoE 模型，而且提示词不能很长。</p>
 
-<h2>布尔变量如何起名</h2>
+<h2 id="h3">布尔变量如何起名</h2>
 
 <p>传说中，编程有两大难题，一个是缓存失效，另一个是变量起名。</p>
 
@@ -214,7 +230,7 @@
 
 <p>比如，不使用 isDisabled，而要用 <code>isEnabled = false</code>。</p>
 
-<h2>科技动态</h2>
+<h2 id="h4">科技动态</h2>
 
 <p>1、<a href="https://openai.com/zh-Hans-CN/supply/co-lab/work-louder/" target="_blank" rel="noopener nofollow">OpenAI 键盘</a></p>
 
@@ -260,7 +276,7 @@
 
 <p><img loading="lazy" onerror="this.style.display='none'" src="https://cdn.beekka.com/blogimg/asset/202507/bg2025070408.webp" referrerpolicy="no-referrer" /></p>
 
-<h2>文章</h2>
+<h2 id="h5">文章</h2>
 
 <p>1、<a href="https://silviasapora.github.io/blog/ml-interviews.html" target="_blank" rel="noopener nofollow">机器学习博士求职指南</a>（英文）</p>
 
@@ -300,7 +316,7 @@
 
 <p>作者回忆著名物理学家理查德·费曼，曾经加入他的创业公司，一起开发超级计算机，有很多有趣的内容。</p>
 
-<h2>工具</h2>
+<h2 id="h6">工具</h2>
 
 <p>1、<a href="https://github.com/darrylmorley/whatcable" target="_blank" rel="noopener nofollow">WhatCable</a></p>
 
@@ -352,7 +368,7 @@
 
 <p>一个自托管的、基于 Web 的常见文件格式转换服务，还支持图像 OCR、音频转文字。</p>
 
-<h2>AI 相关</h2>
+<h2 id="h7">AI 相关</h2>
 
 <p>1、<a href="https://github.com/oh-my-hf/ohmyhf" target="_blank" rel="noopener nofollow">Oh My HuggingFace</a></p>
 
@@ -376,7 +392,7 @@
 
 <p>一个模仿 OpenAI 将输入文本进行词元分解（tokenization）的开源实现。</p>
 
-<h2>资源</h2>
+<h2 id="h8">资源</h2>
 
 <p>1、<a href="https://gotoonion.site/" target="_blank" rel="noopener nofollow">Goto Onion</a></p>
 
@@ -402,7 +418,7 @@
 
 <p>这个网站收集各种迷宫生成算法。</p>
 
-<h2>图片</h2>
+<h2 id="h9">图片</h2>
 
 <p>1、<a href="https://visitfaroeislands.com/en/plan-your-stay/getting-around/world-first-under-sea-roundabout" target="_blank" rel="noopener nofollow">海底环岛</a></p>
 
@@ -420,7 +436,7 @@
 
 <p><img loading="lazy" onerror="this.style.display='none'" src="https://cdn.beekka.com/blogimg/asset/202607/bg2026071505.webp" referrerpolicy="no-referrer" /></p>
 
-<h2>文摘</h2>
+<h2 id="h10">文摘</h2>
 
 <p>1、<a href="https://decrypt.co/357527/ai-save-time-instead-created-new-kind-burnout" target="_blank" rel="noopener nofollow">AI 本应节省时间，减少工作量</a></p>
 
@@ -456,7 +472,7 @@
 <li>预留时间进行真正的人际交往。</li>
 </ol>
 
-<h2>言论</h2>
+<h2 id="h11">言论</h2>
 
 <p>1、</p>
 
@@ -488,7 +504,7 @@
 
 <p>-- <a href="https://www.joanwestenberg.com/p/the-bread-paradox-why-convenience" target="_blank" rel="noopener nofollow">《为什么便利总是胜出，以及为什么 SaaS 不会消亡》</a></p>
 
-<h2>往年回顾</h2>
+<h2 id="h12">往年回顾</h2>
 
 <p><a href="https://www.ruanyifeng.com/blog/2025/07/weekly-issue-357.html" target="_blank" rel="noopener nofollow">稳定币的博弈</a>（#357）</p>
 

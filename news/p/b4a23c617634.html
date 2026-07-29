@@ -47,6 +47,22 @@
   .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
   .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
   .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  /* 长文目录(≥3 小标题且正文 ≥2000 字才出): <details> 原生可折叠, 不用一行 JS。
+     默认 open —— 目录的用处是先看清结构再决定读哪段, 收起来就失去意义; 想收也一点即收。 */
+  .dp-toc{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:24px;background:#FBFCFF}
+  .dp-toc summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--ink-2);display:flex;align-items:center;gap:7px;list-style:none}
+  .dp-toc summary::-webkit-details-marker{display:none}
+  .dp-toc summary i{font-size:11px;color:var(--blue)}
+  .dp-toc summary span{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-3);margin-left:auto}
+  .dp-toc ol{list-style:none;margin:10px 0 2px;padding:0;counter-reset:toc}
+  .dp-toc li{counter-increment:toc;font-size:13px;line-height:1.7;padding:2px 0}
+  .dp-toc li::before{content:counter(toc) ". ";font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .dp-toc li.lv3{padding-left:16px}
+  .dp-toc li.lv4{padding-left:32px}
+  .dp-toc a{color:var(--ink-2);text-decoration:none;overflow-wrap:anywhere}
+  .dp-toc a:hover{color:var(--blue)}
+  /* 锚点跳转时标题别贴到视口顶端(站点顶栏会盖住) */
+  .dp-body h2[id],.dp-body h3[id],.dp-body h4[id]{scroll-margin-top:76px}
   .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
   .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
   .dp-body p{margin:0 0 1.05em}
@@ -96,7 +112,7 @@
     <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（36氪 · 行业动态）所有 · <a href="https://36kr.com/p/3916800672656773?f=rss" target="_blank" rel="noopener">阅读原文</a></span></div>
     <p class="dp-quip"><i class="fa-solid fa-quote-left"></i>健康饮食AI拍图功能，在私域场景有直接转化潜力</p>
     <div class="dp-brief"><b>简报</b>蚂蚁阿福上线“AI拍饮食”功能，用户可拍照获取食物营养分析和健康建议，助力科学减重。</div>
-    <article class="dp-body"><p>在科学减重这件事上，继战略投资薄荷健康之后，蚂蚁阿福又放了个大招。</p>
+    <details class="dp-toc" open><summary><i class="fa-solid fa-list-ul"></i>目录<span>3 节</span></summary><ol><li class="lv2"><a href="#h1">战投薄荷的化学反应：“AI营养师”学成归来</a></li><li class="lv2"><a href="#h2">“阿福先吃”背后，科学减重1亿斤更靠谱了</a></li><li class="lv2"><a href="#h3">全民闯关减重，有望诞生“国民级”健康AI入口</a></li></ol></details><article class="dp-body"><p>在科学减重这件事上，继战略投资薄荷健康之后，蚂蚁阿福又放了个大招。</p>
   <p>7月29日，蚂蚁阿福宣布升级上线“AI拍饮食”功能，用户拍食物照片发给阿福，就能自动估算营养和热量信息，获得健康饮食搭配建议和运动消耗计划等，还支持一健存入个人健康档案，建立“热量账户”。吃得对不对，多不多，一目了然。</p>
   <p><img loading="lazy" onerror="this.style.display='none'" src="https://img.36krcdn.com/hsossms/20260729/v2_f160e5f7d56e4cb0bd4c116828463895@19153231_oswg3087755oswg6106oswg4071_img_jpg?x-oss-process=image/quality,q_80/format,jpg/interlace,1" referrerpolicy="no-referrer" /></p>
   <p>阿福此次推出“AI拍饮食”功能，并非是一项孤立动作。</p>
@@ -104,7 +120,7 @@
   <p>这场“全民科学减重行动”带来的风潮超出预期。越来越多人加入“减重”大军，爬华山、游东湖、骑单车、跳单杠等场景都出现了阿福陪练、陪游的身影。目前全国已有近150万网友参与科学减重行动，减重超过200万斤。</p>
   <p>在运动之外，吃什么，怎么吃，往往是减重中最难也是最容易忽略的一环。普通人很难持续、准确地记录自己吃了多少，热量是否超标，搭配是否合理。对大众来说，阻碍科学减重的，并非缺少意愿，而是缺少一种足够专业、低门槛、且能长期坚持和反馈的趁手工具。</p>
   <p>“减重”这一全民健康管理场景，有望诞生出一个“国民级健康AI应用”。而能否将这一场景做深做透，正是全民AI健康入口的试金石。</p>
-  <h2><strong>战投薄荷的化学反应：“AI营养师”学成归来</strong></h2>
+  <h2 id="h1"><strong>战投薄荷的化学反应：“AI营养师”学成归来</strong></h2>
   <p>让AI“看懂”中餐，其实并不简单。</p>
   <p>在AI健康管理赛道，将饮食“数字化”一直是难题。相较遵循标准化食材、分量和烹饪逻辑的西餐，中餐不仅菜系繁多、食材组合灵活，同一道菜因火候、配料的不同，热量和营养差距就可能悬殊。</p>
   <p>这也导致市面上的饮食记录工具普遍易出现品类误判等问题，数据库本身的更新和维护也不容易。</p>
@@ -119,7 +135,7 @@
   <p>此外，考虑到少数复杂菜品的识别偏差，或偶尔“剩饭”等问题，阿福补充了“改”的功能，在饮食记录过程中，用户可灵活修改食物的名称、克数等信息。</p>
   <p>这相当于给每个人开一个专属的“热量账户”，让普通人可以实时掌握饮食热量“收支”、及时调整膳食结构，让科学饮食管理落地到一日三餐。</p>
   <p>也正是凭借这部分能力，阿福把过去繁琐、容易中断的饮食记录，变成了一次拍照、一次对话就能完成的轻量化动作。用户不需要再手动搜索食物热量，也不需要再自己计算营养配比，更不必依赖复杂的专业知识，就能快速获得科学的饮食建议。</p>
-  <h2><strong>“阿福先吃”背后，科学减重1亿斤更靠谱了</strong></h2>
+  <h2 id="h2"><strong>“阿福先吃”背后，科学减重1亿斤更靠谱了</strong></h2>
   <p>体重管理本质上是一个长链条、多环节协同的健康场景，只有打通测量、记录、分析、饮食、运动等多个环节，才能实现更精准的科学减重和长期健康管理。</p>
   <p><strong>科学减重的起点，是全面了解自己的身体指标。</strong></p>
   <p>今年6月底，发起“科学减重1亿斤”行动后，阿福首先通过“1分钱”领体脂秤，普及基础的减重工具，把科学减重硬件门槛打下来。很多用户领秤后，第一次全面了解自己的体重、体脂率、脂肪量等身体状况。</p>
@@ -130,7 +146,7 @@
   <p>如今，越来越多人开始“让阿福先吃”，科学减重不再只是靠短期热情驱动而是形成长期的健康生活习惯。吃饭前拍一下，吃饭后记一笔，看似只是简单的动作，背后却是饮食决策方式的改变，也是健康管理链条融入生活的开始。</p>
   <p><img loading="lazy" onerror="this.style.display='none'" src="https://img.36krcdn.com/hsossms/20260729/v2_109a6b9efac540b1a59fa6af42b519df@19153231_oswg296284oswg1284oswg1142_img_jpg?x-oss-process=image/quality,q_100/format,jpg/interlace,1" referrerpolicy="no-referrer" /></p>
   <p>从补贴体脂秤、降低减重门槛，到AI提供运动指导，再到饮食管理服务，阿福的一系列动作环环相扣，不仅逐步形成科学减重的“测、动、吃”服务闭环，也让“减重1亿斤”这个听起来似乎“离谱”的目标变得越来越“靠谱”。</p>
-  <h2><strong>全民闯关减重，有望诞生“国民级”健康AI入口</strong></h2>
+  <h2 id="h3"><strong>全民闯关减重，有望诞生“国民级”健康AI入口</strong></h2>
   <p>如果我们仅功能升级层面来理解“AI拍饮食”，或许低估了它的长期价值。</p>
   <p>阿福想做的，其实是以高频的减重需求为起点，帮用户整合起多维度的健康档案，延伸出一条清晰、深入的健康管理路径，让“主动管理健康”从理念走向落地。</p>
   <p>当前，国内健康管理赛道存在较明显的服务碎片化问题。消费级的记录饮食、健身体检，重医疗属性的线上问诊、购药，通常分属不同独立产品，各平台服务相互隔绝，就像一座座“孤岛”。</p>

@@ -47,6 +47,22 @@
   .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
   .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
   .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  /* 长文目录(≥3 小标题且正文 ≥2000 字才出): <details> 原生可折叠, 不用一行 JS。
+     默认 open —— 目录的用处是先看清结构再决定读哪段, 收起来就失去意义; 想收也一点即收。 */
+  .dp-toc{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:24px;background:#FBFCFF}
+  .dp-toc summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--ink-2);display:flex;align-items:center;gap:7px;list-style:none}
+  .dp-toc summary::-webkit-details-marker{display:none}
+  .dp-toc summary i{font-size:11px;color:var(--blue)}
+  .dp-toc summary span{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-3);margin-left:auto}
+  .dp-toc ol{list-style:none;margin:10px 0 2px;padding:0;counter-reset:toc}
+  .dp-toc li{counter-increment:toc;font-size:13px;line-height:1.7;padding:2px 0}
+  .dp-toc li::before{content:counter(toc) ". ";font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .dp-toc li.lv3{padding-left:16px}
+  .dp-toc li.lv4{padding-left:32px}
+  .dp-toc a{color:var(--ink-2);text-decoration:none;overflow-wrap:anywhere}
+  .dp-toc a:hover{color:var(--blue)}
+  /* 锚点跳转时标题别贴到视口顶端(站点顶栏会盖住) */
+  .dp-body h2[id],.dp-body h3[id],.dp-body h4[id]{scroll-margin-top:76px}
   .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
   .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
   .dp-body p{margin:0 0 1.05em}
@@ -96,7 +112,7 @@
     <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（爱范儿 · 行业动态）所有 · <a href="https://www.ifanr.com/1673039?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=" target="_blank" rel="noopener">阅读原文</a></span></div>
     <p class="dp-quip"><i class="fa-solid fa-quote-left"></i>Agent的“小脑”设计更符合企业级交互需求</p>
     <div class="dp-brief"><b>简报</b>腾讯副总裁林松涛表示意图正在代替入口，Agent需要小脑。应用宝推出桌面Agent Marvis，定位操作系统层级个人AI助手。</div>
-    <article class="dp-body"><p>AI 下半场不缺 Agent 产品，在腾讯内部更是如此。</p>
+    <details class="dp-toc" open><summary><i class="fa-solid fa-list-ul"></i>目录<span>4 节</span></summary><ol><li class="lv3"><a href="#h1">从分发软件，到直接交付服务</a></li><li class="lv3"><a href="#h2">大模型是「大脑」，Marvis 想补上「小脑」</a></li><li class="lv3"><a href="#h3">最重要的指标，不是 DAU</a></li><li class="lv3"><a href="#h4">「再小的需求，也值得一个应用」</a></li></ol></details><article class="dp-body"><p>AI 下半场不缺 Agent 产品，在腾讯内部更是如此。</p>
 <p>WorkBuddy 的月活跃用户已经到了 2000 万量级，是今年增长最快的国产智能体产品之一。</p>
 <p>与此同时，腾讯的应用宝团队也做了一个桌面 Agent，叫 Marvis，定位是「操作系统层级的个人 AI 助手」。5 月 20 日 Marvis 上线；两天后，DAU 超过 30 万，七日留存约 54%。</p>
 <p><img loading="lazy" onerror="this.style.display='none'" src="https://s3.ifanr.com/wp-content/uploads/2026/05/12-2.png!720" referrerpolicy="no-referrer" /></p>
@@ -104,7 +120,7 @@
 <p>那么问题也来了，当市面上的 Agent 越来越像，腾讯内部已经有了 WorkBuddy，应用宝为什么还要再做一个？它解决了什么新的需求呢？</p>
 <p>WAIC 2026 期间，腾讯副总裁林松涛和应用宝跨端业务及 Marvis 负责人蔡建涛，接受了 APPSO 在内的媒体采访。</p>
 <p>对于「腾讯内部是否在重复造轮子」这个问题，林松涛和蔡建涛没有回避。他们给的答案，要从应用商店讲起。</p>
-<h3>从分发软件，到直接交付服务</h3>
+<h3 id="h1">从分发软件，到直接交付服务</h3>
 <p>应用宝已经做了 14 年。被问到为什么要做 Marvis，蔡建涛没有先谈 Agent，他先从「商店」聊起。</p>
 <blockquote><p>以前商店是分发，但分发走到终点，是服务。</p></blockquote>
 <p>过去，用户想转换文件格式，要先去商店下载极光 PDF、WPS 等软件，再借助软件完成任务。应用商店提供的是服务之前的一步：把工具送到用户手里。</p>
@@ -118,7 +134,7 @@
 <p>团队过去在跨端、开发者生态，以及与微软、英特尔合作中积累的能力，被重新组织进了 Marvis。</p>
 <p>这也是 Marvis 与 WorkBuddy 的本质区别，WorkBuddy 更接近从办公结果交付切入；Marvis 的起点仍然是应用宝那条「分发—服务」的线。</p>
 <p>Marvis 想接管的，是用户与设备之间的关系。</p>
-<h3>大模型是「大脑」，Marvis 想补上「小脑」</h3>
+<h3 id="h2">大模型是「大脑」，Marvis 想补上「小脑」</h3>
 <p>但一段来自应用宝的历史，还不足以证明 Marvis 的必要性。回到产品本身，它仍然要回答：在一批已经能操作电脑、处理文件的 Agent 里，自己的差异是什么？</p>
 <p>蔡建涛把 Agent 的能力拆成四个部分：<strong>感知、思考、规划和行动</strong>。</p>
 <p>「今天市面上的 Agent，我说帮我找一张上周宝宝撑伞的照片，它有 thinking、planning、action，就是缺了『感知』这一环。只有做到系统级，才能做到感知。」</p>
@@ -144,7 +160,7 @@
 <p>因此，他们不按职业划分用户，而按需求划分。程序员同样要查找照片、管理电脑；编程任务交给 Codex 更合适，而设备与应用场景的需求，并不专属于某一类人。</p>
 <p>Marvis 上线后的数据也符合这套判断：<strong>44% 的用户在使用本地文件能力</strong>，28% 在管理电脑硬件，18% 在执行浏览器任务，16% 在使用应用能力；把 Marvis 当作搜索工具使用的用户只有 6%。</p>
 <p>蔡建涛说，这个 6% 说明，基本没有用户把 Marvis 当作豆包或元宝的替代品。用户对它的定位，反而比想象中更清楚。</p>
-<h3>最重要的指标，不是 DAU</h3>
+<h3 id="h3">最重要的指标，不是 DAU</h3>
 <p>「感知」是 Marvis 选择的产品切口。真正让它与大多数 Agent 较劲的，则是一个不那么典型的互联网指标。</p>
 <p>林松涛说，团队内部最看重的不是日活，也不是会话数，而是用户真实任务的实际完成数。这个「完成」不是 Marvis 自己宣告任务结束，而是用户认为事情确实办成了。</p>
 <blockquote><p>以前做分发的人不关心这个，成功下载 App 就跟我没关系了。今天不是这样。</p></blockquote>
@@ -166,7 +182,7 @@
 <p>至于许多人关心的手机端，蔡建涛的思路是把手机作为控制端。用户需要的未必是另一套手机 Agent，而是一个可以接收任务、持续运行的计算容器；手机只负责发出指令、接收结果。</p>
 <p>这也是我们体验过的场景：人在外面，通过手机让家里的电脑安装游戏，或者校对一份采访稿，任务完成后，再由手机接收结果。</p>
 <p>这个容器可以是 PC，也可以是已经上线、但仍处于早期阶段的云端 Marvis。后者相当于一台私有化的腾讯云轻量服务器，数据专属，只归用户自己。</p>
-<h3>「再小的需求，也值得一个应用」</h3>
+<h3 id="h4">「再小的需求，也值得一个应用」</h3>
 <p>Marvis 值得一提的，还有它的 Skill「广场」。</p>
 <p>为什么要做成广场？蔡建涛提到一个几乎所有 Agent 都存在的问题：「你们看过 Skill 的名字没有？基本全是英文，很多很难的单词，不是普适、用户友好的东西。」</p>
 <p><img loading="lazy" onerror="this.style.display='none'" src="https://s3.ifanr.com/wp-content/uploads/2026/05/117-4.png!720" referrerpolicy="no-referrer" /></p>

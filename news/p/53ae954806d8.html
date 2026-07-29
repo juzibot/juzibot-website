@@ -47,6 +47,22 @@
   .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
   .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
   .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  /* 长文目录(≥3 小标题且正文 ≥2000 字才出): <details> 原生可折叠, 不用一行 JS。
+     默认 open —— 目录的用处是先看清结构再决定读哪段, 收起来就失去意义; 想收也一点即收。 */
+  .dp-toc{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:24px;background:#FBFCFF}
+  .dp-toc summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--ink-2);display:flex;align-items:center;gap:7px;list-style:none}
+  .dp-toc summary::-webkit-details-marker{display:none}
+  .dp-toc summary i{font-size:11px;color:var(--blue)}
+  .dp-toc summary span{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-3);margin-left:auto}
+  .dp-toc ol{list-style:none;margin:10px 0 2px;padding:0;counter-reset:toc}
+  .dp-toc li{counter-increment:toc;font-size:13px;line-height:1.7;padding:2px 0}
+  .dp-toc li::before{content:counter(toc) ". ";font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .dp-toc li.lv3{padding-left:16px}
+  .dp-toc li.lv4{padding-left:32px}
+  .dp-toc a{color:var(--ink-2);text-decoration:none;overflow-wrap:anywhere}
+  .dp-toc a:hover{color:var(--blue)}
+  /* 锚点跳转时标题别贴到视口顶端(站点顶栏会盖住) */
+  .dp-body h2[id],.dp-body h3[id],.dp-body h4[id]{scroll-margin-top:76px}
   .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
   .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
   .dp-body p{margin:0 0 1.05em}
@@ -96,7 +112,7 @@
     <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（量子位 · 行业动态）所有 · <a href="https://www.qbitai.com/2026/07/460174.html" target="_blank" rel="noopener">阅读原文</a></span></div>
     <p class="dp-quip"><i class="fa-solid fa-quote-left"></i>实时多模态生成对销售互动场景有直接价值</p>
     <div class="dp-brief"><b>简报</b>Vivix发布实时交互多模态模型A1，支持与虚拟角色实时视频通话。角色能根据声音即时行动，拥有身体和与环境的互动能力。</div>
-    <article class="dp-body"><h1>全新统一流式架构，Vivix灵动时刻正式发布首个实时互动模型</h1>
+    <details class="dp-toc" open><summary><i class="fa-solid fa-list-ul"></i>目录<span>9 节</span></summary><ol><li class="lv2"><a href="#h1">统一流式架构与原生交互建模</a></li><li class="lv2"><a href="#h2">统一多模态参考、交互与流式生成</a></li><li class="lv2"><a href="#h3">Speech、Audio、Gesture与Event统一建模</a></li><li class="lv2"><a href="#h4">MJD把8-Step压缩到2-Step</a></li><li class="lv2"><a href="#h5">近30B激活参数模型如何跑进消费级显卡</a></li><li class="lv2"><a href="#h6">Encoder与Decoder解耦</a></li><li class="lv2"><a href="#h7">原生NVFP4训推协同</a></li><li class="lv2"><a href="#h8">极致的计算、通信调度与mega-kernel</a></li><li class="lv2"><a href="#h9">从一个角色，到一个持续演变的世界</a></li></ol></details><article class="dp-body"><h1>全新统一流式架构，Vivix灵动时刻正式发布首个实时互动模型</h1>
     			   
              <img loading="lazy" onerror="this.style.display='none'" src="http://www.qbitai.com/wp-content/themes/liangziwei/imagesnew/head.jpg" referrerpolicy="no-referrer" /><em><a href="https://www.qbitai.com/author/henry" target="_blank" rel="noopener nofollow">henry</a></em>
                           2026-07-25
@@ -126,12 +142,12 @@
 <p>也就是说，这边话音刚落，屏幕另一端的角色基本已经动起来了。</p>
 <p>官方现已开放内测，欢迎访问官网及API开放平台申请体验：https://vivix.ai/</p>
 <p>它究竟是怎么做到的？</p>
-<h2>统一流式架构与原生交互建模</h2>
+<h2 id="h1">统一流式架构与原生交互建模</h2>
 <p>这通平行世界的视频电话要真正接通，第一步不是让角色回答得多聪明，而是让它在持续生成过程中，始终还是同一个角色、身处同一个世界。</p>
 <p>Vivix将A1定位为全球首个在一套原生流式架构中，统一<b>多模态参考</b>、<b>实时交互</b>和<b>流式生成</b>的基础模型。</p>
 <p>拆开来看，A1在模型层面主要做了三件事：</p>
 <p>参考条件要持续生效，新的交互要随时插进来，音频和视频还得一直往下生成。</p>
-<h2>统一多模态参考、交互与流式生成</h2>
+<h2 id="h2">统一多模态参考、交互与流式生成</h2>
 <p>为了实现上面的效果，A1首先把多模态参考、实时交互和视频生成，统一进了一套原生流式架构。</p>
 <p><img loading="lazy" onerror="this.style.display='none'" src="https://i.qbitai.com/wp-content/uploads/2026/07/ef55b3da6a93267a147f626847fcd796.png" referrerpolicy="no-referrer" /></p>
 <p>这听起来像是把几个模块接在一起，但真正困难的地方在于：</p>
@@ -148,7 +164,7 @@
 <p>换句话说，A1既要保证角色一直是它自己，也不能因为怕出错，就让它站在原地一动不动。这是它与现有所有数字人相关模型产品最大的差别。</p>
 <p>不过，让角色和世界保持连续，只解决了“它还在不在”的问题。</p>
 <p>想要像视频通话一样互动，它还得听懂文字之外正在发生的一切。</p>
-<h2>Speech、Audio、Gesture与Event统一建模</h2>
+<h2 id="h3">Speech、Audio、Gesture与Event统一建模</h2>
 <p>今天的大多数数字人，本质上还是一条串起来的流水线：</p>
 <p>ASR先把语音转成文字，LLM根据文字生成回答，TTS再把回答变成声音，最后由Motion Model或Video Model补上口型和动作。</p>
 <p>这套方法可以工作，但链路每多一层，就会多一次等待和信息交接。</p>
@@ -164,7 +180,7 @@
 <p>感知、规划、行为控制和音视频生成，不再是几个各自排队的离线任务，而是进入了同一条实时链路。</p>
 <p>到了这里，角色已经能够听懂用户，也知道接下来该做什么。</p>
 <p>但如果下一帧要等上几秒，这通视频电话依然打不起来。</p>
-<h2>MJD把8-Step压缩到2-Step</h2>
+<h2 id="h4">MJD把8-Step压缩到2-Step</h2>
 <p>实时性的下一道瓶颈，来自视频扩散本身。</p>
 <p>视频扩散的不同采样步骤承担着不同任务：有的先搭出语义结构和运动方向，有的补充局部细节，还有的负责维持前后画面的连续性。</p>
 <p>因此，直接减少采样步数，往往会同时损失动作幅度、画面细节和长时稳定性。</p>
@@ -178,14 +194,14 @@
 <p>此外，为防止模型通过少动换取稳定，MJD还让学生模型学习教师模型更完整的动作分布，同时在latent潜空间和原始数据空间中进行优化。</p>
 <p>前者看住整体生成分布，后者补充细小动作、视觉纹理和长期累计误差优化。</p>
 <p>由此，视频扩散从8-Step质量基线压缩到2-Step推理，同时保持了接近8-Step版本的短时画质、指令遵循、运动表现和长时稳定性。</p>
-<h2>近30B激活参数模型如何跑进消费级显卡</h2>
+<h2 id="h5">近30B激活参数模型如何跑进消费级显卡</h2>
 <p>近期市面上陆续出现一些近似实时推理的视频生成模型，包括一系列实时视频“世界模型”。</p>
 <p>他们的实现方式通常是基于小参数量（如1~5B）或较大的VAE压缩比（如16x16x8）来实现，牺牲了模型的capacity，导致模型效果要么不能有大运动，要么就会频繁出现较大artifacts。</p>
 <p>从技术博客中我们看到Vivix本次发布的两个模型的有效激活参数接近30B，并采用了8x8x4的高质量压缩率，计算下来每秒token吞吐需要做到前述工作的数十倍，这对模型推理成本和实时性带来了极大挑战。</p>
 <p>为了稳稳接住这条实时链路，Vivix还推出了<b>VMI</b>，也就是Vivix Model Infra。</p>
 <p>VMI的思路可以概括为三步：把互相干扰的任务拆开，让模型以更低精度运行，再把计算、通信和内存统一调度。</p>
 <p><img loading="lazy" onerror="this.style.display='none'" src="https://i.qbitai.com/wp-content/uploads/2026/07/7b607f8fb3665d27f710e8a81efc754c.png" referrerpolicy="no-referrer" /></p>
-<h2>Encoder与Decoder解耦</h2>
+<h2 id="h6">Encoder与Decoder解耦</h2>
 <p>第一步，是把容易互相堵车的任务拆开。</p>
 <p>多模态Encoder负责处理图片、视频、语音和其他参考条件，更适合用大Batch追求高吞吐；Real-Time Decoder Loop则要连续逐帧生成，更在意低延迟、稳定输出和随时打断。</p>
 <p>如果把两者塞进同一个资源池，Encoder正在处理的批量任务，就可能堵住Decoder的实时链路。</p>
@@ -196,7 +212,7 @@
 <p>前者隔离不同类型的任务负载，后者减少推理阶段之间的状态搬运和等待。按照Vivix的说法，这构成了其面向实时视频生成的PD分离架构。</p>
 <p>整套链路最终支持稳定连续生成、模型级打断和实时重定向，Encoder与Decoder也可以独立弹性伸缩。</p>
 <p>据悉，这套流式调度器响应新输入最短仅需300毫秒，从用户给出新指令到画面出现可见反应，平均延迟低于0.6秒。</p>
-<h2>原生NVFP4训推协同</h2>
+<h2 id="h7">原生NVFP4训推协同</h2>
 <p>把编码和解码拆开，相当于先把道路疏通了。</p>
 <p>接下来更直接的问题是：近30B激活参数的模型，怎么装进消费级显卡？</p>
 <p>答案首先指向4-bit。</p>
@@ -207,7 +223,7 @@
 <p>此外，针对视频生成链路，VMI还加入了专门的去噪误差校正，压住量化误差在不同timestep和连续帧之间的累积。</p>
 <p>整套训练过程也会直接对齐最终部署使用的NVFP4 GEMM Kernel，减少训练精度与推理精度之间的分布偏移。</p>
 <p>实测现实，NVFP4相对BF16基线实现了生成质量接近无损，同时降低显存占用并提高推理吞吐。</p>
-<h2>极致的计算、通信调度与mega-kernel</h2>
+<h2 id="h8">极致的计算、通信调度与mega-kernel</h2>
 <p>NVFP4让模型装得下、算得动。</p>
 <p>但在多卡系统里，还有最后一道不太显眼的瓶颈：GPU、PCIe和显存不能总在彼此等待。</p>
 <p>在RTX级消费GPU上，多卡通信主要经过PCIe。</p>
@@ -221,7 +237,7 @@
 <p>把三项优化放在一起看，逻辑其实很清楚：</p>
 <p>Encoder与Decoder解耦，负责疏通实时链路；原生NVFP4训推协同，负责让近30B激活参数模型装得下、跑得动；计算、通信和内存协同调度，则负责消灭多卡系统里那些看不见的等待。</p>
 <p>到这里，A1才算完成了从“模型可以交互”，到“交互可以实时运行”的最后一公里。</p>
-<h2>从一个角色，到一个持续演变的世界</h2>
+<h2 id="h9">从一个角色，到一个持续演变的世界</h2>
 <p>从统一多模态参考与流式生成，到原生交互信号建模；从8-Step压缩到2-Step，再到Encoder/Decoder解耦、原生NVFP4和整套协同调度引擎，六项技术共同补上了实时交互链路中的不同缺口。</p>
 <p>一套组合拳下来，最终实现了近30B激活参数、近似无损的消费原生NVFP4、消费级显卡实时生成。</p>
 <p>所以，Vivix-A1交付的不再只是一个实时交互的概念，而是一套已经运行起来的原生流式多模态模型。</p>

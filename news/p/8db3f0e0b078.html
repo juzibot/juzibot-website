@@ -47,6 +47,22 @@
   .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
   .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
   .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  /* 长文目录(≥3 小标题且正文 ≥2000 字才出): <details> 原生可折叠, 不用一行 JS。
+     默认 open —— 目录的用处是先看清结构再决定读哪段, 收起来就失去意义; 想收也一点即收。 */
+  .dp-toc{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:24px;background:#FBFCFF}
+  .dp-toc summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--ink-2);display:flex;align-items:center;gap:7px;list-style:none}
+  .dp-toc summary::-webkit-details-marker{display:none}
+  .dp-toc summary i{font-size:11px;color:var(--blue)}
+  .dp-toc summary span{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-3);margin-left:auto}
+  .dp-toc ol{list-style:none;margin:10px 0 2px;padding:0;counter-reset:toc}
+  .dp-toc li{counter-increment:toc;font-size:13px;line-height:1.7;padding:2px 0}
+  .dp-toc li::before{content:counter(toc) ". ";font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .dp-toc li.lv3{padding-left:16px}
+  .dp-toc li.lv4{padding-left:32px}
+  .dp-toc a{color:var(--ink-2);text-decoration:none;overflow-wrap:anywhere}
+  .dp-toc a:hover{color:var(--blue)}
+  /* 锚点跳转时标题别贴到视口顶端(站点顶栏会盖住) */
+  .dp-body h2[id],.dp-body h3[id],.dp-body h4[id]{scroll-margin-top:76px}
   .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
   .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
   .dp-body p{margin:0 0 1.05em}
@@ -96,11 +112,11 @@
     <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>句子互动自家内容，首发于李佳芮的博客，本页为官网收录版 · <a href="https://rui.juzi.bot/interview/2020-06-01-lijiarui-siyuliuliang.html" target="_blank" rel="noopener">看原发布</a></span></div>
     
     
-    <article class="dp-body"><blockquote>
+    <details class="dp-toc" open><summary><i class="fa-solid fa-list-ul"></i>目录<span>3 节</span></summary><ol><li class="lv2"><a href="#h1">1. 如何用智能对话解决传统社群运营痛点</a></li><li class="lv2"><a href="#h2">2. 私域流量运营 &amp;amp; 疫情下的策略</a></li><li class="lv2"><a href="#h3">3. 创业管理透明度 &amp;amp; 合作支持</a></li></ol></details><article class="dp-body"><blockquote>
 <p>上周的云分享我们有幸邀请到句子互动的创始人李佳芮做客，跟我们聊了聊在微信生态圈如何有效得构建私域流量，以及作为tech公司创始人的创业心得。</p>
 </blockquote>
 <p><img referrerpolicy="no-referrer" onerror="this.style.display='none'" alt="teaser" src="../img/8db3f0e0b078/e6c4cfbfda71.png" / loading="lazy" decoding="async"></p>
-<h2>1. 如何用智能对话解决传统社群运营痛点</h2>
+<h2 id="h1">1. 如何用智能对话解决传统社群运营痛点</h2>
 <p>李佳芮在2017年发现了微信生态智能对话服务的新机会，创立句子互动。专注于将智能对话落地到微信等社交生态，通过设计专业的对话系统对接流程，帮助企业搭建符合真实业务场景的<a class="cpt" href="../c/chatbot.html" data-def="聊天机器人是基于自然语言处理技术的对话系统，能模拟人类与用户进行文本或语音交互">对话机器人</a>。句子互动围绕微信生态为客户提供的智能营销和销售的SaaS工具，助力包括京东金融、腾讯广告、美团点评等企业客户。</p>
 <p>分享的一开始佳芮就与我们分享了传统运营的痛点， 以及智能对话如何能够高效得解决这些问题的。在创立自己的舞蹈社和给其他百家公司做社交媒体策划的工作过程中，她发现当时客服都处于手动操作的阶段， 对于客户的转化、标签、大批量类似问题的回复都依赖人工不能高效得解决。</p>
 <p>对此，她总结了自己的三点需求：首先她希望所有的微信好友请求和拉群的操作能够自动化完成。其次，对于首次加好友或者进群的常见问题回答能由机器人自动回答。同时，因为运营多个微信群，佳芮希望机器人能自动识别群里说话最多的人来担当社群管理员。</p>
@@ -108,13 +124,13 @@
 <p><img referrerpolicy="no-referrer" onerror="this.style.display='none'" alt="products" src="../img/8db3f0e0b078/c0f100ea9f1d.jpg" / loading="lazy" decoding="async"></p>
 <p>在此基础上推出的句子互动产品“智能对话”为企业解决了容易漏掉客户信息， 团队协作困难，无法评估团队表现和消耗团队大量精力做重复工作的问题。从事微信运营的品牌和个人一定遇到过这样的情况，过多的信息，有限的人力资源，常在工作效率与信息管理上权衡，一不小心就漏掉重要的内容。</p>
 <p>佳芮分享道，句子互动大多数的用户来自于教育、旅游、健康、金融等行业，这些行业都有三个类似的特点：客单价高，其次销售人员需要大量时间在微信上沟通完成转化，同时因为客单价高常常接到需要特殊化定制的要求。“智能对话”能够完成引流，销售转化，售后运营等一系列的运营需求。</p>
-<h2>2. 私域流量运营 &amp; 疫情下的策略</h2>
+<h2 id="h2">2. 私域流量运营 &amp; 疫情下的策略</h2>
 <p>句子互动作为基于微信生态的智能对话服务，其终端的运营环节与私域流量紧密相关。李佳芮也详细的为我们介绍了私域流量的产生以及重要性。对于品牌方，拥有私域流量就意味这自己拥有的粉丝，在销售成本极其低廉的情况下可以更加精准地运营客户，向客户主动发起通讯。</p>
 <p>佳芮在前期的实践中意识到，在微信公众号所积累的私域流量有一定的弱点。比如：流量的培育周期长 ，一旦封号将流失所有的资源积累，同时公众号很难主动向粉丝个体发起通讯。而这三个问题都在微信个人号的<a class="cpt" href="../c/private-domain-operations.html" data-def="私域运营指企业通过自有渠道（如微信群、APP）直接管理和运营用户，减少对第三方平台的依赖">私域流量运营</a>中得到很好的解决。个人号的朋友圈，群就是流量阵地。</p>
 <p>同时李佳芮谈到， 面对个人微信号封号， 限流，设置标签难等问题， 私域流量的下一个黄金十年在企业微信。疫情期间，企业微信号的注册量成倍增长，显然运营者已经意识到了企业微信号的便捷与机遇。与此同时，疫情加速推进了消费者的线上消费习惯， 扩大了线上消费的年龄区间，企业此时如果能抓住机遇， 沉淀每一个消费者，对疫情之后的发展将起到长足的影响。</p>
 <p><img referrerpolicy="no-referrer" onerror="this.style.display='none'" alt="wechat-and-wechat-work" src="../img/8db3f0e0b078/0562a86be29c.png" / loading="lazy" decoding="async"></p>
 <p>在私域流量的运营上，李佳芮也毫无保留得与我们分享了很多实用的小tips。其中她分享作为品牌方，为避免用户流失，保持私域流量的活度。品牌需要真心得和客户做朋友，提供有温度的交流，在面对客户的微信朋友圈中保持一定程度的个人分享让客户感受到你是一个有血有肉的人。另外为每个客户设立标签（自动化打标签）以便于建立更完整的用户画像，在客户需要的时候为他们提供他们需要的个性化内容。最后，私域流量的运营是一个精细化的，需要长期投入的过程。企业需要在产品、内容、服务、用户关系每个方面都尽量提供好的客户体验。</p>
-<h2>3. 创业管理透明度 &amp; 合作支持</h2>
+<h2 id="h3">3. 创业管理透明度 &amp; 合作支持</h2>
 <p>句子互动的成功也不是一路顺利， 李佳芮分享了她是如何与自己的团队建立与磨合成如今渐入佳境的分工模式。其中她提到了几点建议：创业初期，要找准Product-Market Fit,时刻注重现金流。其次，要好好运用在YC alumni的人脉和资源。再次，团队合作的透明度非常重要。</p>
 <p>作为创始人，她让句子团队都了解创业不是一蹴而就的事情， 真正的成功是长久的努力。她鼓励大家都能够平衡生活与工作， 这样有更健康的身体和心理状态迎接长久的挑战。李佳芮还分享了在公司管理中公开和透明的重要性。定期与团队分享公司目前的状态与步调，可以使大家对于各自每个时间段工作的重心、团队节奏有清楚的了解。为了做到公开与透明，佳芮近一年来持续与团队分享周报，与投资人分享月报，并得到了积极的反馈。这个流程不但帮助公司更好地总结工作，也加强了团队成员的交流。</p>
 <p><img referrerpolicy="no-referrer" onerror="this.style.display='none'" alt="juzi-founders" src="../img/8db3f0e0b078/bd08501758fe.png" / loading="lazy" decoding="async"></p>

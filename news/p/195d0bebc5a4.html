@@ -47,6 +47,22 @@
   .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
   .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
   .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  /* 长文目录(≥3 小标题且正文 ≥2000 字才出): <details> 原生可折叠, 不用一行 JS。
+     默认 open —— 目录的用处是先看清结构再决定读哪段, 收起来就失去意义; 想收也一点即收。 */
+  .dp-toc{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:24px;background:#FBFCFF}
+  .dp-toc summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--ink-2);display:flex;align-items:center;gap:7px;list-style:none}
+  .dp-toc summary::-webkit-details-marker{display:none}
+  .dp-toc summary i{font-size:11px;color:var(--blue)}
+  .dp-toc summary span{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-3);margin-left:auto}
+  .dp-toc ol{list-style:none;margin:10px 0 2px;padding:0;counter-reset:toc}
+  .dp-toc li{counter-increment:toc;font-size:13px;line-height:1.7;padding:2px 0}
+  .dp-toc li::before{content:counter(toc) ". ";font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .dp-toc li.lv3{padding-left:16px}
+  .dp-toc li.lv4{padding-left:32px}
+  .dp-toc a{color:var(--ink-2);text-decoration:none;overflow-wrap:anywhere}
+  .dp-toc a:hover{color:var(--blue)}
+  /* 锚点跳转时标题别贴到视口顶端(站点顶栏会盖住) */
+  .dp-body h2[id],.dp-body h3[id],.dp-body h4[id]{scroll-margin-top:76px}
   .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
   .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
   .dp-body p{margin:0 0 1.05em}
@@ -96,7 +112,7 @@
     <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（宝玉 · 大咖观点）所有 · <a href="https://baoyu.io/blog/2026-07-06/claudedevs-2074208949205881033" target="_blank" rel="noopener">阅读原文</a></span></div>
     
     <div class="dp-brief"><b>简报</b>Claude Code 团队详解 AI 智能体循环机制，按触发方式、停止条件等维度分类，强调从简单方案开始灵活应用。</div>
-    <article class="dp-body"><h1>从零开始玩转循环 (Getting started with loops)</h1>
+    <details class="dp-toc" open><summary><i class="fa-solid fa-list-ul"></i>目录<span>7 节</span></summary><ol><li class="lv2"><a href="#h1">回合制循环 (Turn-based loops)</a></li><li class="lv2"><a href="#h2">目标导向循环 (Goal-based loop /goal)</a></li><li class="lv2"><a href="#h3">基于时间的循环 (Time-based loop /loop 和 /schedule)</a></li><li class="lv2"><a href="#h4">主动式循环 (Proactive loops)</a></li><li class="lv2"><a href="#h5">保持代码质量 (Maintaining code quality)</a></li><li class="lv2"><a href="#h6">控制 Token 消耗 (Managing token usage)</a></li><li class="lv2"><a href="#h7">开始你的探索之旅 (Getting started)</a></li></ol></details><article class="dp-body"><h1>从零开始玩转循环 (Getting started with loops)</h1>
 <p>最近大家都在热议“<a class="cpt" href="../c/agentic-loop.html" data-def="指AI智能体重复执行任务周期直到达成目标的模式，通过迭代优化提升输出质量，减少人工干预">设计循环</a> (designing loops)”，而不是简单地给你的编程 AI 智能体 (AI Agent) 扔一条提示词 (prompt) 就完事。如果你在 X（原 Twitter）上花点时间，想搞清楚到底什么是“循环”，你会听到五花八门的答案。</p>
 <p>在 Claude Code 团队，我们将“循环”定义为：<strong>AI 智能体不断重复执行工作周期，直到满足某个预设的停止条件。</strong> 为了方便理解，我们根据以下四个维度，对循环进行了分类：</p>
 <ul>
@@ -106,7 +122,7 @@
 <li>哪种类型的任务最适合它</li>
 </ul>
 <p>接下来，我们将带你了解这几种主要的循环类型、适用场景，以及如何在控制 token 消耗的同时，保证产出的代码质量。请记住，并不是所有任务都需要复杂的循环；建议从最简单的方案开始上手，然后根据实际情况灵活挑选这些模式。</p>
-<h2>回合制循环 (Turn-based loops)</h2>
+<h2 id="h1">回合制循环 (Turn-based loops)</h2>
 <p><img loading="lazy" onerror="this.style.display='none'" src="https://s.baoyu.io/imgs/2026-07-06/claudedevs-2074208949205881033/img-002-HMkOVNybEAAncbL.jpg" referrerpolicy="no-referrer" /></p>
 <ul>
 <li><strong>触发方式</strong>：用户输入提示词。</li>
@@ -136,7 +152,7 @@ description: 在宣布完成之前，端到端验证任何 UI 更改。
 
 如果任何一个步骤失败，请修复问题并从步骤 1 重新开始 —— 绝对不要把只验证了一半的工作交回给我。
 </code></pre>
-<h2>目标导向循环 (Goal-based loop /goal)</h2>
+<h2 id="h2">目标导向循环 (Goal-based loop /goal)</h2>
 <p><img loading="lazy" onerror="this.style.display='none'" src="https://s.baoyu.io/imgs/2026-07-06/claudedevs-2074208949205881033/img-003-HMkOlk3bcAAHX46.jpg" referrerpolicy="no-referrer" /></p>
 <ul>
 <li><strong>触发方式</strong>：实时手动输入提示词。</li>
@@ -151,7 +167,7 @@ description: 在宣布完成之前，端到端验证任何 UI 更改。
 <pre><code># 将主页的 Lighthouse 网页性能跑分提高到 90 分或以上，尝试 5 次后停止。
 /goal get the homepage Lighthouse score to 90 or above, stop after 5 tries.
 </code></pre>
-<h2>基于时间的循环 (Time-based loop /loop 和 /schedule)</h2>
+<h2 id="h3">基于时间的循环 (Time-based loop /loop 和 /schedule)</h2>
 <ul>
 <li><strong>触发方式</strong>：设定的时间间隔。</li>
 <li><strong>停止条件</strong>：你手动取消它，或者工作彻底完成了（比如代码被合并了，任务队列清空了）。</li>
@@ -164,7 +180,7 @@ description: 在宣布完成之前，端到端验证任何 UI 更改。
 /loop 5m check my PR, address review comments, and fix failing CI
 </code></pre>
 <p>需要注意的是，<code>/loop</code> 是在你本地电脑上运行的，所以一旦你关机或者退出，它就停止了。如果你想把循环搬到云端全天候运行，可以使用 <code>/schedule</code> 指令来创建一个云端的例行程序 (routine)。</p>
-<h2>主动式循环 (Proactive loops)</h2>
+<h2 id="h4">主动式循环 (Proactive loops)</h2>
 <p><img loading="lazy" onerror="this.style.display='none'" src="https://s.baoyu.io/imgs/2026-07-06/claudedevs-2074208949205881033/img-004-HMkPQM8bEAA3RAk.jpg" referrerpolicy="no-referrer" /></p>
 <ul>
 <li><strong>触发方式</strong>：事件触发或定时计划，全程无需人类实时参与。</li>
@@ -184,7 +200,7 @@ description: 在宣布完成之前，端到端验证任何 UI 更改。
 <pre><code># 每小时执行一次：检查 project-feedback 频道中的 bug 报告。目标：直到本次运行发现的所有报告都已被分类、处理并回复，才停止运行。在修复 bug 时，使用工作流在平行的工作区中探索三种不同的解决方案，并让一个专门作为“裁判”的模型对它们进行对抗性的严格审查。
 /schedule every hour: check the project-feedback channel for bug reports. /goal: don&#x27;t stop until every report found this run is triaged, actioned, and responded to. When fixing a bug, use a workflow to explore three solutions in parallel worktrees and have a judge adversarially review them.
 </code></pre>
-<h2>保持代码质量 (Maintaining code quality)</h2>
+<h2 id="h5">保持代码质量 (Maintaining code quality)</h2>
 <p>一个循环产出成果的质量，很大程度上取决于围绕它建立的外围系统。在设计这个系统时，请遵循以下原则：</p>
 <ul>
 <li><strong>保持代码库本身的整洁</strong>：Claude 会不知不觉地模仿你代码库中已有的模式和规范。底子好，它写出来的代码就好。</li>
@@ -193,7 +209,7 @@ description: 在宣布完成之前，端到端验证任何 UI 更改。
 <li><strong>使用第二个智能体来进行代码审查</strong>：找一个没有被历史对话污染、拥有全新上下文的智能体来做代码审查。它的偏见更少，也不会被主干智能体的思路“带偏”。你可以使用内置的 <code>/code-review</code> 技能，或者针对 Github 的专用审查工具 (<a href="https://code.claude.com/docs/en/code-review" target="_blank" rel="noopener nofollow">代码审查文档</a>)。</li>
 </ul>
 <p>当某一次执行的结果没达到你的标准时，<strong>千万别仅仅停留在“把这个 bug 修好”就完事了。</strong> 试着把这次踩坑的教训提炼出来，固化到你的规则里，从而在未来的无数次迭代中改善整个系统。</p>
-<h2>控制 Token 消耗 (Managing token usage)</h2>
+<h2 id="h6">控制 Token 消耗 (Managing token usage)</h2>
 <p>为了有效控制 Token 消耗 <strong>(Token 是大语言模型处理文本的基本计费单位，类似按字数算钱)</strong>，你的循环必须有清晰的边界：</p>
 <ul>
 <li><strong>选择合适的指令和模型</strong>：杀鸡焉用牛刀。小任务根本不需要动用多个智能体或复杂的循环。很多任务用更便宜、更快的模型就能完美解决。</li>
@@ -203,7 +219,7 @@ description: 在宣布完成之前，端到端验证任何 UI 更改。
 <li><strong>别把例行程序跑得太频繁</strong>：你监控的事物多久变一次，你的检查间隔就应该设为多长。不要让 AI 傻傻地每秒钟去刷新一个一天才更新一次的网页。</li>
 <li><strong>定期查看消耗</strong>：输入 <code>/usage</code> 命令，它可以按技能、子智能体 (SubAgents) 和 MCP 详细拆解近期的消耗情况；直接输入不带参数的 <code>/goal</code>，可以查看目前跑了多少回合以及 Token 的消耗量；<code>/workflows</code> 会显示每个智能体的具体 Token 消耗，并且你可以在那里随时让某个智能体停下来。</li>
 </ul>
-<h2>开始你的探索之旅 (Getting started)</h2>
+<h2 id="h7">开始你的探索之旅 (Getting started)</h2>
 <p>简单总结一下：</p>
 <table>
 <thead>

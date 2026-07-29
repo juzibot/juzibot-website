@@ -47,6 +47,22 @@
   .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
   .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
   .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  /* 长文目录(≥3 小标题且正文 ≥2000 字才出): <details> 原生可折叠, 不用一行 JS。
+     默认 open —— 目录的用处是先看清结构再决定读哪段, 收起来就失去意义; 想收也一点即收。 */
+  .dp-toc{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:24px;background:#FBFCFF}
+  .dp-toc summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--ink-2);display:flex;align-items:center;gap:7px;list-style:none}
+  .dp-toc summary::-webkit-details-marker{display:none}
+  .dp-toc summary i{font-size:11px;color:var(--blue)}
+  .dp-toc summary span{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-3);margin-left:auto}
+  .dp-toc ol{list-style:none;margin:10px 0 2px;padding:0;counter-reset:toc}
+  .dp-toc li{counter-increment:toc;font-size:13px;line-height:1.7;padding:2px 0}
+  .dp-toc li::before{content:counter(toc) ". ";font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .dp-toc li.lv3{padding-left:16px}
+  .dp-toc li.lv4{padding-left:32px}
+  .dp-toc a{color:var(--ink-2);text-decoration:none;overflow-wrap:anywhere}
+  .dp-toc a:hover{color:var(--blue)}
+  /* 锚点跳转时标题别贴到视口顶端(站点顶栏会盖住) */
+  .dp-body h2[id],.dp-body h3[id],.dp-body h4[id]{scroll-margin-top:76px}
   .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
   .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
   .dp-body p{margin:0 0 1.05em}
@@ -96,7 +112,7 @@
     <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（爱范儿 · 行业动态）所有 · <a href="https://www.ifanr.com/1673258?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=" target="_blank" rel="noopener">阅读原文</a></span></div>
     <p class="dp-quip"><i class="fa-solid fa-quote-left"></i>Kimi K3开源加速了企业级员工的技术迭代</p>
     <div class="dp-brief"><b>简报</b>Kimi K3开源后引发硅谷震动，其低成本高性能特性让英伟达和Anthropic对立，推动Open Secure AI Alliance成立。</div>
-    <article class="dp-body"><p>一个中国<a class="cpt" href="../c/open-source-model.html" data-def="指模型权重和代码公开，允许任何人免费使用、修改和分发的AI模型">开源模型</a>，引发整个硅谷科技巨头「地震」。</p>
+    <details class="dp-toc" open><summary><i class="fa-solid fa-list-ul"></i>目录<span>3 节</span></summary><ol><li class="lv2"><a href="#h1">不惜一切「保护」开源</a></li><li class="lv2"><a href="#h2">Anthropic 说，我从未主张禁止开源模型</a></li><li class="lv2"><a href="#h3">所有人都在捍卫适合自己的「开放」</a></li></ol></details><article class="dp-body"><p>一个中国<a class="cpt" href="../c/open-source-model.html" data-def="指模型权重和代码公开，允许任何人免费使用、修改和分发的AI模型">开源模型</a>，引发整个硅谷科技巨头「地震」。</p>
 <p>这个熟悉的剧情，上次的主角是 DeepSeek R1，这次则是刚刚开源的 Kimi K3 ，它甚至让英伟达和 Anthropic 公开站到了对立面上。</p>
 <p>Kimi K3 一放上开源大模型社区 Hugging Face，30 分钟就收获了 4000+ 点赞，登顶热门榜。连 Hugging Face 联合创始人都发 X 说这是迄今为止模型发布增长速度最快的一次。</p>
 <p><img loading="lazy" onerror="this.style.display='none'" src="https://s3.ifanr.com/wp-content/uploads/2026/07/PixPin_2026-07-28_10-10-44.png!720" referrerpolicy="no-referrer" /></p>
@@ -108,7 +124,7 @@
 <p>接近前沿的能力 + 极低的价格 + 开放模型权重，三项联合起来的杀伤力，让硅谷彻底炸开了锅。围绕 Kimi K3 的争论也从模型能力一路来到了开放权重是否更安全、该如何处理开放权重的模型。</p>
 <p>英伟达宣布发起 Open Secure AI Alliance，拉来微软、Hugging Face、Cloudflare、CrowdStrike 等三十多家首批伙伴；Anthropic CEO Dario Amodei 则单独发了一篇长文，解释自己为什么没有签署支持开放权重的产业公开信。</p>
 <p>「开源」又一次成了所有人都在争抢的好词。</p>
-<h2>不惜一切「保护」开源</h2>
+<h2 id="h1">不惜一切「保护」开源</h2>
 <p>7 月 22 日，黄仁勋在接受 Axios 采访时就直接为中国开放模型辩护。他称这些模型「非常优秀」，美国公司当然应该被允许使用。</p>
 <p>他还把 Anthropic 推到了台前，他认为 Anthropic 不应该因为网络安全风险而限制 Claude Mythos 的使用，强大的模型应该接受测试、发现问题、及时修补，而不是先把访问入口关掉。</p>
 <p>两天后，英伟达、微软、Meta、Hugging Face、AMD、红帽、Linux 基金会等公司发表《开放权重与美国 AI 领导力》公开信。谷歌和 OpenAI 后来加入，目前签署机构已经超过 100 家。</p>
@@ -129,7 +145,7 @@
 
 <p>K3 尤其能说明这笔生意，它的权重约 1.56 TB。vLLM 给出的简便部署方案，需要 8 张英伟达 B300 或 8 张 AMD MI355X。个人电脑当然可以点下「下载」，但第一批真正能把它跑起来的，还是云平台、研究机构和大型企业。</p>
 <p>模型免费，不代表推理免费。对一家卖算力的公司来说，模型越开放，能在自建服务器上运行它的客户越多。</p>
-<h2>Anthropic 说，我从未主张禁止开源模型</h2>
+<h2 id="h2">Anthropic 说，我从未主张禁止开源模型</h2>
 <p>要讲 Anthropic 的态度必然少不了这两张来自其 MTS（Member of Technical Staff ）员工在 X 上发表的逆天言论。</p>
 <p><a href="https://s3.ifanr.com/wp-content/uploads/2026/07/img_6a68455cc6014.png!720" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://s3.ifanr.com/wp-content/uploads/2026/07/img_6a68455cc6014.png!720" referrerpolicy="no-referrer" /></a></p>
 <p>他在 X 上转发了黄仁勋的第一条推特，并表示你英伟达这么喜欢开源，为什么不把 CUDA 技术还有 GPU 驱动全部开源。他还继续阴阳怪气微软，转发微软 CEO 的帖子说，你支持开源，你的 Windows 和 Office 怎么不开源呢？</p>
@@ -160,7 +176,7 @@
 
 <p>一旦这种模式与商业模式展开竞争，以公共利益为框架的说服力就会降低。</p></blockquote>
 <p><a href="https://s3.ifanr.com/wp-content/uploads/2026/07/img_6a68466bbba3d.png!720" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://s3.ifanr.com/wp-content/uploads/2026/07/img_6a68466bbba3d.png!720" referrerpolicy="no-referrer" /></a></p>
-<h2>所有人都在捍卫适合自己的「开放」</h2>
+<h2 id="h3">所有人都在捍卫适合自己的「开放」</h2>
 <p>无论支持还是反对，英伟达与 Anthropic 代表的立场都很难说是完全为了维护开源精神。</p>
 <p>他们的分歧，本质上不只是技术路线之争，也与它们位于产业链的不同位置有关，其中不可避免的因素都是为了自己的利益。</p>
 <p>Kimi K3 希望用开放权重快速获得全球开发者、部署平台和生态支持。</p>
