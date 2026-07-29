@@ -86,7 +86,7 @@
 
 <p>Architecture-wise, it builds on the earlier GLM-5 and GLM-5.1 architecture. In particular, it reuses <a href="https://sebastianraschka.com/llm-architecture-gallery/mla/" target="_blank" rel="noopener nofollow">Multi-head Latent Attention</a> and <a href="https://sebastianraschka.com/llm-architecture-gallery/deepseek-sparse-attention/" target="_blank" rel="noopener nofollow">DeepSeek Sparse Attention</a>, the DSA mechanism from DeepSeek V3.2 that I covered in the <a href="https://magazine.sebastianraschka.com/p/technical-deepseek" target="_blank" rel="noopener nofollow">DeepSeek V3 to V3.2 article</a>.</p>
 
-<p>What’s new is <a class="cpt" href="../c/indexshare.html" data-def="一种用于长上下文稀疏注意力的技术，通过共享索引降低大模型处理超长文本时的计算成本">IndexShare</a>. This is a cross-layer reuse trick for DSA. Instead of recomputing the sparse-attention top-k indexer in every layer, GLM-5.2 runs the full indexer only once every four layers. The following layers then reuse the selected token indices.</p>
+<p>What’s new is IndexShare. This is a cross-layer reuse trick for DSA. Instead of recomputing the sparse-attention top-k indexer in every layer, GLM-5.2 runs the full indexer only once every four layers. The following layers then reuse the selected token indices.</p>
 
 <p>This keeps the same DSA idea but makes 1M-token inference cheaper. The attention pattern is still adaptive, but the model spends less work repeatedly deciding which earlier tokens to attend to.</p>
 
@@ -106,7 +106,7 @@
 
 <p>在架构上，它基于早期的 GLM-5 和 GLM-5.1 架构构建。特别是，它复用了<a href="https://sebastianraschka.com/llm-architecture-gallery/mla/" target="_blank" rel="noopener nofollow">多头潜在注意力</a>和<a href="https://sebastianraschka.com/llm-architecture-gallery/deepseek-sparse-attention/" target="_blank" rel="noopener nofollow">DeepSeek 稀疏注意力</a>，后者即来自 DeepSeek V3.2 的 DSA 机制，我在<a href="https://magazine.sebastianraschka.com/p/technical-deepseek" target="_blank" rel="noopener nofollow">关于 DeepSeek V3 到 V3.2 的文章</a>中曾有介绍。</p>
 
-<p>新引入的是 <a class="cpt" href="../c/indexshare.html" data-def="一种用于长上下文稀疏注意力的技术，通过共享索引降低大模型处理超长文本时的计算成本">IndexShare</a>。这是针对 DSA 的一种跨层复用技巧。GLM-5.2 并非在每一层都重新计算稀疏注意力的 top-k 索引器，而是每四层才运行一次完整的索引器。随后的层则复用已选定的 token 索引。</p>
+<p>新引入的是 IndexShare。这是针对 DSA 的一种跨层复用技巧。GLM-5.2 并非在每一层都重新计算稀疏注意力的 top-k 索引器，而是每四层才运行一次完整的索引器。随后的层则复用已选定的 token 索引。</p>
 
 <p>这保持了 DSA 的核心思想，但使得百万 token 推理的成本更低。注意力模式仍然是自适应的，但模型在反复决定关注哪些先前 token 上所花费的计算量减少了。</p>
 

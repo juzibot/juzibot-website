@@ -97,10 +97,10 @@
 <p>当大家都在死磕稠密模型（Dense Models，<strong>所有参数都参与计算的传统大模型结构</strong>）时，DeepSeek 却迎难而上，选择了极难训练的<a class="cpt" href="../c/moe-model.html" data-def="一种模型架构，内含多个“专家”子网络，每次推理只激活其中一部分来处理任务">混合专家模型</a>（MoE, Mixture of Experts）。</p>
 </li>
 <li>
-<p>他们从“第一性原理”（First Principles）出发，发明了全新的 <a class="cpt" href="../c/grpo-algorithm.html" data-def="一种强化学习算法，通过组内相对策略优化降低训练成本，提升模型推理能力">GRPO</a> 算法，取代了在强化学习（RL, Reinforcement Learning）中虽然占据统治地位、但实现成本极高的 PPO 算法。</p>
+<p>他们从“第一性原理”（First Principles）出发，发明了全新的 GRPO 算法，取代了在强化学习（RL, Reinforcement Learning）中虽然占据统治地位、但实现成本极高的 PPO 算法。</p>
 </li>
 <li>
-<p>他们摸索出了<a class="cpt" href="../c/rlvr.html" data-def="使用可验证奖励信号训练模型的强化学习方法，确保输出准确可靠">基于验证奖励的强化学习</a>（RLVR, Reinforcement Learning from Verified Rewards），并将其作为提升模型推理能力的杀手锏。</p>
+<p>他们摸索出了基于验证奖励的强化学习（RLVR, Reinforcement Learning from Verified Rewards），并将其作为提升模型推理能力的杀手锏。</p>
 </li>
 <li>
 <p>他们通过“多 Token 预测”（<a class="cpt" href="../c/multi-token-prediction.html" data-def="训练技术让模型同时预测多个后续Token，提高训练效率和生成速度">MTP</a>, Multi-Token Prediction）提出了一种绝妙的投机解码（Speculative Decoding，<strong>一种通过预判后续单词来加速大模型生成速度的技术</strong>）策略，同时还让训练信号变得更加密集。</p>

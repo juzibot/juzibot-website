@@ -107,7 +107,7 @@
 </p>
 <p><a href="https://github.com/drumih/turbo-fieldfare/blob/main/docs/assets/turbofieldfare-app.webp" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://github.com/drumih/turbo-fieldfare/raw/main/docs/assets/turbofieldfare-app.webp" alt="TurboFieldfare Mac app generating text with Gemma 4 26B-A4B" referrerpolicy="no-referrer" /></a></p>
 <p>Memory got expensive. So I gave a 26-billion-parameter model a ~2 GB budget.</p>
-<p><a class="cpt" href="../c/turbofieldfare.html" data-def="一款专为Apple Silicon Mac设计的开源推理引擎，能在极低内存（如2GB）下运行26B参数的Gemma 4模型">TurboFieldfare</a> runs the instruction-tuned
+<p>TurboFieldfare runs the instruction-tuned
 <strong><a href="https://ai.google.dev/gemma/docs/core/model_card_4" target="_blank" rel="noopener nofollow">Gemma 4 26B-A4B</a></strong>
 without loading the entire 14.3 GB model into memory. It keeps the shared
 1.35 GB core and FP16 KV cache in memory, then streams only the experts needed
@@ -440,7 +440,7 @@ wildlife community. They do important work.</p>
 </p>
 <p><a href="https://github.com/drumih/turbo-fieldfare/blob/main/docs/assets/turbofieldfare-app.webp" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://github.com/drumih/turbo-fieldfare/raw/main/docs/assets/turbofieldfare-app.webp" alt="TurboFieldfare Mac app generating text with Gemma 4 26B-A4B" referrerpolicy="no-referrer" /></a></p>
 <p>内存变得昂贵了。所以我给一个拥有 260 亿参数的模型分配了约 2 GB 的内存预算。</p>
-<p><a class="cpt" href="../c/turbofieldfare.html" data-def="一款专为Apple Silicon Mac设计的开源推理引擎，能在极低内存（如2GB）下运行26B参数的Gemma 4模型">TurboFieldfare</a> 运行指令微调的
+<p>TurboFieldfare 运行指令微调的
 <strong><a href="https://ai.google.dev/gemma/docs/core/model_card_4" target="_blank" rel="noopener nofollow">Gemma 4 26B-A4B</a></strong>
 时，并不会将整个 14.3 GB 的模型都加载到内存中。它将共享的
 1.35 GB 核心和 FP16 KV 缓存保留在内存中，然后仅将每个 token 所需的专家模块从 SSD 流式传输。这就是该模型能够在 8 GB RAM 的 Mac 上运行的原因。</p>

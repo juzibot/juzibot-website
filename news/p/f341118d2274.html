@@ -86,7 +86,7 @@
 <p>There are two types of hallucination:</p>
 <ol>
 <li>In-context hallucination: The model output should be consistent with the source content in context.</li>
-<li><a class="cpt" href="../c/extrinsic-hallucination.html" data-def="大语言模型生成与外部事实不符或完全捏造的内容，好比一个自信的专家在说谎，但听起来很真实">Extrinsic hallucination</a>: The model output should be grounded by the pre-training dataset. However, given the size of the pre-training dataset, it is too expensive to retrieve and identify conflicts per generation. If we consider the pre-training data corpus as a proxy for world knowledge, we essentially try to ensure the model output is factual and verifiable by external world knowledge. Equally importantly, when the model does not know about a fact, it should say so.</li>
+<li>Extrinsic hallucination: The model output should be grounded by the pre-training dataset. However, given the size of the pre-training dataset, it is too expensive to retrieve and identify conflicts per generation. If we consider the pre-training data corpus as a proxy for world knowledge, we essentially try to ensure the model output is factual and verifiable by external world knowledge. Equally importantly, when the model does not know about a fact, it should say so.</li>
 </ol>
 <p>This post focuses on extrinsic hallucination. To avoid hallucination, LLMs need to be (1) factual and (2) acknowledge not knowing the answer when applicable.</p>
 <h1>What Causes Hallucinations?#</h1>

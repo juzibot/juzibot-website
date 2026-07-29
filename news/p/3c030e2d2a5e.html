@@ -105,7 +105,7 @@
 <p>官方地址：PKU-YuanGroup/UniWorld-View: Official implementation of UniWorld-View</p>
 <h1>只看正脸，画出后脑勺</h1>
 <p>先说这事儿为什么难。</p>
-<p><a class="cpt" href="../c/novel-view-synthesis.html" data-def="新视角合成技术能让AI根据一张图片或一段视频，生成从任意新角度看到的场景">新视角合成</a>（Novel View Synthesis），本质上是让AI“脑补”没拍到的角度。</p>
+<p>新视角合成（Novel View Synthesis），本质上是让AI“脑补”没拍到的角度。</p>
 <p>而难点全在“大基线（large-baseline）”三个字上——</p>
 <p>说白了就是：<strong>只给AI看正脸，让它画出侧脸，甚至后脑勺。</strong></p>
 <p>传统路线NeRF、3DGS，走的是“重建”逻辑：看得越多，建得越好。</p>
@@ -128,7 +128,7 @@
 <p>点云没有“面”的概念，不会自动遮挡。相机绕到物体背后，正面的点会直接透过来，相当于隔着后脑勺，看到了一张脸。</p>
 <p>小幅度换视角时，这些穿帮不明显，生成模型还能糊弄过去。</p>
 <p>可一旦上了大基线，条件图里全是错误几何信号，扩散模型直接被带偏：结构扭曲、伪影乱飞。</p>
-<p>UniWorld-View的第一板斧，就砍向这里——“<a class="cpt" href="../c/occlusion-aware-point-cloud-rendering.html" data-def="遮挡感知点云渲染解决了AI生成3D内容时的“穿帮”问题">遮挡感知点云渲染</a>”（Occlusion-aware Point Cloud Rendering）。</p>
+<p>UniWorld-View的第一板斧，就砍向这里——“遮挡感知点云渲染”（Occlusion-aware Point Cloud Rendering）。</p>
 <p>第一招：<strong>双重投影（Double-Reprojection），专治撕裂。</strong></p>
 <img loading="lazy" onerror="this.style.display='none'" src="https://i.qbitai.com/wp-content/uploads/2026/07/9413e58c49dfb16527adf0215446731a.webp" referrerpolicy="no-referrer" />△遮挡感知点云渲染：解决前景背景撕裂
 <p>把源画面投影到目标视角，再原路投影回来。</p>

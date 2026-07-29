@@ -90,7 +90,7 @@
   <p>几天前，WAIC 2026首日主论坛上，Sutton发表演讲，强调了下一代AI的核心路线是经验驱动，而静态标注数据模式已触达天花板。DeepSeek近期也把持续学习带进了更多人的视野之中，声称<strong>Agent之后需要的解决的问题是持续学习，这也是下一代模型必须具备的能力。</strong></p>
   <p>可见，后训练与持续学习，越来越成为下一阶段评判模型能力的关键点。</p>
   <p>Mind Lab在上个月发布了Macaron-V1-Preview模型，此后业务迅速被推着往前走：商业化刚开始跑2周，ARR就达到了1000万美金。</p>
-  <p>Macaron-V1-Preview的构成是：在GLM-5.1上，挂载了5个参数约1B的<a class="cpt" href="../c/mixture-of-lora.html" data-def="混合LoRA是一种后训练技术，通过挂载多个小型LoRA专家模块到基座模型，实现任务动态切换与持续学习能力">LoRA专家模块</a>。尽管只是一个预览版的模型，Macaron-V1-Preview在多个Benchmark上的表现也很亮眼，不仅性能反超基座模型GLM-5.1外，还领先GPT 5.4、Claude Opus 4.6等一众模型。而超越基座的能力，就来自于挂载其上的LoRA。</p>
+  <p>Macaron-V1-Preview的构成是：在GLM-5.1上，挂载了5个参数约1B的LoRA专家模块。尽管只是一个预览版的模型，Macaron-V1-Preview在多个Benchmark上的表现也很亮眼，不仅性能反超基座模型GLM-5.1外，还领先GPT 5.4、Claude Opus 4.6等一众模型。而超越基座的能力，就来自于挂载其上的LoRA。</p>
   <p>而真正让他们备受关注的，是用MoL（Mixture-of-LoRA）的方式做后训练的路径。在模型执行不同任务时，系统可以根据任务类型，动态切换到最适合的专家模块；在用户长时间的使用中，沉淀下来的数据也能积累出一个专属LoRA，能随着模型的不断调用而持续更新。</p>
   <p>Preview版本率先跑通了技术路径、做好了市场验证。紧接着，7月21日，Mind Lab发布并开源了Macaron-V1的正式版本。从官方发布的benchmark来看，Macaron-V1在12项基准测试中拿下了6个SOTA，其余成绩和前沿模型也比较接近。</p>
   <p>这一版本有两个模型：旗舰版Venti，是一个基于GLM-5.2做后训练、总参数748B的模型，其中744B来自冻结的GLM-5.2基座，4B来自于Mind Lab自己训练的4组各约1B的LoRA，分别负责Chat、Agent、Coding和生成UI界面四类能力；另一个是面向本地部署的轻量版Tall，是基于Qwen3.6做后训练、总参数50B的模型。两个版本都原生支持200万token上下文。</p>

@@ -84,7 +84,7 @@
     <div class="dp-brief"><b>简报</b>soluna 项目默认静态链接 Lua 库，这阻碍了以动态库形式加载 Lua 的 C 扩展，因为静态链接会导致多个 Lua 实例冲突，标准做法应使用动态链接。</div>
     <article class="dp-body"><p><a href="https://github.com/cloudwu/soluna" target="_blank" rel="noopener nofollow">soluna</a> 集成了 lua 虚拟机，但默认构建方式是将 lua 库静态链接到唯一的执行文件中。这将导致无法以动态库的形式外挂 Lua 的 C 扩展。</p>
 
-<p>这是因为，如果独立编译 Lua 的 C 扩展库，通常需要链接 Lua 的 C API 。标准的方法是<a class="cpt" href="../c/dynamic-linking.html" data-def="在程序运行时加载共享库的技术，允许多个程序共享代码，减少内存占用">动态链接</a> lua 实现，如果静态链接 liblua.a ，会导致进程中有多份 lua 的实现。在 Lua 的历史版本中，这将导致运行期错误。</p>
+<p>这是因为，如果独立编译 Lua 的 C 扩展库，通常需要链接 Lua 的 C API 。标准的方法是动态链接 lua 实现，如果静态链接 liblua.a ，会导致进程中有多份 lua 的实现。在 Lua 的历史版本中，这将导致运行期错误。</p>
 
 <p>这是因为，Lua 的实现中有一个静态的“空”对象，所有的 nil 都指向这个对象。如果进程空间中有多份 Lua 实现，就会出现多个空对象。运行时的数据结构中会引用这个空对象，而不同副本的实现将“空”和自身保留的“空”对象引用做比较时，就会出现错误的判断。</p>
 
