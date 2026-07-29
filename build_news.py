@@ -1000,6 +1000,10 @@ def sync_manual(src, old, limit):
         print(f"[{src['id']}] 已初始化投递位 {path.relative_to(ROOT)}")
         return [], []
     entries = json.loads(path.read_text(encoding="utf-8")).get("items", [])
+    if not entries:
+        # 空投递位静默为 0 会被误读成"公司没这类内容"; 显式提示该补什么(2026-07-29)
+        print(f"  [提示] {src['id']} 投递位 {path.relative_to(ROOT)} 为空——"
+              f"往 items 里加 {{url,title,date}} 即可上站")
     got, failed = [], []
     for e in entries:
         u = (e.get("url") or "").strip()
@@ -1075,10 +1079,13 @@ def sync_feishu_base(src, old, limit):
 
     rows = d["data"]["data"]
     got, failed, passed = [], [], 0
+    blocked = {"缺链接": 0, "未勾上官网": 0, "两者都缺": 0}  # 闸门拦截原因分布(诊断用)
     for row in rows:
         title_cell, link_cell, acct_cell, on_site, date_cell = (list(row) + [None] * 5)[:5]
         link = cell_link(link_cell)
         if not on_site or not link:  # 闸门: 勾了「上官网」且有正式链接才收
+            k = "两者都缺" if (not on_site and not link) else ("缺链接" if not link else "未勾上官网")
+            blocked[k] += 1
             continue
         passed += 1
         if link in old:
@@ -1103,7 +1110,13 @@ def sync_feishu_base(src, old, limit):
             continue
         it = make_item(src, link, title, summary, date, account)
         got.append(it) if it else (failed.append(link), print(f"  [跳过] 登记行缺标题且抓取失败: {link}"))
-    print(f"[{src['id']}] 登记表 {len(rows)} 行, 过闸 {passed} 行, 新收 {len(got)} 条")
+    stuck = ", ".join(f"{k} {v} 行" for k, v in blocked.items() if v)
+    tail = f" | 卡在闸外: {stuck}" if stuck else ""
+    print(f"[{src['id']}] 登记表 {len(rows)} 行, 过闸 {passed} 行, 新收 {len(got)} 条{tail}")
+    if passed == 0 and rows:
+        # 全员卡外 = 运营侧登记没填完, 不是"公司没内容"。显式喊出来, 别让它静默成 0 条。
+        print(f"  [提示] {src['id']} 登记表有 {len(rows)} 行但无一过闸——"
+              f"需在飞书表里补「公众号正式链接」并勾「上官网」(表: {src['base_token']})")
     return got, failed
 
 
@@ -2103,7 +2116,7 @@ b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';})
 # 「输入签名」——签名不变则跳过重算。签名过度捕获(条目全字段 + 概念库 + 正文/译文镜像 + 模板
 # 版本), 任一输入变即重算, 绝不产生陈旧页。签名落 data/render-cache.json(随仓库提交, 供 CI
 # 跨轮增量; 不进任何内联/公开 HTML)。改模板结构时递增 RENDER_VER 触发全量重算。
-RENDER_VER = "1"
+RENDER_VER = "2"  # 2026-07-29: 详情页加 Article schema、概念页加 DefinedTerm → 全量重算
 RENDER_CACHE = ROOT / "data" / "render-cache.json"
 
 
