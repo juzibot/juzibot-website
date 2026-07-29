@@ -3106,6 +3106,51 @@ def inject_page(spec, items, sources_meta, now):
 
 # ---------------- 主流程 ----------------
 
+METRICS_FILE = ROOT / "data" / "metrics.jsonl"
+METRIC_DROP_PCT = 15       # 关键指标较上一轮降幅超此值即显著告警
+
+
+def record_metrics(vis, items, sources_meta, failed, now):
+    """每轮追加一行指标并与上一轮比对——**静默退化是最难发现的故障**。
+
+    管线每 6 小时在 CI 里跑, 日志跑完就丢。某个源 feed 改版后返回 HTTP 200 但解析出 0 条,
+    表现只是「上站数少了几条」: 不报错、不失败、没人会注意, 直到某天有人发现某个源半年
+    没更新过。有了历史行, 突降就能自动喊出来。
+
+    只记数字不记内容(文件体积可控); 写失败一律吞掉——可观测性设施不该拖垮管线本身。
+    """
+    per_src = {m["id"]: m["count"] for m in sources_meta}
+    row = {"at": now, "visible": len(vis), "stock": len(items), "failed": len(failed),
+           "sources": per_src,
+           "src_status": {m["id"]: m["status"] for m in sources_meta}}
+    prev = None
+    try:
+        if METRICS_FILE.exists():
+            lines = [x for x in METRICS_FILE.read_text(encoding="utf-8").splitlines() if x.strip()]
+            if lines:
+                prev = json.loads(lines[-1])
+    except (OSError, ValueError):
+        prev = None
+    if prev:
+        warn = []
+        pv = prev.get("visible") or 0
+        if pv and len(vis) < pv * (100 - METRIC_DROP_PCT) / 100:
+            warn.append(f"上站总数 {pv} → {len(vis)}(降 {round((pv-len(vis))*100/pv)}%)")
+        for sid, n in per_src.items():
+            o = (prev.get("sources") or {}).get(sid)
+            # 只报「本来有、现在没了或腰斩」; 新源从 0 涨上来不算异常
+            if o and (n == 0 or n < o * (100 - METRIC_DROP_PCT) / 100):
+                warn.append(f"{sid} {o} → {n}")
+        if warn:
+            print(f"[指标告警] 较上一轮({prev.get('at', '?')[:16]})明显下滑: " + "; ".join(warn))
+            print("  → 多半是某源 feed 改版/被封后静默返回空, 不是内容真的少了; 查该源的 status 与抓取日志")
+    try:
+        with METRICS_FILE.open("a", encoding="utf-8") as f:
+            f.write(json.dumps(row, ensure_ascii=False) + "\n")
+    except OSError as e:  # noqa: BLE001
+        print(f"  [提示] 指标未落盘({e}), 不影响本轮产物")
+
+
 def main():
     ap = argparse.ArgumentParser(description="多源抓取、AI 筛选并更新动态页(卡片版/聚合版)与 data/news.json")
     ap.add_argument("--full", action="store_true", help="忽略已有数据, 全量重抓")
@@ -3264,6 +3309,7 @@ def main():
     print(f"[完成] 上站 {len(vis)} 条 / 存量 {len(items)} 条({per_src}), 失败 {len(all_failed)} → data/news.json + " + " + ".join(p["file"].name for p in PAGES) + " + news/p/")
     if all_failed:
         print("  失败清单:\n  " + "\n  ".join(all_failed))
+    record_metrics(vis, items, sources_meta, all_failed, now)
 
 
 if __name__ == "__main__":
