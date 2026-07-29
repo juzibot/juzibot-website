@@ -114,12 +114,12 @@ CI 每 6h:  rsync 拉服务器 /opt/www/jz-news/{data,news}/ → 跑 build_news.
 | `.github/workflows/copy-guard.yml` | 「企微/企业微信」不出现在任何入库页面与一方数据 |
 | `deploy/nginx-news.conf` | 对外路由片段(**待运维 include**) |
 | `docs/DEPLOY.md` | 上线手册(注意第 7.4 条:可能过时) |
+| `news.html` / `news-c.html` | 两版页面模板壳(注入区为空) |
+| `data/product-news.json` / `press-news.json` | 人工种子(产品动态 / 媒体报道登记位) |
 
 **管线内还有三道自检**(不在 CI 里, 每次跑管线都执行):详情页/概念页的**计数守恒断言**
 (`written + same + skipped == len(want)`, 对不上直接崩)、概念页**死链断言**(指向不存在的
 概念页即崩)、**指标退化告警**(关键指标较上一轮降幅超 15% 显著提示, 见 `data/metrics.jsonl`)。
-| `news.html` / `news-c.html` | 两版页面模板壳(注入区为空) |
-| `data/product-news.json` / `press-news.json` | 人工种子(产品动态 / 媒体报道登记位) |
 
 ## 6.6 待拍板与已知债(2026-07-30 补)
 
