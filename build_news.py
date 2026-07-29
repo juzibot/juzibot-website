@@ -2078,6 +2078,12 @@ b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';})
 <meta name="description" content="{esc(desc)}" />
 <meta name="robots" content="{robots}" />
 <link rel="canonical" href="{esc(canonical)}" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="{esc(title)}" />
+<meta property="og:description" content="{esc(desc)}" />
+<meta property="og:url" content="{esc(canonical)}" />
+<meta property="og:site_name" content="句子互动" />
+<meta name="twitter:card" content="summary" />
 {schema}
 <link rel="icon" href="../../logo.png" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -2124,7 +2130,7 @@ b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';})
 # 「输入签名」——签名不变则跳过重算。签名过度捕获(条目全字段 + 概念库 + 正文/译文镜像 + 模板
 # 版本), 任一输入变即重算, 绝不产生陈旧页。签名落 data/render-cache.json(随仓库提交, 供 CI
 # 跨轮增量; 不进任何内联/公开 HTML)。改模板结构时递增 RENDER_VER 触发全量重算。
-RENDER_VER = "2"  # 2026-07-29: 详情页加 Article schema、概念页加 DefinedTerm → 全量重算
+RENDER_VER = "3"  # 2026-07-30: 详情页/概念页加 og 标签、索引页加 DefinedTermSet → 全量重算
 RENDER_CACHE = ROOT / "data" / "render-cache.json"
 
 
@@ -2268,6 +2274,12 @@ def concept_page_shell(title, desc, canonical, inner, ctx_title, schema=""):
 <meta name="description" content="{esc(desc)}" />
 <meta name="robots" content="index,follow" />
 <link rel="canonical" href="{esc(canonical)}" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="{esc(title)}" />
+<meta property="og:description" content="{esc(desc)}" />
+<meta property="og:url" content="{esc(canonical)}" />
+<meta property="og:site_name" content="句子互动" />
+<meta name="twitter:card" content="summary" />
 {schema}
 <link rel="icon" href="../../logo.png" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -2345,8 +2357,19 @@ def concept_index_html(lib, refs_map, worthy=None):
         f'    <div class="cx-grid">\n{cards}\n    </div>\n'
         '    <p class="cp-note">概念定义由句子互动动态管线的 AI 加工层生成、编辑维护；点击概念查看完整定义与相关动态。</p>'
     )
+    # DefinedTermSet schema(2026-07-30): 告诉 AI 引擎这些概念页是一个成体系的术语集,
+    # 而不是一堆散页——术语集比孤立页面更容易被整体引用。
+    set_schema = '<script type="application/ld+json">' + json.dumps({
+        "@context": "https://schema.org", "@type": "DefinedTermSet",
+        "name": "句子互动 AI 概念库", "inLanguage": "zh-CN",
+        "url": f"{SITE_BASE}/news/c/index.html",
+        "description": "AI 行业核心概念速查：每个概念一段面向企业决策者的大白话定义。",
+        "publisher": {"@type": "Organization", "name": "句子互动", "url": f"{SITE_BASE}/"},
+        "hasDefinedTerm": [{"@type": "DefinedTerm", "name": lib[s]["term"],
+                            "url": f"{SITE_BASE}/news/c/{s}.html"} for s in order[:60]],
+    }, ensure_ascii=False).replace("</", "<\\/") + "</script>"
     return concept_page_shell("AI 概念索引 - 句子互动", "AI 行业核心概念速查：每个概念一段面向企业决策者的大白话定义，并反向索引提到它的行业动态与技术观点。",
-                              f"{SITE_BASE}/news/c/index.html", inner, "AI 概念索引")
+                              f"{SITE_BASE}/news/c/index.html", inner, "AI 概念索引", set_schema)
 
 
 def write_news_sitemap(vis, lib, worthy):
