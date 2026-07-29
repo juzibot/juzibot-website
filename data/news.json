@@ -1,8 +1,8 @@
 {
  "generated_by": "build_news.py",
- "generated_at": "2026-07-30T05:04:08+08:00",
- "count": 599,
- "visible": 282,
+ "generated_at": "2026-07-30T05:14:25+08:00",
+ "count": 600,
+ "visible": 283,
  "sources": [
   {
    "id": "rui-blog",
@@ -10,7 +10,7 @@
    "type": "sitemap",
    "home": "https://rui.juzi.bot/",
    "status": "ok",
-   "last_sync": "2026-07-30T05:04:08+08:00",
+   "last_sync": "2026-07-30T05:14:25+08:00",
    "group": "company",
    "ai": true,
    "count": 37
@@ -21,7 +21,7 @@
    "type": "feishu-base",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T05:04:08+08:00",
+   "last_sync": "2026-07-30T05:14:25+08:00",
    "group": "company",
    "ai": false,
    "count": 0
@@ -32,7 +32,7 @@
    "type": "manual",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T05:04:08+08:00",
+   "last_sync": "2026-07-30T05:14:25+08:00",
    "group": "company",
    "ai": false,
    "count": 5
@@ -43,7 +43,7 @@
    "type": "manual",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T05:04:08+08:00",
+   "last_sync": "2026-07-30T05:14:25+08:00",
    "group": "company",
    "ai": false,
    "count": 0
@@ -54,7 +54,7 @@
    "type": "rss",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T05:04:08+08:00",
+   "last_sync": "2026-07-30T05:14:25+08:00",
    "group": "radar",
    "ai": true,
    "count": 99
@@ -65,7 +65,7 @@
    "type": "rss",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T05:04:08+08:00",
+   "last_sync": "2026-07-30T05:14:25+08:00",
    "group": "radar",
    "ai": true,
    "count": 87
@@ -76,7 +76,7 @@
    "type": "hn-algolia",
    "home": "https://news.ycombinator.com/",
    "status": "ok",
-   "last_sync": "2026-07-30T05:04:08+08:00",
+   "last_sync": "2026-07-30T05:14:25+08:00",
    "group": "radar",
    "ai": true,
    "count": 29
@@ -87,13 +87,37 @@
    "type": "qisi-list",
    "home": "https://news.miracleplus.com/",
    "status": "ok",
-   "last_sync": "2026-07-30T05:04:08+08:00",
+   "last_sync": "2026-07-30T05:14:25+08:00",
    "group": "radar",
    "ai": true,
-   "count": 25
+   "count": 26
   }
  ],
  "items": [
+  {
+   "id": "9c26bb8761e2",
+   "title": "齐思头条2026/07/30「Kimi K3（2.8T MoE）本地化运行与 vLLM/1‑bit 压缩突破, 现货 GPU 租赁价约翻倍推高算力成本并驱动数据中心扩产, 自治 agent 横向攻破 Hugging Face 窃取生产密钥复盘」",
+   "url": "https://news.miracleplus.com/share_link/145651",
+   "summary": "Twitter Kimi K3（Moonshot AI 发布 2.8T MoE，vLLM 与本地化运行突破） ：Moonshot AI 公布 Kimi K3，为约 2.8 万亿参数的 Mixture‑of‑Experts（每 token 激活 16/896 个专家），宣称支持百万 token 上下文与原生多模态理解。社区与推理栈在 Da…",
+   "category": "头条",
+   "tags": [],
+   "date": "2026-07-30",
+   "source": "qisi",
+   "source_name": "齐思",
+   "author": "奇绩创坛",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-30"
+   },
+   "concepts": [
+    "moe-model",
+    "vllm",
+    "long-context-window",
+    "speculative-decoding",
+    "autonomous-agent-attack"
+   ],
+   "concepts_full": true
+  },
   {
    "id": "7240f81abb0e",
    "title": "硅谷忽视的AI真正风险：量子计算与数据所有权问题",

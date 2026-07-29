@@ -1097,6 +1097,12 @@ def sync_manual(src, old, limit):
 
 # ---------------- adapter: feishu-base(发布登记表, 公众号闸门) ----------------
 
+# 飞书登记表本轮「过闸链接」名册: sync_feishu_base 成功拉表时写入, retire_unlisted 据此
+# 对账撤稿。**只在成功时写**——lark-cli 缺失/接口失败会 raise, 名册里查不到该源就跳过对账,
+# 绝不把「拉不到表」当成「表是空的」而撤空整个源(CI 里没有 lark-cli, 该源必然失败)。
+_FEISHU_ROSTER = {}
+
+
 def wechat_meta(url):
     """抓 mp.weixin 文章页 og 标签, 返回 (title, summary, date)——任一项可能为空。"""
     page = fetch(url)
@@ -1145,7 +1151,9 @@ def sync_feishu_base(src, old, limit):
         raise RuntimeError(f"record-list 失败: {d.get('error', {}).get('message', '未知')}")
 
     rows = d["data"]["data"]
-    got, failed, passed = [], [], 0
+    got, failed, passed, fixed = [], [], 0, 0
+    seen = set()   # 本轮已处理的链接(同一条 URL 在表里写了两行也不会造出同 id 重复条目)
+    roster = set()  # 本轮过闸的全部链接 → 交给 retire_unlisted 做撤稿对账
     blocked = {"缺链接": 0, "未勾上官网": 0, "两者都缺": 0}  # 闸门拦截原因分布(诊断用)
     for row in rows:
         title_cell, link_cell, acct_cell, on_site, date_cell = (list(row) + [None] * 5)[:5]
@@ -1155,12 +1163,23 @@ def sync_feishu_base(src, old, limit):
             blocked[k] += 1
             continue
         passed += 1
+        if link in seen:
+            print(f"  [重复] {src['id']} 登记表里 {link} 出现多次, 只用第一行; 请删掉多余行")
+            continue
+        seen.add(link)
+        roster.add(link)
+        account = acct_cell[0] if isinstance(acct_cell, list) and acct_cell else str(acct_cell or "")
+        title = title_cell if isinstance(title_cell, str) else ""
         if link in old:
+            # 与 manual 源同款回写: 表里改了标题/日期/账号要能落地。飞书表是公众号的唯一
+            # 事实源, 而此前「已入库即跳过」让它变成只进不出 —— 改了不生效、取消勾选也撤不掉。
+            # 这里只用表里的字段(不重抓 og, 省一次网络请求); _restate 的留空不覆盖会保护
+            # 已抓到的摘要。
+            fixed += _restate(old[link], {"url": link, "title": title,
+                                          "date": cell_date(date_cell), "category": account}, src)
             continue
         if limit and len(got) + len(failed) >= limit:
             break
-        account = acct_cell[0] if isinstance(acct_cell, list) and acct_cell else str(acct_cell or "")
-        title = title_cell if isinstance(title_cell, str) else ""
         summary, date = "", ""
         try:
             t, summary, date = wechat_meta(link)
@@ -1177,9 +1196,11 @@ def sync_feishu_base(src, old, limit):
             continue
         it = make_item(src, link, title, summary, date, account)
         got.append(it) if it else (failed.append(link), print(f"  [跳过] 登记行缺标题且抓取失败: {link}"))
+    _FEISHU_ROSTER[src["id"]] = roster   # 只在拉表成功时写入: 失败会 raise, retire_unlisted 就查不到 → 跳过该源不误撤
     stuck = ", ".join(f"{k} {v} 行" for k, v in blocked.items() if v)
     tail = f" | 卡在闸外: {stuck}" if stuck else ""
-    print(f"[{src['id']}] 登记表 {len(rows)} 行, 过闸 {passed} 行, 新收 {len(got)} 条{tail}")
+    print(f"[{src['id']}] 登记表 {len(rows)} 行, 过闸 {passed} 行, 新收 {len(got)} 条"
+          + (f", 回写更新 {fixed} 条" if fixed else "") + tail)
     if passed == 0 and rows:
         # 全员卡外 = 运营侧登记没填完, 不是"公司没内容"。显式喊出来, 别让它静默成 0 条。
         print(f"  [提示] {src['id']} 登记表有 {len(rows)} 行但无一过闸——"
@@ -1493,13 +1514,23 @@ def retire_unlisted(items):
     data/news.json。加上这道后, 从 data/*-news.json 删掉一行即可下站。
 
     三条安全边界(这是有破坏性的操作, 宁可少撤不可误撤):
-      ① 只管 type=manual 的一方源。RSS/sitemap 源的 feed 会滚动, 老条目自然离开抓取
-         窗口, 那不代表要下架——对它们做这件事会把整站历史清空。
+      ① 只管一方登记源: type=manual(本地 JSON)与 feishu-base(公众号闸门表)。RSS/sitemap
+         源的 feed 会滚动, 老条目自然离开抓取窗口, 那不代表要下架——对它们做这件事会把
+         整站历史清空。
       ② 读表失败(文件缺失/JSON 损坏)直接跳过该源, 不是当作"空表"把该源全撤了。
       ③ 只打 retired 标记不删数据: 存量库保留原记录, 误撤了改回登记表就能复原。
     """
     by_src = {}
     for src in SOURCES:
+        if src.get("type") == "feishu-base":
+            # 飞书表(公众号闸门): 名册由 sync_feishu_base 成功拉表时写入。取消勾「上官网」
+            # 或删行都会让链接从名册里消失 → 这里撤稿。拉表失败时名册无此源, 直接跳过。
+            roster = _FEISHU_ROSTER.get(src["id"])
+            if roster is None:
+                print(f"  [撤稿对账] {src['id']} 本轮未成功拉表, 跳过——不当作空表处理")
+                continue
+            by_src[src["id"]] = roster
+            continue
         if src.get("type") != "manual":
             continue
         f = src.get("file")
@@ -2788,6 +2819,10 @@ _EV_CACHE = {}
 def concept_evidence(it, c):
     """给「概念×动态」这一对取一段**原文证据**(≤130字), 用于概念页的引用行。
 
+    匹配规则复用 concept_rx()——与详情页正文标注同一份(大小写不敏感、英文别名要求词边界、
+    ≤2 字纯中文泛词跳过)。原先这里自己 str.find: 大小写敏感导致 RLHF 匹配不到 rlhf(漏证据),
+    无词边界导致 api 命中 rapid 里的 api(误证据)——同一个「什么算提到了这个概念」写了两套规则。
+
     两级回退, 全部取自本站已有数据, 不做任何生成/改写(概念页要能经得起查证):
       ① 本地正文里含该词(或别名)的那句话 —— 最贴题, 但正文镜像不覆盖全部上站条目;
       ② 条目摘要 —— 兜住剩下的, 但摘要里往往不含该概念词, 只算"相关"不算"佐证"。
@@ -2813,24 +2848,29 @@ def concept_evidence(it, c):
                 pass
         body = " ".join(parts)
         _EV_CACHE[it["id"]] = body
+    rx = concept_rx(c)   # 与详情页标注层同一份匹配规则, 不再自己 find
     for src in (body, (it.get("summary") or "").strip()):
-        if not src:
+        if not src or not rx:
             continue
-        for term in terms:
-            i = src.find(term)
-            if i < 0:
+        for _once in (0,):
+            m = rx.search(src)
+            if not m:
                 continue
+            i, j, hit = m.start(), m.end(), m.group(0)
             # 扩到句子边界, 再按 130 字裁窗(窗口以命中词为中心)
             lo = max((src.rfind(ch, 0, i) for ch in "。！？；\n"), default=-1) + 1
-            hi = min((x for x in (src.find(ch, i + len(term)) for ch in "。！？") if x > 0), default=-1)
-            hi = hi + 1 if hi > 0 else min(len(src), i + len(term) + 90)
+            hi = min((x for x in (src.find(ch, j) for ch in "。！？") if x > 0), default=-1)
+            hi = hi + 1 if hi > 0 else min(len(src), j + 90)
             s = src[lo:hi].strip()
             if len(s) > 130:
                 a = max(lo, i - 45)
                 s = ("…" if a > lo else "") + src[a:a + 130].strip() + "…"
             if len(s) < 12 or has_banned(s):
                 break  # 违禁词句直接弃用: 证据可以少一条, 口径不能破
-            return re.sub(re.escape(term), lambda m: f"<mark>{esc(m.group(0))}</mark>", esc(s), count=1)
+            # 在**转义后**的文本里定位转义后的命中词: term 本身可能含 & 之类需转义的字符,
+            # 直接拿原词去 esc(s) 里找会落空。
+            return re.sub(re.escape(esc(hit)), lambda mm: f"<mark>{mm.group(0)}</mark>",
+                          esc(s), count=1)
     s = (it.get("summary") or "").strip()
     if has_banned(s):
         return ""
@@ -3013,9 +3053,14 @@ def inject_page(spec, items, sources_meta, now):
                   lambda m: m.group(1) + str(len(items) - n_comp) + m.group(2), page, count=1)
 
     # ItemList schema(2026-07-29, 仅卡片版): 让 AI 引擎能解析出「句子最近发生了什么」这张
-    # 清单——只列自家条目, 外部转载不进(它们 noindex, 列进来等于替别人做 SEO)。
+    # 清单。判据用 detail_indexable() 而不是 COMPANY_SOURCES——注释一直写着「只列自家条目,
+    # 外部转载不进(它们 noindex)」, 但 COMPANY_SOURCES 含 product/press, 而只有 own 源
+    # (rui-blog/wechat-mp)的详情页才是 index 的: product 详情页 canonical 指产品页、press
+    # 指第三方媒体, 两者都 noindex。原实现把 5 条 noindex URL 公示给了 AI 引擎, 与注释的
+    # 意图正好相反。收口到 detail_indexable() 后, 这份清单与 sitemap、详情页 robots 三处
+    # 用同一份判据。
     if spec.get("company_first"):
-        comp = [i for i in items if i["source"] in COMPANY_SOURCES][:20]
+        comp = [i for i in items if detail_indexable(i)][:20]
         il = json.dumps({
             "@context": "https://schema.org", "@type": "ItemList",
             "name": "句子互动最新动态", "inLanguage": "zh-CN",
