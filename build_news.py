@@ -2033,6 +2033,25 @@ DETAIL_CSS = """
 """
 
 
+def ld_json(obj, tag_id=""):
+    """JSON-LD 序列化: 剔掉空值键再输出。
+
+    schema.org 里空字符串/空数组不是"没填", 是**填了个无效值"——校验器会因此判整段
+    schema 无效, 结果是白写。典型场景: Article 的 about 由概念列表推导而来, 条目没标
+    概念时就是 []，6 个详情页因此带着空 about 出站。
+    0 和 False 是合法取值, 不能一并清掉, 所以显式比较而不是靠真值判断。
+    """
+    def prune(o):
+        if isinstance(o, dict):
+            return {k: prune(v) for k, v in o.items() if v is not None and v != "" and v != [] and v != {}}
+        if isinstance(o, list):
+            return [prune(x) for x in o]
+        return o
+    attr = f' id="{tag_id}"' if tag_id else ""
+    body = json.dumps(prune(obj), ensure_ascii=False).replace("</", "<\\/")
+    return f'<script type="application/ld+json"{attr}>{body}</script>'
+
+
 def normalize_links(h, base):
     """镜像正文的链接规范化——sanitize_fragment 只管安全(去活动内容/危险协议), 这里管可用性。
 
@@ -2106,7 +2125,7 @@ def detail_html(it, lib, worthy):
     # 自家动态页该是样板间; 外部转载页 noindex, 发 schema 无益且易被判内容剽窃。
     schema = ""
     if own and full:
-        schema = '<script type="application/ld+json">' + json.dumps({
+        schema = ld_json({
             "@context": "https://schema.org", "@type": "Article",
             "headline": title[:110], "description": desc[:300],
             "datePublished": it["date"], "inLanguage": "zh-CN",
@@ -2118,7 +2137,7 @@ def detail_html(it, lib, worthy):
                          "url": f"{SITE_BASE}/news.html"},
             "about": [{"@type": "DefinedTerm", "name": lib[s]["term"],
                        "url": f"{SITE_BASE}/news/c/{s}.html"} for s in slugs if s in lib][:5],
-        }, ensure_ascii=False).replace("</", "<\\/") + "</script>"
+        })
     if zh:
         body = (
             '<div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang">'
@@ -2201,7 +2220,7 @@ b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';})
 # 「输入签名」——签名不变则跳过重算。签名过度捕获(条目全字段 + 概念库 + 正文/译文镜像 + 模板
 # 版本), 任一输入变即重算, 绝不产生陈旧页。签名落 data/render-cache.json(随仓库提交, 供 CI
 # 跨轮增量; 不进任何内联/公开 HTML)。改模板结构时递增 RENDER_VER 触发全量重算。
-RENDER_VER = "6"  # 2026-07-30: 详情页/概念页加静态兜底导航(给不跑 JS 的 AI 爬虫) → 全量重算
+RENDER_VER = "7"  # 2026-07-30: schema 剔空值键(空 about/alternateName 会让整段被判无效) → 全量重算
 RENDER_CACHE = ROOT / "data" / "render-cache.json"
 
 
@@ -2447,14 +2466,14 @@ def concept_html(slug, c, refs, related, lib):
     )
     # DefinedTerm schema(2026-07-29): 概念页是自家原创且 index, 是 GEO 的主力资产——
     # 给 AI 引擎一个可直接引用的术语定义结构(名称/别名/定义/所属术语集)。
-    schema = '<script type="application/ld+json">' + json.dumps({
+    schema = ld_json({
         "@context": "https://schema.org", "@type": "DefinedTerm",
         "name": c["term"], "description": c["def"][:300], "inLanguage": "zh-CN",
         "url": f"{SITE_BASE}/news/c/{slug}.html",
         "alternateName": [a for a in c.get("aliases", []) if a != c["term"]][:6],
         "inDefinedTermSet": {"@type": "DefinedTermSet", "name": "句子互动 AI 概念库",
                              "url": f"{SITE_BASE}/news/c/index.html"},
-    }, ensure_ascii=False).replace("</", "<\\/") + "</script>"
+    })
     return concept_page_shell(f"{c['term']}是什么？- 句子互动 AI 概念库", c["def"][:150],
                               f"{SITE_BASE}/news/c/{slug}.html", inner, c["term"], schema)
 
@@ -2478,7 +2497,7 @@ def concept_index_html(lib, refs_map, worthy=None):
     )
     # DefinedTermSet schema(2026-07-30): 告诉 AI 引擎这些概念页是一个成体系的术语集,
     # 而不是一堆散页——术语集比孤立页面更容易被整体引用。
-    set_schema = '<script type="application/ld+json">' + json.dumps({
+    set_schema = ld_json({
         "@context": "https://schema.org", "@type": "DefinedTermSet",
         "name": "句子互动 AI 概念库", "inLanguage": "zh-CN",
         "url": f"{SITE_BASE}/news/c/index.html",
@@ -2486,7 +2505,7 @@ def concept_index_html(lib, refs_map, worthy=None):
         "publisher": {"@type": "Organization", "name": "句子互动", "url": f"{SITE_BASE}/"},
         "hasDefinedTerm": [{"@type": "DefinedTerm", "name": lib[s]["term"],
                             "url": f"{SITE_BASE}/news/c/{s}.html"} for s in order[:60]],
-    }, ensure_ascii=False).replace("</", "<\\/") + "</script>"
+    })
     return concept_page_shell("AI 概念索引 - 句子互动", "AI 行业核心概念速查：每个概念一段面向企业决策者的大白话定义，并反向索引提到它的行业动态与技术观点。",
                               f"{SITE_BASE}/news/c/index.html", inner, "AI 概念索引", set_schema)
 
