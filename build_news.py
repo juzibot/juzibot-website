@@ -989,6 +989,29 @@ def sync_rss(src, old, limit):
 
 # ---------------- adapter: manual(手动投递位, 公众号) ----------------
 
+def _restate(it, e, src):
+    """用登记表条目 e 回写已入库条目 it 的可编辑字段, 返回 1 表示确有改动。
+
+    可编辑面限定在人工登记的展示字段; url/id/source/抓取产物一概不动。
+    留空字段不覆盖: 登记表常只填 url+title, 空 summary 不该洗掉已抓到的摘要。
+    """
+    fresh = make_item(src, (e.get("url") or "").strip(), e.get("title") or it.get("title", ""),
+                      e.get("summary") if e.get("summary") is not None else it.get("summary", ""),
+                      e.get("date") or it.get("date", ""), e.get("category", ""),
+                      author=e.get("author"))
+    if not fresh:
+        return 0
+    changed = 0
+    for k in ("title", "summary", "date", "category", "author"):
+        v = fresh.get(k)
+        if k in ("category", "author") and not (e.get(k) or "").strip():
+            continue  # 这两个登记表没填就别用默认值去盖
+        if v and it.get(k) != v:
+            it[k] = v
+            changed = 1
+    return changed
+
+
 def sync_manual(src, old, limit):
     path = src["file"]
     if not path.exists():
@@ -1004,10 +1027,17 @@ def sync_manual(src, old, limit):
         # 空投递位静默为 0 会被误读成"公司没这类内容"; 显式提示该补什么(2026-07-29)
         print(f"  [提示] {src['id']} 投递位 {path.relative_to(ROOT)} 为空——"
               f"往 items 里加 {{url,title,date}} 即可上站")
-    got, failed = [], []
+    got, failed, fixed = [], [], 0
     for e in entries:
         u = (e.get("url") or "").strip()
-        if not u or u in old:
+        if not u:
+            continue
+        if u in old:
+            # 一方内容登记表是唯一事实源, 改了就得生效 —— 老逻辑是"入库即跳过", 导致 product/press
+            # 条目登记后被永久冻结, 摘要写错/口径要改都落不了地(2026-07-30 修违禁词时撞出来的)。
+            # 只回写登记表里显式写了的字段, 留空不覆盖(防登记表偷懒把已抓好的数据洗掉);
+            # id 由 url 派生, 回写不改 id, 详情页链接不断。
+            fixed += _restate(old[u], e, src)
             continue
         if limit and len(got) + len(failed) >= limit:
             break
@@ -1024,7 +1054,8 @@ def sync_manual(src, old, limit):
                 print(f"  [失败] 投递条目抓取 {u}: {ex}")
         it = make_item(src, u, title, summary, date, e.get("category", ""), author=e.get("author"))
         got.append(it) if it else (failed.append(u), print(f"  [跳过] 投递条目缺 title/date 且抓取失败: {u}"))
-    print(f"[{src['id']}] 投递位 {len(entries)} 条, 新收 {len(got)} 条")
+    print(f"[{src['id']}] 投递位 {len(entries)} 条, 新收 {len(got)} 条"
+          + (f", 回写更新 {fixed} 条" if fixed else ""))
     return got, failed
 
 
@@ -2132,7 +2163,7 @@ b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';})
 # 「输入签名」——签名不变则跳过重算。签名过度捕获(条目全字段 + 概念库 + 正文/译文镜像 + 模板
 # 版本), 任一输入变即重算, 绝不产生陈旧页。签名落 data/render-cache.json(随仓库提交, 供 CI
 # 跨轮增量; 不进任何内联/公开 HTML)。改模板结构时递增 RENDER_VER 触发全量重算。
-RENDER_VER = "3"  # 2026-07-30: 详情页/概念页加 og 标签、索引页加 DefinedTermSet → 全量重算
+RENDER_VER = "4"  # 2026-07-30: 概念页引用行加原文证据(<mark> 标注命中词) → 全量重算
 RENDER_CACHE = ROOT / "data" / "render-cache.json"
 
 
@@ -2171,7 +2202,7 @@ def write_detail_pages(vis, items, lib, worthy):
     已下线条目的页面与孤儿正文镜像顺手清掉(部署端 git clean 同步删除)。"""
     DETAIL_DIR.mkdir(parents=True, exist_ok=True)
     want = set()
-    written = skipped = 0
+    written = skipped = same = 0
     cache = _load_render_cache()
     old_sigs = cache.get("detail", {})
     new_sigs = {}
@@ -2202,6 +2233,8 @@ def write_detail_pages(vis, items, lib, worthy):
         if not p.exists() or p.read_text(encoding="utf-8") != html:
             p.write_text(html, encoding="utf-8")
             written += 1
+        else:
+            same += 1  # 签名失效但重算结果没变(同概念页, 三态计数不让页在日志里蒸发)
     cache["detail"] = new_sigs
     _save_render_cache(cache)
     stale = [p for p in DETAIL_DIR.glob("*.html") if p.name not in want]
@@ -2214,8 +2247,9 @@ def write_detail_pages(vis, items, lib, worthy):
         p.unlink()
     for d in ([p for p in IMG_DIR.iterdir() if p.is_dir() and p.name not in keep_ids] if IMG_DIR.exists() else []):
         shutil.rmtree(d)  # 下线条目的本地化图片目录一并清
-    print(f"[详情页] 共 {len(want)} 页(新写/重写 {written}, 跳过 {skipped}, 清理 {len(stale)}) → news/p/"
-          + (f", 清孤儿镜像 {len(orphan)}" if orphan else ""))
+    assert written + same + skipped == len(want), f"详情页计数对不上: {written}+{same}+{skipped} != {len(want)}"
+    print(f"[详情页] 共 {len(want)} 页(新写/重写 {written}, 重算未变 {same}, 跳过 {skipped}, "
+          f"清理 {len(stale)}) → news/p/" + (f", 清孤儿镜像 {len(orphan)}" if orphan else ""))
 
 
 # ---------------- 概念页 news/c/<slug>.html + 总目录 ----------------
@@ -2235,7 +2269,12 @@ CONCEPT_CSS = """
   .cp-def{font-size:15.5px;line-height:1.95;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:14px;padding:18px 22px;margin-bottom:26px}
   .cp-sec{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--ink-2);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
   .cp-sec i{color:var(--blue);font-size:12px}
-  .cp-item{display:flex;align-items:baseline;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-item{display:flex;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line-2)}
+  .cp-meta{display:flex;align-items:baseline;gap:8px;flex:0 0 auto}
+  .cp-body{min-width:0}
+  .cp-ev{margin:4px 0 0;font-size:12.5px;line-height:1.65;color:var(--ink-2);overflow-wrap:anywhere}
+  .cp-ev mark{background:rgba(37,99,235,.12);color:var(--blue);font-weight:650;padding:0 2px;border-radius:3px}
+  @media(max-width:560px){.cp-item{flex-direction:column;gap:4px}}
   .cp-item time{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex:0 0 auto}
   .cp-item .src{font-size:11px;font-weight:750;color:var(--sc,var(--blue));flex:0 0 auto}
   .cp-item a.t{font-size:14px;font-weight:650;color:var(--ink);line-height:1.5;overflow-wrap:anywhere}
@@ -2307,9 +2346,11 @@ def concept_html(slug, c, refs, related, lib):
     """单个概念页: 定义 + 提到它的动态反向索引 + 相关概念链。"""
     alias_line = " / ".join(a for a in c.get("aliases", []) if a != c["term"])
     ref_rows = "\n".join(  # 列表只铺前 30 条(控页面体积), 计数仍用全量 len(refs)(与索引页一致, Bugbot PR#100)
-        f'      <div class="cp-item"><time datetime="{esc(it["date"])}">{esc(it["date"])}</time>'
-        f'<span class="src s-{esc(it["source"])}">{esc(it["source_name"])}</span>'
-        f'<a class="t" href="../p/{it["id"]}.html">{esc(disp_title(it))}</a></div>'
+        f'      <div class="cp-item"><div class="cp-meta"><time datetime="{esc(it["date"])}">{esc(it["date"])}</time>'
+        f'<span class="src s-{esc(it["source"])}">{esc(it["source_name"])}</span></div>'
+        f'<div class="cp-body"><a class="t" href="../p/{it["id"]}.html">{esc(disp_title(it))}</a>'
+        + (f'<p class="cp-ev">{ev}</p>' if (ev := concept_evidence(it, c)) else "")
+        + '</div></div>'
         for it in refs[:30])
     rel_links = "".join(
         f'<a href="{s}.html"><i class="fa-solid fa-diagram-project"></i>{esc(lib[s]["term"])}</a>'
@@ -2394,6 +2435,16 @@ def write_news_sitemap(vis, lib, worthy):
     print(f"[sitemap] sitemap-news.xml 共 {len(urls)} 条(概念页 {len(worthy) + 1} + 自家详情页 {len(urls) - len(worthy) - 1})")
 
 
+# 官网口径(用户 2026-07-27 拍板): 「企微 / 企业微信」不出现在任何页面。自家内容(COMPANY_SOURCES)
+# 的标题/摘要在数据层就该写对, 这里是渲染层兜底 —— 概念页证据是逐字引用, 极易把违禁词带上页。
+# 注: rui-blog 历史文章正文(2021-2023)里的原词不在此处理, 篡改作者原文是另一回事, 见 NEWS_HANDOFF。
+BANNED_TERMS = ("企业微信", "企微")
+
+
+def has_banned(s):
+    return any(b in (s or "") for b in BANNED_TERMS)
+
+
 def worthy_concepts(lib, vis):
     """够格发独立页的概念集合(2026-07-30 门槛)。详情页标注、概念页生成、sitemap 三处
     必须用同一份, 否则会出现"正文标了链接但页面没生成"的死链。"""
@@ -2407,6 +2458,50 @@ def worthy_concepts(lib, vis):
         if len(rs) >= CONCEPT_PAGE_MIN_REFS or any(i["source"] in COMPANY_SOURCES for i in rs):
             out.add(s)
     return out
+
+
+_EV_CACHE = {}
+
+
+def concept_evidence(it, c):
+    """给「概念×动态」这一对取一段**原文证据**(≤130字), 用于概念页的引用行。
+
+    两级回退, 全部取自本站已有数据, 不做任何生成/改写(概念页要能经得起查证):
+      ① 本地正文里含该词(或别名)的那句话 —— 最贴题, 但正文只抓到 88/278 篇;
+      ② 条目摘要 —— 覆盖 423/587, 兜住剩下的。
+    命中的词用 <mark> 标出, 让读者一眼看到词在真实语境里怎么用。
+    """
+    terms = [c["term"]] + [a for a in (c.get("aliases") or []) if len(a) >= 2]
+    body = _EV_CACHE.get(it["id"], ...)
+    if body is ...:
+        f = CONTENT_DIR / f'{it["id"]}.zh.html'
+        try:
+            body = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", f.read_text(encoding="utf-8")))
+        except OSError:
+            body = ""
+        _EV_CACHE[it["id"]] = body
+    for src in (body, (it.get("summary") or "").strip()):
+        if not src:
+            continue
+        for term in terms:
+            i = src.find(term)
+            if i < 0:
+                continue
+            # 扩到句子边界, 再按 130 字裁窗(窗口以命中词为中心)
+            lo = max((src.rfind(ch, 0, i) for ch in "。！？；\n"), default=-1) + 1
+            hi = min((x for x in (src.find(ch, i + len(term)) for ch in "。！？") if x > 0), default=-1)
+            hi = hi + 1 if hi > 0 else min(len(src), i + len(term) + 90)
+            s = src[lo:hi].strip()
+            if len(s) > 130:
+                a = max(lo, i - 45)
+                s = ("…" if a > lo else "") + src[a:a + 130].strip() + "…"
+            if len(s) < 12 or has_banned(s):
+                break  # 违禁词句直接弃用: 证据可以少一条, 口径不能破
+            return re.sub(re.escape(term), lambda m: f"<mark>{esc(m.group(0))}</mark>", esc(s), count=1)
+    s = (it.get("summary") or "").strip()
+    if has_banned(s):
+        return ""
+    return esc(s[:130] + "…") if len(s) >= 24 else ""
 
 
 def write_concept_pages(lib, vis):
@@ -2427,14 +2522,20 @@ def write_concept_pages(lib, vis):
                 if o != s:
                     related_map.setdefault(s, {})[o] = related_map.get(s, {}).get(o, 0) + 1
     # 逐页生成即写, 不先攒全量字典(Bugbot PR#100 内存优化); 输入签名不变的页跳过重算(增量)
-    written = skipped = 0
+    written = skipped = same = 0
 
     def _emit(name, html):
-        nonlocal written
+        # 三态计数, 别让页"人间蒸发": 签名失效会走到这里重算 HTML, 但重算结果常与磁盘一致。
+        # 老写法只在内容真变时 +1, 那些"重算了但没变"的页哪个计数都不进, 日志显示的处理量
+        # 远小于实际(曾出现共 100 页却只报 1+1)。same 同时是签名过敏度指标: 它长期偏大,
+        # 说明签名里混进了不影响产物的输入, 白烧算力。
+        nonlocal written, same
         p = CONCEPT_DIR / name
         if not p.exists() or p.read_text(encoding="utf-8") != html:
             p.write_text(html, encoding="utf-8")
             written += 1
+        else:
+            same += 1
     worthy = worthy_concepts(lib, vis)
     cache = _load_render_cache()
     old_sigs = cache.get("concept", {})
@@ -2455,9 +2556,12 @@ def write_concept_pages(lib, vis):
         want.add(name)
         refs = refs_map.get(slug, [])  # 传全量: concept_html 内部列表切前 30, 计数用全量总数
         related = sorted(related_map.get(slug, {}), key=lambda o: (-related_map[slug][o], o))[:8]
-        # 精确捕获 concept_html 渲染用到的输入: 概念本身 + 全量计数 + 前 30 条引用的展示字段 + 相关概念名
+        # 精确捕获 concept_html 渲染用到的输入: 概念本身 + 全量计数 + 前 30 条引用的展示字段 + 相关概念名。
+        # 摘要取哈希不取长度: 证据段直接引用摘要, 而等长替换(「企业微信」→「自有阵地」)长度指纹识别不出来。
         ref_repr = f"{len(refs)}|" + "|".join(
-            f"{r['id']},{r['date']},{r['source']},{r['source_name']},{disp_title(r)}" for r in refs[:30])
+            f"{r['id']},{r['date']},{r['source']},{r['source_name']},{disp_title(r)},"
+            f"{_sha(r.get('summary') or '')[:10]},{int((CONTENT_DIR / (r['id'] + '.zh.html')).exists())}"
+            for r in refs[:30])
         rel_repr = "|".join(f"{o}={lib.get(o, {}).get('term')}" for o in related)
         sig = _sha(RENDER_VER, f"{c.get('term')}|{c.get('def')}|{'/'.join(c.get('aliases') or [])}", ref_repr, rel_repr)
         new_sigs[name] = sig
@@ -2470,7 +2574,9 @@ def write_concept_pages(lib, vis):
     stale = [p for p in CONCEPT_DIR.glob("*.html") if p.name not in want]
     for p in stale:
         p.unlink()
-    print(f"[概念页] 共 {len(want)} 页(新写/重写 {written}, 跳过 {skipped}, 清理 {len(stale)}) → news/c/")
+    assert written + same + skipped == len(want), f"概念页计数对不上: {written}+{same}+{skipped} != {len(want)}"
+    print(f"[概念页] 共 {len(want)} 页(新写/重写 {written}, 重算未变 {same}, 跳过 {skipped}, "
+          f"清理 {len(stale)}) → news/c/")
 
 
 # 两个平行版本均为全源(2026-07-07 用户裁决; 原列表版 B 于 2026-07-21 并入聚合版),
