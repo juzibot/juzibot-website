@@ -10,10 +10,18 @@ The marketing site for 句子互动（JuziBot），served at https://juzibot.com
 
 ```bash
 python3 build_redirects.py  # regenerate /zh/* and /en/* 301 redirect stubs
+python3 test_build_news.py  # 动态页管线的离线不变量测试(74 项, 纯 stdlib, 不联网, 秒级)
+python3 build_news.py --clean-shell   # 把两个列表页还原成干净模板壳(注入区清空)
 # python3 build_pages.py    # ⚠️ STALE — do NOT run, it regresses hand-edited pages (see below)
 ```
 
-There is no single "build everything" command and no lint/test. The deploy server just serves the working tree, it does not run Python — all HTML is committed and hand-maintained.
+There is no single "build everything" command. The deploy server just serves the working tree, it does not run Python — all HTML is committed and hand-maintained.
+
+**动态页管线有测试，改它之前先跑**（2026-07-30 加，此前本文档写的是 "no lint/test"）：`test_build_news.py` 用纯标准库、不联网、不需要 `ZHIPU_API_KEY`、秒级跑完，固化了 17 组已经出过事或差点出事的不变量——noindex 页的 schema 与 canonical、译题与原题重复、概念死链、时间流倒序、SVG 不本地托管、消毒剥事件属性与 style（含紧贴引号写法）、链接规范化、模板源码指纹、原子写失败路径、`retire_unlisted` 的三条安全边界、两道去重、概念页保留已发布页、指标告警的误报边界、`_restate` 留空不覆盖、`has_banned` 口径闸、`detail_indexable` 三条件、部署清单覆盖所有根目录产物。
+
+**为什么这个项目值得破例有测试**：验证渲染改动原本得跑全量管线（抓十几个源、调 AI、几分钟、要网络与密钥），代价高到「就改了个模板，先不验了」变成常态——而这套测试写完第一次跑，就抓到一个已经带着四次提交跑了一路的**安全回归**（消毒的紧贴引号绕过被一次反向拷贝抹掉，而 shell-clean/copy-guard/守恒断言/死链断言四道守卫全都放过了它，全量重建每次都成功、产物都正常，因为存量镜像里恰好没有带 payload 的内容）。**产物正常不等于逻辑正确。** 测试的价值不在覆盖率，在把验证成本压到低于偷懒的诱惑。
+
+CI 侧对应 `.github/workflows/news-test.yml`（语法 + 不变量测试 + 两页内联 JS + 关键实现齐全性），与 `shell-clean.yml`（模板壳不得含生成数据、生成物不得入库）、`copy-guard.yml`（「企微/企业微信」不出现在任何页面）并列。**闸有效不等于防护有效——推送前本地先跑一遍,比事后修 CI 红灯便宜。**
 
 ## ⚠️ build_pages.py is STALE — do NOT run it
 
