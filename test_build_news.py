@@ -390,6 +390,30 @@ def test_detail_indexable_three_conditions():
 # 改注释, 没有自动办法。
 
 
+# ---------------------------------------------------------------- 18
+def test_deploy_list_covers_root_artifacts():
+    """CI 的 rsync 推送清单必须覆盖管线产出的**所有根目录文件**。
+
+    漏一个的表现是「功能静默少一块」而不是报错: 比如 news-radar.json 没推上去, 雷达区
+    永远只有内联的 24 条、前端 fetch 静默 404, 页面不崩、日志不报, 只是内容少了 210 条。
+    这类故障没人会主动发现, 所以把「产物 ↔ 部署清单」这个对应关系钉在测试里 —— 将来新增
+    根目录产物时, 这条会先失败提醒补 workflow。
+
+    注意: 这条只在 PR 分支/main 上有意义(workflow 的清单在那里维护); 预览分支的 workflow
+    副本可能是旧的, CI 也只在 PR 分支跑, 所以不构成误报来源。
+    """
+    src = (ROOT / "build_news.py").read_text(encoding="utf-8")
+    produced = sorted({m for m in re.findall(r'ROOT / "([^"/]+\.[a-z]+)"', src)})
+    wf_path = ROOT / ".github" / "workflows" / "news-cron.yml"
+    if not wf_path.exists():
+        check("部署清单文件存在", False, "news-cron.yml 缺失")
+        return
+    wf = wf_path.read_text(encoding="utf-8")
+    missing = [f for f in produced if f not in wf]
+    check(f"部署清单覆盖 {len(produced)} 个根目录产物", not missing,
+          f"清单里缺 {missing} —— 补进 news-cron.yml 的推送 rsync 行, 否则线上缺文件")
+
+
 def main():
     tests = [v for k, v in sorted(globals().items()) if k.startswith("test_")]
     for fn in tests:
