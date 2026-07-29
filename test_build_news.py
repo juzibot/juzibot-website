@@ -585,6 +585,87 @@ def test_read_time_thresholds():
           B.read_time("<p><b>" + "字" * 400 + "</b></p>") == B.read_time("<p>" + "字" * 400 + "</p>"))
 
 
+# ---------------------------------------------------------------- 24
+def _rel_fixture():
+    """五条: A/B/C 共享概念(B 与 A 共两个), D/E 同源用来测同源上限。"""
+    mk = lambda i, cs, src="industry", d="2026-07-20": {
+        "id": i, "title": f"标题{i}", "url": f"https://e.com/{i}", "date": d,
+        "source": src, "source_name": "行业动态", "category": "36氪", "author": "36氪",
+        "summary": "s", "tags": [], "concepts": cs}
+    vis = [mk("a", ["moe", "tpu"]), mk("b", ["moe", "tpu"]), mk("c", ["moe"], "hn", "2026-07-21"),
+           mk("d", ["moe"]), mk("e", ["moe"], "hn", "2026-07-19")]
+    pool = {i["id"]: i for i in vis}
+    cidx = {}
+    for i in vis:
+        for s in i["concepts"]:
+            cidx.setdefault(s, []).append(i["id"])
+    lib = {"moe": {"term": "MoE模型"}, "tpu": {"term": "TPU"}}
+    return vis, pool, cidx, lib
+
+
+def test_related_items_evidence_and_safety():
+    """相关动态: 只用共同概念这一种可核关系, 且链接指向的页必然存在。
+
+    此前实测 284 个详情页通往其他详情页的链接是 0 个 —— 读者读完只能回列表页重新扫,
+    爬虫也只能靠 JS 驱动的列表页做枢纽。写过一版「无共同概念就退同源近期」的兜底档, 量出
+    77% 的页四条全同源、最差例子是《国资委抓科技创新》配「美股收跌/欧盟调查足联」, 已删。
+    """
+    vis, pool, cidx, lib = _rel_fixture()
+    a = pool["a"]
+    rel = B.related_items(a, pool, cidx)
+    ids = [r["id"] for r, _ in rel]
+    check("不自链", "a" not in ids, ids)
+    check("不重复", len(set(ids)) == len(ids), ids)
+    check("全部在 pool 内(零死链)", all(r["id"] in pool for r, _ in rel), ids)
+    check("条数不超上限", len(rel) <= B.RELATED_MAX, len(rel))
+    check("共同概念多的排前面", ids[0] == "b", ids)
+    check("同源不超 RELATED_SRC_MAX",
+          max(sum(1 for r, _ in rel if r["source"] == s) for s in {r["source"] for r, _ in rel})
+          <= B.RELATED_SRC_MAX, [r["source"] for r, _ in rel])
+    check("两次调用同序(连跑字节稳定靠这条)",
+          [r["id"] for r, _ in B.related_items(a, pool, cidx)] == ids)
+    # 理由必须为真: 声称的共同概念在双方条目里都得有
+    bad = [(r["id"], c) for r, cs in rel for c in cs
+           if c not in a["concepts"] or c not in r["concepts"]]
+    check("理由为真(共同概念双方都有)", not bad, bad)
+    why = B.related_why(["moe", "tpu"], lib)
+    check("理由写词条名不写 slug", "MoE模型" in why and "moe" not in why, why)
+    check("多概念报计数", "2 个概念" in why, why)
+    # 概念无同伴 → 整块不出, 不留空标题(实测 30% 的页属于这种)
+    lone = dict(pool["a"], id="z", concepts=["unique-slug"])
+    check("无同伴时不出空区块", B.related_items(lone, pool, cidx) == []
+          and B.related_html([], lib) == "")
+    h = B.related_html(rel, lib)
+    check("链接是同目录相对路径", 'href="b.html"' in h, h[:90])
+    check("区块内零外链", "http" not in h)
+    check("有可访问名(aria-labelledby 指向真实 id)",
+          'aria-labelledby="dp-rel-h"' in h and 'id="dp-rel-h"' in h)
+
+
+def test_related_change_invalidates_signature():
+    """相关列表变了必须触发重算 —— 否则条目下线后, 旧页挂着指向已删页的死链。
+
+    这是本页唯一的跨条目依赖: 页面内容取决于**别的条目**, 而原签名只算自己的字段与镜像。
+    这里直接比签名的 rsig 分量: 同一条目在「B 还在」与「B 已下线」两个 pool 下必须不同。
+    """
+    vis, pool, cidx, lib = _rel_fixture()
+    a = pool["a"]
+    rsig = lambda pl, cx: B._sha(*(f"{r['id']}|{B.disp_title(r)}|{B.related_why(cs, lib)}"
+                                   for r, cs in B.related_items(a, pl, cx)))
+    before = rsig(pool, cidx)
+    gone = {k: v for k, v in pool.items() if k != "b"}
+    cidx2 = {s: [i for i in ids if i != "b"] for s, ids in cidx.items()}
+    after = rsig(gone, cidx2)
+    check("条目下线 → 相关签名变化(触发重算, 死链留不下)", before != after, f"{before} vs {after}")
+    check("下线后的相关列表里不再有它", "b" not in [r["id"] for r, _ in B.related_items(a, gone, cidx2)])
+    check("数据没变则签名不变(不制造无谓重算)", rsig(pool, cidx) == before)
+    # 新条目挤进列表同样要改签名
+    pool3 = dict(pool); pool3["f"] = dict(pool["b"], id="f", title="新来的", date="2026-07-25")
+    cidx3 = {s: ids + (["f"] if s in ("moe", "tpu") else []) for s, ids in cidx.items()}
+    check("新条目挤进列表 → 签名变化", rsig(pool3, cidx3) != before)
+
+
+
 def main():
     tests = [v for k, v in sorted(globals().items()) if k.startswith("test_")]
     for fn in tests:
