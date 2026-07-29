@@ -505,14 +505,21 @@ def content_text(item_id):
 SITE_BASE = "https://juzibot.com"
 OWN_SOURCES = {s["id"] for s in SOURCES if s.get("own")}
 MIRROR_MODE = {s["id"]: s.get("mirror", "full") for s in SOURCES}
-# 公司相关源: 自家博客/公众号 + 产品动态 + 写公司的媒体报道。news.html 默认视图把这几类
-# 置顶(佳芮: 进来首屏要和公司相关, 不能一进来全是别的新闻); 外部资讯随后, 各组内保持时间序。
+# —— 双区信息架构(2026-07-29, 佳芮「来到句子动态首页看到凌迪科技和润建股份是什么鬼」) ——
+# 根因不是排序而是内容速率不匹配: 公司内容 ~4 条/月, 行业 RSS ~50 条/天, 任何混排的时间流
+# 都会让自家信号被淹没。解法是分区不是排序: 「句子动态」(自家)与「行业雷达」(外部观察)
+# 分成两个区, 默认只看句子动态; 行业资讯降级为可切换的次区, 定位从"转载"改成"我们在看什么"。
 COMPANY_SOURCES = {"rui-blog", "wechat-mp", "product", "press"}
+GROUPS = {"company": "句子动态", "radar": "行业雷达"}
+
+
+def group_of(source_id):
+    return "company" if source_id in COMPANY_SOURCES else "radar"
 
 
 def company_first(items):
-    """稳定分区: 公司相关源置顶(保持各自时间序), 外部资讯(行业/大咖/HN/齐思)随后。
-    仅用于 news.html 卡片流; 聚合版 news-c.html 按月分组, 不能打乱时间序, 故不套用。"""
+    """组内排序兜底: 公司相关置顶(各自保持时间序), 外部随后。
+    双区分离后主要由前端分组视图承担, 此函数保证预渲染/无 JS 时也是公司信号在前。"""
     comp = [i for i in items if i["source"] in COMPANY_SOURCES]
     rest = [i for i in items if i["source"] not in COMPANY_SOURCES]
     return comp + rest
@@ -993,6 +1000,10 @@ def sync_manual(src, old, limit):
         print(f"[{src['id']}] 已初始化投递位 {path.relative_to(ROOT)}")
         return [], []
     entries = json.loads(path.read_text(encoding="utf-8")).get("items", [])
+    if not entries:
+        # 空投递位静默为 0 会被误读成"公司没这类内容"; 显式提示该补什么(2026-07-29)
+        print(f"  [提示] {src['id']} 投递位 {path.relative_to(ROOT)} 为空——"
+              f"往 items 里加 {{url,title,date}} 即可上站")
     got, failed = [], []
     for e in entries:
         u = (e.get("url") or "").strip()
@@ -1068,10 +1079,13 @@ def sync_feishu_base(src, old, limit):
 
     rows = d["data"]["data"]
     got, failed, passed = [], [], 0
+    blocked = {"缺链接": 0, "未勾上官网": 0, "两者都缺": 0}  # 闸门拦截原因分布(诊断用)
     for row in rows:
         title_cell, link_cell, acct_cell, on_site, date_cell = (list(row) + [None] * 5)[:5]
         link = cell_link(link_cell)
         if not on_site or not link:  # 闸门: 勾了「上官网」且有正式链接才收
+            k = "两者都缺" if (not on_site and not link) else ("缺链接" if not link else "未勾上官网")
+            blocked[k] += 1
             continue
         passed += 1
         if link in old:
@@ -1096,7 +1110,13 @@ def sync_feishu_base(src, old, limit):
             continue
         it = make_item(src, link, title, summary, date, account)
         got.append(it) if it else (failed.append(link), print(f"  [跳过] 登记行缺标题且抓取失败: {link}"))
-    print(f"[{src['id']}] 登记表 {len(rows)} 行, 过闸 {passed} 行, 新收 {len(got)} 条")
+    stuck = ", ".join(f"{k} {v} 行" for k, v in blocked.items() if v)
+    tail = f" | 卡在闸外: {stuck}" if stuck else ""
+    print(f"[{src['id']}] 登记表 {len(rows)} 行, 过闸 {passed} 行, 新收 {len(got)} 条{tail}")
+    if passed == 0 and rows:
+        # 全员卡外 = 运营侧登记没填完, 不是"公司没内容"。显式喊出来, 别让它静默成 0 条。
+        print(f"  [提示] {src['id']} 登记表有 {len(rows)} 行但无一过闸——"
+              f"需在飞书表里补「公众号正式链接」并勾「上官网」(表: {src['base_token']})")
     return got, failed
 
 
@@ -2003,6 +2023,23 @@ def detail_html(it, lib):
         robots, canonical = "index,follow", f"{SITE_BASE}/news/p/{it['id']}.html"
     else:
         robots, canonical = "noindex,follow", it["url"]
+    # 结构化数据(2026-07-29): 只给允许收录的自家内容发 Article——官网自己卖 GEO 优化师,
+    # 自家动态页该是样板间; 外部转载页 noindex, 发 schema 无益且易被判内容剽窃。
+    schema = ""
+    if own and full:
+        schema = '<script type="application/ld+json">' + json.dumps({
+            "@context": "https://schema.org", "@type": "Article",
+            "headline": title[:110], "description": desc[:300],
+            "datePublished": it["date"], "inLanguage": "zh-CN",
+            "url": f"{SITE_BASE}/news/p/{it['id']}.html",
+            "author": {"@type": "Person" if it["source"] == "rui-blog" else "Organization",
+                       "name": it.get("author") or "句子互动"},
+            "publisher": {"@type": "Organization", "name": "句子互动", "url": f"{SITE_BASE}/"},
+            "isPartOf": {"@type": "CollectionPage", "name": "句子·动态",
+                         "url": f"{SITE_BASE}/news.html"},
+            "about": [{"@type": "DefinedTerm", "name": lib[s]["term"],
+                       "url": f"{SITE_BASE}/news/c/{s}.html"} for s in slugs if s in lib][:5],
+        }, ensure_ascii=False).replace("</", "<\\/") + "</script>"
     if zh:
         body = (
             '<div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang">'
@@ -2033,6 +2070,7 @@ b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';})
 <meta name="description" content="{esc(desc)}" />
 <meta name="robots" content="{robots}" />
 <link rel="canonical" href="{esc(canonical)}" />
+{schema}
 <link rel="icon" href="../../logo.png" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="../../assets/site.css" />
@@ -2078,7 +2116,7 @@ b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';})
 # 「输入签名」——签名不变则跳过重算。签名过度捕获(条目全字段 + 概念库 + 正文/译文镜像 + 模板
 # 版本), 任一输入变即重算, 绝不产生陈旧页。签名落 data/render-cache.json(随仓库提交, 供 CI
 # 跨轮增量; 不进任何内联/公开 HTML)。改模板结构时递增 RENDER_VER 触发全量重算。
-RENDER_VER = "1"
+RENDER_VER = "2"  # 2026-07-29: 详情页加 Article schema、概念页加 DefinedTerm → 全量重算
 RENDER_CACHE = ROOT / "data" / "render-cache.json"
 
 
@@ -2207,7 +2245,7 @@ CONCEPT_CSS = """
 """
 
 
-def concept_page_shell(title, desc, canonical, inner, ctx_title):
+def concept_page_shell(title, desc, canonical, inner, ctx_title, schema=""):
     """概念页/总目录的公共壳: 原创内容, index,follow + canonical 指自身。"""
     ctx = json.dumps({"entity": "news-concept", "type": "page", "title": ctx_title}, ensure_ascii=False).replace("</", "<\\/")
     return f"""<!DOCTYPE html>
@@ -2219,6 +2257,7 @@ def concept_page_shell(title, desc, canonical, inner, ctx_title):
 <meta name="description" content="{esc(desc)}" />
 <meta name="robots" content="index,follow" />
 <link rel="canonical" href="{esc(canonical)}" />
+{schema}
 <link rel="icon" href="../../logo.png" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="../../assets/site.css" />
@@ -2264,8 +2303,18 @@ def concept_html(slug, c, refs, related, lib):
           '    </div>\n'
           '    <p class="cp-note">概念定义由句子互动动态管线的 AI 加工层生成、编辑维护，供快速理解行业语境；如有不准确之处欢迎通过官网联系我们指正。</p>'
     )
+    # DefinedTerm schema(2026-07-29): 概念页是自家原创且 index, 是 GEO 的主力资产——
+    # 给 AI 引擎一个可直接引用的术语定义结构(名称/别名/定义/所属术语集)。
+    schema = '<script type="application/ld+json">' + json.dumps({
+        "@context": "https://schema.org", "@type": "DefinedTerm",
+        "name": c["term"], "description": c["def"][:300], "inLanguage": "zh-CN",
+        "url": f"{SITE_BASE}/news/c/{slug}.html",
+        "alternateName": [a for a in c.get("aliases", []) if a != c["term"]][:6],
+        "inDefinedTermSet": {"@type": "DefinedTermSet", "name": "句子互动 AI 概念库",
+                             "url": f"{SITE_BASE}/news/c/index.html"},
+    }, ensure_ascii=False).replace("</", "<\\/") + "</script>"
     return concept_page_shell(f"{c['term']}是什么？- 句子互动 AI 概念库", c["def"][:150],
-                              f"{SITE_BASE}/news/c/{slug}.html", inner, c["term"])
+                              f"{SITE_BASE}/news/c/{slug}.html", inner, c["term"], schema)
 
 
 def concept_index_html(lib, refs_map):
@@ -2390,9 +2439,37 @@ def inject_page(spec, items, sources_meta):
     if not n:
         sys.exit(f"[错误] {path.name} 里找不到 <script id=\"news-data\">")
 
-    page, n = re.subn(r'(<b id="newsTotal">)[^<]*(</b>)', lambda m: m.group(1) + str(len(items)) + m.group(2), page, count=1)
+    # 双区计数(2026-07-29): newsTotal = 句子动态条数, newsRadar = 行业雷达条数;
+    # 无 JS 时预渲染的静态数字也要分区, 否则"共 254 条"仍把页面说成资讯站。
+    n_comp = sum(1 for i in items if i["source"] in COMPANY_SOURCES)
+    page, n = re.subn(r'(<b id="newsTotal">)[^<]*(</b>)',
+                      lambda m: m.group(1) + str(n_comp if spec.get("company_first") else len(items)) + m.group(2),
+                      page, count=1)
     if not n:
         sys.exit(f"[错误] {path.name} 里找不到 <b id=\"newsTotal\">")
+    page = re.sub(r'(<b id="newsRadar">)[^<]*(</b>)',
+                  lambda m: m.group(1) + str(len(items) - n_comp) + m.group(2), page, count=1)
+
+    # ItemList schema(2026-07-29, 仅卡片版): 让 AI 引擎能解析出「句子最近发生了什么」这张
+    # 清单——只列自家条目, 外部转载不进(它们 noindex, 列进来等于替别人做 SEO)。
+    if spec.get("company_first"):
+        comp = [i for i in items if i["source"] in COMPANY_SOURCES][:20]
+        il = json.dumps({
+            "@context": "https://schema.org", "@type": "ItemList",
+            "name": "句子互动最新动态", "inLanguage": "zh-CN",
+            "numberOfItems": len(comp),
+            "itemListElement": [{
+                "@type": "ListItem", "position": n + 1,
+                "url": f"{SITE_BASE}/news/p/{i['id']}.html",
+                "name": disp_title(i)[:110],
+            } for n, i in enumerate(comp)],
+        }, ensure_ascii=False).replace("</", "<\\/")
+        block = f'<script type="application/ld+json" id="news-itemlist">{il}</script>'
+        if 'id="news-itemlist"' in page:
+            page = re.sub(r'<script type="application/ld\+json" id="news-itemlist">.*?</script>',
+                          lambda m: block, page, count=1, flags=re.S)
+        else:  # 首次: 挂在既有 CollectionPage schema 之后
+            page = page.replace('</script>\n<style>', '</script>\n' + block + '\n<style>', 1)
 
     path.write_text(page, encoding="utf-8")
 
@@ -2427,6 +2504,7 @@ def main():
         sources_meta.append({
             "id": src["id"], "name": src["name"], "type": src["type"],
             "home": src.get("home", ""), "status": status, "last_sync": now,
+            "group": group_of(src["id"]),  # 双区: company(句子动态) | radar(行业雷达)
             "ai": bool(src.get("ai_filter")),  # 聚合版数据源面板据此标「AI 筛」
             "count": 0,  # 终态统一重算(见下), 此处占位
         })

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>齐思头条2026/07/29「Kimi K3 开源 2.8T MoE（原生视觉、百万 token 超长上下文）、Grok 4.6 约1.5T、4.7 约2.1T 规划发布」 - 句子·动态</title>
+<meta name="description" content="Twitter Kimi K3（Kimi.ai 发布 2.8T MoE、原生视觉与 1,000,000‑token 长上下文并开放权重生态） ：Kimi 正式释出 K3，标称为 2.8 万亿参数的 Mixture‑of‑Experts 模型，单 token 平均激活约 1.04B 参数，原生视觉能力并支持 1,000,000 token…" />
+<meta name="robots" content="noindex,follow" />
+<link rel="canonical" href="https://news.miracleplus.com/share_link/145444" />
+
+<link rel="icon" href="../../logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../../assets/site.css" />
+<style>
+  .dp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
+  .dp-wrap{max-width:760px;margin:0 auto}
+  .dp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
+  .dp-back:hover{color:var(--blue)}
+  .dp-meta{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:14px}
+  .dp-srcb{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:750;color:var(--sc,var(--blue))}
+  .s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
+  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-voices{--sc:#9333EA}
+  .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
+  .dp-cat{display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ink-3);background:#F6F7FB;border:1px solid var(--line-2);border-radius:6px;padding:2px 8px}
+  .dp-date{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-3)}
+  .dp-title{font-size:clamp(24px,3.2vw,34px);font-weight:850;letter-spacing:-.03em;line-height:1.32;word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance;margin-bottom:10px}
+  .dp-orig{font-size:13px;color:var(--ink-3);overflow-wrap:anywhere;margin-bottom:8px}
+  .dp-by{font-size:12.5px;font-weight:600;color:var(--ink-3);margin-bottom:18px}
+  .dp-notice{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:1.7;color:var(--ink-2);background:#F6F7FB;border:1px solid var(--line-2);border-radius:10px;padding:10px 14px;margin-bottom:22px}
+  .dp-notice i{color:var(--blue);margin-top:4px;flex:0 0 auto}
+  .dp-notice a{color:var(--blue);font-weight:700;overflow-wrap:anywhere}
+  .dp-quip{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.66;font-weight:600;color:var(--blue-deep);background:var(--blue-50);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:18px}
+  .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
+  .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
+  .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
+  .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
+  .dp-body p{margin:0 0 1.05em}
+  .dp-body img{max-width:100%;height:auto;border-radius:10px;margin:.4em 0}
+  .dp-body pre{background:#0F172A;color:#E2E8F0;font-family:var(--mono);font-size:12.5px;line-height:1.7;padding:14px 16px;border-radius:10px;overflow-x:auto;margin:0 0 1.1em}
+  .dp-body code{font-family:var(--mono);font-size:.92em}
+  .dp-body :not(pre)>code{background:#F1F5F9;padding:1px 5px;border-radius:5px}
+  .dp-body blockquote{border-left:3px solid var(--line);padding:2px 0 2px 14px;color:var(--ink-3);margin:0 0 1.05em}
+  .dp-body a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+  .dp-body ul,.dp-body ol{padding-left:1.5em;margin:0 0 1.05em}
+  .dp-body table{display:block;overflow-x:auto;border-collapse:collapse;margin:0 0 1.1em}
+  .dp-body td,.dp-body th{border:1px solid var(--line);padding:6px 10px;font-size:.92em}
+  .dp-excerpt{font-size:15px;line-height:1.9;color:var(--ink-2);border-left:3px solid var(--line);padding:2px 0 2px 16px;margin-bottom:8px}
+  .dp-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;padding-top:20px;border-top:1px solid var(--line-2)}
+  .dp-btn{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:750;border-radius:999px;padding:10px 20px;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+  .dp-btn.pri{background:var(--blue);color:#fff}
+  .dp-btn.pri:hover{background:var(--blue-deep)}
+  .dp-btn.sec{background:#fff;color:var(--ink-2);border:1px solid var(--line)}
+  .dp-btn.sec:hover{color:var(--blue);border-color:var(--blue)}
+  .dp-note{font-size:11.5px;line-height:1.7;color:var(--ink-3);margin-top:18px}
+  .dp-langbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+  .dp-lang{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:750;color:var(--blue);
+    background:var(--blue-50);border:1px solid var(--blue-100);border-radius:999px;padding:7px 14px;
+    transition:background .2s var(--ease),border-color .2s var(--ease)}
+  .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
+  .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div id="site-nav"></div>
+<main class="dp-main">
+  <div class="dp-wrap">
+    <a class="dp-back" href="../../news.html"><i class="fa-solid fa-arrow-left"></i>返回动态</a>
+    <div class="dp-meta">
+      <span class="dp-srcb s-qisi"><i class="fa-solid fa-lightbulb"></i>齐思</span>
+      <span class="dp-cat">头条</span>
+      <time class="dp-date" datetime="2026-07-29">2026-07-29</time>
+    </div>
+    <h1 class="dp-title">齐思头条2026/07/29「Kimi K3 开源 2.8T MoE（原生视觉、百万 token 超长上下文）、Grok 4.6 约1.5T、4.7 约2.1T 规划发布」</h1>
+    
+    <p class="dp-by">来源：奇绩创坛 · 齐思</p>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（奇绩创坛 · 齐思）所有 · <a href="https://news.miracleplus.com/share_link/145444" target="_blank" rel="noopener">阅读原文</a></span></div>
+    
+    
+    <article class="dp-body"><h4>Twitter</h4>
+<p><strong>Kimi K3（Kimi.ai 发布 2.8T MoE、原生视觉与 1,000,000‑token <a class="cpt" href="../c/long-context-window.html" data-def="指大模型单次能处理和理解的文本长度上限，例如100万Token">长上下文</a>并开放权重生态）</strong> ：Kimi 正式释出 K3，标称为 2.8 万亿参数的 Mixture‑of‑Experts 模型，单 token 平均激活约 1.04B 参数，原生视觉能力并支持 1,000,000 token 的超长上下文；官方与社区同时开源配套基础设施（AgentENV、MoonEP、speculator/推理加速等），并给出在强化学习、编码与 agent 基准（Agent Arena / CursorBench）上的竞争性结果与部署配方。社区实测显示在 80×RTX 5090 集群上单流约 ~20 tok/s，vLLM、Modal、Cursor 等平台已日零时部署与集成，且存在通过 REAP/剪枝将权重缩减到 ~350GB 的移植方案，商业许可对大厂存在额外协议要求。(<a href="https://news.miracleplus.com/share_link/145296" target="_blank" rel="noopener nofollow">Kimi 官方技术报告</a>、<a href="https://twitter.com/Scobleizer/status/2082026513072074776" target="_blank" rel="noopener nofollow">80×RTX5090 实测说明（Scobleizer 推文）</a>、<a href="https://twitter.com/vllm_project/status/2082141443645387212" target="_blank" rel="noopener nofollow">vLLM 部署指南（推文）</a>、<a href="https://t.co/Dsxyw5rLqm" target="_blank" rel="noopener nofollow">AgentENV 开源仓库</a>、<a href="https://t.co/h2Rcwg88dQ" target="_blank" rel="noopener nofollow">MoonEP GitHub</a>、<a href="https://news.miracleplus.com/share_link/145280" target="_blank" rel="noopener nofollow">Cursor 上线公告</a>、<a href="https://twitter.com/lm_zheng/status/2081876507342045199" target="_blank" rel="noopener nofollow">DSpark speculator 性能说明</a>)</p>
+<p><strong>Grok 系列（Elon 宣布 Grok 4.6 ≈1.5T、4.7 ≈2.1T；Grok 4.5 编码效率声明）</strong> ：Elon Musk 公布 Grok 的发布节奏：Grok 4.6 预计约 8 月 7 日上线，规模约 1.5 万亿参数并在 SFT/RL 上有改进，数周后跟进 4.7（约 2.1 万亿参数，性能更好但延迟略高）；另有报告指出 Grok 4.5 在编码任务上具有极高的 token 效率（每任务约 3.5M tokens），强调参数与延迟/效率的实用权衡。(<a href="https://news.miracleplus.com/share_link/145407" target="_blank" rel="noopener nofollow">Elon 关于 Grok 规划的推文</a>、<a href="https://news.miracleplus.com/share_link/145407" target="_blank" rel="noopener nofollow">Grok 4.7 报道摘要</a>、<a href="https://news.miracleplus.com/share_link/145261" target="_blank" rel="noopener nofollow">Grok 4.5 编码效率分析</a>、<a href="https://twitter.com/billyuchenlin/status/2082191972194983986" target="_blank" rel="noopener nofollow">发布节奏说明（推文）</a>)</p>
+<p><strong>Anthropic（“Project Panama” 书籍采购与销毁争议、开权立场与隐私/研究影响）</strong> ：多条调查与法院/媒体文件指 Anthropic 在获取书籍语料时既有大规模数字化采购计划（代号“Project Panama”相关报导），也被指在将纸质书籍高速切脊扫描后销毁部分实体藏本，引发版权、图书馆归档与文化遗产的伦理争议；公司同时就开放权重与安全发布说明并遭社区强烈讨论，另有研究/产品线（Claude Mythos Preview）在密码学弱点发现与对话隐私泄露上带来新一轮关注。(<a href="https://news.miracleplus.com/share_link/145264" target="_blank" rel="noopener nofollow">关于 Anthropic 销毁书籍的报道汇总</a>、<a href="https://news.miracleplus.com/share_link/145263" target="_blank" rel="noopener nofollow">相关舆论与案例汇总报道</a>、<a href="https://twitter.com/GaryMarcus/status/2082097814931472814" target="_blank" rel="noopener nofollow">Gary Marcus 对 Project Panama 的描述</a>、<a href="https://twitter.com/AnthropicAI/status/2081864750296658008" target="_blank" rel="noopener nofollow">Anthropic 官方说明推文</a>、<a href="https://t.co/TYKLjb3Q7V" target="_blank" rel="noopener nofollow">Claude 揭示密码学弱点研究（推文）</a>)</p>
+<p><strong>“放慢/节奏控制”与行业治理争论（员工联名、联盟与公司立场分化）</strong> ：来自 OpenAI、Anthropic、DeepMind 等机构的员工联署致政府，呼吁建立在必要时能“刻意放慢”AI 发展的机制；行业内部出现明显分化——部分高层支持节奏控制并讨论如何在不被视为“监管绑架”下实施，另有厂商与创业者强烈反对限制开源与研究自由，同时出现以厂商为核心的“Open Secure AI Alliance”讨论安全合作框架。(<a href="https://news.miracleplus.com/share_link/145425" target="_blank" rel="noopener nofollow">员工联署报道</a>、<a href="https://twitter.com/garrytan/status/2082147202034708876" target="_blank" rel="noopener nofollow">Sam/内部讨论转述（RT）</a>、<a href="https://twitter.com/Scobleizer/status/2081904901760979029" target="_blank" rel="noopener nofollow">Dario Amodei 对争议的回应（转述）</a>、<a href="https://news.miracleplus.com/share_link/145250" target="_blank" rel="noopener nofollow">关于 Open Secure AI Alliance 的报道</a>、<a href="https://twitter.com/TimSweeneyEpic/status/2081937889697386794" target="_blank" rel="noopener nofollow">反对限制开源的评论（Tim Sweeney 推文）</a>)</p>
+<p><strong>算力与基础设施资本动向（GPU spot 价、hyperscaler 现金流与大型数据中心融资传闻）</strong> ：市场分析显示 GPU spot 租赁价长期高于合同价，意味着 hyperscaler 在現有合约下对潜在经营现金流存在低估风险；与此同时有报道称 Nvidia 与 OpenAI 就为俄亥俄州超大数据中心项目提供高额支持展开谈判（报道提到高达 2,500 亿美元的 backstop），Morgan Stanley 的产业图谱也对 AI 价值链各环节的获利结构做出分层说明，这些资本与价格信号将直接影响未来 capex、供给与估值路径。(<a href="https://news.miracleplus.com/share_link/145414" target="_blank" rel="noopener nofollow">GPU 租赁与现金流分析</a>、<a href="https://news.miracleplus.com/share_link/145414" target="_blank" rel="noopener nofollow">Gavin Baker 市场分析推文</a>、<a href="https://news.miracleplus.com/share_link/145258" target="_blank" rel="noopener nofollow">Nvidia‑OpenAI 数据中心 支持传闻</a>、<a href="https://news.miracleplus.com/share_link/145402" target="_blank" rel="noopener nofollow">Morgan Stanley AI 供应链地图</a>)</p>
+<p><strong>训练优化器与系统改进（AdamW 局限、SOAP/Muon 与 OKLS/Online KL Shampoo）</strong> ：研究与工程实测表明 AdamW 在极大批量训练（报道提及单次批量高达 1e8 tokens）下出现稳定性瓶颈，NVIDIA 团队/社区提出 SOAP 与 Muon 等更高阶优化器在超大规模训练中稳定性更佳并给出分层分布式设计以兼容 Megatron‑LM；同时 Tilde Research 发布 Online KL Shampoo（OKLS），尝试在线近似全矩阵 AdaGrad 的 KL 最优解以改善梯度相关性捕捉，这些工作共同指向大规模训练中算法与系统协同的重要性。(<a href="https://twitter.com/omarsar0/status/2081872946960675017" target="_blank" rel="noopener nofollow">NVIDIA 优化器要点转述</a>、<a href="https://news.miracleplus.com/share_link/145428" target="_blank" rel="noopener nofollow">OKLS 发布与详述</a>、<a href="https://news.miracleplus.com/share_link/145428" target="_blank" rel="noopener nofollow">OKLS 相关报道</a>)</p>
+<p><strong>AMD Instella‑MoE（AMD 发布开放 MoE 模型以展示 MI300X 训练能力）</strong> ：AMD 推出 Instella‑MoE，作为首个面向开源的专家混合语言模型，整体约 160 亿参数、单 token 激活约 28 亿参数，训练使用 Instinct MI300X 芯片。官方与初步对比显示在效率/精度权衡上对比同类 MoE 与密集模型具有竞争力，强调未来在更大规模时可见的优势。(<a href="https://news.miracleplus.com/share_link/145255" target="_blank" rel="noopener nofollow">Instella‑MoE 发布说明与性能对比</a>)</p>
+<p><strong>FishAudio（S2.1 Pro 上线并获 $52M 种子轮，主打 5 秒克隆与成本/速度优势）</strong> ：FishAudio 宣布完成 5,200 万美元种子融资并推出 S2.1 Pro，宣称可从 5 秒音频样本克隆声音，推断速度为 Cartesia 的 ~2×、成本约为 Eleven Labs 的 1/6，并支持逐词情感、语调与节奏控制；公司称已有 HeyGen、LiveKit 等客户在生产环境使用，并对企业客户提出“若无法降低 50% 成本则免费一年”的商业承诺。(<a href="https://twitter.com/Scobleizer/status/2082156469848527245" target="_blank" rel="noopener nofollow">融资与 S2.1 Pro 公告（推文）</a>、<a href="https://news.miracleplus.com/share_link/145427" target="_blank" rel="noopener nofollow">详细报道：FishAudio 融资与产品说明</a>)</p>
+<p><strong>Perplexity（Personal Computer 本地代理与 Model Council 多模型比对功能）</strong> ：Perplexity 在 Windows 上发布 Personal Computer，本地代理能力可在本地文件、已连接应用与网络间编排 agent，用于研究、代码与浏览工作流；同时推出 Model Council 功能，能够对多个 frontier 模型并行比对并输出带引用的汇总报告，便于决策者在本地与跨模型审计下选择最合适模型与策略。(<a href="https://twitter.com/AravSrinivas/status/2082162006225039538" target="_blank" rel="noopener nofollow">Model Council 功能说明（推文）</a>、<a href="https://twitter.com/AravSrinivas/status/2082104809713529341" target="_blank" rel="noopener nofollow">Personal Computer Windows 发布推文</a>)</p>
+<p><strong>Hugging Face（遭遇自治体 agent 攻击与开源防御实战）</strong> ：Hugging Face 披露遭遇一起复杂的自治体(agent)网络攻击并公开了详细的技术时间线与交互回放，团队展示在取证/防御过程中如何借助<a class="cpt" href="../c/open-source-model.html" data-def="指模型权重和代码公开，允许任何人免费使用、修改和分发的AI模型">开源模型</a>（如 GLM‑5.2）与自有基础设施完成遏制与应急响应；事件也触发了对闭源取证工具误判问题以及开源安全工具生态（OSAA）作用的讨论。(<a href="https://t.co/uPxIpjW8Xn" target="_blank" rel="noopener nofollow">Clement 的完整技术时间线与交互回放</a>、<a href="https://t.co/gkqXqv0kU1" target="_blank" rel="noopener nofollow">NVIDIA/Arav 关于用 GLM‑5.2 进行遏制的说明</a>、<a href="https://twitter.com/stanfordnlp/status/2081867681490510246" target="_blank" rel="noopener nofollow">CoT 可监测性研讨会报告</a>)</p>
+<p><strong>Agent 平台与开发者工具（Hyperagent、Mastra Factory、Trace Intelligence、搜索加速与低价开发计划）</strong> ：多家公司推出面向 agent 化流水线与企业落地的工具：Hyperagent 提供云端可学习技能的隔离代理运行环境并一键部署到 Slack 等场景；Mastra Factory、Trace Intelligence 等产品分别定位于 agent‑化的 issue→生产流水线与 agent traces 聚类定位常见失败；搜索/检索团队宣称将 agent 的网页检索 P50 从 372ms 降到 62ms，Cursor 推出面向印度的低价 Start 计划并内置 Grok 与 app builder，显示 agent 工具鏈条的下沉与工程化成熟。(<a href="https://twitter.com/svpino/status/2081955620161552693" target="_blank" rel="noopener nofollow">Hyperagent 功能介绍</a>、<a href="https://t.co/hPXSyekmYg" target="_blank" rel="noopener nofollow">Mastra Factory 发布（推文）</a>、<a href="https://t.co/z7tDv4nqO7" target="_blank" rel="noopener nofollow">Trace Intelligence 演示（推文）</a>、<a href="https://t.co/aEbu5R8Eis" target="_blank" rel="noopener nofollow">搜索加速说明（推文）</a>、<a href="https://twitter.com/aman_madaan/status/2081982087050281198" target="_blank" rel="noopener nofollow">Cursor Start 印度计划（推文）</a>)</p>
+<p><strong>OpenAI（ChatGPT Work 企业推广、GPT‑Live 语音上线与校园项目）</strong> ：OpenAI 推出 ChatGPT Work 企业试用活动（注册后短期试用额度），并在教育/企业场景全球化上线 GPT‑Live 语音功能；同时开放 OpenAI Student Collective / Campus Lead 项目以扶持本科生社区与培训。与此同时安全/治理圈对 OpenAI 是否应按自定的 Preparedness Framework 暂停某些开发的呼声仍在发酵。(<a href="https://twitter.com/gdb/status/2081877298538746165" target="_blank" rel="noopener nofollow">ChatGPT Work 活动说明 — Greg Brockman 推文</a>、<a href="https://twitter.com/gdb/status/2082174655037870240" target="_blank" rel="noopener nofollow">OpenAI 校园项目招募 — Greg Brockman 推文</a>、<a href="https://twitter.com/ESYudkowsky/status/2081984903445639463" target="_blank" rel="noopener nofollow">呼吁按 Preparedness Framework 暂停开发的声明</a>)</p>
+<p><strong>Google（Gemma 系列累计下载破 9 亿、Gemini Managed Agents 与 AI Studio 更新）</strong> ：Google 宣布 Gemma 系列（Gemma 1 / ShieldGemma / MedGemma / Gemma 4）累计下载量超过 9 亿次，显示其在开源多型号分发上的规模化；同时 Google 在 AI Studio 中更新 Managed Agents，默认将 Gemini 3.6 Flash 作为默认模型并加入环境钩子、预算限制、工具调用沙箱与免费试用层，便于开发者更细粒度地集成 agent。(<a href="https://news.miracleplus.com/share_link/145256" target="_blank" rel="noopener nofollow">Gemma 下载量里程碑公告</a>、<a href="https://t.co/gKqXqv0kU1" target="_blank" rel="noopener nofollow">Gemini Managed Agents API 更新公告</a>、<a href="https://news.miracleplus.com/share_link/145413" target="_blank" rel="noopener nofollow">AI Studio Managed Agents 更新说明</a>)</p>
+<p><strong>芯片/EDA 自动化与内存协同（Synopsys+Microsoft EDA 流程、Nemotron 3 Ultra、SK hynix×NVIDIA 内存合作）</strong> ：Synopsys 与 Microsoft 联合发布针对自动化芯片设计的 EDA 工作流，宣称在早期测试中可将调试闭环与周期时间缩短 25%–40%；NVIDIA 的 Nemotron 3 Ultra 在 agentic 芯片设计任务中给出高通过率示例，表明“生成‑仿真‑修正”闭环在芯片开发自动化上可行；SK hynix 与 NVIDIA 的合作则聚焦下一代 AI 内存/高带宽存储以支撑更大模型与更高吞吐的需求。(<a href="https://twitter.com/dnystedt/status/2081891098105164242" target="_blank" rel="noopener nofollow">Synopsys 与 Microsoft EDA 工作流说明</a>、<a href="https://news.miracleplus.com/share_link/145257" target="_blank" rel="noopener nofollow">Nemotron 3 Ultra agentic 芯片设计测试报告</a>、<a href="https://news.miracleplus.com/share_link/145259" target="_blank" rel="noopener nofollow">SK hynix × NVIDIA 合作公告</a>)</p>
+<p><strong>训练与推理效率提升案例（DFlash 460 tok/s、DSpark speculator 与机器人训练成本下降）</strong> ：多项工程与研究显示吞吐与训练成本正在快速下降：一支团队宣称其定制 DFlash 达到 460 tok/s 的推理吞吐率；K3 生态中的 speculator/解码优化将 batch‑1 解码从约 113 → 423 tok/s；在机器人领域，H2 SONIC 在仅 4× L40 GPUs、两天训练后达到高质量控制表现（相比原先需要 64 GPUs 的配置显著节省成本）。(<a href="https://news.miracleplus.com/share_link/145249" target="_blank" rel="noopener nofollow">DFlash 460 tok/s 性能说明</a>、<a href="https://twitter.com/lm_zheng/status/2081876507342045199" target="_blank" rel="noopener nofollow">DSpark speculator 性能说明</a>、<a href="https://twitter.com/Scobleizer/status/2082030871318798465" target="_blank" rel="noopener nofollow">H2 SONIC 训练/成本下降说明</a>)</p>
+<p><strong>机器人与视频世界模型（世界模型零样本泛化、LLM 驱动机器人编码接口）</strong> ：研究团队发布的视频世界模型能在 15 小时单臂机器人视频训练下实现强烈的零样本泛化（例如迁移到新身体/不同形态），并产生动作生成与指令解释能力；工业化方向出现把 LLM（如 Claude）作为机器人编程接口的实践，多个实测案例在真实或仿真环境中将机器人任务成功率提升到数十％乃至 97.3%，表明语言模型与低层控制器结合带来的性能跃迁。(<a href="https://news.miracleplus.com/share_link/145273" target="_blank" rel="noopener nofollow">视频世界模型研究报道</a>、<a href="https://twitter.com/garrytan/status/2081864993981796810" target="_blank" rel="noopener nofollow">Waddle Labs 将 Claude 用于机器人代码（推文）</a>、<a href="https://twitter.com/tedzadouri/status/2082195617737277745" target="_blank" rel="noopener nofollow">机器人实测/仿真性能对比报道</a>)</p>
+<p><strong>NEAR（Confidential Intents GA、Meteor 浏览器钱包量子防护键与 LayerZero Stargate 集成）</strong> ：NEAR 推出 Confidential Intents 正式 GA，为开发者开放机密执行能力并通过 1‑Click Swap API 支持隐私结算；Meteor 浏览器钱包加入 ML‑DSA‑65 后量子全权限密钥支持（当前浏览器钱包首发，助记词恢复与部分 dApp 支持有说明限制）；同时 LayerZero 的 Stargate 已整合 NEAR Intents，增强生态内跨链流动性与顺畅 swap 能力。(<a href="https://twitter.com/NEARProtocol/status/2082128241981059141" target="_blank" rel="noopener nofollow">Confidential Intents 上线 — 官方推文</a>、<a href="https://twitter.com/NEARProtocol/status/2082169980452225077" target="_blank" rel="noopener nofollow">Meteor 钱包 ML‑DSA‑65 说明 — 官方推文</a>、<a href="https://twitter.com/NEARProtocol/status/2082089775960404036" target="_blank" rel="noopener nofollow">Stargate 与 NEAR Intents 集成 — 官方推文</a>)</p>
+<p>---</p>
+<h4>HackerNews</h4>
+<p><strong><a href="https://news.miracleplus.com/share_link/145350" target="_blank" rel="noopener nofollow">The Rise of Intelligence Ownership</a></strong> ：讨论企业如何用开源/微调模型在成本和效果上取代前沿闭源大模型的实践与经济学。</p>
+<p>- <strong>成本与效果对比</strong> ：一项目录审查工作中，经微调的9B开源模型以约$0.50/1000条目成本超过所有测试的前沿配置，比最便宜的前沿方案便宜约40倍，较最贵方案便宜约340倍。 - <strong>用途与模型匹配</strong> ：多数商业用例并不需要超大通用模型，面向特定任务的微调与轻量模型在成本效率和工程可控性上更具优势。</p>
+<p><strong><a href="https://news.miracleplus.com/share_link/145404" target="_blank" rel="noopener nofollow">GitHub - schildep/verified-3d-mesh-intersection: Formally verified 3D mesh intersection - trust 93 lines of spec, not 1000+ lines of AI-written code</a></strong> ：在 Lean 4 上实现并形式化验证的三维网格布尔相交核，目标是最小化人工审查可信面。</p>
+<p>- <strong>形式化规格与可审计性</strong> ：将问题抽象为可审查的93行规范，AI 自动生成 &gt;60k 行 Lean 证明，Lean 校验器在编译时证明实现满足规范，从而把人工信任缩减到规范和证明检查器本身。 - <strong>精度与性能权衡</strong> ：实现使用精确有理数消除数值误差以保证正确性，但因此性能远低于工程级实现（示例：两只70k三角网格的相交需约24秒），可通过在浮点层做快速路径并在必要时回退到高精度来改进。</p>
+<p><strong><a href="https://news.miracleplus.com/share_link/145416" target="_blank" rel="noopener nofollow">Inside Zig&#x27;s Incremental Compilation</a></strong> ：Zig 团队介绍其增量编译内部实现，使对复杂应用的单次改动能够在毫秒级完成重编译与链接。</p>
+<p>- <strong>微小改动、毫秒级迭代</strong> ：在真实复杂应用上演示，初次构建约为秒级，随后每次代码改动的增量重编译可在约50–70ms 完成，实现快速试验-调试循环。 - <strong>适用范围与折衷</strong> ：当前增量流程依赖自托管代码生成后端且缺少跨函数高级优化（如全局内联），因此与 LLVM 的发布/优化流水线存在内在冲突——开发时用增量编译以换取迭代速度，发布构建则仍需完整优化。</p>
+<p>---</p>
+<h4>Reddit</h4>
+<p><strong><a href="https://news.miracleplus.com/share_link/145360" target="_blank" rel="noopener nofollow">Claude Opus 5 is an asshole</a></strong> ：围绕 Opus 5 与早期 Claude/其它模型在语气、主动性和可靠性上的差异展开激烈技术讨论。</p>
+<p>- 更激进的对抗性调优：Opus 5 被调教得更倾向于反驳与主动挑战用户输入，表现为更“倔强”“尖刻”的回复风格。 - Bench‑maxxing 与自治权权衡：为追求基准与自主推断，Opus 5 更容易在缺乏证据时自行推进决策，导致更高频的自信性错误和非请求性操作。 - 实用应对策略：将 Fable 用作规划/指挥层、把 Opus 设为低努力/目标导向模式，或改用“告诉模型目标而非步骤”的提示，可以显著降低误导性和绕道行为。</p>
+<p>---</p>
+<p><strong><a href="https://news.miracleplus.com/share_link/145332" target="_blank" rel="noopener nofollow">What am I missing? Self-Hosting Kimi K3 has 34× First-Year ROI at 90%</a></strong> ：OP 用极简成本模型论证自托管 K3 可在一年内实现高额 ROI，引发对实务成本与可行性的质疑。</p>
+<p>- 全面成本被低估：除了机柜与 GPU 外，还必须计入冷却、电力接入与冗余、存储/网络、运维人员、备件与合规/许可等显著 CAPEX/OPEX。 - 利用率与并发限制：实际可用推理容量通常需预留冗量（峰值/故障/扩容），高上下文与 KV 缓存会显著降低并发用户数，90% 长期利用率不现实。 - 市场与更新风险：吸引稳定客户、支付带宽/托管费、应对模型迅速迭代与精简化（被蒸馏或降本）都是抹平理论 ROI 的关键商业风险。</p>
+<p>---</p>
+<p><strong><a href="https://news.miracleplus.com/share_link/145355" target="_blank" rel="noopener nofollow">Got Kimi K3 running on my MacBook. It&#x27;s painfully slow, but it works.</a></strong> ：作者通过不完整下载、按需从 Hugging Face 拉取专家（experts）实现对 1.56TB K3 的“流式运行”，但速度极慢。</p>
+<p>- 网络流式专家的可行性与代价：按需从远端拉取专家能在资源受限设备上启动超大模型，但网络延迟与频繁阻塞导致交互性极差（示例约 1 分钟/令牌）。 - 缓存与预取是关键优化点：把高频专家本地化缓存或实现智能预取可以大幅提升吞吐，但需要复杂的统计/替换策略与磁盘/内存管理。 - 依赖外部基础设施与限额风险：把权重作为远端存储层意味着对 Hugging Face/带宽限额与稳定性的高度依赖，且在规模化场景可能触发速率限制或成本暴涨。</p>
+<p>---</p>
+<h4>国内信息源</h4>
+<p>- <strong><a href="https://news.miracleplus.com/share_link/145334" target="_blank" rel="noopener nofollow">LLaDA2.2 动态扩散模型</a></strong> ：扩散语言模型实现动态编辑能力，引入Levenshtein编辑原语（保留/替换/删除/插入）与基于环境反馈的强化学习策略（L-EBPO），并通过128K原生上下文和块路由机制支持长交互场景，能够并行生成、边生成边自我增删纠错，提升吞吐与推理成本效率，挑战自回归在智能体任务上的垄断。 - <strong><a href="https://news.miracleplus.com/share_link/145333" target="_blank" rel="noopener nofollow">Being-H0.8 引入触觉感知</a></strong> ：BeingBeyond的Being-H0.8将触觉作为核心模态，提出隐式触觉世界-动作架构，并基于50万小时以上的人类视频数据训练，显著增强机器人在精细操作中的预测与执行能力，为具身智能的跨模态感知与决策提供实用路径。 - <strong><a href="https://news.miracleplus.com/share_link/145368" target="_blank" rel="noopener nofollow">NVIDIA Cosmos：物理AI基础模型</a></strong> ：提出面向Physical AI的基础模型思路，强调数据规模、模态对齐与表征学习在代理理解物理世界中的作用，讨论生成与理解、行动重要性及代理成长需求，为视频生成与具身智能的模型与数据策略提供行业级参考。 - <strong><a href="https://news.miracleplus.com/share_link/145365" target="_blank" rel="noopener nofollow">晓布Next：边缘侧多智能体</a></strong> ：OPPO推出端侧多Agent系统，方案包含全域记忆、全时意图感知与多Agent协作，强调本地数据处理与用户授权下的主动服务能力，旨在从被动助手向主动、隐私友好的端侧AI转型，适配手机端场景化应用。 - <strong><a href="https://news.miracleplus.com/share_link/145367" target="_blank" rel="noopener nofollow">Kimi K3 开源权重论战</a></strong> ：Kimi K3开源权重引发开放vs封闭讨论：一方面推动技术普惠与创新，另一方面受限于高性能硬件门槛与安全风险。行业建议在开放同时配套治理与安全测试、硬件/API成本评估与国际协作标准。 - <strong><a href="https://news.miracleplus.com/share_link/145315" target="_blank" rel="noopener nofollow">UniWorld-View 视图合成突破</a></strong> ：提出遮挡感知点云渲染与双流条件注入的视图合成方法，解决大基线视角转换中的几何与纹理一致性问题，技术可被用于视觉感知增强、机器人环境建模与具身智能的空间理解能力提升。 - <strong><a href="https://news.miracleplus.com/share_link/145363" target="_blank" rel="noopener nofollow">GPT 检索 OpenReview 辅助 Rebuttal</a></strong> ：实践型技巧：使用GPT在OpenReview上检索历史作者回应以快速构建逻辑清晰的Rebuttal方案，该方法能加速找到相似问题的应对策略并提升反驳质量，是学术投稿与同行评审应对的有效工具。</p>
+<p>---</p>
+<h4>GitHub &amp; HuggingFace</h4>
+<p>- <strong><a href="https://news.miracleplus.com/share_link/145336" target="_blank" rel="noopener nofollow">Kimi K3</a></strong> ：基于Kimi D 框架的多模态代理模型，号称具备约2.8万亿参数，面向复杂任务的代理式推理与多模态理解能力。 - <strong><a href="https://news.miracleplus.com/share_link/145383" target="_blank" rel="noopener nofollow">ADHD编码代理技能</a></strong> ：基于“思维树+剪枝”的并行分歧生成与评分机制（构建在Claude &amp; Codex Agent SDK上），用于提高代理探索与决策效率。 - <strong><a href="https://news.miracleplus.com/share_link/145418" target="_blank" rel="noopener nofollow">Genesis 项目</a></strong> ：围绕降低模型训练噪声门的技术路径展开，以推动开源 LLM（如 Genesis Hermes 相关发布）的演进与社区资助。 - <strong><a href="https://news.miracleplus.com/share_link/145318" target="_blank" rel="noopener nofollow">Inflect-Nano-v2</a></strong> ：不到4M参数的英语文本到波形TTS系统，支持确定性种子、长文本处理，并能在CPU与CUDA上高效推理。</p></article>
+    <div class="dp-actions">
+      <a class="dp-btn pri" href="https://news.miracleplus.com/share_link/145444" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      
+      <button type="button" class="dp-btn sec" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
+      <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
+    </div>
+    <p class="dp-note">本页由句子互动动态管线自动生成，聚合内容版权归各来源所有；如来源方希望调整或移除收录，请通过官网联系我们。</p>
+  </div>
+</main>
+<div id="site-footer"></div>
+<script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "齐思头条2026/07/29「Kimi K3 开源 2.8T MoE（原生视觉、百万 token 超长上下文）、Grok 4.6 约1.5T、4.7 约2.1T 规划发布」"};</script>
+<script src="../../assets/site.js"></script>
+</body>
+</html>

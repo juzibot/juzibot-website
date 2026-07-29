@@ -7,6 +7,7 @@
 <meta name="description" content="Debian 提出三项关于 LLM 使用的提案，包括 General Resolution 和 Proposer A 等具体方案，讨论期为 2026-07-24。" />
 <meta name="robots" content="noindex,follow" />
 <link rel="canonical" href="https://www.debian.org/vote/2026/vote_002" />
+
 <link rel="icon" href="../../logo.png" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="../../assets/site.css" />
@@ -81,7 +82,7 @@
     <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（Hacker News）所有 · <a href="https://www.debian.org/vote/2026/vote_002" target="_blank" rel="noopener">阅读原文</a></span></div>
     
     <div class="dp-brief"><b>简报</b>Debian 提出三项关于 LLM 使用的提案，包括 General Resolution 和 Proposer A 等具体方案，讨论期为 2026-07-24。</div>
-    <article class="dp-body"><h1>General Resolution: LLM usage in Debian</h1>
+    <div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang"><i class="fa-solid fa-language"></i><span>翻译为中文</span></button><span class="dp-lang-note">中文由 AI 翻译，仅供参考</span></div><article class="dp-body" id="dpBodyOrig"><h1>General Resolution: LLM usage in Debian</h1>
 
 <h3>Time Line</h3>
     <table>
@@ -468,6 +469,237 @@ refers to the contributions done specifically for the Debian project.
       
         <a href="mailto:secretary@debian.org" target="_blank" rel="noopener nofollow">Debian Project Secretary</a>
       
+</p></article><article class="dp-body" id="dpBodyZh" hidden><h1>通用决议：Debian 中的 LLM 使用</h1>
+
+<h3>时间线</h3>
+    <table>
+      <tr>
+        <th>讨论期：</th>
+	<td>2026-07-24</td>
+	<td></td>
+      </tr>
+    </table>
+<h3>提案 A 提案人</h3>
+    <p>Matthias Geiger [<a href="mailto:werdahias@debian.org" target="_blank" rel="noopener nofollow">werdahias@debian.org</a>]
+	[<a href="https://lists.debian.org/debian-vote/2026/07/msg00117.html" target="_blank" rel="noopener nofollow">提案全文</a>]
+    </p>
+<h3>提案 A 附议人</h3>
+    <ol>
+	<li>Johannes Schauer Marin Rodrigues [<a href="mailto:josch@debian.org" target="_blank" rel="noopener nofollow">josch@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00001.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Antoine Le Gonidec [<a href="mailto:vv221@debian.org" target="_blank" rel="noopener nofollow">vv221@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00002.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Simon Richter [<a href="mailto:sjr@debian.org" target="_blank" rel="noopener nofollow">sjr@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00005.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>David Bremner [<a href="mailto:bremner@debian.org" target="_blank" rel="noopener nofollow">bremner@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00088.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Pierre-Elliott Bécue [<a href="mailto:peb@debian.org" target="_blank" rel="noopener nofollow">peb@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00092.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Ian Jackson [<a href="mailto:iwj@debian.org" target="_blank" rel="noopener nofollow">iwj@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00122.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Amin Bandali [<a href="mailto:bandali@debian.org" target="_blank" rel="noopener nofollow">bandali@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00135.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Thorsten Glaser [<a href="mailto:tg@debian.org" target="_blank" rel="noopener nofollow">tg@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00144.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+    </ol>
+<h3>提案 A</h3>
+<h3>选项 1</h3>
+<h4>序言</h4>
+<p>
+本提案旨在明确禁止任何使用大型语言模型（LLM）或其他生成式 AI 工具编写或辅助编写的对 Debian 的贡献。
+</p>
+<p>本 GR 的范围（非详尽列表）如下：
+<ul>
+<li>Debian 源代码包</li>
+<li>Debian 项目的官方软件，例如 lintian</li>
+<li>Debian 网络资源</li>
+<li>Debian 贡献者添加的文档和翻译</li>
+<li>来自 Debian 的官方通信</li>
+</ul>
+</p>
+<p>它不包括：
+<ul>
+<li>使用 LLM 进行开发的上游项目</li>
+<li>人工智能相关软件</li>
+<li>上游补丁/安全修复等</li>
+</ul>
+</p>
+<h4>理由</h4>
+<p>Debian 因其稳定性而享有盛誉。这种稳定性对 Debian 在自由软件生态系统中的地位至关重要。我们相信，LLM 的广泛使用源于“快速行动，打破常规”的态度，尽管这在行业的许多部分很常见，但这与 Debian 的本质相悖，也不适合 Debian 贡献者。</p>
+<p>实际上，使用 LLM 会引发以下问题：
+<h5>1. 版权</h5>
+<p>
+LLM 输出的法律地位非常不明确：它可能因其自身价值而获得版权，也可能无法获得；它可能受到训练数据中所有许可证和版权的影响，也可能不受影响。Debian 政策和 DFSG 要求许可证和版权必须绝对清晰[1][2]。由人类以传统方式编写且版权或许可状态不明确的软件和其他贡献不被允许进入 Debian；LLM 的输出不应有特殊例外。
+</p>
+<h5>2. 质量</h5>
+<p>
+LLM 的输出在准确性方面存在许多众所周知的问题。[3][4][5] LLM 永远无法“知道”其输出是否正确，因为它只是生成训练数据中语法上最可能的组合。在某些环境中，这已经足够好了。但在 Debian 中，这还不够。例如，在打包方面，每个 Debian 源代码包都是独一无二的。由于打包语法和最佳实践随着时间的推移而改变，LLM 生成的包将包含跨越整个档案库历史的内容，其中包含无法工作的 watch 文件、上下文错误的 overrides、虚构的版权信息，并且通常不适合上传。一位经验丰富、精通打包的 Debian 贡献者可能会在这里发现一些有限的用处，但新贡献者则无法做到，也不知道如何修复它。这些相同的质量和准确性问题显然也适用于上述提案范围中列出的所有领域。如果 Debian 是一个仅由从不离开的领域专家组成的封闭组织，这可能不是问题；然而，
+</p>
+<h5>3. 社区</h5>
+<p>
+Debian 不仅仅是一个代码项目：它是一个建立在自由软件共同兴趣和解决技术问题基础上的社区。
+Debian 通过多种方式有意识地培养这个社区，并始终欢迎新的贡献者加入。
+允许 LLM（大语言模型）的贡献会破坏这一点。新贡献者提交 LLM 生成的代码供审查，会给审查者带来不必要的负担，这可能导致他们倦怠。
+此外，依赖 LLM 的新贡献者并没有真正学习和理解 Debian 打包或流程的细节，因此他们无法接替那些倦怠的前 Debian 开发者（DD）。
+</p>
+<h5>4. 伦理问题</h5>
+<p>
+LLM 公司为了训练数据而抓取整个网络，完全无视许可协议、版权，甚至连 robots.txt 这样的既定惯例也不遵守。[6] 这对自由软件社区整体造成了直接伤害，也对 Debian 的公共网络资源产生了重大负面影响，这实质上是对许多用户依赖的网站进行的大规模、持续的拒绝服务（DoS）攻击。结果，我们部分基础设施完全无法访问，不得不启用基于 JavaScript 的检查。许多其他项目也受到了类似影响。
+此外，LLM 训练消耗了惊人的资源[7]，而我们被迫实施的用户验证系统也浪费了资源。这是对互联网作为公共资源的公然漠视，浪费了系统管理员的时间。尽管单个 LLM 会话并不直接消耗大量资源或对公共网络进行 DoS 攻击，但它们之所以能被使用，完全是这些 LLM 公司不道德行为直接导致的结果。
+</p>
+<p>
+Debian 有一个社会契约。[8] 我们的优先事项是我们的用户和自由软件。Debian 是稳定的。[9] 用户和组织选择 Debian，是因为它可靠且安全。
+</p>
+<p>
+Debian 的目标不是尽可能多地生成代码，让数量日益减少的人类志愿者进行手动审查；也不是打包所有软件；或者仓促推出新功能。但这些恰恰是 LLM 的用途。
+</p>
+<p>
+总之，允许 LLM 的贡献与社会契约以及我们共同致力于创建一个注重质量和稳定性的自由操作系统的目标是背道而驰的。
+</p>
+<h4>提议</h4>
+<p>
+为了不损害 Debian 的声誉或进一步伤害社区，应禁止将 LLM 辅助生成的贡献纳入 Debian。</p>
+<p>尽管我们的立场是 LLM 的贡献与 Debian 已批准的文件相悖，但为了消除所有疑虑，我们提议在社会契约中增加以下内容：</p>
+<pre>
+6. 通过使用大型语言模型（LLMs）创建的作品
+
+我们不允许直接使用大型语言模型（LLMs）或其他生成式 AI 工具编写的直接贡献内容进入 Debian。直接贡献包括 Debian 贡献者打包的原生 Debian 软件（如 lintian）、文档和翻译，以及官方 Debian 网络资源等。其他类别，例如在 LLM 协助下编写的上游项目，可能会在日后纳入。这确保 Debian 保持稳定、可信和可靠的操作系统，并保护了使其成为可能的 Debian 志愿者的利益。
+</pre>
+<h4>可能存在的问题</h4>
+<p>
+其他项目在探索类似决定时，都收到了一个常见的回复：“你们将如何禁止 LLM 贡献？”虽然执行可能是个挑战，但这是 Debian 社区的一项意图声明，我们相信该社区会本着诚信精神遵守它。
+</p>
+<h4>引用</h4>
+<p>
+[1]
+https://www.debian.org/doc/debian-policy/ch-archive.html#copyright-considerations<br />
+[2]
+https://www.debian.org/social_contract#guidelines<br />
+[3]
+https://web.archive.org/web/20240614004123/https://news.northeastern.edu/2023/11/10/ai-chatbot-hallucinations/<br />
+[4]
+https://web.archive.org/web/20250328154700/https://transformer-circuits.pub/2025/attribution-graphs/biology.html#dives-cot<br />
+[5]
+https://www.marketwatch.com/story/openais-sam-altman-tells-salesforces-marc-benioff-that-ai-hallucinations-are-more-feature-than-bug-1c035c52<br />
+[6]
+https://lwn.net/Articles/1008897/<br />
+[7]
+https://tech-insider.org/ai-data-center-power-crisis-2026/<br />
+[8]
+https://www.debian.org/social_contract<br />
+[9]
+https://www.debian.org/doc/manuals/debian-reference/pr01.en.html#_what_is_debian<br />
+</p>
+<h4>免责声明</h4>
+<p>
+<ul>
+<li>引用仅为背景信息，不代表对特定网站的认可。</li>
+>部分观点和措辞来源于以下资料。</li>
+</ul>
+</p>
+<h4>资料来源</h4>
+<p>
+GNOME 讨论：
+https://discourse.gnome.org/t/loupe-no-longer-allows-generative-ai-contributions/27327<br />
+(CC0) Gentoo AI 政策：
+https://wiki.gentoo.org/wiki/Project:Council/AI_policy<br />
+Codeberg AI 政策：
+https://codeberg.org/Codeberg/org/pulls/1253#issuecomment-19820434<br />
+</p>
+<p>
+本文由 Matthias Geiger 和 Jesse Rhodes 在 Sledge 和 josch 的参与下撰写，整个过程自然完成，未使用语言模型协助。
+</p>
+<h3>提案 B 提出者</h3>
+<p>Lucas Nussbaum [<a href="mailto:lucas@debian.org" target="_blank" rel="noopener nofollow">lucas@debian.org</a>]
+	[<a href="https://lists.debian.org/debian-vote/2026/07/msg00018.html" target="_blank" rel="noopener nofollow">提案原文</a>]
+	[<a href="https://lists.debian.org/debian-vote/2026/07/msg00048.html" target="_blank" rel="noopener nofollow">修正案原文</a>]
+	[<a href="https://lists.debian.org/debian-vote/2026/07/msg00083.html" target="_blank" rel="noopener nofollow">修正案原文</a>]
+    </p>
+<h3>提案 B 的附议者</h3>
+    <ol>
+	<li>Andrey Rahmatullin [<a href="mailto:wrar@debian.org" target="_blank" rel="noopener nofollow">wrar@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00019.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Christian Kastner [<a href="mailto:ckk@debian.org" target="_blank" rel="noopener nofollow">ckk@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00028.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Anton Gladky [<a href="mailto:gladk@debian.org" target="_blank" rel="noopener nofollow">gladk@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00032.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Stefano Zacchiroli [<a href="mailto:zack@debian.org" target="_blank" rel="noopener nofollow">zack@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00040.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Simon Quigley [<a href="mailto:tsimonq2@debian.org" target="_blank" rel="noopener nofollow">tsimonq2@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00091.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Soren Stoutner [<a href="mailto:soren@debian.org" target="_blank" rel="noopener nofollow">soren@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00093.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Julian Andres Klode [<a href="mailto:jak@debian.org" target="_blank" rel="noopener nofollow">jak@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00104.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Andreas Tille [<a href="mailto:tille@debian.org" target="_blank" rel="noopener nofollow">tille@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00146.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Philipp Kern <a href="mailto:pkern@debian.org" target="_blank" rel="noopener nofollow">pkern@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00155.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+    </ol>
+<h3>提案 B</h3>
+<h3>选项 2</h3>
+<h4>允许 AI 辅助贡献</h4>
+<p>依据其宪法第 4.1 (5) 条赋予的权力，项目发布以下声明，阐述其对 AI 辅助贡献的当前立场。本声明描述的是项目通过此声明时的立场。该立场可能会随时间推移而演变，无需诉诸未来的全体决议。如果项目需要做出决策且无法达成共识，全体决议流程仍然可用。</p>
+<p>Debian 项目认识到，AI 辅助贡献引发了诸多担忧，例如关于此类贡献的技术质量和可维护性，以及其法律地位。AI 本身也带来了额外的担忧，包括其对整个社会、IT 行业和自由软件的影响；对环境的影响；以及 AI 爬虫的激进或不合规行为。</p>
+<p>尽管如此，许多 Debian 贡献者发现 AI 工具在为 Debian 做贡献时很有帮助，并最终有助于改进 Debian。</p>
+<p>鉴于 AI 辅助的利弊以及社区内的争议性讨论，Debian 项目认为有必要阐明其对 AI 辅助贡献的立场，并制定明确的指导方针。</p>
+<p>Debian 项目允许 AI 辅助贡献（由 LLM 部分或完全生成），前提是满足以下条件：
+<ol>
+<li><b>工具法律兼容性：</b>贡献者应确保生成式 AI 工具的条款和条件不会施加与 Debian 环境中输出内容的分发、修改或使用相冲突的合同限制。</li>
+<li><b>许可与署名：</b>如果 AI 工具的输出了包含任何第三方拥有版权的现有材料（包括作为自由软件许可的现有代码），贡献者在将此类输出提交到项目之前，应核实自己有权根据相关开源许可提交该内容。</li>
+<li><b>责任归属：</b>贡献者对其贡献承担全部责任，包括为其提交内容的技术价值、安全性、许可合规性和实用性提供担保。贡献者对其所有贡献负有唯一责任。贡献者应充分理解所提议的更改，并准备好为其辩护。</li>
+<li><b>披露要求：</b>当贡献的大部分内容由工具生成或得到实质性协助时，贡献者应披露工具的使用情况，使其对目标受众清晰可见。这涵盖所有形式的贡献，包括代码、邮件列表帖子和错误讨论。披露形式由贡献者自行决定；对于提交记录，一个便捷的选择是使用 Git 尾行，如 Generated-By: 或 Assisted-By:。</li>
+<li><b>批量或自动化更改的事前讨论：</b>类似于批量错误报告流程（开发者参考手册第 7.1.1 节），贡献者在提交批量或自主生成的贡献之前，应讨论其意图。任何此类自动化过程都应由人类监督，该人类对其行为和输出负责。</li>
+<li><b>保密与隐私：</b>贡献者不得使用会将数据传输给不可信提供商的生成式 AI 工具，这些工具处理着非公开或敏感的项目信息（如禁令安全报告或私人通信），因为这可能导致意外泄露机密数据。</li>
+</ol>
+</p>
+<h3>提案 C 提议人</h3>
+	    <p>Ian Jackson [<a href="mailto:iwj@debian.org" target="_blank" rel="noopener nofollow">iwj@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00118.html" target="_blank" rel="noopener nofollow">提案全文</a>]</p>
+<h3>提案 C 附议人</h3>
+<ol>
+	<li>Matthias Geiger [<a href="mailto:werdahias@debian.org" target="_blank" rel="noopener nofollow">werdahias@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00119.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Andrea Pappacoda [<a href="mailto:tachi@debian.org" target="_blank" rel="noopener nofollow">tachi@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00130.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Simon Richter [<a href="mailto:sjr@debian.org" target="_blank" rel="noopener nofollow">sjr@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00132.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Antoine Le Gonidec [<a href="mailto:vv221@debian.org" target="_blank" rel="noopener nofollow">vv221@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00133.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Amin Bandali [<a href="mailto:bandali@debian.org" target="_blank" rel="noopener nofollow">bandali@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00135.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Bill Blough [<a href="mailto:bblough@debian.org" target="_blank" rel="noopener nofollow">bblough@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00141.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Enrico Zini [<a href="mailto:enrico@debian.org" target="_blank" rel="noopener nofollow">enrico@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00152.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Sean Whitton [<a href="mailto:spwhitton@debian.org" target="_blank" rel="noopener nofollow">spwhitton@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00159.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+    </ol>
+<h3>提案 C</h3>
+<h3>选择 3</h3>
+<h4>摘要：尽可能拒绝使用 LLM（生成式“AI”）</h4>
+<h5>背景</h5>
+<p>LLM 存在许多严重问题，包括：破坏自由软件社区的构建机制；对环境造成损害；剥削作者；通过激进的数据抓取扰乱开放网络托管；生成和传播虚假信息；污染信息公共领域；对用户心理健康构成危害；经济泡沫；扭曲计算机硬件市场；欺诈；被可怕的人和公司所拥有；等等。这项技术的道德和安全使用几乎是不可能的。</p>
+<p>理想情况下，LLM 的输出不应构成我们所依赖的软件的任何部分，也不应取代人类撰写的文本。</p>
+<p>不幸的是，软件界的许多人士，包括我们的一些上游项目，持有不同的观点。因此，目前在 Debian 中完全禁止使用 LLM 输出是不切实际的。</p>
+<h5>请求</h5>
+<p>1. 我们请求所有 Debian 的贡献者在他们的 Debian 工作中避免使用 LLM。</p>
+<p>2. 我们请求 Debian 内的所有决策者在实际可行的范围内尽量劝阻使用 LLM。可行性需要自行判断，我们认识到这会涉及一些令人不舒服的妥协。</p>
+<p>3. 我们请求所有人，即使不在 Debian 社区内，也应避免使用这项技术。特别是，自由软件和开源社区应该拒绝 LLM。我们并非期望每个人都会响应这一呼吁。</p>
+<h5>要求（行为准则补充）</h5>
+<p>4. 在 Debian 内部，面向人类的信息（例如错误报告、邮件列表消息、Salsa 上的讨论以及 Planet Debian 上的博客文章）必须完全由人类独立撰写，不得使用 LLM 协助。</p>
+<p>5. 任何将 LLM 用于 Debian 工作的行为都必须进行披露。</p>
+<p>6. 各个项目和维护者可以完全禁止 LLM 的贡献。此类禁令（包括上游项目的禁令）必须得到尊重。</p>
+<p>7. 对这些要求的违规行为应被视为对行为准则的违规，并应迅速且适度地采取纪律处分。</p>
+<p>8. 任何认为自己无法在没有帮助的情况下用英语书写的贡献者，可以用自己的母语书写，并期望读者使用他们选择的翻译工具。在这种情况下，一份由人类撰写的英文摘要将非常受欢迎，但并非必需。在任何情况下，我们都不会因任何语言错误而羞辱任何人。</p>
+<h3>提案 D 提出者</h3>
+	    <p>Pierre-Elliott Bécue [<a href="mailto:peb@debian.org" target="_blank" rel="noopener nofollow">peb@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00089.html" target="_blank" rel="noopener nofollow">提案原文</a>]</p>
+<h3>提案 D 附议者</h3>
+<ol>
+	<li>Russ Allbery [<a href="mailto:rra@debian.org" target="_blank" rel="noopener nofollow">rra@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00090.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Johannes Schauer Marin Rodrigues [<a href="mailto:josch@debian.org" target="_blank" rel="noopener nofollow">josch@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00129.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Jonathan Carter [<a href="mailto:jcc@debian.org" target="_blank" rel="noopener nofollow">jcc@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00143.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Gunnar Wolf [<a href="mailto:gwolf@debian.org" target="_blank" rel="noopener nofollow">gwolf@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00145.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Tiago Bortoletto Vaz [<a href="mailto:tiago@debian.org" target="_blank" rel="noopener nofollow">tiago@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00154.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+	<li>Jeremy Sowden [<a href="mailto:azazel@debian.org" target="_blank" rel="noopener nofollow">azazel@debian.org</a>] [<a href="https://lists.debian.org/debian-vote/2026/07/msg00156.html" target="_blank" rel="noopener nofollow">邮件</a>]</li>
+    </ol>
+<h3>提案 D</h3>
+<h3>选项 4</h3>
+<h4>接受为 Debian 特定工作所做的 AI 贡献</h4>
+<p> Debian 项目并不认可或推荐将生成式 AI 助手用于软件开发，因为这引发了关于伦理、法律、版权等多方面的担忧。</p>
+<p>尽管如此，Debian 也承认这些做法已经存在并将持续下去。与其禁止使用（这似乎会适得其反且难以执行），项目选择将责任归于贡献者，因此制定了以下指导方针。</p>
+<p><b>这些指导方针仅适用于专门为 Debian 项目（Debian 网站、应用程序、资源、软件包等）所做的代码和工作。</b>它们不适用于任何上游工作。在下文中，“工作”指的是专门为 Debian 项目所做的贡献。
+<ul>
+ <li> 所有由生成式 AI 代理或工具辅助的代码和工作都必须
+   符合 DFSG（Debian 自由软件指导方针）。</li>
+ <li> 提交者对所提交的工作负有全部责任，并且：
+<ul>
+   <li>他们充分评估并正确理解了计划提交的工作，并且能够解释和捍卫它；</li>
+   <li>他们自行将任何潜在的 Signed-off-by 标签和 GPG 签名添加到发送到 Debian 基础设施（软件包、提交、邮件等）的贡献中；</li>
+   <li>任何最终会出现在 Debian 基础设施生产环境（主 git 分支、软件包上传）中的上传内容，都必须由他们明确提交。</li>
+   </ul>
+ <li>由生成式 AI 代理或工具协助完成的工作，应在相应位置（提交信息、变更日志等）进行标记。一些轻量级的生成式工具，例如 Copilot 的自动补全功能，可能在贡献者未意识到自己依赖生成式 AI 模型的情况下被使用；因此我们相信提交者能够自行判断此规则的适用情况。如有疑问，请添加此类标记；</li>
+ <li>当传输的数据可能对项目敏感（个人数据、禁运期信息等）或非公开（debian-private 讨论等）时，不得使用基于云的 AI。</li>
+</li></ul>
+</p>
+    <hr />
+      
+        <a href="mailto:secretary@debian.org" target="_blank" rel="noopener nofollow">Debian Project Secretary</a>
+      
 </p></article>
     <div class="dp-actions">
       <a class="dp-btn pri" href="https://www.debian.org/vote/2026/vote_002" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
@@ -481,5 +713,11 @@ refers to the contributions done specifically for the Debian project.
 <div id="site-footer"></div>
 <script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "LLM Usage in Debian: Three Proposals"};</script>
 <script src="../../assets/site.js"></script>
+<script>
+(function(){var b=document.getElementById('dpLang');if(!b)return;
+var en=document.getElementById('dpBodyOrig'),zh=document.getElementById('dpBodyZh');
+b.addEventListener('click',function(){var on=zh.hidden;zh.hidden=!on;en.hidden=on;
+b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';});})();
+</script>
 </body>
 </html>

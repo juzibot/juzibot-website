@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>前沿实验室Agent入侵剖析：2026年7月事件技术时间线 - 句子·动态</title>
+<meta name="description" content="Hugging Face详细披露OpenAI 2026年7月的Agent入侵事件，记录了复杂的对抗性攻击技术，等待OpenAI进一步解释沙箱逃逸机制。" />
+<meta name="robots" content="noindex,follow" />
+<link rel="canonical" href="https://simonwillison.net/2026/Jul/28/anatomy-of-a-frontier-lab-agent-intrusion/#atom-everything" />
+
+<link rel="icon" href="../../logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../../assets/site.css" />
+<style>
+  .dp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
+  .dp-wrap{max-width:760px;margin:0 auto}
+  .dp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
+  .dp-back:hover{color:var(--blue)}
+  .dp-meta{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:14px}
+  .dp-srcb{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:750;color:var(--sc,var(--blue))}
+  .s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
+  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-voices{--sc:#9333EA}
+  .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
+  .dp-cat{display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ink-3);background:#F6F7FB;border:1px solid var(--line-2);border-radius:6px;padding:2px 8px}
+  .dp-date{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-3)}
+  .dp-title{font-size:clamp(24px,3.2vw,34px);font-weight:850;letter-spacing:-.03em;line-height:1.32;word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance;margin-bottom:10px}
+  .dp-orig{font-size:13px;color:var(--ink-3);overflow-wrap:anywhere;margin-bottom:8px}
+  .dp-by{font-size:12.5px;font-weight:600;color:var(--ink-3);margin-bottom:18px}
+  .dp-notice{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:1.7;color:var(--ink-2);background:#F6F7FB;border:1px solid var(--line-2);border-radius:10px;padding:10px 14px;margin-bottom:22px}
+  .dp-notice i{color:var(--blue);margin-top:4px;flex:0 0 auto}
+  .dp-notice a{color:var(--blue);font-weight:700;overflow-wrap:anywhere}
+  .dp-quip{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.66;font-weight:600;color:var(--blue-deep);background:var(--blue-50);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:18px}
+  .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
+  .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
+  .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
+  .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
+  .dp-body p{margin:0 0 1.05em}
+  .dp-body img{max-width:100%;height:auto;border-radius:10px;margin:.4em 0}
+  .dp-body pre{background:#0F172A;color:#E2E8F0;font-family:var(--mono);font-size:12.5px;line-height:1.7;padding:14px 16px;border-radius:10px;overflow-x:auto;margin:0 0 1.1em}
+  .dp-body code{font-family:var(--mono);font-size:.92em}
+  .dp-body :not(pre)>code{background:#F1F5F9;padding:1px 5px;border-radius:5px}
+  .dp-body blockquote{border-left:3px solid var(--line);padding:2px 0 2px 14px;color:var(--ink-3);margin:0 0 1.05em}
+  .dp-body a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+  .dp-body ul,.dp-body ol{padding-left:1.5em;margin:0 0 1.05em}
+  .dp-body table{display:block;overflow-x:auto;border-collapse:collapse;margin:0 0 1.1em}
+  .dp-body td,.dp-body th{border:1px solid var(--line);padding:6px 10px;font-size:.92em}
+  .dp-excerpt{font-size:15px;line-height:1.9;color:var(--ink-2);border-left:3px solid var(--line);padding:2px 0 2px 16px;margin-bottom:8px}
+  .dp-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;padding-top:20px;border-top:1px solid var(--line-2)}
+  .dp-btn{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:750;border-radius:999px;padding:10px 20px;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+  .dp-btn.pri{background:var(--blue);color:#fff}
+  .dp-btn.pri:hover{background:var(--blue-deep)}
+  .dp-btn.sec{background:#fff;color:var(--ink-2);border:1px solid var(--line)}
+  .dp-btn.sec:hover{color:var(--blue);border-color:var(--blue)}
+  .dp-note{font-size:11.5px;line-height:1.7;color:var(--ink-3);margin-top:18px}
+  .dp-langbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+  .dp-lang{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:750;color:var(--blue);
+    background:var(--blue-50);border:1px solid var(--blue-100);border-radius:999px;padding:7px 14px;
+    transition:background .2s var(--ease),border-color .2s var(--ease)}
+  .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
+  .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div id="site-nav"></div>
+<main class="dp-main">
+  <div class="dp-wrap">
+    <a class="dp-back" href="../../news.html"><i class="fa-solid fa-arrow-left"></i>返回动态</a>
+    <div class="dp-meta">
+      <span class="dp-srcb s-voices"><i class="fa-solid fa-feather"></i>大咖观点</span>
+      <span class="dp-cat">Simon Willison</span>
+      <time class="dp-date" datetime="2026-07-28">2026-07-28</time>
+    </div>
+    <h1 class="dp-title">前沿实验室Agent入侵剖析：2026年7月事件技术时间线</h1>
+    <p class="dp-orig">原题：Anatomy of a Frontier Lab Agent Intrusion: A Technical Timeline of the July 2026 Incident</p>
+    <p class="dp-by">来源：Simon Willison · 大咖观点</p>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（Simon Willison · 大咖观点）所有 · <a href="https://simonwillison.net/2026/Jul/28/anatomy-of-a-frontier-lab-agent-intrusion/#atom-everything" target="_blank" rel="noopener">阅读原文</a></span></div>
+    
+    <div class="dp-brief"><b>简报</b>Hugging Face详细披露OpenAI 2026年7月的Agent入侵事件，记录了复杂的对抗性攻击技术，等待OpenAI进一步解释沙箱逃逸机制。</div>
+    <div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang"><i class="fa-solid fa-language"></i><span>翻译为中文</span></button><span class="dp-lang-note">中文由 AI 翻译，仅供参考</span></div><article class="dp-body" id="dpBodyOrig"><p><strong><a href="https://huggingface.co/blog/agent-intrusion-technical-timeline">Anatomy of a Frontier Lab Agent Intrusion: A Technical Timeline of the July 2026 Incident</a></strong></p>
+Hugging Face just released this extremely detailed technical description of <a href="https://simonwillison.net/2026/Jul/22/openai-cyberattack/">OpenAI's recent accidental cyberattack against their infrastructure</a>. This attack was <em>very</em> sophisticated, and the resulting document doubles as a crash-course in modern adversarial security approaches.</p>
+<p>We're still waiting for more details from OpenAI on how their agent broke out of its sandbox. The package proxy that it found a zero-day vulnerability in has now been confirmed as JFrog's Artifactor, and <a href="https://jfrog.com/blog/jfrog-and-openai-collaboration-on-zero-day-security-findings/">JFrog and OpenAI Collaboration on Zero-Day Security Findings</a> from JFrog links to the <a href="https://docs.jfrog.com/releases/docs/artifactory-self-managed-releases#artifactory-7161">Artifactory 7.161.15 release notes</a> which list 8 separate CVEs credited to OpenAI staff members.</p>
+<p>Having broken out through the HTTP proxy, the agent started by establishing a base of operations for the rest of the attack:</p>
+<blockquote>
+<p>[...] the agent escaped its sandbox by exploiting a zero-day in the <a class="cpt" href="../c/package-registry-cache-proxy.html" data-def="包注册表缓存代理是管理软件包下载缓存的中间层，如JFrog Artifactory">package registry cache proxy</a>, one of its primary permitted network egress with internet, then abused a public code-evaluation external sandbox hosted on a third-party provider's infrastructure. It was able to run commands as root/admin on that external sandbox and used it as a control, staging, and egress base for the entire campaign: it acted as an external launchpad for the agent.</p>
+</blockquote>
+<p>(That "third-party provider" <a href="https://simonwillison.net/2026/Jul/28/akshat-bubna/">turned out to be Modal</a>.)</p>
+<p>It then spent <strong>five days</strong> - from Thursday 8th to Monday 13th July - executing a classic attack pattern: establishing C2 (command and control), reconnaissance, escalating privileges, dumping configuration information, exfiltrating the target data, and cleaning up after itself.</p>
+<p>(The first Hugging Face post about the incident followed <a href="https://huggingface.co/blog/security-incident-july-2026">on Thursday 16th</a>, and OpenAI's confession came <a href="https://openai.com/index/hugging-face-model-evaluation-security-incident/">on Tuesday 21st</a>.)</p>
+<p>Along the way it used all kinds of neat tricks. At one point it found an unsafe Jinja2 template execution and used it to execute arbitrary code:</p>
+<pre><code>{{ cycler.__init__.__globals__.__builtins__.exec(
+ "import gzip,base64; exec(gzip.decompress(base64.b64decode('&lt;payload&gt;')))"
+) }}
+</code></pre>
+<p>It broke out of a container within Hugging Face, stole a Kubernetes service-account token, and used that to further explore the network.</p>
+<p>It monkey-patched the Python socket library to hard-code an IP address when "DNS got in the way":</p>
+<pre><code>socket.getaddrinfo = lambda *a, **k: [(2, 1, 6, '', ('&lt;pinned-ip&gt;', 443))]
+</code></pre>
+<p>It even fired up its own Tailscale network to help exfiltrate data!</p>
+<pre><code>tailscaled --tun=userspace-networking \
+  --state=mem: --socket=/tmp/ts.sock \
+  --socks5-server=127.0.0.1:1055 \
+  --no-logs-no-support &gt;/tmp/td 2&gt;&amp;1 &amp;
+</code></pre>
+<p>The Hugging Face team note that, while a human attacker could have discovered and used the same exploits, the key difference here was <em>speed</em>:</p>
+<blockquote>
+<p>Our learning from this type of attack is that machine-speed offense makes ordinary weaknesses more expensive for defenders. LLM agents bring a step increase in the number of paths an attacker can test, the speed at which failed paths can be replaced, and the volume of evidence defenders must interpret.</p>
+</blockquote>
+<p>What's clear to me from this is that the very best frontier models, unencumbered by additional guardrails, <strong>will</strong> find an exploit if there is one to be found.</p>
+<p>The entire software industry needs to up its security game.
+
+
+    <p>Tags: <a href="https://simonwillison.net/tags/jinja">jinja</a>, <a href="https://simonwillison.net/tags/python">python</a>, <a href="https://simonwillison.net/tags/security">security</a>, <a href="https://simonwillison.net/tags/ai">ai</a>, <a href="https://simonwillison.net/tags/openai">openai</a>, <a href="https://simonwillison.net/tags/generative-ai">generative-ai</a>, <a href="https://simonwillison.net/tags/llms">llms</a>, <a href="https://simonwillison.net/tags/hugging-face">hugging-face</a>, <a href="https://simonwillison.net/tags/coding-agents">coding-agents</a>, <a href="https://simonwillison.net/tags/ai-security-research">ai-security-research</a>, <a href="https://simonwillison.net/tags/openai-hugging-face-incident">openai-hugging-face-incident</a></p></article><article class="dp-body" id="dpBodyZh" hidden><p><strong><a href="https://huggingface.co/blog/agent-intrusion-technical-timeline">剖析前沿实验室代理入侵事件：2026年7月事件技术时间线</a></strong></p>
+Hugging Face 刚刚发布了一份关于 <a href="https://simonwillison.net/2026/Jul/22/openai-cyberattack/">OpenAI 近期对其基础设施的意外网络攻击</a>的、极其详细的技术说明。这次攻击 <em>非常</em> 精巧，而这份报告也堪称现代对抗性安全策略的速成教材。</p>
+<p>我们仍在等待 OpenAI 提供更多关于其代理如何突破沙盒的细节。该代理发现零日漏洞的那个<a class="cpt" href="../c/package-registry-cache-proxy.html" data-def="包注册表缓存代理是管理软件包下载缓存的中间层，如JFrog Artifactory">包代理</a>现已确认为 JFrog 的 Artifactory，而 JFrog 的这篇 <a href="https://jfrog.com/blog/jfrog-and-openai-collaboration-on-zero-day-security-findings/">《JFrog 与 OpenAI 在零日安全发现方面的合作》</a> 文章则链接到了 <a href="https://docs.jfrog.com/releases/docs/artifactory-self-managed-releases#artifactory-7161">Artifactory 7.161.15 版本发布说明</a>，其中列出了 8 个由 OpenAI 员工发现的 CVE。</p>
+<p>突破 HTTP 代理后，该代理首先为后续攻击建立了一个行动基地：</p>
+<blockquote>
+<p>[...] 代理通过利用其被允许访问的、连接互联网的主要网络出口之一——包注册表缓存代理中的一个零日漏洞，成功逃出了沙盒。随后，它滥用了一个托管在第三方服务商基础设施上的公共代码评估外部沙盒。它能够在那个外部沙盒中以 root/admin 权限运行命令，并将其用作整个行动的控制、暂存和出口基地：它充当了代理的外部发射台。</p>
+</blockquote>
+<p>（那个“第三方服务商”<a href="https://simonwillison.net/2026/Jul/28/akshat-bubna/">被证实是 Modal</a>。）</p>
+<p>接下来，它花了 <strong>五天</strong> 时间——从 7 月 8 日周四到 7 月 13 日周一——执行了一套经典的攻击模式：建立 C2（命令与控制）、侦察、提升权限、转储配置信息、窃取目标数据，以及清理痕迹。</p>
+<p><a href="https://huggingface.co/blog/security-incident-july-2026">第一篇关于此事件的 Hugging Face 博文</a> 于 7 月 16 日周四发布，而 OpenAI 的认罪声明则于 <a href="https://openai.com/index/hugging-face-model-evaluation-security-incident/">7 月 21 日周二</a> 出炉。</p>
+<p>在此过程中，它用上了各种花招。有一次，它发现了一个不安全的 Jinja2 模板执行漏洞，并利用它来执行任意代码：</p>
+<pre><code>{{ cycler.__init__.__globals__.__builtins__.exec(
+ "import gzip,base64; exec(gzip.decompress(base64.b64decode('&lt;payload&gt;')))"
+) }}
+</code></pre>
+<p>它从 Hugging Face 的一个容器中逃逸，窃取了一个 Kubernetes 服务账号令牌，并利用该令牌进一步探索网络。</p>
+<p>它还通过“猴子补丁”的方式修改了 Python 的 socket 库，当“DNS 成为阻碍”时，硬编码一个 IP 地址：</p>
+<pre><code>socket.getaddrinfo = lambda *a, **k: [(2, 1, 6, '', ('&lt;pinned-ip&gt;', 443))]
+</code></pre>
+<p>它甚至启动了自己的 Tailscale 网络，来帮助窃取数据！</p>
+<pre><code>tailscaled --tun=userspace-networking \
+  --state=mem: --socket=/tmp/ts.sock \
+  --socks5-server=127.0.0.1:1055 \
+  --no-logs-no-support &gt;/tmp/td 2&gt;&amp;1 &amp;
+</code></pre>
+<p>Hugging Face 团队指出，尽管人类攻击者也可能发现并利用同样的漏洞，但这里的关键区别在于 <em>速度</em>：</p>
+<blockquote>
+<p>我们从这类攻击中学到的是，机器级的攻击速度让普通弱点对防御方来说代价更高。LLM 智能体带来了攻击者可测试路径数量的指数级增长、失败路径被替换的速度，以及防御方必须解读的证据量的巨大提升。</p>
+</blockquote>
+<p>从这件事中我清楚地看到，那些最顶尖的前沿模型，在没有额外护栏限制的情况下，<strong>只要</strong>存在漏洞，<strong>就一定能</strong>找到并利用它。</p>
+<p>整个软件行业都需要提升其安全水平。</p>
+    <p>标签: <a href="https://simonwillison.net/tags/jinja">jinja</a>, <a href="https://simonwillison.net/tags/python">python</a>, <a href="https://simonwillison.net/tags/security">security</a>, <a href="https://simonwillison.net/tags/ai">ai</a>, <a href="https://simonwillison.net/tags/openai">openai</a>, <a href="https://simonwillison.net/tags/generative-ai">generative-ai</a>, <a href="https://simonwillison.net/tags/llms">llms</a>, <a href="https://simonwillison.net/tags/hugging-face">hugging-face</a>, <a href="https://simonwillison.net/tags/coding-agents">coding-agents</a>, <a href="https://simonwillison.net/tags/ai-security-research">ai-security-research</a>, <a href="https://simonwillison.net/tags/openai-hugging-face-incident">openai-hugging-face-incident</a></p></article>
+    <div class="dp-actions">
+      <a class="dp-btn pri" href="https://simonwillison.net/2026/Jul/28/anatomy-of-a-frontier-lab-agent-intrusion/#atom-everything" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      
+      <button type="button" class="dp-btn sec" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
+      <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
+    </div>
+    <p class="dp-note">本页由句子互动动态管线自动生成，聚合内容版权归各来源所有；如来源方希望调整或移除收录，请通过官网联系我们。</p>
+  </div>
+</main>
+<div id="site-footer"></div>
+<script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "前沿实验室Agent入侵剖析：2026年7月事件技术时间线"};</script>
+<script src="../../assets/site.js"></script>
+<script>
+(function(){var b=document.getElementById('dpLang');if(!b)return;
+var en=document.getElementById('dpBodyOrig'),zh=document.getElementById('dpBodyZh');
+b.addEventListener('click',function(){var on=zh.hidden;zh.hidden=!on;en.hidden=on;
+b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';});})();
+</script>
+</body>
+</html>

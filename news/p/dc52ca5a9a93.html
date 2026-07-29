@@ -7,6 +7,7 @@
 <meta name="description" content="Martin Alderson分析OpenAI意外攻击Hugging Face事件。Hugging Face因运行大量不可信模型和代码，拥有巨大攻击面。" />
 <meta name="robots" content="noindex,follow" />
 <link rel="canonical" href="https://simonwillison.net/2026/Jul/23/the-first-known-runaway-ai-agent/#atom-everything" />
+
 <link rel="icon" href="../../logo.png" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="../../assets/site.css" />
@@ -81,7 +82,7 @@
     <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（Simon Willison · 大咖观点）所有 · <a href="https://simonwillison.net/2026/Jul/23/the-first-known-runaway-ai-agent/#atom-everything" target="_blank" rel="noopener">阅读原文</a></span></div>
     
     <div class="dp-brief"><b>简报</b>Martin Alderson分析OpenAI意外攻击Hugging Face事件。Hugging Face因运行大量不可信模型和代码，拥有巨大攻击面。</div>
-    <article class="dp-body"><p><strong><a href="https://martinalderson.com/posts/huggingface-openai-exploit/">The first known runaway AI agent - or a very bad marketing stunt?</a></strong></p>
+    <div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang"><i class="fa-solid fa-language"></i><span>翻译为中文</span></button><span class="dp-lang-note">中文由 AI 翻译，仅供参考</span></div><article class="dp-body" id="dpBodyOrig"><p><strong><a href="https://martinalderson.com/posts/huggingface-openai-exploit/">The first known runaway AI agent - or a very bad marketing stunt?</a></strong></p>
 Martin Alderson's commentary on the <a href="https://simonwillison.net/2026/Jul/22/openai-cyberattack/">OpenAI accidental cyberattack against Hugging Face</a> includes a couple of details I hadn't considered.</p>
 <p>First, Hugging Face offers a truly rich target if you're trying to find potential vulnerabilities that require executing arbitrary code:</p>
 <blockquote>
@@ -97,7 +98,23 @@ Martin Alderson's commentary on the <a href="https://simonwillison.net/2026/Jul/
     <p><small></small>Via <a href="https://lobste.rs/s/nsnb4j/first_known_runaway_ai_agent_very_bad">Lobste.rs</a></small></p>
 
 
-    <p>Tags: <a href="https://simonwillison.net/tags/security">security</a>, <a href="https://simonwillison.net/tags/ai">ai</a>, <a href="https://simonwillison.net/tags/openai">openai</a>, <a href="https://simonwillison.net/tags/generative-ai">generative-ai</a>, <a href="https://simonwillison.net/tags/llms">llms</a>, <a href="https://simonwillison.net/tags/hugging-face">hugging-face</a>, <a href="https://simonwillison.net/tags/ai-security-research">ai-security-research</a></p></article>
+    <p>Tags: <a href="https://simonwillison.net/tags/security">security</a>, <a href="https://simonwillison.net/tags/ai">ai</a>, <a href="https://simonwillison.net/tags/openai">openai</a>, <a href="https://simonwillison.net/tags/generative-ai">generative-ai</a>, <a href="https://simonwillison.net/tags/llms">llms</a>, <a href="https://simonwillison.net/tags/hugging-face">hugging-face</a>, <a href="https://simonwillison.net/tags/ai-security-research">ai-security-research</a></p></article><article class="dp-body" id="dpBodyZh" hidden><p><strong><a href="https://martinalderson.com/posts/huggingface-openai-exploit/">首个已知的失控AI代理——还是一场拙劣的营销噱头？</a></strong></p>
+Martin Alderson 对 <a href="https://simonwillison.net/2026/Jul/22/openai-cyberattack/">OpenAI 意外攻击 Hugging Face 的事件</a>的评论中，有几个我之前没注意到的细节。</p>
+<p>首先，如果你在寻找需要执行任意代码的潜在漏洞，Hugging Face 绝对是一个极其丰富的攻击目标：</p>
+<blockquote>
+<p>Hugging Face 的攻击面极其庞大。他们有数不清的接口，这些接口都在运行不受信任的模型和代码。虽然他们肯定投入了大量资源进行防御，但根据其运营模式，他们被攻击的机会确实比许多其他服务要多得多。我真心同情他们的网络安全团队。</p>
+</blockquote>
+<p>其次，一直让我感到困惑的是，OpenAI 为什么没有注意到他们的沙箱被这个代理彻底攻破了。他们肯定在严密监控网络流量吧？</p>
+<p>Martin 指出：</p>
+<blockquote>
+<p>他们很可能同时在运行海量的基准测试，并且拥有近乎无限的 token 预算——你需要尽可能多的样本才能判断一个模型在某个基准测试上的表现有多好。也可能他们正在测试模型的各种不同检查点，以理解模型在经历各个训练阶段后是如何改进的。</p>
+</blockquote>
+<p>当你了解到这类基准测试通常的运行规模后，就更容易想象 OpenAI 团队在这次基准测试中犯下的错误了。据我们所知，他们可能同时让一个新模型在数十种不同的环境中接受数十个基准测试的检验。
+
+    <p><small></small>来源：<a href="https://lobste.rs/s/nsnb4j/first_known_runaway_ai_agent_very_bad">Lobste.rs</a></small></p>
+
+
+    <p>标签：<a href="https://simonwillison.net/tags/security">security</a>, <a href="https://simonwillison.net/tags/ai">ai</a>, <a href="https://simonwillison.net/tags/openai">openai</a>, <a href="https://simonwillison.net/tags/generative-ai">generative-ai</a>, <a href="https://simonwillison.net/tags/llms">llms</a>, <a href="https://simonwillison.net/tags/hugging-face">hugging-face</a>, <a href="https://simonwillison.net/tags/ai-security-research">ai-security-research</a></p></article>
     <div class="dp-actions">
       <a class="dp-btn pri" href="https://simonwillison.net/2026/Jul/23/the-first-known-runaway-ai-agent/#atom-everything" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
       
@@ -110,5 +127,11 @@ Martin Alderson's commentary on the <a href="https://simonwillison.net/2026/Jul/
 <div id="site-footer"></div>
 <script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "首个已知的失控AI代理——还是糟糕的营销噱头？"};</script>
 <script src="../../assets/site.js"></script>
+<script>
+(function(){var b=document.getElementById('dpLang');if(!b)return;
+var en=document.getElementById('dpBodyOrig'),zh=document.getElementById('dpBodyZh');
+b.addEventListener('click',function(){var on=zh.hidden;zh.hidden=!on;en.hidden=on;
+b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';});})();
+</script>
 </body>
 </html>
