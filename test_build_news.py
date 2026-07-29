@@ -322,6 +322,74 @@ def test_metrics_alert_thresholds():
             B.METRICS_FILE = orig
 
 
+# ---------------------------------------------------------------- 15
+def test_restate_never_wipes_with_blanks():
+    """一方登记表回写: 只覆盖显式写了的字段。
+
+    登记表常只填 url+title, 空 summary 不该洗掉管线已抓到的摘要 —— 这条坏了不会报错,
+    只会让站上的摘要悄悄变空。
+    """
+    src = {"id": "press", "name": "媒体报道", "author": "", "default_category": ""}
+    it = {"id": "x", "url": "https://a.example/1", "title": "旧标题", "summary": "已抓到的好摘要",
+          "category": "36氪", "author": "36氪", "date": "2026-07-01", "tags": [],
+          "source": "press", "source_name": "媒体报道"}
+    B._restate(it, {"url": it["url"], "title": "新标题"}, src)   # 只给了 title
+    check("回写更新给了的字段", it["title"] == "新标题")
+    check("留空不覆盖已抓到的摘要", it["summary"] == "已抓到的好摘要", it["summary"])
+    check("留空不覆盖 category", it["category"] == "36氪", it["category"])
+    check("留空不覆盖 date", it["date"] == "2026-07-01", it["date"])
+    changed = B._restate(it, {"url": it["url"], "title": "新标题"}, src)
+    check("无实际变化时返回 0(不虚报回写数)", changed == 0, str(changed))
+
+
+# ---------------------------------------------------------------- 16
+def test_banned_terms_gate():
+    """官网口径闸: 「企微/企业微信」不出现在任何页面。坏了不会报错, 违禁词直接上页。"""
+    check("识别「企业微信」", B.has_banned("意向沉到企业微信接着跟进"))
+    check("识别「企微」", B.has_banned("沉淀到企微"))
+    check("正常文案不误判", not B.has_banned("意向沉到自有阵地接着跟进"))
+    check("空值安全", not B.has_banned("") and not B.has_banned(None))
+    lib = {"x": {"term": "私域运营", "aliases": [], "def": "把公域来的意向沉到自有阵地持续经营。"}}
+    it = fixture_item(summary="公域意向自动沉到企业微信，AI 客服接力跟进。", concepts=["x"])
+    ev = B.concept_evidence(it, lib["x"])
+    check("概念证据弃用含违禁词的句子", not B.has_banned(ev), ev[:50])
+
+
+# ---------------------------------------------------------------- 17
+def test_detail_indexable_three_conditions():
+    """详情页可收录判据是单一事实源(详情页 robots / sitemap / ItemList 三处共用)。
+    三个条件缺一不可; 少任何一个都会让 sitemap 收录 noindex 页。
+    """
+    import tempfile
+    orig = B.CONTENT_DIR
+    with tempfile.TemporaryDirectory() as d:
+        try:
+            B.CONTENT_DIR = pathlib.Path(d)
+            own = next(iter(B.OWN_SOURCES))
+            it = fixture_item(id="mirror1", source=own, source_name=own)
+            check("① 无镜像文件 → 不可收录", not B.detail_indexable(it))
+            (B.CONTENT_DIR / "mirror1.html").write_text("", encoding="utf-8")
+            check("② 镜像文件为空 → 不可收录", not B.detail_indexable(it))
+            (B.CONTENT_DIR / "mirror1.html").write_text("<p>有内容的镜像</p>", encoding="utf-8")
+            check("③ own 源 + 镜像有内容 → 可收录", B.detail_indexable(it))
+            ext = fixture_item(id="mirror1", source="industry", source_name="行业动态")
+            check("④ 非 own 源即便有镜像也不可收录", not B.detail_indexable(ext))
+        finally:
+            B.CONTENT_DIR = orig
+
+
+# 曾在此加过一组「文档引用的路径必须存在」的检查, 已删除。原因:
+# 它产生 6 个误报(文档里的简称 askbar.js、外部 feed 路径 /feed.xml、示例 hr.html、
+# 明说已删除的 news-b.html), 而且我在实现里又误用了 lstrip("./") —— 把 .github/... 的
+# 前导点当字符集合剥掉, 于是去查一个不存在的 github/workflows/...。今天这是第二次踩
+# lstrip 的坑(前一次是 lstrip("www.")), 上一次我还专门写了注释警告它。
+#
+# 按同一条标准: **经常误报的检查等于没有检查, 还会训练人忽略它**。而它也抓不到真正的
+# 文档漂移 —— 那是语义层面的(worthy_concepts 注释写「三处」而实际有四处, 我照着错清单
+# 验证, 漏掉的第四处挂了 64 条死链), 路径检查看不见。语义漂移目前只能靠改代码时顺手
+# 改注释, 没有自动办法。
+
+
 def main():
     tests = [v for k, v in sorted(globals().items()) if k.startswith("test_")]
     for fn in tests:
