@@ -464,7 +464,15 @@ def sanitize_fragment(h):
     h = re.sub(r"<!--.*?-->", "", h or "", flags=re.S)
     h = re.sub(r"<(script|style|iframe|object|embed|form|frameset|noscript)\b[^>]*>.*?</\1\s*>", "", h, flags=re.S | re.I)
     h = re.sub(r"<(script|style|iframe|object|embed|form|link|meta|base)\b[^>]*/?>", "", h, flags=re.I)
-    h = re.sub(r"[\s/]+on[a-z]+\s*=\s*(\"[^\"]*\"|'[^']*'|[^\s>]+)", " ", h, flags=re.I)  # [\s/]: 挡 <img/onerror=> 无空白写法(Bugbot PR#100)
+    # 事件属性剥离。前导集合必须含引号: 属性值收尾的引号本身就是属性边界, 紧贴写法
+    # <img src="x"onerror="alert(1)"> 既无空白也无斜杠, 老正则 [\s/]+ 会整条放行——
+    # 第三方正文镜像在 juzibot.com 域名下, 放行等于让别人在我们域上执行 JS(2026-07-30 实测穿透)。
+    # 用捕获组把边界字符还回去, 否则会吃掉前一个属性的收尾引号、破坏标签结构。
+    # 宁可误伤(把正文里形如 title="… onclick=x" 的**文本**删掉)也不放过: 这是消毒层。
+    h = re.sub(r"""([\s/"'])on[a-z]+\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)""", r"\1", h, flags=re.I)
+    # style 属性一并剥: 镜像正文的排版本就该由 .dp-body 的 CSS 管, 而留着它, 第三方
+    # 正文可以用 position:fixed 铺一层全屏浮层, 在我们域名下做钓鱼或篡改页面。
+    h = re.sub(r"""([\s/"'])style\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)""", r"\1", h, flags=re.I)
     # 危险协议链接消毒: 解实体+去空白后判 javascript/vbscript/非白名单 data(挡实体编码绕过, Bugbot PR#100)
     h = _URL_ATTR_RX.sub(_neutralize_url, h)
     return h.strip()
@@ -2529,8 +2537,12 @@ RENDER_VER = "8"  # 2026-07-30: 概念页证据改读原文镜像(原先只读�
 # 这个坑我栽过两次(Article schema 没生效那次、概念索引页文案没生效那次), 而规则就写在上面
 # 那行注释里。与其依赖人记得, 不如让签名自己感知模板变化: 把渲染函数的源码一起哈希进去。
 # RENDER_VER 保留作人工总开关(想强制全量重算时改它), 日常改模板不再需要动它。
+# 新增任何参与渲染的函数, 都要登记到这里 —— 否则改它不触发缓存重算, 页面停在旧版。
+# 这个坑今天栽过三次: Article schema 没生效、概念索引页文案没生效、以及加 build_toc 时
+# 又忘了登记(靠测试查出来)。指纹机制本身防不住「忘了把新函数纳入指纹」。
 _TPL_FNS = ("detail_html", "concept_html", "concept_index_html", "concept_page_shell",
-            "concept_evidence", "annotate_concepts", "img_render", "normalize_links", "ld_json")
+            "concept_evidence", "annotate_concepts", "img_render", "normalize_links",
+            "ld_json", "breadcrumb_ld", "build_toc", "nav_fallback")
 
 
 def _template_sig():
@@ -2802,8 +2814,6 @@ def concept_html(slug, c, refs, related, lib, worthy=None):
         + (f'    <p class="cp-alias"><b>也叫</b> {esc(alias_line)}</p>\n' if alias_line else "")
         # 定义文本里就地标注其他概念 —— 读者看到「大型语言模型」这类词时能点进去。
         # 详情页正文一直有这层标注, 概念页的定义却没有, 是两处对同一件事的做法不一致。
-        # rel="" 因为概念页之间同目录; 排除自己(自链接无意义); 只标 worthy 的(防死链,
-        # 与 worthy_concepts 的四处共用同一份判据)。
         + f'    <div class="cp-def">{annotate_concepts(esc(c["def"]), def_hits, lib, rel="")}</div>\n'
         + (f'    <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（{len(refs)}）</div>\n{ref_rows}\n' if refs else "")
         + (f'    <div class="cp-sec"><i class="fa-solid fa-diagram-project"></i>相关概念</div>\n    <div class="cp-rel">{rel_links}</div>\n' if related else "")
@@ -3218,6 +3228,8 @@ def inject_page(spec, items, sources_meta, now):
 
 METRICS_FILE = ROOT / "data" / "metrics.jsonl"
 METRIC_DROP_PCT = 15       # 关键指标较上一轮降幅超此值即显著告警
+METRIC_KEEP_ROWS = 720     # 指标历史保留行数: 每 6 小时一行 ≈ 半年。文件每轮被 rsync 全量
+                           # 传输, 无限增长虽慢也是债; 半年足够看出季节性与慢性退化。
 
 
 def record_metrics(vis, items, sources_meta, failed, now):
@@ -3255,17 +3267,60 @@ def record_metrics(vis, items, sources_meta, failed, now):
             print(f"[指标告警] 较上一轮({prev.get('at', '?')[:16]})明显下滑: " + "; ".join(warn))
             print("  → 多半是某源 feed 改版/被封后静默返回空, 不是内容真的少了; 查该源的 status 与抓取日志")
     try:
-        with METRICS_FILE.open("a", encoding="utf-8") as f:
-            f.write(json.dumps(row, ensure_ascii=False) + "\n")
+        old_lines = ([x for x in METRICS_FILE.read_text(encoding="utf-8").splitlines() if x.strip()]
+                     if METRICS_FILE.exists() else [])
+        keep = old_lines[-(METRIC_KEEP_ROWS - 1):] + [json.dumps(row, ensure_ascii=False)]
+        # 整体重写而不是追加: 顺带做截断。用原子写——这文件每轮被 rsync 全量推回服务器,
+        # 半截文件会让下一轮读不出上一轮指标, 告警随之静默失效。
+        write_atomic(METRICS_FILE, "\n".join(keep) + "\n")
     except OSError as e:  # noqa: BLE001
         print(f"  [提示] 指标未落盘({e}), 不影响本轮产物")
+
+
+def clean_shells():
+    """把两个列表页还原成干净模板壳(清空注入区)——`--clean-shell` 的实现。
+
+    「生成物不入库」是架构裁决, 但注入过数据的页面被拷回 PR 分支已经发生**两次**
+    (eafb0e3 那批 223KB, 以及 2026-07-30 从预览分支拷 ARIA 改动时又带回 103KB/245KB)。
+    两次的根因相同: **拷贝方向反了**。
+
+    正确方向只有一个 —— 源码(build_news.py 与模板壳)在 PR 分支改, 拷到预览分支跑管线
+    验证, 验证通过后就在 PR 分支提交; 源码本来就在 PR 分支, 所以**永远不需要**从预览分支
+    往回拷。反向拷贝这条路上今天丢过一次安全修复、带回过一次注入数据。
+
+    万一还是拷回来了, 跑 `python3 build_news.py --clean-shell` 一次即可, 别手改正则。
+    """
+    for spec in PAGES:
+        p = spec["file"]
+        if not p.exists():
+            print(f"  [跳过] {p.name} 不存在")
+            continue
+        t = p.read_text(encoding="utf-8")
+        before = len(t.encode()) // 1024
+        t = re.sub(r'(<script id="news-data" type="application/json">).*?(</script>)',
+                   r'\1{"sources":[],"items":[]}\2', t, count=1, flags=re.S)
+        t = re.sub(r'(<!-- NEWS:LIST:BEGIN 此区块由 build_news.py 生成，勿手改 -->).*?(<!-- NEWS:LIST:END -->)',
+                   r'\1\n\2', t, count=1, flags=re.S)
+        for tag, val in (("newsTotal", "0"), ("newsRadar", "0"), ("newsFresh", "—")):
+            t = re.sub(rf'(<b id="{tag}">)[^<]*(</b>)', rf'\g<1>{val}\2', t, count=1)
+        t = re.sub(r'<script type="application/ld\+json" id="news-itemlist">.*?</script>\n?', "", t, flags=re.S)
+        p.write_text(t, encoding="utf-8")
+        print(f"  {p.name}: {before}KB → {len(t.encode()) // 1024}KB")
+    print("[干净壳] 注入区已清空; 提交前可用 .github/workflows/shell-clean.yml 的同款检查自查")
 
 
 def main():
     ap = argparse.ArgumentParser(description="多源抓取、AI 筛选并更新动态页(卡片版/聚合版)与 data/news.json")
     ap.add_argument("--full", action="store_true", help="忽略已有数据, 全量重抓")
     ap.add_argument("--limit", type=int, default=0, help="每源本次最多收 N 条新内容(调试)")
+    ap.add_argument("--clean-shell", action="store_true",
+                    help="把两个列表页还原成干净模板壳(清空注入区), 不跑管线。"
+                         "从预览分支拷页面回 PR 分支后跑一次即可——生成物不入库(见 CLAUDE.md)")
     args = ap.parse_args()
+
+    if args.clean_shell:
+        clean_shells()
+        return
 
     prev = {}  # 已有数据始终留底; --full 只决定"要不要跳过已抓过的", 不决定"能不能回退"
     if DATA_FILE.exists():
