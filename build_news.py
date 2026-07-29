@@ -2343,7 +2343,7 @@ b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';})
 # 「输入签名」——签名不变则跳过重算。签名过度捕获(条目全字段 + 概念库 + 正文/译文镜像 + 模板
 # 版本), 任一输入变即重算, 绝不产生陈旧页。签名落 data/render-cache.json(随仓库提交, 供 CI
 # 跨轮增量; 不进任何内联/公开 HTML)。改模板结构时递增 RENDER_VER 触发全量重算。
-RENDER_VER = "7"  # 2026-07-30: schema 剔空值键(空 about/alternateName 会让整段被判无效) → 全量重算
+RENDER_VER = "8"  # 2026-07-30: 概念页证据改读原文镜像(原先只读中译, 中文条目全落空) → 全量重算
 RENDER_CACHE = ROOT / "data" / "render-cache.json"
 
 
@@ -2693,11 +2693,20 @@ def concept_evidence(it, c):
     terms = [c["term"]] + [a for a in (c.get("aliases") or []) if len(a) >= 2]
     body = _EV_CACHE.get(it["id"], ...)
     if body is ...:
-        f = CONTENT_DIR / f'{it["id"]}.zh.html'
-        try:
-            body = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", f.read_text(encoding="utf-8")))
-        except OSError:
-            body = ""
+        # 两个镜像都要读, 顺序有讲究(2026-07-30 修): <id>.html 是**原文**镜像(284 个),
+        # <id>.zh.html 是英文条目的**中译**(仅 91 个)。概念词是中文的——
+        #   · 中文条目: 原文里就有该词, 读 .html;
+        #   · 英文条目: 原文是英文不含中文词, 得读中译 .zh.html。
+        # 原先只读 .zh.html, 于是占多数的中文条目全部取不到正文, 一律退回摘要兜底,
+        # 证据里根本不含该概念词——314 条证据只有 75 条命中(带 <mark>)。
+        parts = []
+        for suffix in (".html", ".zh.html"):
+            f = CONTENT_DIR / f'{it["id"]}{suffix}'
+            try:
+                parts.append(re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", f.read_text(encoding="utf-8"))))
+            except OSError:
+                pass
+        body = " ".join(parts)
         _EV_CACHE[it["id"]] = body
     for src in (body, (it.get("summary") or "").strip()):
         if not src:
@@ -2783,7 +2792,8 @@ def write_concept_pages(lib, vis):
         # 摘要取哈希不取长度: 证据段直接引用摘要, 而等长替换(「企业微信」→「自有阵地」)长度指纹识别不出来。
         ref_repr = f"{len(refs)}|" + "|".join(
             f"{r['id']},{r['date']},{r['source']},{r['source_name']},{disp_title(r)},"
-            f"{_sha(r.get('summary') or '')[:10]},{int((CONTENT_DIR / (r['id'] + '.zh.html')).exists())}"
+            f"{_sha(r.get('summary') or '')[:10]},"
+            f"{int((CONTENT_DIR / (r['id'] + '.html')).exists())}{int((CONTENT_DIR / (r['id'] + '.zh.html')).exists())}"
             for r in refs[:30])
         rel_repr = "|".join(f"{o}={lib.get(o, {}).get('term')}" for o in related)
         sig = _sha(RENDER_VER, f"{c.get('term')}|{c.get('def')}|{'/'.join(c.get('aliases') or [])}", ref_repr, rel_repr)
