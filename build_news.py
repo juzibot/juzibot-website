@@ -3137,6 +3137,8 @@ def inject_page(spec, items, sources_meta, now):
 
 METRICS_FILE = ROOT / "data" / "metrics.jsonl"
 METRIC_DROP_PCT = 15       # 关键指标较上一轮降幅超此值即显著告警
+METRIC_KEEP_ROWS = 720     # 指标历史保留行数: 每 6 小时一行 ≈ 半年。文件每轮被 rsync 全量
+                           # 传输, 无限增长虽慢也是债; 半年足够看出季节性与慢性退化。
 
 
 def record_metrics(vis, items, sources_meta, failed, now):
@@ -3174,8 +3176,12 @@ def record_metrics(vis, items, sources_meta, failed, now):
             print(f"[指标告警] 较上一轮({prev.get('at', '?')[:16]})明显下滑: " + "; ".join(warn))
             print("  → 多半是某源 feed 改版/被封后静默返回空, 不是内容真的少了; 查该源的 status 与抓取日志")
     try:
-        with METRICS_FILE.open("a", encoding="utf-8") as f:
-            f.write(json.dumps(row, ensure_ascii=False) + "\n")
+        old_lines = ([x for x in METRICS_FILE.read_text(encoding="utf-8").splitlines() if x.strip()]
+                     if METRICS_FILE.exists() else [])
+        keep = old_lines[-(METRIC_KEEP_ROWS - 1):] + [json.dumps(row, ensure_ascii=False)]
+        # 整体重写而不是追加: 顺带做截断。用原子写——这文件每轮被 rsync 全量推回服务器,
+        # 半截文件会让下一轮读不出上一轮指标, 告警随之静默失效。
+        write_atomic(METRICS_FILE, "\n".join(keep) + "\n")
     except OSError as e:  # noqa: BLE001
         print(f"  [提示] 指标未落盘({e}), 不影响本轮产物")
 
