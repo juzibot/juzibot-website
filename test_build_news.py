@@ -410,8 +410,19 @@ def test_deploy_list_covers_root_artifacts():
         return
     wf = wf_path.read_text(encoding="utf-8")
     missing = [f for f in produced if f not in wf]
-    check(f"部署清单覆盖 {len(produced)} 个根目录产物", not missing,
+    check(f"CI 推送清单覆盖 {len(produced)} 个根目录产物", not missing,
           f"清单里缺 {missing} —— 补进 news-cron.yml 的推送 rsync 行, 否则线上缺文件")
+    # 文档里的**手动**推送命令同样要覆盖 —— 公众号新文靠它推(CI 里没有 lark-cli)。
+    # 这条曾漏掉 sitemap-news.xml 与 news-radar.json: CI 有、文档没有, 而测试原先只查
+    # workflow, 覆盖不到文档里的命令。
+    dep = ROOT / "docs" / "DEPLOY.md"
+    if dep.exists():
+        block = dep.read_text(encoding="utf-8")
+        m = re.search(r'rsync -az news\.html[^\n]*', block)
+        line = m.group(0) if m else ""
+        miss_doc = [f for f in produced if f.endswith((".xml", ".json", ".html")) and f not in line]
+        check("DEPLOY.md 的手动推送命令同样覆盖全部根目录产物", not miss_doc,
+              f"手册里缺 {miss_doc} —— 公众号新文按手册手动推时会漏, 内容悄悄不更新")
 
 
 def main():
