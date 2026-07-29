@@ -2337,6 +2337,26 @@ def concept_index_html(lib, refs_map):
                               f"{SITE_BASE}/news/c/index.html", inner, "AI 概念索引")
 
 
+def write_news_sitemap(vis, lib):
+    """动态页自维护 sitemap(2026-07-29): 概念页 252 个 + 自家详情页数十个都是允许收录的
+    原创内容, 却一个都不在手工 sitemap.xml 里——搜索引擎只能靠爬内链慢慢摸, GEO 资产半埋。
+    管线每轮重写 sitemap-news.xml(与手工 sitemap.xml 分离互不干扰, robots 里并列声明):
+    只收 index 的页(概念页全收; 详情页只收 own+镜像成功的, 外部转载页 noindex 不进)。"""
+    urls = []
+    for slug in sorted(lib):
+        urls.append((f"{SITE_BASE}/news/c/{slug}.html", "0.6"))
+    urls.append((f"{SITE_BASE}/news/c/index.html", "0.7"))
+    for it in vis:
+        if it["source"] in OWN_SOURCES and (CONTENT_DIR / f"{it['id']}.html").exists():
+            urls.append((f"{SITE_BASE}/news/p/{it['id']}.html", "0.6"))
+    body = "\n".join(f'  <url><loc>{u}</loc><priority>{pr}</priority></url>' for u, pr in urls)
+    (ROOT / "sitemap-news.xml").write_text(
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        f'{body}\n</urlset>\n', encoding="utf-8")
+    print(f"[sitemap] sitemap-news.xml 共 {len(urls)} 条(概念页 {len(lib) + 1} + 自家详情页 {len(urls) - len(lib) - 1})")
+
+
 def write_concept_pages(lib, vis):
     """概念库落静态页: 每个概念一页 + 总目录; 内容不变不重写(幂等), 库里已没有的 slug 页面清理。
     反向索引与相关概念都只看上站条目; 概念本身不因引用清零而删页(库是唯一事实源, 定义仍是原创资产)。"""
@@ -2614,6 +2634,7 @@ def main():
         inject_page(spec, vis, sources_meta)
     write_detail_pages(vis, items, lib)
     write_concept_pages(lib, vis)
+    write_news_sitemap(vis, lib)
 
     per_src = " | ".join(f"{m['name']}:{m['count']}" for m in sources_meta)
     print(f"[完成] 上站 {len(vis)} 条 / 存量 {len(items)} 条({per_src}), 失败 {len(all_failed)} → data/news.json + " + " + ".join(p["file"].name for p in PAGES) + " + news/p/")
