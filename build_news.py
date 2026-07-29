@@ -1593,7 +1593,15 @@ def ai_translate(items):
 
 CONCEPTS_FILE = ROOT / "data" / "concepts.json"
 CONCEPT_DIR = ROOT / "news" / "c"
-CONCEPT_BATCH = 10        # 每批文章数: 新概念定义输出较长, 批次取小防截断
+CONCEPT_BATCH = 10
+# 概念页上站门槛(2026-07-30): 实测 255 个概念里 137 个只被引用 1 次, 其中 129 个来自外部
+# 资讯的一次性名词(Tailscale Kindle / AI 剧内容井喷 / 智能尿布监测…)——与句子互动的行业
+# 语境无关, 却各占一个 index 页面, 既稀释「AI 概念库」的品牌分量也摊薄 GEO 权重。
+# 规则: 概念仍照常入库(数据不丢, 是详情页标注与去重的记忆), 但只有「够格」的才发独立页——
+#   ①被 ≥2 篇上站文章引用(经过第二次验证, 不是一次性名词), 或
+#   ②被任一自家内容(own/product)引用(自家提到的即属自家语境, 一次也算)
+# 不够格的概念以后被引到自然升格, 无需人工干预; 已生成的页会被既有清理逻辑收走。
+CONCEPT_PAGE_MIN_REFS = 2        # 每批文章数: 新概念定义输出较长, 批次取小防截断
 CONCEPT_LIB_MAX = 500     # 塞进 prompt 的概念库上限: 库只增不删, 全量塞会让 prompt 无限膨胀触上下文上限/整批失败(Bugbot PR#100)
 CONCEPT_MAX_PER_ITEM = 5  # 每篇最多挂 5 个概念(详情页标注同此上限)
 GENERIC_SLUGS = {"ai", "artificial-intelligence", "tech", "technology", "software", "internet",
@@ -1984,7 +1992,7 @@ DETAIL_CSS = """
 """
 
 
-def detail_html(it, lib):
+def detail_html(it, lib, worthy):
     """静态详情页(整页由本脚本生成, 每次可整体重写, 页内无时间戳保证连跑字节稳定)。
     所有权分档(2026-07-22 四轮): own 源(自家内容)全文镜像+允许 index+canonical 指自身;
     外部源维持版权安全三件套——canonical 指向原文 + noindex + 页首显著出处
@@ -1999,7 +2007,7 @@ def detail_html(it, lib):
     full = content_p.read_text(encoding="utf-8") if mirror_on(it["source"]) and content_p.exists() else ""
     zh_p = zh_content_path(it["id"])
     zh = zh_p.read_text(encoding="utf-8") if full and title_is_en(it["title"]) and zh_p.exists() else ""
-    slugs = it.get("concepts") or []
+    slugs = [s for s in (it.get("concepts") or []) if s in worthy]  # 只标有页的概念, 防死链
     full = img_render(annotate_concepts(full, slugs, lib))
     zh = img_render(annotate_concepts(zh, slugs, lib))
     desc = it.get("brief") or it["summary"] or title
@@ -2150,7 +2158,7 @@ def _save_render_cache(cache):
     RENDER_CACHE.write_text(json.dumps(cache, ensure_ascii=False, indent=0), encoding="utf-8")
 
 
-def write_detail_pages(vis, items, lib):
+def write_detail_pages(vis, items, lib, worthy):
     """过筛条目逐条落静态详情页; 输入签名不变的页跳过重算(增量, 幂等),
     已下线条目的页面与孤儿正文镜像顺手清掉(部署端 git clean 同步删除)。"""
     DETAIL_DIR.mkdir(parents=True, exist_ok=True)
@@ -2173,13 +2181,16 @@ def write_detail_pages(vis, items, lib):
         # 源级 mirror(full/excerpt)与 own 配置也决定详情页形态(全文镜像 vs 导读、index vs noindex),
         # 但不在条目字段里——须显式纳入签名, 否则改 excerpt 退级时镜像文件哈希不变会误命中跳过(Bugbot PR#100)
         srccfg = f"{MIRROR_MODE.get(it['source'], 'full')}|{'own' if it['source'] in OWN_SOURCES else 'ext'}"
-        sig = _sha(RENDER_VER, srccfg, csig, item_repr,
+        # 本条会标注哪些概念取决于门槛(worthy): 概念被引次数涨过门槛→该标了, 跌出→不能再标(否则
+        # 链向已不存在的概念页=死链)。只纳入本条自己的概念的够格状态, 不让全库变动殃及全部页。
+        wsig = "".join("1" if s in worthy else "0" for s in (it.get("concepts") or []))
+        sig = _sha(RENDER_VER, srccfg, csig, wsig, item_repr,
                    _file_sig(CONTENT_DIR / f"{it['id']}.html"), _file_sig(zh_content_path(it["id"])))
         new_sigs[it["id"]] = sig
         if p.exists() and old_sigs.get(it["id"]) == sig:
             skipped += 1
             continue
-        html = detail_html(it, lib)
+        html = detail_html(it, lib, worthy)
         if not p.exists() or p.read_text(encoding="utf-8") != html:
             p.write_text(html, encoding="utf-8")
             written += 1
@@ -2317,9 +2328,10 @@ def concept_html(slug, c, refs, related, lib):
                               f"{SITE_BASE}/news/c/{slug}.html", inner, c["term"], schema)
 
 
-def concept_index_html(lib, refs_map):
-    """概念总目录页: 全部概念按被引次数降序铺卡片。"""
-    order = sorted(lib, key=lambda s: (-len(refs_map.get(s, [])), lib[s]["term"]))
+def concept_index_html(lib, refs_map, worthy=None):
+    """概念总目录页: 按被引次数降序铺卡片; 只铺发了独立页的概念(不够格的没有页, 铺上去是死链)。"""
+    keys = [s for s in lib if worthy is None or s in worthy]
+    order = sorted(keys, key=lambda s: (-len(refs_map.get(s, [])), lib[s]["term"]))
     cards = "\n".join(
         f'      <a class="cx-card" href="{s}.html"><b>{esc(lib[s]["term"])}</b>'
         f'<p>{esc(concept_tip(lib[s]["def"]))}</p>'
@@ -2337,13 +2349,13 @@ def concept_index_html(lib, refs_map):
                               f"{SITE_BASE}/news/c/index.html", inner, "AI 概念索引")
 
 
-def write_news_sitemap(vis, lib):
+def write_news_sitemap(vis, lib, worthy):
     """动态页自维护 sitemap(2026-07-29): 概念页 252 个 + 自家详情页数十个都是允许收录的
     原创内容, 却一个都不在手工 sitemap.xml 里——搜索引擎只能靠爬内链慢慢摸, GEO 资产半埋。
     管线每轮重写 sitemap-news.xml(与手工 sitemap.xml 分离互不干扰, robots 里并列声明):
     只收 index 的页(概念页全收; 详情页只收 own+镜像成功的, 外部转载页 noindex 不进)。"""
     urls = []
-    for slug in sorted(lib):
+    for slug in sorted(worthy):  # 只收真发了页的概念(门槛外的没有页)
         urls.append((f"{SITE_BASE}/news/c/{slug}.html", "0.6"))
     urls.append((f"{SITE_BASE}/news/c/index.html", "0.7"))
     for it in vis:
@@ -2354,7 +2366,22 @@ def write_news_sitemap(vis, lib):
         '<?xml version="1.0" encoding="UTF-8"?>\n'
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
         f'{body}\n</urlset>\n', encoding="utf-8")
-    print(f"[sitemap] sitemap-news.xml 共 {len(urls)} 条(概念页 {len(lib) + 1} + 自家详情页 {len(urls) - len(lib) - 1})")
+    print(f"[sitemap] sitemap-news.xml 共 {len(urls)} 条(概念页 {len(worthy) + 1} + 自家详情页 {len(urls) - len(worthy) - 1})")
+
+
+def worthy_concepts(lib, vis):
+    """够格发独立页的概念集合(2026-07-30 门槛)。详情页标注、概念页生成、sitemap 三处
+    必须用同一份, 否则会出现"正文标了链接但页面没生成"的死链。"""
+    refs = {}
+    for it in vis:
+        for s in it.get("concepts") or []:
+            refs.setdefault(s, []).append(it)
+    out = set()
+    for s in lib:
+        rs = refs.get(s, [])
+        if len(rs) >= CONCEPT_PAGE_MIN_REFS or any(i["source"] in COMPANY_SOURCES for i in rs):
+            out.add(s)
+    return out
 
 
 def write_concept_pages(lib, vis):
@@ -2383,19 +2410,22 @@ def write_concept_pages(lib, vis):
         if not p.exists() or p.read_text(encoding="utf-8") != html:
             p.write_text(html, encoding="utf-8")
             written += 1
+    worthy = worthy_concepts(lib, vis)
     cache = _load_render_cache()
     old_sigs = cache.get("concept", {})
     new_sigs = {}
     want = {"index.html"}
     # 目录页: 模板版本 + 全库 + 各概念引用数
     idx_sig = _sha(RENDER_VER, _lib_annot_sig(lib),
-                   json.dumps({s: len(refs_map.get(s, [])) for s in lib}, sort_keys=True))
+                   json.dumps({s: len(refs_map.get(s, [])) for s in sorted(worthy)}, sort_keys=True))
     new_sigs["index.html"] = idx_sig
     if (CONCEPT_DIR / "index.html").exists() and old_sigs.get("index.html") == idx_sig:
         skipped += 1
     else:
-        _emit("index.html", concept_index_html(lib, refs_map))
+        _emit("index.html", concept_index_html(lib, refs_map, worthy))
     for slug, c in lib.items():
+        if slug not in worthy:
+            continue  # 不够格: 留在库里(标注/去重照用), 不占独立页
         name = f"{slug}.html"
         want.add(name)
         refs = refs_map.get(slug, [])  # 传全量: concept_html 内部列表切前 30, 计数用全量总数
@@ -2632,9 +2662,10 @@ def main():
     )
     for spec in PAGES:
         inject_page(spec, vis, sources_meta)
-    write_detail_pages(vis, items, lib)
+    worthy = worthy_concepts(lib, vis)  # 门槛算一次, 详情页标注/概念页/sitemap 共用防死链
+    write_detail_pages(vis, items, lib, worthy)
     write_concept_pages(lib, vis)
-    write_news_sitemap(vis, lib)
+    write_news_sitemap(vis, lib, worthy)
 
     per_src = " | ".join(f"{m['name']}:{m['count']}" for m in sources_meta)
     print(f"[完成] 上站 {len(vis)} 条 / 存量 {len(items)} 条({per_src}), 失败 {len(all_failed)} → data/news.json + " + " + ".join(p["file"].name for p in PAGES) + " + news/p/")
