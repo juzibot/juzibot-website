@@ -498,6 +498,50 @@ def test_all_render_fns_registered_in_fingerprint():
     check("版本键形如 <人工版本>.<指纹>", re.fullmatch(r"[\w.]+\.[0-9a-f]{10}", v), v)
 
 
+# ---------------------------------------------------------------- 21
+def test_feed_scope_is_company_only():
+    """自家动态 RSS 的范围约束是**版权硬边界**, 不是风格偏好 —— 转载的第三方内容做成全文
+    feed 分发, 比站内镜像更进一步, 不能做。所以这条必须钉死。
+    """
+    import tempfile, xml.etree.ElementTree as ET
+    vis = [
+        fixture_item(id="c1", source="rui-blog", source_name="博客精选", title="自家博客"),
+        fixture_item(id="c2", source="product", source_name="产品动态", title="自家产品"),
+        fixture_item(id="x1", source="industry", source_name="行业动态", title="第三方资讯"),
+        fixture_item(id="x2", source="voices", source_name="大咖观点", title="第三方博主"),
+        fixture_item(id="x3", source="hn", source_name="Hacker News", title="HN 热帖"),
+    ]
+    orig = B.ROOT
+    with tempfile.TemporaryDirectory() as d:
+        try:
+            B.ROOT = pathlib.Path(d)
+            B.write_news_feed(vis)
+            f = B.ROOT / "news-feed.xml"
+            check("feed 已生成", f.exists())
+            if not f.exists():
+                return
+            root = ET.fromstring(f.read_text(encoding="utf-8"))   # 解析失败即 XML 不合法
+            items = root.find("channel").findall("item")
+            titles = {i.findtext("title") for i in items}
+            check("自家内容进 feed", {"自家博客", "自家产品"} <= titles, str(titles))
+            leak = titles & {"第三方资讯", "第三方博主", "HN 热帖"}
+            check("**第三方内容不得进 feed**(版权硬边界)", not leak, f"泄漏 {leak}")
+            links = [i.findtext("link") for i in items]
+            check("链接指站内详情页", all("/news/p/" in (l or "") for l in links), str(links))
+            check("每条都有 pubDate", all(i.findtext("pubDate") for i in items))
+            check("每条 guid 与 link 一致", all(i.findtext("guid") == i.findtext("link") for i in items))
+        finally:
+            B.ROOT = orig
+    # 公司区为空时不该产出空 feed(空 channel 对阅读器是噪音)
+    with tempfile.TemporaryDirectory() as d2:
+        try:
+            B.ROOT = pathlib.Path(d2)
+            B.write_news_feed([fixture_item(id="x9", source="industry", source_name="行业动态")])
+            check("公司区为空时不产出 feed", not (B.ROOT / "news-feed.xml").exists())
+        finally:
+            B.ROOT = orig
+
+
 def main():
     tests = [v for k, v in sorted(globals().items()) if k.startswith("test_")]
     for fn in tests:
