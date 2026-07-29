@@ -350,6 +350,8 @@
     buildGroups(); buildSrcs(); buildTimes();
     count.textContent = '共 ' + groupCount(state.group) + ' 条';
     more.hidden = state.shown >= data.length;
+    // 默认视图=句子动态, 预渲染=全量: 首帧按分区重渲(否则首屏仍是混排)
+    render(true);
 
     document.getElementById('newsGroups').addEventListener('click', function (e) {
       var b = e.target.closest('[data-group]'); if (!b) return;
