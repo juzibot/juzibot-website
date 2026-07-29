@@ -2267,6 +2267,21 @@ def _bare_host(u):
     return h[4:] if h.startswith("www.") else h
 
 
+def breadcrumb_ld(trail):
+    """BreadcrumbList schema——让搜索结果显示层级路径而不是裸 URL。
+
+    这批页面本来就为搜索与 AI 引擎而建, 而路径信息只存在于视觉的「返回」链接里,
+    机器读不到。补上后搜索结果能显示「句子互动 › 动态 › AI 概念库 › MoE 模型」,
+    对可信度与点击率有实际影响; 对 AI 引擎也是一条「这页在站内什么位置」的结构信息。
+    trail: [(名称, 绝对 URL), ...] 从站点根到当前页; 末项就是本页。
+    """
+    return ld_json({
+        "@context": "https://schema.org", "@type": "BreadcrumbList",
+        "itemListElement": [{"@type": "ListItem", "position": n + 1, "name": nm, "item": u}
+                            for n, (nm, u) in enumerate(trail)],
+    })
+
+
 def detail_html(it, lib, worthy):
     """静态详情页(整页由本脚本生成, 每次可整体重写, 页内无时间戳保证连跑字节稳定)。
     所有权分档(2026-07-22 四轮): own 源(自家内容)全文镜像+允许 index+canonical 指自身;
@@ -2319,6 +2334,9 @@ def detail_html(it, lib, worthy):
         except ValueError:
             same_site = False
         canonical = f"{SITE_BASE}/news/p/{it['id']}.html" if same_site else it["url"]
+    # 面包屑: 只给允许收录的页发(noindex 页发 schema 无意义)
+    crumb = breadcrumb_ld([("句子互动", f"{SITE_BASE}/"), ("动态", f"{SITE_BASE}/news.html"),
+                           (title[:60], f"{SITE_BASE}/news/p/{it['id']}.html")]) if own and full else ""
     # 结构化数据(2026-07-29): 只给允许收录的自家内容发 Article——官网自己卖 GEO 优化师,
     # 自家动态页该是样板间; 外部转载页 noindex, 发 schema 无益且易被判内容剽窃。
     schema = ""
@@ -2375,7 +2393,7 @@ b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';})
 <meta property="og:url" content="{esc(canonical)}" />
 <meta property="og:site_name" content="句子互动" />
 <meta name="twitter:card" content="summary" />
-{schema}
+{schema}{crumb}
 <link rel="icon" href="../../logo.png" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="../../assets/site.css" />
@@ -2698,8 +2716,11 @@ def concept_html(slug, c, refs, related, lib):
         "inDefinedTermSet": {"@type": "DefinedTermSet", "name": "句子互动 AI 概念库",
                              "url": f"{SITE_BASE}/news/c/index.html"},
     })
+    crumb = breadcrumb_ld([("句子互动", f"{SITE_BASE}/"), ("动态", f"{SITE_BASE}/news.html"),
+                           ("AI 概念库", f"{SITE_BASE}/news/c/index.html"),
+                           (c["term"], f"{SITE_BASE}/news/c/{slug}.html")])
     return concept_page_shell(f"{c['term']}是什么？- 句子互动 AI 概念库", c["def"][:150],
-                              f"{SITE_BASE}/news/c/{slug}.html", inner, c["term"], schema)
+                              f"{SITE_BASE}/news/c/{slug}.html", inner, c["term"], schema + crumb)
 
 
 def concept_index_html(lib, refs_map, worthy=None):
@@ -2734,8 +2755,10 @@ def concept_index_html(lib, refs_map, worthy=None):
         "hasDefinedTerm": [{"@type": "DefinedTerm", "name": lib[s]["term"],
                             "url": f"{SITE_BASE}/news/c/{s}.html"} for s in order[:60]],
     })
+    idx_crumb = breadcrumb_ld([("句子互动", f"{SITE_BASE}/"), ("动态", f"{SITE_BASE}/news.html"),
+                               ("AI 概念库", f"{SITE_BASE}/news/c/index.html")])
     return concept_page_shell("AI 概念索引 - 句子互动", "AI 行业核心概念速查：每个概念一段面向企业决策者的大白话定义，并反向索引提到它的行业动态与技术观点。",
-                              f"{SITE_BASE}/news/c/index.html", inner, "AI 概念索引", set_schema)
+                              f"{SITE_BASE}/news/c/index.html", inner, "AI 概念索引", set_schema + idx_crumb)
 
 
 def detail_indexable(it):
