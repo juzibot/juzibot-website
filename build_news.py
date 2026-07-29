@@ -1526,7 +1526,7 @@ def visible_items(items):
     再过一道同源同标题去重(多源撞车)。"""
     filtered_srcs = {s["id"] for s in SOURCES if s.get("ai_filter")}
     vis = [i for i in items
-           if not i.get("retired")  # 一方登记表删行 → 撤稿(见 retire_unlisted)
+           if not i.get("retired")   # 一方登记表删行 → 撤稿(见 retire_unlisted)
            and (i["source"] not in filtered_srcs or i.get("ai", {}).get("keep"))]
     return dedupe_same_story(vis)
 
@@ -3028,6 +3028,7 @@ def main():
     if caps:
         cutoff = (datetime.now() - timedelta(days=45)).strftime("%Y-%m-%d")
         seen_n, kept_items, trimmed = {}, [], 0
+        over_n, expire_n, over_cost = 0, 0, 0  # 两类修剪分开记: 合成一个数字看不出死循环
         for it in items:  # 已按日期倒序
             if it["source"] in caps:
                 on_site = it["source"] not in filtered_srcs or it.get("ai", {}).get("keep")
@@ -3035,16 +3036,21 @@ def main():
                     n = seen_n.get(it["source"], 0)
                     if n >= caps[it["source"]]:
                         trimmed += 1
+                        over_n += 1
+                        if it.get("ai") or it.get("title_zh"):
+                            over_cost += 1  # 这条已经花过 AI 判定/翻译, 删了下轮要重付
                         continue
                     seen_n[it["source"]] = n + 1
                 # 保留期按「判定时间」(退化用条目日期)算: 个人博客 feed 窗口横跨数年, 按条目日期算
                 # 会让老文章「当轮清掉→下轮重抓→重判」死循环, 每轮白花判定成本(2026-07-22 二轮修正)
                 elif (it.get("ai", {}).get("at") or it["date"]) < cutoff:
                     trimmed += 1
+                    expire_n += 1
                     continue
             kept_items.append(it)
         if trimmed:
-            print(f"[修剪] 超出 keep_max/45 天保留期的条目 {trimmed} 条")
+            print(f"[修剪] 共 {trimmed} 条 = 上站超额 {over_n}(其中 {over_cost} 条已花过 AI 成本)"
+                  f" + 过 45 天保留期 {expire_n}")
         items = kept_items
 
     # 页面只注入过筛条目; data/news.json 存全量(含被筛掉的, 是增量去重和判定缓存的记忆)
