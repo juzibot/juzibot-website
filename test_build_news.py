@@ -423,6 +423,15 @@ def test_deploy_list_covers_root_artifacts():
         miss_doc = [f for f in produced if f.endswith((".xml", ".json", ".html")) and f not in line]
         check("DEPLOY.md 的手动推送命令同样覆盖全部根目录产物", not miss_doc,
               f"手册里缺 {miss_doc} —— 公众号新文按手册手动推时会漏, 内容悄悄不更新")
+    # 第三处: nginx 得有对应 location 才能对外访问。推上去了但没有 location = 线上 404,
+    # 而 404 的是被 sitemap 声明过的 URL 或前端要 fetch 的分片 —— 页面不崩, 只是少一块。
+    ng = ROOT / "deploy" / "nginx-news.conf"
+    if ng.exists():
+        conf = ng.read_text(encoding="utf-8")
+        # news/ 目录靠 `location ^~ /news/` 前缀覆盖; 根目录单文件需要各自的 location
+        miss_ng = [f for f in produced if f not in conf]
+        check("nginx location 覆盖全部根目录产物", not miss_ng,
+              f"nginx 配置里缺 {miss_ng} —— 推上去了但对外 404")
 
 
 def main():
