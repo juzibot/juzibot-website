@@ -505,14 +505,21 @@ def content_text(item_id):
 SITE_BASE = "https://juzibot.com"
 OWN_SOURCES = {s["id"] for s in SOURCES if s.get("own")}
 MIRROR_MODE = {s["id"]: s.get("mirror", "full") for s in SOURCES}
-# 公司相关源: 自家博客/公众号 + 产品动态 + 写公司的媒体报道。news.html 默认视图把这几类
-# 置顶(佳芮: 进来首屏要和公司相关, 不能一进来全是别的新闻); 外部资讯随后, 各组内保持时间序。
+# —— 双区信息架构(2026-07-29, 佳芮「来到句子动态首页看到凌迪科技和润建股份是什么鬼」) ——
+# 根因不是排序而是内容速率不匹配: 公司内容 ~4 条/月, 行业 RSS ~50 条/天, 任何混排的时间流
+# 都会让自家信号被淹没。解法是分区不是排序: 「句子动态」(自家)与「行业雷达」(外部观察)
+# 分成两个区, 默认只看句子动态; 行业资讯降级为可切换的次区, 定位从"转载"改成"我们在看什么"。
 COMPANY_SOURCES = {"rui-blog", "wechat-mp", "product", "press"}
+GROUPS = {"company": "句子动态", "radar": "行业雷达"}
+
+
+def group_of(source_id):
+    return "company" if source_id in COMPANY_SOURCES else "radar"
 
 
 def company_first(items):
-    """稳定分区: 公司相关源置顶(保持各自时间序), 外部资讯(行业/大咖/HN/齐思)随后。
-    仅用于 news.html 卡片流; 聚合版 news-c.html 按月分组, 不能打乱时间序, 故不套用。"""
+    """组内排序兜底: 公司相关置顶(各自保持时间序), 外部随后。
+    双区分离后主要由前端分组视图承担, 此函数保证预渲染/无 JS 时也是公司信号在前。"""
     comp = [i for i in items if i["source"] in COMPANY_SOURCES]
     rest = [i for i in items if i["source"] not in COMPANY_SOURCES]
     return comp + rest
@@ -2390,9 +2397,16 @@ def inject_page(spec, items, sources_meta):
     if not n:
         sys.exit(f"[错误] {path.name} 里找不到 <script id=\"news-data\">")
 
-    page, n = re.subn(r'(<b id="newsTotal">)[^<]*(</b>)', lambda m: m.group(1) + str(len(items)) + m.group(2), page, count=1)
+    # 双区计数(2026-07-29): newsTotal = 句子动态条数, newsRadar = 行业雷达条数;
+    # 无 JS 时预渲染的静态数字也要分区, 否则"共 254 条"仍把页面说成资讯站。
+    n_comp = sum(1 for i in items if i["source"] in COMPANY_SOURCES)
+    page, n = re.subn(r'(<b id="newsTotal">)[^<]*(</b>)',
+                      lambda m: m.group(1) + str(n_comp if spec.get("company_first") else len(items)) + m.group(2),
+                      page, count=1)
     if not n:
         sys.exit(f"[错误] {path.name} 里找不到 <b id=\"newsTotal\">")
+    page = re.sub(r'(<b id="newsRadar">)[^<]*(</b>)',
+                  lambda m: m.group(1) + str(len(items) - n_comp) + m.group(2), page, count=1)
 
     path.write_text(page, encoding="utf-8")
 
@@ -2427,6 +2441,7 @@ def main():
         sources_meta.append({
             "id": src["id"], "name": src["name"], "type": src["type"],
             "home": src.get("home", ""), "status": status, "last_sync": now,
+            "group": group_of(src["id"]),  # 双区: company(句子动态) | radar(行业雷达)
             "ai": bool(src.get("ai_filter")),  # 聚合版数据源面板据此标「AI 筛」
             "count": 0,  # 终态统一重算(见下), 此处占位
         })
