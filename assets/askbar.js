@@ -135,10 +135,13 @@
   function pageCtx() { var c = window.PAGE_CTX; return (c && c.entity) ? c : null; }
   function scroll() { body.scrollTop = body.scrollHeight; }
 
-  function open() {
+  function open(ctxOverride) {
+    // ctxOverride: 一次性上下文(如动态页每张卡的「问句子」)。此前这类入口只能改写
+    // window.PAGE_CTX, 而它不会还原——点过一张卡之后, 该页所有提问都被永久打上那篇
+    // 文章的上下文。加个可选参数即可, 不传时行为与原先完全一致(向后兼容)。
     if (ov.classList.contains('open')) return;
     lastFocus = document.activeElement;
-    var c = pageCtx();
+    var c = (ctxOverride && ctxOverride.entity) ? ctxOverride : pageCtx();
     if (c) { ctx.hidden = false; ctx.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i> 正在看：<b>' + esc(c.title || c.entity) + '</b> · 可直接就它追问'; }
     else { ctx.hidden = true; }
     if (!started) { greet(); started = true; }

@@ -708,7 +708,12 @@ def extract_readable(page, base_url):
 IMG_DIR = ROOT / "news" / "img"
 IMG_UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
           "(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36")  # mmbiz 等图床对非浏览器 UA 挑剔
-IMG_MAGIC = (b"\x89PNG", b"\xff\xd8", b"GIF8", b"RIFF", b"<svg", b"<?xm", b"BM", b"II*\x00", b"MM\x00*")
+# SVG 与 XML 魔数已移除(2026-07-30): SVG 是**可执行文档**, 能内嵌 <script>。原先它被判为
+# 合法图片、下载进 news/img/ 由 juzibot.com 以 image/svg+xml 提供, 访客直接打开该 URL
+# 浏览器就会执行其中的脚本——在我们自己域下的存储型 XSS。本地化只对 own 源做, 但 own 源的
+# 文章完全可能引用外部图床的 SVG。移除后 SVG 判为非图片、走 miss 分支保留原始外链地址:
+# 图照样显示(从原图床加载), 只是不再由我们托管, 风险归零。
+IMG_MAGIC = (b"\x89PNG", b"\xff\xd8", b"GIF8", b"RIFF", b"BM", b"II*\x00", b"MM\x00*")
 # AVIF/HEIF 是 ISOBMFF: 开头是盒长度, "ftyp" 在偏移 4、品牌在偏移 8, startswith 认不出(Bugbot PR#100)
 IMG_FTYP_BRANDS = (b"avif", b"avis", b"mif1", b"msf1", b"heic", b"heix")
 
@@ -717,7 +722,7 @@ def is_image_bytes(raw):
     """图片二进制识别: 常规魔数(PNG/JPEG/GIF/WebP-RIFF/SVG/BMP/TIFF) 或 AVIF/HEIF 的 ftyp 盒。"""
     return raw.startswith(IMG_MAGIC) or (raw[4:8] == b"ftyp" and raw[8:12] in IMG_FTYP_BRANDS)
 CTYPE_EXT = {"image/png": ".png", "image/jpeg": ".jpg", "image/gif": ".gif", "image/webp": ".webp",
-             "image/svg+xml": ".svg", "image/avif": ".avif", "image/bmp": ".bmp"}
+             "image/avif": ".avif", "image/bmp": ".bmp"}   # svg 有意不列: 见 IMG_MAGIC 处说明
 
 
 def fetch_image(url):
@@ -742,7 +747,7 @@ def img_ext(url, ctype):
         return ".jpg" if e in ("jpeg", "jpg") else f".{e}"
     if ctype in CTYPE_EXT:
         return CTYPE_EXT[ctype]
-    m = re.search(r"\.(png|jpe?g|gif|webp|svg|avif|bmp)$", urlparse(url).path, re.I)
+    m = re.search(r"\.(png|jpe?g|gif|webp|avif|bmp)$", urlparse(url).path, re.I)  # svg 不列, 见 IMG_MAGIC
     if m:
         e = m.group(1).lower()
         return ".jpg" if e in ("jpeg", "jpg") else f".{e}"
@@ -1923,9 +1928,20 @@ def safe_href(url):
     return esc(url) if re.match(r"https?://", url, re.I) else "#"
 
 
+def zh_title(it):
+    """真正可用的中文译题——title_zh 必须与原标题**确实不同**才算译题。
+
+    有些条目的 title_zh 与 title 一字不差(翻译层原样落回), 而"当标题用"和"渲染一行
+    原题："此前共用同一个判据 it.get("title_zh"), 于是同一个英文标题被显示两遍
+    (实测 46/280 条内联条目命中)。判据收紧到这里, disp_title 与三处「原题：」一起生效。
+    """
+    z = (it.get("title_zh") or "").strip()
+    return z if z and z != (it.get("title") or "").strip() else ""
+
+
 def disp_title(it):
     """展示标题: 英文条目有译题用中文题, 原题降为小字。"""
-    return it.get("title_zh") or it["title"]
+    return zh_title(it) or it["title"]
 
 
 def disp_summary(it):
@@ -1947,7 +1963,7 @@ def card_html(it):
         + (f'<span class="nc-cat">{esc(it["category"])}</span>' if it["category"] else "")
         + f'<time class="nc-date" datetime="{esc(it["date"])}">{esc(it["date"])}</time></div>'
         f'<h3 class="nc-title"><a href="{esc(detail_href(it))}">{esc(disp_title(it))}</a></h3>'
-        + (f'<p class="nc-orig">原题：{esc(it["title"])}</p>' if it.get("title_zh") else "")
+        + (f'<p class="nc-orig">原题：{esc(it["title"])}</p>' if zh_title(it) else "")
         + f'<p class="nc-sum">{esc(disp_summary(it))}</p>'
         + (f'<p class="nc-quip"><i class="fa-solid fa-quote-left"></i>{esc(it["quip"])}</p>' if it.get("quip") else "")
         + '<div class="nc-foot">'
@@ -1982,7 +1998,7 @@ def feed_item_html(it):
         + (f'<span class="fd-cat">{esc(it["category"])}</span>' if it["category"] else "")
         + f'<time class="fd-date" datetime="{esc(it["date"])}">{esc(it["date"][5:])}</time></div>'
         f'<h3 class="fd-title"><a href="{esc(detail_href(it))}">{esc(disp_title(it))}</a></h3>'
-        + (f'<p class="fd-orig">原题：{esc(it["title"])}</p>' if it.get("title_zh") else "")
+        + (f'<p class="fd-orig">原题：{esc(it["title"])}</p>' if zh_title(it) else "")
         + (f'<p class="fd-sum">{esc(summary)}</p>' if summary else "")
         + (f'<p class="fd-quip"><i class="fa-solid fa-quote-left"></i>{esc(it["quip"])}</p>' if it.get("quip") else "")
         + (f'<div class="fd-tags">{tags}</div>' if tags else "")
@@ -2192,7 +2208,11 @@ def normalize_links(h, base):
     if not h:
         return h
     h = re.sub(r'<a\b[^>]*?href\s*=\s*"mailto:[^"]*"[^>]*>(.*?)</a>', r"\1", h, flags=re.S | re.I)
-    h = re.sub(r'<a\b[^>]*?href\s*=\s*"(?!https?://)[^":]*://[^"]*"[^>]*>(.*?)</a>', r"\1", h, flags=re.S | re.I)
+    # 畸形协议判据必须是"合法 scheme 形状"(字母开头 + 字母数字/+-. ), 不能只写 [^":]*://——
+    # 那会把 href="/search?q=http://x" 这类**相对链接**误判成畸形协议整条拆成纯文本
+    # (`/search?q=http` 不含冒号, 正好接上 `://`)。收紧后 `ttps://` 仍命中、相对链接安全。
+    h = re.sub(r'<a\b[^>]*?href\s*=\s*"(?!https?://)[A-Za-z][A-Za-z0-9+.\-]*://[^"]*"[^>]*>(.*?)</a>',
+               r"\1", h, flags=re.S | re.I)
 
     def _abs(m):
         u = m.group(2).strip()
@@ -2203,6 +2223,17 @@ def normalize_links(h, base):
         except ValueError:
             return m.group(0)
     return re.sub(r'(href\s*=\s*")([^"]*)(")', _abs, h, flags=re.I)
+
+
+def _bare_host(u):
+    """URL 的裸主机名(小写、去掉 www. 前缀), 用于「是不是自家域名」判断。
+
+    不要用 netloc.lstrip("www.")——lstrip 接的是**字符集合**不是前缀: 它在
+    www.juzibot.com 上恰好给出正确结果, 但 wow.example.com 会被啃掉开头的 w。
+    偶然正确的写法比明显错误的更危险, 因为它会被当成对的沿用下去。
+    """
+    h = urlparse(u).netloc.lower()
+    return h[4:] if h.startswith("www.") else h
 
 
 def detail_html(it, lib, worthy):
@@ -2243,7 +2274,20 @@ def detail_html(it, lib, worthy):
     if own and full:
         robots, canonical = "index,follow", f"{SITE_BASE}/news/p/{it['id']}.html"
     else:
-        robots, canonical = "noindex,follow", it["url"]
+        robots = "noindex,follow"
+        # canonical 指原文是给**外部**转载做归属声明, 原文在别人域名下, 指过去无害。
+        # 但 product 源的 url 是**我们自己的**营销页——实测那 5 条分别指向 products/shouhu、
+        # workforce/geo、workforce/hr、products/dongxing, 以及 https://juzibot.com/ 首页。
+        # 「noindex + canonical 指向站内可收录页」是 Google 明确不建议的矛盾组合, 可能把
+        # noindex 传导给 canonical 目标——代价是产品主页乃至首页掉出索引, 不可接受。
+        # 自家 url 一律改指自身: 信号自洽(这页别收录), 不牵连任何其他页面。
+        # 按**域名**判断而不是 startswith(SITE_BASE): 登记表里哪天填成 http:// 或
+        # www.juzibot.com, 前缀比对就漏了, 而漏掉意味着这个高危问题悄悄没修到。
+        try:
+            same_site = _bare_host(it["url"]) == _bare_host(SITE_BASE)
+        except ValueError:
+            same_site = False
+        canonical = f"{SITE_BASE}/news/p/{it['id']}.html" if same_site else it["url"]
     # 结构化数据(2026-07-29): 只给允许收录的自家内容发 Article——官网自己卖 GEO 优化师,
     # 自家动态页该是样板间; 外部转载页 noindex, 发 schema 无益且易被判内容剽窃。
     schema = ""
@@ -2266,8 +2310,11 @@ def detail_html(it, lib, worthy):
             '<div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang">'
             '<i class="fa-solid fa-language"></i><span>翻译为中文</span></button>'
             '<span class="dp-lang-note">中文由 AI 翻译，仅供参考</span></div>'
-            f'<article class="dp-body" id="dpBodyOrig">{full}</article>'
-            f'<article class="dp-body" id="dpBodyZh" hidden>{zh}</article>'
+            # 两份正文各自声明语言: 页面框架是 <html lang="zh-CN">, 但 dpBodyOrig 装的是
+            # 英文原文——不标 lang="en" 的话屏幕阅读器会用中文发音念英文, 搜索引擎的语言
+            # 判定也跟着错(这类页有 91 个)。
+            f'<article class="dp-body" id="dpBodyOrig" lang="en">{full}</article>'
+            f'<article class="dp-body" id="dpBodyZh" lang="zh-CN" hidden>{zh}</article>'
         )
     elif full:
         body = f'<article class="dp-body">{full}</article>'
@@ -2314,7 +2361,7 @@ b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';})
       <time class="dp-date" datetime="{esc(it["date"])}">{esc(it["date"])}</time>
     </div>
     <h1 class="dp-title">{esc(title)}</h1>
-    {f'<p class="dp-orig">原题：{esc(it["title"])}</p>' if it.get("title_zh") else ""}
+    {f'<p class="dp-orig">原题：{esc(it["title"])}</p>' if zh_title(it) else ""}
     <p class="dp-by">来源：{esc(origin)}</p>
     <div class="dp-notice">{notice}</div>
     {f'<p class="dp-quip"><i class="fa-solid fa-quote-left"></i>{esc(it["quip"])}</p>' if it.get("quip") else ""}
@@ -2344,6 +2391,29 @@ b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';})
 # 版本), 任一输入变即重算, 绝不产生陈旧页。签名落 data/render-cache.json(随仓库提交, 供 CI
 # 跨轮增量; 不进任何内联/公开 HTML)。改模板结构时递增 RENDER_VER 触发全量重算。
 RENDER_VER = "8"  # 2026-07-30: 概念页证据改读原文镜像(原先只读中译, 中文条目全落空) → 全量重算
+
+# 模板源码指纹: 改了渲染模板却忘了 bump RENDER_VER, 增量缓存会把该更新的页全部跳过——
+# 这个坑我栽过两次(Article schema 没生效那次、概念索引页文案没生效那次), 而规则就写在上面
+# 那行注释里。与其依赖人记得, 不如让签名自己感知模板变化: 把渲染函数的源码一起哈希进去。
+# RENDER_VER 保留作人工总开关(想强制全量重算时改它), 日常改模板不再需要动它。
+_TPL_FNS = ("detail_html", "concept_html", "concept_index_html", "concept_page_shell",
+            "concept_evidence", "annotate_concepts", "img_render", "normalize_links", "ld_json")
+
+
+def _template_sig():
+    try:
+        import inspect
+        g = globals()
+        return _sha(*(inspect.getsource(g[f]) for f in _TPL_FNS if f in g))[:10]
+    except (OSError, TypeError):   # 源码不可得(打包/exec 场景)时退回纯人工版本号
+        return "nosrc"
+
+
+def render_ver():
+    """增量缓存的版本键 = 人工版本号 + 模板源码指纹。"""
+    return f"{RENDER_VER}.{_template_sig()}"
+
+
 RENDER_CACHE = ROOT / "data" / "render-cache.json"
 
 
@@ -2403,7 +2473,7 @@ def write_detail_pages(vis, items, lib, worthy):
         # 本条会标注哪些概念取决于门槛(worthy): 概念被引次数涨过门槛→该标了, 跌出→不能再标(否则
         # 链向已不存在的概念页=死链)。只纳入本条自己的概念的够格状态, 不让全库变动殃及全部页。
         wsig = "".join("1" if s in worthy else "0" for s in (it.get("concepts") or []))
-        sig = _sha(RENDER_VER, srccfg, csig, wsig, item_repr,
+        sig = _sha(render_ver(),srccfg, csig, wsig, item_repr,
                    _file_sig(CONTENT_DIR / f"{it['id']}.html"), _file_sig(zh_content_path(it["id"])))
         new_sigs[it["id"]] = sig
         if p.exists() and old_sigs.get(it["id"]) == sig:
@@ -2614,7 +2684,11 @@ def concept_index_html(lib, refs_map, worthy=None):
         '    <a class="cp-back" href="../../news.html"><i class="fa-solid fa-arrow-left"></i>返回动态</a>\n'
         '    <div class="cp-kicker"><i class="fa-solid fa-book-open"></i>AI 概念库</div>\n'
         f'    <h1 class="cp-title">概念索引</h1>\n'
-        f'    <p class="cp-lede">动态页聚合的内容里绕不开的 {len(lib)} 个概念，每个都用一段大白话讲清楚它是什么、对业务意味着什么。从任一概念页还能反查提到它的动态。</p>\n'
+        # 两个数字都要给: len(lib) 是概念库总量(每个都有定义, 详情页正文标注悬停即可看到),
+        # len(worthy) 才是本页铺出来的独立页数。原先只写 len(lib), 页面说「289 个概念」
+        # 却只有 107 张卡, 数字不实。
+        f'    <p class="cp-lede">动态页聚合的内容里绕不开的 {len(lib)} 个概念，每个都用一段大白话讲清楚它是什么、'
+        f'对业务意味着什么；其中被反复提到的 {len(worthy or lib)} 个已成独立页，可反查提到它的动态。</p>\n'
         f'    <div class="cx-grid">\n{cards}\n    </div>\n'
         '    <p class="cp-note">概念定义由句子互动动态管线的 AI 加工层生成、编辑维护；点击概念查看完整定义与相关动态。</p>'
     )
@@ -2633,6 +2707,20 @@ def concept_index_html(lib, refs_map, worthy=None):
                               f"{SITE_BASE}/news/c/index.html", inner, "AI 概念索引", set_schema)
 
 
+def detail_indexable(it):
+    """详情页是否允许收录——sitemap 与 detail_html 必须用同一份判据。
+
+    两处原本各写一遍, sitemap 那份漏了 mirror_on(): own 源一旦按设计改成 mirror=excerpt
+    (「来源方有异议就一行退级」这个开关本就是给人用的), 详情页立刻退成 noindex 导读,
+    而 sitemap 照旧把它收进去——等于主动告诉搜索引擎去抓一个自己声明了别抓的页。
+    判据分散就会漂移, 这和 worthy_concepts 漏掉第四处、长期挂 64 条死链是同一类错。
+    三个条件缺一不可: own 源 + 该源开着镜像 + 镜像文件真有内容。
+    """
+    p = CONTENT_DIR / f"{it['id']}.html"
+    return (it["source"] in OWN_SOURCES and mirror_on(it["source"])
+            and p.exists() and p.stat().st_size > 0)
+
+
 def write_news_sitemap(vis, lib, worthy):
     """动态页自维护 sitemap(2026-07-29): 概念页 252 个 + 自家详情页数十个都是允许收录的
     原创内容, 却一个都不在手工 sitemap.xml 里——搜索引擎只能靠爬内链慢慢摸, GEO 资产半埋。
@@ -2643,7 +2731,7 @@ def write_news_sitemap(vis, lib, worthy):
         urls.append((f"{SITE_BASE}/news/c/{slug}.html", "0.6"))
     urls.append((f"{SITE_BASE}/news/c/index.html", "0.7"))
     for it in vis:
-        if it["source"] in OWN_SOURCES and (CONTENT_DIR / f"{it['id']}.html").exists():
+        if detail_indexable(it):   # 与 detail_html 的 index 判据共用一份, 防漂移
             urls.append((f"{SITE_BASE}/news/p/{it['id']}.html", "0.6"))
     body = "\n".join(f'  <url><loc>{u}</loc><priority>{pr}</priority></url>' for u, pr in urls)
     (ROOT / "sitemap-news.xml").write_text(
@@ -2666,7 +2754,16 @@ def has_banned(s):
 def worthy_concepts(lib, vis):
     """够格发独立页的概念集合(2026-07-30 门槛)。四处必须用同一份, 否则就是死链:
     ①详情页正文标注 ②概念页生成 ③sitemap ④概念页之间的「相关概念」链接。
-    ④曾被漏掉, 长期挂着 64 条死链——write_concept_pages 末尾现有自检兜底。"""
+    ④曾被漏掉, 长期挂着 64 条死链——write_concept_pages 末尾现有自检兜底。
+
+    门槛只管**新页要不要发**, 不管**老页要不要留**: 已经发出去的概念页一律保留。
+    原因是引用数会因为外部条目被 keep_max 修剪而下降(99 个页里有 31 个只差一条),
+    一跌破门槛页面就被 unlink, 而它是 index 且已进 sitemap 的原创页——Google 那边
+    直接变软 404(nginx 把未知路径重定向回首页), 白丢一个已收录的 URL。
+    定义本身是原创资产, 价值不随引用数波动; URL 一旦公开就是承诺。
+    已存在的页面文件本身就是"发布过"的事实源, 不另开台账; ∩ lib 保证概念真从库里
+    删掉时页面仍会被清理。
+    """
     refs = {}
     for it in vis:
         for s in it.get("concepts") or []:
@@ -2676,6 +2773,12 @@ def worthy_concepts(lib, vis):
         rs = refs.get(s, [])
         if len(rs) >= CONCEPT_PAGE_MIN_REFS or any(i["source"] in COMPANY_SOURCES for i in rs):
             out.add(s)
+    if CONCEPT_DIR.exists():
+        published = {p.stem for p in CONCEPT_DIR.glob("*.html") if p.name != "index.html"}
+        kept = (published & set(lib)) - out
+        if kept:
+            print(f"  [概念页] 保留 {len(kept)} 个已发布但当前引用不足门槛的页(URL 稳定优先)")
+        out |= published & set(lib)
     return out
 
 
@@ -2686,9 +2789,11 @@ def concept_evidence(it, c):
     """给「概念×动态」这一对取一段**原文证据**(≤130字), 用于概念页的引用行。
 
     两级回退, 全部取自本站已有数据, 不做任何生成/改写(概念页要能经得起查证):
-      ① 本地正文里含该词(或别名)的那句话 —— 最贴题, 但正文只抓到 88/278 篇;
-      ② 条目摘要 —— 覆盖 423/587, 兜住剩下的。
-    命中的词用 <mark> 标出, 让读者一眼看到词在真实语境里怎么用。
+      ① 本地正文里含该词(或别名)的那句话 —— 最贴题, 但正文镜像不覆盖全部上站条目;
+      ② 条目摘要 —— 兜住剩下的, 但摘要里往往不含该概念词, 只算"相关"不算"佐证"。
+    命中的词用 <mark> 标出, 让读者一眼看到词在真实语境里怎么用; 走②的行没有 mark,
+    这个差别就是证据质量的分界——统计 mark 条数比统计覆盖率更能反映真实水平
+    (曾因只看覆盖率而高估: 86% 有证据, 但真正命中概念词的只有 42%)。
     """
     terms = [c["term"]] + [a for a in (c.get("aliases") or []) if len(a) >= 2]
     body = _EV_CACHE.get(it["id"], ...)
@@ -2770,7 +2875,7 @@ def write_concept_pages(lib, vis):
     new_sigs = {}
     want = {"index.html"}
     # 目录页: 模板版本 + 全库 + 各概念引用数
-    idx_sig = _sha(RENDER_VER, _lib_annot_sig(lib),
+    idx_sig = _sha(render_ver(),_lib_annot_sig(lib),
                    json.dumps({s: len(refs_map.get(s, [])) for s in sorted(worthy)}, sort_keys=True))
     new_sigs["index.html"] = idx_sig
     if (CONCEPT_DIR / "index.html").exists() and old_sigs.get("index.html") == idx_sig:
@@ -2796,7 +2901,7 @@ def write_concept_pages(lib, vis):
             f"{int((CONTENT_DIR / (r['id'] + '.html')).exists())}{int((CONTENT_DIR / (r['id'] + '.zh.html')).exists())}"
             for r in refs[:30])
         rel_repr = "|".join(f"{o}={lib.get(o, {}).get('term')}" for o in related)
-        sig = _sha(RENDER_VER, f"{c.get('term')}|{c.get('def')}|{'/'.join(c.get('aliases') or [])}", ref_repr, rel_repr)
+        sig = _sha(render_ver(),f"{c.get('term')}|{c.get('def')}|{'/'.join(c.get('aliases') or [])}", ref_repr, rel_repr)
         new_sigs[name] = sig
         if (CONCEPT_DIR / name).exists() and old_sigs.get(name) == sig:
             skipped += 1
@@ -2867,7 +2972,11 @@ def inject_page(spec, items, sources_meta, now):
     # 的这些, 不报错、不白屏——渐进增强, 不引入新的失败模式。
     comp = [_slim(i) for i in items if i["source"] in COMPANY_SOURCES]
     rad = [_slim(i) for i in items if i["source"] not in COMPANY_SOURCES]
-    inline_items = comp + rad[:RADAR_INLINE]
+    # 拼完必须重新按日期倒序: comp + rad[:N] 是两段各自有序的列表, 直接相接会让「全部」分区
+    # 的时间流在第 len(comp) 条处倒回(公司区走到 2018 年, 下一条突然跳回 2026)。
+    # 分区筛选按 source 走, 混排不影响它; 但「全部」视图看的就是时间流, 断裂即是错。
+    inline_items = sorted(comp + rad[:RADAR_INLINE],
+                          key=lambda x: (x.get("date", ""), x["id"]), reverse=True)
     rest = rad[RADAR_INLINE:]
     if spec.get("company_first") and rest:  # 仅卡片版分片(聚合版按月分组, 缺条目会断月份)
         (ROOT / "news-radar.json").write_text(

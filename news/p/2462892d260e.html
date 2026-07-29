@@ -91,12 +91,12 @@
       <time class="dp-date" datetime="2026-06-24">2026-06-24</time>
     </div>
     <h1 class="dp-title">Scaling Laws, Carefully</h1>
-    <p class="dp-orig">原题：Scaling Laws, Carefully</p>
+    
     <p class="dp-by">来源：Lilian Weng · 大咖观点</p>
     <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（Lilian Weng · 大咖观点）所有 · <a href="https://lilianweng.github.io/posts/2026-06-24-scaling-laws/" target="_blank" rel="noopener">阅读原文</a></span></div>
     
     <div class="dp-brief"><b>简报</b>深度学习缩放定律揭示模型规模、数据量与计算资源对训练损失的幂律关系，核心是优化计算资源分配。</div>
-    <div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang"><i class="fa-solid fa-language"></i><span>翻译为中文</span></button><span class="dp-lang-note">中文由 AI 翻译，仅供参考</span></div><article class="dp-body" id="dpBodyOrig"><p><a class="cpt" href="../c/scaling-laws.html" data-def="深度学习模型性能随参数、数据和计算量增加而可预测提升的经验规律">Scaling laws</a> are one of the most critical empirical findings in deep learning. The observation is simple in form: the training loss $L$ decreases predictably as we scale up model size $N$, dataset size $D$, and compute $C$, following a power-law curve, which appears as a straight line on a log-log plot. We can view scaling laws as a framework for describing the relationship between compute, loss, model size and data; at its core, it is about how to allocate precious compute optimally between $N$ and $D$.</p>
+    <div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang"><i class="fa-solid fa-language"></i><span>翻译为中文</span></button><span class="dp-lang-note">中文由 AI 翻译，仅供参考</span></div><article class="dp-body" id="dpBodyOrig" lang="en"><p><a class="cpt" href="../c/scaling-laws.html" data-def="深度学习模型性能随参数、数据和计算量增加而可预测提升的经验规律">Scaling laws</a> are one of the most critical empirical findings in deep learning. The observation is simple in form: the training loss $L$ decreases predictably as we scale up model size $N$, dataset size $D$, and compute $C$, following a power-law curve, which appears as a straight line on a log-log plot. We can view scaling laws as a framework for describing the relationship between compute, loss, model size and data; at its core, it is about how to allocate precious compute optimally between $N$ and $D$.</p>
 <p>This predictability makes scaling laws highly valuable in practice. A common workflow is to fit scaling laws on a handful of small runs and then extrapolate to estimate the token and compute requirements for larger models.</p>
 <table>
 	<thead>
@@ -456,7 +456,7 @@ $$
 <p>[12] Besiroglu et al. <a href="https://arxiv.org/abs/2404.10102" target="_blank" rel="noopener nofollow">“Chinchilla Scaling: A Replication Attempt.”</a> arXiv preprint arXiv:2404.10102, 2024.</p>
 <p>[13] Michaud et al. <a href="https://arxiv.org/abs/2303.13506" target="_blank" rel="noopener nofollow">“The Quantization Model of Neural Scaling”</a> NeurIPS 2023.</p>
 <p>[14] Brill. <a href="https://arxiv.org/abs/2412.07942" target="_blank" rel="noopener nofollow">“Neural Scaling Laws Rooted in the Data Distribution.”</a> arXiv preprint arXiv:2412.07942, 2024.</p>
-<p>[15] Rae et al. <a href="https://arxiv.org/abs/2112.11446" target="_blank" rel="noopener nofollow">“Scaling Language Models: Methods, Analysis &amp; Insights from Training Gopher.”</a> arXiv preprint arXiv:2112.11446, 2021.</p></article><article class="dp-body" id="dpBodyZh" hidden><p><a class="cpt" href="../c/scaling-laws.html" data-def="深度学习模型性能随参数、数据和计算量增加而可预测提升的经验规律">缩放定律</a>是深度学习领域最重要的经验性发现之一。其观察形式很简单：当我们扩大模型规模 $N$、数据集规模 $D$ 和计算量 $C$ 时，训练损失 $L$ 会按照幂律曲线可预测地下降，在对数坐标图上呈现为一条直线。我们可以将缩放定律视为描述计算量、损失、模型规模和数据之间关系的框架；其核心在于如何最优地在 $N$ 和 $D$ 之间分配宝贵的计算资源。</p>
+<p>[15] Rae et al. <a href="https://arxiv.org/abs/2112.11446" target="_blank" rel="noopener nofollow">“Scaling Language Models: Methods, Analysis &amp; Insights from Training Gopher.”</a> arXiv preprint arXiv:2112.11446, 2021.</p></article><article class="dp-body" id="dpBodyZh" lang="zh-CN" hidden><p><a class="cpt" href="../c/scaling-laws.html" data-def="深度学习模型性能随参数、数据和计算量增加而可预测提升的经验规律">缩放定律</a>是深度学习领域最重要的经验性发现之一。其观察形式很简单：当我们扩大模型规模 $N$、数据集规模 $D$ 和计算量 $C$ 时，训练损失 $L$ 会按照幂律曲线可预测地下降，在对数坐标图上呈现为一条直线。我们可以将缩放定律视为描述计算量、损失、模型规模和数据之间关系的框架；其核心在于如何最优地在 $N$ 和 $D$ 之间分配宝贵的计算资源。</p>
 <p>这种可预测性使得缩放定律在实践中极具价值。一个常见的工作流程是：先用少量小规模实验拟合缩放定律，然后外推以估算更大模型所需的 token 数量和计算资源。</p>
 <table>
 	<thead>

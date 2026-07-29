@@ -91,12 +91,12 @@
       <time class="dp-date" datetime="2024-04-12">2024-04-12</time>
     </div>
     <h1 class="dp-title">Diffusion Models for Video Generation</h1>
-    <p class="dp-orig">原题：Diffusion Models for Video Generation</p>
+    
     <p class="dp-by">来源：Lilian Weng · 大咖观点</p>
     <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（Lilian Weng · 大咖观点）所有 · <a href="https://lilianweng.github.io/posts/2024-04-12-diffusion-video/" target="_blank" rel="noopener">阅读原文</a></span></div>
     
     <div class="dp-brief"><b>简报</b>扩散模型在图像合成上表现优异，现被用于更复杂的视频生成。视频生成需保证时间一致性，对模型的世界知识要求更高，计算成本也更大。</div>
-    <div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang"><i class="fa-solid fa-language"></i><span>翻译为中文</span></button><span class="dp-lang-note">中文由 AI 翻译，仅供参考</span></div><article class="dp-body" id="dpBodyOrig"><p><a href="https://lilianweng.github.io/posts/2021-07-11-diffusion-models/" target="_blank" rel="noopener nofollow">Diffusion models</a> have demonstrated strong results on image synthesis in past years. Now the research community has started working on a harder task—using it for video generation. The task itself is a superset of the image case, since an image is a video of 1 frame, and it is much more challenging because:</p>
+    <div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang"><i class="fa-solid fa-language"></i><span>翻译为中文</span></button><span class="dp-lang-note">中文由 AI 翻译，仅供参考</span></div><article class="dp-body" id="dpBodyOrig" lang="en"><p><a href="https://lilianweng.github.io/posts/2021-07-11-diffusion-models/" target="_blank" rel="noopener nofollow">Diffusion models</a> have demonstrated strong results on image synthesis in past years. Now the research community has started working on a harder task—using it for video generation. The task itself is a superset of the image case, since an image is a video of 1 frame, and it is much more challenging because:</p>
 <ol>
 <li>It has extra requirements on temporal consistency across frames in time, which naturally demands more world knowledge to be encoded into the model.</li>
 <li>In comparison to text or images, it is more difficult to collect large amounts of high-quality, high-dimensional video data, let along text-video pairs.</li>
@@ -418,7 +418,7 @@ $$
 <p>[10] Blattmann et al. 2023 <a href="https://arxiv.org/abs/2304.08818" target="_blank" rel="noopener nofollow">“Align your Latents: High-Resolution Video Synthesis with Latent Diffusion Models.”</a></p>
 <p>[11] Blattmann et al. 2023 <a href="https://arxiv.org/abs/2311.15127" target="_blank" rel="noopener nofollow">“Stable Video Diffusion: Scaling Latent Video Diffusion Models to Large Datasets.”</a></p>
 <p>[12] Esser et al. 2023 <a href="https://arxiv.org/abs/2302.03011" target="_blank" rel="noopener nofollow">“Structure and Content-Guided Video Synthesis with Diffusion Models.”</a></p>
-<p>[13] Bar-Tal et al. 2024 <a href="https://arxiv.org/abs/2401.12945" target="_blank" rel="noopener nofollow">“Lumiere: A Space-Time Diffusion Model for Video Generation.”</a></p></article><article class="dp-body" id="dpBodyZh" hidden><p><a href="https://lilianweng.github.io/posts/2021-07-11-diffusion-models/" target="_blank" rel="noopener nofollow">扩散模型</a>近年来在图像合成领域展现出了强大的效果。现在，研究社区开始着手攻克一个更难的任务——将其应用于视频生成。这项任务本身是图像生成任务的超集，因为图像可以看作是单帧的视频，而且它更具挑战性，原因如下：</p>
+<p>[13] Bar-Tal et al. 2024 <a href="https://arxiv.org/abs/2401.12945" target="_blank" rel="noopener nofollow">“Lumiere: A Space-Time Diffusion Model for Video Generation.”</a></p></article><article class="dp-body" id="dpBodyZh" lang="zh-CN" hidden><p><a href="https://lilianweng.github.io/posts/2021-07-11-diffusion-models/" target="_blank" rel="noopener nofollow">扩散模型</a>近年来在图像合成领域展现出了强大的效果。现在，研究社区开始着手攻克一个更难的任务——将其应用于视频生成。这项任务本身是图像生成任务的超集，因为图像可以看作是单帧的视频，而且它更具挑战性，原因如下：</p>
 <ol>
 <li>它对时间上帧与帧之间的时间一致性提出了额外要求，这自然需要将更多的世界知识编码到模型中。</li>
 <li>与文本或图像相比，收集大量高质量、高维度的视频数据更加困难，更不用说文本-视频对了。</li>

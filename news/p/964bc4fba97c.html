@@ -91,12 +91,12 @@
       <time class="dp-date" datetime="2026-07-29">2026-07-29</time>
     </div>
     <h1 class="dp-title">SQLite in Production: Optimizing WAL Mode, Concurrency, and VFS Layers</h1>
-    <p class="dp-orig">原题：SQLite in Production: Optimizing WAL Mode, Concurrency, and VFS Layers</p>
+    
     <p class="dp-by">来源：Hacker News</p>
     <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（Hacker News）所有 · <a href="https://micrologics.org/blog/sqlite-in-production-optimizing-wal-mode-concurrency-and-vfs-layers-for-low-latency-app-servers" target="_blank" rel="noopener">阅读原文</a></span></div>
     
     <div class="dp-brief"><b>简报</b>文章探讨了 SQLite 在生产环境中的应用，揭示了其“仅限本地”的误解，并介绍了如何优化 WAL 模式、并发处理和 VFS 层。</div>
-    <div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang"><i class="fa-solid fa-language"></i><span>翻译为中文</span></button><span class="dp-lang-note">中文由 AI 翻译，仅供参考</span></div><article class="dp-body" id="dpBodyOrig"><h2>Demystifying the &quot;Local-Only&quot; Myth of SQLite</h2>
+    <div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang"><i class="fa-solid fa-language"></i><span>翻译为中文</span></button><span class="dp-lang-note">中文由 AI 翻译，仅供参考</span></div><article class="dp-body" id="dpBodyOrig" lang="en"><h2>Demystifying the &quot;Local-Only&quot; Myth of SQLite</h2>
 <p>Historically, SQLite has been relegated to the role of an embedded database for mobile clients, IoT devices, and local development environments. Conventional wisdom dictated that for any serious production-grade web application, a client-server database like PostgreSQL or MySQL was mandatory. However, this assumption overlooks a massive shift in modern hardware architecture.</p>
 <p>With the ubiquity of high-speed NVMe SSDs, ultra-fast local storage, and the trend toward single-tenant edge deployments, the network roundtrip latency of traditional databases has become the primary bottleneck. By running SQLite directly within the application process on the same server, you eliminate the network overhead entirely. Reads become simple memory-mapped file operations, resulting in sub-millisecond query execution.</p>
 <p>Yet, running SQLite in production requires a shift in how we configure, tune, and think about database concurrency. Out-of-the-box, SQLite is configured for maximum safety and compatibility, not high-throughput application servers. To unlock its true potential, we must dive deep into its internal mechanisms: Write-Ahead Logging (WAL), locking states, cache management, and custom Virtual File System (VFS) layers.</p>
@@ -197,7 +197,7 @@ PRAGMA auto_vacuum = INCREMENTAL;
 </code></pre>
 <h2>Conclusion: When to Run SQLite in Production</h2>
 <p>SQLite is no longer just an embedded toy. When properly configured with WAL mode, memory mapping, and proper transaction boundaries, a single SQLite database can easily handle hundreds of concurrent requests and millions of queries per day on a modest virtual private server.</p>
-<p>If your application requires complex, distributed write transactions across multiple geographical regions, or if your dataset exceeds several terabytes, a traditional system like PostgreSQL remains the correct tool. But if your system is read-heavy, fits within a few hundred gigabytes, and demands ultra-low latency, running SQLite directly on your application server is a highly performant, operationally simple, and cost-effective architecture choice.</p></article><article class="dp-body" id="dpBodyZh" hidden><h2>揭开“仅限本地”SQLite 迷思</h2>
+<p>If your application requires complex, distributed write transactions across multiple geographical regions, or if your dataset exceeds several terabytes, a traditional system like PostgreSQL remains the correct tool. But if your system is read-heavy, fits within a few hundred gigabytes, and demands ultra-low latency, running SQLite directly on your application server is a highly performant, operationally simple, and cost-effective architecture choice.</p></article><article class="dp-body" id="dpBodyZh" lang="zh-CN" hidden><h2>揭开“仅限本地”SQLite 迷思</h2>
 <p>长期以来，SQLite 被局限于移动客户端、物联网设备和本地开发环境的嵌入式数据库角色。传统观念认为，对于任何严肃的生产级 Web 应用，像 PostgreSQL 或 MySQL 这样的客户端-服务器数据库是必不可少的。然而，这种假设忽略了现代硬件架构的巨大转变。</p>
 <p>随着高速 NVMe SSD、超快本地存储以及单租户边缘部署趋势的普及，传统数据库的网络往返延迟已成为主要瓶颈。通过在相同服务器上的应用程序进程中直接运行 SQLite，你可以完全消除网络开销。读取操作变成了简单的内存映射文件操作，实现了亚毫秒级的查询执行。</p>
 <p>然而，在生产环境中运行 SQLite需要我们在配置、调优和数据库并发处理方式上做出转变。开箱即用的 SQLite 是为最大安全性和兼容性而配置的，而非高吞吐量应用服务器。要释放其真正潜力，我们必须深入研究其内部机制：预写日志（WAL）、锁定状态、缓存管理和自定义虚拟文件系统（VFS）层。</p>

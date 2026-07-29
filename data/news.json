@@ -1,8 +1,8 @@
 {
  "generated_by": "build_news.py",
- "generated_at": "2026-07-30T03:41:50+08:00",
- "count": 596,
- "visible": 280,
+ "generated_at": "2026-07-30T05:04:08+08:00",
+ "count": 599,
+ "visible": 282,
  "sources": [
   {
    "id": "rui-blog",
@@ -10,7 +10,7 @@
    "type": "sitemap",
    "home": "https://rui.juzi.bot/",
    "status": "ok",
-   "last_sync": "2026-07-30T03:41:50+08:00",
+   "last_sync": "2026-07-30T05:04:08+08:00",
    "group": "company",
    "ai": true,
    "count": 37
@@ -21,7 +21,7 @@
    "type": "feishu-base",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T03:41:50+08:00",
+   "last_sync": "2026-07-30T05:04:08+08:00",
    "group": "company",
    "ai": false,
    "count": 0
@@ -32,7 +32,7 @@
    "type": "manual",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T03:41:50+08:00",
+   "last_sync": "2026-07-30T05:04:08+08:00",
    "group": "company",
    "ai": false,
    "count": 5
@@ -43,7 +43,7 @@
    "type": "manual",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T03:41:50+08:00",
+   "last_sync": "2026-07-30T05:04:08+08:00",
    "group": "company",
    "ai": false,
    "count": 0
@@ -54,7 +54,7 @@
    "type": "rss",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T03:41:50+08:00",
+   "last_sync": "2026-07-30T05:04:08+08:00",
    "group": "radar",
    "ai": true,
    "count": 99
@@ -65,7 +65,7 @@
    "type": "rss",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T03:41:50+08:00",
+   "last_sync": "2026-07-30T05:04:08+08:00",
    "group": "radar",
    "ai": true,
    "count": 87
@@ -76,10 +76,10 @@
    "type": "hn-algolia",
    "home": "https://news.ycombinator.com/",
    "status": "ok",
-   "last_sync": "2026-07-30T03:41:50+08:00",
+   "last_sync": "2026-07-30T05:04:08+08:00",
    "group": "radar",
    "ai": true,
-   "count": 27
+   "count": 29
   },
   {
    "id": "qisi",
@@ -87,7 +87,7 @@
    "type": "qisi-list",
    "home": "https://news.miracleplus.com/",
    "status": "ok",
-   "last_sync": "2026-07-30T03:41:50+08:00",
+   "last_sync": "2026-07-30T05:04:08+08:00",
    "group": "radar",
    "ai": true,
    "count": 25
@@ -419,6 +419,28 @@
    "concepts_full": true
   },
   {
+   "id": "ce380da70fd5",
+   "title": "Claude Is Down",
+   "url": "https://status.claude.com/incidents/q2kg8n613kr3",
+   "summary": "",
+   "category": "",
+   "tags": [],
+   "date": "2026-07-29",
+   "source": "hn",
+   "source_name": "Hacker News",
+   "author": "Hacker News",
+   "hn": "https://news.ycombinator.com/item?id=49102150",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-30"
+   },
+   "brief": "Claude 服务目前出现故障，无法正常访问。用户遇到服务中断问题。",
+   "brief_full": false,
+   "title_zh": "Claude Is Down",
+   "concepts": [],
+   "concepts_full": false
+  },
+  {
    "id": "cb61eb1c5387",
    "title": "OceanBase回应融资报道：全力投入AI数据创新，与资本市场保持开放沟通",
    "url": "https://www.qbitai.com/2026/07/462380.html",
@@ -465,6 +487,30 @@
     "user-state-modeling"
    ],
    "concepts_full": true
+  },
+  {
+   "id": "c67f0599e5bd",
+   "title": "Kimi K3-256k",
+   "url": "https://www.kimi.com/code/docs/en/kimi-code/models",
+   "summary": "",
+   "category": "",
+   "tags": [],
+   "date": "2026-07-29",
+   "source": "hn",
+   "source_name": "Hacker News",
+   "author": "Hacker News",
+   "hn": "https://news.ycombinator.com/item?id=49101852",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-30"
+   },
+   "brief": "Kimi K3-256k 是一款大语言模型，支持超长上下文处理。该模型能够处理长达 256k tokens 的文本内容。",
+   "brief_full": false,
+   "title_zh": "Kimi K3-256k",
+   "concepts": [
+    "long-context-window"
+   ],
+   "concepts_full": false
   },
   {
    "id": "c57c419013a8",
@@ -1223,6 +1269,23 @@
    "ai": {
     "keep": false,
     "at": "2026-07-29"
+   }
+  },
+  {
+   "id": "531730882c6d",
+   "title": "A.I. companies are recruiting electricians and carpenters by the thousands",
+   "url": "https://www.nytimes.com/2026/07/29/business/economy/data-center-electricians-training.html",
+   "summary": "",
+   "category": "",
+   "tags": [],
+   "date": "2026-07-29",
+   "source": "hn",
+   "source_name": "Hacker News",
+   "author": "Hacker News",
+   "hn": "https://news.ycombinator.com/item?id=49098198",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-30"
    }
   },
   {

@@ -91,12 +91,12 @@
       <time class="dp-date" datetime="2024-07-07">2024-07-07</time>
     </div>
     <h1 class="dp-title">Extrinsic Hallucinations in LLMs</h1>
-    <p class="dp-orig">原题：Extrinsic Hallucinations in LLMs</p>
+    
     <p class="dp-by">来源：Lilian Weng · 大咖观点</p>
     <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（Lilian Weng · 大咖观点）所有 · <a href="https://lilianweng.github.io/posts/2024-07-07-hallucination/" target="_blank" rel="noopener">阅读原文</a></span></div>
     
     <div class="dp-brief"><b>简报</b>文章将LLM的幻觉限定为生成与上下文或世界知识不符的虚构内容，分为上下文内和上下文外两类，强调其与一般错误的区别。</div>
-    <div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang"><i class="fa-solid fa-language"></i><span>翻译为中文</span></button><span class="dp-lang-note">中文由 AI 翻译，仅供参考</span></div><article class="dp-body" id="dpBodyOrig"><p>Hallucination in large language models usually refers to the model generating unfaithful, fabricated, inconsistent, or nonsensical content. As a term, hallucination has been somewhat generalized to cases when the model makes mistakes. Here, I would like to narrow down the problem of hallucination to cases where the model output is fabricated and <strong>not grounded</strong> by either the provided context or world knowledge.</p>
+    <div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang"><i class="fa-solid fa-language"></i><span>翻译为中文</span></button><span class="dp-lang-note">中文由 AI 翻译，仅供参考</span></div><article class="dp-body" id="dpBodyOrig" lang="en"><p>Hallucination in large language models usually refers to the model generating unfaithful, fabricated, inconsistent, or nonsensical content. As a term, hallucination has been somewhat generalized to cases when the model makes mistakes. Here, I would like to narrow down the problem of hallucination to cases where the model output is fabricated and <strong>not grounded</strong> by either the provided context or world knowledge.</p>
 <p>There are two types of hallucination:</p>
 <ol>
 <li>In-context hallucination: The model output should be consistent with the source content in context.</li>
@@ -495,7 +495,7 @@ RARR leads to better-balanced results, especially in terms of preservation metri
 <p>[21] Lin et al. <a href="https://arxiv.org/abs/2405.01525" target="_blank" rel="noopener nofollow">“FLAME: Factuality-Aware Alignment for Large Language Models.”</a> arXiv preprint arXiv:2405.01525 (2024).</p>
 <p>[22] Tian &amp; Mitchell et al. <a href="https://arxiv.org/abs/2311.08401" target="_blank" rel="noopener nofollow">“Fine-tuning Language Models for Factuality.”</a> ICLR 2024. (<a href="https://github.com/kttian/llm_factuality_tuning" target="_blank" rel="noopener nofollow">code</a>)</p>
 <p>[23] Nakano, Hilton &amp; Balaji, et al. <a href="https://arxiv.org/abs/2112.09332" target="_blank" rel="noopener nofollow">“WebGPT: Browser-assisted question-answering with human feedback.”</a> arXiv preprint arXiv:2112.09332 (2021).</p>
-<p>[24] Menick et al. <a href="https://arxiv.org/abs/2203.11147" target="_blank" rel="noopener nofollow">“Teaching language models to support answers with verified quotes.”</a> arXiv preprint arXiv:2203.11147 (2022).</p></article><article class="dp-body" id="dpBodyZh" hidden><p>大型语言模型中的幻觉通常指模型生成不忠实、虚构、不一致或无意义的内容。作为一个术语，"幻觉"已被泛化到模型犯错的任何情况。在这里，我想将幻觉问题缩小到模型输出是虚构的，并且<strong>没有依据</strong>于提供的上下文或世界知识的情况。</p>
+<p>[24] Menick et al. <a href="https://arxiv.org/abs/2203.11147" target="_blank" rel="noopener nofollow">“Teaching language models to support answers with verified quotes.”</a> arXiv preprint arXiv:2203.11147 (2022).</p></article><article class="dp-body" id="dpBodyZh" lang="zh-CN" hidden><p>大型语言模型中的幻觉通常指模型生成不忠实、虚构、不一致或无意义的内容。作为一个术语，"幻觉"已被泛化到模型犯错的任何情况。在这里，我想将幻觉问题缩小到模型输出是虚构的，并且<strong>没有依据</strong>于提供的上下文或世界知识的情况。</p>
 <p>幻觉有两种类型：</p>
 <ol>
 <li>上下文内幻觉：模型输出应与上下文中的源内容保持一致。</li>
