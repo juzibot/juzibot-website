@@ -1,0 +1,17 @@
+<p>Thanks everyone for all the kind words and feedback. Super happy that you are enjoying <em>Build a <a href="https://sebastianraschka.com/glossary/#reasoning-model" target="_blank" rel="noopener nofollow">Reasoning Model</a> (From Scratch)</em>!</p>
+
+<p>Unfortunately, there’s a small typo in Listing 6.5 on page 198 (see the video below). The line <code>torch.manual_seed(0)</code> should be <code>torch.manual_seed(5)</code>.</p>
+
+<p>This is a tiny change, but it’s needed to reproduce the generated response in Listing 6.5 and the corresponding log-probability outputs later in Chapter 6. If you use 0, the code is of course still correct but the numeric results may be a bit different, which could be confusing. Anyway, it should be a small 1 character change :).</p>
+
+<p>This will be fixed in the next printing.</p>
+
+<p>I am sorry about the oversight, and I hope this note saves you some debugging time.</p>
+
+
+
+
+
+<p><br /></p>
+
+<p>Source: lightly edited website version of my <a href="https://substack.com/@rasbt/note/c-301484736" target="_blank" rel="noopener nofollow">Substack note</a>.</p>

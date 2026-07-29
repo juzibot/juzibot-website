@@ -1,0 +1,179 @@
+<h2>
+            In a land far-far away.. #
+        </h2><p>... there was once a far too cold cup of coffee next to a freshly brewed
+far-too-hot one. Four different terminals where three could have been closed an
+hour ago, and a shell script which I really (really) did not want to write.</p>
+<p>Who would have thought a single colon would be the one to save the <code>day</code> night?</p>
+<blockquote>
+<p><strong>Note</strong>: Want your mind blown straight away? See more colons in the limelight.</p>
+</blockquote>
+<h2>
+            Checking for required arguments #
+        </h2><p>This is a familiar dance, it&#x27;s pretty much muscle memory by this point. You have
+a script, it takes a few arguments, and some of them are mandatory; alright, an
+if-statement like so many times before:</p>
+<pre><code>if [ -z &quot;$1&quot; ]; then
+   echo &quot;missing argument, aborting.&quot; 1&gt;&amp;2
+   exit 1
+fi
+
+echo &quot;Hello $1!&quot;
+</code></pre>
+<p>Though.. what if I told you the above four lines could be replaced by just... one?</p>
+<pre><code>: &quot;${1:?missing argument, aborting.}&quot;
+echo &quot;Hello $1!&quot;
+</code></pre>
+<pre><code>$ bash example.sh
+example.sh: line 1: 1: missing argument, aborting.
+
+$ bash example.sh refp
+Hello refp!
+</code></pre>
+<p>And look what happens if we refer to a variable with a proper name — it&#x27;s
+the same behavior as previously but easier to spot; the diagnostic includes
+the name of our variable!</p>
+<pre><code>: &quot;${GREET_NAME:?missing argument, aborting.}&quot;
+echo &quot;Hello $GREET_NAME!&quot;
+</code></pre>
+<pre><code>$ bash greet.sh
+greet.sh: line 1: GREET_NAME: missing argument, aborting.
+</code></pre>
+<h3>
+            Parameter expansion and the story of <code>:?</code> #
+        </h3><p>There are two things going on in the previous snippet, and you are correct in
+identifying that one part is using <a href="https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_06_02" target="_blank" rel="noopener nofollow">parameter expansion</a>:</p>
+<ul>
+<li><p>The syntax <code>${name:?diagnostic}</code> checks whether <code>$name</code> is unset or empty
+— if it is, the diagnostic is printed to <em>stderr</em> and the shell exits with a
+non-zero status, otherwise;</p>
+</li>
+<li><p>if the variable is set, it is equivalent to <code>$name</code>.</p>
+</li>
+</ul>
+<h2>
+            That.. other colon #
+        </h2><p>So that&#x27;s one colon, but what about that other one, the one who sits alone at
+the beginning of the line?</p>
+<ul>
+<li><p><code>:</code> is the <a href="https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_16" target="_blank" rel="noopener nofollow">null-command</a>
+— a builtin that does nothing but evaluate its arguments and discard the
+result.</p>
+</li>
+<li><p><code>:</code> is old — it goes all the way back to the <a href="https://en.wikipedia.org/wiki/Thompson_shell#Design" target="_blank" rel="noopener nofollow">1971 Thompson
+shell</a> where it doubled as a <a href="https://www.in-ulm.de/~mascheck/bourne/PWB/goto.1.html" target="_blank" rel="noopener nofollow">label</a> and Unix&#x27;s very first
+comment marker.</p>
+</li>
+<li><p><code>:</code> two eyes staring at you in the dark, with love.</p>
+</li>
+</ul>
+
+<h2>
+            More colons in the limelight #
+        </h2><p>Perhaps we have already established that there is more to <code>:</code> than meets the
+eye, but to prove the real magic of the <a href="https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_16" target="_blank" rel="noopener nofollow">null-command</a> —
+here are a few usages that blew my mind.</p>
+<pre><code>: &quot;${DATA_DIR:=/var/data}&quot;       
+: &quot;${RETRIES:=3}&quot;                
+</code></pre>
+<pre><code>: &gt; error.log                    
+: &gt; error.log &gt; access.log       
+</code></pre>
+<pre><code>( : &lt; dataset.json ) &amp;&amp; echo YES 
+( : &gt;&gt; result.json ) &amp;&amp; echo YES 
+</code></pre>
+<pre><code>trap : INT                       
+sleep 60                         
+</code></pre>
+<pre><code>set -u                           
+: &quot;$DEPLOY_ENV&quot; &quot;$HOST&quot;          
+</code></pre>
+<pre><code>if some-command; then
+    :                            
+else
+    echo &quot;command failed&quot;
+fi
+</code></pre>
+<h2>
+            Con-colon-sion #
+        </h2><p>So, if you are like me and prefer less typing (gotta go fast) — the
+<a href="https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_16" target="_blank" rel="noopener nofollow">null-command</a> and <a href="https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_06_02" target="_blank" rel="noopener nofollow">parameter expansion</a> are a pair
+worth studying before your coffee goes cold.</p>
+<p>And also.. isn&#x27;t this — magic?</p>
+<pre><code>set  : : : : : : : : : : : : : : : : : : : : :
+
+while : colons are more than &quot;${1:?magic}&quot;; do
+    echo &quot;$*&quot; &amp;&amp; shift
+done
+</code></pre>
+<blockquote>
+<p><strong>Note</strong>: The above example is safe to run locally, try it!</p>
+</blockquote>
+<h2>
+            Frequently Asked Questions #
+        </h2><p>After reading a few comments online, it seems I skipped over some things worth
+explaining. I will keep this section updated as questions come up.</p>
+<ul>
+<li><h3>
+            Why do I need the null-command? Doesn&#x27;t the expansion happen without the colon? #
+        </h3><p>The parameter expansion will happen regardless, but without a null-command or
+similar usage the shell will treat the resulting string as a command to run.</p>
+<pre><code>% ${HELLO:=123}
+zsh: command not found: 123
+</code></pre>
+<p>If we prefix our parameter-expansion with the null-command, the result is
+discarded, but the expression is still evaluated (setting <code>HELLO</code> to <code>123</code>).</p>
+<pre><code>% : ${HELLO:=123}
+% echo $HELLO
+123
+</code></pre>
+</li>
+<li><h3>
+            Why use the null-command when I could do <code>VAR=${VAR:-default-value}</code>? #
+        </h3><p>This at its core boils down to personal preference, but using our beloved
+colon we can shrink the number of potential typos to one (rather than two):</p>
+<pre><code>: &quot;${DATA_DIR:=/var/data}&quot;           
+DATA_DIR=&quot;${DATA_DRI:-/var/data}&quot;    
+</code></pre>
+</li>
+<li><h3>
+            Why would I do any of these when it hurts readability? #
+        </h3><p>There are a few common misconceptions about the — very contrived —
+examples presented in this article, questions regarding their usefulness,
+or if one should ever-ever use these things at all.</p>
+<p>Let&#x27;s take the below as an example.</p>
+<pre><code>if some-command; then
+    :                            
+else
+    echo &quot;command failed&quot;
+fi
+</code></pre>
+<p>Of course you can use <code>if ! some-command</code> and get rid of
+the branching, but that isn&#x27;t the point of the snippet
+— the point is to show that the null-command can be
+used in places where a command is required, but nothing is
+desired.</p>
+<p>It was never meant to be read as <em>&quot;oh, if I have an if-statement I should use
+null-command&quot;</em>, it is intended to be read as <em>&quot;oh, if I am in a context which
+requires a command, I can use the null-command to no-op it&quot;</em>.</p>
+<h4>
+            Clever real-world usage of <code>:</code> in the wild #
+        </h4><p>User
+<a href="https://news.ycombinator.com/user?id=fphilipe" target="_blank" rel="noopener nofollow">ifphilipe</a>
+posted what follows as <a href="https://news.ycombinator.com/item?id=49047453" target="_blank" rel="noopener nofollow">a comment</a> on
+<a href="https://news.ycombinator.com" target="_blank" rel="noopener nofollow">news.ycombinator.com</a>,
+which is the direct equivalent of needing a command which
+does absolutely nothing.</p>
+<blockquote>
+<p>I use the colon as EDITOR with Git when I want to do an
+interactive rebase combined with auto squash without
+having to edit the todo list. I have an alias[1] for that
+which I call a quick interactive rebase:</p>
+<p><code>riq = -c sequence.editor=: rebase --interactive</code></p>
+</blockquote>
+<p>Could this article have used the above rather than the so
+much debated if-statement? If I was clever enough to come
+up with it — yes.. but would it be as comprehensible
+in terms of understanding what <code>:</code> really is? I strongly
+suspect not.</p>
+</li>
+</ul>

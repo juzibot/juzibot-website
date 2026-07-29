@@ -1,0 +1,86 @@
+<h1>国产世界模型登顶李飞飞团队榜单！适配国产昇腾算力、代码权重全开源</h1>
+    			   
+             <img src="http://www.qbitai.com/wp-content/themes/liangziwei/imagesnew/head.jpg" referrerpolicy="no-referrer" /><em><a href="https://www.qbitai.com/author/simiao" target="_blank" rel="noopener nofollow">思邈</a></em>
+                          2026-07-24
+             22:19:06
+          
+          来源：<a href="https://www.qbitai.com" target="_blank" rel="noopener nofollow">量子位</a>            
+                          
+            <p>给它一张图，还你整个世界</p>
+                			<blockquote>
+<p>允中 发自 凹非寺</p>
+<p>量子位 | 公众号 QbitAI</p>
+</blockquote>
+<p>李飞飞团队的世界模型榜单，刚刚换了新榜首。</p>
+<img src="https://i.qbitai.com/wp-content/uploads/2026/07/0b4ec339ec811104c83ce20b4947681c.webp" referrerpolicy="no-referrer" />△WorldScore榜单
+<p>登顶的是<strong>兔展智能</strong>团队联合北大、鹏城实验室研发的<strong>UniWorld-View（模型已适配国产昇腾算力）</strong>：</p>
+<p>你随手拍一段视频，或者干脆只给一张图，它还你一段“相机轨迹任你指定”的新视角视频——</p>
+<p>推、拉、摇、移，甚至“绕着场景360°转一圈”都可以，提供“精确听话的相机位姿控制”。</p>
+<p>不管是单图3D生成还是视频4D生成，用的是“同一套代码、同一个模型”。</p>
+<p>真·Uni（统一）World-View了，本次世界模型的训练数据来自北大系初创企业<strong>元空智能</strong>，代码和权重也已<strong>全部开源</strong>：</p>
+<p>官方地址：PKU-YuanGroup/UniWorld-View: Official implementation of UniWorld-View</p>
+<h1>只看正脸，画出后脑勺</h1>
+<p>先说这事儿为什么难。</p>
+<p>新视角合成（Novel View Synthesis），本质上是让AI“脑补”没拍到的角度。</p>
+<p>而难点全在“大基线（large-baseline）”三个字上——</p>
+<p>说白了就是：<strong>只给AI看正脸，让它画出侧脸，甚至后脑勺。</strong></p>
+<p>传统路线NeRF、3DGS，走的是“重建”逻辑：看得越多，建得越好。</p>
+<p>可随手拍的单目视频，视角覆盖约等于没有。喂给它们，轻则空洞伪影满天飞，重则直接摆烂。</p>
+<p>生成式路线倒是敢画。但大多数方法只是把相机位姿当个“口头指令”（一个抽象的条件向量）塞进扩散模型——</p>
+<p>没有显式3D建模，走两步就飘，转大角度直接失控。</p>
+<p>于是近两年出现了第三条路：</p>
+<blockquote>
+<p>先用几何模型把画面撑成3D点云，再把目标视角的点云渲染图喂给视频扩散模型当条件。</p>
+</blockquote>
+<p>几何归几何，生成归生成，相机控制一下子准了。ViewCrafter、英伟达GEN3C，走的都是这条路。</p>
+<p>但在研发过程中，团队发现，这条路上藏着一个大家都踩过、却没人认真填的坑。</p>
+<h1>点云渲染，会“穿帮”</h1>
+<p>坑就出在点云渲染这一步。</p>
+<p>点云是一堆孤立的点：既不知道谁跟谁相连，也不知道哪面朝外。</p>
+<p>视角一转大，渲染图会出现两种经典穿帮：</p>
+<p>一是<strong>前景背景撕裂</strong>。</p>
+<p>深度边界处没有连接信息，视角一变，前景纹理就像口香糖一样被扯到背景上，或者背景像素直接糊到前景脸上。</p>
+<p>二是<strong>背面漏光</strong>。</p>
+<p>点云没有“面”的概念，不会自动遮挡。相机绕到物体背后，正面的点会直接透过来，相当于隔着后脑勺，看到了一张脸。</p>
+<p>小幅度换视角时，这些穿帮不明显，生成模型还能糊弄过去。</p>
+<p>可一旦上了大基线，条件图里全是错误几何信号，扩散模型直接被带偏：结构扭曲、伪影乱飞。</p>
+<p>UniWorld-View的第一板斧，就砍向这里——“遮挡感知点云渲染”（Occlusion-aware Point Cloud Rendering）。</p>
+<p>第一招：<strong>双重投影（Double-Reprojection），专治撕裂。</strong></p>
+<img src="https://i.qbitai.com/wp-content/uploads/2026/07/9413e58c49dfb16527adf0215446731a.webp" referrerpolicy="no-referrer" />△遮挡感知点云渲染：解决前景背景撕裂
+<p>把源画面投影到目标视角，再原路投影回来。</p>
+<p>来回一倒腾，凡是“回不来”的像素，就是会被遮挡的区域。</p>
+<p>把这些区域沿相机轨迹逐帧累积成遮挡mask，渲染时直接挖掉——该是洞的地方就老老实实留洞，交给生成模型去补，而不是留一堆错误纹理误导它。</p>
+<p>第二招：<strong>法向过滤，专治背面漏光。</strong></p>
+<img src="https://i.qbitai.com/wp-content/uploads/2026/07/352f71a8498fff498eec223c000766e3.webp" referrerpolicy="no-referrer" />△法线过滤点云渲染：解决背面漏光
+<p>给每个点估计法向量，和视线方向算个夹角：背对相机的点，直接踢出渲染。</p>
+<p>两招下来，条件图里的错误信号清零，剩下的全是可靠几何+明确的待补区域。</p>
+<h1>双分支架构，一个管构图，一个管上色</h1>
+<p>几何理顺了，还剩第二个矛盾：</p>
+<p>点云渲染图“位置对，但内容缺”；源视频“内容全，但位置不对”。</p>
+<p>怎么让生成结果既贴合目标视角，又和原视频长得一模一样？</p>
+<p>UniWorld-View的答案是<strong>“双流条件注入”</strong>：</p>
+<ul>
+<li>“几何流”：点云渲染图+mask，编码后加到潜变量上，负责把生成内容死死钉在3D结构上；</li>
+<li>“外观流”：源视频走新设计的“Ref-DiT模块”——新视角特征当Query，源视频特征当Key/Value做cross-attention，让模型自己去原视频里”翻素材”，哪儿缺补哪儿，连点云伪影造成的糊纹理都能顺手修掉。</li>
+</ul>
+<p>一个管构图，一个管上色，分工明确。</p>
+<img src="https://i.qbitai.com/wp-content/uploads/2026/07/a2b8583e68b4e1128e126bb6aa695136.webp" referrerpolicy="no-referrer" />△模型框架图
+<h1>4D重建</h1>
+<p>更进一步：既然能任意换机位，那多换几个机位，“单目视频不就变成多视角视频了”？</p>
+<p>多视角视频一到手，4D重建（动态3DGS）就从不可能任务变成了常规操作。</p>
+<p>这里还有个巧思。常规生成式方法的相机是“边走边拍”，空间变换和时间推进耦合在一起，视角在4D空间里分布极不均匀。</p>
+<p>UniWorld-View直接把两者解耦，分两步走：</p>
+<ul>
+<li><strong>“先拍定妆照”</strong>：把时间冻结在第一帧，绕场生成一圈静态环绕视图，当整个场景的外观锚点；</li>
+<li><strong>“再开机拍动态”</strong>：在固定机位上生成同步多视角视频，每个机位的第一帧用“定妆照”对齐，前景的自遮挡靠迭代生成逐步补全。</li>
+</ul>
+<p>生成多视角视频后，喂给4DGS优化，就得到了最终的4D场景。</p>
+<p>单目随手拍→可自由视角漫游的4D场景，一条龙打通。</p>
+<p>兔展智能由北京大学校友与北京大学视觉领域青年领军人才联合创立，公司专注<strong>视觉AI大模型研发</strong>，拥有世界一流的基于视觉大模型的多模态大模型底层自研技术，是国内视觉AI大模型领域代表企业。</p>
+<p>公司自主研发<strong>Open-Sora Plan、UniWorld</strong>等系列视觉AI模型，其中Open-Sora Plan是行业首个开源文生视频模型，2024年代码引用量位居全球第一；UniWorld视觉大模型率先探索理解与生成统一架构。</p>
+<p>其中，2025年，兔展智能发布的<strong>UniWorld-V2</strong>理解与生成统一架构的视觉大模型，早于NanoBanana3个月发布，引领理解生成一体化新方向；</p>
+<p>2026年4月，兔展智能发布<strong>UniWorld-V2.5</strong>，不仅与GPT-Image-2同周发布，而且在InfoGraph、图文交错、文字密集等场景上也对齐GPT-Image-2的生成能力。</p>
+<p>在持续推进视觉AI大模型技术演进的同时，兔展智能正加快推进UniWorld的大模型能力产品化，近期将推出产模一体设计生产工具<strong>RabbitVis</strong>，进一步推动视觉AI进入商业设计工作流。</p>
+                
+                
+                <em>版权所有，未经授权不得以任何形式转载及使用，违者必究。</em>

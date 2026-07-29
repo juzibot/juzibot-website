@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>User Interfaces of the Demo Scene - 句子·动态</title>
+<meta name="description" content="文章探讨了 Demo Scene 这一数字艺术亚文化，该文化有着悠久传统，场景创作者们会从零开始或借鉴现有工具来构建自己的工具。" />
+<meta name="robots" content="noindex,follow" />
+<link rel="canonical" href="https://www.datagubbe.se/scenegui/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="User Interfaces of the Demo Scene" />
+<meta property="og:description" content="文章探讨了 Demo Scene 这一数字艺术亚文化，该文化有着悠久传统，场景创作者们会从零开始或借鉴现有工具来构建自己的工具。" />
+<meta property="og:url" content="https://www.datagubbe.se/scenegui/" />
+<meta property="og:site_name" content="句子互动" />
+<meta name="twitter:card" content="summary" />
+
+<link rel="icon" href="../../logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../../assets/site.css" />
+<style>
+  /* 静态兜底导航: site.js 一执行就被 outerHTML 连同占位一起换掉, 访客几乎看不到它。
+     不隐藏也不 noscript 包裹——那会让爬虫拿不到, 而它存在的唯一理由就是给不跑 JS 的爬虫看。
+     样式做朴素一行, 万一 site.js 加载失败, 这排链接本身就是可用的降级导航。 */
+  .nav-fb{display:flex;flex-wrap:wrap;gap:6px 16px;padding:12px clamp(16px,4vw,40px);
+    border-bottom:1px solid var(--line-2);font-size:12.5px}
+  .nav-fb a{color:var(--ink-3);text-decoration:none}
+  .nav-fb a:hover{color:var(--blue)}
+
+  .dp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
+  .dp-wrap{max-width:760px;margin:0 auto}
+  .dp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
+  .dp-back:hover{color:var(--blue)}
+  .dp-meta{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:14px}
+  .dp-srcb{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:750;color:var(--sc,var(--blue))}
+  .s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
+  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-voices{--sc:#9333EA}
+  .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
+  .dp-cat{display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ink-3);background:#F6F7FB;border:1px solid var(--line-2);border-radius:6px;padding:2px 8px}
+  .dp-date{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-3)}
+  .dp-title{font-size:clamp(24px,3.2vw,34px);font-weight:850;letter-spacing:-.03em;line-height:1.32;word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance;margin-bottom:10px}
+  .dp-orig{font-size:13px;color:var(--ink-3);overflow-wrap:anywhere;margin-bottom:8px}
+  .dp-by{font-size:12.5px;font-weight:600;color:var(--ink-3);margin-bottom:18px}
+  .dp-notice{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:1.7;color:var(--ink-2);background:#F6F7FB;border:1px solid var(--line-2);border-radius:10px;padding:10px 14px;margin-bottom:22px}
+  .dp-notice i{color:var(--blue);margin-top:4px;flex:0 0 auto}
+  .dp-notice a{color:var(--blue);font-weight:700;overflow-wrap:anywhere}
+  .dp-quip{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.66;font-weight:600;color:var(--blue-deep);background:var(--blue-50);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:18px}
+  .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
+  .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
+  .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
+  .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
+  .dp-body p{margin:0 0 1.05em}
+  .dp-body img{max-width:100%;height:auto;border-radius:10px;margin:.4em 0}
+  .dp-body pre{background:#0F172A;color:#E2E8F0;font-family:var(--mono);font-size:12.5px;line-height:1.7;padding:14px 16px;border-radius:10px;overflow-x:auto;margin:0 0 1.1em}
+  .dp-body code{font-family:var(--mono);font-size:.92em}
+  .dp-body :not(pre)>code{background:#F1F5F9;padding:1px 5px;border-radius:5px}
+  .dp-body blockquote{border-left:3px solid var(--line);padding:2px 0 2px 14px;color:var(--ink-3);margin:0 0 1.05em}
+  .dp-body a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+  .dp-body ul,.dp-body ol{padding-left:1.5em;margin:0 0 1.05em}
+  .dp-body table{display:block;overflow-x:auto;border-collapse:collapse;margin:0 0 1.1em}
+  .dp-body td,.dp-body th{border:1px solid var(--line);padding:6px 10px;font-size:.92em}
+  .dp-excerpt{font-size:15px;line-height:1.9;color:var(--ink-2);border-left:3px solid var(--line);padding:2px 0 2px 16px;margin-bottom:8px}
+  .dp-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;padding-top:20px;border-top:1px solid var(--line-2)}
+  .dp-btn{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:750;border-radius:999px;padding:10px 20px;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+  .dp-btn.pri{background:var(--blue);color:#fff}
+  .dp-btn.pri:hover{background:var(--blue-deep)}
+  .dp-btn.sec{background:#fff;color:var(--ink-2);border:1px solid var(--line)}
+  .dp-btn.sec:hover{color:var(--blue);border-color:var(--blue)}
+  .dp-note{font-size:11.5px;line-height:1.7;color:var(--ink-3);margin-top:18px}
+  .dp-langbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+  .dp-lang{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:750;color:var(--blue);
+    background:var(--blue-50);border:1px solid var(--blue-100);border-radius:999px;padding:7px 14px;
+    transition:background .2s var(--ease),border-color .2s var(--ease)}
+  .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
+  .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div id="site-nav" class="nav-fb"><a href="../../index.html">句子互动</a><a href="../../products/miaodong.html">句子秒懂</a><a href="../../products/shouhu.html">句子守护</a><a href="../../products/canmou.html">句子问数</a><a href="../../products/dongxing.html">句子懂行</a><a href="../../products/miaohui.html">句子秒回</a><a href="../../products/cli.html">句子 CLI</a><a href="../../products/zhizao.html">句子制造</a><a href="../../fde.html">FDE</a><a href="../../enterprise.html">企业方案</a><a href="../../industries.html">行业</a><a href="../../about.html">关于我们</a><a href="../../news.html">动态</a></div>
+<main class="dp-main">
+  <div class="dp-wrap">
+    <a class="dp-back" href="../../news.html"><i class="fa-solid fa-arrow-left"></i>返回动态</a>
+    <div class="dp-meta">
+      <span class="dp-srcb s-hn"><i class="fa-brands fa-hacker-news"></i>Hacker News</span>
+      
+      <time class="dp-date" datetime="2026-07-29">2026-07-29</time>
+    </div>
+    <h1 class="dp-title">User Interfaces of the Demo Scene</h1>
+    <p class="dp-orig">原题：User Interfaces of the Demo Scene</p>
+    <p class="dp-by">来源：Hacker News</p>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（Hacker News）所有 · <a href="https://www.datagubbe.se/scenegui/" target="_blank" rel="noopener">阅读原文</a></span></div>
+    
+    <div class="dp-brief"><b>简报</b>文章探讨了 Demo Scene 这一数字艺术亚文化，该文化有着悠久传统，场景创作者们会从零开始或借鉴现有工具来构建自己的工具。</div>
+    <div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang"><i class="fa-solid fa-language"></i><span>翻译为中文</span></button><span class="dp-lang-note">中文由 AI 翻译，仅供参考</span></div><article class="dp-body" id="dpBodyOrig"><h2>User Interfaces of the Demo Scene</h2>
+
+<p><b>Exploring the tools of the trade</b></p>
+<p><i>July 2026</i></p>
+
+<p>
+Ahh, the <a href="https://www.datagubbe.se/scenearch/" target="_blank" rel="noopener nofollow">demo scene</a> - a digital art subculture, a motley gang of creative nerds, and a favourite pastime of mine. So much amazing art, music and code has been produced by sceners, and anyone who comes into contact with the scene might start to wonder exactly <i>how</i> - apart from hours of dedicated grind, of course.
+</p>
+
+<p>
+The scene has a long and storied tradition of building its own tools. Sometimes from scratch, sometimes by stealing ideas or even code from existing offerings. In a combination of teenage inexperience, old habits, a penchant for experimenting and a desire to make things <i>look cool</i>, this has resulted in some rather peculiar user interfaces.
+</p>
+
+<p>
+A few of them are presented below. Most of them are for the Amiga, but several other platforms are represented as well.
+</p>
+
+<hr />
+
+<h2>Elite Sinus Producer</h2>
+
+<p>
+Not wanting to be accused of clickbaiting, let&#x27;s start off with one of the main attractions: <b>Elite Sinus Producer</b> (sinus here is to be understood as <a href="https://en.wikipedia.org/wiki/Sine" target="_blank" rel="noopener nofollow">sine</a>), made by Ipec Elite for the Amiga. Demos are usually described as &quot;real time&quot;, which is true in the sense that they&#x27;re (almost) never just animation players, and that demo effects are produced, frame by frame, from code. However, to achieve seemingly impossible technical feats, extensive &quot;cheating&quot; is employed. The most common cheat is probably the so called precalc, meaning that instead of doing complex maths on a 7 MHz (or even slower) CPU, lookup tables are utilized. A plethora of tools for creating such lookup tables exist. This is one of them.
+</p>
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/elitesinuesproducer-menu.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/elitesinuesproducer-menu.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+When first starting Elite Sinus Producer, the user is met with this menu. Upon pressing an F-key to make a selection, the corresponding menu option is highlighted and a sample of a cuckoo clock is played. Loudly.
+</p>
+
+<hr />
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/elitesinusproducer-flower.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/elitesinusproducer-flower.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+Here I&#x27;ve selected the &quot;Flower&quot; option. Pretty, no? This can then be saved to disk as (presumably) assembly source code. Any sprite would look nice when moving along this path!
+</p>
+
+<hr />
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/elitesinusproducer-help.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/elitesinusproducer-help.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+There&#x27;s also a handy help screen, which is so outlandish I <a href="https://www.datagubbe.se/scenegui/p/elitesinusproducer-helpmov.mp4" target="_blank" rel="noopener nofollow">had to grab a short film clip of it</a>: Part of the background consists of moving blue raster bars, and the other part flashes between red and cyan. This obviously helps immensely when reading the text, displayed in a font designed with nothing but legibility in mind.
+</p>
+
+<hr />
+
+<h2>Text Based Interfaces</h2>
+
+<p>
+Plenty of scene related tools are either command line utilities or predominantly text based. First out, we have the assemblers. There was a wide variety of assemblers for the Amiga, but the scene always favoured Seka, Asm-One and other derivatives of the same concept. There were so many different versions and hacks (Trash&#x27;m-one, for example) that the sprawling <a href="https://janeway.exotica.org.uk/release.php?id=97095" target="_blank" rel="noopener nofollow">family tree</a> rivals that of <a href="https://en.wikipedia.org/wiki/List_of_Unix_systems" target="_blank" rel="noopener nofollow">Unix systems</a>.
+</p>
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/asm-seka.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/asm-seka.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+Here&#x27;s Seka 2.0, and as we can see, it&#x27;s based on a commercial assembler. This type of assembler always asks the user for the size of the working memory to be allocated. They then enter a command line mode, which can be used to examine RAM memory and CPU registers, and load source files into the editor proper.
+</p>
+
+<hr />
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/asm-one.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/asm-one.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+Here&#x27;s AsmOne in one of its many incarnations. It&#x27;s quite similar to Seka (in fact, it&#x27;s &quot;Seka-Updated&quot;), but has more built-in commands and presumably other improvements as well (I&#x27;ve never been much of a coder). Interface-wise, it opens its own screen, as opposed to running in a window on the default Workbench screen.
+</p>
+
+<hr />
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/multi-ripper.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/multi-ripper.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+What if you found a piece of cool music or graphics in, say, a game? What if you wanted to steal some samples, or a sprite, or perhaps just save an entire tune for easy listening? Then you&#x27;d need a <i>ripper</i> - a tool for hunting through your computer&#x27;s memory, looking for remnants of such data after quitting the game. There were tons of various such rippers for the Amiga. Here&#x27;s Multi-Ripper, which has a fairly representative set of features.
+</p>
+
+<hr />
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/save_our_sources.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/save_our_sources.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+Here&#x27;s another type of ripper, specifically written to look for Seka assembly sources in memory after the computer had crashed. The Amiga, like most other home computers, had no memory protection, and demo coding is a notoriously crash-prone activity. Saving often was common practice, but even seasoned coders sometimes messed up and forgot. With a bit of luck, the code could be extracted from memory after a warm reboot.
+</p>
+
+<hr />
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/sinus-creator.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/sinus-creator.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+Here&#x27;s another type of sine precalculator, called The Sinus Creator. I have no idea if the numbers I&#x27;ve entered in the screenshot make sense, but the two-window text interface is interesting. Of course, the result can be saved as a Seka source file.
+</p>
+
+<hr />
+
+<h2>Music Trackers</h2>
+
+<p>
+Demo music has historically been made in trackers. Far from traditional notation, a tracker lets the musician enter tones along with various modifiers and effects in something that&#x27;s more reminiscent of a programming editor rather than regular composing. They also let the user manage instruments, whether sampled or synthesized.
+</p>
+
+<p>
+Sample-based trackers on the Amiga have an even more sprawling family tree than that of Amiga assemblers, but they all originate from Karsten Obarski&#x27;s commercial Ultimate Soundtracker from 1987. Being commercial and thus costing money, it was soon picked apart by sceners, which resulted in NoiseTracker, which was then revamped into ProTracker, which in turn exists in so many various versions and re-hashed hacks that it&#x27;s nigh impossible to keep track (heh) of. The sprawl is <a href="https://janeway.exotica.org.uk/release.php?id=74038" target="_blank" rel="noopener nofollow">even sprawlier</a> than that of Amiga assemblers!
+</p>
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/c64-soundmonitor.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/c64-soundmonitor.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+SoundMonitor 1.0 for the Commodore 64 (by Chris Huelsbeck) isn&#x27;t strictly speaking a scene release, and wasn&#x27;t called &quot;tracker&quot;. However, the interface (with one &quot;track&quot; per available sound channel) is what inspired the previously mentioned Ultimate Soundtracker, and is thus included here for posterity and correctness.
+</p>
+
+<hr />
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/noisetracker.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/noisetracker.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+NoiseTracker by the Swedish duo Mahoney and Kaktus wasn&#x27;t the first, but it was immensely popular and came to define the tracker experience for years to come. Its legacy lives on just not in Protracker on the Amiga, but on several other platforms as well.
+</p>
+
+<hr />
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/protracker-filepicker.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/protracker-filepicker.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+Here&#x27;s Protracker&#x27;s file picker. Just like in NoiseTracker above, it&#x27;s accessed by clicking the &quot;Disk Op.&quot; button in the rather dense interface. It&#x27;s hard to describe what a strange experience this UI delivers, because it&#x27;s almost - but not quite - intuitive to someone used to more mainstream Amiga programs. It&#x27;s easy to misclick, misunderstand or just plain miss things. To illustrate its idiosyncratic design, take note of the vertical EXIT button, which quits back to the main menu. It&#x27;s conveniently placed between the up and down arrows used for scrolling the purple file and directory listing.
+</p>
+
+<hr />
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/atarist-digicomposer.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/atarist-digicomposer.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+Here&#x27;s Digicomposer 1.0 for the Atari ST/e, which in turn builds on Noisetracker for the Atari. The interface is clearly more than just inspired by its Amiga counterpart. It&#x27;s but one of a whole menagerie of trackers for the Atari ST, some &quot;digi&quot; (sample-based) like this one, some for YM-chip based music.
+</p>
+
+<hr />
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/Fasttracker_II_v2.06_04.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/Fasttracker_II_v2.06_04.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+Fasttracker II for MS-DOS is iconic in its own right. With support for Gravis UltraSound and other advanced PC sound hardware, it has features for 16-bit samples, bizarre amounts of sound channels, and even lets the user play a simple version of <a href="https://en.wikipedia.org/wiki/Snake_(video_game_genre)" target="_blank" rel="noopener nofollow">Snake</a> if they so desire.
+</p>
+
+<hr />
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/abyss_highest_experience.gif" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/abyss_highest_experience.gif" referrerpolicy="no-referrer" /></a>
+</p><p>
+Abyss&#x27; Highest Experience is a chiptune tracker for the Amiga, intended to sound like the Commodore 64&#x27;s SID chip. The user interface is an interesting crossover between Soundtracker and a more modern, <a href="https://www.datagubbe.se/os20up/" target="_blank" rel="noopener nofollow">Workbench 2.0</a>-like look.
+</p>
+
+<hr />
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/atarist-megatizer.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/atarist-megatizer.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+I don&#x27;t know much about Megatizer for the Atari ST, but it sure does look cool!
+</p>
+
+<hr />
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/jamcrackerpro.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/jamcrackerpro.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+JamCrackerPro for the Amiga eschewed the traditional tracker UI and opted for a system-friendly, multi-window interface.
+</p>
+
+<hr />
+
+<h2>Disk Copiers</h2>
+
+<p>
+In order to distribute demos (and pirated software), disk copying was a common activity on the scene. Commodore provided a disk copier in AmigaOS, but it wasn&#x27;t always up to the task of copying demos and games that bypassed the file system by writing directly to the tracks of a floppy. Thus, special software was needed!
+</p>
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/x-copy.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/x-copy.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+Like SoundMonitor, X-Copy isn&#x27;t strictly a scene release. Although originally written by <a href="https://www.exotica.org.uk/wiki/Unit_A" target="_blank" rel="noopener nofollow">sceners</a>, it was released commercially and then heavily pirated on the scene. The prominently featured grids contain one square for each track on the disk, displaying the status for copying that particular part of the floppy. When a copy was finished (which could take some time), the program helpfully played a little &quot;boing&quot; sound.
+</p>
+
+<hr />
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/x-copy3.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/x-copy3.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+X-Copy was released in many versions during the Amiga heydays. Here&#x27;s X-Copy 3.0, apparently in an illicit variety distributed by the cracking group Paradox.
+</p>
+
+<hr />
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/d-copy.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/d-copy.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+Personally, I preferred D-Copy, mostly because I thought the user interface looked cool (and I still do). It is, as far as I know, a bona fide non-commercial scene product.
+</p>
+
+<hr />
+
+<h2>Other Tools</h2>
+
+<p>
+A short article like this can only ever scratch the surface of the numerous demo scene tools ever created. Here are but a few more various tools and interfaces, selected for being interesting and/or representative of their kind.
+</p>
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/titanics.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/titanics.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+This is Titanics Cruncher for the Amiga. A cruncher uses asymmetrical compression of executable files. This saves space on disk, with the tradeoff being longer loading times, due to the decrunching (decompression) of the executable upon running it. Several other crunchers exist, and on a variety of platforms.
+</p>
+
+<hr />
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/di_ansi_editor_2.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/di_ansi_editor_2.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+Before the Internet, there was the <a href="https://en.wikipedia.org/wiki/Bulletin_board_system" target="_blank" rel="noopener nofollow">Bulletin Board System</a>, or BBS. Sceners were usually interested in Elite BBS:es, meaning ones that offered pirated software for download. There were few, if any, Elite BBS:es without cool ANSI (or PETSCII, on the C64) graphics, for example in animated menu screens. Thus, many various ANSI editors popped up for different platforms. This is Digital Intelligence&#x27;s Ansi-Editor v2.4 for the Amiga, and it has a very peculiar user interface. The toolbar at the bottom displays the currently active colours, but you can&#x27;t select them from there. Click all you want, to no effect - you have to use the pull-down menu to actually pick one.
+</p>
+
+<hr />
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/chared.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/chared.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+Before Twitter, Facebook, IRC and even widespread access to modems and BBS:es, scroll texts were the communication medium of choice for the scene. Cool scrollers required cool fonts, and it could be helpful with a dedicated font (or charset) editor. Here&#x27;s Charedit by Escape, for MS-DOS.
+</p>
+
+<hr />
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/falcon-dspdit.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/falcon-dspdit.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+Home computers often came with custom or otherwise esoteric hardware. The Atari Falcon, for example, sported a Motorola 56001 digital signal processor. DSPdit by tSCc (short for The Sirius Cybernetics Corporation) is an editor and assembler made specifically for DSP56k programming. It uses the standard GEM toolkit, which gives it a very clean and professional look.
+</p>
+
+<hr />
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/sca-viruskiller.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/sca-viruskiller.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+The first computer virus for the Amiga was a bootblock virus, infecting the boot sector of floppy disks. As such, it could potentially ruin games and other floppies with custom bootblocks. It was constructed by the Swiss Cracking Association, SCA. The virus spread like wildfire and perhaps SCA was plagued by a guilty conscience, because later they also produced the very first virus killer for the Amiga - designed to counter their own virus. The mega-mighty interface is easy enough to grasp!
+</p>
+
+<hr />
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/trackmo-dos1993.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/trackmo-dos1993.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+As mentioned above, plenty of Amiga demos were so called trackmos, meaning they didn&#x27;t use the file system, but rather stored data straight on the tracks of a floppy disk. This soon resulted in various tooling becoming available for creating such trackmos. Mostly it was just code shared between sceners, but there were also complete software suites, like TrackmoDOS by Poison of NOVA. Among other things, it came with this orthodox file manager for writing and deleting files to a trackmo floppy. Being a scener tool, the GUI of course sports some rather spiffy colour gradients.
+</p>
+
+<hr />
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/raw_text.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/raw_text.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+This is RAW, which isn&#x27;t really a tool, but rather a disk magazine, or diskmag. A diskmag is just that - a periodical published on one or more floppy disks. Most of the articles were usually scene related, although some mags branched out and featured everything from short stories and poems to essays about history and politics. RAW was one of the most popular Amiga diskmags during the early 1990s, and as we can see, the UI was shiny and textured long before Frutiger Aero was a thing. It even came with a built-in palette editor (pictured), allowing the user to customize the text colours.
+</p>
+
+<hr />
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/atarifalcon-fuckpaint.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/atarifalcon-fuckpaint.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+This is FuckPaint, a pixel painter for the Atari Falcon. It is included here solely on the merit of its name, and its equally classy &quot;Analizer&quot; tool.
+</p>
+
+<hr />
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/amidp2.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/amidp2.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+Although not at all a scene production, <a href="https://www.datagubbe.se/dpaint/" target="_blank" rel="noopener nofollow">Deluxe Paint</a> must be mentioned here. To the best of my knowledge, the scene never produced a pixel painter for the Amiga (except later ports of <a href="https://en.wikipedia.org/wiki/GrafX2" target="_blank" rel="noopener nofollow">Grafx2</a>), presumably because nobody saw the need for one. I don&#x27;t think a single Amiga user existed that didn&#x27;t have a copy of this software, either bought separately, bundled with the machine or just pirated. It was also completely dominant on the PC. There were other Amiga pixel painters, such as Brilliance and Personal Paint, but their combined market share was a mere fraction of this giant, which also dominated graphics creation for games well into the the mid-1990s.
+</p>
+
+<hr />
+
+<p>
+That&#x27;s enough demo scene interfaces for one helping. For those still wanting more, I recommend <a href="https://www.datagubbe.se/utildisks/" target="_blank" rel="noopener nofollow">this gallery of utildisk menus</a>.
+</p>
+
+<p>
+Take care and happy hacking!
+</p></article><article class="dp-body" id="dpBodyZh" hidden><h2>演示场景的用户界面</h2>
+
+<p><b>探索行业工具</b></p>
+<p><i>2026年7月</i></p>
+
+<p>
+啊，<a href="https://www.datagubbe.se/scenearch/" target="_blank" rel="noopener nofollow">演示场景</a>——一个数字艺术亚文化，一群创意极客的集合，也是我的一大爱好。场景创作者们产出了大量惊人的艺术、音乐和代码，任何接触过这个场景的人，除了那些投入无数小时的专注努力外，都会不禁好奇他们<i>究竟是如何做到的</i>。
+</p>
+
+<p>
+场景有着悠久的自建工具传统。有时从零开始，有时借鉴甚至直接挪用现有产品的创意或代码。结合了年少时的经验不足、旧习惯、对实验的热爱以及让东西<i>看起来很酷</i>的渴望，这造就了一些相当奇特的用户界面。
+</p>
+
+<p>
+下面展示了其中的一些。它们大多用于 Amiga 平台，但也涵盖了其他几个平台。
+</p>
+
+<hr />
+
+<h2>Elite Sinus Producer</h2>
+
+<p>
+为了避免被指责为标题党，我们先从其中一个主要亮点开始：<b>Elite Sinus Producer</b>（这里的 sinus 指的是 <a href="https://en.wikipedia.org/wiki/Sine" target="_blank" rel="noopener nofollow">正弦波</a>），由 Ipec Elite 为 Amiga 平台制作。演示程序通常被描述为“实时”的，这确实没错，因为它们（几乎）从不只是动画播放器，而且演示效果是通过代码逐帧生成的。然而，为了实现看似不可能的技术壮举，人们会大量使用“作弊”手段。最常见的“作弊”方法可能是所谓的预计算（precalc），意思是不在 7 MHz（甚至更慢）的 CPU 上进行复杂的数学运算，而是使用查找表。市面上有许多用于创建此类查找表的工具，这就是其中之一。
+</p>
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/elitesinuesproducer-menu.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/elitesinuesproducer-menu.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+当首次启动 Elite Sinus Producer 时，用户会看到这个菜单。按下某个 F 键进行选择后，相应的菜单选项会高亮显示，同时会大声播放一声布谷钟的音效。
+</p>
+
+<hr />
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/elitesinusproducer-flower.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/elitesinusproducer-flower.png" referrerpolicy="no-referrer" /></a>
+</p>
+<p>
+这里我选择了"Flower"选项。很漂亮，对吧？然后可以将其保存为（推测的）汇编源代码。任何精灵沿着这条路径移动时都会很漂亮！
+</p>
+
+<hr />
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/elitesinusproducer-help.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/elitesinusproducer-help.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+还有一个方便的帮助屏幕，它太离谱了，以至于我<a href="https://www.datagubbe.se/scenegui/p/elitesinusproducer-helpmov.mp4" target="_blank" rel="noopener nofollow">不得不截取了一段短视频</a>：背景的一部分是移动的蓝色光栅条，另一部分在红色和青色之间闪烁。这显然对阅读文本有很大帮助，文本显示在一种完全以可读性为设计目标的字体中。
+</p>
+
+<hr />
+
+<h2>基于文本的界面</h2>
+
+<p>
+许多场景相关的工具要么是命令行实用程序，要么主要是基于文本的。首先，我们有汇编器。Amiga上有各种各样的汇编器，但场景中总是偏爱Seka、Asm-One和其他同一概念的其他衍生品。有太多不同的版本和修改版（例如Trash'm-one），以至于庞大的<a href="https://janeway.exotica.org.uk/release.php?id=97095" target="_blank" rel="noopener nofollow">家族树</a>可以与<a href="https://en.wikipedia.org/wiki/List_of_Unix_systems" target="_blank" rel="noopener nofollow">Unix系统</a>的家族树相媲美。
+</p>
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/asm-seka.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/asm-seka.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+这是Seka 2.0，我们可以看到它基于一个商业汇编器。这种类型的汇编器总是要求用户输入要分配的工作内存大小。然后它们会进入命令行模式，可以用来检查RAM内存和CPU寄存器，并将源文件加载到编辑器中。
+</p>
+
+<hr />
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/asm-one.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/asm-one.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+这是AsmOne的众多版本之一。它与Seka非常相似（实际上它是"Seka-Updated"），但内置了更多命令，并且可能还有其他改进（我从来不是一个真正的程序员）。在界面方面，它打开自己的屏幕，而不是在默认的Workbench屏幕上的窗口中运行。
+</p>
+
+<hr />
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/multi-ripper.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/multi-ripper.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+假设你在某个游戏里发现了一段很酷的音乐或图形，又或者你想提取一些采样、精灵图，或者干脆保存整首曲子以便随时欣赏？这时候你就需要用到 <i>ripper</i>（资源提取工具）了——它能在游戏退出后，扫描你电脑的内存，寻找这类数据的残骸。当年 Amiga 平台上就有各种各样的这类工具。这里展示的是 Multi-Ripper，它具备了一套相当典型的功能。
+</p>
+
+<hr />
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/save_our_sources.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/save_our_sources.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+这是另一类提取工具，专门用于在电脑崩溃后，从内存中寻找 Seka 汇编源代码。和其他大多数家用电脑一样，Amiga 没有内存保护机制，而演示程序编写又是一项以频繁崩溃而“闻名”的活动。经常保存是常规操作，但即便经验丰富的程序员有时也会手忙脚乱，忘了保存。运气好的话，电脑重启后，代码还能从内存里被抢救出来。
+</p>
+
+<hr />
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/sinus-creator.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/sinus-creator.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+这是另一类正弦波预计算工具，名为 The Sinus Creator。我不确定截图里输入的数字是否正确，但这个双窗口的文本界面很有意思。当然，计算结果可以保存为 Seka 源文件。
+</p>
+
+<hr />
+
+<h2>音乐追踪器</h2>
+
+<p>
+演示音乐的传统制作方式是使用追踪器（Tracker）。它与传统乐谱截然不同，音乐人输入音符和各种修饰、效果的方式，更像是使用一个编程编辑器，而不是普通的作曲软件。同时，追踪器也允许用户管理乐器，无论是采样还是合成。
+</p>
+<p>
+基于采样的 Amiga 追踪器有着比汇编器更加庞大的家族树，但它们都源自 Karsten Obarski 在 1987 年开发的商业软件 Ultimate Soundtracker。由于是商业软件需要付费，很快就被破解者们拆解分析，由此诞生了 NoiseTracker，后来又被重制为 ProTracker。而 ProTracker 又衍生出无数个不同版本和修改版，多得几乎让人难以追踪（嘿）。这个分支体系比 Amiga 汇编器的还要更加庞大！
+</p>
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/c64-soundmonitor.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/c64-soundmonitor.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+Chris Huelsbeck 为 Commodore 64 开发的 SoundMonitor 1.0 严格来说不算是一个破解版作品，也没有被称为“追踪器”。然而，它的界面（每个可用声道对应一个“音轨”）正是前面提到的 Ultimate Soundtracker 的灵感来源，因此为了完整性和准确性，我们在此收录它。
+</p>
+
+<hr />
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/noisetracker.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/noisetracker.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+由瑞典二人组 Mahoney 和 Kaktus 开发的 NoiseTracker 虽然不是最早的，但它极其流行，并在此后多年里定义了“追踪器”的使用体验。它的遗产至今仍在延续——不仅存在于 Amiga 平台的 Protracker 中，也影响了其他多个平台。
+</p>
+
+<hr />
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/protracker-filepicker.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/protracker-filepicker.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+这是 Protracker 的文件选择器。就像上面的 NoiseTracker 一样，在相当拥挤的界面中，通过点击“Disk Op.”按钮可以调出它。很难描述这个 UI 带来的是怎样一种奇特的体验，因为它对于习惯了更主流 Amiga 程序的用户来说，几乎是——但又不是完全——直观的。用户很容易误点、误解，或者干脆忽略某些功能。为了说明其独特的设计，请注意那个垂直的 EXIT 按钮，它用于返回主菜单。这个按钮被巧妙地放置在用于滚动紫色文件和目录列表的上下箭头之间。
+</p>
+
+<hr />
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/atarist-digicomposer.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/atarist-digicomposer.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+这是 Atari ST/e 上的 Digicomposer 1.0，它本身又基于 Atari 上的 Noisetracker。其界面显然不只是借鉴了 Amiga 上的同类产品，而是有过之而无不及。它只是 Atari ST 上众多音乐制作软件（tracker）中的一员，有些像这款一样是“数码”（采样）的，有些则是基于 YM 芯片的音乐制作器。
+</p>
+
+<hr />
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/Fasttracker_II_v2.06_04.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/Fasttracker_II_v2.06_04.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+MS-DOS 上的 Fasttracker II 本身就是一款传奇软件。它支持 Gravis UltraSound 和其他先进的 PC 音频硬件，具备 16 位采样、海量音轨等特性，甚至允许用户在闲暇时玩一个简化版的 <a href="https://en.wikipedia.org/wiki/Snake_(video_game_genre)" target="_blank" rel="noopener nofollow">贪吃蛇</a>游戏。
+</p>
+
+<hr />
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/abyss_highest_experience.gif" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/abyss_highest_experience.gif" referrerpolicy="no-referrer" /></a>
+</p><p>
+Abyss 的 Highest Experience 是一款 Amiga 平台的芯片音乐制作器，旨在模拟 Commodore 64 的 SID 芯片音色。它的用户界面很有趣，是 Soundtracker 和更现代的、类似 <a href="https://www.datagubbe.se/os20up/" target="_blank" rel="noopener nofollow">Workbench 2.0</a> 风格的混合体。
+</p>
+
+<hr />
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/atarist-megatizer.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/atarist-megatizer.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+我对 Atari ST 上的 Megatizer 了解不多，但它看起来确实很酷！
+</p>
+
+<hr />
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/jamcrackerpro.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/jamcrackerpro.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+Amiga 上的 JamCrackerPro 摒弃了传统的音乐制作软件界面，转而采用了一种更符合系统习惯的多窗口设计。
+</p>
+
+<hr />
+
+<h2>磁盘复制工具</h2>
+<p>
+为了分发演示程序（和盗版软件），磁盘拷贝在当时圈子里是一项常见活动。Commodore 在 AmigaOS 中提供了一个磁盘拷贝工具，但它并不总能胜任那些通过直接写入软盘扇区来绕过文件系统的演示程序和游戏的拷贝任务。因此，就需要专门的软件了！
+</p>
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/x-copy.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/x-copy.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+和 SoundMonitor 一样，X-Copy 严格来说并不算是一个场景组织的作品。尽管它最初是由 <a href="https://www.exotica.org.uk/wiki/Unit_A" target="_blank" rel="noopener nofollow">sceners</a> 编写的，但它后来被商业化发布，然后在场景里被大量盗版。界面中醒目的网格包含了磁盘上每个磁道的一个方块，用于显示拷贝软盘特定部分的进度。当拷贝完成时（这可能需要一些时间），程序会贴心地播放一声小小的“boing”音效。
+</p>
+
+<hr />
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/x-copy3.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/x-copy3.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+在 Amiga 的黄金时代，X-Copy 发布了多个版本。这是 X-Copy 3.0，看起来是由破解组织 Paradox 分发的某个非官方版本。
+</p>
+
+<hr />
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/d-copy.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/d-copy.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+我个人更喜欢 D-Copy，主要是因为我觉得它的用户界面看起来很酷（而且我现在还是这么认为）。据我所知，它是一个名副其实的非商业场景产品。
+</p>
+
+<hr />
+
+<h2>其他工具</h2>
+
+<p>
+像这样一篇短文只能触及曾经创建的无数演示场景工具的皮毛。这里再列举一些其他各种有趣的和/或具有代表性的工具和界面。
+</p>
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/titanics.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/titanics.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+这是 Amiga 平台的 Titanics Cruncher。所谓的 "cruncher" 指的是对可执行文件进行非对称压缩的工具。这可以节省磁盘空间，代价是加载时间更长，因为程序在运行时需要先进行解压（解压缩）。除了这个，还有许多其他的 cruncher 工具，并且它们存在于多种平台上。
+</p>
+
+<hr />
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/di_ansi_editor_2.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/di_ansi_editor_2.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+在互联网出现之前，有<a href="https://en.wikipedia.org/wiki/Bulletin_board_system" target="_blank" rel="noopener nofollow">电子公告板系统</a>，也就是 BBS。场景圈的人通常对“精英级”BBS 感兴趣，也就是那些提供盗版软件下载的站点。几乎没有哪个精英级 BBS 没有酷炫的 ANSI（或者在 C64 上是 PETSCII）图形，比如在动画菜单界面里。因此，各种不同平台的 ANSI 编辑器应运而生。这是 Digital Intelligence 的 Ansi-Editor v2.4，专为 Amiga 平台打造，它的用户界面非常奇特。底部的工具栏显示了当前激活的颜色，但你无法从那里选择它们。随便怎么点击都毫无反应——你必须使用下拉菜单才能真正选一个颜色。
+</p>
+
+<hr />
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/chared.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="httpshttps://www.datagubbe.se/scenegui/p/chared.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+在 Twitter、Facebook、IRC，甚至调制解调器和 BBS 普及之前，滚动文本是场景圈首选的沟通方式。酷炫的滚动文本需要酷炫的字体，因此一个专门的字体（或字符集）编辑器会很有用。这是 Escape 为 MS-DOS 开发的 Charedit。
+</p>
+
+<hr />
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/falcon-dspdit.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/falcon-dspdit.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+家用电脑通常都配有定制或其它稀奇古怪的硬件。例如，Atari Falcon 就搭载了一颗摩托罗拉 56001 数字信号处理器。tSCc（The Sirius Cybernetics Corporation 的缩写）开发的 DSPdit 是一款专门为 DSP56k 编程打造的编辑器和汇编器。它使用了标准的 GEM 工具包，这让它的外观看起来非常整洁和专业。
+</p>
+
+<hr />
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/sca-viruskiller.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/sca-viruskiller.png" referrerpolicy="no-referrer" /></a>
+</p>
+<p>
+Amiga 上的第一个计算机病毒是一种引导扇区病毒，会感染软盘的引导扇区。因此，它可能会破坏带有自定义引导扇区的游戏和其他软盘。该病毒由瑞士破解协会（SCA）制作。病毒传播得非常迅速，或许 SCA 受到了良心的谴责，因为他们后来也制作了 Amiga 上的第一个杀毒程序——专门用来清除他们自己制造的病毒。这个超级强大的界面很容易上手！
+</p>
+
+<hr />
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/trackmo-dos1993.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/trackmo-dos1993.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+如上所述，许多 Amiga 演示程序都是所谓的“轨道演示”（trackmos），这意味着它们不使用文件系统，而是将数据直接存储在软盘的磁道上。这很快催生了许多用于创建此类轨道演示的工具。起初，这通常只是场景创作者之间共享的代码，但后来也出现了完整的软件套件，例如 NOVA 组织的 Poison 开发的 TrackmoDOS。除了其他功能，它还附带了这个正统的文件管理器，用于向轨道演示软盘写入和删除文件。作为一款场景创作者的工具，其界面自然也带有相当酷炫的渐变色彩。
+</p>
+
+<hr />
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/raw_text.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/raw_text.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+这是 RAW，它其实不是一个工具，而是一个磁盘杂志，或称 diskmag。磁盘杂志顾名思义——就是发布在一张或多张软盘上的定期刊物。大部分文章通常与场景文化相关，但有些杂志的内容则更加广泛，从短篇小说、诗歌到关于历史和政论的散文应有尽有。RAW 是 1990 年代初最受欢迎的 Amiga 磁盘杂志之一，正如我们所见，它的 UI 在 Frutiger Aero 风格流行很久之前就已经拥有了闪亮和质感的界面。它甚至还带有一个内置的调色板编辑器（如图所示），允许用户自定义文本颜色。
+</p>
+
+<hr />
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/atarifalcon-fuckpaint.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/atarifalcon-fuckpaint.png" referrerpolicy="no-referrer" /></a>
+</p><p>
+这是 FuckPaint，一款为 Atari Falcon 开发的像素画绘制工具。它被收录在这里，纯粹是因为它的名字，以及那个同样“高雅”的“Analizer”工具。
+</p>
+
+<hr />
+
+<p>
+<a href="https://www.datagubbe.se/scenegui/p/amidp2.png" target="_blank" rel="noopener nofollow"><img loading="lazy" onerror="this.style.display='none'" src="https://www.datagubbe.se/scenegui/p/amidp2.png" referrerpolicy="no-referrer" /></a>
+</p>
+<p>
+虽然这完全不是一个场景制作工具，但 <a href="https://www.datagubbe.se/dpaint/" target="_blank" rel="noopener nofollow">Deluxe Paint</a> 还是必须在这里提一下。据我所知，当时那个圈子从未为 Amiga 开发过像素绘图软件（后来移植的 <a href="https://en.wikipedia.org/wiki/GrafX2" target="_blank" rel="noopener nofollow">Grafx2</a> 除外），大概是因为没人觉得有必要。我敢说，当时没有哪个 Amiga 用户手里没有这款软件的——无论是单独购买的、随机器捆绑的，还是盗版的。它在 PC 平台上也占据着绝对主导地位。当时还有其他 Amiga 像素绘图软件，比如 Brilliance 和 Personal Paint，但它们的市场份额加起来也只是这个巨头的零头。这款软件在游戏图形制作领域也一直占据主导地位，直到 90 年代中期。
+</p>
+
+<hr />
+
+<p>
+关于场景制作界面的内容就先到这里。如果还想了解更多，我推荐 <a href="https://www.datagubbe.se/utildisks/" target="_blank" rel="noopener nofollow">这个 utildisk 菜单图库</a>。
+</p>
+
+<p>
+保重，祝编程愉快！
+</p></article>
+    <div class="dp-actions">
+      <a class="dp-btn pri" href="https://www.datagubbe.se/scenegui/" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      <a class="dp-btn sec" href="https://news.ycombinator.com/item?id=49093434" target="_blank" rel="noopener"><i class="fa-brands fa-hacker-news"></i>HN 讨论</a>
+      <button type="button" class="dp-btn sec" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
+      <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
+    </div>
+    <p class="dp-note">本页由句子互动动态管线自动生成，聚合内容版权归各来源所有；如来源方希望调整或移除收录，请通过官网联系我们。</p>
+  </div>
+</main>
+<div id="site-footer"></div>
+<script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "User Interfaces of the Demo Scene"};</script>
+<script src="../../assets/site.js"></script>
+<script>
+(function(){var b=document.getElementById('dpLang');if(!b)return;
+var en=document.getElementById('dpBodyOrig'),zh=document.getElementById('dpBodyZh');
+b.addEventListener('click',function(){var on=zh.hidden;zh.hidden=!on;en.hidden=on;
+b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';});})();
+</script>
+</body>
+</html>

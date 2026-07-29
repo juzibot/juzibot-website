@@ -1,0 +1,43 @@
+<p>Interesting surprise open-weight LLM drop from Thinking Machines Lab yesterday. Their nearly 1T-parameter <a href="https://thinkingmachines.ai/news/introducing-inkling/" target="_blank" rel="noopener nofollow">Inkling model</a> looks pretty solid on the reported benchmarks.</p>
+
+<p>Compared with GLM-5.2, Inkling performs better on evaluations such as IFBench (79.8% versus 73.3%) and SimpleQA Verified (43.9% versus 38.1%). It performs worse on several reasoning and coding-agent benchmarks, including HLE without tools (29.7% versus 40.1%), SWE-Bench Pro Public (54.3% versus 62.1%), and Terminal-Bench 2.1 (63.8% versus 82.7%).</p>
+
+<p>These are release-time numbers, and some rows combine externally reported values with internal harness results. I would therefore not over-interpret small differences. Overall, Inkling looks like a good all-rounder that is intended for further fine-tuning and specialization. That direction makes sense given that Thinking Machines Lab also develops Tinker, its model customization and fine-tuning platform.</p>
+
+<p>Architecture-wise, Inkling is a 975B-parameter sparse Mixture-of-Experts model with 41B active parameters and a <a href="https://sebastianraschka.com/glossary/#context-length" target="_blank" rel="noopener nofollow">context window</a> of up to 1M tokens.</p>
+
+<figure><p><img src="https://sebastianraschka.com/images/blog/2026/inkling/hero.webp" alt="Inkling architecture diagram and release benchmark comparisons with GLM-5.2, Nemotron 3 Ultra, Kimi K2.5, GPT 5.6 Sol, and Claude Fable 5" referrerpolicy="no-referrer" /></p>
+<figcaption>Figure 1. Inkling architecture and release-time <a href="https://sebastianraschka.com/glossary/#benchmark" target="_blank" rel="noopener nofollow">benchmark</a> comparisons. The benchmark panels use results from Thinking Machines Lab&#x27;s <a href="https://thinkingmachines.ai/news/introducing-inkling/" target="_blank" rel="noopener nofollow">July 15, 2026 announcement</a>. The higher-resolution architecture figure is also available in the <a href="https://sebastianraschka.com/llm-architecture-gallery/#card-inkling" target="_blank" rel="noopener nofollow">LLM Architecture Gallery</a>.</figcaption></figure>
+
+
+<p>Some side-by-side observations:</p>
+
+<ol>
+  <li>Inkling has about 231B more total parameters than GLM-5.2 (975B versus 744B), although their active footprints are almost identical at 41B and 40B parameters.</li>
+  <li>Inkling is less sparse than Kimi K2.5. It activates 4.2% of its parameters per token, compared with 3.2% for Kimi K2.5 (41B of 975B versus 32B of 1T).</li>
+  <li>Inkling uses a regular Transformer decoder rather than the hybrid Mamba-Transformer approach used by Nemotron 3 Ultra.</li>
+</ol>
+
+<p>I am curious about token throughput. The larger active footprint than Kimi K2.5 and the use of conventional GQA rather than <a href="https://sebastianraschka.com/glossary/#mla" target="_blank" rel="noopener nofollow">MLA</a> or a recurrent hybrid stack suggest that raw decoding speed may not be Inkling’s main advantage. However, throughput also depends heavily on quantization, expert parallelism, attention kernels, batching, and hardware. I have not seen directly comparable provider measurements yet.</p>
+
+<p>The overall design follows the recent large-<a href="https://sebastianraschka.com/glossary/#moe" target="_blank" rel="noopener nofollow">MoE</a> trend, but the architecture has a few interesting surprises:</p>
+
+<ol>
+  <li>
+    <p><strong>Small convolution layers in several places.</strong> Each decoder layer applies short kernel-4 convolutions after the key and value projections and on the attention and MLP branch outputs. My intuition is that these provide cheap local token mixing and an explicit short-range inductive bias alongside attention.</p>
+  </li>
+  <li>
+    <p><strong>An additional RMSNorm directly after the token <a href="https://sebastianraschka.com/glossary/#token-embeddings" target="_blank" rel="noopener nofollow">embedding layer</a>.</strong> This is separate from the pre-attention <a href="https://sebastianraschka.com/glossary/#rmsnorm" target="_blank" rel="noopener nofollow">RMSNorm</a> inside every transformer block. At first glance, it looks almost redundant, but it is explicitly enabled in the <a href="https://huggingface.co/thinkingmachines/Inkling/blob/main/config.json" target="_blank" rel="noopener nofollow">configuration</a> and present in the <a href="https://github.com/huggingface/transformers/blob/main/src/transformers/models/inkling/modeling_inkling.py" target="_blank" rel="noopener nofollow">Transformers implementation</a>. Whether it materially helps would require an ablation.</p>
+  </li>
+  <li>
+    <p><strong>A learned, input-dependent relative-position bias instead of <a href="https://sebastianraschka.com/glossary/#rope" target="_blank" rel="noopener nofollow">RoPE</a>.</strong> <a href="https://thinkingmachines.ai/news/introducing-inkling/#architecture" target="_blank" rel="noopener nofollow">Thinking Machines says</a> that the relative-position approach “performs better and extrapolates better to longer sequences” than RoPE.</p>
+  </li>
+</ol>
+
+<p>Regarding the last point, my intuition is that the sliding-window-heavy architecture helps. Of the 66 decoder layers, 55 use local attention with a small 512-token window. A learned relative-position bias may provide enough <a href="https://sebastianraschka.com/glossary/#positional-encoding" target="_blank" rel="noopener nofollow">positional information</a> within these windows.</p>
+
+<p>In the 11 global layers, the released implementation applies the learned bias only over the preceding 1,024 tokens. Attention beyond that range is effectively content-based with respect to this positional bias. This is somewhat similar to the intuition behind <a href="https://sebastianraschka.com/glossary/#nope" target="_blank" rel="noopener nofollow">NoPE</a>, which other architectures use in selected global-attention layers.</p>
+
+<p>Overall, Inkling is an interesting variation on the DeepSeek-V3-style MoE recipe and a solid release. Some may find it underwhelming because it does not lead every benchmark. I find the broad and mixed benchmark profile refreshingly honest. It may also indicate that the model is less benchmark-specialized than several recent releases.</p>
+
+<p>And, as always, it is good to see another strong open-weight <a href="https://sebastianraschka.com/glossary/#base-model" target="_blank" rel="noopener nofollow">base model</a> available for fine-tuning and independent study.</p>

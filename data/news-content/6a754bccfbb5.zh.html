@@ -1,0 +1,13 @@
+<p><strong><a href="https://www.anthropic.com/research/discovering-cryptographic-weaknesses">用 Claude 发现密码学弱点</a></strong></p>
+<p>这篇文章最精彩的部分（<a href="https://github.com/anthropics/cryptography-research-demo">项目仓库在此</a>）讲述了 Anthropic 研究人员如何利用 Claude Mythos 找到了 HAWK 和一个较弱的 AES 版本中的数学缺陷（“这些结果对当今的计算机系统没有实际影响”），而他们分享的那些提示词（包括拼写错误）才是亮点：</p>
+<blockquote>
+<p>模型们倾向于认为问题无解，所以干脆不尝试，需要大量的提示引导才行。</p>
+<p>为什么不试试 aes-128 r7？我们的目标就是要找到比现有方法更好的东西。</p>
+<p>不对，我们的目标是拥有一个顶尖的研究员那样高度智能的模型，我们要找到新的攻击方法。</p>
+<p>不，我们不想改变目标 [...] 我们需要找到值得发表的研究成果。</p>
+<p>再说一次，我们不是在找那些唾手可得的东西，我们要做正经的研究，找到真正有难度的发现。</p>
+</blockquote>
+<p>Mythos Preview 总共运行了 60 个小时（估计 API 成本约 10 万美元），期间人类的主要干预是鼓励它不要放弃，并“找到值得发表的东西”。</p>
+<p>论文 <a href="https://arxiv.org/abs/2607.18538">CryptanalysisBench: LLM 能做密码分析吗？</a> 描述了这项工作中创建的新评估基准，该研究是与苏黎世联邦理工学院、特拉维夫大学和海法大学合作完成的。</p>
+<p><small></small>来源：<a href="https://news.ycombinator.com/item?id=49087091">Hacker News</a></small></p>
+<p>标签：<a href="https://simonwillison.net/tags/ai">ai</a>, <a href="https://simonwillison.net/tags/prompt-engineering">prompt-engineering</a>, <a href="https://simonwillison.net/tags/generative-ai">generative-ai</a>, <a href="https://simonwillison.net/tags/llms">llms</a>, <a href="https://simonwillison.net/tags/anthropic">anthropic</a>, <a href="https://simonwillison.net/tags/claude">claude</a>, <a href="https://simonwillison.net/tags/ai-security-research">ai-security-research</a>, <a href="https://simonwillison.net/tags/claude-mythos-fable">claude-mythos-fable</a></p>

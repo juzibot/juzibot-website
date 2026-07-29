@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>隼瞻创始人曾轶：AI推倒芯片设计壁垒，我们要做半导体行业的「Copilot」 - 句子·动态</title>
+<meta name="description" content="隼瞻创始人曾轶认为AI正在推倒芯片设计壁垒，公司押注领域专用架构（DSA），为客户提供定制化处理器内核，抓住RISC-V发展机遇。" />
+<meta name="robots" content="noindex,follow" />
+<link rel="canonical" href="https://www.leiphone.com/category/chips/6Ce1BxLj2chEdoJD.html" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="隼瞻创始人曾轶：AI推倒芯片设计壁垒，我们要做半导体行业的「Copilot」" />
+<meta property="og:description" content="隼瞻创始人曾轶认为AI正在推倒芯片设计壁垒，公司押注领域专用架构（DSA），为客户提供定制化处理器内核，抓住RISC-V发展机遇。" />
+<meta property="og:url" content="https://www.leiphone.com/category/chips/6Ce1BxLj2chEdoJD.html" />
+<meta property="og:site_name" content="句子互动" />
+<meta name="twitter:card" content="summary" />
+
+<link rel="icon" href="../../logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../../assets/site.css" />
+<style>
+  /* 静态兜底导航: site.js 一执行就被 outerHTML 连同占位一起换掉, 访客几乎看不到它。
+     不隐藏也不 noscript 包裹——那会让爬虫拿不到, 而它存在的唯一理由就是给不跑 JS 的爬虫看。
+     样式做朴素一行, 万一 site.js 加载失败, 这排链接本身就是可用的降级导航。 */
+  .nav-fb{display:flex;flex-wrap:wrap;gap:6px 16px;padding:12px clamp(16px,4vw,40px);
+    border-bottom:1px solid var(--line-2);font-size:12.5px}
+  .nav-fb a{color:var(--ink-3);text-decoration:none}
+  .nav-fb a:hover{color:var(--blue)}
+
+  .dp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
+  .dp-wrap{max-width:760px;margin:0 auto}
+  .dp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
+  .dp-back:hover{color:var(--blue)}
+  .dp-meta{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:14px}
+  .dp-srcb{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:750;color:var(--sc,var(--blue))}
+  .s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
+  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-voices{--sc:#9333EA}
+  .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
+  .dp-cat{display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ink-3);background:#F6F7FB;border:1px solid var(--line-2);border-radius:6px;padding:2px 8px}
+  .dp-date{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-3)}
+  .dp-title{font-size:clamp(24px,3.2vw,34px);font-weight:850;letter-spacing:-.03em;line-height:1.32;word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance;margin-bottom:10px}
+  .dp-orig{font-size:13px;color:var(--ink-3);overflow-wrap:anywhere;margin-bottom:8px}
+  .dp-by{font-size:12.5px;font-weight:600;color:var(--ink-3);margin-bottom:18px}
+  .dp-notice{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:1.7;color:var(--ink-2);background:#F6F7FB;border:1px solid var(--line-2);border-radius:10px;padding:10px 14px;margin-bottom:22px}
+  .dp-notice i{color:var(--blue);margin-top:4px;flex:0 0 auto}
+  .dp-notice a{color:var(--blue);font-weight:700;overflow-wrap:anywhere}
+  .dp-quip{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.66;font-weight:600;color:var(--blue-deep);background:var(--blue-50);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:18px}
+  .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
+  .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
+  .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
+  .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
+  .dp-body p{margin:0 0 1.05em}
+  .dp-body img{max-width:100%;height:auto;border-radius:10px;margin:.4em 0}
+  .dp-body pre{background:#0F172A;color:#E2E8F0;font-family:var(--mono);font-size:12.5px;line-height:1.7;padding:14px 16px;border-radius:10px;overflow-x:auto;margin:0 0 1.1em}
+  .dp-body code{font-family:var(--mono);font-size:.92em}
+  .dp-body :not(pre)>code{background:#F1F5F9;padding:1px 5px;border-radius:5px}
+  .dp-body blockquote{border-left:3px solid var(--line);padding:2px 0 2px 14px;color:var(--ink-3);margin:0 0 1.05em}
+  .dp-body a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+  .dp-body ul,.dp-body ol{padding-left:1.5em;margin:0 0 1.05em}
+  .dp-body table{display:block;overflow-x:auto;border-collapse:collapse;margin:0 0 1.1em}
+  .dp-body td,.dp-body th{border:1px solid var(--line);padding:6px 10px;font-size:.92em}
+  .dp-excerpt{font-size:15px;line-height:1.9;color:var(--ink-2);border-left:3px solid var(--line);padding:2px 0 2px 16px;margin-bottom:8px}
+  .dp-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;padding-top:20px;border-top:1px solid var(--line-2)}
+  .dp-btn{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:750;border-radius:999px;padding:10px 20px;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+  .dp-btn.pri{background:var(--blue);color:#fff}
+  .dp-btn.pri:hover{background:var(--blue-deep)}
+  .dp-btn.sec{background:#fff;color:var(--ink-2);border:1px solid var(--line)}
+  .dp-btn.sec:hover{color:var(--blue);border-color:var(--blue)}
+  .dp-note{font-size:11.5px;line-height:1.7;color:var(--ink-3);margin-top:18px}
+  .dp-langbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+  .dp-lang{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:750;color:var(--blue);
+    background:var(--blue-50);border:1px solid var(--blue-100);border-radius:999px;padding:7px 14px;
+    transition:background .2s var(--ease),border-color .2s var(--ease)}
+  .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
+  .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div id="site-nav" class="nav-fb"><a href="../../index.html">句子互动</a><a href="../../products/miaodong.html">句子秒懂</a><a href="../../products/shouhu.html">句子守护</a><a href="../../products/canmou.html">句子问数</a><a href="../../products/dongxing.html">句子懂行</a><a href="../../products/miaohui.html">句子秒回</a><a href="../../products/cli.html">句子 CLI</a><a href="../../products/zhizao.html">句子制造</a><a href="../../fde.html">FDE</a><a href="../../enterprise.html">企业方案</a><a href="../../industries.html">行业</a><a href="../../about.html">关于我们</a><a href="../../news.html">动态</a></div>
+<main class="dp-main">
+  <div class="dp-wrap">
+    <a class="dp-back" href="../../news.html"><i class="fa-solid fa-arrow-left"></i>返回动态</a>
+    <div class="dp-meta">
+      <span class="dp-srcb s-industry"><i class="fa-solid fa-rss"></i>行业动态</span>
+      <span class="dp-cat">雷锋网</span>
+      <time class="dp-date" datetime="2026-07-29">2026-07-29</time>
+    </div>
+    <h1 class="dp-title">隼瞻创始人曾轶：AI推倒芯片设计壁垒，我们要做半导体行业的「Copilot」</h1>
+    
+    <p class="dp-by">来源：雷锋网 · 行业动态</p>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（雷锋网 · 行业动态）所有 · <a href="https://www.leiphone.com/category/chips/6Ce1BxLj2chEdoJD.html" target="_blank" rel="noopener">阅读原文</a></span></div>
+    <p class="dp-quip"><i class="fa-solid fa-quote-left"></i>AI降低芯片设计门槛，半导体Copilot有市场空间</p>
+    <div class="dp-brief"><b>简报</b>隼瞻创始人曾轶认为AI正在推倒芯片设计壁垒，公司押注领域专用架构（DSA），为客户提供定制化处理器内核，抓住RISC-V发展机遇。</div>
+    <article class="dp-body"><p>曾轶办公室里的那壶茶续了一遍又一遍，谈话就是这么松松散散地展开的——很典型的广东式会客，不必正襟危坐，事情却也谈得不含糊。</p><p>他讲话带着潮汕口音的余韵，语速不快，总是笑着把一句话说完。笑的时候眼睛眯起来，人也跟着往前倾一点，很容易让人放松下来。</p><p>聊AI、聊RISC-V，话题落到行业里，他有一种克制不住的兴奋。</p><p>过去两三年，RISC-V在国内的势头比他预想的还要快，端侧和IoT已经全面铺开，尤其在深圳和大湾区，大量公司正在从ARM往RISC-V切。更让他兴奋的是AI带来的变量——各家科技巨头都在用RISC-V做定制化AI处理器，高通、谷歌、Meta，没有例外。</p><p>他觉得，这是RISC-V第一次摸到了一个真正的大机会。</p><p>隼瞻就踩在这条线上。22年起家，二十来个人，押注领域专用架构（DSA），为客户提供客制化的CPU、DSP、NPU等处理器内核，曾轶曾在行业里摸爬了二十年，太清楚通用处理器在后摩尔时代的半导体行业已经难以满足芯片和算法的需求。</p><p>三年过去，生意已经实实在在地跑起来了。</p><p>生意做起来之后，客户和隼瞻的关系也逐渐变得紧密——紧密到我问他，客户会不会担心被绑定在隼瞻的平台上，这本该是个不太好接的问题。</p><p>曾轶没回避，笑着说：“就是要让客户上我们的‘贼船’。”</p><p>随后他补了一句，真正让客户留下来的，并不是“绑定”，而是定制带来的价值。</p><p>这大概是曾轶身上最鲜明的东西：不太回避生意的本质，也不太掩饰自己想要什么。他不太相信凭空造出来的风口，更相信被需求一步步逼出来的路径——就像他后来反复讲到的，ARM是被手机的低功耗需求逼出来的，这一次，他赌的是AI会把RISC-V逼到台前。</p><p>以下是雷峰网与曾轶的对话，经整理发布。</p><h2>AI正在拿走芯片架构的决定权<br /></h2><p><strong>雷峰网：</strong>过去多年，处理器架构的竞争格局相对稳定，但近两年RISC-V迅速进入产业视野。在您看来，AI究竟改变了哪些底层逻辑？<br /></p><p><strong>曾轶：</strong>AI极大地改变了，甚至可以说完全打破了整个处理器架构的格局。整个芯片行业的设计范式，或者说芯片架构的决定权正在转移：以前是芯片公司决定芯片的架构，其他人跟着芯片公司来写程序；现在芯片架构的决定权跑到了AI公司那里，是AI的模型决定了芯片的架构，这是大格局上的变化。</p><p>过去，客户基于英特尔这类通用CPU就能运行各种算法和应用，CPU的地位因此非常稳固，但现在，不同的AI模型对算力需求截然不同，单一的通用CPU已无法高效支撑。虽然早期可以通过NVIDIA的GPU来应对，但随着AI向端侧部署、落地为各种智能硬件，设备内部往往需要一颗专用芯片来运行特定模型。</p><p>在处理器微观层面，CPU的角色正在弱化。面对AI模型，负责矢量处理的VPU和负责张量计算的TPU/NPU反而变得更为关键。它们之间的协同，以及针对特定模型和算法进行的架构与指令集优化，成为AI时代对处理器的核心需求。正因如此，英特尔受到显著冲击，ARM的重要性也相对下降。</p><p>而RISC-V之所以能在此刻脱颖而出，正是因为上述几种处理单元都需要高度面向模型进行定制。不同模型需要不同的定制指令，这些指令在ARM和英特尔等封闭架构上要么不存在，要么效率极低。于是，各家公司开始在RISC-V架构上自行开发。</p><p>这一趋势已在产业界形成共识。高通、特斯拉相继收购RISC-V公司，Google、Meta乃至英特尔自身，都与RISC-V公司建立了深度合作。这些合作无一例外，都是将开放、灵活、可任意修改的RISC-V架构，作为其下一代AI处理器的基座。</p><p><strong>雷峰网：</strong>在这场竞争中，RISC-V相较于X86与ARM，最关键的优势是否在于其可定制性？<br /></p><p><strong>曾轶</strong>：是的，其核心优势在于可定制与开源。正是这种开放特性，使得各家公司能够根据自身需求对架构进行深度修改与优化，而这种“魔改”的自由度，恰恰体现了RISC-V的优越性。</p><p><strong>雷峰网：</strong>这是否意味着，x86和ARM这类由原厂掌控扩展权的封闭架构，在AI时代已难以满足需求？<br /></p><p><strong>曾轶：</strong>明显不够用了，行业已形成共识，仅靠购买一颗ARM CPU来运行AI模型的做法已成过去，取而代之的是一种整合多种处理单元的专用设计思路。</p><p><strong>雷峰网：</strong>您此前判断AI与RISC-V的融合已至临界点。在您看来，AI技术对RISC-V最大的催化作用体现在哪里？<br /></p><p><strong>曾轶</strong>：最大的催化作用，在于AI让芯片设计技术走向平台化了。</p><p>五到十年前，一家小型公司涉足CPU设计几乎是不可想象的，而如今，CPU设计已随处可见。我们与合作伙伴在两个月内便推出了一款新CPU，正是得益于这一转变。</p><p>在我们的开发流程中，引擎本身已大量运用AI技术，能够快速生成设计方案。近期，我们还将AI进一步导入代码生成引擎，我在内部和同事说，我们要做处理器行业的“Claude Code”——用AI的方式，辅助用户自动生成DSA处理器。</p><p>可以说，AI推倒了芯片设计行业原本高不可攀的技术壁垒，同时也催生了大量的市场机会。</p><h2>RISC-V怎么走：不强攻服务器，靠AI反向渗透<br /></h2><p><strong>雷峰网：</strong>从产业落地的角度看，决定一个架构能否真正成熟并被大规模采用的根本因素是什么？<br /></p><p><strong>曾轶：</strong>这个问题很大，但我觉得最核心的因素是市场需求。</p><p>我们把冯·诺依曼架构奉为圭臬，但从学术角度看，它并非效率最优的方案，其最终胜出，很大程度上得益于二战后的军事需求与美国的广泛采用，而非单纯的技术先进性。同样，ARM也并非天生就是手机的最佳选择，它本质上也是一种RISC架构，关键在于，手机对功耗极度敏感，市场急需一款与英特尔路线不同、能以极低功耗运行的处理器架构，正是这种对低功耗的强烈需求，让ARM脱颖而出。</p><p>RISC-V的兴起遵循相同的规律，它是被AI浪潮、定制化需求和处理器专用化的趋势共同推向前台的，脱离市场来谈论架构，意义不大。学术界积累了大量处理器架构，但只有当市场出现明确而强烈的需求时，这些架构才会被重新激活并迭代完善。</p><p>从国内现状来看，RISC-V的发展呈现出两条路径：一条主攻服务器，声势浩大但商业化进程缓慢；另一条主攻领域专用架构，商业化落地更快。越来越多的公司正涌入DSA方向，说明市场正在做出选择。</p><p>归根结底，架构的成败取决于它能否切中市场的真实方向，市场反过来也会反哺技术的演进。与此同时，生态建设同样不可或缺，国内在这方面正在逐步推进，虽然需要时间，但方向是确定的。</p><p><strong>雷峰网：</strong>借鉴ARM进入服务器市场约耗时十年的经验，您认为RISC-V与ARM、x86形成稳定的三分格局，大概还需要多长时间？<br /></p><p><strong>曾轶：</strong>当前的市场格局是：英特尔主导服务器与PC，ARM主导手机。ARM多年来一直试图向上切入PC和服务器市场，过程很不容易。相比之下，RISC-V的发展速度已经相当快了，它在疫情之后，即2021至2022年才真正全面铺开，如今在端侧和IoT领域已成星火燎原之势，尤其在深圳及大湾区，大量公司已经或正在考虑采用，其开放授权和可定制的特性优势明显。</p><p>但要真正形成三分天下的格局，RISC-V需要一个爆点，我认为这个爆点不太可能来自对传统市场的正面强攻。正如ARM当年的崛起并非吞并Intel的地盘，而是抓住了手机这一全新机遇，RISC-V的机会同样在于抓住AI这波浪潮。</p><p>RISC-V未来的路径很可能是：各家公司用它打造形态各异的AI处理器，进而以AI应用反向渗透传统的服务器、PC和手机市场。</p><p><strong>雷峰网</strong>：长远来看，RISC-V在服务器市场会走出一条什么样的路？会成为主要的架构吗？<br /></p><p><strong>曾轶：</strong>我没有足够的信息来判断这件事，很多人问过我这个问题，我觉得这背后有一个潜台词——大家认定这是一个好市场，所以关心什么时候能超越Intel。</p><p>但我的疑问恰恰在于：RISC-V这个市场，真的有那么好吗？</p><p>隼瞻成立初期，我们确实考虑过进入多核与服务器CPU市场，也做了相应的技术储备，但去年以来，DPU的出现让我意识到这个市场正在发生变化，它有可能会变成一个没那么有吸引力的市场。相比之下，将资源投向NPU的回报似乎要高得多——NPU是典型的DSA，其核心逻辑是以牺牲通用性为代价，换取特定任务上的极致效率，因此在相同功耗和面积下，NPU的推理吞吐远高于通用RISC-V CPU。</p><p>也许在未来，CPU真的没那么重要了，计算设备也可能不再依赖Windows或安卓这样的传统操作系统。所以，真正值得我们思考的是：AI时代到来时，处理器应该做什么事情？</p><p><strong>雷峰网：</strong>随着Token经济时代的来临，CPU重新获得市场关注，业内出现了未来CPU、GPU、NPU配比可能趋向1:1:1的观点。<br /></p><p><strong>曾轶</strong>：确实存在这种观点，我并非认为CPU会失去生存空间。我的立场是，不去固化地瞄准某一块CPU市场，而是回到市场本身的需求。</p><p>市场真正需要的，是AI整体解决方案，在这个方案中，我们的判断很明确：它本质上是CPU、VPU与NPU的组合。我们布局了这几种处理单元的产品，并提供定制方案，它们之间的配比也会根据实际场景灵活调整。</p><p>因此，我们正在做两件事：一是构建足够丰富的货架式产品矩阵；二是将这些产品整合，设计出最贴合客户模型和垂直领域的处理器解决方案，这个方案通常包含若干CPU和VPU，以及数量更多的NPU。在这个体系里，CPU对我们依然至关重要。</p><p><strong>雷峰网：</strong>若RISC-V要成为主流的第三代架构，高性能通用计算是无法回避的领域。它目前在这一方向上的成熟度如何？<br /></p><p><strong>曾轶：</strong>大有希望，但需要分层来看。</p><p>从架构与标准层面看，RISC-V已具备进入高性能计算的技术基础。无论是x86、ARM还是RISC-V，经过充分演进都能做出最高标准的处理器内核与架构；从技术实现层面看，尤其在自主可控的政策驱动下，中科院计算所、阿里等机构持续投入，香山、昆明湖等系列项目推进，技术上的可实现性已经具备，差距在逐步减小。</p><p>然而，商用层面的挑战则比较复杂，困难不仅在于技术本身，更在于生态与市场的接受度。服务器领域积累了庞大的软件生态，性能达标只是第一步，若软件配套和用户体验跟不上，市场就很难真正接纳，这构成了极高的准入门槛。</p><p>从这个角度看，服务器大芯片的攻坚，或许更适合由大型国资企业来承担。华为已经在这条路上走得不错，中兴通讯同样具备条件，当这类企业持续投入，市场长期关注的问题自然会找到答案。</p><p><strong>雷峰网：</strong>您预计RISC-V还需要多长时间，才能在高性能通用计算领域真正立足？<br /></p><p><strong>曾轶：</strong>我觉得五年内出现像样的技术方案是大概率事件，但技术方案能否真正商用落地，可以参考另一个参照物——ARM在服务器市场的表现。时至今日，ARM在服务器领域的市场占比仍然不高，而其他创业公司要发展到飞腾或华为鲲鹏的状态极为困难。ARM经历过的每一步，RISC-V一步都绕不开，所以何时能在服务器市场真正站稳，现在很难给出明确的时间表。</p><p><strong>雷峰网：</strong>ARM服务器市场占比偏低，核心原因在于性能层面的不足，还是更多受制于客户接受度、准入门槛与生态适配等非技术因素？<br /></p><p><strong>曾轶：</strong>我觉得与生态有很强的关联。生态适配的不足，最终也会直接体现在性能体验上，标称性能或许很高，但实际跑应用时频繁掉帧、发挥失常，这本质上就是适配问题。</p><p><strong>雷峰网(公众号：雷峰网)：</strong>隼瞻的产品线覆盖从低功耗到高性能的全系列，您认为哪一类市场有望率先成熟？<br /></p><p><strong>曾轶：</strong>首先，IoT市场已经成熟；而当前成长性最强的领域，毫无疑问是AI，RISC-V在AI领域的迭代速度极快，形态上也将高度多元化，未来两三年内，国内外会出现大量基于RISC-V且设计各异的AI处理器。</p><p>另一个值得期待的市场是工控DSP。从新能源逆变器、步进电机，到飞控、低空经济，再到具身机器人，技术脉络具有很强的延续性，该市场长期被TI高度垄断，TI的生态本质上是封闭的，是一套包含大量定制指令的大型DSA。国内企业若想与其竞争，沿用ARM架构无法对抗TI，必须走DSA定制设计路线。目前，这一领域的多家公司已与我们合作进行定制开发。随着灵巧手、具身机器人、无人机等方向快速发展，RISC-V在工控DSP领域的渗透率将显著提升。</p><p>此外，通信领域同样是可期待的增长点。</p><h2>碎片化的背面是同质化<br /></h2><p><strong>雷峰网：</strong>结合您的产业实践，您如何评估RISC-V碎片化带来的风险及其对行业发展的实质影响？<br /></p><p><strong>曾轶</strong>：我觉得大家有时候会望文生义，“碎片化”一词常被误解为负面，但它本质上是一个中性词，与行业发展需求紧密相连。</p><p>比如，ARM架构不碎片化，带来的结果是同质化。过去，大量芯片设计公司每年发布的芯片，架构和规格高度相似，因为它们购买的是ARM预先定义好的同一套公版方案——不仅包含CPU内核，连总线、外设都完整打包。厂商花高价获得授权，本质上是在为ARM打工，自身利润空间有限。</p><p>而碎片化恰恰提供了差异化竞争的可能，我们的客户在采用基于RISC-V的定制处理器后，获得了与竞争对手完全不同的指令集和架构，性能显著提升，并随即申请了专利，这正是碎片化带来的正面价值。</p><p>所以首先我想澄清一个观点：碎片化不是坏事。</p><p>但碎片化也伴随风险。RISC-V的高度灵活性使得定制指令成为可能，而定制指令本身技术门槛极高，如果开发者自行编写RTL并添加指令，但配套编译器质量不佳，产品推向市场后就难以获得认可，不同厂商的方案之间也会产生兼容性问题。这就需要有统一的检测标准和实现规范，而工委会正在推进的测试平台，正是为了对碎片化进行适度收敛。</p><p>此外，碎片化之所以很不规范，是因为很多工程师都是自己手搓的。我们隼瞻的做法是用更高层次的工具平台来替代这种模式，客户只需定义顶层架构，底层的编译器、代码、验证平台均由工具自动生成。这相当于在保留碎片化差异化优势的同时，在相当程度上消解了它带来的风险。</p><p><strong>雷峰网：</strong>那您认为当前RISC-V生态建设中最关键的卡点在哪里？<br /></p><p><strong>曾轶</strong>：实践。</p><p>RISC-V的基础架构本身很简洁，但当各行业真正用起来时，需要完成大量的适配与配套工作。最简单的例子是基础软件库：ARM有丰富的现成库可以直接调用，而RISC-V在这方面仍显不足。虽然我们近几年做了大量补充，但缺口依然明显，也因此期望政府在推动生态建设方面能加大力度。</p><p><strong>雷峰网：</strong>但从更宏观的行业视角来看，RISC-V在中长期缺乏一个能有效统筹各方资源的协调机制，可能导致企业各自为战、重复造轮子。在您看来，产业协作真正的突破口最有可能在哪个方向率先打通？<br /></p><p><strong>曾轶：</strong>ARM实际上也面临类似的协调问题，只是表现方式不同。RISC-V作为开源平台，百花齐放的同时，自然会引发“何时统一协调”的追问。比如中国RISC-V发展迅速，我们时常感到国际基金会的配套节奏跟不上，甚至产生自立门户的念头。而ARM之所以显得没有这个问题，是因为它拥有独家裁决权，可以一锤定音，对外呈现高度统一。</p><p>正因如此，我非常推崇RISC-V工委会在国内所发挥的作用。RISC-V天然具备开放竞争的特性，很难由某一家商业机构来主导标准制定，我们在推动DSA时也不敢以牵头者自居，因为一旦商业公司出面，友商便可能退避。任何一家商业机构都不太适合充当这个协调角色。</p><p>某种程度上，这恰恰是我们社会主义国家可以发挥优势的地方。像工信部、中标协这类机构，本身就是天然的生态组织者。换个角度看，所谓“生态建设”，落到操作层面就是制定一系列行业标准，让各方有章可循，各行各业都面临类似的问题，需要围绕中立组织来推进。</p><p>我们公司现在的做法，便是在各种场合积极推动工委会，以其为方向指引来开展各项工作。目前国内已有多家公司围绕在工委会周围共同推进，并非我们一家在努力。</p><p><strong>雷峰网</strong>：你们目前进展到什么阶段了？<br /></p><p><strong>曾轶：</strong>进展较快。我们近期在上海浦东成立了DSA领域计算实验室，与浦东软件园共建，由RISC-V工委会指导。</p><p>之所以命名为DSA领域计算实验室，而非隼瞻科技实验室，是因为这是一个开放式实验室。DSA本身就是一个领域专用的概念，它的研究方向天然就很分散——不像服务器领域那样目标集中，而是覆盖大量细分方向。成立这个实验室的目的，就是为企业、研究机构、高校甚至极客组织提供一个可共同参与的平台。</p><p>实验室从一开始就在RISC-V工委会的指导下运行，上个月成立时由工委会领导主持。有了这个实体平台，我们便可对RISC-V DSA领域的标准性工作进行前期储备。</p><p><strong>雷峰网：</strong>在追求差异化的同时，如何兼顾客户方案的可迁移性？<br /></p><p><strong>曾轶：</strong>关于可迁移性，要看它是否真的是客户的需求。比如今年我们与某个客户合作开发处理器时，对方在签约时额外付费，明确要求不对其他客户介绍此项技术——他们要的不是可迁移性，而是完全的独立性和差异化。这正是我们在行业中的定位：帮助不同客户建立各自的技术护城河，同时借助自动化与AI化手段让这个过程变得简洁高效。</p><p>相较可迁移性，您真正关心的或许是可实现性——即客户能否快速将想法变为现实。原本可能需要组建大型团队、投入数年时间，如今双方各出两名工程师，两到三个月即可完成包含验证和平台适配在内的全套交付。我们要做的，就是大幅拉低处理器定制的门槛，将定制化的理念和能力普惠到整个行业，而客户最终拿到的产品，依然各自保持差异化。</p><p><strong>雷峰网：</strong>客户是否会产生被绑定在隼瞻平台上的顾虑？<br /></p><p><strong>曾轶：</strong>从实际反馈看，客户普遍认可这种深度合作关系。我们的目标本就是与客户实现深度绑定，而客户也同样乐在其中。</p><p>以一家头部芯片客户为例，他们早期便与我们进行了架构层面的绑定，客户粘性很高。一旦进入这套定制体系，客户往往会形成依赖，因为他们能真实感受到定制带来的差异化优势。这就像购买衣服，习惯了购买标准化成衣后，一旦体验过依据个人身材与风格快速定制并交付的模式，就很难再回到从前的消费习惯。客户每年持续向我们下单，这种绑定对双方而言是双赢的。</p><h2>定制之后，还要做“预制菜”<br /></h2><p><strong>雷峰网：</strong>RISC-V芯片对EDA工具提出了哪些特殊要求？<br /></p><p><strong>曾轶：</strong>有很多特殊要求，EDA工具覆盖设计、验证、系统集成到物理分析的全流程，而CPU架构设计本身难度极高。以往ARM或英特尔的CPU内核，都是由少数团队在封闭环境下完成，如今要将其变为可被广泛定制的普适性产品，复杂度大幅提升，对工具的支撑能力也提出了更高标准。</p><p>最典型的挑战在验证环节。RISC-V CPU的验证远比传统电路复杂，其灵活可定制的特性会产生大量随机功能路径，难以在传统流程中实现全面覆盖，这与架构碎片化带来的多样性直接相关。</p><p>针对这一问题，行业内有不同应对路径。我们的做法是，在为客户生成DSA处理器的同时，配套交付一套专属的测试环境和测试代码。客户在传统EDA验证工具上运行这套代码，基本可实现98%至100%的覆盖率，这是我们为行业解决实际问题所做的贡献。</p><p><strong>雷峰网：</strong>Synopsys和Cadence都是EDA和IP双轮驱动，隼瞻目前是国内唯一一家同时做这两个领域的企业。为什么选择这样的布局？<br /></p><p><strong>曾轶：</strong>我此前在Codasip的经历，奠定了一部分理念基础。在我看来，IP与EDA之间存在天然的共性——两者都服务于半导体行业和芯片企业，边界并不那么泾渭分明。</p><p>因此，较为合理的做法正是我们当前所实践的：以IP为核心，同时配套提供EDA平台，使客户能够基于该平台完成定制。这一模式有其内在逻辑，新思与楷登走的也是类似路径，他们同样拥有对标的解决方案。</p><p><strong>雷峰网：</strong>行业预测到2030年RISC-V市场份额有望达到三分之一甚至更高，在这一节点，您期望隼瞻在行业中扮演怎样的角色？<br /></p><p><strong>曾轶</strong>：这个预测是完全有可能的，而我们的目标是成为DSA领域的领导者，坦率地说，在国内这一方向上，我们目前已经在一定程度上处于这样的位置了——这个赛道一直由我们在推动，我们判断其市场即将迎来爆发。</p><p>我所说的领导者，是指技术的领先性与完备性，以及市场生态位的精准卡位。目前我们通过工具平台为客户定制CPU、DSP和NPU，业务增长迅速，今年上半年业绩已达到去年全年水平，全年营收翻番的可能性很大。</p><p>因此，我们将坚定地举起DSA这面旗帜，并在未来两年有对应的出海计划。</p><p><strong>雷峰网</strong>：若要成为行业领导者，未来几年需要突破哪些关键的技术节点或生态节点？<br /></p><p><strong>曾轶</strong>：要成为行业领导者，未来有两个关键节点必须突破。</p><p>第一，定制工具的全面AI化，这是我们目前最急迫、也最具挑战的方向。目标很明确：真正成为半导体行业的Copilot，以AI驱动的方式帮助客户自动生成处理器方案，我们正与国内某知名科研院所围绕模型优化与导入展开持续探讨，这个方向至关重要。</p><p>第二，在碎片化中推进“反碎片化”。在完成大量高度定制化的项目后，我们开始沉淀共性平台——并非每个客户都需要从头定制一切，部分客户更倾向于获得现成的基核方案。例如在AI领域，我们分别规划了1T以下、20至50T、100至200T算力的梯度方案；或者在对标TI的2800、2900系列的工控DSP领域，同样会有相应布局。这些方案内部被称为“预制菜”——高度封装、稍作调整即可投入使用，这也是我们下一阶段的重点发力方向。</p><p>作者长期关注AI芯片和算力行业，欢迎添加微信 EATINGNTAE 交流。</p><p>雷峰网雷峰网</p>
+                                                <p>雷峰网原创文章，未经授权禁止转载。详情见<a href="https://r.xiumi.us/board/v5/3qhbI/392977584" target="_blank" rel="noopener nofollow">转载须知</a>。</p></article>
+    <div class="dp-actions">
+      <a class="dp-btn pri" href="https://www.leiphone.com/category/chips/6Ce1BxLj2chEdoJD.html" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      
+      <button type="button" class="dp-btn sec" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
+      <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
+    </div>
+    <p class="dp-note">本页由句子互动动态管线自动生成，聚合内容版权归各来源所有；如来源方希望调整或移除收录，请通过官网联系我们。</p>
+  </div>
+</main>
+<div id="site-footer"></div>
+<script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "隼瞻创始人曾轶：AI推倒芯片设计壁垒，我们要做半导体行业的「Copilot」"};</script>
+<script src="../../assets/site.js"></script>
+</body>
+</html>

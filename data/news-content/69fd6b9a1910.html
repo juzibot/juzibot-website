@@ -1,0 +1,62 @@
+<p>Opus 5 上线，Claude 工程师在 X 发文说，团队为 Claude Opus 5、Claude Fable 5 这类新模型删掉了 Claude Code 超过 80% 的系统提示词。</p>
+<p>删完后，他们重新跑了内部编码评测，没有测到性能损失。</p>
+<p>当大家还在研究怎么可以把规则写得更全，把提示词写得更好时，Claude Code 团队已经开始精简这些提示。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/PixPin_2026-07-27_15-57-36.png!720" referrerpolicy="no-referrer" /></p>
+<p>过去，我们热衷于提示词、Skill 这些概念，先是把 AI 用提示词工程进行引导，再用一个线束工程套起来，然后又用一个循环工程让它学会自动化工作。整个过程像是 AI 在用我们，而不是我们在使用 AI。</p>
+<p>随着模型的能力越来越强，Claude 工程师说很多提示词其实是一种累赘。</p>
+<p>他举例说，在 Claude Code 的系统提示词里面可能已经有「适当给代码补充注释」这样的信息，但是我们使用的某个省 Token Skill 可能又写着「不要添加注释」，最后我们发给 AI 的提示词又写着「照着原有的代码风格补充。」</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/ChatGPT-Image10_45_59.png!720" referrerpolicy="no-referrer" /></p>
+<p>AI 懵了，到底听系统提示词的，还是听 Skill 的，还是听用户指令。这些旧的指令继续常驻，不仅会占用模型的上下文，也会产生新的冲突，需要模型花更多的时间去做决策。</p>
+<p>而这些问题，在 Claude 5 系列模型上，其实不用手写提示词，也不需要 Skill 和系统提示词，模型自己知道，什么情况下，代码需要注释，什么情况可以删除。</p>
+<p>Claude 还提到所谓 80% 的提示词，只涉及 Claude Code 的 system prompt，不包括 CLAUDE.md、Skills 等其他上下文。</p>
+<p>那么问题来了，我们自己的提示词还有 Skill 应该怎么删减，才能适配上更先进的模型。</p>
+<h2>所有上下文都要优化</h2>
+<p>我们之前在分享地图非疆域的文章里就曾提到，提示词应该以目的为导向，要暴露我们的未知。</p>
+<p>现在的模型不再是像之前的「实习生」一样，应该把它当做一个高级员工；我们的角色也需要从一个使唤实习生的普通打工人，摇身一变吩咐资深工程师的总监。</p>
+<p>Claude Code 工程师 Thariq 给出了六个新的思路，如何让自己说的话，给模型下的指令，更适配模型的聪明程度。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/ChatGPT10_09_22.png!720" referrerpolicy="no-referrer" /></p>
+<p>六个转变里面提到<strong>以前是给 Claude 规则，现在是相信 Claude 自己的判断力</strong>，意思就说不用说得太明白，AI 现在什么都懂。</p>
+<p>Thariq 这里说的意思是过去我们给各种 Agent 工具保留强硬规则，像是「完成后必须验证」、「除非必要，不要添加注释」、「除非用户要求，不要创建分析文档」等等……这些规则是为了防止旧 Agent 出现最差的结果。</p>
+<p>新模型的判断能力提高后，Claude Code 把它改成了一句更短的要求：按照周围代码的写法工作，匹配原有的注释密度、命名和习惯。</p>
+<p>这个感觉像不像你问老板这个方案要做成什么样，老板说「就是跟咱们原来项目调性一样就可以。」</p>
+<p>电影《年会不能停！》里讽刺的那句「这个问题的关键，是要找到关键的问题」，如今在 AI 时代实现了完美的逻辑闭环。以前是「打工人揣测领导心思」，现在是「我们给 AI 当领导、讲黑话」。哪怕我们自己啥都不会，只要学会说「按原样对齐」、「对齐颗粒度」，聪明的 AI 就能把剩下的活全部自动补全。</p>
+<p>工具调用上也是如此，以前，为了让 Claude 学会使用工具，最常见的做法是提供几个调用示例。但 Anthropic 在新模型上发现，演示案例可能把 Claude 限定在演示过的操作范围内。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/ChatGPT-10_13_12.png!720" referrerpolicy="no-referrer" /></p>
+<p>Thariq 用 Todo 工具举例，过去需要展示几次完整操作，教 Claude 如何创建、开始和完成任务。现在只要在接口中规定三种任务状态 pending、in_progress 和 completed 并注明同一时间只能处理一项任务，Claude 就能根据这些字段自行判断该怎样调用工具。</p>
+<p>因此我们可以把精力放在工具、脚本和文件的接口设计上，以及是否可以直接使用 Claude 的某些参数，这些参数能不能把任务表达清楚。</p>
+<p><strong>例如过去几年，模型逐渐学会选工具、继续执行和自查；Claude Code 也陆续加入 Tool Search、自动记忆、Skills 和权限系统。原来写在 Prompt 里的不少提醒，现在由模型或工具直接完成。</strong></p>
+<p>第三条变化是「需要时再加载」，原文叫 progressive disclosure。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/ChatGPT-Image10_22_32.png!720" referrerpolicy="no-referrer" /></p>
+<p>Claude Code 过去把怎样检查代码、怎样确认任务真的做完都写进系统提示词。每次开始任务时，这两套说明都会一起交给 Claude，哪怕这次根本用不上。</p>
+<p>后来，Anthropic 把两套说明分别做成 Skills。Claude 要检查代码时才打开代码审查（code review）Skill，要验收结果时才打开完成验证（verification）Skill。普通任务不用先读这两套无关说明。</p>
+<p>工具说明也可以按需读取。有些工具开始时不把完整说明交给 Claude。Claude 要使用这个工具时，再通过 ToolSearch 找到完整说明，然后照着调用。ToolSearch 就是用来查找工具说明的搜索器。</p>
+<p>Thariq 还提到 CLAUDE.md 和 Skill.md 也是采用同样的方式。CLAUDE.md 记录整个项目的说明，Skill.md 记录某一项 Skill 的说明。当它们的文件太长时可以按主题拆开，Claude 做相关工作时再读取对应内容。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/ChatGPT-Image10_25_15.png!720" referrerpolicy="no-referrer" /></p>
+<p>第四条变化更简单。旧模型有时需要重复提醒，也可能更重视上下文末尾出现的要求。Claude Code 过去会把同一条工具使用要求写在两个地方：系统提示词里写一次，工具自己的说明里再写一次。</p>
+<p><strong>新模型通常不再需要这种重复。Anthropic 删除了系统提示词里重复的一份，只把使用方法留在工具说明中。</strong></p>
+<p>记忆也不再全部依靠用户手动保存。Claude Code 过去鼓励用户按下 #，把以后还会用到的信息写入 CLAUDE.md，供后续任务继续使用。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/ChatGPT-Imag10_27_53.png!720" referrerpolicy="no-referrer" /></p>
+<p>现在，Claude 会自动保存与当前工作和用户有关的信息，后续遇到相关任务时继续使用。</p>
+<p>最后一项变化是参考材料。这份给模型的参考，需是写清最后要交付什么，以及结果必须满足哪些条件。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/ChatGPT-Image10_32_04.png!720" referrerpolicy="no-referrer" /></p>
+<p>Claude Code 过去主要把计划和规格写进 Markdown 文档。但新模型可以直接阅读更多类型的材料，例如可以在浏览器里直接打开的网页原型（HTML）、已经写好的代码、一组用来检查功能是否正常的测试、其他项目里可以拿来参考或移植的一段代码，以及一份列明评分项目和合格条件的评分表。</p>
+<p>这份评分表还很有讲究，Claude 提到可以让另一个专门负责验收的 AI 按照评分表逐项检查。例如，评分表写明工具接口需要达到哪些要求，验收 AI 再检查结果是否符合用户偏好。</p>
+<p>和之前 Thariq 放弃 Markdown，推荐 HTML 一样，他提到推荐代码形式的参考材料。</p>
+<p><strong>比如让 Claude 制作网页时，直接给它一份能打开的 HTML 原型，通常比只给文字或截图更准确。Claude 不仅能看到页面长什么样，还能读到页面结构和代码。</strong></p>
+<p>了解到这些变化之后，Thariq 还把 Claude 要读取的信息分成了多层。说明产品基本规则的系统提示词（system prompt）、记录项目特殊要求的 CLAUDE.md、按需打开的任务指南（Skills），以及当前任务可以查阅的参考材料（References）等。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/ChatGPT-Image-10_43_37.png!720" referrerpolicy="no-referrer" /></p>
+<p>System prompt 用来说明产品环境和 Claude 的基本任务。作为普通 Claude Code 用户一般不会修改它，但如果我们想要自己开发一套让 AI 自动完成任务的系统时，才需要认真设计这一层。</p>
+<p>CLAUDE.md 是放在项目里的说明文件。Thariq 建议保持简短，重点记录 Claude 只看文件结构不容易发现的特殊规定。</p>
+<p>举个例子，如果一个项目规定所有数据类型都只能在同一个文件里定义，就应该把这项要求写清楚。项目里一眼就能看见的目录和文件，不必再抄一遍。</p>
+<p>Skills 是按需打开的任务指南。除非涉及必须严格遵守的重要事项，否则不要把规则写得太死。内容很长时可以拆成多个文件。个人、团队或产品特有的知识、观点和工作方法，最适合放在这里。</p>
+<p>References 是 Claude 完成当前任务时可以查阅的参考文件，例如规格、页面原型和现有代码。用户可以输入 @，再选中要交给 Claude 的文件。</p>
+<h2>AI 变聪明的时候，人要更「精明」</h2>
+<p>有网友总结现在的 AI 模型变化，<strong>是从一开始的会写代码 → 会写 prompt → 会写 agent / workflow → 会写 skill → 有手/会说话就行。</strong></p>
+<p>写了大半年的 Skill，现在 Skill 的能力似乎都被模型或 Agent 工具给内化了。</p>
+<p>少写绝对规则；用清楚的工具说明代替成套示范；不常用的内容等需要时再打开；同一条要求只保留一份；让 Claude 自动保存部分记忆；规格除了文字，也可以直接用代码、测试和评分表表达。</p>
+<p>把这六条变化放在一起看，Claude Code 删掉的 80% 提示词，都是那些原本为了弥补模型能力不足而存在的「中间层」。</p>
+<p><img src="https://s3.ifanr.com/wp-content/uploads/2026/07/PixPin_2026-07-27_15-59-06.png!720" referrerpolicy="no-referrer" /></p>
+<p>以前，我们不断往 Prompt、Skill、Workflow 里面堆规则，希望 AI 少犯一点错。现在，越来越多规则开始交还给模型自己判断，我们真正需要做的，变成了提供上下文、设计工具接口，以及定义什么叫做好结果。</p>
+<p>当模型越来越聪明之后，人真正要学习的，也不再是怎么把一句 Prompt 写到一百分，而是怎样把整个工作环境搭建好，让 AI 自己判断更多操作细节，完成剩下的 90%。</p>
+<p>不过要直接进化到「有手、会说话就行」还不太可能，但这种状态能很好地形容现阶段 AI Agent 的入门门槛。如果要得到稳定的结果，仍然需要人类提供项目的特殊规定、团队知识和验收材料等。</p>
+<p>过去半年写下的 Skills 不会全部白写，其中那些专门提醒旧模型「别忘了这一步」、「必须这样操作」的内容，确实该重新检查了。</p>
