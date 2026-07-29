@@ -1,7 +1,7 @@
 {
  "generated_by": "build_news.py",
- "generated_at": "2026-07-30T03:21:25+08:00",
- "count": 595,
+ "generated_at": "2026-07-30T03:28:55+08:00",
+ "count": 596,
  "visible": 280,
  "sources": [
   {
@@ -10,7 +10,7 @@
    "type": "sitemap",
    "home": "https://rui.juzi.bot/",
    "status": "ok",
-   "last_sync": "2026-07-30T03:21:25+08:00",
+   "last_sync": "2026-07-30T03:28:55+08:00",
    "group": "company",
    "ai": true,
    "count": 37
@@ -21,7 +21,7 @@
    "type": "feishu-base",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T03:21:25+08:00",
+   "last_sync": "2026-07-30T03:28:55+08:00",
    "group": "company",
    "ai": false,
    "count": 0
@@ -32,7 +32,7 @@
    "type": "manual",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T03:21:25+08:00",
+   "last_sync": "2026-07-30T03:28:55+08:00",
    "group": "company",
    "ai": false,
    "count": 5
@@ -43,7 +43,7 @@
    "type": "manual",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T03:21:25+08:00",
+   "last_sync": "2026-07-30T03:28:55+08:00",
    "group": "company",
    "ai": false,
    "count": 0
@@ -54,7 +54,7 @@
    "type": "rss",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T03:21:25+08:00",
+   "last_sync": "2026-07-30T03:28:55+08:00",
    "group": "radar",
    "ai": true,
    "count": 99
@@ -65,7 +65,7 @@
    "type": "rss",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T03:21:25+08:00",
+   "last_sync": "2026-07-30T03:28:55+08:00",
    "group": "radar",
    "ai": true,
    "count": 87
@@ -76,7 +76,7 @@
    "type": "hn-algolia",
    "home": "https://news.ycombinator.com/",
    "status": "ok",
-   "last_sync": "2026-07-30T03:21:25+08:00",
+   "last_sync": "2026-07-30T03:28:55+08:00",
    "group": "radar",
    "ai": true,
    "count": 27
@@ -87,7 +87,7 @@
    "type": "qisi-list",
    "home": "https://news.miracleplus.com/",
    "status": "ok",
-   "last_sync": "2026-07-30T03:21:25+08:00",
+   "last_sync": "2026-07-30T03:28:55+08:00",
    "group": "radar",
    "ai": true,
    "count": 25
@@ -1247,6 +1247,23 @@
     "ai-native-enterprise-transformation"
    ],
    "concepts_full": true
+  },
+  {
+   "id": "4e943825a64e",
+   "title": "Keychron announces first open-source firmware for gaming mice",
+   "url": "https://www.digitalfoundry.net/news/2026/07/keychron-announces-first-open-source-firmware-for-gaming-mice",
+   "summary": "",
+   "category": "",
+   "tags": [],
+   "date": "2026-07-29",
+   "source": "hn",
+   "source_name": "Hacker News",
+   "author": "Hacker News",
+   "hn": "https://news.ycombinator.com/item?id=49099715",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-30"
+   }
   },
   {
    "id": "4e2df7e8e9f2",
@@ -8206,26 +8223,23 @@
   },
   {
    "id": "195d0bebc5a4",
-   "title": "从零开始玩转循环 (Getting started with loops)",
    "url": "https://baoyu.io/blog/2026-07-06/claudedevs-2074208949205881033",
-   "summary": "最近大家都在热议“设计循环 (designing loops)”，而不是简单地给你的写代码的 AI 智能体 (AI Agent) 下提示词。如果你在 X（原 Twitter）上逛一逛，想搞清楚“循环”到底是个啥，你会看到五花八门的答案。",
-   "category": "宝玉",
-   "tags": [],
-   "date": "2026-07-06",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "宝玉",
+   "date": "2026-07-06",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "近期热议AI智能体中的循环设计，而非简单提示词。在X平台上，关于循环的定义众说纷纭，文章从零开始解释如何玩转循环。",
+   "title": "从零开始玩转循环 (Getting started with loops)",
+   "source_name": "大咖观点",
+   "brief": "Claude Code 团队详解 AI 智能体循环机制，按触发方式、停止条件等维度分类，强调从简单方案开始灵活应用。",
+   "brief_full": true,
    "concepts": [
     "agentic-loop",
-    "autonomous-agents",
-    "prompt-engineering",
+    "harness-layer",
     "system-prompt"
-   ]
+   ],
+   "concepts_full": true
   },
   {
    "id": "2bc4a920b1b3",
@@ -8245,24 +8259,23 @@
   },
   {
    "id": "296ce7765dad",
-   "title": "科技爱好者周刊（第 402 期）：我在智念 AI 的日子（小说）",
    "url": "http://www.ruanyifeng.com/blog/2026/07/weekly-issue-402.html",
-   "summary": "这里记录每周值得分享的科技内容，周五发布。...",
-   "category": "阮一峰",
-   "tags": [],
-   "date": "2026-07-02",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "阮一峰",
+   "date": "2026-07-02",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "科技爱好者周刊第402期分享一篇题为“我在智念 AI 的日子”的小说，记录每周科技内容。",
+   "title": "科技爱好者周刊（第 402 期）：我在智念 AI 的日子（小说）",
+   "source_name": "大咖观点",
+   "brief": "科技爱好者周刊第 402 期分享智念 AI 工作体验小说，收录开源投稿与招聘信息，封面为内蒙古草原方舟文化空间。",
+   "brief_full": true,
    "concepts": [
-    "coding-agent",
-    "token-consumption"
-   ]
+    "token-consumption",
+    "saas-product",
+    "personal-ai"
+   ],
+   "concepts_full": true
   },
   {
    "id": "550d6604b32c",
@@ -8292,49 +8305,36 @@
   },
   {
    "id": "fe39f43c087c",
-   "title": "Build a Reasoning Model From Scratch Is Out",
    "url": "https://sebastianraschka.com/blog/2026/build-a-reasoning-model-from-scratch-is-out.html",
-   "summary": "Short note announcing the release of Build a Reasoning Model From Scratch and linking the publisher and Amazon pages.",
-   "category": "Sebastian Raschka",
-   "tags": [],
-   "date": "2026-06-30",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "Sebastian Raschka",
+   "date": "2026-06-30",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "《从头构建推理模型》一书现已发布，文章提供了出版商和亚马逊的购买链接，该书旨在指导读者从零开始构建推理模型。",
-   "title_zh": "《从头构建推理模型》已发布",
+   "title": "Build a Reasoning Model From Scratch Is Out",
+   "source_name": "大咖观点",
+   "brief": "《Build a Reasoning Model From Scratch》新书发布，440 页全彩内容，是《Build a Large Language Model (From Scratch)》的续作。",
+   "brief_full": true,
+   "title_zh": "Build a Reasoning Model From Scratch Is Out",
    "concepts": [
     "reasoning-model",
     "reinforcement-learning",
-    "model-distillation",
-    "foundation-model"
-   ]
+    "model-distillation"
+   ],
+   "concepts_full": true
   },
   {
    "id": "ee7009035355",
-   "title": "Using Local Coding Agents",
    "url": "https://sebastianraschka.com/blog/2026/using-local-coding-agents.html",
-   "summary": "Short note linking a new article on setting up local coding agents with open-weight models.",
-   "category": "Sebastian Raschka",
-   "tags": [],
-   "date": "2026-06-29",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "Sebastian Raschka",
+   "date": "2026-06-29",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "文章链接到一篇新文章，介绍如何使用开放权重模型设置本地编码代理，以替代云端服务，这对于注重隐私或成本的用户可能有帮助。",
-   "title_zh": "使用本地编码代理",
-   "concepts": [
-    "coding-agent",
-    "open-source-model"
-   ]
+   "title": "Using Local Coding Agents",
+   "source_name": "大咖观点"
   },
   {
    "id": "86a34b395b91",
@@ -8353,48 +8353,45 @@
   },
   {
    "id": "39217bafd159",
-   "title": "Using Local Coding Agents",
    "url": "https://magazine.sebastianraschka.com/p/using-local-coding-agents",
-   "summary": "Using Open-Weight Models in Local Coding Harnesses as an Alternative to Claude Code and Codex Subscriptions",
-   "category": "Sebastian Raschka",
-   "tags": [],
-   "date": "2026-06-27",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "Sebastian Raschka",
+   "date": "2026-06-27",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "本文探讨了在本地编码工具中使用开放权重模型，作为 Claude Code 和 Codex 订阅服务的替代方案，可以降低成本并提高数据控制权。",
-   "title_zh": "使用本地编码代理",
+   "title": "Using Local Coding Agents",
+   "source_name": "大咖观点",
+   "brief": "教程介绍如何使用开源工具和开源 LLM 搭建本地编程智能体，提供生产级环境配置指南。",
+   "brief_full": true,
+   "title_zh": "Using Local Coding Agents",
    "concepts": [
     "coding-agent",
+    "inference-engine",
     "open-source-model"
-   ]
+   ],
+   "concepts_full": true
   },
   {
    "id": "e7c67241bdfa",
-   "title": "Local Open-Weight LLMs in Coding Harnesses",
    "url": "https://sebastianraschka.com/blog/2026/local-open-weight-llms-coding-harnesses.html",
-   "summary": "Short note on trying local open-weight LLMs across Qwen-Code, Codex, and Claude Code harnesses.",
-   "category": "Sebastian Raschka",
-   "tags": [],
-   "date": "2026-06-26",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "Sebastian Raschka",
+   "date": "2026-06-26",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "文章测试了多个本地开放权重 LLM 在不同编码工具中的表现，包括 Qwen-Code、Codex 和 Claude Code，旨在探索本地模型在编码任务中的可行性。",
-   "title_zh": "编码工具中的本地开放权重 LLM",
+   "title": "Local Open-Weight LLMs in Coding Harnesses",
+   "source_name": "大咖观点",
+   "brief": "测试不同开源 LLM 在编程框架中的表现，30B 混合专家模型性能优异，Claude Code 消耗 tokens 量约为 Codex 的两倍。",
+   "brief_full": true,
+   "title_zh": "Local Open-Weight LLMs in Coding Harnesses",
    "concepts": [
-    "open-source-model",
-    "large-language-model",
-    "coding-agent"
-   ]
+    "moe-model",
+    "token-consumption",
+    "inference-deployment"
+   ],
+   "concepts_full": true
   },
   {
    "id": "ebba0d1c937e",
@@ -8414,24 +8411,24 @@
   },
   {
    "id": "2462892d260e",
-   "title": "Scaling Laws, Carefully",
    "url": "https://lilianweng.github.io/posts/2026-06-24-scaling-laws/",
-   "summary": "Scaling laws are one of the most critical empirical findings in deep learning. The observation is simple in form: the training loss $L$ decreases predictably as we scale…",
-   "category": "Lilian Weng",
-   "tags": [],
-   "date": "2026-06-24",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "Lilian Weng",
+   "date": "2026-06-24",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "缩放定律是深度学习中最关键的经验发现之一，观察到训练损失随模型规模扩大而可预测地下降，文章深入讨论了这一定律的重要性和应用。",
-   "title_zh": "谨慎的缩放定律",
+   "title": "Scaling Laws, Carefully",
+   "source_name": "大咖观点",
+   "brief": "深度学习缩放定律揭示模型规模、数据量与计算资源对训练损失的幂律关系，核心是优化计算资源分配。",
+   "brief_full": true,
+   "title_zh": "Scaling Laws, Carefully",
    "concepts": [
-    "scaling-laws"
-   ]
+    "scaling-laws",
+    "training-compute",
+    "model-capability"
+   ],
+   "concepts_full": true
   },
   {
    "id": "68334296fb04",
@@ -8517,112 +8514,105 @@
   },
   {
    "id": "384f71ffddd0",
-   "title": "GLM-5.2 and IndexShare for Long-Context Sparse Attention",
    "url": "https://sebastianraschka.com/blog/2026/glm-5-2-indexshare.html",
-   "summary": "Short note on GLM-5.2, an open-weight GLM update that keeps the GLM-5 sparse MoE backbone and adds IndexShare for cheaper 1M-token DSA inference.",
-   "category": "Sebastian Raschka",
-   "tags": [],
-   "date": "2026-06-18",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "Sebastian Raschka",
+   "date": "2026-06-18",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "GLM-5.2 是 GLM 的更新版本，保留了稀疏 MoE 骨干，并引入 IndexShare 技术，以降低 1M-token DSA 推理的成本，提升长上下文处理效率。",
-   "title_zh": "GLM-5.2 和用于长上下文稀疏注意力的 IndexShare",
+   "title": "GLM-5.2 and IndexShare for Long-Context Sparse Attention",
+   "source_name": "大咖观点",
+   "brief": "Z.ai 发布 GLM-5.2 开源模型，复用 Multi-head Latent Attention 和 DeepSeek Sparse Attention 架构，新增 IndexShare 特性。",
+   "brief_full": true,
+   "title_zh": "GLM-5.2 and IndexShare for Long-Context Sparse Attention",
    "concepts": [
-    "moe-model",
+    "indexshare",
     "long-context-window",
-    "indexshare"
-   ]
+    "moe-model"
+   ],
+   "concepts_full": true
   },
   {
    "id": "4c9d5872c695",
-   "title": "VibeThinker-3B and the Strength of Post-Training",
    "url": "https://sebastianraschka.com/blog/2026/vibethinker-3b-post-training.html",
-   "summary": "Short note on VibeThinker-3B, a 3B model based on Qwen2.5-Coder-3B whose reported coding and reasoning results point to strong post-training.",
-   "category": "Sebastian Raschka",
-   "tags": [],
-   "date": "2026-06-17",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "Sebastian Raschka",
+   "date": "2026-06-17",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "VibeThinker-3B 是一个基于 Qwen2.5-Coder-3B 的 3B 参数模型，其编码和推理性能显示后训练效果显著，突出了后训练在模型优化中的重要性。",
-   "title_zh": "VibeThinker-3B 和后训练的力量",
+   "title": "VibeThinker-3B and the Strength of Post-Training",
+   "source_name": "大咖观点",
+   "brief": "VibeThinker-3B 基于 Qwen2.5-Coder-3B 构建，通过优质数据筛选和后训练达到接近大型系统的性能。",
+   "brief_full": true,
+   "title_zh": "VibeThinker-3B and the Strength of Post-Training",
    "concepts": [
-    "post-training"
-   ]
+    "post-training",
+    "reinforcement-learning",
+    "model-distillation"
+   ],
+   "concepts_full": true
   },
   {
    "id": "1e41ec2cc2f9",
-   "title": "为啥 Codex 还不推出类似 Codex Design 的产品？",
    "url": "https://baoyu.io/blog/2026-06-13/codex-design-model-gap",
-   "summary": "Claude Design 的关键不在 Harness，而在模型能否同时处理 UI/UX、数据结构、状态管理和交互逻辑。",
-   "category": "宝玉",
-   "tags": [],
-   "date": "2026-06-13",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "宝玉",
+   "date": "2026-06-13",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "文章探讨Codex尚未推出类似Claude Design的产品，关键在于模型需同时处理UI/UX、数据结构、状态管理和交互逻辑。",
+   "title": "为啥 Codex 还不推出类似 Codex Design 的产品？",
+   "source_name": "大咖观点",
+   "brief": "解释为何 Codex 未推出类似 Codex Design 的产品，指出 GPT-5.5 模型能力尚不足，区分模型层与 Harness 层差异。",
+   "brief_full": true,
    "concepts": [
     "harness-layer",
+    "agentic-coding",
     "model-capability"
-   ]
+   ],
+   "concepts_full": true
   },
   {
    "id": "9d0d798da4d2",
-   "title": "North Mini Code and Agentic Coding Benchmarks",
    "url": "https://sebastianraschka.com/blog/2026/north-mini-code-agentic-coding.html",
-   "summary": "Short note on North Mini Code, Cohere's 30B total and 3B active open-weight MoE model for agentic coding tasks.",
-   "category": "Sebastian Raschka",
-   "tags": [],
-   "date": "2026-06-12",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "Sebastian Raschka",
+   "date": "2026-06-12",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "North Mini Code 是 Cohere 推出的开放权重 MoE 模型，总参数 30B，活跃参数 3B，专为代理编码任务设计，旨在提升自动化编码任务的效率。",
-   "title_zh": "North Mini Code 和代理编码基准",
+   "title": "North Mini Code and Agentic Coding Benchmarks",
+   "source_name": "大咖观点",
+   "brief": "Cohere 发布 North Mini Code 开源模型，30B 参数混合专家架构，专注于智能体编程任务评估。",
+   "brief_full": true,
+   "title_zh": "North Mini Code and Agentic Coding Benchmarks",
    "concepts": [
-    "moe-model",
-    "open-source-model",
-    "coding-agent"
-   ]
+    "terminal-bench",
+    "agentic-coding",
+    "moe-model"
+   ],
+   "concepts_full": true
   },
   {
    "id": "61667c024d65",
-   "title": "对基本有序的序列排序算法",
    "url": "https://blog.codingnow.com/2026/06/powersort.html",
-   "summary": "quicksort 是基于比较的排序中表现最好的算法，它在大多数情况下都能接近时间复杂度 O(n log n) ，所以 qsort() 也是 C 标准库中排序的默认实现。但是，quicksort 是非稳定排序，即当原始序列中出现相同的元素时，经过 qsort ，这些相同元素的次序可能被调整。即两个 key 相同的元素，经过排序可能调换次…",
-   "category": "云风",
-   "tags": [],
-   "date": "2026-06-11",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "云风",
+   "date": "2026-06-11",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "快速排序在基本有序序列上表现良好，时间复杂度接近 O(n log n)，但它是非稳定排序，相同元素的顺序可能改变，文章讨论了其优缺点。",
+   "title": "对基本有序的序列排序算法",
+   "source_name": "大咖观点",
+   "brief": "分析快速排序与插入排序的稳定性差异，插入排序对有序序列效率高但对逆序序列性能退化。",
+   "brief_full": true,
    "concepts": [
     "sorting-algorithm",
     "timsort"
-   ]
+   ],
+   "concepts_full": true
   },
   {
    "id": "10ff0f01ec77",
@@ -8642,24 +8632,20 @@
   },
   {
    "id": "f3d1448df6a6",
-   "title": "LLM Research Papers: The 2026 List (January to May)",
    "url": "https://magazine.sebastianraschka.com/p/llm-research-papers-2026-part1",
-   "summary": "A curated roundup of notable LLM research papers that came out this year",
-   "category": "Sebastian Raschka",
-   "tags": [],
-   "date": "2026-06-06",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "Sebastian Raschka",
+   "date": "2026-06-06",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "本文精选了 2026 年 1 月至 5 月期间发表的值得注意的 LLM 研究论文，提供了一个综合回顾，涵盖了模型架构、训练方法等多个方面。",
-   "title_zh": "LLM 研究论文：2026 年列表（1 月至 5 月）",
-   "concepts": [
-    "large-language-model"
-   ]
+   "title": "LLM Research Papers: The 2026 List (January to May)",
+   "source_name": "大咖观点",
+   "brief": "整理 2026 年 1-5 月值得阅读的 LLM 研究论文列表，涵盖作者计划引用或回顾的文献。",
+   "brief_full": true,
+   "title_zh": "LLM Research Papers: The 2026 List (January to May)",
+   "concepts": [],
+   "concepts_full": true
   },
   {
    "id": "85d5e6ba2748",
@@ -8705,26 +8691,25 @@
   },
   {
    "id": "3fd20a6f05c4",
-   "title": "DeepSeek 的 10 万亿美元大战略",
    "url": "https://baoyu.io/blog/2026-05-23/bookwormengr-status-2057909493250539891",
-   "summary": "你有没有想过，DeepSeek 可能怎么赚钱，而且赚很多钱？",
-   "category": "宝玉",
-   "tags": [],
-   "date": "2026-05-23",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "宝玉",
+   "date": "2026-05-23",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "文章思考DeepSeek如何实现大规模盈利，探讨其可能的10万亿美元大战略。",
+   "title": "DeepSeek 的 10 万亿美元大战略",
+   "source_name": "大咖观点",
+   "brief": "分析 DeepSeek 战略，认为其通过开源和生态建设瞄准万亿美元市值及十万亿级产业目标。",
+   "brief_full": true,
    "concepts": [
     "moe-model",
     "grpo-algorithm",
     "rlvr",
-    "multi-token-prediction"
-   ]
+    "multi-token-prediction",
+    "zero-bubble"
+   ],
+   "concepts_full": true
   },
   {
    "id": "1a1dd81875b7",
@@ -8744,23 +8729,23 @@
   },
   {
    "id": "de6541bcf762",
-   "title": "来自 Codex 官方团队的分享：如何把 Codex 用到极致",
    "url": "https://baoyu.io/blog/2026-05-20/jxnlco-2057153744630890620",
-   "summary": "大多数开发者最初使用编程智能体，是为了写代码：检查仓库、生成 diff、跑测试、开 pull request。",
-   "category": "宝玉",
-   "tags": [],
-   "date": "2026-05-20",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "宝玉",
+   "date": "2026-05-20",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "Codex官方团队分享如何最大化利用编程智能体，从检查仓库、生成代码差异到运行测试和提交拉取请求。",
+   "title": "来自 Codex 官方团队的分享：如何把 Codex 用到极致",
+   "source_name": "大咖观点",
+   "brief": "Codex 官方分享如何最大化利用其功能，从代码编写扩展到终端命令、API 调用等自动化任务。",
+   "brief_full": true,
    "concepts": [
-    "coding-agent"
-   ]
+    "persistent-threads",
+    "mcp-server",
+    "thread-automations"
+   ],
+   "concepts_full": true
   },
   {
    "id": "25f60418af43",
@@ -8777,23 +8762,22 @@
   },
   {
    "id": "1c8592fbafab",
-   "title": "为什么我不“凭感觉编程”",
    "url": "https://baoyu.io/translations/2026-05-17/i-dont-vibe-code",
-   "summary": "这篇文章从成本、经验、抽象、数据、摩擦、责任和创作乐趣等角度，解释作者为什么始终无法真正接受 vibe coding。",
-   "category": "宝玉",
-   "tags": [],
-   "date": "2026-05-17",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "宝玉",
+   "date": "2026-05-17",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "作者从成本、经验、抽象、数据、摩擦、责任和创作乐趣等方面，解释为何无法接受vibe coding（凭感觉编程）。",
+   "title": "为什么我不“凭感觉编程”",
+   "source_name": "大咖观点",
+   "brief": "作者阐述不依赖“凭感觉编程”的原因，包括对 AI 工具成本和实用性的实际考量。",
+   "brief_full": true,
    "concepts": [
-    "vibe-coding"
-   ]
+    "vibe-coding",
+    "token-cost"
+   ],
+   "concepts_full": true
   },
   {
    "id": "804753cab139",
@@ -8813,106 +8797,99 @@
   },
   {
    "id": "0c83e7b090a8",
-   "title": "创始人手册：打造 AI 原生初创公司",
    "url": "https://baoyu.io/translations/2026-05-16/the-founders-playbook-building-an-ai-native-startup",
-   "summary": "AI 正在重塑初创公司的生命周期：从构思、MVP、发布到扩展，创始人可以用 Claude、Claude Code 和 Claude Cowork 压缩验证、开发和运营周期。",
-   "category": "宝玉",
-   "tags": [],
-   "date": "2026-05-16",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "宝玉",
+   "date": "2026-05-16",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "AI正改变初创公司流程，创始人可利用Claude、Claude Code和Claude Cowork来加速构思、MVP、发布和扩展阶段。",
+   "title": "创始人手册：打造 AI 原生初创公司",
+   "source_name": "大咖观点",
+   "brief": "AI 原生初创公司创始人手册，探讨 2026 年如何利用智能体编程降低创业门槛，快速将想法落地。",
+   "brief_full": true,
    "concepts": [
     "ai-native-enterprise",
-    "coding-agent"
-   ]
+    "agentic-coding"
+   ],
+   "concepts_full": true
   },
   {
    "id": "aefa6b151dd0",
-   "title": "Forward Deployed Engineer：AI 时代的新宠岗位，到底干什么？",
    "url": "https://baoyu.io/blog/2026-05-15/forward-deployed-engineer",
-   "summary": "FDE 正成为 AI 公司争抢的新岗位，关键不是写模型，而是把模型真正接进企业业务。",
-   "category": "宝玉",
-   "tags": [],
-   "date": "2026-05-15",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "宝玉",
+   "date": "2026-05-15",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "Forward Deployed Engineer（FDE）是AI时代新兴岗位，重点不在开发模型，而是将模型集成到企业业务中。",
+   "title": "Forward Deployed Engineer：AI 时代的新宠岗位，到底干什么？",
+   "source_name": "大咖观点",
+   "brief": "Google 正在大力投入 Forward Deployed Engineer 岗位，并简化面试流程。OpenAI 也成立了估值 140 亿美元的部署公司，同样重视 FDE 的职责。",
+   "brief_full": true,
    "concepts": [
-    "ai-fde"
-   ]
+    "forward-deployed-engineer"
+   ],
+   "concepts_full": true
   },
   {
    "id": "d886987181ce",
-   "title": "AI 时代到底该怎么管一个工程团队",
    "url": "https://baoyu.io/blog/2026-05-12/running-an-ai-native-engineering-org",
-   "summary": "Fiona Fung 以 Claude Code 团队实践说明，AI 时代的软件工程不再卡在写代码，而是卡在验证、评审、跨职能协作和安全边界。真正需要重构的是流程、组织结构、知识共享方式和衡量指标。",
-   "category": "宝玉",
-   "tags": [],
-   "date": "2026-05-12",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "宝玉",
+   "date": "2026-05-12",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "Fiona Fung基于Claude Code团队经验指出，AI时代软件工程瓶颈转向验证、评审、协作和安全，需重构流程、组织结构和衡量指标。",
+   "title": "AI 时代到底该怎么管一个工程团队",
+   "source_name": "大咖观点",
+   "brief": "Fiona Fung 在 Anthropic 分享了 AI 时代管理工程团队的经验，结合了 Claude Code 团队的实践案例。",
+   "brief_full": true,
    "concepts": [
-    "process-reengineering",
-    "organizational-performance"
-   ]
+    "agentic-coding",
+    "complexity-hunting",
+    "uncertainty-loop"
+   ],
+   "concepts_full": true
   },
   {
    "id": "33b2a5b84730",
-   "title": "为什么资深开发者讲不清自己的专业能力",
    "url": "https://baoyu.io/translations/2026-05-12/why-senior-developers-fail-to-communicate-their-expertise",
-   "summary": "资深开发者习惯用复杂度来解释问题，而业务里的其他人真正担心的是不确定性；以及在 AI 已经进入视野之后，这件事该怎么办。",
-   "category": "宝玉",
-   "tags": [],
-   "date": "2026-05-12",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "宝玉",
+   "date": "2026-05-12",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "资深开发者常以复杂度解释问题，但业务方更关心不确定性；文章探讨在AI时代如何改善这种沟通。",
+   "title": "为什么资深开发者讲不清自己的专业能力",
+   "source_name": "大咖观点",
+   "brief": "资深开发者常因沟通方式与受众不匹配而无法传达专业价值，文章分析了这一现象的原因。",
+   "brief_full": true,
    "concepts": [
-    "software-complexity",
-    "business-cycle"
-   ]
+    "complexity-hunting",
+    "uncertainty-loop"
+   ],
+   "concepts_full": true
   },
   {
    "id": "846c8049bd2f",
-   "title": "Codex 的野心，MCP 和 Skill 的下一步",
    "url": "https://baoyu.io/blog/2026-05-11/skill-next-codex",
-   "summary": "Codex 右侧工作区的演进不只是 UI 变化，而是在为插件生态铺路。",
-   "category": "宝玉",
-   "tags": [],
-   "date": "2026-05-11",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "宝玉",
+   "date": "2026-05-11",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "Codex工作区的演进不仅是界面更新，更是为插件生态系统奠定基础，涉及MCP和Skill的下一步发展。",
+   "title": "Codex 的野心，MCP 和 Skill 的下一步",
+   "source_name": "大咖观点",
+   "brief": "Codex、Claude 等顶尖 Agent 应用普遍采用三栏布局，右侧工作区是 Agent 交互的最优解。",
+   "brief_full": true,
    "concepts": [
-    "mcp"
-   ]
+    "agent-plugin-ecosystem",
+    "persistent-threads",
+    "thread-automations"
+   ],
+   "concepts_full": true
   },
   {
    "id": "4896cd760f43",
@@ -9072,24 +9049,17 @@
   },
   {
    "id": "329a99c34f6f",
-   "title": "soluna 外挂 C 模块",
    "url": "https://blog.codingnow.com/2026/03/soluna_external_lib.html",
-   "summary": "soluna 集成了 lua 虚拟机，但默认构建方式是将 lua 库静态链接到唯一的执行文件中。这将导致无法以动态库的形式外挂 Lua 的 C 扩展。 这是因为，如果独立编译 Lua 的 C 扩展库，通常需要链接 Lua 的 C API 。标准的方法是动态链接 lua 实现，如果静态链接 liblua.a ，会导致进程中有多份 lua …",
-   "category": "云风",
-   "tags": [],
-   "date": "2026-03-11",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "云风",
+   "date": "2026-03-11",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "soluna 项目默认静态链接 Lua 库，这阻碍了以动态库形式加载 Lua 的 C 扩展，因为静态链接会导致多个 Lua 实例冲突，标准做法应使用动态链接。",
-   "concepts": [
-    "lua-vm",
-    "dynamic-linking"
-   ]
+   "title": "soluna 外挂 C 模块",
+   "source_name": "大咖观点",
+   "brief": "soluna 默认静态链接 lua 库导致无法外挂 C 扩展，文章解释了技术原因及解决方案。",
+   "brief_full": true
   },
   {
    "id": "918f52cb3741",
@@ -9109,23 +9079,17 @@
   },
   {
    "id": "93777efe0538",
-   "title": "用 AI 辅助读书",
    "url": "https://blog.codingnow.com/2026/02/ai_reading.html",
-   "summary": "最近一年闲下来，我重新挖掘了读书的乐趣，尤其是读小说。 读小说真的需要时间和心境，因为进入心流状态更慢。如果长时间无法进入状态，很容易就读不下去；但一旦读进去了，比玩游戏（互动形式）或看影视剧（多媒体形式）更让人沉浸和回味。你可以对精彩处反复斟酌体会其中的情感，也更容易停下来脑补作者在情节上的留白。阅读节奏完全由自己控制，可快可慢。鉴于…",
-   "category": "云风",
-   "tags": [],
-   "date": "2026-02-16",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "云风",
+   "date": "2026-02-16",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "作者分享了用AI辅助读书的体验，特别是读小说时如何通过AI帮助进入心流状态，提升阅读的沉浸感和节奏控制。",
-   "concepts": [
-    "ai-recommendation"
-   ]
+   "title": "用 AI 辅助读书",
+   "source_name": "大咖观点",
+   "brief": "作者用 AI 辅助读书，通过 Gemini 推荐小说，提升阅读体验并探索新类型。",
+   "brief_full": true
   },
   {
    "id": "9904f11bcdc9",
@@ -9209,24 +9173,18 @@
   },
   {
    "id": "a5f012fc82c1",
-   "title": "2025 LLM Year in Review",
    "url": "https://karpathy.bearblog.dev/year-in-review-2025/",
-   "summary": "2025 Year in Review of LLM paradigm changes",
-   "category": "Karpathy",
-   "tags": [],
-   "date": "2025-12-19",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "Karpathy",
+   "date": "2025-12-19",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "该内容对2025年大语言模型（LLM）的范式变化进行年度回顾，总结了该领域在当年的关键发展和趋势变化。",
-   "title_zh": "2025 LLM 年度回顾",
-   "concepts": [
-    "large-language-model"
-   ]
+   "title": "2025 LLM Year in Review",
+   "source_name": "大咖观点",
+   "brief": "2025 年 LLM 领域取得显著进展，包括强化学习可验证奖励等范式转变。",
+   "brief_full": true,
+   "title_zh": "2025 LLM 年度回顾"
   },
   {
    "id": "377c0f5b2232",
@@ -9246,25 +9204,18 @@
   },
   {
    "id": "84a03fe3e0b8",
-   "title": "Auto-grading decade-old Hacker News discussions with hindsight",
    "url": "https://karpathy.bearblog.dev/auto-grade-hn/",
-   "summary": "A vibe coding thought exercise on what it might look like for LLMs to scour human historical data at scale and in retrospect.",
-   "category": "Karpathy",
-   "tags": [],
-   "date": "2025-12-10",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "Karpathy",
+   "date": "2025-12-10",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "这是一个关于用大语言模型（LLM）大规模回顾性自动评分十年旧Hacker News讨论的思考练习，探讨了vibe coding在历史数据分析中的应用可能性。",
-   "title_zh": "用后见之明自动评分十年旧的 Hacker News 讨论",
-   "concepts": [
-    "large-language-model",
-    "vibe-coding"
-   ]
+   "title": "Auto-grading decade-old Hacker News discussions with hindsight",
+   "source_name": "大咖观点",
+   "brief": "作者回顾十年前 Hacker News 讨论并自动评分，对比历史预测与实际发展。",
+   "brief_full": true,
+   "title_zh": "用后见之明自动评分十年前的 Hacker News 讨论"
   },
   {
    "id": "cce64b2db70f",
@@ -9284,217 +9235,165 @@
   },
   {
    "id": "e4717274827e",
-   "title": "Verifiability",
    "url": "https://karpathy.bearblog.dev/verifiability/",
-   "summary": "The impact of verifiability on the jagged frontier of LLMs",
-   "category": "Karpathy",
-   "tags": [],
-   "date": "2025-11-17",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "Karpathy",
+   "date": "2025-11-17",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "内容讨论可验证性对大语言模型（LLM）锯齿状前沿的影响，分析了在LLM发展中可验证性如何影响模型的可靠性和实际应用效果。",
-   "title_zh": "可验证性",
-   "concepts": [
-    "large-language-model",
-    "verifiability"
-   ]
+   "title": "Verifiability",
+   "source_name": "大咖观点",
+   "brief": "AI 被比作新计算范式，任务的可指定性是预测其就业影响的关键特征。",
+   "brief_full": true,
+   "title_zh": "可验证性"
   },
   {
    "id": "b782186650d2",
-   "title": "Sora update #1",
    "url": "https://blog.samaltman.com/sora-update-number-1",
-   "summary": "We have been learning quickly from how people are using Sora and taking feedback from users, rightsholders, and other interested groups. We of course spent a lot of time…",
-   "category": "Sam Altman",
-   "tags": [],
-   "date": "2025-10-04",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "Sam Altman",
+   "date": "2025-10-04",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "OpenAI从Sora的使用中快速学习，并收集用户和版权持有者的反馈。他们计划很快实施两项更改，首先是为版权持有者提供更精细的角色生成控制，类似于肖像选择加入模型但增加额外控制。",
-   "title_zh": "Sora 更新 #1",
-   "concepts": [
-    "sora"
-   ]
+   "title": "Sora update #1",
+   "source_name": "大咖观点",
+   "brief": "Sora 将为版权所有者提供更精细的角色生成控制，并优化模型训练数据。",
+   "brief_full": true,
+   "title_zh": "Sora 更新 #1"
   },
   {
    "id": "d006fe49e0b0",
-   "title": "Animals vs Ghosts",
    "url": "https://karpathy.bearblog.dev/animals-vs-ghosts/",
-   "summary": "Today's frontier LLM research is not about building animals. It is about summoning ghosts. And a bit more on Sutton's Dwarkesh pod.",
-   "category": "Karpathy",
-   "tags": [],
-   "date": "2025-10-01",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "Karpathy",
+   "date": "2025-10-01",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "文章指出当前大语言模型（LLM）前沿研究不是关于构建动物，而是召唤幽灵，并进一步讨论了Sutton在Dwarkesh播客中提出的观点和见解。",
-   "title_zh": "动物 vs 幽灵",
-   "concepts": [
-    "large-language-model"
-   ]
+   "title": "Animals vs Ghosts",
+   "source_name": "大咖观点",
+   "brief": "文章讨论 Sutton 的“苦涩教训”理论，分析其在前沿 LLM 研究中的影响。",
+   "brief_full": true,
+   "title_zh": "动物 vs 幽灵"
   },
   {
    "id": "6f8a89c343ef",
-   "title": "Sora 2",
    "url": "https://blog.samaltman.com/sora-2",
-   "summary": "We are launching a new app called Sora. This is a combination of a new model called Sora 2, and a new product that makes it easy to create, share, and view videos. This …",
-   "category": "Sam Altman",
-   "tags": [],
-   "date": "2025-09-30",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "Sam Altman",
+   "date": "2025-09-30",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "OpenAI推出名为Sora的新应用，结合Sora 2模型，旨在简化视频创作、分享和观看流程。这被许多人视为创意领域的ChatGPT时刻，可能引发创造力的寒武纪大爆发。",
-   "title_zh": "Sora 2",
-   "concepts": [
-    "sora"
-   ]
+   "title": "Sora 2",
+   "source_name": "大咖观点",
+   "brief": "Sora 2 新应用发布，结合模型与产品，旨在推动创意领域的“寒武纪大爆发”。",
+   "brief_full": true,
+   "title_zh": "Sora 2"
   },
   {
    "id": "464d152e82d8",
-   "title": "Abundant Intelligence",
    "url": "https://blog.samaltman.com/abundant-intelligence",
-   "summary": "Growth in the use of AI services has been astonishing; we expect it to be even more astonishing going forward. As AI gets smarter, access to AI will be a fundamental dri…",
-   "category": "Sam Altman",
-   "tags": [],
-   "date": "2025-09-23",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "Sam Altman",
+   "date": "2025-09-23",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "AI服务的使用增长令人震惊，预计未来将更加惊人。随着AI变得更智能，访问AI可能成为经济的基本驱动力，甚至被视为基本人权。OpenAI正在为满足全球对推理和训练计算的需求奠定基础。",
-   "title_zh": "丰富的智能",
-   "concepts": [
-    "reasoning-effort",
-    "training-compute"
-   ]
+   "title": "Abundant Intelligence",
+   "source_name": "大咖观点",
+   "brief": "AI 服务增长惊人，未来算力需求将成为经济驱动力，可能成为基本人权。",
+   "brief_full": true,
+   "title_zh": "丰富的智能"
   },
   {
    "id": "1293596c82dd",
-   "title": "Jakub and Szymon",
    "url": "https://blog.samaltman.com/jakub-and-szymon",
-   "summary": "AI has gotten remarkably better in recent years; ChatGPT can do amazing things that we take for granted. This is as it should be, and is the story of human progress. But…",
-   "category": "Sam Altman",
-   "tags": [],
-   "date": "2025-09-09",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "Sam Altman",
+   "date": "2025-09-09",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "AI在近年来取得显著进步，ChatGPT能完成许多令人惊叹的任务。这背后是人类智慧的体现，许多人通过不懈努力，构建了大多数专家认为在当前时间框架内不可能实现的系统。",
-   "title_zh": "Jakub 和 Szymon",
-   "concepts": [
-    "reinforcement-learning",
-    "pre-training",
-    "reasoning-model"
-   ]
+   "title": "Jakub and Szymon",
+   "source_name": "大咖观点",
+   "brief": "ChatGPT 的进步背后是无数人的努力，展现了人类在不可能时间框架内实现突破的智慧。",
+   "brief_full": true,
+   "title_zh": "Jakub 和 Szymon"
   },
   {
    "id": "d3cd7669dd32",
-   "title": "The Gentle Singularity",
    "url": "https://blog.samaltman.com/the-gentle-singularity",
-   "summary": "We are past the event horizon; the takeoff has started. Humanity is close to building digital superintelligence, and at least so far it’s much less weird than it seems l…",
-   "category": "Sam Altman",
-   "tags": [],
-   "date": "2025-06-10",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "Sam Altman",
+   "date": "2025-06-10",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "人类已越过事件视界，数字超级智能的构建正在启动。尽管目前世界看起来仍正常，但AI系统已在许多方面超越人类智能，标志着温和奇点的到来。",
+   "title": "The Gentle Singularity",
+   "source_name": "大咖观点",
+   "brief": "人类已接近构建数字超级智能，尽管尚未出现科幻场景，但系统已在多方面超越人类。",
+   "brief_full": true,
    "title_zh": "温和的奇点",
    "concepts": [
     "digital-superintelligence"
-   ]
+   ],
+   "concepts_full": true
   },
   {
    "id": "87ed01723e4f",
-   "title": "Why We Think",
    "url": "https://lilianweng.github.io/posts/2025-05-01-thinking/",
-   "summary": "Special thanks to John Schulman for a lot of super valuable feedback and direct edits on this post. Test time compute ( Graves et al. 2016 , Ling, et al. 2017 , Cobbe et…",
-   "category": "Lilian Weng",
-   "tags": [],
-   "date": "2025-05-01",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "Lilian Weng",
+   "date": "2025-05-01",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "文章探讨我们为什么思考，引入了测试时计算的概念，并感谢John Schulman提供的宝贵反馈和直接编辑，涉及相关研究工作的讨论。",
+   "title": "Why We Think",
+   "source_name": "大咖观点",
+   "brief": "文章回顾了测试时计算和思维链等技术的进展，探讨如何有效利用模型的“思考时间”。",
+   "brief_full": true,
    "title_zh": "我们为什么思考",
    "concepts": [
-    "reasoning-effort"
-   ]
+    "test-time-compute"
+   ],
+   "concepts_full": true
   },
   {
    "id": "d56d55ab7d15",
-   "title": "Vibe coding MenuGen",
    "url": "https://karpathy.bearblog.dev/vibe-coding-menugen/",
-   "summary": "Work log of vibe coding menugen app",
-   "category": "Karpathy",
-   "tags": [],
-   "date": "2025-04-27",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "Karpathy",
+   "date": "2025-04-27",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "这是一个关于vibe coding MenuGen应用的工作日志，详细记录了开发过程中的步骤、思考和体验，展示了vibe coding方法的实际应用。",
+   "title": "Vibe coding MenuGen",
+   "source_name": "大咖观点",
+   "brief": "博主分享在餐厅看菜单时的困惑，遇到不熟悉的菜品术语如Pâté、Tagine等，常需搜索图片理解，甚至被复杂描述如‘Confit tubers’搞糊涂。",
+   "brief_full": true,
    "title_zh": "Vibe coding MenuGen",
    "concepts": [
     "vibe-coding"
-   ]
+   ],
+   "concepts_full": true
   },
   {
    "id": "e95b42032d78",
-   "title": "Power to the people: How LLMs flip the script on technology diffusion",
    "url": "https://karpathy.bearblog.dev/power-to-the-people/",
-   "summary": "Yes",
-   "category": "Karpathy",
-   "tags": [],
-   "date": "2025-04-07",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "Karpathy",
+   "date": "2025-04-07",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "内容探讨大语言模型（LLM）如何颠覆技术扩散的传统剧本，使技术更易于被普通人获取和使用，从而赋予普通人更多权力。",
-   "title_zh": "权力归于人民：LLM如何颠覆技术扩散的剧本",
-   "concepts": [
-    "technology-diffusion"
-   ]
+   "title": "Power to the people: How LLMs flip the script on technology diffusion",
+   "source_name": "大咖观点",
+   "brief": "文章探讨LLM如何颠覆技术扩散的传统自上而下路径，指出新技术不再局限于政府或企业，而是更直接惠及个人，改变了技术普及的模式。",
+   "brief_full": true,
+   "title_zh": "Power to the people: How LLMs flip the script on technology diffusion"
   },
   {
    "id": "5f7a82b4d0ce",
@@ -9514,24 +9413,18 @@
   },
   {
    "id": "31e7723102c3",
-   "title": "Three Observations",
    "url": "https://blog.samaltman.com/three-observations",
-   "summary": "Our mission is to ensure that AGI (Artificial General Intelligence) benefits all of humanity. Systems that start to point to AGI* are coming into view, and so we think i…",
-   "category": "Sam Altman",
-   "tags": [],
-   "date": "2025-02-09",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "Sam Altman",
+   "date": "2025-02-09",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "OpenAI的使命是确保通用人工智能（AGI）造福全人类。随着指向AGI的系统逐渐显现，理解当前发展阶段至关重要。AGI被定义为能在多个领域以人类水平解决复杂问题的系统。",
-   "title_zh": "三个观察",
-   "concepts": [
-    "agi"
-   ]
+   "title": "Three Observations",
+   "source_name": "大咖观点",
+   "brief": "作者反思AGI（通用人工智能）的发展，强调AGI定义虽模糊，但应能解决多领域复杂问题，并指出人类创造工具的本性推动世界进步。",
+   "brief_full": true,
+   "title_zh": "Three Observations"
   },
   {
    "id": "5b5ee5ab83ad",
@@ -9557,24 +9450,18 @@
   },
   {
    "id": "4d98497ab5b6",
-   "title": "Reflections",
    "url": "https://blog.samaltman.com/reflections",
-   "summary": "The second birthday of ChatGPT was only a little over a month ago, and now we have transitioned into the next paradigm of models that can do complex reasoning. New years…",
-   "category": "Sam Altman",
-   "tags": [],
-   "date": "2025-01-06",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "Sam Altman",
+   "date": "2025-01-06",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "在ChatGPT两周年之际，OpenAI已过渡到能进行复杂推理的新模型范式。公司创始人分享个人反思，认为随着接近AGI，回顾进展和未知领域尤为重要。",
-   "title_zh": "反思",
-   "concepts": [
-    "agi"
-   ]
+   "title": "Reflections",
+   "source_name": "大咖观点",
+   "brief": "ChatGPT发布仅两月后，模型已进入复杂推理新阶段。作者分享个人感悟，认为接近AGI之际，需审视公司进展，但仍有许多未知领域。",
+   "brief_full": true,
+   "title_zh": "Reflections"
   },
   {
    "id": "6385c4cbef5b",
@@ -9618,109 +9505,95 @@
   },
   {
    "id": "af1a476c6de0",
-   "title": "Reward Hacking in Reinforcement Learning",
    "url": "https://lilianweng.github.io/posts/2024-11-28-reward-hacking/",
-   "summary": "Reward hacking occurs when a reinforcement learning (RL) agent exploits flaws or ambiguities in the reward function to achieve high rewards, without genuinely learning o…",
-   "category": "Lilian Weng",
-   "tags": [],
-   "date": "2024-11-28",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "Lilian Weng",
+   "date": "2024-11-28",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "奖励黑客行为指强化学习代理利用奖励函数的缺陷或模糊性来获得高奖励，而未真正学习任务，文章详细解释了这一现象及其影响。",
-   "title_zh": "强化学习中的奖励黑客行为",
+   "title": "Reward Hacking in Reinforcement Learning",
+   "source_name": "大咖观点",
+   "brief": "奖励 hacking 指强化学习代理利用奖励函数漏洞获取高奖励，而非真正学习任务。因环境不完美且奖励函数难以精确指定，该问题在RLHF普及后更显突出。",
+   "brief_full": true,
+   "title_zh": "Reward Hacking in Reinforcement Learning",
    "concepts": [
     "reward-hacking"
-   ]
+   ],
+   "concepts_full": true
   },
   {
    "id": "f341118d2274",
-   "title": "Extrinsic Hallucinations in LLMs",
    "url": "https://lilianweng.github.io/posts/2024-07-07-hallucination/",
-   "summary": "Hallucination in large language models usually refers to the model generating unfaithful, fabricated, inconsistent, or nonsensical content. As a term, hallucination has …",
-   "category": "Lilian Weng",
-   "tags": [],
-   "date": "2024-07-07",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "Lilian Weng",
+   "date": "2024-07-07",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "内容讨论大语言模型（LLM）中的外部幻觉问题，即模型生成不忠实、捏造、不一致或无意义内容的现象，探讨了其原因和应对方法。",
-   "title_zh": "LLM中的外部幻觉",
+   "title": "Extrinsic Hallucinations in LLMs",
+   "source_name": "大咖观点",
+   "brief": "文章将LLM的幻觉限定为生成与上下文或世界知识不符的虚构内容，分为上下文内和上下文外两类，强调其与一般错误的区别。",
+   "brief_full": true,
+   "title_zh": "Extrinsic Hallucinations in LLMs",
    "concepts": [
-    "large-language-model",
     "extrinsic-hallucination"
-   ]
+   ],
+   "concepts_full": true
   },
   {
    "id": "822ecd9272d7",
-   "title": "GPT-4o",
    "url": "https://blog.samaltman.com/gpt-4o",
-   "summary": "There are two things from our announcement today I wanted to highlight. First, a key part of our mission is to put very capable AI tools in the hands of people for free …",
-   "category": "Sam Altman",
-   "tags": [],
-   "date": "2024-05-13",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "Sam Altman",
+   "date": "2024-05-13",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "OpenAI强调其使命是将强大的AI工具免费或以优惠价格提供给用户。他们自豪地宣布，世界上最优秀的模型GPT-4o已在ChatGPT中免费提供，无广告干扰。",
-   "title_zh": "GPT-4o",
-   "concepts": [
-    "gpt-4o"
-   ]
+   "title": "GPT-4o",
+   "source_name": "大咖观点",
+   "brief": "OpenAI宣布将全球最佳模型免费提供给用户，强调其使命是让强大AI工具惠及大众，并回顾公司从创造AI到直接应用的转变。",
+   "brief_full": true,
+   "title_zh": "GPT-4o"
   },
   {
    "id": "38eb95b0e9e6",
-   "title": "Diffusion Models for Video Generation",
    "url": "https://lilianweng.github.io/posts/2024-04-12-diffusion-video/",
-   "summary": "Diffusion models have demonstrated strong results on image synthesis in past years. Now the research community has started working on a harder task—using it for video ge…",
-   "category": "Lilian Weng",
-   "tags": [],
-   "date": "2024-04-12",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "Lilian Weng",
+   "date": "2024-04-12",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "扩散模型在图像合成上已展示出强劲结果，现在研究社区开始将其应用于更困难的视频生成任务，文章概述了相关进展和挑战。",
-   "title_zh": "用于视频生成的扩散模型",
+   "title": "Diffusion Models for Video Generation",
+   "source_name": "大咖观点",
+   "brief": "扩散模型在图像合成上表现优异，现被用于更复杂的视频生成。视频生成需保证时间一致性，对模型的世界知识要求更高，计算成本也更大。",
+   "brief_full": true,
+   "title_zh": "Diffusion Models for Video Generation",
    "concepts": [
-    "diffusion-model"
-   ]
+    "diffusion-model-video-generation"
+   ],
+   "concepts_full": true
   },
   {
    "id": "e01d339bfba6",
-   "title": "Thinking about High-Quality Human Data",
    "url": "https://lilianweng.github.io/posts/2024-02-05-human-data-quality/",
-   "summary": "[Special thank you to Ian Kivlichan for many useful pointers (E.g. the 100+ year old Nature paper “Vox populi”) and nice feedback. 🙏 ] High-quality data is the fuel for …",
-   "category": "Lilian Weng",
-   "tags": [],
-   "date": "2024-02-05",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "Lilian Weng",
+   "date": "2024-02-05",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "该内容探讨了高质量人类数据的重要性，引用了Ian Kivlichan的反馈和早期研究如“Vox populi”论文，强调数据是AI发展的关键基础。",
-   "title_zh": "思考高质量人类数据",
+   "title": "Thinking about High-Quality Human Data",
+   "source_name": "大咖观点",
+   "brief": "高质量数据是深度学习模型训练的关键，多数任务特定数据来自人工标注。文章探讨提升数据质量的方法，强调人类数据收集的根本性挑战。",
+   "brief_full": true,
+   "title_zh": "Thinking about High-Quality Human Data",
    "concepts": [
-    "high-quality-human-data"
-   ]
+    "high-quality-human-data",
+    "human-rating"
+   ],
+   "concepts_full": true
   },
   {
    "id": "ba593506c0c0",
@@ -9803,69 +9676,67 @@
   },
   {
    "id": "ce68292451aa",
-   "title": "Adversarial Attacks on LLMs",
    "url": "https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/",
-   "summary": "The use of large language models in the real world has strongly accelerated by the launch of ChatGPT. We (including my team at OpenAI, shoutout to them) have invested a …",
-   "category": "Lilian Weng",
-   "tags": [],
-   "date": "2023-10-25",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "Lilian Weng",
+   "date": "2023-10-25",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "随着ChatGPT的推出，大语言模型（LLM）在现实世界中的使用加速，文章讨论了对LLM的对抗性攻击，涉及安全性和鲁棒性问题。",
-   "title_zh": "对LLM的对抗性攻击",
+   "title": "Adversarial Attacks on LLMs",
+   "source_name": "大咖观点",
+   "brief": "尽管通过RLHF等手段为LLM构建了默认安全行为，但对抗性攻击或越狱提示仍可能触发模型输出不当内容。LLM的对抗攻击与图像领域不同，存在于离散空间。",
+   "brief_full": true,
+   "title_zh": "Adversarial Attacks on LLMs",
    "concepts": [
-    "large-language-model",
-    "adversarial-attacks"
-   ]
+    "adversarial-attacks",
+    "adversarial-prompt",
+    "model-jailbreak"
+   ],
+   "concepts_full": true
   },
   {
    "id": "97b2c5f4478d",
-   "title": "LLM Powered Autonomous Agents",
    "url": "https://lilianweng.github.io/posts/2023-06-23-agent/",
-   "summary": "Building agents with LLM (large language model) as its core controller is a cool concept. Several proof-of-concepts demos, such as AutoGPT , GPT-Engineer and BabyAGI , s…",
-   "category": "Lilian Weng",
-   "tags": [],
-   "date": "2023-06-23",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "Lilian Weng",
+   "date": "2023-06-23",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "以大语言模型（LLM）为核心控制器构建自主代理是一个有趣概念，已有AutoGPT、GPT-Engineer和BabyAGI等概念验证演示，文章探讨了其潜力和应用。",
-   "title_zh": "LLM驱动的自主代理",
+   "title": "LLM Powered Autonomous Agents",
+   "source_name": "大咖观点",
+   "brief": "以LLM为核心构建自主代理是前沿概念，如AutoGPT等。LLM可作为代理的‘大脑’，配合规划、记忆、工具调用等组件，成为强大的通用问题解决者。",
+   "brief_full": true,
+   "title_zh": "LLM Powered Autonomous Agents",
    "concepts": [
-    "large-language-model",
-    "autonomous-agents"
-   ]
+    "autonomous-agents",
+    "agent-brain",
+    "agent-memory",
+    "tool-use"
+   ],
+   "concepts_full": true
   },
   {
    "id": "1d65254430ae",
-   "title": "Prompt Engineering",
    "url": "https://lilianweng.github.io/posts/2023-03-15-prompt-engineering/",
-   "summary": "Prompt Engineering , also known as In-Context Prompting , refers to methods for how to communicate with LLM to steer its behavior for desired outcomes without updating t…",
-   "category": "Lilian Weng",
-   "tags": [],
-   "date": "2023-03-15",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "Lilian Weng",
+   "date": "2023-03-15",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "Prompt Engineering 是一种通过设计提示来与大型语言模型交互的技术，旨在不修改模型权重的情况下引导其产生特定行为或输出。它也被称为 In-Context Prompting，帮助用户获得期望结果。",
-   "title_zh": "提示工程",
+   "title": "Prompt Engineering",
+   "source_name": "大咖观点",
+   "brief": "Prompt Engineering 指通过提示词引导LLM行为以达成目标，无需更新模型权重。它是一门依赖实验和启发式的经验科学，效果因模型而异。",
+   "brief_full": true,
+   "title_zh": "Prompt Engineering",
    "concepts": [
     "prompt-engineering",
-    "large-language-model"
-   ]
+    "zero-shot-learning",
+    "few-shot-learning"
+   ],
+   "concepts_full": true
   },
   {
    "id": "aad31dab86c9",
@@ -9895,24 +9766,22 @@
   },
   {
    "id": "bd2a1c61491f",
-   "title": "The Transformer Family Version 2.0",
    "url": "https://lilianweng.github.io/posts/2023-01-27-the-transformer-family-v2/",
-   "summary": "Many new Transformer architecture improvements have been proposed since my last post on “The Transformer Family” about three years ago. Here I did a big refactoring and …",
-   "category": "Lilian Weng",
-   "tags": [],
-   "date": "2023-01-27",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "Lilian Weng",
+   "date": "2023-01-27",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "自三年前发布 Transformer 家族文章后，研究者提出了众多架构改进。作者对内容进行了大幅重构，以涵盖这些新发展，总结了 Transformer 架构的最新进展。",
-   "title_zh": "Transformer 家族版本 2.0",
+   "title": "The Transformer Family Version 2.0",
+   "source_name": "大咖观点",
+   "brief": "作者更新了三年前的‘The Transformer Family’文章，新增大量近期论文，重构了章节层级，并补充了符号定义，使内容更全面详尽。",
+   "brief_full": true,
+   "title_zh": "The Transformer Family Version 2.0",
    "concepts": [
     "transformer-architecture"
-   ]
+   ],
+   "concepts_full": true
   },
   {
    "id": "ae414deef656",
@@ -9936,26 +9805,24 @@
   },
   {
    "id": "4dab64a7e3ce",
-   "title": "Large Transformer Model Inference Optimization",
    "url": "https://lilianweng.github.io/posts/2023-01-10-inference-optimization/",
-   "summary": "[Updated on 2023-01-24: add a small section on Distillation .] Large transformer models are mainstream nowadays, creating SoTA results for a variety of tasks. They are p…",
-   "category": "Lilian Weng",
-   "tags": [],
-   "date": "2023-01-10",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "Lilian Weng",
+   "date": "2023-01-10",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "大型 Transformer 模型已成为主流，在多项任务中达到 state-of-the-art 结果。文章更新了优化技术，特别添加了关于蒸馏的小节，以提升推理效率。",
-   "title_zh": "大型 Transformer 模型推理优化",
+   "title": "Large Transformer Model Inference Optimization",
+   "source_name": "大咖观点",
+   "brief": "大型Transformer模型推理成本高昂，是实际应用瓶颈。文章分析其难度源于模型规模增大，并探讨了蒸馏等优化方法。",
+   "brief_full": true,
+   "title_zh": "Large Transformer Model Inference Optimization",
    "concepts": [
-    "model-distillation",
-    "inference-deployment",
-    "transformer-architecture"
-   ]
+    "kv-cache",
+    "autoregressive-decoding",
+    "inference-deployment"
+   ],
+   "concepts_full": true
   },
   {
    "id": "e769a88139e9",
@@ -10063,25 +9930,23 @@
   },
   {
    "id": "27001a298dc5",
-   "title": "DALL•E 2",
    "url": "https://blog.samaltman.com/dall-star-e-2",
-   "summary": "Today we did a research launch of DALL•E 2, a new AI tool that can create and edit images from natural language instructions. Most importantly, we hope people love the t…",
-   "category": "Sam Altman",
-   "tags": [],
-   "date": "2022-04-06",
    "source": "voices",
-   "source_name": "大咖观点",
-   "author": "Sam Altman",
+   "date": "2022-04-06",
    "ai": {
     "keep": true,
     "at": "2026-07-22"
    },
-   "brief": "OpenAI研究发布了DALL•E 2，这是一个能根据自然语言指令创建和编辑图像的新AI工具。他们希望用户喜爱并发现其实用性，认为它能增强创造力并带来乐趣。",
+   "title": "DALL•E 2",
+   "source_name": "大咖观点",
+   "brief": "OpenAI发布DALL•E 2，可通过自然语言指令创建和编辑图像。作者认为该工具能激发创造力，并展示了AI从辅助工具到创意伙伴的转变。",
+   "brief_full": true,
    "title_zh": "DALL•E 2",
    "concepts": [
-    "image-generation-model",
-    "dall-e-2"
-   ]
+    "dall-e-2",
+    "image-generation-model"
+   ],
+   "concepts_full": true
   },
   {
    "id": "cef4c3eb3949",

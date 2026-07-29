@@ -105,7 +105,7 @@
   <p>尽管2025年才注册成立，「眸深智能」的技术积累从2022年已经开始。在技术路线上，「眸深智能」选择了一条与主流VLA（视觉-语言-动作）不同的路径——以动作为核心的&quot;<a class="cpt" href="../c/world-action-model.html" data-def="通用世界模型的延伸，特指将模型对环境的理解和预测，直接转化为机器人等物理实体可执行动作序列的模型">世界动作模型</a>&quot;（World Motion Model）。</p>
   <p><img loading="lazy" onerror="this.style.display='none'" src="https://img.36krcdn.com/hsossms/20260725/v2_adde42ccc1284ca98cb44e97b6d41f5a@1199336245_oswg77948oswg1080oswg810_img_000?x-oss-process=image/format,jpg/interlace,1" referrerpolicy="no-referrer" /></p>
   <p>（图源/企业）</p>
-  <p>从2022年起，「眸深智能」团队已经发布了<strong>MLD（隐空间动作<a class="cpt" href="../c/diffusion-model.html" data-def="一种生成式AI模型，通过逐步去噪过程从随机噪声中生成高质量数据，如图像或视频">扩散模型</a>）</strong>。在当时，行业主流是将动作视为离散的信号，导致生成的动作僵硬且缺乏多样性，而「眸深智能」团队在全球dede范围内首次提出将动作映射到隐空间（Latent Space），并引入扩散模型（Diffusion Model）。</p>
+  <p>从2022年起，「眸深智能」团队已经发布了<strong>MLD（隐空间动作扩散模型）</strong>。在当时，行业主流是将动作视为离散的信号，导致生成的动作僵硬且缺乏多样性，而「眸深智能」团队在全球dede范围内首次提出将动作映射到隐空间（Latent Space），并引入扩散模型（Diffusion Model）。</p>
   <p><strong>MLD</strong>相当于让AI学会了“无师自通”地生成动作：不再需要逐帧教机器人如何走路，而是让模型像画家去噪一样，从一团随机噪声中还原出自然、连贯的人体姿态。</p>
   <p>如果说MLD解决了“怎么生成动作”，「眸深智能」又进一步着眼于如何“指挥动作”。2023年9月，团队创造性发布了<strong>MotionGPT</strong>。类比汉字的基本笔画，团队将人体姿态拆解为约3000个“动作基元”。就像大语言模型（LLM）通过预测下一个token来生成句子一样，MotionGPT通过预测下一个“动作token”来生成复杂行为。</p>
   <p>这种将连续动作离散化的处理方式，不仅极大地提升了模型对长序列任务的理解能力，更重要的是，它让机器人具备了Zero-Shot（零样本）泛化能力——没见过的动作指令，也能通过重组动作词汇来理解并执行。这也是全球首个把动作做成token的具身大模型，发表于NeurIPS 2023。</p>
