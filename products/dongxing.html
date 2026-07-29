@@ -10,9 +10,6 @@
 <link rel="stylesheet" href="../assets/site.css" />
 <style>
   /* scoped · 仅用 site.css 既有变量，承接首页配色，不引入异色 */
-  /* 标题整段不断行、只在短语之间断（.sec-top h2 有 text-wrap:balance，会平衡两行）；极窄屏放开 */
-  .nw{white-space:nowrap}
-  @media(max-width:420px){.nw{white-space:normal}}
   /* —— 产品页头：沿用 .hero 的浅色径向底，承接面包屑 + KPI —— */
   .ph{position:relative;overflow:hidden;padding:clamp(104px,13vh,150px) var(--gut) clamp(48px,6vw,76px);
     background:radial-gradient(1100px 540px at 82% 4%,var(--blue-100),transparent 60%),
@@ -143,7 +140,7 @@
       <div class="sec-top rv">
         <div>
           <span class="sec-eyebrow">知识工程</span>
-          <h2><span class="nw">把散落的知识，炼成</span> <span class="nw"><span class="hl"><span>AI 答得准的资产</span></span>。</span></h2>
+          <h2>把散落的知识，炼成 <span class="hl"><span>AI 答得准的资产</span></span>。</h2>
         </div>
         <p class="sub">很多客户以为把知识库直接接进 AI 就行，结果命中率反而更低、答得更乱。问题不在 AI，在知识没被整理过。这件事叫知识工程——句子懂行用下面四步，把散乱的知识炼成 AI 真正用得上的资产。</p>
       </div>
@@ -490,7 +487,7 @@
     <div class="wrap cta-inner">
       <div class="rv">
         <h2>先把你的知识工程做对，<br/>再上 <span class="acc">AI 员工</span>。</h2>
-        <p class="sub">从一个 AI 角色起步，逐步扩展到多个 Agent。90 天内，第一个 AI 员工即在客户的 IM 中上岗。</p>
+        <p class="sub">从一个 AI 角色起步，逐步扩展到多个 Agent。简单角色最快 1 天上岗，复杂角色 90 天。</p>
         <div class="cta-actions">
           <button type="button" class="btn btn-blue btn-lg ar-host" onclick="openContact('句子懂行·底部CTA','预约演示')">
             预约演示
@@ -501,7 +498,7 @@
       <div class="cta-stats">
         <div class="cta-stat rv" style="--ac:#4338CA"><div class="csv">第一步</div><div class="csl">知识工程是 Agent 上岗的前提</div></div>
         <div class="cta-stat rv rv-d1" style="--ac:#14B8A6"><div class="csv">可追溯</div><div class="csl">每条回答可追溯出处，而非模型生成</div></div>
-        <div class="cta-stat rv rv-d2" style="--ac:#6366F1"><div class="csv">90 天</div><div class="csl">第一个 AI 员工即在客户的 IM 中上岗</div></div>
+        <div class="cta-stat rv rv-d2" style="--ac:#6366F1"><div class="csv">最快 1 天</div><div class="csl">简单角色上岗，复杂角色 90 天</div></div>
       </div>
     </div>
   </section>
