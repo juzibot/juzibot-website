@@ -2198,6 +2198,22 @@ DETAIL_CSS = """
   .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
   .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
   .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  /* 长文目录(≥3 小标题且正文 ≥2000 字才出): <details> 原生可折叠, 不用一行 JS。
+     默认 open —— 目录的用处是先看清结构再决定读哪段, 收起来就失去意义; 想收也一点即收。 */
+  .dp-toc{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:24px;background:#FBFCFF}
+  .dp-toc summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--ink-2);display:flex;align-items:center;gap:7px;list-style:none}
+  .dp-toc summary::-webkit-details-marker{display:none}
+  .dp-toc summary i{font-size:11px;color:var(--blue)}
+  .dp-toc summary span{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-3);margin-left:auto}
+  .dp-toc ol{list-style:none;margin:10px 0 2px;padding:0;counter-reset:toc}
+  .dp-toc li{counter-increment:toc;font-size:13px;line-height:1.7;padding:2px 0}
+  .dp-toc li::before{content:counter(toc) ". ";font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .dp-toc li.lv3{padding-left:16px}
+  .dp-toc li.lv4{padding-left:32px}
+  .dp-toc a{color:var(--ink-2);text-decoration:none;overflow-wrap:anywhere}
+  .dp-toc a:hover{color:var(--blue)}
+  /* 锚点跳转时标题别贴到视口顶端(站点顶栏会盖住) */
+  .dp-body h2[id],.dp-body h3[id],.dp-body h4[id]{scroll-margin-top:76px}
   .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
   .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
   .dp-body p{margin:0 0 1.05em}
@@ -2311,6 +2327,50 @@ def breadcrumb_ld(trail):
     })
 
 
+TOC_MIN_HEADS = 3          # 少于这么多小标题不出目录(两三段的短文加目录只是噪音)
+TOC_MIN_CHARS = 2000       # 正文不够长也不出——目录的价值在于长文里定位
+
+
+def build_toc(body):
+    """从镜像正文里抽小标题做目录, 返回 (带锚点的正文, 目录 HTML)。
+
+    可收录的 35 个自家详情页里有 19 个是 3000+ 字且带 3 个以上小标题的长文
+    (《做一家 Anthropic 一样的公司》5434 字 9 标题、《…高三实习生》3440 字 10 标题、
+    2019 YC 专访 8319 字 5 标题), 而它们既是佳芮的署名长文、也是 SEO 入口页 ——
+    八千字的专访没有目录, 读者只能盲滚。
+
+    只在「够长 + 够多标题」时出目录; 短文加目录纯属噪音。
+    锚点 id 用序号而不是标题文本的 slug: 标题里常有中文、标点、emoji, 转 slug 既容易撞车
+    又会因为标题微调而变化, 而 URL 里的锚点一旦被人分享出去就不该失效。
+    """
+    heads = list(re.finditer(r'<h([234])(\s[^>]*)?>(.*?)</h\1>', body, re.S | re.I))
+    txt_len = len(re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", body)))
+    if len(heads) < TOC_MIN_HEADS or txt_len < TOC_MIN_CHARS:
+        return body, ""
+    items, out, last = [], [], 0
+    for n, m in enumerate(heads, 1):
+        lvl, attrs, inner = m.group(1), m.group(2) or "", m.group(3)
+        label = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", inner)).strip()
+        if not label:
+            continue
+        aid = f"h{n}"
+        out.append(body[last:m.start()])
+        # 已有 id 的标题不覆盖(原文自带锚点时保持它, 站外可能已有链接指过来)
+        if re.search(r'\bid\s*=', attrs, re.I):
+            out.append(m.group(0))
+            aid = (re.search(r'\bid\s*=\s*"([^"]+)"', attrs, re.I) or [None, aid])[1]
+        else:
+            out.append(f'<h{lvl}{attrs} id="{aid}">{inner}</h{lvl}>')
+        last = m.end()
+        items.append((lvl, aid, label))
+    out.append(body[last:])
+    lis = "".join(f'<li class="lv{lvl}"><a href="#{esc(aid)}">{esc(label[:60])}</a></li>'
+                  for lvl, aid, label in items)
+    toc = ('<details class="dp-toc" open><summary><i class="fa-solid fa-list-ul"></i>'
+           f'目录<span>{len(items)} 节</span></summary><ol>{lis}</ol></details>')
+    return "".join(out), toc
+
+
 def detail_html(it, lib, worthy):
     """静态详情页(整页由本脚本生成, 每次可整体重写, 页内无时间戳保证连跑字节稳定)。
     所有权分档(2026-07-22 四轮): own 源(自家内容)全文镜像+允许 index+canonical 指自身;
@@ -2395,7 +2455,10 @@ def detail_html(it, lib, worthy):
             f'<article class="dp-body" id="dpBodyZh" lang="zh-CN" hidden>{zh}</article>'
         )
     elif full:
-        body = f'<article class="dp-body">{full}</article>'
+        # 长文出目录: 只对单语正文做。双语页有「翻译为中文」toggle, 两份正文各一套锚点会
+        # 让目录指向隐藏的那份, 不值得为此加一层同步逻辑。
+        full_anchored, toc = build_toc(full)
+        body = f'{toc}<article class="dp-body">{full_anchored}</article>'
     else:
         body = f'<blockquote class="dp-excerpt">{annotate_concepts(esc(it["summary"]), slugs, lib)}</blockquote>' if it["summary"] else ""
     lang_js = ("""
