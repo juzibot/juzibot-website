@@ -409,6 +409,12 @@ def test_deploy_list_covers_root_artifacts():
         check("部署清单文件存在", False, "news-cron.yml 缺失")
         return
     wf = wf_path.read_text(encoding="utf-8")
+    # 只在**新架构**(rsync 推产物)的 workflow 上校验。预览分支 stage-2 保留的是老架构
+    # workflow(生成物入库、commit+push, 没有 rsync 推送行), 它按设计就不该有这份清单 ——
+    # 在那里报缺失是误报, 而误报会训练人忽略这条检查。
+    if "rsync" not in wf:
+        check("(跳过)当前分支的 workflow 是老架构, 无 rsync 推送清单可校验", True)
+        return
     missing = [f for f in produced if f not in wf]
     check(f"CI 推送清单覆盖 {len(produced)} 个根目录产物", not missing,
           f"清单里缺 {missing} —— 补进 news-cron.yml 的推送 rsync 行, 否则线上缺文件")
