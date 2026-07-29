@@ -1402,10 +1402,60 @@ def ai_screen(items):
     print(f"[AI 筛选] 新判 {judged} 条: 收 {kept} / 筛掉 {judged - kept}" + (f", 待定 {pending}(下次重试)" if pending else ""))
 
 
+def _story_key(it):
+    """同一篇报道的归一化指纹: 源 + 去标点小写标题。中文标点与英文标点一起剥, 避免
+    「AI 时代的 SEO」与「AI时代的SEO」被当成两篇。"""
+    s = (it.get("title_zh") or it.get("title") or "").lower()
+    s = re.sub(r"[\s「」『』【】\[\]()（）:：;；,，.。!！?？\-—_/\\\"'“”‘’|]+", "", s)
+    return (it["source"], s)
+
+
+def dedupe_same_story(vis, span_days=7):
+    """同源、同标题、日期相近的条目只留首发那条(存量数据不动, 只是不上站)。
+
+    URL 去重表拦不住这种撞车, 实际抓到两组:
+      · 量子位与雷锋网前后一天报道同一事件, 标题一字不差;
+      · 作者把同一篇文章同时发在个人博客和 Substack。
+    页面上并排两条一模一样的标题, 观感直接掉档。
+
+    保留日期最早的(首发); 同日取 id 字典序小的。必须确定性——否则每轮保留的条目会抖动,
+    详情页与概念页反向索引跟着反复重建, 增量缓存也就白做了。
+    """
+    from datetime import date as _d
+
+    def _pd(s):
+        try:
+            y, m, dd = map(int, str(s)[:10].split("-"))
+            return _d(y, m, dd)
+        except (ValueError, TypeError):
+            return None
+    groups = {}
+    for it in sorted(vis, key=lambda x: (x.get("date", ""), x["id"])):
+        k = _story_key(it)
+        if not k[1]:
+            groups[("", it["id"])] = [it]
+            continue
+        hit = None
+        for kept in groups.get(k, []):
+            a, b = _pd(kept.get("date")), _pd(it.get("date"))
+            if a and b and abs((a - b).days) <= span_days:
+                hit = kept
+                break
+        if hit is None:
+            groups.setdefault(k, []).append(it)
+    keep = {id(x) for lst in groups.values() for x in lst}
+    out = [i for i in vis if id(i) in keep]
+    if len(out) < len(vis):
+        print(f"  [去重] 同源同标题撞车 {len(vis) - len(out)} 条不上站(存量保留, 只是不进页面)")
+    return out
+
+
 def visible_items(items):
-    """页面只注入过筛条目: 配了 ai_filter 的源里, 未判(pending)或 keep=false 的都不上站。"""
+    """页面只注入过筛条目: 配了 ai_filter 的源里, 未判(pending)或 keep=false 的都不上站。
+    再过一道同源同标题去重(多源撞车)。"""
     filtered_srcs = {s["id"] for s in SOURCES if s.get("ai_filter")}
-    return [i for i in items if i["source"] not in filtered_srcs or i.get("ai", {}).get("keep")]
+    vis = [i for i in items if i["source"] not in filtered_srcs or i.get("ai", {}).get("keep")]
+    return dedupe_same_story(vis)
 
 
 QUIP_SOURCES = {"industry"}  # 齐思式加工层只做三方内容; 自家内容(博客/公众号/产品)不自评
@@ -2541,8 +2591,9 @@ def has_banned(s):
 
 
 def worthy_concepts(lib, vis):
-    """够格发独立页的概念集合(2026-07-30 门槛)。详情页标注、概念页生成、sitemap 三处
-    必须用同一份, 否则会出现"正文标了链接但页面没生成"的死链。"""
+    """够格发独立页的概念集合(2026-07-30 门槛)。四处必须用同一份, 否则就是死链:
+    ①详情页正文标注 ②概念页生成 ③sitemap ④概念页之间的「相关概念」链接。
+    ④曾被漏掉, 长期挂着 64 条死链——write_concept_pages 末尾现有自检兜底。"""
     refs = {}
     for it in vis:
         for s in it.get("concepts") or []:
@@ -2650,7 +2701,11 @@ def write_concept_pages(lib, vis):
         name = f"{slug}.html"
         want.add(name)
         refs = refs_map.get(slug, [])  # 传全量: concept_html 内部列表切前 30, 计数用全量总数
-        related = sorted(related_map.get(slug, {}), key=lambda o: (-related_map[slug][o], o))[:8]
+        # 相关概念也必须过 worthy: related_map 来自全部上站条目的共现, 含大量只被提到
+        # 一次、不够格发页的概念。漏了这道就是死链——worthy 的注释原本只写了"详情页标注/
+        # 概念页生成/sitemap 三处", 这是被漏掉的第四处, 长期挂着 64 条死链没人发现。
+        related = sorted((o for o in related_map.get(slug, {}) if o in worthy),
+                         key=lambda o: (-related_map[slug][o], o))[:8]
         # 精确捕获 concept_html 渲染用到的输入: 概念本身 + 全量计数 + 前 30 条引用的展示字段 + 相关概念名。
         # 摘要取哈希不取长度: 证据段直接引用摘要, 而等长替换(「企业微信」→「自有阵地」)长度指纹识别不出来。
         ref_repr = f"{len(refs)}|" + "|".join(
@@ -2670,6 +2725,13 @@ def write_concept_pages(lib, vis):
     for p in stale:
         p.unlink()
     assert written + same + skipped == len(want), f"概念页计数对不上: {written}+{same}+{skipped} != {len(want)}"
+    # 死链自检: 概念页里指向同目录的 .html 必须真实存在。靠人记得去查是靠不住的——
+    # 「相关概念」这条漏了很久, 因为体检脚本只覆盖了详情页/索引/sitemap 三处。
+    have = {p.name for p in CONCEPT_DIR.glob("*.html")}
+    dead = [(p.name, m.group(1)) for p in CONCEPT_DIR.glob("*.html")
+            for m in re.finditer(r'href="([a-z0-9][a-z0-9-]*\.html)"', p.read_text(encoding="utf-8"))
+            if m.group(1) not in have]
+    assert not dead, f"概念页有 {len(dead)} 条死链, 例: {dead[:3]}"
     print(f"[概念页] 共 {len(want)} 页(新写/重写 {written}, 重算未变 {same}, 跳过 {skipped}, "
           f"清理 {len(stale)}) → news/c/")
 
