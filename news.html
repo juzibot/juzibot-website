@@ -65,6 +65,11 @@
   .cat-row.sub .cat-btn{font-size:11.5px;padding:5px 11px;color:var(--ink-3);background:#FBFCFF;border-color:var(--line-2)}
   .cat-row.sub .cat-btn:hover{color:var(--blue);border-color:var(--blue)}
   .cat-row.sub .cat-btn.on{background:var(--ink);border-color:var(--ink);color:#fff}
+  /* 双区分区切换(2026-07-29): 句子动态 = 自家内容(主), 行业雷达 = 外部观察(次) */
+  .cat-row.grp .cat-btn{font-size:13.5px;font-weight:750;padding:8px 16px}
+  .cat-row.grp .cat-btn.on{background:var(--ink);border-color:var(--ink);color:#fff}
+  .cat-row.grp .cat-btn.on small{color:rgba(255,255,255,.7)}
+  .cat-row.grp .cat-btn i{opacity:.9}
   .news-search{flex:0 0 auto;display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);
     border-radius:999px;padding:7px 13px;width:clamp(150px,22vw,250px);transition:border-color .2s var(--ease),box-shadow .2s var(--ease)}
   .news-search:focus-within{border-color:var(--blue);box-shadow:0 6px 18px rgba(67,56,202,.12)}
@@ -149,9 +154,10 @@
   <section class="news-hero">
     <div class="wrap">
       <h1>句子·<span class="accent">动态</span></h1>
-      <p class="news-lede">博客在写的、公众号在发的、AI 行业在发生的，先筛一遍再按时间流在这一页更新。每条都能点开原文，也能按住 <strong>⌘K</strong> 直接问 AI。</p>
+      <p class="news-lede">句子在做什么、写什么、被谁报道——都在这一页。<strong>行业雷达</strong>另起一区，放我们在看的 AI 动态和一句自己的看法。每条都能点开原文，也能按住 <strong>⌘K</strong> 直接问 AI。</p>
       <div class="news-meta">
-        <span class="pill"><i class="fa-solid fa-newspaper"></i><b id="newsTotal">0</b>&nbsp;条内容</span>
+        <span class="pill"><i class="fa-solid fa-house-chimney"></i>句子动态&nbsp;<b id="newsTotal">0</b>&nbsp;条</span>
+        <span class="pill"><i class="fa-solid fa-satellite-dish"></i>行业雷达&nbsp;<b id="newsRadar">0</b>&nbsp;条</span>
         <span class="pill"><i class="fa-solid fa-tower-broadcast"></i>博客 · 公众号 · 产品 · 媒体 · 行业 · 大咖</span>
         <span class="pill"><i class="fa-solid fa-rotate"></i>持续更新</span>
         <a class="pill" href="news/c/index.html"><i class="fa-solid fa-book-open"></i>概念索引</a>
@@ -163,6 +169,7 @@
   <div class="news-bar" id="newsBar">
     <div class="wrap pad">
       <div class="bar-rows">
+        <div class="cat-row grp" id="newsGroups" role="tablist" aria-label="分区"></div>
         <div class="cat-row" id="newsSrcs" role="tablist" aria-label="按来源筛选"></div>
         <div class="cat-row sub" id="newsCats" hidden aria-label="按分类筛选"></div>
         <div class="cat-row sub" id="newsTimes" aria-label="按时间筛选"></div>
@@ -219,7 +226,12 @@
       total = document.getElementById('newsTotal'),
       sentinel = document.getElementById('newsSentinel');
 
-  var state = { src: 'all', cat: 'all', time: 'all', cut: '', q: '', shown: list.querySelectorAll('.news-card').length };
+  var state = { group: 'company', src: 'all', cat: 'all', time: 'all', cut: '', q: '', shown: list.querySelectorAll('.news-card').length };
+  var GROUPS = [{ k: 'company', n: '句子动态', i: 'fa-solid fa-house-chimney' },
+                { k: 'radar', n: '行业雷达', i: 'fa-solid fa-satellite-dish' },
+                { k: 'all', n: '全部', i: 'fa-solid fa-layer-group' }];
+  function grpOf(id) { var s = sources.filter(function (x) { return x.id === id; })[0]; return (s && s.group) || 'radar'; }
+  function inGroup(it) { return state.group === 'all' || grpOf(it.source) === state.group; }
 
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function safeHref(u) { u = String(u == null ? '' : u).trim(); return /^https?:\/\//i.test(u) ? esc(u) : '#'; }  // 与 Python safe_href 同构: 非 http(s) 外链回 #(Bugbot PR#100)
@@ -257,6 +269,7 @@
   function filtered() {
     var kw = state.q.toLowerCase();
     return data.filter(function (it) {
+      if (!inGroup(it)) return false;
       if (state.src !== 'all' && it.source !== state.src) return false;
       if (state.cat !== 'all' && it.category !== state.cat) return false;
       if (state.cut && it.date < state.cut) return false;
@@ -272,14 +285,28 @@
     if (next.length) list.insertAdjacentHTML('beforeend', next.map(cardHTML).join(''));
     state.shown += next.length;
     var isFiltered = state.src !== 'all' || state.cat !== 'all' || state.time !== 'all' || state.q;
-    count.textContent = isFiltered ? (f.length + ' / ' + data.length + ' 条') : ('共 ' + data.length + ' 条');
+    count.textContent = isFiltered ? (f.length + ' / ' + groupCount(state.group) + ' 条') : ('共 ' + groupCount(state.group) + ' 条');
     empty.classList.toggle('show', f.length === 0);
     more.hidden = state.shown >= f.length;
   }
 
+  function groupCount(g) {
+    return data.filter(function (it) { return g === 'all' || grpOf(it.source) === g; }).length;
+  }
+  function buildGroups() {
+    var el = document.getElementById('newsGroups');
+    el.innerHTML = GROUPS.map(function (g) {
+      return '<button type="button" class="cat-btn' + (g.k === state.group ? ' on' : '') + '" data-group="' + g.k +
+             '" role="tab" aria-selected="' + (g.k === state.group) + '"><i class="' + g.i + '"></i>' + g.n +
+             '<small>' + groupCount(g.k) + '</small></button>';
+    }).join('');
+  }
   function buildSrcs() {
-    var html = '<button type="button" class="cat-btn on" data-src="all" role="tab" aria-selected="true">全部<small>' + data.length + '</small></button>';
-    sources.forEach(function (s) {
+    // 只列当前分区内的源(分区=主筛选, 源=组内次筛选)
+    var inb = sources.filter(function (s) { return state.group === 'all' || (s.group || 'radar') === state.group; });
+    var tot = groupCount(state.group);
+    var html = '<button type="button" class="cat-btn on" data-src="all" role="tab" aria-selected="true">全部<small>' + tot + '</small></button>';
+    inb.forEach(function (s) {
       html += '<button type="button" class="cat-btn" data-src="' + esc(s.id) + '" role="tab" aria-selected="false"><i class="' + (ICON[s.id] || 'fa-solid fa-newspaper') + '"></i>' + esc(s.name) + '<small>' + s.count + '</small></button>';
     });
     srcs.innerHTML = html;
@@ -290,7 +317,7 @@
     if (state.src === 'all') return;
     var seen = {}, order = [];
     data.forEach(function (it) {
-      if (it.source !== state.src || !it.category) return;
+      if (!inGroup(it) || it.source !== state.src || !it.category) return;
       if (!seen[it.category]) { seen[it.category] = 0; order.push(it.category); }
       seen[it.category]++;
     });
@@ -318,11 +345,18 @@
 
   function init() {
     if (!data.length) { document.getElementById('newsBar').style.display = 'none'; return; } // 数据缺失：保留预渲染卡片兜底
-    total.textContent = data.length;
-    buildSrcs(); buildTimes();
-    count.textContent = '共 ' + data.length + ' 条';
+    total.textContent = groupCount('company');
+    var rEl = document.getElementById('newsRadar'); if (rEl) rEl.textContent = groupCount('radar');
+    buildGroups(); buildSrcs(); buildTimes();
+    count.textContent = '共 ' + groupCount(state.group) + ' 条';
     more.hidden = state.shown >= data.length;
 
+    document.getElementById('newsGroups').addEventListener('click', function (e) {
+      var b = e.target.closest('[data-group]'); if (!b) return;
+      state.group = b.getAttribute('data-group'); state.src = 'all'; state.cat = 'all';
+      mark(document.getElementById('newsGroups'), 'data-group', state.group);
+      buildSrcs(); buildCats(); render(true);
+    });
     srcs.addEventListener('click', function (e) {
       var b = e.target.closest('[data-src]'); if (!b) return;
       state.src = b.getAttribute('data-src'); state.cat = 'all';
