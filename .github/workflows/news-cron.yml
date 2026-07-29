@@ -142,5 +142,5 @@ jobs:
           rsync -az --delete -e "$SSH" news/c/ "$USER@$HOST:$NEWS_DIR/news/c/"
           rsync -az           -e "$SSH" news/img/ "$USER@$HOST:$NEWS_DIR/news/img/"
           rsync -az --delete -e "$SSH" data/ "$USER@$HOST:$NEWS_DIR/data/"
-          rsync -az -e "$SSH" news.html news-c.html "$USER@$HOST:$NEWS_DIR/"
+          rsync -az -e "$SSH" news.html news-c.html sitemap-news.xml "$USER@$HOST:$NEWS_DIR/"
           echo "同步完成 → $NEWS_DIR (nginx 对外路由见 deploy/nginx-news.conf)"
