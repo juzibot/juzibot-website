@@ -1,0 +1,57 @@
+<p><strong><a href="https://astral.sh/blog/ruff-v0.16.0">Ruff v0.16.0</a></strong></p>
+<p>几天前的7月23日，Astral 公司发布了其 Ruff Python 代码检查工具的一个重要新版本。我今天才注意到，因为我的各种 CI 作业都开始失败了，这归咎于新的默认 Ruff 检查以及我未固定的 <code>"ruff"</code> 开发依赖项。</p>
+<p>来自 Brent Westbrook 的公告文章：</p>
+<blockquote>
+<p>现在 Ruff 默认启用了 413 条规则，而之前的版本只有 59 条。</p>
+<p>自 Ruff 的默认规则集在 <a href="https://github.com/astral-sh/ruff/blob/main/changelogs/0.1.x.md#breaking-changes">v0.1.0</a> 版本中最后一次修改以来，Ruff 中的规则数量已从 708 条增加到 968 条。其中许多规则能够捕捉到严重问题，包括 <a href="https://docs.astral.sh/ruff/rules/load-before-global-declaration">语法错误</a> 和 <a href="https://docs.astral.sh/ruff/rules/yield-in-init/">即时运行时错误</a>，但以前并未默认启用。有了新的规则集，Ruff 将无需任何配置就能提醒您注意这些问题以及许多其他问题。</p>
+</blockquote>
+<p>以下是在任何 Python 项目中尝试使用它的单行命令：</p>
+<pre><code>uvx ruff@latest check .
+</code></pre>
+<p>我用最新的 Ruff 检查了我的三个最大的项目——<a href="https://datasette.io/">Datasette</a>、<a href="https://sqlite-utils.datasette.io/">sqlite-utils</a> 和 <a href="https://llm.datasette.io/">LLM</a>——它发现了数百个违反新默认规则的小问题。</p>
+<p>这三个项目都有非常全面的测试套件，在 CI 中针对 Python 3.10 到 Python 3.14 执行，因此这类升级相当安全。以下命令完成了大部分升级工作：</p>
+<pre><code>uvx ruff@latest check . --fix --unsafe-fixes
+</code></pre>
+<p>对于 <code>sqlite-utils</code>，该命令报告了：</p>
+<pre><code>发现 1618 个错误（已修复 1538 个，剩余 80 个）。
+</code></pre>
+<p>作为一个示例，这里是剩下的三个问题。Ruff 对每个问题的解释都做得很好：</p>
+<pre><code>DTZ005 调用 `datetime.datetime.now()` 时未提供 `tz` 参数
+  --&gt; tests/test_duplicate.py:17:10
+   |
+15 |     "datetime_col" TEXT)""")
+16 |     # 插入一行模拟数据：
+17 |     dt = datetime.datetime.now()
+   |          ^^^^^^^^^^^^^^^^^^^^^^^
+18 |     data = {
+19 |         "text_col": "Cleo",
+   |
+help: 向 `tz` 参数传入一个 `datetime.timezone` 对象
+
+BLE001 不要捕获宽泛的异常：`Exception`
+  --&gt; tests/test_plugins.py:16:12
+   |
+14 |         db.execute("select * from pragma_function_list()")
+15 |         return True
+16 |     except Exception:
+   |            ^^^^^^^^^
+17 |         return False
+18 |     finally:
+   |
+
+B018 发现无用的属性访问。要么将其赋值给变量，要么删除它。
+  --&gt; tests/test_update.py:46:5
+   |
+44 | def test_update_invalid_pk(fresh_db, pk, update_pk):
+45 |     table = fresh_db["table"]
+46 |     table.insert({"id1": 5, "id2": 3, "v": 1}, pk=pk).last_pk
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+47 |     with pytest.raises(NotFoundError):
+48 |         table.update(update_pk, {"v": 2})
+   |
+</code></pre>
+<p>毫不意外，鉴于 Astral <a href="https://simonwillison.net/2026/Mar/19/openai-acquiring-astral/">现在的新家是 OpenAI</a>，这份输出为代码修复助手提供了所需的一切信息。</p>
+<p>我让 Codex (GPT-5.6 Sol high) <a href="https://github.com/simonw/llm/pull/1557">升级了 LLM</a> 和 <a href="https://github.com/simonw/sqlite-utils/pull/814">sqlite-utils</a>，又让 Claude Code (搭配 Opus 5) <a href="https://github.com/simonw/datasette/pull/2857">升级了 Datasette</a>。
+
+
+    <p>标签: <a href="https://simonwillison.net/tags/python">python</a>, <a href="https://simonwillison.net/tags/ruff">ruff</a>, <a href="https://simonwillison.net/tags/astral">astral</a></p>

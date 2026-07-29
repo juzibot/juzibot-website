@@ -1,0 +1,711 @@
+<p><a href="https://huggingface.co/owensong/Inflect-Micro-v2/blob/main/assets/inflect-v2-repository-hero.png" target="_blank" rel="noopener nofollow"><img src="https://huggingface.co/owensong/Inflect-Micro-v2/resolve/main/assets/inflect-v2-repository-hero.png" alt="Inflect-Micro-v2 release cover" referrerpolicy="no-referrer" /></a></p>
+<h1>Inflect-Micro-v2</h1>
+<p><strong>一个参数量不到 10M 的完整本地文本转波形语音合成模型。</strong><br />
+固定音色的英文 TTS，支持确定性种子、长文本处理，以及 CPU 或 CUDA 推理。</p>
+
+<blockquote>
+<p><strong>Owen 的一封信</strong></p>
+<p>我独立开发并资助了 Inflect v2。如果这个版本能找到真正的用户，我希望能够继续这个项目，推出功能更全面的 v3 版本，可能会加入更多语言、音色以及稳定性改进。如果这个模型对你有帮助，在 Hugging Face 上点个赞，确实能帮助更多人发现它。</p>
+</blockquote>
+<p>
+  <a href="https://huggingface.co/spaces/owensong/Inflect-v2" target="_blank" rel="noopener nofollow"><img src="https://img.shields.io/badge/Playground-0B2A54?style=for-the-badge&amp;logo=huggingface&amp;logoColor=white" alt="Live playground" referrerpolicy="no-referrer" /></a>
+  <a href="https://github.com/owenawsong/Inflect" target="_blank" rel="noopener nofollow"><img src="https://img.shields.io/badge/GitHub-1769E0?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="GitHub" referrerpolicy="no-referrer" /></a>
+  <a href="https://huggingface.co/owensong/Inflect-Nano-v2" target="_blank" rel="noopener nofollow"><img src="https://img.shields.io/badge/Nano_3.96M-FFFFFF?style=for-the-badge&amp;logo=huggingface&amp;logoColor=1769E0" alt="Inflect Nano v2" referrerpolicy="no-referrer" /></a>
+  <a href="https://discord.gg/CVJYedvzvp" target="_blank" rel="noopener nofollow"><img src="https://img.shields.io/badge/Discord-1769E0?style=for-the-badge&amp;logo=discord&amp;logoColor=white" alt="Inflect Discord" referrerpolicy="no-referrer" /></a>
+  <a href="https://huggingface.co/owensong/Inflect-Micro-v2/blob/main/docs/EVALUATION.md" target="_blank" rel="noopener nofollow"><img src="https://img.shields.io/badge/Benchmarks-0B2A54?style=for-the-badge&amp;logo=chartdotjs&amp;logoColor=white" alt="Benchmarks" referrerpolicy="no-referrer" /></a>
+</p>
+
+<p><strong>9,356,513 个可部署参数</strong> · <strong>37.53 MB FP32</strong> · <strong>24 kHz 单声道输出</strong></p>
+
+<hr />
+<p>Inflect v2 在两个尺寸上使用同一个公共 API：<strong>Micro 版本优先保证 10M 参数以下的质量；Nano 版本优先保证 4M 参数以下的体积。</strong></p>
+
+<strong>探索此模型卡片</strong>
+<table>
+		<thead><tr>
+<th>从这里开始</th>
+<th>技术细节</th>
+</tr>
+
+		</thead><tbody><tr>
+<td>试听</td>
+<td>架构</td>
+</tr>
+<tr>
+<td>评估</td>
+<td>控件和长文本</td>
+</tr>
+<tr>
+<td>选择 Micro 或 Nano</td>
+<td>数据和适配</td>
+</tr>
+<tr>
+<td>本地运行</td>
+<td><a href="https://huggingface.co/owensong/Inflect-Micro-v2/blob/main/docs/EXPORTS.md" target="_blank" rel="noopener nofollow">导出和量化</a></td>
+</tr>
+<tr>
+<td>包映射</td>
+<td><a href="https://huggingface.co/owensong/Inflect-Micro-v2/blob/main/docs/EVALUATION.md" target="_blank" rel="noopener nofollow">评估和原始协议</a></td>
+</tr>
+<tr>
+<td>局限性</td>
+<td><a href="https://huggingface.co/owensong/Inflect-Micro-v2/blob/main/docs/DEPLOYMENT.md" target="_blank" rel="noopener nofollow">部署指南</a></td>
+</tr>
+</tbody>
+	</table>
+
+
+
+<h2>
+	
+		
+	
+	
+		试听
+	
+</h2>
+<p>这些是保留的文本生成，不是训练音频的重构。每份转录文本都完全按照提供给公共前端的方式展示。</p>
+
+	<table>
+		<thead><tr>
+<th>测试</th>
+<th>精确转录文本</th>
+<th>生成的音频</th>
+</tr>
+
+		</thead><tbody><tr>
+<td><strong>对话</strong></td>
+<td>直到后来我才意识到到底发生了什么。</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>标点符号</strong></td>
+<td>首先，关上窗户；其次，关掉台灯；最后，锁上门。</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>数字</strong></td>
+<td>包裹重十二点六公斤，于七月二十一日送达。</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>地名和人名</strong></td>
+<td>格温多林拍摄了卢布尔雅那外面的桉树。</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>技术术语</strong></td>
+<td>系统运行在三个核心组件上，所有组件都必须保持同步。</td>
+<td></td>
+</tr>
+</tbody>
+	</table>
+
+<h2>
+	
+		
+	
+	
+		评估
+	
+</h2>
+<p>没有单一指标能完全衡量 TTS 质量。Inflect v2 分别报告 <strong>人类偏好</strong>、<strong>预测自然度</strong>、<strong>多 ASR 可懂度</strong>、<strong>完整 FP32 权重大小</strong> 和 <strong>运行时间</strong>，而不是将它们压缩成一个无法验证的分数。</p>
+
+	<table>
+		<thead><tr>
+<th>社区偏好 ↑</th>
+<th>UTMOS22 ↑</th>
+<th>双 ASR 语义词错率 ↓</th>
+<th>完整 FP32 权重大小 ↓</th>
+<th>4 线程 CPU 吞吐量 ↑</th>
+</tr>
+
+		</thead><tbody><tr>
+<td><strong>66.2%</strong></td>
+<td><strong>4.395</strong></td>
+<td><strong>3.99%</strong></td>
+<td><strong>37.53 MB</strong></td>
+<td><strong>6.28× 实时</strong></td>
+</tr>
+</tbody>
+	</table>
+<p>标题行始终指代 <strong>Inflect-Micro-v2</strong>。详细的竞品结果和协议边界在下方保持可见。</p>
+<p><strong>对比集。</strong>结果包括 <a href="https://huggingface.co/KittenML/kitten-tts-nano-0.8" target="_blank" rel="noopener nofollow">KittenTTS Nano</a>、<a href="https://huggingface.co/rhasspy/piper-voices" target="_blank" rel="noopener nofollow">Piper Low</a> 和 <a href="https://huggingface.co/Supertone/supertonic-3" target="_blank" rel="noopener nofollow">Supertonic 3</a>，这些都是已确立的紧凑型或本地 TTS 基准模型，其可部署的权重体积比 Inflect 的两个版本都要大。权重大小在包级别进行比较，且没有任何单一指标被视为整体优越性的证明。</p>
+<h3>
+	
+		
+	
+	
+		1. 人类盲听偏好
+	
+</h3>
+<p><a href="https://huggingface.co/owensong/Inflect-Micro-v2/blob/main/assets/evidence/human-preference.svg" target="_blank" rel="noopener nofollow"><img src="https://huggingface.co/owensong/Inflect-Micro-v2/resolve/main/assets/evidence/human-preference.svg" alt="社区盲听测试" referrerpolicy="no-referrer" /></a></p>
+<p>在最终匿名的社区研究中，<strong>Inflect-Micro-v2 的偏好率为 66.2%</strong>（21 胜 · 10 负 · 3 平）。系统信息被隐藏，左右顺序随机化，平局算作半胜。这是描述性的社区证据，而非正式的 MOS 分。</p>
+<h3>
+	
+		
+	
+	
+		2. 预测自然度与体积对比
+	
+</h3>
+<p><a href="https://huggingface.co/owensong/Inflect-Micro-v2/blob/main/assets/evidence/quality-vs-footprint.svg" target="_blank" rel="noopener nofollow"><img src="https://huggingface.co/owensong/Inflect-Micro-v2/resolve/main/assets/evidence/quality-vs-footprint.svg" alt="预测质量与体积对比" referrerpolicy="no-referrer" /></a></p>
+<p>UTMOS22 测试对每个语音使用了 500 个相同的未见过的提示词。KittenTTS 和 Piper 是等权重的双语音平均值；其观察到的语音范围显示为须线。Supertonic 3-step 的数据点绘制在图表范围下方，而不是为了不压平其他系统。</p>
+<p><strong>Inflect-Micro-v2: 4.395 UTMOS22</strong>，95% 自助法置信区间为 <strong>4.381–4.408</strong>。UTMOS22 是一个学习型预测器，而非人类 MOS 分。</p>
+<h3>
+	
+		
+	
+	
+		3. 未见文本的可懂度
+	
+</h3>
+<p><a href="https://huggingface.co/owensong/Inflect-Micro-v2/blob/main/assets/evidence/asr-consensus.svg" target="_blank" rel="noopener nofollow"><img src="https://huggingface.co/owensong/Inflect-Micro-v2/resolve/main/assets/evidence/asr-consensus.svg" alt="双 ASR 语义词错误率共识" referrerpolicy="no-referrer" /></a></p>
+<p>头条分数是 Qwen3-ASR 和 Nemotron 3.5 语料库 WER 的等权重平均值，适用于<strong>每个</strong>系统。Whisper 被一致排除在头条分数之外，因为它在部分可理解的 Supertonic 8-step 片段中产生了大量插入式幻觉。它没有被删除：完整的三套 ASR 证据如下所示。</p>
+
+<strong>打开完整的三套 ASR 审计报告</strong>
+
+<p><a href="https://huggingface.co/owensong/Inflect-Micro-v2/blob/main/assets/evidence/modern400-three-asr.svg" target="_blank" rel="noopener nofollow"><img src="https://huggingface.co/owensong/Inflect-Micro-v2/resolve/main/assets/evidence/modern400-three-asr.svg" alt="Qwen3-ASR、Nemotron 3.5 和 Whisper large-v3 的语义 WER" referrerpolicy="no-referrer" /></a></p>
+
+	<table>
+		<thead><tr>
+<th>系统 / 语音</th>
+<th>Qwen3-ASR ↓</th>
+<th>Nemotron 3.5 ↓</th>
+<th>Whisper large-v3 ↓</th>
+</tr>
+
+		</thead><tbody><tr>
+<td><strong>Inflect-Micro-v2</strong></td>
+<td><strong>2.52%</strong></td>
+<td><strong>5.45%</strong></td>
+<td><strong>2.73%</strong></td>
+</tr>
+<tr>
+<td><strong>Inflect-Nano-v2</strong></td>
+<td><strong>2.79%</strong></td>
+<td><strong>5.63%</strong></td>
+<td><strong>2.65%</strong></td>
+</tr>
+<tr>
+<td>KittenTTS Nano · Bruno</td>
+<td>2.15%</td>
+<td>3.96%</td>
+<td>2.17%</td>
+</tr>
+<tr>
+<td>KittenTTS Nano · Hugo</td>
+<td>2.39%</td>
+<td>3.80%</td>
+<td>2.11%</td>
+</tr>
+<tr>
+<td>Piper Low · Danny</td>
+<td>2.62%</td>
+<td>5.60%</td>
+<td>2.55%</td>
+</tr>
+<tr>
+<td>Piper Low · Ryan</td>
+<td>2.81%</td>
+<td>5.51%</td>
+<td>2.87%</td>
+</tr>
+<tr>
+<td>Supertonic 3 · M2 · 3-step</td>
+<td>3.03%</td>
+<td>6.04%</td>
+<td>3.22%</td>
+</tr>
+<tr>
+<td>Supertonic 3 · M2 · 8-step</td>
+<td>2.05%</td>
+<td>3.56%</td>
+<td>8.08%</td>
+</tr>
+</tbody>
+	</table>
+
+<p>对于 Inflect-Micro-v2，各项结果分别为<strong>2.52% Qwen3-ASR</strong>、<strong>5.45% Nemotron 3.5</strong> 和<strong>2.73% Whisper large-v3</strong>。之前的三模型平均值<strong>3.57%</strong>仅作为描述性审计值保留，不作为头条分数使用。</p>
+
+
+
+<strong>打开评估器鲁棒性和错误类别诊断</strong>
+
+<p><a href="https://huggingface.co/owensong/Inflect-Micro-v2/blob/main/assets/evidence/asr-robustness.svg" target="_blank" rel="noopener nofollow"><img src="https://huggingface.co/owensong/Inflect-Micro-v2/resolve/main/assets/evidence/asr-robustness.svg" alt="ASR 评估器鲁棒性" referrerpolicy="no-referrer" /></a></p>
+<p><a href="https://huggingface.co/owensong/Inflect-Micro-v2/blob/main/assets/evidence/category-semantic-wer.svg" target="_blank" rel="noopener nofollow"><img src="https://huggingface.co/owensong/Inflect-Micro-v2/resolve/main/assets/evidence/category-semantic-wer.svg" alt="Semantic WER by prompt category" referrerpolicy="no-referrer" /></a></p>
+<p>这些视图是诊断信息，而非额外的排行榜。它们展示了识别器在哪些方面存在分歧，以及哪些提示类别仍会产生可恢复的转录错误。</p>
+
+
+<h3>
+	
+		
+	
+	
+		4. CPU 运行时间
+	
+</h3>
+<p>两个 Inflect 版本在 CPU 上的合成速度都轻松超过实时。管理型基准测试使用的是 Hugging Face 的 <strong>CPU 升级版</strong> 实例（8 vCPU，32 GB RAM），并采用 <strong>四个框架线程</strong>，进行端到端的文本到波形计时，以及 100 个固定的 Modern400 提示。记录了三次完整运行；第一次缓存构建运行被排除，表格数据取自第二次和第三次运行的汇总。</p>
+
+	<table>
+		<thead><tr>
+<th>版本</th>
+<th>稳态 RTF ↓</th>
+<th>音频/墙钟时间比 ↑</th>
+</tr>
+
+		</thead><tbody><tr>
+<td><strong>Inflect-Micro-v2</strong></td>
+<td><strong>0.1593</strong></td>
+<td><strong>6.28×</strong></td>
+</tr>
+<tr>
+<td><strong>Inflect-Nano-v2</strong></td>
+<td><strong>0.0933</strong></td>
+<td><strong>10.72×</strong></td>
+</tr>
+</tbody>
+	</table>
+
+<p>这些是公共 PyTorch 运行时的包级别结果，并非声称 Inflect 是最快的紧凑型 TTS 系统。硬件、前端行为、框架、编译和线程策略都会影响小模型的测量结果。</p>
+
+<strong>开放方向：紧凑型系统速度对比</strong>
+
+<p>同样的管理型 CPU 和四线程策略用于一次较短的对比测试：使用相同的 50 个提示前缀，重复两次。KittenTTS 和 Piper 的数据在其测试的两个语音间进行了等工作量汇总。</p>
+
+	<table>
+		<thead><tr>
+<th>系统</th>
+<th>音频/墙钟时间比 ↑</th>
+</tr>
+
+		</thead><tbody><tr>
+<td>Piper Low</td>
+<td>31.37×</td>
+</tr>
+<tr>
+<td>KittenTTS Nano</td>
+<td>13.33×</td>
+</tr>
+<tr>
+<td><strong>Inflect-Nano-v2</strong></td>
+<td><strong>10.72×</strong></td>
+</tr>
+<tr>
+<td>Supertonic 3 · 3-step</td>
+<td>10.15×</td>
+</tr>
+<tr>
+<td><strong>Inflect-Micro-v2</strong></td>
+<td><strong>6.28×</strong></td>
+</tr>
+<tr>
+<td>Supertonic 3 · 8-step</td>
+<td>4.37×</td>
+</tr>
+</tbody>
+	</table>
+<p>由于 Inflect 使用了更长的 100 提示稳态运行，而对比行使用了较短的 50 提示确认测试，因此此表展示的是部署场景下的性能对比，而非完全匹配的速度排行榜。部分对比模型还使用了优化的 ONNX 运行时，而上文发布的 Inflect 基准测试使用的是标准 PyTorch 运行时。单独发布的 Inflect ONNX 版本并未替换到这些基准测试数据中。</p>
+
+<h3>
+	
+		
+	
+	
+		5. 完整模型占用空间
+	
+</h3>
+<p><a href="https://huggingface.co/owensong/Inflect-Micro-v2/blob/main/assets/evidence/model-footprint.svg" target="_blank" rel="noopener nofollow"><img src="https://huggingface.co/owensong/Inflect-Micro-v2/resolve/main/assets/evidence/model-footprint.svg" alt="Complete deployable model footprint" referrerpolicy="no-referrer" /></a></p>
+<p>共享相同权重的语音变体会被合并。Inflect 的总大小包含了集成的波形解码器。</p>
+
+<strong>打开冻结评估协议</strong>
+
+<ul>
+<li>Modern400 对每个系统使用 400 个相同的未见过的英文提示：200 个固定的现代/压力提示加上 200 个确定性的 FLEURS <code>en_us</code> 测试提示。</li>
+<li>精确文本排除检查了 87,362 个训练转录文本。</li>
+<li>所有 ASR 输入都被重新采样到 16 kHz，并使用相同的公开英文标准化器进行评分。</li>
+<li>UTMOS22 使用 <code>tarepan/SpeechMOS</code> v1.2.0 在一个独立的 500 提示生成集上进行评估。</li>
+<li>标题区间使用 10,000 个 bootstrap 样本。</li>
+<li>Modern400 语料库的 SHA-256 是 <code>b7504ce2dce44a2da82770a6a5dfd2a034fe17e2113980f8a69663ade417a34c</code>。</li>
+<li>提示、假设、压缩的行级报告和摘要都存放在 <code>evaluation/final/</code> 目录下。</li>
+<li>运行时单独评估，因为框架、线程策略、编译和主机负载可能会在小模型对比中占据主导地位。</li>
+</ul>
+
+
+<hr />
+<h2>
+	
+		
+	
+	
+		选择合适的 Inflect 版本
+	
+</h2>
+
+	<table>
+		<thead><tr>
+<th></th>
+<th><strong>Inflect-Nano-v2</strong></th>
+<th><strong>Inflect-Micro-v2</strong></th>
+</tr>
+
+		</thead><tbody><tr>
+<td>完整参数量</td>
+<td>3,966,721</td>
+<td>9,356,513</td>
+</tr>
+<tr>
+<td>FP32 权重大小</td>
+<td>15.97 MB</td>
+<td>37.53 MB</td>
+</tr>
+<tr>
+<td>定位</td>
+<td>最小的实用占用空间</td>
+<td>最强的 Inflect v2 质量</td>
+</tr>
+<tr>
+<td>24 kHz 波形解码器</td>
+<td>已包含</td>
+<td>已包含</td>
+</tr>
+<tr>
+<td>Python API 和前端</td>
+<td>相同</td>
+<td>相同</td>
+</tr>
+</tbody>
+	</table>
+
+<p><strong>Inflect-Micro-v2</strong> 是该系列中注重质量的成员。两个模型都使用相同的公共 API 和完整的文本到波形封装。</p>
+<h2>
+	
+		
+	
+	
+		本地运行
+	
+</h2>
+<h3>
+	
+		
+	
+	
+		安装
+	
+</h3>
+<pre><code>python -m pip install --upgrade huggingface_hub
+hf download owensong/Inflect-Micro-v2 --local-dir Inflect-Micro-v2
+cd Inflect-Micro-v2
+python -m pip install -r requirements.txt
+</code></pre>
+<p>这使用了 Hub 的版本感知下载器，并获取完整的代码库。Git 克隆也可以，但 <code>hf download</code> 是推荐的普通模型安装方式。</p>
+<h3>
+	
+		
+	
+	
+		Python
+	
+</h3>
+<pre><code>from inference import InflectTTS
+
+tts = InflectTTS(&quot;.&quot;, device=&quot;cpu&quot;)
+tts.save(
+    &quot;A small voice can still have something meaningful to say.&quot;,
+    &quot;sample.wav&quot;,
+    speed=1.0,
+    variation=0.667,
+    seed=7,
+)
+</code></pre>
+<h3>
+	
+		
+	
+	
+		通过 Hub 下载
+	
+</h3>
+<pre><code>import sys
+from huggingface_hub import snapshot_download
+
+model_dir = snapshot_download(&quot;owensong/Inflect-Micro-v2&quot;)
+sys.path.insert(0, model_dir)
+
+from inference import InflectTTS
+
+tts = InflectTTS(model_dir, device=&quot;cpu&quot;)
+sample_rate, waveform = tts.synthesize(&quot;The complete model runs locally.&quot;)
+</code></pre>
+<p>结果是一个 24 kHz 单声道 <code>float32</code> 波形。长文本会在标点感知的边界处分割，逐块合成，并以可控的停顿连接。</p>
+<h3>
+	
+		
+	
+	
+		ONNX Runtime
+	
+</h3>
+<p>官方验证的 FP32 导出版本单独发布为
+<a href="https://huggingface.co/owensong/Inflect-Micro-v2-ONNX" target="_blank" rel="noopener nofollow"><code>Inflect-Micro-v2-ONNX</code></a>。
+它支持动态长度、CPU/CUDA/DirectML 提供商选择、确定性种子，以及无需导入 PyTorch 的相同长文本包装器：</p>
+<pre><code>git clone https://huggingface.co/owensong/Inflect-Micro-v2-ONNX
+cd Inflect-Micro-v2-ONNX
+python -m pip install -r onnx/requirements.txt
+python onnx/inference_onnx.py \
+  --text &quot;The complete model now runs through ONNX Runtime.&quot; \
+  --output sample-onnx.wav \
+  --provider cpu \
+  --seed 7
+</code></pre>
+<p>神经模型被拆分为 <code>duration.onnx</code> 和 <code>decode.onnx</code>；它们共同包含完整的文本到波形学习路径。英语 eSpeak-ng 前端仍然是 CPU 端代码。有关图契约、来源、一致性测量、浏览器部署和重新导出说明，请参阅
+<a href="https://huggingface.co/owensong/Inflect-Micro-v2-ONNX" target="_blank" rel="noopener nofollow"><code>ONNX 仓库</code></a>。</p>
+<h2>
+	
+		
+	
+	
+		发布配置
+	
+</h2>
+<table>
+		<thead><tr>
+<th><strong>本地运行时</strong></th>
+<th><strong>长文本处理</strong></th>
+</tr>
+
+		</thead><tbody><tr>
+<td>通过同一 Python API 和 CLI 进行 CPU 和 CUDA 推理。</td>
+<td>带可控停顿和边缘淡入淡出的标点感知分词。</td>
+</tr>
+<tr>
+<td><strong>可重复输出</strong></td>
+<td><strong>可审计评估</strong></td>
+</tr>
+<tr>
+<td>固定种子可在相同运行时堆栈上重现相同的潜在样本。</td>
+<td>包含冻结提示、原始 ASR 假设、间隔、哈希值和各系统报告。</td>
+</tr>
+</tbody>
+	</table>
+
+
+<strong>架构与参数预算</strong>
+
+<p>Inflect v2 是一个参数高效的 VITS 系列端到端文本到波形生成器，具有英语音素前端、单调对齐、随机潜在合成、残差耦合流和集成的别名简化神经波形解码器。</p>
+
+	<table>
+		<thead><tr>
+<th>组件</th>
+<th>Inflect-Micro-v2</th>
+</tr>
+
+		</thead><tbody><tr>
+<td>潜在通道数</td>
+<td>192</td>
+</tr>
+<tr>
+<td>文本隐藏通道数</td>
+<td>96</td>
+</tr>
+<tr>
+<td>编码器层数 / 头数</td>
+<td>3 / 2</td>
+</tr>
+<tr>
+<td>前馈通道数</td>
+<td>768</td>
+</tr>
+<tr>
+<td>流耦合块数</td>
+<td>4</td>
+</tr>
+<tr>
+<td>初始解码器通道数</td>
+<td>320</td>
+</tr>
+<tr>
+<td>上采样率</td>
+<td>8, 8, 2, 2</td>
+</tr>
+<tr>
+<td>训练段长度</td>
+<td>16,384 个样本</td>
+</tr>
+<tr>
+<td>输出</td>
+<td>24 kHz 单声道波形</td>
+</tr>
+</tbody>
+	</table>
+
+<p>本发布描述了可部署的架构。私有语料库构建和优化细节不属于此开源权重包的一部分。</p>
+
+
+
+<strong>控制、确定性与长文本</strong>
+
+
+	<table>
+		<thead><tr>
+<th>控制项</th>
+<th>默认值</th>
+<th>公开范围</th>
+<th>含义</th>
+</tr>
+
+		</thead><tbody><tr>
+<td><code>speed</code></td>
+<td><code>1.0</code></td>
+<td><code>0.5–2.0</code></td>
+<td>值越低越慢；值越高越快。</td>
+</tr>
+<tr>
+<td><code>variation</code></td>
+<td><code>0.667</code></td>
+<td><code>0.0–1.0</code></td>
+<td>值越低越稳定；值越高则采样更多潜在变化。</td>
+</tr>
+<tr>
+<td><code>seed</code></td>
+<td><code>0</code></td>
+<td>整数</td>
+<td>在相同运行时堆栈上重复相同的随机样本。</td>
+</tr>
+</tbody>
+	</table>
+
+<p>长文本按标点感知进行分块，而不是无限长的自回归处理。块边界会添加短暂停顿和边缘淡入淡出。有关波形约定和并发说明，请参阅 <a href="https://huggingface.co/owensong/Inflect-Micro-v2/blob/main/docs/API.md" target="_blank" rel="noopener nofollow"><code>docs/API.md</code></a>。</p>
+
+
+
+<strong>数据、语音与适配状态</strong>
+<p>本次发布包含一个固定的合成英语语音。该包不重新分发真实说话人的录音语料库，不声称该语音代表任何真实人物，并且在推理时无需参考音频或外部模型。</p>
+<p>本次发布以推理优先。新语音和新语言适配功能<strong>目前尚未验证或支持</strong>。新增语音会替换固定说话人，而不是增加可选说话人；语言适配还需要重新构建标准化、音素、符号、嵌入和训练数据。请参阅 <a href="https://huggingface.co/owensong/Inflect-Micro-v2/blob/main/docs/DATA_AND_VOICE.md" target="_blank" rel="noopener nofollow"><code>docs/DATA_AND_VOICE.md</code></a> 和 <a href="https://huggingface.co/owensong/Inflect-Micro-v2/blob/main/docs/FINETUNING.md" target="_blank" rel="noopener nofollow"><code>docs/FINETUNING.md</code></a>。</p>
+
+
+<h2>
+	
+		
+	
+	
+		包结构图
+	
+</h2>
+
+	<table>
+		<thead><tr>
+<th>路径</th>
+<th>用途</th>
+</tr>
+
+		</thead><tbody><tr>
+<td><code>model.pth</code></td>
+<td>仅用于推理的生成器检查点</td>
+</tr>
+<tr>
+<td><code>config.json</code></td>
+<td>架构和音频配置；同时也是 Hub 下载量查询文件</td>
+</tr>
+<tr>
+<td><code>inference.py</code></td>
+<td>公共 Python API 和命令行界面</td>
+</tr>
+<tr>
+<td><code>inflect_vits_frontend.py</code></td>
+<td>英语标准化、音素化和标点符号前端</td>
+</tr>
+<tr>
+<td><code>runtime/</code></td>
+<td>独立的模型实现</td>
+</tr>
+<tr>
+<td><a href="https://huggingface.co/owensong/Inflect-Micro-v2-ONNX" target="_blank" rel="noopener nofollow"><code>Inflect-Micro-v2-ONNX</code></a></td>
+<td>独立的官方 FP32 ONNX 图、无 PyTorch 运行器、一致性报告、校验和以及导出工具</td>
+</tr>
+<tr>
+<td><code>samples/</code></td>
+<td>预留的示例生成结果</td>
+</tr>
+<tr>
+<td><code>evaluation/final/</code></td>
+<td>冻结的基准测试提示、报告和协议工件</td>
+</tr>
+<tr>
+<td><code>docs/</code></td>
+<td>API、部署、评估、适配和导出文档</td>
+</tr>
+<tr>
+<td><code>release_manifest.json</code></td>
+<td>文件大小和 SHA-256 哈希值</td>
+</tr>
+</tbody>
+	</table>
+
+<h2>
+	
+		
+	
+	
+		局限性
+	
+</h2>
+<ul>
+<li>仅支持英文，且只有一种固定的男声。这不是零样本语音克隆。</li>
+<li>不熟悉的表达可能会变得平淡、缺乏表现力或不稳定。</li>
+<li>数字、缩写、同形异义词和不常见名称仍需前端处理，且受上下文影响。</li>
+<li>长文本采用标点感知的分块处理；过渡效果可能与原生长模型生成的版本不同。</li>
+<li>随机变化可能影响语调和发音。进行对比时请固定随机种子。</li>
+<li>UTMOS22 和 ASR 分数不能替代受控的人类 MOS 或 MUSHRA 式评估。</li>
+<li>未经验证用于医疗、法律、紧急或对无障碍至关重要的通信场景。</li>
+</ul>
+<h2>
+	
+		
+	
+	
+		负责任的使用
+	
+</h2>
+<p>请勿使用内置的语音来冒充真人、欺骗听众或创建欺诈性内容。在可能产生误导的上下文中，请明确说明这是合成语音。用户需遵守相关法律法规和 Apache-2.0 许可证。</p>
+<h2>
+	
+		
+	
+	
+		许可、完整性与署名
+	
+</h2>
+<p>原始的 Inflect 代码和权重以 Apache-2.0 许可发布。捆绑的第三方组件保留其自身的声明，详见 <a href="https://huggingface.co/owensong/Inflect-Micro-v2/blob/main/THIRD_PARTY_NOTICES.md" target="_blank" rel="noopener nofollow"><code>THIRD_PARTY_NOTICES.md</code></a>。<code>release_manifest.json</code> 记录了打包文件的大小和 SHA-256 哈希值。</p>
+<h3>
+	
+		
+	
+	
+		私有训练范围与联系方式
+	
+</h3>
+<p>Inflect v2 是一个<strong>开放权重</strong>版本。可部署的权重、推理代码、前端代码、评估提示和发布报告均为公开内容。训练语料生成流程、私有过滤基础设施和完整的优化方案不属于公开包的一部分。</p>
+<p>Owen Song 可能在请求目的明确且不违反许可或数据溯源约束的情况下，为可信研究、合作、可复现性或部署咨询私下分享额外的技术背景信息。</p>
+<ul>
+<li><strong>Discord：</strong> <code>b111ue</code> — 非正式技术问题最快响应</li>
+<li><strong>社区服务器：</strong> <a href="https://discord.gg/CVJYedvzvp" target="_blank" rel="noopener nofollow">discord.gg/CVJYedvzvp</a></li>
+<li><strong>邮箱：</strong> <a href="mailto:owen.aw.song@gmail.com" target="_blank" rel="noopener nofollow">owen.aw.song@gmail.com</a> — 专业咨询首选</li>
+</ul>
+<h2>
+	
+		
+	
+	
+		引用格式
+	
+</h2>
+<pre><code>@software{song2026inflectmicrov2,
+  author = {Owen Song},
+  title = {Inflect-Micro-v2: Complete Local Text-to-Waveform TTS Under 10M Parameters},
+  year = {2026},
+  url = {https://huggingface.co/owensong/Inflect-Micro-v2}
+}
+</code></pre>
+<p><sub>由 Owen Song 独立设计与开发 · 开放权重 · Apache-2.0 · 完整的本地文本到波形推理</sub></p>

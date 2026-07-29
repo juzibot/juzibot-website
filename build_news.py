@@ -233,18 +233,9 @@ SOURCES = [
         "home": "https://news.miracleplus.com/",
         "ai_filter": "ai",
     },
-    {
-        # 二方生态 · 企业微信接口更新日志(2026-07-22): 客户全在企微生态里, 接口/能力变更对他们
-        # 是真信息, 几乎没有官网做这件事。官方 changelog 页服务端渲染可直抓, 每个日期分组落一条
-        "id": "wecom",
-        "name": "企微生态",
-        "author": "企业微信",
-        "type": "wecom-changelog",
-        "page": "https://developer.work.weixin.qq.com/document/path/93221",
-        "max_items": 10,
-        "home": "https://developer.work.weixin.qq.com/document/path/93221",
-    },
 ]
+# 注: 企微/企业微信生态源(wecom-changelog)已于 2026-07-24 移除(佳芮: 企微不出现在任何页面)。
+# 删源后 items 里存量 source=='wecom' 条目会被下方"下线源清理"自动抹掉, 不会 KeyError。
 
 
 # ---------------- 抓取与通用解析 ----------------
@@ -514,6 +505,17 @@ def content_text(item_id):
 SITE_BASE = "https://juzibot.com"
 OWN_SOURCES = {s["id"] for s in SOURCES if s.get("own")}
 MIRROR_MODE = {s["id"]: s.get("mirror", "full") for s in SOURCES}
+# 公司相关源: 自家博客/公众号 + 产品动态 + 写公司的媒体报道。news.html 默认视图把这几类
+# 置顶(佳芮: 进来首屏要和公司相关, 不能一进来全是别的新闻); 外部资讯随后, 各组内保持时间序。
+COMPANY_SOURCES = {"rui-blog", "wechat-mp", "product", "press"}
+
+
+def company_first(items):
+    """稳定分区: 公司相关源置顶(保持各自时间序), 外部资讯(行业/大咖/HN/齐思)随后。
+    仅用于 news.html 卡片流; 聚合版 news-c.html 按月分组, 不能打乱时间序, 故不套用。"""
+    comp = [i for i in items if i["source"] in COMPANY_SOURCES]
+    rest = [i for i in items if i["source"] not in COMPANY_SOURCES]
+    return comp + rest
 MIRROR_MAX_PER_RUN = 60  # 每轮镜像抓取上限: 首轮存量分几轮清完, 防 cron 单轮超时
 MIRROR_GAP = 2.0         # 同域名两次抓取的最小间隔(秒), 礼貌限频
 RD_MIN = 350             # readability 正文长度下限(纯文本字符), 低于视为提取失败退导读
@@ -886,18 +888,6 @@ def extract_qisi_main(page):
     return "\n".join(blocks)
 
 
-def extract_wecom_group(page, anchor):
-    """企微 changelog: 所有条目同一页, 按 url 锚点(YYYYMMDD)取对应日期分组的片段, 相对链接补全。"""
-    heads = list(re.finditer(r"<h([1-4])[^>]*>\s*(20\d{2}/\d{1,2}/\d{1,2})\s*</h\1>", page))
-    for i, m in enumerate(heads):
-        y, mo, d = m.group(2).split("/")
-        if f"{y}{int(mo):02d}{int(d):02d}" != anchor:
-            continue
-        end = heads[i + 1].start() if i + 1 < len(heads) else m.end() + 8000
-        return re.sub(r'(href|src)=(["\'])/', r"\1=\2https://developer.work.weixin.qq.com/", page[m.end():end])
-    return ""
-
-
 def mirror_target(it):
     """镜像抓取的目标 URL。齐思换 api 域名(share_link 原页纯前端渲染, api 域名才有 SEO 版);
     HN 无外链帖(url 即讨论页)没有目标文章可抓, 返回 '' 表示不镜像。"""
@@ -915,8 +905,6 @@ def mirror_body(it, page):
         return extract_rui_body(page, it["url"])
     if it["source"] == "wechat-mp":
         return extract_mp_body(page)
-    if it["source"] == "wecom":
-        return extract_wecom_group(page, it["url"].rsplit("#", 1)[-1])
     if it["source"] == "qisi":
         return extract_qisi_main(page)
     return extract_readable(page, it["url"])
@@ -1112,35 +1100,6 @@ def sync_feishu_base(src, old, limit):
     return got, failed
 
 
-# ---------------- adapter: wecom-changelog(企业微信接口更新日志) ----------------
-
-def sync_wecom(src, old, limit):
-    """企微开发者中心更新日志页: 服务端渲染, <h3>YYYY/MM/DD</h3> 分组, 每个日期落一条。
-    标题取该组第一条变更 + 计数; 无独立详情页, url 用日期锚点保证增量去重唯一性。"""
-    page = fetch(src["page"])
-    heads = list(re.finditer(r"<h([1-4])[^>]*>\s*(20\d{2}/\d{1,2}/\d{1,2})\s*</h\1>", page))
-    got, failed = [], []
-    for i, m in enumerate(heads[: src.get("max_items", 10)]):
-        end = heads[i + 1].start() if i + 1 < len(heads) else m.end() + 4000
-        text = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", page[m.end():end])).strip()
-        y, mo, d = m.group(2).split("/")
-        date = f"{y}-{int(mo):02d}-{int(d):02d}"
-        url = f"{src['page']}#{y}{int(mo):02d}{int(d):02d}"
-        if url in old or not text:
-            continue
-        if limit and len(got) >= limit:
-            break
-        changes = re.findall(r"(?:新增|变更)(?:接口|能力)\s*(.*?)\s*详情", text)
-        if changes:
-            title = f"企业微信接口更新：{changes[0][:34]}" + (f" 等 {len(changes)} 项" if len(changes) > 1 else "")
-        else:
-            title = f"企业微信接口更新（{m.group(2)}）"
-        it = make_item(src, url, title, text, date, "接口更新")
-        got.append(it) if it else failed.append(url)
-    print(f"[{src['id']}] 更新日志 {len(heads)} 组, 新收 {len(got)} 条")
-    return got, failed
-
-
 # ---------------- adapter: hn-algolia(Hacker News 首页热帖) ----------------
 
 def sync_hn(src, old, limit):
@@ -1245,7 +1204,7 @@ def sync_qisi(src, old, limit):
 
 
 ADAPTERS = {"sitemap": sync_sitemap, "rss": sync_rss, "manual": sync_manual,
-            "feishu-base": sync_feishu_base, "wecom-changelog": sync_wecom,
+            "feishu-base": sync_feishu_base,
             "hn-algolia": sync_hn, "qisi-list": sync_qisi}
 
 
@@ -1615,8 +1574,10 @@ def ai_translate(items):
 CONCEPTS_FILE = ROOT / "data" / "concepts.json"
 CONCEPT_DIR = ROOT / "news" / "c"
 CONCEPT_BATCH = 10        # 每批文章数: 新概念定义输出较长, 批次取小防截断
+CONCEPT_LIB_MAX = 500     # 塞进 prompt 的概念库上限: 库只增不删, 全量塞会让 prompt 无限膨胀触上下文上限/整批失败(Bugbot PR#100)
 CONCEPT_MAX_PER_ITEM = 5  # 每篇最多挂 5 个概念(详情页标注同此上限)
-GENERIC_SLUGS = {"ai", "artificial-intelligence", "tech", "technology", "software", "internet"}  # 泛词兜底拦截
+GENERIC_SLUGS = {"ai", "artificial-intelligence", "tech", "technology", "software", "internet",
+                 "index"}  # 泛词兜底拦截 + 保留名 index(概念页 news/c/<slug>.html 会覆盖概念索引 index.html, Bugbot PR#100)
 
 
 def load_concepts():
@@ -1681,12 +1642,20 @@ def ai_concepts(items, lib):
         return
     today = datetime.now().strftime("%Y-%m-%d")
     tagged = born = reused = 0
+    # 概念被引用次数(热门概念最可能复现, 优先塞进 prompt 供去重); 库超上限时只保留热门+较新的一批,
+    # 冷门老概念让出名额, 避免 prompt 无限膨胀(Bugbot PR#100)。
+    pop = {}
+    for it in items:
+        for s in (it.get("concepts") or []):
+            pop[s] = pop.get(s, 0) + 1
     for i in range(0, len(todo), CONCEPT_BATCH):
         batch = todo[i:i + CONCEPT_BATCH]
         entries = [{"id": it["id"], "title": it["title"],
                     "body": (content_text(it["id"]) or it.get("brief") or it["summary"])[:1500]} for it in batch]
-        known = "\n".join(f"{slug} = {c['term']}" + (f"（{'/'.join(c['aliases'][:4])}）" if c.get("aliases") else "")
-                          for slug, c in sorted(lib.items()))
+        lib_keys = sorted(lib, key=lambda s: (pop.get(s, 0), lib[s].get("at", "")), reverse=True)[:CONCEPT_LIB_MAX]
+        known = "\n".join(f"{slug} = {lib[slug]['term']}"
+                          + (f"（{'/'.join(lib[slug]['aliases'][:4])}）" if lib[slug].get("aliases") else "")
+                          for slug in sorted(lib_keys))
         prompt = (
             "句子互动官网动态页在给聚合内容建「概念索引」。对下面每篇文章, 从正文与标题里抽出 2~5 个"
             "真正承载理解门槛的核心概念(技术/行业术语, 如 RLHF、上下文窗口、多智能体编排)。规则:\n"
@@ -1815,7 +1784,6 @@ SRC_ICON = {  # 与 news.html / news-c.html 页内 JS 的 ICON 同步
     "voices": "fa-solid fa-feather",
     "hn": "fa-brands fa-hacker-news",
     "qisi": "fa-solid fa-lightbulb",
-    "wecom": "fa-solid fa-plug",
 }
 
 
@@ -1948,7 +1916,7 @@ DETAIL_CSS = """
   .dp-meta{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:14px}
   .dp-srcb{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:750;color:var(--sc,var(--blue))}
   .s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
-  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-wecom{--sc:#2563EB}.s-voices{--sc:#9333EA}
+  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-voices{--sc:#9333EA}
   .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
   .dp-cat{display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ink-3);background:#F6F7FB;border:1px solid var(--line-2);border-radius:6px;padding:2px 8px}
   .dp-date{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-3)}
@@ -2221,7 +2189,7 @@ CONCEPT_CSS = """
   .cp-note{font-size:11.5px;line-height:1.7;color:var(--ink-3);margin-top:26px}
   .cp-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;padding-top:20px;border-top:1px solid var(--line-2)}
   .s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
-  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-wecom{--sc:#2563EB}.s-voices{--sc:#9333EA}
+  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-voices{--sc:#9333EA}
   .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
   .dp-btn{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:750;border-radius:999px;padding:10px 20px;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
   .dp-btn.pri{background:var(--blue);color:#fff}
@@ -2384,7 +2352,7 @@ def write_concept_pages(lib, vis):
 # 两个平行版本均为全源(2026-07-07 用户裁决; 原列表版 B 于 2026-07-21 并入聚合版),
 # payload 均含 sources 元数据供来源筛选/面板使用
 PAGES = [
-    {"file": ROOT / "news.html", "render_list": lambda its: "\n".join(card_html(i) for i in its), "payload": "full", "only": None},
+    {"file": ROOT / "news.html", "render_list": lambda its: "\n".join(card_html(i) for i in its), "payload": "full", "only": None, "company_first": True},
     {"file": ROOT / "news-c.html", "render_list": lambda its: feed_list(its), "payload": "full", "only": None},
 ]
 
@@ -2404,6 +2372,8 @@ def inject_page(spec, items, sources_meta):
 
     if spec["only"]:
         items = [i for i in items if i["source"] in spec["only"]]
+    if spec.get("company_first"):
+        items = company_first(items)  # 公司相关置顶(仅 news.html; 预渲染前 N 条与内联数据同序)
     rendered = spec["render_list"](items[:PRERENDER])
     page = inject_between(page, "<!-- NEWS:LIST:BEGIN 此区块由 build_news.py 生成，勿手改 -->", "<!-- NEWS:LIST:END -->", rendered, f"{path.name} NEWS:LIST")
 

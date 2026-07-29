@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Ruff v0.16.0 – Significant new updates – 413 default rules up from 59 - 句子·动态</title>
+<meta name="description" content="Ruff v0.16.0 发布，默认规则从 59 条增加到 413 条，可替代 Black、Flake8 等工具，执行速度更快。" />
+<meta name="robots" content="noindex,follow" />
+<link rel="canonical" href="https://astral.sh/blog/ruff-v0.16.0" />
+<link rel="icon" href="../../logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../../assets/site.css" />
+<style>
+  .dp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
+  .dp-wrap{max-width:760px;margin:0 auto}
+  .dp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
+  .dp-back:hover{color:var(--blue)}
+  .dp-meta{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:14px}
+  .dp-srcb{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:750;color:var(--sc,var(--blue))}
+  .s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
+  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-voices{--sc:#9333EA}
+  .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
+  .dp-cat{display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ink-3);background:#F6F7FB;border:1px solid var(--line-2);border-radius:6px;padding:2px 8px}
+  .dp-date{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-3)}
+  .dp-title{font-size:clamp(24px,3.2vw,34px);font-weight:850;letter-spacing:-.03em;line-height:1.32;word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance;margin-bottom:10px}
+  .dp-orig{font-size:13px;color:var(--ink-3);overflow-wrap:anywhere;margin-bottom:8px}
+  .dp-by{font-size:12.5px;font-weight:600;color:var(--ink-3);margin-bottom:18px}
+  .dp-notice{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:1.7;color:var(--ink-2);background:#F6F7FB;border:1px solid var(--line-2);border-radius:10px;padding:10px 14px;margin-bottom:22px}
+  .dp-notice i{color:var(--blue);margin-top:4px;flex:0 0 auto}
+  .dp-notice a{color:var(--blue);font-weight:700;overflow-wrap:anywhere}
+  .dp-quip{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.66;font-weight:600;color:var(--blue-deep);background:var(--blue-50);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:18px}
+  .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
+  .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
+  .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
+  .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
+  .dp-body p{margin:0 0 1.05em}
+  .dp-body img{max-width:100%;height:auto;border-radius:10px;margin:.4em 0}
+  .dp-body pre{background:#0F172A;color:#E2E8F0;font-family:var(--mono);font-size:12.5px;line-height:1.7;padding:14px 16px;border-radius:10px;overflow-x:auto;margin:0 0 1.1em}
+  .dp-body code{font-family:var(--mono);font-size:.92em}
+  .dp-body :not(pre)>code{background:#F1F5F9;padding:1px 5px;border-radius:5px}
+  .dp-body blockquote{border-left:3px solid var(--line);padding:2px 0 2px 14px;color:var(--ink-3);margin:0 0 1.05em}
+  .dp-body a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+  .dp-body ul,.dp-body ol{padding-left:1.5em;margin:0 0 1.05em}
+  .dp-body table{display:block;overflow-x:auto;border-collapse:collapse;margin:0 0 1.1em}
+  .dp-body td,.dp-body th{border:1px solid var(--line);padding:6px 10px;font-size:.92em}
+  .dp-excerpt{font-size:15px;line-height:1.9;color:var(--ink-2);border-left:3px solid var(--line);padding:2px 0 2px 16px;margin-bottom:8px}
+  .dp-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;padding-top:20px;border-top:1px solid var(--line-2)}
+  .dp-btn{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:750;border-radius:999px;padding:10px 20px;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+  .dp-btn.pri{background:var(--blue);color:#fff}
+  .dp-btn.pri:hover{background:var(--blue-deep)}
+  .dp-btn.sec{background:#fff;color:var(--ink-2);border:1px solid var(--line)}
+  .dp-btn.sec:hover{color:var(--blue);border-color:var(--blue)}
+  .dp-note{font-size:11.5px;line-height:1.7;color:var(--ink-3);margin-top:18px}
+  .dp-langbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+  .dp-lang{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:750;color:var(--blue);
+    background:var(--blue-50);border:1px solid var(--blue-100);border-radius:999px;padding:7px 14px;
+    transition:background .2s var(--ease),border-color .2s var(--ease)}
+  .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
+  .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div id="site-nav"></div>
+<main class="dp-main">
+  <div class="dp-wrap">
+    <a class="dp-back" href="../../news.html"><i class="fa-solid fa-arrow-left"></i>返回动态</a>
+    <div class="dp-meta">
+      <span class="dp-srcb s-hn"><i class="fa-brands fa-hacker-news"></i>Hacker News</span>
+      
+      <time class="dp-date" datetime="2026-07-26">2026-07-26</time>
+    </div>
+    <h1 class="dp-title">Ruff v0.16.0 – Significant new updates – 413 default rules up from 59</h1>
+    <p class="dp-orig">原题：Ruff v0.16.0 – Significant new updates – 413 default rules up from 59</p>
+    <p class="dp-by">来源：Hacker News</p>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（Hacker News）所有 · <a href="https://astral.sh/blog/ruff-v0.16.0" target="_blank" rel="noopener">阅读原文</a></span></div>
+    
+    <div class="dp-brief"><b>简报</b>Ruff v0.16.0 发布，默认规则从 59 条增加到 413 条，可替代 Black、Flake8 等工具，执行速度更快。</div>
+    <div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang"><i class="fa-solid fa-language"></i><span>翻译为中文</span></button><span class="dp-lang-note">中文由 AI 翻译，仅供参考</span></div><article class="dp-body" id="dpBodyOrig"><p><a href="https://github.com/astral-sh/ruff" target="_blank" rel="noopener nofollow">Ruff v0.16.0</a> is available now! Install it from
+<a href="https://pypi.org/project/ruff/" target="_blank" rel="noopener nofollow">PyPI</a>, or with your package manager of choice:</p>
+<pre><code>uv tool install ruff@latest</code></pre>
+<p>As a reminder: <strong>Ruff is an extremely fast Python linter and formatter, written in Rust.</strong> Ruff can
+be used to replace Black, Flake8 (plus dozens of plugins), isort, pydocstyle, pyupgrade, and more,
+all while executing tens or hundreds of times faster than any individual tool.</p>
+<h2>Migrating to v0.16 #</h2>
+<p>Ruff v0.16 has a small number of breaking changes, allowing most users to update without significant
+changes to code or configuration. The main exception is described below.</p>
+<h3>Better default rule set #</h3>
+<p>Ruff now enables 413 rules by default, up from 59 in previous versions.</p>
+<p>Since Ruff&#x27;s default rule set was last modified in
+<a href="https://github.com/astral-sh/ruff/blob/main/changelogs/0.1.x.md#breaking-changes" target="_blank" rel="noopener nofollow">v0.1.0</a>, the
+number of rules in Ruff has grown from 708 to 968. Many of these rules catch severe issues,
+including <a href="https://docs.astral.sh/ruff/rules/load-before-global-declaration" target="_blank" rel="noopener nofollow">syntax errors</a> and
+<a href="https://docs.astral.sh/ruff/rules/yield-in-init/" target="_blank" rel="noopener nofollow">immediate runtime errors</a> but were not previously
+enabled by default. With the new rule set, Ruff will bring these issues and many others to your
+attention without any Ruff configuration. Even if you&#x27;re already using
+<a href="https://docs.astral.sh/ruff/settings/#lint_select" target="_blank" rel="noopener nofollow"><code>select</code></a> or
+<a href="https://docs.astral.sh/ruff/settings/#lint_extend-select" target="_blank" rel="noopener nofollow"><code>extend-select</code></a>, we hope that this will
+draw your attention to helpful rules that you previously hadn&#x27;t discovered.</p>
+<p>The full listing of enabled rules is too long to include here, but you can find it on our new
+<a href="https://docs.astral.sh/ruff/default-rules/" target="_blank" rel="noopener nofollow">Default Rules</a> page in the documentation. A few of the
+highlights include rules from the popular flake8-bugbear (<code>B</code>) and pyupgrade (<code>UP</code>) linters, as well
+as rules from our own <code>RUF</code> category.</p>
+<p>If you want to revert to the old default set, you can easily <code>select</code> the old rules with this
+configuration:</p>
+<pre><code>[lint]
+select = [&quot;E4&quot;, &quot;E7&quot;, &quot;E9&quot;, &quot;F&quot;]</code></pre>
+<p>We view this work as closely tied to our longstanding goal of
+<a href="https://github.com/astral-sh/ruff/issues/1774" target="_blank" rel="noopener nofollow">rule recategorization</a>, so look forward to upcoming
+developments in this area.</p>
+<h2>New features in v0.16 #</h2>
+<p>Ruff v0.16 also includes several newly stabilized features that are highlighted below.</p>
+<h3>Markdown code block formatting #</h3>
+<p>Ruff can now format Python code blocks embedded in Markdown files.</p>
+<p>In these files, Ruff v0.16 will format
+<a href="https://spec.commonmark.org/0.30/#fenced-code-blocks" target="_blank" rel="noopener nofollow">fenced code blocks</a> with a <code>python</code>, <code>py</code>,
+<code>python3</code>, <code>py3</code>, <code>pyi</code>, or <code>pycon</code> <a href="https://spec.commonmark.org/0.30/#info-string" target="_blank" rel="noopener nofollow">info string</a>.
+<code>pyi</code> blocks are formatted like stub files, <code>pycon</code> blocks as REPL sessions, and the others use
+normal Python file formatting. For example:</p>
+<pre><code># README
+
+Here&#x27;s an example:
+
+```py
+import ruff
+
+ruff_binary = (
+    ruff.find_ruff_bin()
+)
+```</code></pre>
+<p>will be reformatted when running <code>ruff format</code>:</p>
+<img loading="lazy" onerror="this.style.display='none'" src="https://astral.sh/static/PNG/Ruff_v_0_16_0_format_markdown.png" alt="Ruff formatter output showing a Markdown code block that would be reformatted" referrerpolicy="no-referrer" />
+<p>This can also be used to format <a href="https://quarto.org/" target="_blank" rel="noopener nofollow">Quarto</a> notebooks because Ruff still
+recognizes the language when surrounded by curly braces (e.g. <code> ```{python}</code>). Note that you may
+need to configure your <a href="https://docs.astral.sh/ruff/settings/#extension" target="_blank" rel="noopener nofollow"><code>extension</code></a> mapping if
+your Quarto files use the <code>.qmd</code> extension.</p>
+<p>If you need to suppress formatting, you have several options. If you want the suppression comments
+to appear in the code block, you can use normal <code>fmt: off</code> and <code>fmt: on</code> comments within the code
+block itself, or you can use similar HTML comments to disable formatting for a whole region of the
+document:</p>
+<pre><code># README
+
+&lt;!-- fmt: off --&gt;
+
+```py
+x =      &quot;this will be suppressed&quot;
+```
+
+&lt;!-- fmt: on --&gt;</code></pre>
+<p>To suppress Markdown formatting entirely, you can use the normal
+<a href="https://docs.astral.sh/ruff/settings/#extend-exclude" target="_blank" rel="noopener nofollow"><code>extend-exclude</code></a> setting to exclude all
+Markdown files with a glob like <code>*.md</code>.</p>
+<p>See the <a href="https://docs.astral.sh/ruff/formatter/#markdown-code-formatting" target="_blank" rel="noopener nofollow">full documentation</a> for
+more details.</p>
+<h3><code>ruff: ignore</code> comments offer new suppression features #</h3>
+<p>Ruff now has its own suppression comment format that can be used on its own line.</p>
+<p>In v0.15, the Ruff linter gained a range suppression mechanism through paired <code>ruff: disable</code> and
+<code>ruff: enable</code> comments, much like the <code>fmt: off</code> and <code>fmt: on</code> pair described above:</p>
+<pre><code># ruff: disable[N803]
+def foo(
+    legacyArg1,
+    legacyArg2,
+    legacyArg3,
+    legacyArg4,
+): ...
+# ruff: enable[N803]</code></pre>
+<p>Ruff v0.16 builds on this to add two additional <code>ruff</code> suppression comments. <code>ruff: ignore</code> can be
+used to suppress a diagnostic on the same line, like <code>noqa</code>, or on the following logical line:</p>
+<pre><code>import math  # ruff: ignore[F401]
+
+# ruff: ignore[N803]
+def foo(
+    legacyArg1,
+    legacyArg2,
+    legacyArg3,
+    legacyArg4,
+): ...</code></pre>
+<p>In this case, the logical line spans the whole function header (from <code>def</code> to the colon), so the
+<code>ruff: ignore</code> suppresses all of the same
+<a href="https://docs.astral.sh/ruff/rules/invalid-argument-name/" target="_blank" rel="noopener nofollow"><code>N803</code></a> diagnostics as the
+<code>disable</code>/<code>enable</code> pair above.</p>
+<p><code>ruff: file-ignore</code> comments can be used to suppress diagnostics for the entire file, just like
+<code>ruff: noqa</code> comments:</p>
+<pre><code># ruff: file-ignore[F401] Allow unused imports in this file
+
+import foo
+import bar
+import baz</code></pre>
+<p>As this example also shows, each of these comment kinds can have an associated &quot;reason&quot; explaining
+why they were added, in this case <code>Allow unused imports in this file</code>.</p>
+<p><code>ruff: ignore</code> comments can be added automatically with the new <code>--add-ignore</code> CLI flag, and in
+<a href="https://docs.astral.sh/ruff/preview/" target="_blank" rel="noopener nofollow">preview</a>, all of these <code>ruff</code> suppression comments support rule names instead of codes:</p>
+<pre><code>❯ echo &#x27;import math&#x27; &gt; try.py
+❯ uvx ruff@latest check --preview --add-ignore try.py
+Added 1 ignore comment.
+❯ cat try.py
+import math  # ruff: ignore[unused-import]</code></pre>
+<p>You can find the full specification for all of these comments in the
+<a href="https://docs.astral.sh/ruff/linter/#comments" target="_blank" rel="noopener nofollow">documentation</a>.</p>
+<h3>Fixes are now shown in <code>check</code> and <code>format --check</code> output #</h3>
+<p>Ruff now shows the diff for linter and formatter fixes when rendering diagnostics.</p>
+<p>Both the <code>check</code> and <code>format</code> subcommands have long supported the <code>--diff</code> flag for showing the
+changes introduced by applying fixes with <code>check --fix</code> or <code>format</code>, but this was separate from the
+normal output and suppressed the accompanying explanatory diagnostics. In v0.16, available fixes are
+now shown as part of the default <code>full</code> output format, rendered below the <code>help</code> subdiagnostic:</p>
+<img loading="lazy" onerror="this.style.display='none'" src="https://astral.sh/static/PNG/Ruff_v_0_16_0_check_fixes.png" alt="Ruff check output showing the diff for an unused-import fix" referrerpolicy="no-referrer" />
+<p>The same is true for <code>format --check</code>. Given the following input:</p>
+<pre><code># example.py
+
+if True:
+    pass
+elif     False:
+    pass</code></pre>
+<p>The formatter produces:</p>
+<img loading="lazy" onerror="this.style.display='none'" src="https://astral.sh/static/PNG/Ruff_v_0_16_0_format_fixes.png" alt="Ruff formatter output showing the diff for an unformatted file" referrerpolicy="no-referrer" />
+<p><code>format --check</code> also now supports the full selection of output formats supported by the linter. You
+can use this to obtain machine-readable JSON output or produce the formats expected by GitHub and
+GitLab to render annotations in CI, as just a couple of examples. See the CLI help or
+<a href="https://docs.astral.sh/ruff/settings/#output-format" target="_blank" rel="noopener nofollow">documentation</a> for the full list of supported
+formats.</p>
+<p>One final note on output formats is that there is a small breaking change to the JSON output in
+v0.16. The <code>filename</code>, <code>location</code>, <code>end_location</code>, <code>fix.edits[].location</code>, and
+<code>fix.edits[].end_location</code> fields may now be <code>null</code> rather than defaulting to the empty string and
+row 1, column 1, respectively. This should affect very few of Ruff&#x27;s existing diagnostics but better
+reflects the internal diagnostic representation and may become more common in future rules.</p>
+<h2>Rule stabilizations #</h2>
+<p>The following rules have been stabilized and are no longer in
+<a href="https://docs.astral.sh/ruff/preview/" target="_blank" rel="noopener nofollow">preview</a>:</p>
+<ul>
+<li><a href="https://docs.astral.sh/ruff/rules/airflow3-incompatible-function-signature" target="_blank" rel="noopener nofollow"><code>airflow3-incompatible-function-signature</code></a>
+(<code>AIR303</code>)</li>
+<li><a href="https://docs.astral.sh/ruff/rules/missing-copyright-notice" target="_blank" rel="noopener nofollow"><code>missing-copyright-notice</code></a>
+(<code>CPY001</code>)</li>
+<li><a href="https://docs.astral.sh/ruff/rules/unnecessary-from-float" target="_blank" rel="noopener nofollow"><code>unnecessary-from-float</code></a> (<code>FURB164</code>)</li>
+<li><a href="https://docs.astral.sh/ruff/rules/sorted-min-max" target="_blank" rel="noopener nofollow"><code>sorted-min-max</code></a> (<code>FURB192</code>)</li>
+<li><a href="https://docs.astral.sh/ruff/rules/implicit-string-concatenation-in-collection-literal" target="_blank" rel="noopener nofollow"><code>implicit-string-concatenation-in-collection-literal</code></a>
+(<code>ISC004</code>)</li>
+<li><a href="https://docs.astral.sh/ruff/rules/log-exception-outside-except-handler" target="_blank" rel="noopener nofollow"><code>log-exception-outside-except-handler</code></a>
+(<code>LOG004</code>)</li>
+<li><a href="https://docs.astral.sh/ruff/rules/invalid-bool-return-type" target="_blank" rel="noopener nofollow"><code>invalid-bool-return-type</code></a>
+(<code>PLE0304</code>)</li>
+<li><a href="https://docs.astral.sh/ruff/rules/too-many-positional-arguments" target="_blank" rel="noopener nofollow"><code>too-many-positional-arguments</code></a>
+(<code>PLR0917</code>)</li>
+<li><a href="https://docs.astral.sh/ruff/rules/stop-iteration-return" target="_blank" rel="noopener nofollow"><code>stop-iteration-return</code></a> (<code>PLR1708</code>)</li>
+<li><a href="https://docs.astral.sh/ruff/rules/none-not-at-end-of-union" target="_blank" rel="noopener nofollow"><code>none-not-at-end-of-union</code></a>
+(<code>RUF036</code>)</li>
+<li><a href="https://docs.astral.sh/ruff/rules/access-annotations-from-class-dict" target="_blank" rel="noopener nofollow"><code>access-annotations-from-class-dict</code></a>
+(<code>RUF063</code>)</li>
+<li><a href="https://docs.astral.sh/ruff/rules/duplicate-entry-in-dunder-all" target="_blank" rel="noopener nofollow"><code>duplicate-entry-in-dunder-all</code></a>
+(<code>RUF068</code>)</li>
+</ul>
+<h2>Other behavior stabilizations #</h2>
+<p>This release also stabilizes some additional behavior, previously only available in
+<a href="https://docs.astral.sh/ruff/preview/" target="_blank" rel="noopener nofollow">preview mode</a>:</p>
+<ul>
+<li><a href="https://docs.astral.sh/ruff/rules/blind-except" target="_blank" rel="noopener nofollow"><code>blind-except</code></a> (<code>BLE001</code>) is now suppressed when
+the exception is logged via <code>logging</code> methods other than <code>critical</code>, <code>error</code> and <code>exception</code>.</li>
+<li><a href="https://docs.astral.sh/ruff/rules/future-required-type-annotation" target="_blank" rel="noopener nofollow"><code>future-required-type-annotation</code></a>
+(<code>FA102</code>) now checks for additional <a href="https://peps.python.org/pep-0585/" target="_blank" rel="noopener nofollow">PEP 585</a>-compatible APIs, such as those from
+<code>collections.abc</code>.</li>
+<li><a href="https://docs.astral.sh/ruff/rules/f-string-in-get-text-func-call" target="_blank" rel="noopener nofollow"><code>f-string-in-get-text-func-call</code></a>
+(<code>INT001</code>),
+<a href="https://docs.astral.sh/ruff/rules/format-in-get-text-func-call" target="_blank" rel="noopener nofollow"><code>format-in-get-text-func-call</code></a>
+(<code>INT002</code>), and
+<a href="https://docs.astral.sh/ruff/rules/printf-in-get-text-func-call" target="_blank" rel="noopener nofollow"><code>printf-in-get-text-func-call</code></a>
+(<code>INT003</code>) now check for additional common ways of using the <code>gettext</code> module, such as assigning
+it to <code>builtins._</code>.</li>
+<li><a href="https://docs.astral.sh/ruff/rules/suspicious-url-open-usage" target="_blank" rel="noopener nofollow"><code>suspicious-url-open-usage</code></a>
+(<code>S310</code>) now resolves local string literal bindings to avoid more false positives.</li>
+<li><a href="https://docs.astral.sh/ruff/rules/snmp-insecure-version" target="_blank" rel="noopener nofollow"><code>snmp-insecure-version</code></a> (<code>S508</code>) and
+<a href="https://docs.astral.sh/ruff/rules/snmp-weak-cryptography" target="_blank" rel="noopener nofollow"><code>snmp-weak-cryptography</code></a> (<code>S509</code>) now
+support the recommended API from newer versions of PySNMP.</li>
+<li><a href="https://docs.astral.sh/ruff/rules/typing-text-str-alias" target="_blank" rel="noopener nofollow"><code>typing-text-str-alias</code></a> (<code>UP019</code>) now
+recognizes <code>typing_extensions.Text</code> in addition to <code>typing.Text</code>.</li>
+</ul>
+<h2>Thank you! #</h2>
+<p>Thank you to everyone who provided feedback regarding the changes included in Ruff&#x27;s
+<a href="https://docs.astral.sh/ruff/settings/#preview" target="_blank" rel="noopener nofollow">preview mode</a> and to our contributors. It&#x27;s an honor
+building Ruff with you!</p>
+<hr />
+<p>View the full changelog on <a href="https://github.com/astral-sh/ruff/releases/tag/0.16.0" target="_blank" rel="noopener nofollow">GitHub</a>.</p>
+<p>Read more about <a href="https://astral.sh/about" target="_blank" rel="noopener nofollow">Astral</a> — the company behind Ruff.</p>
+<p><em>Thanks to Zanie Blue, David Peter, Micha Reiser, and Alex Waygood who contributed to this blog
+post.</em></p></article><article class="dp-body" id="dpBodyZh" hidden><p><a href="https://github.com/astral-sh/ruff" target="_blank" rel="noopener nofollow">Ruff v0.16.0</a> 现已发布！你可以从
+<a href="https://pypi.org/project/ruff/" target="_blank" rel="noopener nofollow">PyPI</a> 安装，或者使用你喜欢的包管理器：</p>
+<pre><code>uv tool install ruff@latest</code></pre>
+<p>温馨提示：<strong>Ruff 是一个用 Rust 编写的超快 Python 代码检查与格式化工具。</strong> Ruff 可以替代 Black、Flake8（及其数十个插件）、isort、pydocstyle、pyupgrade 等工具，同时执行速度比任何单个工具都要快上几十甚至几百倍。</p>
+<h2>升级到 v0.16 #</h2>
+<p>Ruff v0.16 只有一些小的破坏性变更，大多数用户无需对代码或配置进行重大修改即可升级。主要例外情况如下所述。</p>
+<h3>更好的默认规则集 #</h3>
+<p>Ruff 默认启用的规则数量从之前的 59 条增加到 413 条。</p>
+<p>自 Ruff 的默认规则集上次在
+<a href="https://github.com/astral-sh/ruff/blob/main/changelogs/0.1.x.md#breaking-changes" target="_blank" rel="noopener nofollow">v0.1.0</a> 中修改以来，Ruff 的规则总数已从 708 条增加到 968 条。其中许多规则能够捕获严重问题，包括
+<a href="https://docs.astral.sh/ruff/rules/load-before-global-declaration" target="_blank" rel="noopener nofollow">语法错误</a> 和
+<a href="https://docs.astral.sh/ruff/rules/yield-in-init/" target="_blank" rel="noopener nofollow">即时运行时错误</a>，但这些规则之前并未默认启用。有了新的规则集，Ruff 会在没有任何配置的情况下向你提醒这些问题以及许多其他问题。即使你已经在使用
+<a href="https://docs.astral.sh/ruff/settings/#lint_select" target="_blank" rel="noopener nofollow"><code>select</code></a> 或
+<a href="https://docs.astral.sh/ruff/settings/#lint_extend-select" target="_blank" rel="noopener nofollow"><code>extend-select</code></a>，我们也希望这能让你注意到那些你之前未曾发现的有用规则。</p>
+<p>完整的启用规则列表太长，无法在此处全部列出，但你可以在我们文档中新增的
+<a href="https://docs.astral.sh/ruff/default-rules/" target="_blank" rel="noopener nofollow">默认规则</a> 页面上找到它们。其中一些亮点包括来自流行的 flake8-bugbear (<code>B</code>) 和 pyupgrade (<code>UP</code>) 检查工具的规则，以及我们自己 <code>RUF</code> 类别的规则。</p>
+<p>如果你想恢复到旧的默认规则集，你可以使用以下配置轻松 <code>select</code> 旧规则：</p>
+<pre><code>[lint]
+select = [&quot;E4&quot;, &quot;E7&quot;, &quot;E9&quot;, &quot;F&quot;]</code></pre>
+<p>我们认为这项工作与我们长期以来致力于的<a href="https://github.com/astral-sh/ruff/issues/1774" target="_blank" rel="noopener nofollow">规则重新分类</a>目标密切相关，因此期待该领域的后续发展。</p>
+<h2>v0.16 的新功能 #</h2>
+<p>Ruff v0.16 还包含几个新稳定的功能，下面将重点介绍。</p>
+<h3>Markdown 代码块格式化 #</h3>
+<p>Ruff 现在可以格式化嵌入在 Markdown 文件中的 Python 代码块。</p>
+<p>在这些文件中，Ruff v0.16 将格式化带有 <code>python</code>、<code>py</code>、<code>python3</code>、<code>py3</code>、<code>pyi</code> 或 <code>pycon</code> <a href="https://spec.commonmark.org/0.30/#info-string" target="_blank" rel="noopener nofollow">信息字符串</a>的<a href="https://spec.commonmark.org/0.30/#fenced-code-blocks" target="_blank" rel="noopener nofollow">围栏代码块</a>。<code>pyi</code> 块的格式与存根文件类似，<code>pycon</code> 块的格式与 REPL 会话类似，其他则使用标准的 Python 文件格式。例如：</p>
+<pre><code># README
+
+这是一个示例：
+
+```py
+import ruff
+
+ruff_binary = (
+    ruff.find_ruff_bin()
+)
+```</code></pre>
+<p>运行 <code>ruff format</code> 时，上述代码将被重新格式化：</p>
+<img loading="lazy" onerror="this.style.display='none'" src="https://astral.sh/static/PNG/Ruff_v_0_16_0_format_markdown.png" alt="Ruff 格式化器输出显示将被重新格式化的 Markdown 代码块" referrerpolicy="no-referrer" />
+<p>这也可用于格式化 <a href="https://quarto.org/" target="_blank" rel="noopener nofollow">Quarto</a> 笔记本，因为当语言被花括号包围时（例如 <code> ```{python}</code>），Ruff 仍然能够识别。请注意，如果您的 Quarto 文件使用 <code>.qmd</code> 扩展名，您可能需要配置您的 <a href="https://docs.astral.sh/ruff/settings/#extension" target="_blank" rel="noopener nofollow"><code>extension</code></a> 映射。</p>
+<p>如果您需要禁用格式化，有几种选择。如果您希望禁用注释出现在代码块中，可以在代码块内使用普通的 <code>fmt: off</code> 和 <code>fmt: on</code> 注释，或者使用类似的 HTML 注释来禁用整个文档区域的格式化：</p>
+<pre><code># README
+
+&lt;!-- fmt: off --&gt;
+
+```py
+x =      &quot;this will be suppressed&quot;
+```
+
+&lt;!-- fmt: on --&gt;</code></pre>
+<p>要完全禁用 Markdown 格式化，您可以使用普通的 <a href="https://docs.astral.sh/ruff/settings/#extend-exclude" target="_blank" rel="noopener nofollow"><code>extend-exclude</code></a> 设置，通过类似 <code>*.md</code> 的 glob 模式排除所有 Markdown 文件。</p>
+<p>更多详情请参阅<a href="https://docs.astral.sh/ruff/formatter/#markdown-code-formatting" target="_blank" rel="noopener nofollow">完整文档</a>。</p>
+<h3><code>ruff: ignore</code> 注释提供新的抑制功能 #</h3>
+<p>Ruff 现在拥有自己的抑制注释格式，可以单独使用一行。</p>
+<p>在 v0.15 版本中，Ruff linter 通过成对的 <code>ruff: disable</code> 和 <code>ruff: enable</code> 注释引入了范围抑制机制，这与上面描述的 <code>fmt: off</code> 和 <code>fmt: on</code> 对类似：</p>
+<pre><code># ruff: disable[N803]
+def foo(
+    legacyArg1,
+    legacyArg2,
+    legacyArg3,
+    legacyArg4,
+): ...
+# ruff: enable[N803]</code></pre>
+<p>Ruff v0.16 在此基础上增加了两种额外的 <code>ruff</code> 抑制注释。<code>ruff: ignore</code> 可以用于抑制同一行的诊断（类似 <code>noqa</code>），或抑制后续逻辑行的诊断：</p>
+<pre><code>import math  # ruff: ignore[F401]
+
+# ruff: ignore[N803]
+def foo(
+    legacyArg1,
+    legacyArg2,
+    legacyArg3,
+    legacyArg4,
+): ...</code></pre>
+<p>在这种情况下，逻辑行跨越整个函数头（从 <code>def</code> 到冒号），因此 <code>ruff: ignore</code> 会抑制与上面 <code>disable</code>/<code>enable</code> 对相同的所有 <a href="https://docs.astral.sh/ruff/rules/invalid-argument-name/" target="_blank" rel="noopener nofollow"><code>N803</code></a> 诊断。</p>
+<p><code>ruff: file-ignore</code> 注释可用于抑制整个文件的诊断，就像 <code>ruff: noqa</code> 注释一样：</p>
+<pre><code># ruff: file-ignore[F401] 允许此文件中存在未使用的导入
+
+import foo
+import bar
+import baz</code></pre>
+<p>如本例所示，每种注释类型都可以附带一个“原因”说明添加它们的原因，这里是 <code>允许此文件中存在未使用的导入</code>。</p>
+<p><code>ruff: ignore</code> 注释可以通过新的 <code>--add-ignore</code> CLI 标志自动添加，并且在 <a href="https://docs.astral.sh/ruff/preview/" target="_blank" rel="noopener nofollow">preview</a> 版本中，所有这些 <code>ruff</code> 抑制注释都支持使用规则名称而非代码：</p>
+<pre><code>❯ echo &#x27;import math&#x27; &gt; try.py
+❯ uvx ruff@latest check --preview --add-ignore try.py
+已添加 1 个忽略注释。
+❯ cat try.py
+import math  # ruff: ignore[unused-import]</code></pre>
+<p>你可以在<a href="https://docs.astral.sh/ruff/linter/#comments" target="_blank" rel="noopener nofollow">文档</a>中找到所有这些注释的完整规范。</p>
+<h3>修复现在会在 <code>check</code> 和 <code>format --check</code> 输出中显示 #</h3>
+<p>Ruff 现在在显示诊断信息时会展示 linter 和 formatter 修复的 diff。</p>
+<p>无论是 <code>check</code> 还是 <code>format</code> 子命令，早已支持 <code>--diff</code> 标志来显示通过 <code>check --fix</code> 或 <code>format</code> 应用修复所引入的更改，但这部分内容与常规输出是分开的，并且会附带抑制解释性的诊断信息。在 v0.16 版本中，现在可用的修复会作为默认 <code>full</code> 输出格式的一部分展示，显示在 <code>help</code> 子诊断信息下方：</p>
+<img loading="lazy" onerror="this.style.display='none'" src="https://astral.sh/static/PNG/Ruff_v_0_16_0_check_fixes.png" alt="Ruff check output showing the diff for an unused-import fix" referrerpolicy="no-referrer" />
+<p><code>format --check</code> 也是如此。给定如下输入：</p>
+<pre><code># example.py
+
+if True:
+    pass
+elif     False:
+    pass</code></pre>
+<p>格式化器会生成如下输出：</p>
+<img loading="lazy" onerror="this.style.display='none'" src="https://astral.sh/static/PNG/Ruff_v_0_16_0_format_fixes.png" alt="Ruff formatter output showing the diff for an unformatted file" referrerpolicy="no-referrer" />
+<p><code>format --check</code> 现在也支持 linter 所支持的全部输出格式。你可以利用这一点获取机器可读的 JSON 输出，或生成 GitHub 和 GitLab 在 CI 中渲染注释所期望的格式，这里仅举几例。有关支持格式的完整列表，请参阅 CLI 帮助或
+<a href="https://docs.astral.sh/ruff/settings/#output-format" target="_blank" rel="noopener nofollow">文档</a>。</p>
+<p>关于输出格式还有最后一点说明：在 v0.16 版本中，JSON 输出发生了一个小的破坏性变更。<code>filename</code>、<code>location</code>、<code>end_location</code>、<code>fix.edits[].location</code> 和
+<code>fix.edits[].end_location</code> 字段现在可能为 <code>null</code>，而不再是默认的空字符串以及第 1 行第 1 列。这项改动应该只会影响极少数现有的 Ruff 诊断信息，但它能更好地反映内部的诊断信息表示方式，并且在未来规则中可能会变得更加普遍。</p>
+<h2>规则稳定化 #</h2>
+<p>以下规则已稳定，不再处于
+<a href="https://docs.astral.sh/ruff/preview/" target="_blank" rel="noopener nofollow">预览</a>状态：</p>
+<ul>
+<li><a href="https://docs.astral.sh/ruff/rules/airflow3-incompatible-function-signature" target="_blank" rel="noopener nofollow"><code>airflow3-incompatible-function-signature</code></a>
+(<code>AIR303</code>)</li>
+<li><a href="https://docs.astral.sh/ruff/rules/missing-copyright-notice" target="_blank" rel="noopener nofollow"><code>missing-copyright-notice</code></a>
+(<code>CPY001</code>)</li>
+<li><a href="https://docs.astral.sh/ruff/rules/unnecessary-from-float" target="_blank" rel="noopener nofollow"><code>unnecessary-from-float</code></a> (<code>FURB164</code>)</li>
+<li><a href="https://docs.astral.sh/ruff/rules/sorted-min-max" target="_blank" rel="noopener nofollow"><code>sorted-min-max</code></a> (<code>FURB192</code>)</li>
+<li><a href="https://docs.astral.sh/ruff/rules/implicit-string-concatenation-in-collection-literal" target="_blank" rel="noopener nofollow"><code>implicit-string-concatenation-in-collection-literal</code></a>
+(<code>ISC004</code>)</li>
+<li><a href="https://docs.astral.sh/ruff/rules/log-exception-outside-except-handler" target="_blank" rel="noopener nofollow"><code>log-exception-outside-except-handler</code></a>
+(<code>LOG004</code>)</li>
+<li><a href="https://docs.astral.sh/ruff/rules/invalid-bool-return-type" target="_blank" rel="noopener nofollow"><code>invalid-bool-return-type</code></a>
+(<code>PLE0304</code>)</li>
+<li><a href="https://docs.astral.sh/ruff/rules/too-many-positional-arguments" target="_blank" rel="noopener nofollow"><code>too-many-positional-arguments</code></a>
+(<code>PLR0917</code>)</li>
+<li><a href="https://docs.astral.sh/ruff/rules/stop-iteration-return" target="_blank" rel="noopener nofollow"><code>stop-iteration-return</code></a> (<code>PLR1708</code>)</li>
+<li><a href="https://docs.astral.sh/ruff/rules/none-not-at-end-of-union" target="_blank" rel="noopener nofollow"><code>none-not-at-end-of-union</code></a>
+(<code>RUF036</code>)</li>
+<li><a href="https://docs.astral.sh/ruff/rules/access-annotations-from-class-dict" target="_blank" rel="noopener nofollow"><code>access-annotations-from-class-dict</code></a>
+(<code>RUF063</code>)</li>
+<li><a href="https://docs.astral.sh/ruff/rules/duplicate-entry-in-dunder-all" target="_blank" rel="noopener nofollow"><code>duplicate-entry-in-dunder-all</code></a>
+(<code>RUF068</code>)</li>
+</ul>
+<h2>其他行为稳定化 #</h2>
+<p>本次发布还稳定了一些额外的行为，这些行为之前仅在
+<a href="https://docs.astral.sh/ruff/preview/" target="_blank" rel="noopener nofollow">预览模式</a>中可用：</p>
+<ul>
+<li><a href="https://docs.astral.sh/ruff/rules/blind-except" target="_blank" rel="noopener nofollow"><code>blind-except</code></a> (<code>BLE001</code>) 现在会在异常通过 <code>logging</code> 方法（<code>critical</code>、<code>error</code> 和 <code>exception</code> 除外）记录时自动抑制。</li>
+<li><a href="https://docs.astral.sh/ruff/rules/future-required-type-annotation" target="_blank" rel="noopener nofollow"><code>future-required-type-annotation</code></a>
+(<code>FA102</code>) 现在会检查额外的 <a href="https://peps.python.org/pep-0585/" target="_blank" rel="noopener nofollow">PEP 585</a> 兼容 API，例如来自 <code>collections.abc</code> 的 API。</li>
+<li><a href="https://docs.astral.sh/ruff/rules/f-string-in-get-text-func-call" target="_blank" rel="noopener nofollow"><code>f-string-in-get-text-func-call</code></a>
+(<code>INT001</code>)、
+<a href="https://docs.astral.sh/ruff/rules/format-in-get-text-func-call" target="_blank" rel="noopener nofollow"><code>format-in-get-text-func-call</code></a>
+(<code>INT002</code>) 和
+<a href="https://docs.astral.sh/ruff/rules/printf-in-get-text-func-call" target="_blank" rel="noopener nofollow"><code>printf-in-get-text-func-call</code></a>
+(<code>INT003</code>) 现在会检查使用 <code>gettext</code> 模块的更多常见方式，例如将其赋值给 <code>builtins._</code>。</li>
+<li><a href="https://docs.astral.sh/ruff/rules/suspicious-url-open-usage" target="_blank" rel="noopener nofollow"><code>suspicious-url-open-usage</code></a>
+(<code>S310</code>) 现在会解析本地字符串字面量绑定，以减少误报。</li>
+<li><a href="https://docs.astral.sh/ruff/rules/snmp-insecure-version" target="_blank" rel="noopener nofollow"><code>snmp-insecure-version</code></a> (<code>S508</code>) 和
+<a href="https://docs.astral.sh/ruff/rules/snmp-weak-cryptography" target="_blank" rel="noopener nofollow"><code>snmp-weak-cryptography</code></a> (<code>S509</code>) 现在支持
+新版 PySNMP 推荐的 API。</li>
+<li><a href="https://docs.astral.sh/ruff/rules/typing-text-str-alias" target="_blank" rel="noopener nofollow"><code>typing-text-str-alias</code></a> (<code>UP019</code>) 现在除了 <code>typing.Text</code> 外，还能识别 <code>typing_extensions.Text</code>。</li>
+</ul>
+<h2>感谢！#</h2>
+<p>感谢所有就 Ruff <a href="https://docs.astral.sh/ruff/settings/#preview" target="_blank" rel="noopener nofollow">预览模式</a>中的变更提供反馈以及为 Ruff 做出贡献的朋友们。能和大家一起构建 Ruff，我们深感荣幸！</p>
+<hr />
+<p>在 <a href="https://github.com/astral-sh/ruff/releases/tag/0.16.0" target="_blank" rel="noopener nofollow">GitHub</a> 上查看完整的更新日志。</p>
+<p>阅读更多关于 <a href="https://astral.sh/about" target="_blank" rel="noopener nofollow">Astral</a> 的信息 — 这家是 Ruff 背后的公司。</p>
+<p><em>感谢 Zanie Blue、David Peter、Micha Reiser 和 Alex Waygood 为这篇博客文章做出的贡献。</em></p></article>
+    <div class="dp-actions">
+      <a class="dp-btn pri" href="https://astral.sh/blog/ruff-v0.16.0" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      <a class="dp-btn sec" href="https://news.ycombinator.com/item?id=49056112" target="_blank" rel="noopener"><i class="fa-brands fa-hacker-news"></i>HN 讨论</a>
+      <button type="button" class="dp-btn sec" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
+      <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
+    </div>
+    <p class="dp-note">本页由句子互动动态管线自动生成，聚合内容版权归各来源所有；如来源方希望调整或移除收录，请通过官网联系我们。</p>
+  </div>
+</main>
+<div id="site-footer"></div>
+<script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "Ruff v0.16.0 – Significant new updates – 413 default rules up from 59"};</script>
+<script src="../../assets/site.js"></script>
+<script>
+(function(){var b=document.getElementById('dpLang');if(!b)return;
+var en=document.getElementById('dpBodyOrig'),zh=document.getElementById('dpBodyZh');
+b.addEventListener('click',function(){var on=zh.hidden;zh.hidden=!on;en.hidden=on;
+b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';});})();
+</script>
+</body>
+</html>

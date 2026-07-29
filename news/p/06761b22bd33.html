@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Codex也断了:OpenAI三线齐崩，Agent时代的宕机账单怎么算 - 句子·动态</title>
+<meta name="description" content="OpenAI连续17天服务异常，API、ChatGPT、Codex三线故障影响用户使用，暴露系统稳定性问题。" />
+<meta name="robots" content="noindex,follow" />
+<link rel="canonical" href="https://www.tmtpost.com/8079615.html" />
+<link rel="icon" href="../../logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../../assets/site.css" />
+<style>
+  .dp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
+  .dp-wrap{max-width:760px;margin:0 auto}
+  .dp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
+  .dp-back:hover{color:var(--blue)}
+  .dp-meta{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:14px}
+  .dp-srcb{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:750;color:var(--sc,var(--blue))}
+  .s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
+  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-voices{--sc:#9333EA}
+  .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
+  .dp-cat{display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ink-3);background:#F6F7FB;border:1px solid var(--line-2);border-radius:6px;padding:2px 8px}
+  .dp-date{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-3)}
+  .dp-title{font-size:clamp(24px,3.2vw,34px);font-weight:850;letter-spacing:-.03em;line-height:1.32;word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance;margin-bottom:10px}
+  .dp-orig{font-size:13px;color:var(--ink-3);overflow-wrap:anywhere;margin-bottom:8px}
+  .dp-by{font-size:12.5px;font-weight:600;color:var(--ink-3);margin-bottom:18px}
+  .dp-notice{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:1.7;color:var(--ink-2);background:#F6F7FB;border:1px solid var(--line-2);border-radius:10px;padding:10px 14px;margin-bottom:22px}
+  .dp-notice i{color:var(--blue);margin-top:4px;flex:0 0 auto}
+  .dp-notice a{color:var(--blue);font-weight:700;overflow-wrap:anywhere}
+  .dp-quip{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.66;font-weight:600;color:var(--blue-deep);background:var(--blue-50);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:18px}
+  .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
+  .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
+  .dp-brief b{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
+  .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
+  .dp-body p{margin:0 0 1.05em}
+  .dp-body img{max-width:100%;height:auto;border-radius:10px;margin:.4em 0}
+  .dp-body pre{background:#0F172A;color:#E2E8F0;font-family:var(--mono);font-size:12.5px;line-height:1.7;padding:14px 16px;border-radius:10px;overflow-x:auto;margin:0 0 1.1em}
+  .dp-body code{font-family:var(--mono);font-size:.92em}
+  .dp-body :not(pre)>code{background:#F1F5F9;padding:1px 5px;border-radius:5px}
+  .dp-body blockquote{border-left:3px solid var(--line);padding:2px 0 2px 14px;color:var(--ink-3);margin:0 0 1.05em}
+  .dp-body a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+  .dp-body ul,.dp-body ol{padding-left:1.5em;margin:0 0 1.05em}
+  .dp-body table{display:block;overflow-x:auto;border-collapse:collapse;margin:0 0 1.1em}
+  .dp-body td,.dp-body th{border:1px solid var(--line);padding:6px 10px;font-size:.92em}
+  .dp-excerpt{font-size:15px;line-height:1.9;color:var(--ink-2);border-left:3px solid var(--line);padding:2px 0 2px 16px;margin-bottom:8px}
+  .dp-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;padding-top:20px;border-top:1px solid var(--line-2)}
+  .dp-btn{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:750;border-radius:999px;padding:10px 20px;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+  .dp-btn.pri{background:var(--blue);color:#fff}
+  .dp-btn.pri:hover{background:var(--blue-deep)}
+  .dp-btn.sec{background:#fff;color:var(--ink-2);border:1px solid var(--line)}
+  .dp-btn.sec:hover{color:var(--blue);border-color:var(--blue)}
+  .dp-note{font-size:11.5px;line-height:1.7;color:var(--ink-3);margin-top:18px}
+  .dp-langbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+  .dp-lang{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:750;color:var(--blue);
+    background:var(--blue-50);border:1px solid var(--blue-100);border-radius:999px;padding:7px 14px;
+    transition:background .2s var(--ease),border-color .2s var(--ease)}
+  .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
+  .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div id="site-nav"></div>
+<main class="dp-main">
+  <div class="dp-wrap">
+    <a class="dp-back" href="../../news.html"><i class="fa-solid fa-arrow-left"></i>返回动态</a>
+    <div class="dp-meta">
+      <span class="dp-srcb s-industry"><i class="fa-solid fa-rss"></i>行业动态</span>
+      <span class="dp-cat">钛媒体</span>
+      <time class="dp-date" datetime="2026-07-26">2026-07-26</time>
+    </div>
+    <h1 class="dp-title">Codex也断了:OpenAI三线齐崩，Agent时代的宕机账单怎么算</h1>
+    
+    <p class="dp-by">来源：钛媒体 · 行业动态</p>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（钛媒体 · 行业动态）所有 · <a href="https://www.tmtpost.com/8079615.html" target="_blank" rel="noopener">阅读原文</a></span></div>
+    <p class="dp-quip"><i class="fa-solid fa-quote-left"></i>Agent时代的宕机风险要求更可靠的架构设计</p>
+    <div class="dp-brief"><b>简报</b>OpenAI连续17天服务异常，API、ChatGPT、Codex三线故障影响用户使用，暴露系统稳定性问题。</div>
+    <article class="dp-body"><blockquote><p>文 | 象先志</p></blockquote><p>7月25日傍晚，OpenAI的API、ChatGPT、Codex三线同时报错，31个服务组件性能下降，1小时51分钟后恢复。</p><p>单次故障倒不算什么，最大问题是，OpenAI已经连续17天没有过一个完全正常的日子。</p><h2><strong>惊险一断</strong></h2><p>北京时间7月25日17时17分，OpenAI官方状态页挂出“Investigating”：多项服务错误率升高。18时02分进入“Monitoring”，缓解措施已生效；19时08分宣布全部恢复 。</p><p><strong>受影响面覆盖三条产品线：API 12个组件、ChatGPT 15个组件、Codex 4个组件，合计31个服务组件性能下降 。</strong>第三方监测站记录的事故起点为UTC时间09时17分，与状态页完全吻合 。</p><p><img loading="lazy" onerror="this.style.display='none'" src="https://images.tmtpost.com/uploads/mms_upload_image/2026/07/20260725215610651.png?imageMogr2/auto-orient/strip/interlace/1/quality/85/format/jpg/thumbnail/1440x229/gravity/center/crop/!1440x229&amp;ext=.png" referrerpolicy="no-referrer" /></p><p>用户侧的感受非常直观：请求失败、响应异常、任务中断。其中Codex中招值得单独拎出来——编程Agent执行任务动辄卡住几十分钟，服务断在中间，如果在跑大项目，那么闹不好会整体烂尾。</p><h2><strong>连续17天“带病上岗”</strong></h2><p>把视角拉长到一个月，这次事故就不能被看做孤例了。</p><p>第三方状态监测平台Bifrost的记录显示，从7月9日至今，OpenAI没有一天处于“完全正常”状态：7月12日和16日两次Major Outage，其余日期在Degraded Performance和Partial Outage之间来回切换 。</p><p>另一个监测站incidenthub的记录同样密集：仅7月23日一天，OpenAI就挂出四起独立事故，涉及ChatGPT错误率和延迟；24日Codex Review报错；25日轮到三线齐崩 。</p><p><img loading="lazy" onerror="this.style.display='none'" src="https://images.tmtpost.com/uploads/mms_upload_image/2026/07/20260725215643462.png?imageMogr2/auto-orient/strip/interlace/1/quality/85/format/jpg/thumbnail/1440x503/gravity/center/crop/!1440x503&amp;ext=.png" referrerpolicy="no-referrer" /></p><p>原因层面官方保持沉默，合理推演有两个方向：夏季推理负载持续爬坡，叠加新模型与新功能的发布节奏，基础设施长期处于压线运行状态。这些都属于推测，等官方复盘。</p><h2><strong>Agent时代，宕机的算法变了</strong></h2><p>两年前ChatGPT宕机，损失的主要是聊天体验。2026年的这次故障，性质已经换挡。</p><p>API背后是生产系统：客服机器人、代码流水线、自动化审计、Agent工作流。服务中断111分钟，断的是生产线。监测页下方那句广告语本身就是市场信号——“OpenAI挂了？自动把请求路由到健康的替代模型”，多模型容灾已经做成了一门生意 。</p><p>对企业选型而言，这组17天的记录会把一个指标推到台前：SLA。模型能力榜周更易主，可靠性却按天计分。能力差距按百分比算，宕机损失按100%算。</p><p>合理推演是两条。<strong>其一，多云多<a class="cpt" href="../c/model-routing.html" data-def="根据任务类型、成本、性能等需求，将AI请求智能分发给最合适的大模型进行处理的技术">模型路由</a>将从加分项变成企业AI架构的标配，单家依赖的风险敞口会被重新定价。其二，每次海外旗舰故障，都是国产模型承接溢出需求的窗口——前提是自家的稳定性先扛住同样的负载曲线。</strong></p><p>OpenAI的工程团队大概率会在几天内给出复盘。但17天连续异常这个事实摆在这里，市场要听的解释，恐怕比&quot;错误率升高&quot;这五个字复杂得多。</p></article>
+    <div class="dp-actions">
+      <a class="dp-btn pri" href="https://www.tmtpost.com/8079615.html" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      
+      <button type="button" class="dp-btn sec" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
+      <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
+    </div>
+    <p class="dp-note">本页由句子互动动态管线自动生成，聚合内容版权归各来源所有；如来源方希望调整或移除收录，请通过官网联系我们。</p>
+  </div>
+</main>
+<div id="site-footer"></div>
+<script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "Codex也断了:OpenAI三线齐崩，Agent时代的宕机账单怎么算"};</script>
+<script src="../../assets/site.js"></script>
+</body>
+</html>
