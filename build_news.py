@@ -2900,6 +2900,63 @@ def detail_indexable(it):
             and p.exists() and p.stat().st_size > 0)
 
 
+FEED_MAX = 30              # feed 里放多少条: 阅读器通常只显示最近若干条, 全量既无必要又让文件变大
+
+
+def write_news_feed(vis):
+    """自家动态的 RSS 2.0 feed —— 这个页面聚合了八个源的 RSS, 自己却不提供一个。
+
+    范围只含公司区(rui-blog / wechat-mp / product / press), 两层理由:
+      ① 版权: 把转载的第三方内容做成全文 feed 分发, 比站内镜像更进一步, 不该做;
+      ② 订阅意图: 订阅者想跟的是「句子互动在做什么」, 不是行业资讯聚合 —— 后者他们自己
+         早就订了源头。
+    描述用摘要而非全文: feed 的作用是让人知道有新内容并点回来, 不是替代站内阅读。
+    链接指站内详情页(自家内容 index 且 canonical 指自身), 而不是外链原发布 —— 与
+    「两版列表的卡片标题都点进站内详情页」一致。
+    """
+    COMPANY = COMPANY_SOURCES
+    items = [i for i in vis if i["source"] in COMPANY][:FEED_MAX]
+    if not items:
+        print("  [feed] 公司区无上站条目, 跳过")
+        return
+    now = datetime.now().astimezone().strftime("%a, %d %b %Y %H:%M:%S %z")
+
+    def rfc822(d):
+        try:
+            y, m, dd = map(int, str(d)[:10].split("-"))
+            return datetime(y, m, dd, tzinfo=timezone.utc).strftime("%a, %d %b %Y %H:%M:%S %z")
+        except (ValueError, TypeError):
+            return now
+    rows = []
+    for it in items:
+        link = f"{SITE_BASE}/news/p/{it['id']}.html"
+        desc = (it.get("summary") or "").strip()[:400]
+        rows.append(
+            "    <item>\n"
+            f"      <title>{esc(disp_title(it))}</title>\n"
+            f"      <link>{link}</link>\n"
+            f"      <guid isPermaLink=\"true\">{link}</guid>\n"
+            f"      <pubDate>{rfc822(it['date'])}</pubDate>\n"
+            f"      <category>{esc(it.get('source_name') or '')}</category>\n"
+            f"      <description>{esc(desc)}</description>\n"
+            "    </item>")
+    body = "\n".join(rows)
+    write_atomic(ROOT / "news-feed.xml",
+                 '<?xml version="1.0" encoding="UTF-8"?>\n'
+                 '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">\n'
+                 "  <channel>\n"
+                 "    <title>句子互动 · 动态</title>\n"
+                 f"    <link>{SITE_BASE}/news.html</link>\n"
+                 f'    <atom:link href="{SITE_BASE}/news-feed.xml" rel="self" type="application/rss+xml" />\n'
+                 "    <description>句子互动在做什么、写什么、被谁报道——博客精选、产品动态、"
+                 "公众号与媒体报道。行业资讯不进 feed(那些请订阅源头)。</description>\n"
+                 "    <language>zh-CN</language>\n"
+                 f"    <lastBuildDate>{now}</lastBuildDate>\n"
+                 f"{body}\n"
+                 "  </channel>\n</rss>\n")
+    print(f"[feed] news-feed.xml 共 {len(items)} 条(公司区; 行业资讯按设计不进 feed)")
+
+
 def write_news_sitemap(vis, lib, worthy):
     """动态页自维护 sitemap(2026-07-29): 概念页 252 个 + 自家详情页数十个都是允许收录的
     原创内容, 却一个都不在手工 sitemap.xml 里——搜索引擎只能靠爬内链慢慢摸, GEO 资产半埋。
@@ -3477,6 +3534,7 @@ def main():
     write_detail_pages(vis, items, lib, worthy)
     write_concept_pages(lib, vis)
     write_news_sitemap(vis, lib, worthy)
+    write_news_feed(vis)
 
     per_src = " | ".join(f"{m['name']}:{m['count']}" for m in sources_meta)
     print(f"[完成] 上站 {len(vis)} 条 / 存量 {len(items)} 条({per_src}), 失败 {len(all_failed)} → data/news.json + " + " + ".join(p["file"].name for p in PAGES) + " + news/p/")

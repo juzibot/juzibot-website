@@ -71,10 +71,10 @@ Actions → news-cron → Run workflow → 勾上 `seed` → Run。它会从 git
   ```bash
   rsync -az --delete news/ <USER>@<HOST>:/opt/www/jz-news/news/
   rsync -az --delete data/ <USER>@<HOST>:/opt/www/jz-news/data/
-  rsync -az news.html news-c.html sitemap-news.xml news-radar.json <USER>@<HOST>:/opt/www/jz-news/
+  rsync -az news.html news-c.html sitemap-news.xml news-radar.json news-feed.xml <USER>@<HOST>:/opt/www/jz-news/
   ```
-  **四个根目录产物一个都不能漏**(与 news-cron.yml 的推送行保持一致):漏 `news-radar.json`
-  → 雷达区拿到过期分片、前端 fetch 到旧数据; 漏 `sitemap-news.xml` → 搜索引擎拿到旧地图。
+  **五个根目录产物一个都不能漏**(与 news-cron.yml 的推送行保持一致):漏 `news-radar.json`
+  → 雷达区拿到过期分片、前端 fetch 到旧数据; 漏 `sitemap-news.xml` → 搜索引擎拿到旧地图; 漏 `news-feed.xml` → RSS 订阅者收不到新内容。
   两者都不报错、页面也不崩, 只是内容悄悄不对 —— `test_build_news.py` 已把这份清单钉住,
   新增根目录产物时测试会先失败提醒补这里与 workflow 两处。
 - **常规轮失败"拉取服务器状态失败"**:说明 `/opt/www/jz-news/` 不存在(还没
