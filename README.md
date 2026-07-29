@@ -7,9 +7,13 @@
 ```bash
 python3 build_news.py          # 增量同步动态页（可安全反复运行）
 python3 build_news.py --full   # 全量重抓（只刷新不删除）
+python3 build_news.py --clean-shell   # 把两个列表页还原成干净模板壳（注入区清空）
+python3 test_build_news.py     # 离线不变量测试（74 项，纯 stdlib、不联网、不要 key、秒级）
 ```
 
 多源抓取 → AI 筛选/锐评/简报/翻译/概念抽取（智谱 GLM API）→ 注入 `news.html` / `news-c.html` / `news/p/*.html` / `news/c/*.html`。
+
+**改渲染/消毒/写入逻辑前后各跑一次 `test_build_news.py`。** 它固化了 17 组已经出过事的不变量（noindex 页的 schema 与 canonical、概念死链、时间流倒序、SVG 不本地托管、消毒剥事件属性、原子写失败路径、撤稿的安全边界……），不联网不要密钥、秒级跑完——而验证同样的东西靠跑全量管线要几分钟且需要网络与 API key。CI 侧对应 `news-test.yml`，与 `shell-clean.yml`（模板壳/生成物）、`copy-guard.yml`（「企微/企业微信」不出现在任何页面）并列。
 
 ### 智谱 GLM API（AI 加工层）
 
