@@ -1,8 +1,8 @@
 {
  "generated_by": "build_news.py",
- "generated_at": "2026-07-30T02:14:58+08:00",
- "count": 590,
- "visible": 276,
+ "generated_at": "2026-07-30T03:21:25+08:00",
+ "count": 595,
+ "visible": 280,
  "sources": [
   {
    "id": "rui-blog",
@@ -10,7 +10,7 @@
    "type": "sitemap",
    "home": "https://rui.juzi.bot/",
    "status": "ok",
-   "last_sync": "2026-07-30T02:14:58+08:00",
+   "last_sync": "2026-07-30T03:21:25+08:00",
    "group": "company",
    "ai": true,
    "count": 37
@@ -21,7 +21,7 @@
    "type": "feishu-base",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T02:14:58+08:00",
+   "last_sync": "2026-07-30T03:21:25+08:00",
    "group": "company",
    "ai": false,
    "count": 0
@@ -32,7 +32,7 @@
    "type": "manual",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T02:14:58+08:00",
+   "last_sync": "2026-07-30T03:21:25+08:00",
    "group": "company",
    "ai": false,
    "count": 5
@@ -43,7 +43,7 @@
    "type": "manual",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T02:14:58+08:00",
+   "last_sync": "2026-07-30T03:21:25+08:00",
    "group": "company",
    "ai": false,
    "count": 0
@@ -54,7 +54,7 @@
    "type": "rss",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T02:14:58+08:00",
+   "last_sync": "2026-07-30T03:21:25+08:00",
    "group": "radar",
    "ai": true,
    "count": 99
@@ -65,10 +65,10 @@
    "type": "rss",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T02:14:58+08:00",
+   "last_sync": "2026-07-30T03:21:25+08:00",
    "group": "radar",
    "ai": true,
-   "count": 85
+   "count": 87
   },
   {
    "id": "hn",
@@ -76,10 +76,10 @@
    "type": "hn-algolia",
    "home": "https://news.ycombinator.com/",
    "status": "ok",
-   "last_sync": "2026-07-30T02:14:58+08:00",
+   "last_sync": "2026-07-30T03:21:25+08:00",
    "group": "radar",
    "ai": true,
-   "count": 26
+   "count": 27
   },
   {
    "id": "qisi",
@@ -87,13 +87,61 @@
    "type": "qisi-list",
    "home": "https://news.miracleplus.com/",
    "status": "ok",
-   "last_sync": "2026-07-30T02:14:58+08:00",
+   "last_sync": "2026-07-30T03:21:25+08:00",
    "group": "radar",
    "ai": true,
-   "count": 24
+   "count": 25
   }
  ],
  "items": [
+  {
+   "id": "7240f81abb0e",
+   "title": "硅谷忽视的AI真正风险：量子计算与数据所有权问题",
+   "url": "https://news.miracleplus.com/share_link/145622",
+   "summary": "本期访谈中，Klino AI 创始人 Jamari 讨论了当前 AI 工具生态的问题，尤其是关于用户数据归属和记忆保存的挑战。Jamari 认为许多 AI 工具只是简单的包装，没有解决长期上下文和数据归属的问题。他介绍了 Klino 的“Klino Brain”节点化存储结构，以减少信息丢失。节目还提到量子计算带来的安全隐患，强调更多专…",
+   "category": "热帖",
+   "tags": [],
+   "date": "2026-07-30",
+   "source": "qisi",
+   "source_name": "齐思",
+   "author": "奇绩创坛",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-30"
+   },
+   "concepts": [
+    "klino-brain",
+    "citizens",
+    "quantum-computing-threat",
+    "api-wrapper",
+    "long-context-window"
+   ],
+   "concepts_full": true
+  },
+  {
+   "id": "f34faab80331",
+   "title": "AI Worming through Word",
+   "url": "https://simonwillison.net/2026/Jul/29/ai-worming-through-word/#atom-everything",
+   "summary": "AI Worming through Word Neat new prompt injection variant by Håkon Måløy, who found a way to upgrade prompt injection attacks against Microsoft Word to full self-replica…",
+   "category": "Simon Willison",
+   "tags": [],
+   "date": "2026-07-29",
+   "source": "voices",
+   "source_name": "大咖观点",
+   "author": "Simon Willison",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-30"
+   },
+   "brief": "Håkon Måløy 发现一种新型 AI 蠕虫攻击，通过在 Word 文档中隐藏指令，当 Copilot 用该文档作为素材时，会误执行这些指令，导致文档被篡改，并可能将恶意指令复制到新文档中。",
+   "brief_full": true,
+   "title_zh": "AI 蠕虫通过 Word 传播",
+   "concepts": [
+    "prompt-injectability",
+    "model-jailbreak"
+   ],
+   "concepts_full": true
+  },
   {
    "id": "f2c72059a6cc",
    "title": "小米大模型拿下“全球第一”，有实力也是侥幸",
@@ -775,6 +823,55 @@
    "concepts_full": true
   },
   {
+   "id": "90749d760640",
+   "title": "Adding a custom MCP server to Claude and ChatGPT",
+   "url": "https://simonwillison.net/2026/Jul/29/mcp-in-claude-and-chatgpt/#atom-everything",
+   "summary": "TIL: Adding a custom MCP server to Claude and ChatGPT Connecting a custom MCP server to Claude and ChatGPT's standard chat interfaces is possible, but can take quite a f…",
+   "category": "Simon Willison",
+   "tags": [],
+   "date": "2026-07-29",
+   "source": "voices",
+   "source_name": "大咖观点",
+   "author": "Simon Willison",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-30"
+   },
+   "brief": "可以为 Claude 和 ChatGPT 连接自定义 MCP 服务器，但操作步骤较为复杂。标签包括 ai、generative-ai、chatgpt、llms、claude、model-context-protocol。",
+   "brief_full": true,
+   "title_zh": "为 Claude 和 ChatGPT 添加自定义 MCP 服务器",
+   "concepts": [
+    "mcp"
+   ],
+   "concepts_full": true
+  },
+  {
+   "id": "8ff67d77127c",
+   "title": "Anatomy of a frontier-lab agent intrusion",
+   "url": "https://huggingface.co/blog/agent-intrusion-technical-timeline",
+   "summary": "",
+   "category": "",
+   "tags": [],
+   "date": "2026-07-29",
+   "source": "hn",
+   "source_name": "Hacker News",
+   "author": "Hacker News",
+   "hn": "https://news.ycombinator.com/item?id=49098466",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-30"
+   },
+   "brief": "一篇关于 2026 年 7 月 Frontier Lab 代理入侵事件的技术分析，详细说明了初始访问途径、代理横向移动过程、执行的命令示例，以及如何使用 GLM 5.2 进行调查。",
+   "brief_full": true,
+   "title_zh": "前沿实验室代理入侵解剖",
+   "concepts": [
+    "agentic-security-harness",
+    "model-jailbreak",
+    "multi-agent-orchestration"
+   ],
+   "concepts_full": true
+  },
+  {
    "id": "8e67caa3b283",
    "title": "Superlogical – Mitchell Hashimoto",
    "url": "https://mitchellh.com/writing/superlogical",
@@ -1301,6 +1398,22 @@
    "source_name": "Hacker News",
    "author": "Hacker News",
    "hn": "https://news.ycombinator.com/item?id=49096654",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-30"
+   }
+  },
+  {
+   "id": "37a1e544eed9",
+   "title": "Quoting Matthew Green",
+   "url": "https://simonwillison.net/2026/Jul/29/matthew-green/#atom-everything",
+   "summary": "Right now we’re in the midst of a historic transition from traditional public-key algorithms based on EC-based cryptography and RSA, moving over to new post-quantum algo…",
+   "category": "Simon Willison",
+   "tags": [],
+   "date": "2026-07-29",
+   "source": "voices",
+   "source_name": "大咖观点",
+   "author": "Simon Willison",
    "ai": {
     "keep": false,
     "at": "2026-07-30"

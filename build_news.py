@@ -1012,6 +1012,29 @@ def _restate(it, e, src):
     return changed
 
 
+def _dedupe_by_id(got, src_id):
+    """适配器返回值的 id 去重兜底。
+
+    id = sha1(url), 所以同一 URL 必然同 id。单个适配器内部若返回了重复 URL(登记表同一
+    条链接写了两行是最容易发生的), 重复条目会一路流到 write_detail_pages 的守恒断言
+    才炸——而那时 data/news.json 与两个列表页早已落盘, 产物半新半旧; 在 CI 里更糟:
+    构建失败 → 后续 commit/push 整段跳过 → 下一轮 checkout 又把 data/ 重置回干净状态,
+    配上仓库里那份没改的登记表再崩一次, 动态页永久停更。
+
+    源头(sync_rss/sync_manual)各自的 seen 是第一道; 这里是第二道, 保证以后新增适配器
+    忘了加 seen 也不会把整条管线撂倒。
+    """
+    seen, out = set(), []
+    for it in got:
+        if it["id"] in seen:
+            continue
+        seen.add(it["id"])
+        out.append(it)
+    if len(out) < len(got):
+        print(f"  [兜底去重] {src_id} 返回了 {len(got) - len(out)} 条同 id 重复项")
+    return out
+
+
 def sync_manual(src, old, limit):
     path = src["file"]
     if not path.exists():
@@ -1028,10 +1051,18 @@ def sync_manual(src, old, limit):
         print(f"  [提示] {src['id']} 投递位 {path.relative_to(ROOT)} 为空——"
               f"往 items 里加 {{url,title,date}} 即可上站")
     got, failed, fixed = [], [], 0
+    seen = set()  # 本轮已处理的 URL——sync_rss 有这道, manual 一直漏着(2026-07-30)
     for e in entries:
         u = (e.get("url") or "").strip()
         if not u:
             continue
+        if u in seen:
+            # 登记表同一条 URL 写了两行(运营先贴初稿标题、后补正式标题却忘了删旧行)。
+            # 不去重的话 make_item 会按 sha1(url) 造出两个同 id 条目, 一路带到
+            # write_detail_pages 的守恒断言才炸, 那时 news.json 与列表页已经落盘。
+            print(f"  [重复] {src['id']} 登记表里 {u} 出现多次, 只用第一行; 请删掉多余行")
+            continue
+        seen.add(u)
         if u in old:
             # 一方内容登记表是唯一事实源, 改了就得生效 —— 老逻辑是"入库即跳过", 导致 product/press
             # 条目登记后被永久冻结, 摘要写错/口径要改都落不了地(2026-07-30 修违禁词时撞出来的)。
@@ -1450,11 +1481,53 @@ def dedupe_same_story(vis, span_days=7):
     return out
 
 
+def retire_unlisted(items):
+    """一方登记表是唯一事实源: 表里删掉的行, 站上也该撤下来(2026-07-30)。
+
+    此前登记表是"只进不出"的——写错了要撤稿、法务要求下架, 都只能手工去改
+    data/news.json。加上这道后, 从 data/*-news.json 删掉一行即可下站。
+
+    三条安全边界(这是有破坏性的操作, 宁可少撤不可误撤):
+      ① 只管 type=manual 的一方源。RSS/sitemap 源的 feed 会滚动, 老条目自然离开抓取
+         窗口, 那不代表要下架——对它们做这件事会把整站历史清空。
+      ② 读表失败(文件缺失/JSON 损坏)直接跳过该源, 不是当作"空表"把该源全撤了。
+      ③ 只打 retired 标记不删数据: 存量库保留原记录, 误撤了改回登记表就能复原。
+    """
+    by_src = {}
+    for src in SOURCES:
+        if src.get("type") != "manual":
+            continue
+        f = src.get("file")
+        try:
+            roster = {(e.get("url") or "").strip()
+                      for e in json.loads(f.read_text(encoding="utf-8")).get("items", [])}
+        except (OSError, ValueError) as e:  # noqa: BLE001
+            print(f"  [撤稿对账] {src['id']} 登记表读取失败({e}), 跳过——不当作空表处理")
+            continue
+        by_src[src["id"]] = {u for u in roster if u}
+    n = 0
+    for it in items:
+        roster = by_src.get(it["source"])
+        if roster is None:
+            continue
+        listed = it["url"] in roster
+        if not listed and not it.get("retired"):
+            it["retired"] = True
+            n += 1
+            print(f"  [撤稿] {it['source']} 登记表已无此行, 下站: {disp_title(it)[:40]}")
+        elif listed and it.get("retired"):
+            it.pop("retired", None)  # 登记表又加回来了 → 复原
+            print(f"  [复站] {it['source']} 登记表重新收录: {disp_title(it)[:40]}")
+    return n
+
+
 def visible_items(items):
     """页面只注入过筛条目: 配了 ai_filter 的源里, 未判(pending)或 keep=false 的都不上站。
     再过一道同源同标题去重(多源撞车)。"""
     filtered_srcs = {s["id"] for s in SOURCES if s.get("ai_filter")}
-    vis = [i for i in items if i["source"] not in filtered_srcs or i.get("ai", {}).get("keep")]
+    vis = [i for i in items
+           if not i.get("retired")  # 一方登记表删行 → 撤稿(见 retire_unlisted)
+           and (i["source"] not in filtered_srcs or i.get("ai", {}).get("keep"))]
     return dedupe_same_story(vis)
 
 
@@ -2863,6 +2936,7 @@ def main():
     for src in SOURCES:
         try:
             got, failed = ADAPTERS[src["type"]](src, old, args.limit)
+            got = _dedupe_by_id(got, src["id"])
             items.extend(got)
             for it in got:  # 本轮新收的 URL 也写回去重表, 后续源撞同一链接不再重复入库(Bugbot PR#100)
                 old.setdefault(it["url"], it)
@@ -2896,6 +2970,12 @@ def main():
     if dropped:
         print(f"[清理] 移除已下线源的历史条目 {len(dropped)} 条({', '.join(sorted({d['source'] for d in dropped}))})")
         items = [i for i in items if i["source"] in valid]
+
+    # 一方登记表对账: 表里删掉的行要能从站上撤下来。放在写库之前, 让 retired 标记落盘,
+    # 这样下一轮不必重算就知道谁被撤过; 放在 --full 保底之后, 保证对账看到的是完整存量。
+    retired_n = retire_unlisted(items)
+    if retired_n:
+        print(f"[撤稿] 一方登记表已删行 → 下站 {retired_n} 条(数据保留, 加回登记表即复站)")
 
     # 元数据归一: 源改名/改结构后, 历史条目的展示字段与当前 SOURCES 对齐
     names = {s["id"]: s["name"] for s in SOURCES}
