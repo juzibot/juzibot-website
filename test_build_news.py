@@ -432,6 +432,15 @@ def test_deploy_list_covers_root_artifacts():
         miss_ng = [f for f in produced if f not in conf]
         check("nginx location 覆盖全部根目录产物", not miss_ng,
               f"nginx 配置里缺 {miss_ng} —— 推上去了但对外 404")
+    # 第四处: robots.txt 得声明 sitemap, 否则搜索引擎不会主动去发现它 —— 文件存在、可访问、
+    # 但没人来读, sitemap 等于白写。这是产物「可被发现」链条上的最后一环。
+    rb = ROOT / "robots.txt"
+    if rb.exists() and any(f.startswith("sitemap") for f in produced):
+        txt = rb.read_text(encoding="utf-8")
+        sm = [f for f in produced if f.startswith("sitemap")]
+        miss_rb = [f for f in sm if f not in txt]
+        check("robots.txt 声明了管线产出的 sitemap", not miss_rb,
+              f"robots.txt 未声明 {miss_rb} —— 搜索引擎不会主动发现它")
 
 
 def main():
