@@ -42,6 +42,16 @@
   .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
   .dp-cat{display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ink-3);background:#F6F7FB;border:1px solid var(--line-2);border-radius:6px;padding:2px 8px}
   .dp-read{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  /* 相关动态: 读完一篇之后的出口。此前详情页之间零链接, 读者只能回列表页重新扫,
+     爬虫也只能靠 JS 驱动的列表页做枢纽。每条都带「为什么相关」, 不做无理由的推荐。 */
+  .dp-rel{margin-top:40px;padding-top:26px;border-top:1px solid var(--line-2)}
+  .dp-rel-h{font-size:14px;font-weight:750;color:var(--ink-2);margin:0 0 14px}
+  .dp-rel ul{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+  .dp-rel a{display:block;padding:10px 12px;margin:0 -12px;border-radius:8px;text-decoration:none;transition:background .2s var(--ease)}
+  .dp-rel a:hover{background:#F6F7FB}
+  .dp-rel-t{display:block;font-size:14px;font-weight:650;color:var(--ink-1);line-height:1.5}
+  .dp-rel a:hover .dp-rel-t{color:var(--blue)}
+  .dp-rel-m{display:block;margin-top:3px;font-size:11.5px;color:var(--ink-3)}
   .dp-read i{font-size:10px;opacity:.7}
   .dp-date{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-3)}
   .dp-title{font-size:clamp(24px,3.2vw,34px);font-weight:850;letter-spacing:-.03em;line-height:1.32;word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance;margin-bottom:10px}
@@ -180,6 +190,7 @@
       <button type="button" class="dp-btn sec" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
       <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
     </div>
+    <nav class="dp-rel" aria-labelledby="dp-rel-h"><h2 id="dp-rel-h" class="dp-rel-h">相关动态</h2><ul><li><a href="cb61eb1c5387.html"><span class="dp-rel-t">OceanBase回应融资报道：全力投入AI数据创新，与资本市场保持开放沟通</span><span class="dp-rel-m">都提到「AI交付」 · <time datetime="2026-07-29">2026-07-29</time></span></a></li><li><a href="b4a23c617634.html"><span class="dp-rel-t">让AI先吃，这个国民级健康难题有解了</span><span class="dp-rel-m">都提到「AI交付」 · <time datetime="2026-07-29">2026-07-29</time></span></a></li><li><a href="0a1ea2a22ead.html"><span class="dp-rel-t">Microsoft Online Tech Forum 微软在线技术峰会 - 李佳芮专访</span><span class="dp-rel-m">都提到「AI交付」 · <time datetime="2020-04-17">2020-04-17</time></span></a></li></ul></nav>
     <p class="dp-note">本页由句子互动动态管线自动生成，聚合内容版权归各来源所有；如来源方希望调整或移除收录，请通过官网联系我们。</p>
   </div>
 </main>

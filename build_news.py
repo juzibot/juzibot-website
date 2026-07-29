@@ -2193,6 +2193,16 @@ DETAIL_CSS = """
   .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
   .dp-cat{display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ink-3);background:#F6F7FB;border:1px solid var(--line-2);border-radius:6px;padding:2px 8px}
   .dp-read{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  /* 相关动态: 读完一篇之后的出口。此前详情页之间零链接, 读者只能回列表页重新扫,
+     爬虫也只能靠 JS 驱动的列表页做枢纽。每条都带「为什么相关」, 不做无理由的推荐。 */
+  .dp-rel{margin-top:40px;padding-top:26px;border-top:1px solid var(--line-2)}
+  .dp-rel-h{font-size:14px;font-weight:750;color:var(--ink-2);margin:0 0 14px}
+  .dp-rel ul{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+  .dp-rel a{display:block;padding:10px 12px;margin:0 -12px;border-radius:8px;text-decoration:none;transition:background .2s var(--ease)}
+  .dp-rel a:hover{background:#F6F7FB}
+  .dp-rel-t{display:block;font-size:14px;font-weight:650;color:var(--ink-1);line-height:1.5}
+  .dp-rel a:hover .dp-rel-t{color:var(--blue)}
+  .dp-rel-m{display:block;margin-top:3px;font-size:11.5px;color:var(--ink-3)}
   .dp-read i{font-size:10px;opacity:.7}
   .dp-date{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-3)}
   .dp-title{font-size:clamp(24px,3.2vw,34px);font-weight:850;letter-spacing:-.03em;line-height:1.32;word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance;margin-bottom:10px}
@@ -2430,7 +2440,72 @@ def read_time(body):
     return f"约 {m} 分钟" if m < 60 else f"约 {round(m / 60, 1)} 小时"
 
 
-def detail_html(it, lib, worthy):
+RELATED_MAX = 4       # 详情页「相关动态」条数上限
+RELATED_SRC_MAX = 2   # 同一来源最多占几条(见下: 不设限时 77% 的页四条同源)
+
+
+def related_items(it, pool, cidx):
+    """给一条动态找相关动态并给出「为什么相关」—— 只用共同概念这一种事实关系。
+
+    读者读完一篇之后, 此前唯一出口是「回列表页重新扫一遍」: 实测 284 个详情页通往其他详情页的
+    链接是 **0 个**。爬虫同样只能靠 JS 驱动的列表页做枢纽, 详情页之间没有任何抓取路径。
+
+    判据是**共同概念**: 概念由 AI 层从正文抽出, 两篇提到同一个概念是可核的真关系; 理由里写出
+    概念名, 读者自己判断这个「相关」成不成立 —— 与概念页只放原文证据是同一条纪律。
+    实测覆盖: 上站 284 条里 88% 有概念标注, 70% 的页因此拿到 ≥1 条真相关。
+
+    **写过一版「没有共同概念就退回同源近期」的兜底档, 量完删掉了**: 实测 77% 的页四条相关全
+    来自同一个源、69% 的相关链接出自这个弱档, 最差的例子是《国资委抓科技创新》配上「户外广告
+    合规指引 / 美股收跌 / 欧盟调查足联 / 长江存储专利」—— 同属行业动态源只等于同一天的新闻,
+    把它叫「相关动态」就是编造关联。剩下 30% 无共同概念的页保留原有「更多动态」出口即可,
+    为这条尾巴再造一套机制, 最坏情况就是上面那堆垃圾(诚实优先于填满版面)。
+
+    同源上限 RELATED_SRC_MAX: 齐思/行业动态是日报式聚合源, 同一话题天天出现, 不设限时相关列表
+    会变成同一件事的三个说法(实测来源多样性 ≥3 的页从 52 升到 84)。
+    只从 pool(本轮要落页的条目)里取, 链接指向的页必然存在; 条目下线会改本页相关列表 → 改签名
+    → 触发重算, 死链在机制上留不下来(见 write_detail_pages 的 rsig)。
+    排序键一律带 id 兜底: 同一份数据必须给出同一个顺序, 否则连跑字节就不稳。
+    """
+    me = it["id"]
+    shared = {}
+    for s in (it.get("concepts") or []):
+        for jid in cidx.get(s, ()):
+            if jid != me and jid in pool:
+                shared.setdefault(jid, []).append(s)
+    out, per = [], {}
+    for jid, cs in sorted(shared.items(),
+                          key=lambda kv: (len(kv[1]), pool[kv[0]].get("date") or "", kv[0]),
+                          reverse=True):
+        src = pool[jid]["source"]
+        if per.get(src, 0) >= RELATED_SRC_MAX:
+            continue
+        per[src] = per.get(src, 0) + 1
+        out.append((pool[jid], sorted(set(cs))))
+        if len(out) >= RELATED_MAX:
+            break
+    return out
+
+
+def related_why(cs, lib):
+    """相关理由文案: 写出共同概念的词条名(读者可核), 多个只报第一个 + 计数。"""
+    terms = [(lib.get(s) or {}).get("term") or s for s in cs]
+    return f"都提到「{terms[0]}」" + (f" 等 {len(terms)} 个概念" if len(terms) > 1 else "")
+
+
+def related_html(rel, lib):
+    """「相关动态」区块; rel 为空(概念无同伴)时整块不出, 不留空标题。"""
+    if not rel:
+        return ""
+    lis = "".join(
+        f'<li><a href="{esc(r["id"])}.html"><span class="dp-rel-t">{esc(disp_title(r))}</span>'
+        f'<span class="dp-rel-m">{esc(related_why(cs, lib))}'
+        f' · <time datetime="{esc(r["date"])}">{esc(r["date"])}</time></span></a></li>'
+        for r, cs in rel)
+    return ('<nav class="dp-rel" aria-labelledby="dp-rel-h">'
+            f'<h2 id="dp-rel-h" class="dp-rel-h">相关动态</h2><ul>{lis}</ul></nav>')
+
+
+def detail_html(it, lib, worthy, rel=()):
     """静态详情页(整页由本脚本生成, 每次可整体重写, 页内无时间戳保证连跑字节稳定)。
     所有权分档(2026-07-22 四轮): own 源(自家内容)全文镜像+允许 index+canonical 指自身;
     外部源维持版权安全三件套——canonical 指向原文 + noindex + 页首显著出处
@@ -2578,6 +2653,7 @@ b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';})
       <button type="button" class="dp-btn sec" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
       <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
     </div>
+    {related_html(rel, lib)}
     <p class="dp-note">本页由句子互动动态管线自动生成，聚合内容版权归各来源所有；如来源方希望调整或移除收录，请通过官网联系我们。</p>
   </div>
 </main>
@@ -2709,6 +2785,12 @@ def write_detail_pages(vis, items, lib, worthy):
     cache = _load_render_cache()
     old_sigs = cache.get("detail", {})
     new_sigs = {}
+    # 相关动态只在本轮要落页的条目(vis)里选, 链接指向的页必然存在
+    pool = {it["id"]: it for it in vis}
+    cidx = {}
+    for it in vis:
+        for s in (it.get("concepts") or []):
+            cidx.setdefault(s, []).append(it["id"])
     for it in vis:
         name = f"{it['id']}.html"
         want.add(name)
@@ -2726,13 +2808,19 @@ def write_detail_pages(vis, items, lib, worthy):
         # 本条会标注哪些概念取决于门槛(worthy): 概念被引次数涨过门槛→该标了, 跌出→不能再标(否则
         # 链向已不存在的概念页=死链)。只纳入本条自己的概念的够格状态, 不让全库变动殃及全部页。
         wsig = "".join("1" if s in worthy else "0" for s in (it.get("concepts") or []))
-        sig = _sha(render_ver(),srccfg, csig, wsig, item_repr,
+        # 相关动态取决于**其他条目**——这是本页唯一的跨条目依赖, 必须显式进签名: 新条目挤进
+        # 相关列表、旧条目下线退出列表, 都得触发本页重算, 否则页面会挂上指向已删页的死链。
+        # 实测代价: 每轮波及 12%~56% 页面重算, 但那是纯本地渲染(不碰 API/网络), 换来的是
+        # 「相关列表永远与实际存在的页一致」这条硬保证。签名与渲染共用同一个 rel, 不各算一次。
+        rel = related_items(it, pool, cidx)
+        rsig = _sha(*(f"{r['id']}|{disp_title(r)}|{related_why(cs, lib)}" for r, cs in rel))
+        sig = _sha(render_ver(),srccfg, csig, wsig, item_repr, rsig,
                    _file_sig(CONTENT_DIR / f"{it['id']}.html"), _file_sig(zh_content_path(it["id"])))
         new_sigs[it["id"]] = sig
         if p.exists() and old_sigs.get(it["id"]) == sig:
             skipped += 1
             continue
-        html = detail_html(it, lib, worthy)
+        html = detail_html(it, lib, worthy, rel)
         if not p.exists() or p.read_text(encoding="utf-8") != html:
             p.write_text(html, encoding="utf-8")
             written += 1
