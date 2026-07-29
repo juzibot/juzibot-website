@@ -443,6 +443,55 @@ def test_deploy_list_covers_root_artifacts():
               f"robots.txt 未声明 {miss_rb} —— 搜索引擎不会主动发现它")
 
 
+# ---------------------------------------------------------------- 19
+def test_toc_thresholds_and_anchors():
+    """长文目录: 门槛、锚点完整性、不覆盖原文已有 id。
+
+    「点了不动」的目录比没有目录更糟, 所以锚点与 id 必须严格对应; 短文出目录纯属噪音,
+    所以门槛也要测反向。
+    """
+    # 每段 150×5=750 字 ×4 段 = 3000 字, 稳过 TOC_MIN_CHARS(2000) —— fixture 必须满足被测
+    # 函数的前提条件, 否则失败的是测试数据不是代码(这是今天第二次踩 fixture 的坑)。
+    long_body = "".join(f"<h2>小节 {i}</h2><p>{'正文内容。' * 150}</p>" for i in range(1, 5))
+    anchored, toc = B.build_toc(long_body)
+    check("长文+多标题 → 出目录", bool(toc), "未出目录")
+    ids = set(re.findall(r'<h[234][^>]*\sid="([^"]+)"', anchored))
+    hrefs = set(re.findall(r'href="#([^"]+)"', toc))
+    check("目录每个锚点都有对应 id", hrefs and hrefs <= ids, f"悬空锚点 {hrefs - ids}")
+    check("目录节数与标题数一致", len(hrefs) == 4, f"{len(hrefs)} vs 4")
+    # 门槛反向: 标题够但正文太短
+    short = "<h2>a</h2><p>短</p><h2>b</h2><p>短</p><h2>c</h2><p>短</p>"
+    check("正文太短 → 不出目录", B.build_toc(short)[1] == "")
+    # 门槛反向: 正文够长但标题太少
+    few = f"<h2>唯一小节</h2><p>{'正文内容。' * 200}</p>"
+    check("标题太少 → 不出目录", B.build_toc(few)[1] == "")
+    # 原文自带 id 不覆盖(站外可能已有链接指过来)
+    keep = "".join(f'<h2 id="orig-{i}">节 {i}</h2><p>{"字" * 800}</p>' for i in range(1, 4))
+    a2, t2 = B.build_toc(keep)
+    check("原文自带 id 被保留", 'id="orig-1"' in a2 and 'href="#orig-1"' in t2, t2[:80])
+    check("空正文安全", B.build_toc("") == ("", ""))
+
+
+# ---------------------------------------------------------------- 20
+def test_all_render_fns_registered_in_fingerprint():
+    """参与渲染的函数必须登记进 _TPL_FNS, 否则改它不触发缓存重算 —— 页面停在旧版。
+
+    这个坑今天栽过三次(Article schema、概念索引页文案、以及加 build_toc 时忘了登记)。
+    **指纹机制本身防不住「忘了把新函数纳入指纹」**, 所以这里正反两面都测:
+    ①列表里的名字都能在模块里找到(防写错名或删了函数没删登记)
+    ②几个已知的渲染函数确实在列表里(防加了新渲染函数忘登记)
+    """
+    missing = [f for f in B._TPL_FNS if not hasattr(B, f)]
+    check("_TPL_FNS 里的名字都存在", not missing, f"找不到 {missing}")
+    must = ["detail_html", "concept_html", "build_toc", "breadcrumb_ld", "ld_json",
+            "annotate_concepts", "normalize_links", "nav_fallback"]
+    unreg = [f for f in must if f not in B._TPL_FNS]
+    check("已知渲染函数全部登记在册", not unreg,
+          f"未登记 {unreg} —— 改它们不会触发缓存重算")
+    v = B.render_ver()
+    check("版本键形如 <人工版本>.<指纹>", re.fullmatch(r"[\w.]+\.[0-9a-f]{10}", v), v)
+
+
 def main():
     tests = [v for k, v in sorted(globals().items()) if k.startswith("test_")]
     for fn in tests:

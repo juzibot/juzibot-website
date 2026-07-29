@@ -2537,8 +2537,12 @@ RENDER_VER = "8"  # 2026-07-30: 概念页证据改读原文镜像(原先只读�
 # 这个坑我栽过两次(Article schema 没生效那次、概念索引页文案没生效那次), 而规则就写在上面
 # 那行注释里。与其依赖人记得, 不如让签名自己感知模板变化: 把渲染函数的源码一起哈希进去。
 # RENDER_VER 保留作人工总开关(想强制全量重算时改它), 日常改模板不再需要动它。
+# 新增任何参与渲染的函数, 都要登记到这里 —— 否则改它不触发缓存重算, 页面停在旧版。
+# 这个坑今天栽过三次: Article schema 没生效、概念索引页文案没生效、以及加 build_toc 时
+# 又忘了登记(靠测试查出来)。指纹机制本身防不住「忘了把新函数纳入指纹」。
 _TPL_FNS = ("detail_html", "concept_html", "concept_index_html", "concept_page_shell",
-            "concept_evidence", "annotate_concepts", "img_render", "normalize_links", "ld_json")
+            "concept_evidence", "annotate_concepts", "img_render", "normalize_links",
+            "ld_json", "breadcrumb_ld", "build_toc", "nav_fallback")
 
 
 def _template_sig():
