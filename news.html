@@ -374,11 +374,23 @@
     // 默认视图=句子动态, 预渲染=全量: 首帧按分区重渲(否则首屏仍是混排)
     render(true);
 
+    // 雷达数据按需加载(2026-07-30 分片): 内联只带句子动态全量 + 雷达前 N 条, 首次切到
+    // 雷达/全部时补齐余量; 失败就用已内联的, 不白屏也不报错(渐进增强)。
+    var radarLoaded = !(payload.radar_rest > 0), radarLoading = false;
+    function ensureRadar(after) {
+      if (radarLoaded || radarLoading) { after(); return; }
+      radarLoading = true;
+      fetch('news-radar.json').then(function (r) { return r.json(); }).then(function (j) {
+        if (j && j.items && j.items.length) { data = data.concat(j.items); }
+        radarLoaded = true; radarLoading = false; buildGroups(); buildSrcs(); after();
+      }).catch(function () { radarLoaded = true; radarLoading = false; after(); });
+    }
     document.getElementById('newsGroups').addEventListener('click', function (e) {
       var b = e.target.closest('[data-group]'); if (!b) return;
       state.group = b.getAttribute('data-group'); state.src = 'all'; state.cat = 'all';
       mark(document.getElementById('newsGroups'), 'data-group', state.group);
-      buildSrcs(); buildCats(); render(true);
+      var go = function () { buildSrcs(); buildCats(); render(true); };
+      if (state.group === 'company') go(); else ensureRadar(go);
     });
     srcs.addEventListener('click', function (e) {
       var b = e.target.closest('[data-src]'); if (!b) return;
@@ -398,7 +410,7 @@
     });
 
     var deb;
-    q.addEventListener('input', function () { clearTimeout(deb); deb = setTimeout(function () { state.q = q.value.trim(); render(true); }, 180); });
+    q.addEventListener('input', function () { clearTimeout(deb); deb = setTimeout(function () { state.q = q.value.trim(); if (state.q) { ensureRadar(function () { render(true); }); } else { render(true); } }, 180); });
 
     reset.addEventListener('click', function () {
       state.src = 'all'; state.cat = 'all'; state.time = 'all'; state.cut = ''; state.q = ''; q.value = '';

@@ -1601,7 +1601,9 @@ CONCEPT_BATCH = 10
 #   ①被 ≥2 篇上站文章引用(经过第二次验证, 不是一次性名词), 或
 #   ②被任一自家内容(own/product)引用(自家提到的即属自家语境, 一次也算)
 # 不够格的概念以后被引到自然升格, 无需人工干预; 已生成的页会被既有清理逻辑收走。
-CONCEPT_PAGE_MIN_REFS = 2        # 每批文章数: 新概念定义输出较长, 批次取小防截断
+CONCEPT_PAGE_MIN_REFS = 2
+SUMMARY_INLINE_MAX = 180   # 内联摘要上限(卡片 3 行约 90 字, 留余量给搜索)
+RADAR_INLINE = 24          # 内联的雷达条目数(切过去立刻有内容, 其余按需拉 news-radar.json)        # 每批文章数: 新概念定义输出较长, 批次取小防截断
 CONCEPT_LIB_MAX = 500     # 塞进 prompt 的概念库上限: 库只增不删, 全量塞会让 prompt 无限膨胀触上下文上限/整批失败(Bugbot PR#100)
 CONCEPT_MAX_PER_ITEM = 5  # 每篇最多挂 5 个概念(详情页标注同此上限)
 GENERIC_SLUGS = {"ai", "artificial-intelligence", "tech", "technology", "software", "internet",
@@ -2499,7 +2501,35 @@ def inject_page(spec, items, sources_meta):
     rendered = spec["render_list"](items[:PRERENDER])
     page = inject_between(page, "<!-- NEWS:LIST:BEGIN 此区块由 build_news.py 生成，勿手改 -->", "<!-- NEWS:LIST:END -->", rendered, f"{path.name} NEWS:LIST")
 
-    payload = items if spec["payload"] == "items" else {"sources": sources_meta, "items": items}
+    # 内联瘦身(2026-07-30): 实测 news.html 271KB 里 218KB 是内联数据, 而其中 8 个字段前端
+    # 从没读过——ai(判定缓存)/concepts/concepts_full/brief_full/cat_slug/title_zh_tried/hn
+    # 是管线内部状态, 不该进浏览器。只送前端真用的字段(两页逐个 grep 核实过, tags 仅聚合版用)。
+    # data/news.json 仍存全量, 增量去重与判定缓存不受影响。
+    keep = {"id", "source", "source_name", "title", "title_zh", "summary", "brief", "quip",
+            "url", "date", "category", "author", "tags"}
+
+    def _slim(i):
+        o = {k: v for k, v in i.items() if k in keep}
+        s = o.get("summary") or ""
+        if len(s) > SUMMARY_INLINE_MAX:  # 卡片只显示 3 行(~90 字), 内联留 180 字够用且够搜
+            o["summary"] = s[:SUMMARY_INLINE_MAX] + "…"
+        return o
+
+    # 数据分片(2026-07-30): 默认视图是「句子动态」(42 条), 却要先下载全部 278 条 = 218KB。
+    # 内联只放「句子动态全量 + 行业雷达前 RADAR_INLINE 条」(保证切过去立刻有东西看),
+    # 其余雷达条目落 news-radar.json, 前端首次切到雷达/全部时按需拉取; 拉取失败就用已内联
+    # 的这些, 不报错、不白屏——渐进增强, 不引入新的失败模式。
+    comp = [_slim(i) for i in items if i["source"] in COMPANY_SOURCES]
+    rad = [_slim(i) for i in items if i["source"] not in COMPANY_SOURCES]
+    inline_items = comp + rad[:RADAR_INLINE]
+    rest = rad[RADAR_INLINE:]
+    if spec.get("company_first") and rest:  # 仅卡片版分片(聚合版按月分组, 缺条目会断月份)
+        (ROOT / "news-radar.json").write_text(
+            json.dumps({"items": rest}, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+        payload = {"sources": sources_meta, "items": inline_items, "radar_rest": len(rest)}
+    else:
+        slim = [_slim(i) for i in items]
+        payload = slim if spec["payload"] == "items" else {"sources": sources_meta, "items": slim}
     # 内联数据: JSON 放进 <script type="application/json">, 转义 </ 防止提前闭合标签
     data_json = json.dumps(payload, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
     page, n = re.subn(

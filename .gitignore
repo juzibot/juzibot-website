@@ -23,4 +23,5 @@ data/news.json
 data/concepts.json
 data/render-cache.json
 data/news-content/
+news-radar.json   # 雷达数据分片(前端按需拉)
 sitemap-news.xml   # 管线每轮重写(概念页+自家详情页地图), 与手工 sitemap.xml 分离
