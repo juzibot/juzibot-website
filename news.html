@@ -246,6 +246,7 @@
       total = document.getElementById('newsTotal'),
       sentinel = document.getElementById('newsSentinel');
 
+  var radarLoaded = !((payload.radar_rest || 0) > 0), radarLoading = false;
   var state = { group: 'company', src: 'all', cat: 'all', time: 'all', cut: '', q: '', shown: list.querySelectorAll('.news-card').length };
   var GROUPS = [{ k: 'company', n: '句子动态', i: 'fa-solid fa-house-chimney' },
                 { k: 'radar', n: '行业雷达', i: 'fa-solid fa-satellite-dish' },
@@ -311,7 +312,10 @@
   }
 
   function groupCount(g) {
-    return data.filter(function (it) { return g === 'all' || grpOf(it.source) === g; }).length;
+    // 分片后 data 里只有内联部分, 未加载的雷达余量(radar_rest)要计入, 否则计数自我矮化
+    var n = data.filter(function (it) { return g === 'all' || grpOf(it.source) === g; }).length;
+    var rest = (radarLoaded ? 0 : (payload.radar_rest || 0));
+    return (g === 'company') ? n : n + rest;
   }
   function buildGroups() {
     var el = document.getElementById('newsGroups');
@@ -376,7 +380,6 @@
 
     // 雷达数据按需加载(2026-07-30 分片): 内联只带句子动态全量 + 雷达前 N 条, 首次切到
     // 雷达/全部时补齐余量; 失败就用已内联的, 不白屏也不报错(渐进增强)。
-    var radarLoaded = !(payload.radar_rest > 0), radarLoading = false;
     function ensureRadar(after) {
       if (radarLoaded || radarLoading) { after(); return; }
       radarLoading = true;
