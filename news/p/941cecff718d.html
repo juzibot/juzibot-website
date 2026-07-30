@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>国产大模型，贵到用不起？ - 句子·动态</title>
+<meta name="description" content="国产大模型在开发者中“叫好不叫座”，虽周调用量领先美国，但头部企业营收仅数亿元，与Anthropic的600-700亿美元ARR差距显著。" />
+<meta name="robots" content="noindex,follow" />
+<link rel="canonical" href="https://www.tmtpost.com/8084364.html" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="国产大模型，贵到用不起？" />
+<meta property="og:description" content="国产大模型在开发者中“叫好不叫座”，虽周调用量领先美国，但头部企业营收仅数亿元，与Anthropic的600-700亿美元ARR差距显著。" />
+<meta property="og:url" content="https://www.tmtpost.com/8084364.html" />
+<meta property="og:site_name" content="句子互动" />
+<meta name="twitter:card" content="summary" />
+
+<link rel="icon" href="../../logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../../assets/site.css" />
+<style>
+  /* 静态兜底导航: site.js 一执行就被 outerHTML 连同占位一起换掉, 访客几乎看不到它。
+     不隐藏也不 noscript 包裹——那会让爬虫拿不到, 而它存在的唯一理由就是给不跑 JS 的爬虫看。
+     样式做朴素一行, 万一 site.js 加载失败, 这排链接本身就是可用的降级导航。 */
+  .nav-fb{display:flex;flex-wrap:wrap;gap:6px 16px;padding:12px clamp(16px,4vw,40px);
+    border-bottom:1px solid var(--line-2);font-size:12.5px}
+  .nav-fb a{color:var(--ink-3);text-decoration:none}
+  .nav-fb a:hover{color:var(--blue)}
+
+  .dp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
+  .dp-wrap{max-width:760px;margin:0 auto}
+  .dp-crumb{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:12.5px;color:var(--ink-3);margin-bottom:20px;min-width:0}
+  .dp-crumb a{color:var(--ink-3);text-decoration:none}
+  .dp-crumb a:hover{color:var(--blue)}
+  .dp-crumb i{font-style:normal;opacity:.5;font-size:11px}
+  .dp-crumb [aria-current]{color:var(--ink-2);font-weight:650;overflow-wrap:anywhere}
+  .dp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
+  .dp-back:hover{color:var(--blue)}
+  .dp-meta{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:14px}
+  .dp-srcb{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:750;color:var(--sc,var(--blue))}
+  .s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
+  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-voices{--sc:#9333EA}
+  .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
+  .dp-cat{display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ink-3);background:#F6F7FB;border:1px solid var(--line-2);border-radius:6px;padding:2px 8px}
+  .dp-read{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  /* 相关动态: 读完一篇之后的出口。此前详情页之间零链接, 读者只能回列表页重新扫,
+     爬虫也只能靠 JS 驱动的列表页做枢纽。每条都带「为什么相关」, 不做无理由的推荐。 */
+  .dp-rel{margin-top:40px;padding-top:26px;border-top:1px solid var(--line-2)}
+  .dp-rel-h{font-size:14px;font-weight:750;color:var(--ink-2);margin:0 0 14px}
+  .dp-rel ul{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+  .dp-rel a{display:block;padding:10px 12px;margin:0 -12px;border-radius:8px;text-decoration:none;transition:background .2s var(--ease)}
+  .dp-rel a:hover{background:#F6F7FB}
+  .dp-rel-t{display:block;font-size:14px;font-weight:650;color:var(--ink-1);line-height:1.5}
+  .dp-rel a:hover .dp-rel-t{color:var(--blue)}
+  .dp-rel-m{display:block;margin-top:3px;font-size:11.5px;color:var(--ink-3)}
+  .dp-read i{font-size:10px;opacity:.7}
+  .dp-date{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-3)}
+  .dp-title{font-size:clamp(24px,3.2vw,34px);font-weight:850;letter-spacing:-.03em;line-height:1.32;word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance;margin-bottom:10px}
+  .dp-orig{font-size:13px;color:var(--ink-3);overflow-wrap:anywhere;margin-bottom:8px}
+  .dp-by{font-size:12.5px;font-weight:600;color:var(--ink-3);margin-bottom:18px}
+  .dp-notice{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:1.7;color:var(--ink-2);background:#F6F7FB;border:1px solid var(--line-2);border-radius:10px;padding:10px 14px;margin-bottom:22px}
+  .dp-notice i{color:var(--blue);margin-top:4px;flex:0 0 auto}
+  .dp-notice a{color:var(--blue);font-weight:700;overflow-wrap:anywhere}
+  .dp-quip{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.66;font-weight:600;color:var(--blue-deep);background:var(--blue-50);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:18px}
+  .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
+  .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
+  .dp-brief b{display:flex;align-items:baseline;gap:8px;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  /* AI 产出物的就地标注(2026-07-30): 概念页的定义早就在页尾注明「由 AI 加工层生成、编辑
+     维护」, 而详情页的简报与锐评一直没标 —— 读者会把那句锐评当成编辑观点。283 页都有这两块,
+     不标就是 283 次误导。放在区块内而不是只放页尾: 页尾声明读者多半划不到, 而标注要落在
+     人实际阅读的位置才有意义。样式压到最小, 不抢正文。 */
+  .dp-brief b em,.dp-quip em{font-style:normal;font-family:var(--mono);font-size:10px;font-weight:600;
+    letter-spacing:0;color:var(--ink-3);white-space:nowrap}
+  .dp-brief b em{margin-left:auto}
+  .dp-quip em{display:block;margin-top:5px;opacity:.85}
+  /* 长文目录(≥3 小标题且正文 ≥2000 字才出): <details> 原生可折叠, 不用一行 JS。
+     默认 open —— 目录的用处是先看清结构再决定读哪段, 收起来就失去意义; 想收也一点即收。 */
+  .dp-toc{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:24px;background:#FBFCFF}
+  .dp-toc summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--ink-2);display:flex;align-items:center;gap:7px;list-style:none}
+  .dp-toc summary::-webkit-details-marker{display:none}
+  .dp-toc summary i{font-size:11px;color:var(--blue)}
+  .dp-toc summary span{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-3);margin-left:auto}
+  .dp-toc ol{list-style:none;margin:10px 0 2px;padding:0;counter-reset:toc}
+  .dp-toc li{counter-increment:toc;font-size:13px;line-height:1.7;padding:2px 0}
+  .dp-toc li::before{content:counter(toc) ". ";font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .dp-toc li.lv3{padding-left:16px}
+  .dp-toc li.lv4{padding-left:32px}
+  .dp-toc a{color:var(--ink-2);text-decoration:none;overflow-wrap:anywhere}
+  .dp-toc a:hover{color:var(--blue)}
+  /* 锚点跳转时标题别贴到视口顶端(站点顶栏会盖住) */
+  .dp-body h2[id],.dp-body h3[id],.dp-body h4[id]{scroll-margin-top:76px}
+  .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
+  .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
+  .dp-body p{margin:0 0 1.05em}
+  .dp-body img{max-width:100%;height:auto;border-radius:10px;margin:.4em 0}
+  .dp-body pre{background:#0F172A;color:#E2E8F0;font-family:var(--mono);font-size:12.5px;line-height:1.7;padding:14px 16px;border-radius:10px;overflow-x:auto;margin:0 0 1.1em}
+  .dp-body code{font-family:var(--mono);font-size:.92em}
+  .dp-body :not(pre)>code{background:#F1F5F9;padding:1px 5px;border-radius:5px}
+  .dp-body blockquote{border-left:3px solid var(--line);padding:2px 0 2px 14px;color:var(--ink-3);margin:0 0 1.05em}
+  .dp-body a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+  .dp-body ul,.dp-body ol{padding-left:1.5em;margin:0 0 1.05em}
+  .dp-body table{display:block;overflow-x:auto;border-collapse:collapse;margin:0 0 1.1em}
+  .dp-body td,.dp-body th{border:1px solid var(--line);padding:6px 10px;font-size:.92em}
+  .dp-excerpt{font-size:15px;line-height:1.9;color:var(--ink-2);border-left:3px solid var(--line);padding:2px 0 2px 16px;margin-bottom:8px}
+  .dp-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;padding-top:20px;border-top:1px solid var(--line-2)}
+  .dp-btn{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:750;border-radius:999px;padding:10px 20px;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+  .dp-btn.pri{background:var(--blue);color:#fff}
+  .dp-btn.pri:hover{background:var(--blue-deep)}
+  .dp-btn.sec{background:#fff;color:var(--ink-2);border:1px solid var(--line)}
+  .dp-btn.sec:hover{color:var(--blue);border-color:var(--blue)}
+  .dp-note{font-size:11.5px;line-height:1.7;color:var(--ink-3);margin-top:18px}
+  .dp-langbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+  .dp-lang{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:750;color:var(--blue);
+    background:var(--blue-50);border:1px solid var(--blue-100);border-radius:999px;padding:7px 14px;
+    transition:background .2s var(--ease),border-color .2s var(--ease)}
+  .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
+  .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div id="site-nav" class="nav-fb"><a href="../../index.html">句子互动</a><a href="../../products/miaodong.html">句子秒懂</a><a href="../../products/shouhu.html">句子守护</a><a href="../../products/canmou.html">句子问数</a><a href="../../products/dongxing.html">句子懂行</a><a href="../../products/miaohui.html">句子秒回</a><a href="../../products/cli.html">句子 CLI</a><a href="../../products/zhizao.html">句子制造</a><a href="../../fde.html">FDE</a><a href="../../enterprise.html">企业方案</a><a href="../../industries.html">行业</a><a href="../../about.html">关于我们</a><a href="../../news.html">动态</a></div>
+<main class="dp-main">
+  <div class="dp-wrap">
+    <nav class="dp-crumb" aria-label="面包屑"><a href="../../index.html">句子互动</a><i aria-hidden="true">›</i><a href="../../news.html">动态</a><i aria-hidden="true">›</i><span aria-current="page">国产大模型，贵到用不起？</span></nav>
+    <div class="dp-meta">
+      <span class="dp-srcb s-industry"><i class="fa-solid fa-rss"></i>行业动态</span>
+      <span class="dp-cat">钛媒体</span>
+      <time class="dp-date" datetime="2026-07-30">2026-07-30</time>
+      <span class="dp-read"><i class="fa-regular fa-clock"></i>约 12 分钟</span>
+    </div>
+    <h1 class="dp-title">国产大模型，贵到用不起？</h1>
+    
+    <p class="dp-by">来源：钛媒体 · 行业动态</p>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（钛媒体 · 行业动态）所有 · <a href="https://www.tmtpost.com/8084364.html" target="_blank" rel="noopener">阅读原文</a></span></div>
+    <p class="dp-quip"><i class="fa-solid fa-quote-left"></i>国产大模型价格敏感度高，需平衡成本与客户续费意愿<em>AI 加工层生成</em></p>
+    <div class="dp-brief"><b>简报<em>AI 加工层生成</em></b>国产大模型在开发者中“叫好不叫座”，虽周调用量领先美国，但头部企业营收仅数亿元，与Anthropic的600-700亿美元ARR差距显著。</div>
+    <details class="dp-toc" open><summary><i class="fa-solid fa-list-ul"></i>目录<span>3 节</span></summary><ol><li class="lv2"><a href="#h1">01“低价”的幻觉</a></li><li class="lv2"><a href="#h2">02 国产定价之痛</a></li><li class="lv2"><a href="#h3">03 模型的“黄金三角”</a></li></ol></details><article class="dp-body"><blockquote><p>文 | 最话FunTalk，作者 | 林书<strong><br /></strong></p></blockquote><p>最近这一个月，硅谷AI界可谓大招频出，GPT-5.6、fable5、Grok-4.5接连问世。</p><p>一时间，国内开发者、程序员群体纷纷沸腾，各种关于GPT-5.6等前沿模型的讨论、测评此起彼伏。</p><p>尽管这个月也有Kimi-K3这样的新锐国产模型问世，但总的来看，国产大模型当前在一线开发者群体中，始终处于一种“叫好不叫座”的状态。</p><p><img loading="lazy" onerror="this.style.display='none'" src="https://images.tmtpost.com/uploads/images/2026/07/29/1f6cb083513bf099715ed30b4e07de4a_1785332080.webp?imageMogr2/auto-orient/strip/interlace/1/quality/85/format/jpg/thumbnail/1440x636/gravity/center/crop/!1440x636&amp;ext=.webp" referrerpolicy="no-referrer" /></p><p>根据最新数据，在使用量方面：OpenRouter 6月22日至28日数据显示，中国模型周调用量达20.39万亿Token，美国模型为4.25万亿，前者已连续九周领先。</p><p>但与之形成反差的是，国内AI六小龙在营收方面的表现，却不怎么尽如人意：公开财报显示，智谱2025年营收7.24亿元，亏损却达到了30亿元以上，MiniMax为7900万美元（约5.7亿元）；月之暗面等其余四家尚未披露完整年营收。</p><p>即使头部企业，收入仍停留在数亿元量级。</p><p>相较之下，作为AI头部企业的Anthropic，其ARR已经达到了约 600 亿—700 亿美元，主要驱动力为 B2B API 及 AI Coding 场景 。</p><p>这不由得引出了一个尖锐的问题：</p><p>为何号称“便宜”、“调用量大”的国产模型，至今仍然叫好不叫座，在AI Coding等高价值的场景上，至今仍难以与国外顶尖模型正面抗衡？</p><p>最近，笔者在与多个一线开发者深入探讨此问题后，发现了一个很反直觉的事实：</p><p><strong>国产大模型，某种程度上其实非常“贵”。</strong></p><p>也正是这样的“贵”，让某些性能上有所突破的国产模型，难以真正展现自己的闪光之处。</p><h2 id="h1">01“低价”的幻觉</h2><p>提起国产大模型，很多人想到的都是DeepSeek、Kimi、智谱这样的代表，而与之关联最紧密的标签之一，就是低价、便宜；</p><p>如果仅从Token单价上来看，国产模型与GPT-5.6、fable5等顶尖模型相比，确实有着不小的优势，拿GLM-5.2与DeepSeek V4举例：GLM-5.2每百万Token输入/输出为1.4/4.4美元，DeepSeek-V4-Pro为0.435/0.87美元；GPT-5.6 Sol为5/30美元，Claude Fable 5则为10/50美元。</p><p>但实际上，这种“低价”的印象，是一种圈外人长久的误区。</p><p><strong>尤其在高强度的编程场景下，国产大模型的单价不但没有优势，甚至反而还比有套餐的GPT、Claude贵出好几倍。</strong></p><p>李光（化名）是AI领域的一位科研工作者，由于工作需要，每天都要在AI Coding的场景下消耗几十亿Token，在这样的消耗量下，如果用国产大模型，例如GLM-5.2，整体的成本就会变得非常恐怖。</p><p><img loading="lazy" onerror="this.style.display='none'" src="https://images.tmtpost.com/uploads/images/2026/07/29/9a8141aad22515da25114e3d2b9c7946_1785332080.webp?imageMogr2/auto-orient/strip/interlace/1/quality/85/format/jpg/thumbnail/1440x510/gravity/center/crop/!1440x510&amp;ext=.webp" referrerpolicy="no-referrer" /></p><p>李光晒出的Token账单</p><p>在交谈当天，李光消耗的Token已经接近40亿，这里可以稍微换算一下，倘若他用的是GLM-5.2，成本大致是：（8639万普通输入×1.4美元＋33.80亿缓存输入×0.26美元＋1906万输出及推理×4.4美元）约为1084美元，按1美元兑7.2元估算，约合人民币7800元。</p><p>而让李光如此放开手脚烧Token的原因，就是因为他开了GPT的CodeX套餐，</p><p>这里简单解释一下CodeX套餐的具体形式，简单来说，它是针对编程场景推出的一款套餐：严格说来，它并非真正不限量，而是把Codex纳入ChatGPT订阅：Plus为20美元/月，Pro从100美元/月起，额度约为Plus的5倍或20倍；触顶后可购买Credits继续使用。</p><p>同样地，Anthropic的Claude Code也有一套类似的套餐，具体形式是：Claude Pro为20美元/月，Max 5x和Max 20x分别为100、200美元/月；Claude网页端与Claude Code共享每5小时及每周额度，触顶后可按API价格续用。</p><p>在这样的套餐兜底下，巨大的<a class="cpt" href="../c/token-cost.html" data-def="Token成本是使用大模型时按Token计量的实际开销，包括输入和输出的费用">Token成本</a>反而被抹平了。</p><p>对于国内的开发者来说，在高强度AI Coding场景下，每天消耗几十亿、上百亿Token，是一个很普遍的常态。</p><p>小刘也是一个AI Coding的重度开发者，他在Codex上实际一周的花费是 300元人民币，而这还是在没有公司报销的情况下。</p><p>但即使是这样的成本，对比国产模型，依然显得“便宜”了很多，因为同样300元，根本买不来GLM 5.2 同等数量的token。</p><p><img loading="lazy" onerror="this.style.display='none'" src="https://images.tmtpost.com/uploads/images/2026/07/29/78cf3a67ccbc28de01d3ec0dda9ef00f_1785332080.webp?imageMogr2/auto-orient/strip/interlace/1/quality/85/format/jpg/thumbnail/1440x1377&amp;ext=.webp" referrerpolicy="no-referrer" /></p><p>小刘的Token账单</p><p>在国内开发者看来，GPT的 codex 套餐，是目前能买到的最便宜的 token，比智谱、kimi 便宜好几倍，这可能反直觉，但是事实就是国产模型在高强度的Coding场景下，性价比完全无法与之对比。</p><p>这里需要说明的是：codex并非真正意义的不限量套餐，如果按最高档200美元算，一周大概有20亿额度。</p><p>但是，由于部分开发者会通过“中转站”等手段使用模型，某些模型的实际成本，会比官方渠道低很多，这就导致有时能以更低的价格，买到更多Token，于是才有了300块能买120亿Token的现象。</p><p>实际上，国产模型在定价方面，不是没有推出过类似的套餐，但如果细究起来，这样的套餐，在限额方面，比起codex而言，存在着很大的限制。</p><h2 id="h2">02 国产定价之痛</h2><p>国产大模型在定价方面的现状，可以用一句话来形容：</p><p><strong>“你以为你进的是自助餐的场子，但最后发现，商家还是按斤计费。”</strong></p><p>举例来说，在套餐方面，国内的Kimi、GLM-5.2：Kimi Code分为49、99、199、699元四档，额度按周刷新；GLM Coding Plan的Lite、Pro、Max每5小时分别约80、400、1600次Prompt，每周约400、2000、8000次，且GLM-5.2高峰期按3倍扣额。</p><p>以阿里的qoder为例，根据笔者一位从事B端客户运维的朋友阿迷（化名）介绍：“qoder曾经是国内最好用的AI IDE，可惜它自己的新定价，把优势搞没了。”</p><p>在套餐方面：Qoder CN个人Pro、Pro+分别为59、169元/月，含2000、6000 Credits；Teams与VPC版分别为99、199元/席位·月，均含3000 Credits，后者50席起售。</p><p>“今年他们合并灵码调了定价后，就我知道的，至少都有二三十家放弃续费了。”阿迷后来介绍道。</p><p>根据阿迷的测试，qoder企业版199的套餐，按他的用法，3天就没了，如果按重度开发者的用法，估计一天就没了。</p><p>同样地，在套餐方面，令国内用户感到五味陈杂的，还有GLM-5.2。</p><p>按照开发者小薇的说法：“GLM-5.2的套餐约等于没有，就算有套餐高峰期仍然限流，并且还存在‘背刺’用户的现象。”</p><p>按照36氪的报道：GLM-5.2的套餐，之前比演唱会门票还难抢，每天早上十点钟准时刷新，能不能买到全凭手速。</p><p>2026 年 1 月，智谱发公告说因为算力紧张，把每日可销售量直接砍到原来的 20%，每天早上 10 点放一点额度，几分钟就售罄。</p><p><strong>说到底，国产模型在套餐、价格上的“吝啬”，本质上是算力不足造成的窘迫。</strong></p><p>根据2025年中国信通院、工信部的数据，中国现存的数据中心是449 个，而美国则是5427 个，在总算力方面，中国为1053 EFLOPS，而美国则是2400。</p><p>但这里的关键在于：美国那2,400 EFLOPS 里，高端 GPU 占比极高；中国的算力里，大量是华为昇腾、寒武纪等国产芯片，单卡性能与 H100 仍有代差。</p><p>为应对愈发高涨的算力需求，2026 年 3 月开始，智谱、阿里云、腾讯云、百度在Token价格上集体涨价，涨幅从 5% 到 460% 不等。</p><p>说白了，国产模型的“低价”、“价格战”早已成为了过去式。</p><p>不是国产模型不想搞buffet，是因为算过账：以现在的算力成本和亏损状态，搞包月等于拿固定月费去赌用户不会刷爆，而按照国内开发者、程序员动辄一天烧几十亿、甚至上百亿Token的用法，这样的商业模式，很快会被击穿成本线。</p><p>而OpenAI 和 Anthropic 的编程套餐，卖的是高净值企业客户——Cursor、GitHub Copilot 这种大客户一年能给 Anthropic 贡献 14 亿美元收入。</p><p>在高算力的加持下，这套商业模式，本质是用&quot;固定月费&quot;换&quot;长期锁客&quot;，客户质量高，ARPU 也相对较高，摊得平成本。</p><p>而相较之下，国内虽然有阿里这样的云巨头，但问题是：阿里云FY2026 调整后 EBITA Margin 只有 7.5%，云智能集团虽然收入增长快，但利润并不丰厚。</p><p>并且，传统云厂商敢卖&quot;不限量云服务器&quot;，是因为用户不是 24 小时满负载。一台 ECS，实际 CPU 利用率可能只有 10%，云厂商可以把一台物理机超卖给十个人。</p><p>但大模型推理不一样：来一个token，就要实打实烧一次 GPU 算力。用户如果 24 小时不间断刷，云厂商的 HBM 显存、GPU 核心、电费全是刚性支出，没有任何超卖空间。</p><h2 id="h3"> 03 模型的“黄金三角”</h2><p>除了价格方面的因素外，对国内开发者来说，选择Codex、Calude Code的原因，无疑是其强大的编程性能。</p><p>然而，在性能方面，国产模型也并非像某些刻板印象中想的那样。</p><p>在与多个开发者交谈后，笔者发现一个较为普遍的观点是：国产大模型，尤其是GLM-5.2等最新的模型，已经可以承接一些辅助性的、次要的任务，例如做测试和修改bug。</p><p><strong>但在较为复杂的、长时间的异步任务上，国产模型目前与GPT、Calude等顶尖模型，仍有较大差距。</strong></p><p>开发者小张，今年3月份用过一次国产模型编程，用GLM、qwen和GPT对比同样的任务，只有gpt跑完了，且符合页面要求，那是一个多级、多列内容比对和结果生成的项目。</p><p>而另一个开发者小薇则表示，根据她的体验，Kimi 2.7 和 豆包 2.1 Pro 性能也尚可，但是它总的来说还是要弱一档（属于第二梯队），但总体而言也超过 Claude Sonnet 4.6 了。</p><p>目前，开发者群体中的普遍共识是：GLM-5.2是第一个达到了 Opus 级别的国产模型。</p><p><strong>它在执行真实的、复杂的、长时间的异步任务中，它是可用的、占据了一席之地的。</strong></p><p>尽管在很多维度，例如世界知识上，其与真正的Opus模型仍有较大差距，但这不妨碍其成为国产模型的新高度。</p><p>但现实是：这刚刚崭露头角少数“尖子生”，却被与性能无关的其他因素拖累了。</p><p>具体来说，这样的因素包括了缓存效率不高、高峰期仍然会限流等等，让开发者的实际体验很糟糕。</p><p>这就引出了当下模型对比中的另一个维度：稳定性。</p><p>在一线开发者、程序员的体验中，模型的选择，早已不是简单的性能对比，而是——</p><p><strong>性能—价格—稳定性的“黄金三角”。</strong></p><p>在这三个维度中，国产模型只勉强拿下了第一维度的部分指标。</p><p>近期，国内的Kimi发布了其最新的旗舰模型K3：这是一款拥有2.8万亿参数、原生多模态和100万Token上下文的开放权重旗舰模型，主攻长程编程、知识工作与深度推理。</p><p><img loading="lazy" onerror="this.style.display='none'" src="https://images.tmtpost.com/uploads/images/2026/07/29/f0c93dd07eb5629fdfe7d2b3ef7c638f_1785332080.webp?imageMogr2/auto-orient/strip/interlace/1/quality/85/format/jpg/thumbnail/1440x873&amp;ext=.webp" referrerpolicy="no-referrer" /></p><p>在众多测评中，其在Artificial Analysis上的智力指数是57分、位列全球第三；Arena前端编程榜以1679分登顶，甚至有传言称，其性能已经能比肩Claude Fable 5。</p><p>然而，在耀眼的分数与排名背后，开发者关切最多的，仍然是一个词：性价比。</p><p>在K3发布后，很多开发者表示，现在Kimi仍然很贵，与Codex相比没有性价比，且额度不够用，单看API价格，K3也谈不上“白菜价”：每百万Token缓存/输入/输出分别为2/20/100元；GPT-5.6 Sol为0.5/5/30美元，K3虽低于Sol，却明显高于GPT-5.6 Luna的0.1/1/6美元。</p><p>且在使用K3的过程中，开发者表示还出现了API断连，甚至断了一上午的情况。</p><p>就目前的情况来看，国内开发者不是不愿意为国产模型付费，而是国产模型目前因算力紧、成本高，目前开不起Codex这样具有性价比的套餐，只能开看似自助餐，实则限量的“大众点评套餐”（类似智谱 的Coding Plan）。</p><p>而套餐的体验不稳定、性价比模糊，导致用户使用过难以留存。这本质上，是在目前算力底座成本高的情况下，用户的理性选择。</p><p>以上这些，并非我们要长他人志气，灭自己威风，只是想提示一种风险。</p><p>目前，国产模型在追赶GPT、Claude的路途中，非常喜欢强调性能，但国产大模型从研发到应用，需要攀登的，远不止性能这一座高山。</p><p>我们需要的是等待，等到国产算力基座大规模量产了，在技术、价格、稳定性方面，形成合力了，我们的产品就能撑起用户的期待。</p></article>
+    <div class="dp-actions">
+      <a class="dp-btn pri" href="https://www.tmtpost.com/8084364.html" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      
+      <button type="button" class="dp-btn sec" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
+      <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
+    </div>
+    <nav class="dp-rel" aria-labelledby="dp-rel-h"><h2 id="dp-rel-h" class="dp-rel-h">相关动态</h2><ul><li><a href="285b9257d2df.html"><span class="dp-rel-t">Self-hosting Kimi K3: 20% more hardware cost, 20% better task resolution</span><span class="dp-rel-m">都提到「模型能力」 等 2 个概念 · <time datetime="2026-07-29">2026-07-29</time></span></a></li><li><a href="f2c72059a6cc.html"><span class="dp-rel-t">小米大模型拿下“全球第一”，有实力也是侥幸</span><span class="dp-rel-m">都提到「开源模型定价策略」 · <time datetime="2026-07-29">2026-07-29</time></span></a></li><li><a href="f48c6176a083.html"><span class="dp-rel-t">Opus 5冲上第一，还需要Fable 5吗？</span><span class="dp-rel-m">都提到「Token成本」 · <time datetime="2026-07-26">2026-07-26</time></span></a></li><li><a href="4b664fa5afe5.html"><span class="dp-rel-t">LM Studio 0.4.14 Beta 增加支持 MTP 推测解码功能</span><span class="dp-rel-m">都提到「Token成本」 · <time datetime="2026-07-26">2026-07-26</time></span></a></li></ul></nav>
+    <p class="dp-note">本页由句子互动动态管线自动生成，聚合内容版权归各来源所有；如来源方希望调整或移除收录，请通过官网联系我们。</p>
+  </div>
+</main>
+<div id="site-footer"></div>
+<script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "国产大模型，贵到用不起？"};</script>
+<script src="../../assets/site.js"></script>
+</body>
+</html>
