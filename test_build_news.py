@@ -37,6 +37,11 @@ import build_news as B  # noqa: E402
 PASS, FAIL = [], []
 
 
+def html_unescape(s):
+    import html as _h
+    return _h.unescape(s)
+
+
 def check(name, cond, detail=""):
     (PASS if cond else FAIL).append(name)
     print(f"  {'✓' if cond else '✗'} {name}" + (f"  ← {detail}" if detail and not cond else ""))
@@ -790,6 +795,58 @@ def test_page_desc_quality_and_width():
     src = (ROOT / "build_news.py").read_text(encoding="utf-8")
     check("入库前过 brief_usable", "if brief_usable(b):" in src)
     check("答了但不可用时落 brief_tried(不再每轮重试烧配额)", 'it["brief_tried"] = has_full' in src)
+
+
+# ---------------------------------------------------------------- 29
+def test_concept_index_filter_and_termset():
+    """概念索引页: 110 个概念要能查, 术语集 schema 要覆盖全, 且不跑 JS 时内容不变。
+
+    两处实测问题:
+    ① schema 里硬编码 `order[:60]` —— 页面 110 张卡, 机器只看到 60 个(覆盖 54%), 漏掉的正是长尾。
+       补满的真实代价只有 0.51KB gzip(+4%): 原始 +8KB, 但重复 JSON 压缩率极高 ——
+       **按原始体积做的取舍在这里是错的**。上限保留但放宽到 300, 且截断时打印告警(静默截断
+       会让人以为"全覆盖了")。
+    ② 110 张卡平铺没有查找入口, 读者只能靠浏览器 Ctrl+F(手机上埋得很深)。过滤键收词条名 +
+       **别名** + slug —— 读者常常只记得别名(记得 RLHF, 但词条名是「人类反馈强化学习」)。
+    """
+    lib = {"moe-model": {"term": "MoE模型", "aliases": ["混合专家模型", "Mixture of Experts"],
+                         "def": "一种把大模型拆成多个专家子网络、每次只激活少数几个的架构。"},
+           "rlhf": {"term": "人类反馈强化学习", "aliases": ["RLHF"],
+                    "def": "用人类偏好数据训练奖励模型再微调策略的方法。"}}
+    k = B.concept_keys("moe-model", lib["moe-model"])
+    check("检索键含词条名", "moe模型" in k, k)
+    check("检索键含全部别名", all(a.lower() in k for a in lib["moe-model"]["aliases"]), k)
+    check("检索键含 slug 词", "moe model" in k, k)
+    check("检索键全小写", k == k.lower(), k)
+    h = B.concept_index_html(lib, {"moe-model": [1, 2], "rlhf": [1]}, set(lib))
+    check("每张卡都有检索键", h.count("data-k=") == len(lib), h.count("data-k="))
+    check("有过滤输入框", 'id="cxq"' in h and 'type="search"' in h)
+    check("计数区有 aria-live(读屏能拿到结果数)", 'id="cxCount"' in h and 'aria-live="polite"' in h)
+    check("有空结果态与「看全部」出口", 'id="cxEmpty"' in h and 'id="cxClear"' in h)
+    # 渐进增强: 不跑 JS 时全部卡片可见 —— 若默认 hidden, 爬虫拿到的就是空页
+    check("卡片默认不隐藏(不跑 JS 照常可见)", "cx-card" in h and 'class="cx-card" hidden' not in h)
+    check("CSS 没把卡片默认藏起来", not re.search(r"\.cx-card\s*\{[^}]*display\s*:\s*none", h))
+    ld = [json.loads(html_unescape(x)) for x in
+          re.findall(r'<script type="application/ld\+json">(.*?)</script>', h, re.S)]
+    ts = [x for x in ld if x.get("@type") == "DefinedTermSet"]
+    check("发 DefinedTermSet", len(ts) == 1, [x.get("@type") for x in ld])
+    terms = ts[0].get("hasDefinedTerm") or []
+    check("术语集覆盖全部有页概念", len(terms) == len(lib), f"{len(terms)}/{len(lib)}")
+    # 词条只列 name+url: 定义留在各自的概念页(那里有全文 DefinedTerm), 枢纽页再抄 112 条
+    # 是冗余, 实测要多花 13.7KB gzip —— 而最初支持"塞定义"的 0.51KB 是拿重复假数据量出来的
+    check("每个词条有名字与 url", all(x.get("name") and x.get("url", "").endswith(".html") for x in terms))
+    check("术语集不重复抄定义(定义在各概念页)", not any(x.get("description") for x in terms))
+    # 只列有页的概念, 否则 schema 里就是死链
+    thin = dict(lib, **{"no-page": {"term": "没页的概念", "aliases": [], "def": "只被提到一次。"}})
+    h2 = B.concept_index_html(thin, {"moe-model": [1, 2]}, set(lib))
+    ld2 = [json.loads(html_unescape(x)) for x in
+           re.findall(r'<script type="application/ld\+json">(.*?)</script>', h2, re.S)]
+    urls = [x["url"] for y in ld2 if y.get("@type") == "DefinedTermSet" for x in y["hasDefinedTerm"]]
+    check("不够格发页的概念不进 schema(否则是死链)",
+          not any("no-page" in u for u in urls), urls)
+    src = (ROOT / "build_news.py").read_text(encoding="utf-8")
+    check("到上限时打印告警(不静默截断)",
+          "if len(order) > IDX_SCHEMA_MAX:" in src and "只列了" in src)
 
 
 def main():
