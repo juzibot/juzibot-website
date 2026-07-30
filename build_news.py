@@ -1855,7 +1855,7 @@ def save_concepts(lib):
                    "def 由管线 AI 层原创生成(企业口吻 80~120 字), 人工可直接改字段(管线不覆盖已有概念); "
                    "aliases 用于同义归一与详情页正文匹配。删除概念请连同各条目 concepts 字段里的引用一起清。",
         "concepts": dict(sorted(lib.items())),
-    }, ensure_ascii=False, indent=1), encoding="utf-8")
+    }, ensure_ascii=False, indent=1))
 
 
 def slug_norm(s):
@@ -2775,9 +2775,61 @@ _TPL_CACHE = {}   # 签名在每条目的循环里都要取一次(284 次), 闭�
 # 常量名里带这些字样的不进指纹: 一是它们可能每轮不同(拿不到 key 时为空), 会让签名不稳定、
 # 每轮全量重算; 二是没必要把密钥喂进任何哈希。
 _SIG_SKIP_RX = re.compile(r"KEY|TOKEN|SECRET|PASSWORD|COOKIE")
-# 只有不可变类型进指纹。运行中会被填充的缓存(`_CRX_CACHE`/`_TPL_CACHE` 等 dict)一旦进来,
-# 签名就每轮不同 → 每轮全量重算, 增量缓存直接废掉。
-_SIG_TYPES = (str, int, float, bool, tuple, frozenset)
+# 标量常量一律可进指纹。容器(dict/set/list)要看它在模块里有没有被**就地改写**过:
+# 从未被改写的是配置表(SRC_ICON 那种, 原样进页面), 被改写的是运行时缓存(_CRX_CACHE 等),
+# 后者一旦进指纹, 签名就每轮不同 → 每轮全量重算, 增量缓存直接废掉。判据从 AST 推, 不手写名单。
+_SIG_SCALARS = (str, int, float, bool, tuple, frozenset)
+_SIG_CONTAINERS = (dict, set, frozenset, list, tuple)
+# 就地改写的写法: X[k]=v / del X[k] / X.append(...) 这类
+_MUT_METHODS = frozenset({"setdefault", "update", "pop", "popitem", "clear", "append", "extend",
+                          "insert", "remove", "add", "discard", "sort", "reverse"})
+
+
+def _mutated_globals():
+    """模块里被就地改写过的全局名 —— 这些是运行时缓存/累加器, 不能进指纹。"""
+    if "mut" in _TPL_CACHE:
+        return _TPL_CACHE["mut"]
+    import ast
+    import inspect
+    out = set()
+    try:
+        tree = ast.parse(inspect.getsource(sys.modules[__name__]))
+    except (OSError, TypeError, SyntaxError):
+        _TPL_CACHE["mut"] = frozenset()          # 源码不可得: 保守起见当全部可变(容器一律不进)
+        return _TPL_CACHE["mut"]
+    for n in ast.walk(tree):
+        if isinstance(n, (ast.Assign, ast.AugAssign, ast.Delete)):
+            tg = n.targets if isinstance(n, (ast.Assign, ast.Delete)) else [n.target]
+            for x in tg:
+                if isinstance(x, ast.Subscript) and isinstance(x.value, ast.Name):
+                    out.add(x.value.id)
+        elif (isinstance(n, ast.Call) and isinstance(n.func, ast.Attribute)
+                and n.func.attr in _MUT_METHODS and isinstance(n.func.value, ast.Name)):
+            out.add(n.func.value.id)
+    _TPL_CACHE["mut"] = frozenset(out)
+    return _TPL_CACHE["mut"]
+
+
+def _const_repr(v):
+    """常量的规范化表示 —— 必须**跨进程、跨机器**稳定, 否则签名每轮/每机不同, 全量重算。
+
+    两个坑都踩过才写成这样:
+    · set/frozenset 的 repr 顺序取决于 PYTHONHASHSEED(字符串哈希每进程随机化) → 必须排序
+    · Path 的 repr 是绝对路径, 我的机器是 /Users/… 而 CI 是 /home/runner/… → 折成相对 ROOT
+    """
+    if isinstance(v, dict):
+        return "{" + ",".join(f"{_const_repr(k)}:{_const_repr(x)}"
+                              for k, x in sorted(v.items(), key=lambda kv: repr(kv[0]))) + "}"
+    if isinstance(v, (set, frozenset)):
+        return "{" + ",".join(sorted(_const_repr(x) for x in v)) + "}"
+    if isinstance(v, (list, tuple)):
+        return "[" + ",".join(_const_repr(x) for x in v) + "]"
+    if isinstance(v, Path):
+        try:
+            return f"P:{v.relative_to(ROOT)}"
+        except ValueError:
+            return f"P:{v.name}"
+    return repr(v)
 
 
 def _tpl_parts():
@@ -2813,8 +2865,10 @@ def _tpl_parts():
                 stack.append(n.func.id)
             elif isinstance(n, ast.Name) and isinstance(n.ctx, ast.Load):
                 nm = n.id
-                if (nm.isupper() or nm.lstrip("_").isupper()) and not _SIG_SKIP_RX.search(nm) \
-                        and isinstance(g.get(nm), _SIG_TYPES):
+                val = g.get(nm)
+                if (nm.isupper() or nm.lstrip("_").isupper()) and not _SIG_SKIP_RX.search(nm) and (
+                        isinstance(val, _SIG_SCALARS)
+                        or (isinstance(val, _SIG_CONTAINERS) and nm not in _mutated_globals())):
                     consts.add(nm)
     _TPL_CACHE["parts"] = (tuple(sorted(seen)), tuple(sorted(consts)))
     return _TPL_CACHE["parts"]
@@ -2841,7 +2895,7 @@ def _template_sig():
             raise OSError("闭包为空")
         # 名字一起进哈希: 函数增删/改名也算模板变化(只哈源码则"删一个加一个"可能撞上)
         sig = _sha(*[f"{f}\x1f{inspect.getsource(g[f])}" for f in fns]
-                   + [f"{c}\x1f{g[c]!r}" for c in consts])[:10]
+                   + [f"{c}\x1f{_const_repr(g[c])}" for c in consts])[:10]
     except (OSError, TypeError):   # 源码不可得(打包/exec 场景)时退回纯人工版本号
         sig = "nosrc"
     _TPL_CACHE["sig"] = sig
