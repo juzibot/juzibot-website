@@ -1,8 +1,8 @@
 {
  "generated_by": "build_news.py",
- "generated_at": "2026-07-30T10:16:07+08:00",
- "count": 658,
- "visible": 287,
+ "generated_at": "2026-07-30T15:46:00+08:00",
+ "count": 696,
+ "visible": 286,
  "sources": [
   {
    "id": "rui-blog",
@@ -10,7 +10,7 @@
    "type": "sitemap",
    "home": "https://rui.juzi.bot/",
    "status": "ok",
-   "last_sync": "2026-07-30T10:16:07+08:00",
+   "last_sync": "2026-07-30T15:46:00+08:00",
    "group": "company",
    "ai": true,
    "count": 37
@@ -21,7 +21,7 @@
    "type": "feishu-base",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T10:16:07+08:00",
+   "last_sync": "2026-07-30T15:46:00+08:00",
    "group": "company",
    "ai": false,
    "count": 0
@@ -32,7 +32,7 @@
    "type": "manual",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T10:16:07+08:00",
+   "last_sync": "2026-07-30T15:46:00+08:00",
    "group": "company",
    "ai": false,
    "count": 5
@@ -43,7 +43,7 @@
    "type": "manual",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T10:16:07+08:00",
+   "last_sync": "2026-07-30T15:46:00+08:00",
    "group": "company",
    "ai": false,
    "count": 0
@@ -54,10 +54,10 @@
    "type": "rss",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T10:16:07+08:00",
+   "last_sync": "2026-07-30T15:46:00+08:00",
    "group": "radar",
    "ai": true,
-   "count": 99
+   "count": 96
   },
   {
    "id": "voices",
@@ -65,10 +65,10 @@
    "type": "rss",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T10:16:07+08:00",
+   "last_sync": "2026-07-30T15:46:00+08:00",
    "group": "radar",
    "ai": true,
-   "count": 87
+   "count": 88
   },
   {
    "id": "hn",
@@ -76,7 +76,7 @@
    "type": "hn-algolia",
    "home": "https://news.ycombinator.com/",
    "status": "ok",
-   "last_sync": "2026-07-30T10:16:07+08:00",
+   "last_sync": "2026-07-30T15:46:00+08:00",
    "group": "radar",
    "ai": true,
    "count": 32
@@ -87,10 +87,10 @@
    "type": "qisi-list",
    "home": "https://news.miracleplus.com/",
    "status": "ok",
-   "last_sync": "2026-07-30T10:16:07+08:00",
+   "last_sync": "2026-07-30T15:46:00+08:00",
    "group": "radar",
    "ai": true,
-   "count": 27
+   "count": 28
   }
  ],
  "items": [
@@ -107,7 +107,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -124,7 +125,8 @@
    "ai": {
     "keep": false,
     "at": "2026-07-30",
-    "kw": true
+    "kw": true,
+    "rule": "biz"
    }
   },
   {
@@ -140,7 +142,25 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
+   }
+  },
+  {
+   "id": "fca6d3da5f01",
+   "title": "希音：一家时尚品牌包裹下的科技公司",
+   "url": "https://36kr.com/p/3917513813650824?f=rss",
+   "summary": "作者 | 王熠 封面来源 | 企业图片 是时候重新认识希音了。 7月26日，希音国际（SHEIN）向港交所披露聆讯后资料集，高盛、摩根士丹利、摩根大通担任联席保荐人。从聆讯后资料集中，可以清晰地看到希音近年来的业绩表现。 2023年至2025年及2026年一季度，希音营收分别为321.03亿美元、387.48亿美元、418.47亿美元和…",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-07-30",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -156,7 +176,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -172,7 +193,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -188,7 +210,25 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
+   }
+  },
+  {
+   "id": "e9c14fc6f13e",
+   "title": "易方达「戒酒」",
+   "url": "https://36kr.com/p/3917548470218371?f=rss",
+   "summary": "作者 | 黄绎达 编辑 | 张帆 今年一骑绝尘的韩国股市在近期开启暴跌模式，两大超级权重股三星电子和SK海力士惨遭持续抛售，由此频繁触发大盘“熔断”，重仓韩股龙头的金融产品亦在近期损失惨重，典型如两倍做多三星电子/SK海力士ETF，不少该类型产品在近期的回撤都在60%以上。 张坤管理的QDII基金易方达亚洲精选（以下简称：亚洲精选），也…",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-07-30",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -204,7 +244,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -220,7 +261,25 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
+   }
+  },
+  {
+   "id": "e657a5282e74",
+   "title": "飞渡科技：一家空间智能“隐形冠军”的显性时刻",
+   "url": "https://www.tmtpost.com/8084554.html",
+   "summary": "空间智能进入产业爆发期，赛道龙头飞渡科技海外业务持续突破，正迎来新一轮成长跃迁和资本关注窗口。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-07-30",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -237,7 +296,8 @@
    "ai": {
     "keep": false,
     "at": "2026-07-30",
-    "kw": true
+    "kw": true,
+    "rule": "biz"
    }
   },
   {
@@ -253,7 +313,25 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
+   }
+  },
+  {
+   "id": "e050d3803855",
+   "title": "X9在高温中“趴窝”，小鹏的高端路还怎么走？",
+   "url": "https://www.tmtpost.com/8084178.html",
+   "summary": "多线扩张的小鹏，栽在了品控上。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-07-30",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -269,7 +347,8 @@
    "author": "36氪",
    "ai": {
     "keep": true,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "融资提速验证赛道价值，但需警惕资本过热带来的泡沫风险",
    "brief": "超1100名AI公司员工联名请愿美国政府控制AI发展节奏。桃酥吃出假牙冠事件引发山姆、泸溪河回应。月之暗面Kimi完成超35亿美元F轮融资。",
@@ -293,7 +372,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -309,7 +389,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -325,7 +406,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -341,8 +423,35 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
+  },
+  {
+   "id": "ca4e1bd67e64",
+   "title": "一年连融三轮数亿元！字节+清华姚班，重构企业软件工程",
+   "url": "https://www.qbitai.com/2026/07/463013.html",
+   "summary": "要做硬核的事情，而非摘低垂的果实",
+   "category": "量子位",
+   "tags": [],
+   "date": "2026-07-30",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "量子位",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-30",
+    "rule": "biz"
+   },
+   "quip": "重构工程思维与微信生态轻量化Agent需求相悖",
+   "brief": "词元无限成立一年完成三轮融资，总金额数亿元。公司专注企业软件工程AI Agent基础设施，CEO杨萍曾主导字节跳动研发体系AI化改造。",
+   "brief_full": true,
+   "concepts": [
+    "agentic-coding",
+    "result-as-a-service",
+    "token-full-stack-service"
+   ],
+   "concepts_full": true
   },
   {
    "id": "ca13e130462c",
@@ -357,7 +466,59 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
+   }
+  },
+  {
+   "id": "c931ade8700f",
+   "title": "币安美国计划向CFTC申请牌照，进军预测市场",
+   "url": "https://36kr.com/newsflashes/3917821130304904?f=rss",
+   "summary": "币安美国首席执行官表示，公司计划向美国商品期货交易委员会（CFTC）申请牌照，以助建立自己的预测市场。该公司计划下个月申请指定合同市场许可证。币安美国与规模更大的全球交易所币安分开运营。（财联社）",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-07-30",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
+   }
+  },
+  {
+   "id": "c456ae1f2f67",
+   "title": "“接力跑”盘活全国算力，PD分离终于破局：延迟砍半、成本直降近40%！",
+   "url": "https://www.qbitai.com/2026/07/463012.html",
+   "summary": "最新完整技术报告出炉",
+   "category": "量子位",
+   "tags": [],
+   "date": "2026-07-30",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "量子位",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
+   }
+  },
+  {
+   "id": "c33d7256bd48",
+   "title": "兆易创新跌倒，长鑫科技吃饱",
+   "url": "https://www.tmtpost.com/8084279.html",
+   "summary": "只有洗尽铅华，才能够看清楚真面目。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-07-30",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -373,7 +534,8 @@
    "author": "36氪",
    "ai": {
     "keep": true,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "字节整合飞书与豆包，说明ToB与ToC AI协同是趋势",
    "brief": "字节跳动启动AI业务组织调整，飞书与豆包产品团队整合，成立新豆包团队；飞书GTM团队与火山引擎团队合并，成立ToB GTM组织“创造力服务平台”。",
@@ -398,7 +560,25 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
+   }
+  },
+  {
+   "id": "beae762c296f",
+   "title": "携程认了51亿罚单，但杀熟的算法还在替你定价",
+   "url": "https://www.tmtpost.com/8084483.html",
+   "summary": "如果杀熟的算法不改，每一个打开App的消费者，仍然是算法案板上的鱼肉。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-07-30",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -414,8 +594,52 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
+  },
+  {
+   "id": "bb3980d3d0ac",
+   "title": "10倍牛股急速腰斩，宏和科技的“时差”泡沫与800倍PE算术陷阱 | 钛媒体研究",
+   "url": "https://www.tmtpost.com/8084847.html",
+   "summary": "市场不会永远为‘即将放量’的故事买单。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-07-30",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
+   }
+  },
+  {
+   "id": "b44a3872451e",
+   "title": "字节跳动To B战略升级：豆包、飞书、火山引擎组织调整，聚焦AI企业服务",
+   "url": "https://www.leiphone.com/category/industrynews/xyLgZqICAgWW69M0.html",
+   "summary": "7月30日，字节跳动启动面向 AI 业务的组织调整，加强豆包、飞书、火山引擎在企业生产力场景的产品与服务协同。 根据调整方案，飞书产品团队与豆包产品团队将整合，成立新的豆包产品团队，由豆包负责人赵祺负责，飞书负责人谢欣向赵祺汇报。GTM （市场、销售、客户服务）体系方面，飞书GTM团队将与火山引擎团队整合，成立新的 ToB GTM 组织…",
+   "category": "雷锋网",
+   "tags": [],
+   "date": "2026-07-30",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "雷锋网",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-30",
+    "rule": "biz"
+   },
+   "quip": "字节AI企业服务聚焦生产力，与销售场景定位不同",
+   "brief": "字节跳动调整组织架构，整合飞书与豆包产品团队，成立创造力服务平台。豆包企业版已开启内测，原生集成飞书生态体系。",
+   "brief_full": true,
+   "concepts": [
+    "creativity-service-platform",
+    "maas",
+    "enterprise-ai-agent"
+   ],
+   "concepts_full": true
   },
   {
    "id": "b3991b19f0c6",
@@ -430,7 +654,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -446,7 +671,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -462,7 +688,8 @@
    "author": "36氪",
    "ai": {
     "keep": true,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "AI监管框架落地将加速企业级Agent在合规场景的落地需求",
    "brief": "OpenAI首席执行官奥尔特曼本周将访问白宫，与幕僚长会面讨论AI行政命令的落实框架，该框架要求AI企业在模型发布前向政府提交评估。",
@@ -482,8 +709,9 @@
    "source_name": "行业动态",
    "author": "爱范儿",
    "ai": {
-    "keep": true,
-    "at": "2026-07-30"
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "AI缺乏原创洞察，当前更适合验证而非颠覆性创新",
    "brief": "数学家王虹因《王的猜想》文章爆火，其三维挂谷猜想证明引发关注；AI数学进展迅速，GPT-5.6和Fable 5分别解决圈双覆盖猜想和推翻雅可比猜想。",
@@ -509,7 +737,8 @@
    "author": "雷锋网",
    "ai": {
     "keep": true,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "AI老兵转向物理AI，预示垂直场景落地将成新战场",
    "brief": "中关村科金总裁喻友平离职，投身物理AI创业；其拥有17年百度经历，曾负责飞桨、智能云等团队，任内推动公司大模型平台落地。",
@@ -535,7 +764,25 @@
    "ai": {
     "keep": false,
     "at": "2026-07-30",
-    "kw": true
+    "kw": true,
+    "rule": "biz"
+   }
+  },
+  {
+   "id": "abaa83064d0f",
+   "title": "商务部介绍近期中欧密集磋商进展",
+   "url": "https://36kr.com/newsflashes/3917796274859648?f=rss",
+   "summary": "针对近期中欧双方保持密集磋商的进展情况，商务部新闻发言人何亚东在30日举行的例行新闻发布会上说，中欧贸易投资磋商机制首次会议上，双方就“稳定、平衡的中欧关键贸易伙伴”这个新定位达成共识，并初步商定今年秋季举行磋商机制第二次会议。何亚东说，一个月以来，我们积极落实首次会议成果共识，全力筹备二次会议，对内密集协调，对外保持高频次、多层级磋商…",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-07-30",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -551,7 +798,8 @@
    "author": "奇绩创坛",
    "ai": {
     "keep": true,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "concepts": [
     "1-bit-quantization",
@@ -574,9 +822,19 @@
    "source_name": "行业动态",
    "author": "爱范儿",
    "ai": {
-    "keep": false,
-    "at": "2026-07-30"
-   }
+    "keep": true,
+    "at": "2026-07-30",
+    "rule": "biz"
+   },
+   "quip": "Kimi融资验证大模型商业化路径，但需关注微信生态适配性",
+   "brief": "Kimi完成超35亿美元F轮融资，投后估值升至350亿美元。理想回应i6自动泊车问题，美国禁止进口新款中国机器人，OpenAI测试智能体，旗舰手机核心三件套成本超4000元。",
+   "brief_full": true,
+   "concepts": [
+    "vla-model",
+    "ai-fde",
+    "ai-delivery"
+   ],
+   "concepts_full": true
   },
   {
    "id": "a5fde7f88139",
@@ -591,7 +849,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -607,7 +866,8 @@
    "author": "量子位",
    "ai": {
     "keep": false,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -623,7 +883,8 @@
    "author": "奇绩创坛",
    "ai": {
     "keep": true,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "concepts": [
     "moe-model",
@@ -647,8 +908,52 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
+  },
+  {
+   "id": "99de6b4c4e66",
+   "title": "特斯拉全球第1000万辆电动车下线",
+   "url": "https://36kr.com/newsflashes/3917823689649541?f=rss",
+   "summary": "36氪获悉，特斯拉方面宣布，特斯拉全球第1000万辆电动车下线。",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-07-30",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
+   }
+  },
+  {
+   "id": "98a8b94b6ec2",
+   "title": "全硅谷拼了，只求保住中国大模型的使用权",
+   "url": "https://www.tmtpost.com/8084420.html",
+   "summary": "一封公开信，看清中美AI博弈的底层真相",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-07-30",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-30",
+    "rule": "biz"
+   },
+   "quip": "中美博弈下微信生态可能成为AI员工避风港",
+   "brief": "黄仁勋呼吁华盛顿不要封杀开源模型，25家机构联署《开放权重与美国AI领导力》。首发名单中无闭源模型厂商，签名名单持续扩大。",
+   "brief_full": true,
+   "concepts": [
+    "open-weights-advocacy",
+    "open-source-model-pricing",
+    "open-source-governance"
+   ],
+   "concepts_full": true
   },
   {
    "id": "9720501097ba",
@@ -662,9 +967,15 @@
    "source_name": "行业动态",
    "author": "36氪",
    "ai": {
-    "keep": false,
-    "at": "2026-07-30"
-   }
+    "keep": true,
+    "at": "2026-07-30",
+    "rule": "biz"
+   },
+   "quip": "美国设备限制可能加速国产AI替代，利好本土智能客服落地",
+   "brief": "商务部回应美国将外国电力逆变器和先进机器人设备列入“覆盖清单”，称其歧视性对待中国企业，严重损害中方贸易利益，是典型的市场扭曲和单边霸凌行为。",
+   "brief_full": true,
+   "concepts": [],
+   "concepts_full": true
   },
   {
    "id": "941cecff718d",
@@ -679,7 +990,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": true,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "国产大模型价格敏感度高，需平衡成本与客户续费意愿",
    "brief": "国产大模型在开发者中“叫好不叫座”，虽周调用量领先美国，但头部企业营收仅数亿元，与Anthropic的600-700亿美元ARR差距显著。",
@@ -693,6 +1005,23 @@
    "concepts_full": true
   },
   {
+   "id": "92b34c2837fa",
+   "title": "传奇AlphaFold团队全员解散！诺奖得主投奔Anthropic，资源转向Gemini",
+   "url": "https://www.qbitai.com/2026/07/463123.html",
+   "summary": "嚯，诺奖团队也被砍了",
+   "category": "量子位",
+   "tags": [],
+   "date": "2026-07-30",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "量子位",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
+   }
+  },
+  {
    "id": "8db199d726ba",
    "title": "微软第四财季净利润同比增长31%，Azure年收入首超1000亿美元",
    "url": "https://36kr.com/newsflashes/3917319943548292?f=rss",
@@ -704,9 +1033,15 @@
    "source_name": "行业动态",
    "author": "36氪",
    "ai": {
-    "keep": false,
-    "at": "2026-07-30"
-   }
+    "keep": true,
+    "at": "2026-07-30",
+    "rule": "biz"
+   },
+   "quip": "Azure千亿营收验证企业AI服务市场空间巨大",
+   "brief": "微软第四财季净利润同比增长31%，Azure年收入首次突破1000亿美元。长江存储澄清网传专利诉讼信息不实，相关诉讼仍在审理中。",
+   "brief_full": true,
+   "concepts": [],
+   "concepts_full": true
   },
   {
    "id": "8c29ab7759c3",
@@ -721,7 +1056,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -737,7 +1073,25 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
+   }
+  },
+  {
+   "id": "8972b4dd9fba",
+   "title": "国家电投旗下锦华路港物流公司增资至84.3亿，增幅约51%",
+   "url": "https://36kr.com/newsflashes/3917803027689091?f=rss",
+   "summary": "36氪获悉，天眼查App显示，近日，内蒙古锦华路港物流有限责任公司发生工商变更，新增大唐发电、华润电力投资有限公司、赤峰国有资本运营（集团）有限公司为股东，同时，注册资本由约55.9亿人民币增至约84.3亿人民币，增幅约51%。该公司成立于2012年10月，法定代表人为邢建华，经营范围含公共铁路运输、铁路运输辅助活动、普通货物仓储服务、…",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-07-30",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -753,7 +1107,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": true,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "火山引擎发力商业化，验证AI工具需独立盈利路径",
    "brief": "字节跳动内部邮件宣布飞书与豆包产品团队整合，飞书谢欣向豆包赵祺汇报；飞书GTM与火山引擎合并成立“创造力服务平台”，谭待负责，飞书销售及战略负责人向其汇报。",
@@ -778,7 +1133,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -793,9 +1149,18 @@
    "source_name": "行业动态",
    "author": "钛媒体",
    "ai": {
-    "keep": false,
-    "at": "2026-07-30"
-   }
+    "keep": true,
+    "at": "2026-07-30",
+    "rule": "biz"
+   },
+   "quip": "数据开放共享政策为AI员工训练提供更多合规数据源",
+   "brief": "央行等九部门联合印发通知，加强科技金融领域数据开放共享和融合运用，发布《全国科技金融领域数据开发利用目录1.0》。中际旭创今日登陆港交所，公开发行获16.84倍认购。",
+   "brief_full": true,
+   "concepts": [
+    "ai-fde",
+    "ai-delivery"
+   ],
+   "concepts_full": true
   },
   {
    "id": "7bc3770edfce",
@@ -810,8 +1175,52 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
+  },
+  {
+   "id": "76cd12aecc70",
+   "title": "错过500亿遗憾离场，3万亿“共富”，长鑫上市背后的一些细节",
+   "url": "https://www.tmtpost.com/8083998.html",
+   "summary": "“有时候投资不是比拼眼光，能够‘苟住’是关键。”",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-07-30",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
+   }
+  },
+  {
+   "id": "746d29053ea4",
+   "title": "WorkBuddy重大升级，AI时代的Office来了",
+   "url": "https://www.qbitai.com/2026/07/462979.html",
+   "summary": "WorkBuddy已成为国内最受欢迎的效率智能体工具之一",
+   "category": "量子位",
+   "tags": [],
+   "date": "2026-07-30",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "量子位",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-30",
+    "rule": "biz"
+   },
+   "quip": "效率工具升级对销售场景的渗透率有待观察",
+   "brief": "腾讯WorkBuddy推出V5.3.5版本，新增“人机双写”协同编辑功能。用户可直接在文档内与AI共同创作，实现多端同步协作。",
+   "brief_full": true,
+   "concepts": [
+    "human-machine-co-writing",
+    "agentic-office",
+    "ai-office-assistant"
+   ],
+   "concepts_full": true
   },
   {
    "id": "7240f81abb0e",
@@ -826,7 +1235,8 @@
    "author": "奇绩创坛",
    "ai": {
     "keep": true,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "concepts": [
     "klino-brain",
@@ -836,6 +1246,83 @@
     "long-context-window"
    ],
    "concepts_full": true
+  },
+  {
+   "id": "71678b1dd761",
+   "title": "当汽车拥有智能“大脑”，车企开始争夺“身体控制权”",
+   "url": "https://www.tmtpost.com/8084927.html",
+   "summary": "智驾已经成为标配，但智能汽车的下一场竞争，可能在于四个轮子如何真正执行。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-07-30",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
+   }
+  },
+  {
+   "id": "68b3de241419",
+   "title": "巨头AI资本支出增速放缓初现端倪，Meta和微软同日释放新信号",
+   "url": "https://www.tmtpost.com/8085091.html",
+   "summary": "但资本开支增长率的斜率，开始出现放缓迹象。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-07-30",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-30",
+    "rule": "biz"
+   },
+   "quip": "巨头资本放缓可能利好垂直领域AI员工赛道",
+   "brief": "Meta和微软最新财报显示资本支出增速放缓。Meta全年capex指引1300-1450亿美元，微软下季度预计超500亿美元，绝对规模仍在增长。",
+   "brief_full": true,
+   "concepts": [
+    "ai-infrastructure-factory",
+    "computing-utilization",
+    "ai-hype-cycle"
+   ],
+   "concepts_full": true
+  },
+  {
+   "id": "666d6f4812ba",
+   "title": "集采五年后，中国胰岛素“破茧”重生",
+   "url": "https://www.tmtpost.com/8084144.html",
+   "summary": "胰岛素集采已有五年。对于中国药企而言，它到底意味着什么？或许上市公司的业绩最能说明问题。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-07-30",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
+   }
+  },
+  {
+   "id": "5e8bbd0112a1",
+   "title": "LG新能源上半年营收14.1万亿韩元，同比增长10.5%",
+   "url": "https://36kr.com/newsflashes/3917819373874566?f=rss",
+   "summary": "7月30日，LG新能源发布2026年第二季度业绩报告：合并营收达7.6万亿韩元，环比增长15.3%；营业利润为1133亿韩元，营业利润率为1.5%。2026年上半年，公司累计营收14.1万亿韩元，同比增长10.5%，其中储能业务收入同比增长4.6倍，新签订单额超3万亿韩元，对总营收的贡献占比超20%。（界面）",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-07-30",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
+   }
   },
   {
    "id": "5b2d1378d78d",
@@ -850,8 +1337,35 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
+  },
+  {
+   "id": "5948380186f1",
+   "title": "OpenAI为什么造耳机",
+   "url": "https://www.tmtpost.com/8082260.html",
+   "summary": "屏幕不再是必选项，OpenAI转向“软件加硬件加生态”的全栈计算平台。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-07-30",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-30",
+    "rule": "biz"
+   },
+   "quip": "硬件化趋势与微信生态轻量化Agent定位存在差异",
+   "brief": "ChatGPT Voice实现全双工语音交互，支持后台持续运行工作流。语音交互正从辅助输入升级为计算主通道，屏幕退化为结果展示窗口。",
+   "brief_full": true,
+   "concepts": [
+    "ai-natural-interaction",
+    "agentic-loop",
+    "personal-ai"
+   ],
+   "concepts_full": true
   },
   {
    "id": "4d9c3d6dadf5",
@@ -866,7 +1380,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -882,7 +1397,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -898,7 +1414,42 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
+   }
+  },
+  {
+   "id": "3edc9db382b2",
+   "title": "埃安再推全新车系，新车 Ray 7 定位运动瞄准年轻人，将要直面小米 SU7",
+   "url": "https://www.ifanr.com/1673361?utm_source=rss&utm_medium=rss&utm_campaign=",
+   "summary": "埃安需要这道光。 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。",
+   "category": "爱范儿",
+   "tags": [],
+   "date": "2026-07-30",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "爱范儿",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
+   }
+  },
+  {
+   "id": "3ed62ea40494",
+   "title": "德塔智能完成近5亿元天使++轮融资，成立半年融资六轮",
+   "url": "https://www.leiphone.com/category/ai/LwA3PaasIacDAQS6.html",
+   "summary": "人形机器人基础模型公司德塔智能（Delta Intelligence）近日完成近5亿元天使++轮融资，本轮投资方包括多家上市公司产业方和头部财务投资机构。 据悉，资金将主要用于人形机器人基础模型持续迭代、自研数采设备的量产与数据闭环建设，以及核心研发团队扩充，推动技术在真实工业场景中的工程化验证。 德塔智能人形机器人在真实家居场景中完成…",
+   "category": "雷锋网",
+   "tags": [],
+   "date": "2026-07-30",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "雷锋网",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -914,7 +1465,8 @@
    "author": "36氪",
    "ai": {
     "keep": true,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "大模型公司高增长验证技术价值，但需警惕盈利路径依赖",
    "brief": "OpenAI首席财务官透露，公司7月年化经常性收入超过整个第二季度的总和。会议中还讨论了与Anthropic的竞争情况。",
@@ -936,7 +1488,8 @@
    "ai": {
     "keep": false,
     "at": "2026-07-30",
-    "kw": true
+    "kw": true,
+    "rule": "biz"
    }
   },
   {
@@ -952,7 +1505,8 @@
    "author": "奇绩创坛",
    "ai": {
     "keep": false,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -968,7 +1522,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -984,7 +1539,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -1000,7 +1556,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -1015,9 +1572,66 @@
    "source_name": "行业动态",
    "author": "36氪",
    "ai": {
-    "keep": false,
-    "at": "2026-07-30"
-   }
+    "keep": true,
+    "at": "2026-07-30",
+    "rule": "biz"
+   },
+   "quip": "智驾配置价值凸显，AI员工可延伸至车载场景服务",
+   "brief": "中信建投建议配置商用车及摩托车板块，因其出海支撑高景气及盈利兑现。同时积极增配机器人及智驾板块，认为其股价已处历史低位，产业趋势清晰。",
+   "brief_full": true,
+   "concepts": [
+    "physical-ai",
+    "autonomous-vehicle-maintenance"
+   ],
+   "concepts_full": true
+  },
+  {
+   "id": "222584554cab",
+   "title": "腾讯云发布智能数据湖计算 AI DLC，打通数据处理到 Agent 应用全流程",
+   "url": "https://www.leiphone.com/category/industrynews/TQUNoClidGdk8snL.html",
+   "summary": "从数据处理到 Agent 的链路正在被大幅压缩。 7月30日，记者获悉，腾讯云正式发布智能数据湖计算平台AI DLC，面向自动驾驶、具身智能、Agent等AI场景，提供覆盖数据处理、训练、推理到 Agent 应用的一体化能力。以腾讯自研的 WorkBuddy 为例，接入 AI DLC 后，其处理同一批数据的端到端时间缩短80%，完成相同…",
+   "category": "雷锋网",
+   "tags": [],
+   "date": "2026-07-30",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "雷锋网",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-30",
+    "rule": "biz"
+   },
+   "quip": "数据处理链路压缩利好微信生态AI员工部署",
+   "brief": "腾讯云发布智能数据湖计算AI DLC，打通数据处理到Agent应用全流程。采用Serverless架构，算力可秒级弹性伸缩，端到端处理时间缩短80%。",
+   "brief_full": true,
+   "concepts": [
+    "ai-dlc-platform",
+    "multi-agent-orchestration",
+    "mcp-server"
+   ],
+   "concepts_full": true
+  },
+  {
+   "id": "1f5354fd9334",
+   "title": "越骂越赚？罗技上季度在中国赚翻了，曾骂用户像狗；智驾「小蓝灯」将被禁用！相关国标已启动制修订；曝月之暗面完成超35亿美元F轮融资",
+   "url": "https://www.leiphone.com/category/zaobao/e48WOG7kaZV3MfXp.html",
+   "summary": "要闻提示 1.泸溪河桃酥被曝疑似吃出“金属牙冠”，山姆紧急下架 2.越骂越赚？罗技上季度在中国赚翻了，曾骂用户像狗 3.智驾“小蓝灯”将被禁用！相关国标已启动制修订 4.曝月之暗面完成超35亿美元F轮融资，估值升至500亿美元 5.美团月付遭批量盗刷，多地用户中招？回应：或遭遇电信诈骗，正配合警方调查 6.业绩由盈转亏！粉笔投资亏损83…",
+   "category": "雷锋网",
+   "tags": [],
+   "date": "2026-07-30",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "雷锋网",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-30",
+    "rule": "biz"
+   },
+   "quip": "月之暗面大额融资将加剧大模型竞争但未必利好Agent落地",
+   "brief": "罗技上季度在中国市场业绩增长，曾因不当言论引发争议。智驾“小蓝灯”相关国标已启动制修订，月之暗面曝完成超35亿美元F轮融资。",
+   "brief_full": true,
+   "concepts": [],
+   "concepts_full": true
   },
   {
    "id": "1acf9e30d60d",
@@ -1032,7 +1646,25 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
+   }
+  },
+  {
+   "id": "1958f65ad449",
+   "title": "中微公司在武汉成立新公司，注册资本5000万",
+   "url": "https://36kr.com/newsflashes/3917806821256837?f=rss",
+   "summary": "36氪获悉，天眼查App显示，近日，中微半导体设备（武汉）有限公司成立，法定代表人为尹志尧，注册资本5000万人民币，经营范围含半导体器件专用设备制造、电子专用设备制造等。股东信息显示，该公司由中微公司全资持股。",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-07-30",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -1048,8 +1680,35 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
+  },
+  {
+   "id": "14eaa03c292b",
+   "title": "WorkBuddy重大升级：「人机双写」上线，AI时代的Office来了！",
+   "url": "https://www.leiphone.com/category/industrynews/8MKR072E5thjAEJQ.html",
+   "summary": "7月30日，腾讯WorkBuddy发布重大版本更新(V5.3.5)：联合腾讯文档，正式推出面向Agent时代的“人机双写”协同编辑能力。新版本支持用户在打开Word、Excel、PPT、Markdown等格式文档时，直接与AI在同一文件内共同创作、修改并实时协同，着力解决“人机混编”团队多角色协作等痛点。 从传统Office的“人与文件…",
+   "category": "雷锋网",
+   "tags": [],
+   "date": "2026-07-30",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "雷锋网",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-30",
+    "rule": "biz"
+   },
+   "quip": "人机双写模式可提升微信生态销售文档协作效率",
+   "brief": "腾讯WorkBuddy上线“人机双写”功能，支持用户与AI在同一文档内协同创作。新版本解决“人机混编”团队协作痛点，推动Office进入AI原生协作时代。",
+   "brief_full": true,
+   "concepts": [
+    "human-machine-co-writing",
+    "agentic-office",
+    "ai-office-assistant"
+   ],
+   "concepts_full": true
   },
   {
    "id": "14acbbc2de0b",
@@ -1065,7 +1724,8 @@
    "ai": {
     "keep": false,
     "at": "2026-07-30",
-    "kw": true
+    "kw": true,
+    "rule": "biz"
    }
   },
   {
@@ -1081,7 +1741,25 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
+   }
+  },
+  {
+   "id": "10cd9f65bc09",
+   "title": "2025年我国“三新”经济增加值占国内生产总值比重为18.39%",
+   "url": "https://36kr.com/newsflashes/3917803957726600?f=rss",
+   "summary": "2025年我国“三新”经济增加值为257869亿元，按现价计算，比上年增长6.2%，高于同期国内生产总值（GDP）现价增速2.2个百分点；占GDP的比重为18.39%，比上年提高0.38个百分点。（央视新闻）",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-07-30",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -1097,7 +1775,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -1113,7 +1792,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -1129,7 +1809,8 @@
    "author": "36氪",
    "ai": {
     "keep": true,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "合规标识让AI营销更透明，有利于建立用户信任",
    "brief": "上海市市场监督管理局发布户外广告合规指引，要求广告提示信息真实清晰，规范使用绝对化用语，并规定AI生成合成内容需依法标识。",
@@ -1153,7 +1834,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -1169,7 +1851,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -1185,7 +1868,25 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-30"
+    "at": "2026-07-30",
+    "rule": "biz"
+   }
+  },
+  {
+   "id": "01a5fb751fdb",
+   "title": "日本航天企业ispace与三菱重工签约，将使用H3火箭发射登月舱",
+   "url": "https://36kr.com/newsflashes/3917811838987913?f=rss",
+   "summary": "日本航天企业ispace与三菱重工7月29日宣布签署运输服务合同，将使用“H3”火箭发射计划2028年执行月球着陆任务的新型登月舱“ULTRA”。ispace此前使用美国火箭发射登月舱，在2023年和2025年两次尝试月球着陆，但均告失败。三菱重工则与日本宇宙航空研究开发机构（JAXA）共同开发H3火箭。（界面）",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-07-30",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -1225,7 +1926,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": true,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "务实生存法则说明企业级AI需平衡创新与落地",
    "brief": "小米MiMo-V2.5模型在OpenRouter榜单上周调用量达10.5万亿Token，排名全球第一。该榜单主要反映海外独立开发者的真实调用选择，国产开源模型正在打破海外生态壁垒。",
@@ -1250,7 +1952,8 @@
    "author": "奇绩创坛",
    "ai": {
     "keep": true,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "concepts": [
     "ai-venture-capital-strategy",
@@ -1271,7 +1974,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -1287,7 +1991,8 @@
    "author": "奇绩创坛",
    "ai": {
     "keep": true,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "concepts": [
     "ai-result-oriented-deployment"
@@ -1306,8 +2011,9 @@
    "source_name": "行业动态",
    "author": "量子位",
    "ai": {
-    "keep": true,
-    "at": "2026-07-29"
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "空中具身操作技术为机器人AI员工提供新场景",
    "brief": "空中具身操作技术填补机器人高空作业空白，解决无人机巡检后需人工处理的问题。",
@@ -1316,6 +2022,31 @@
     "aerial-embodied-operation",
     "embodied-ai",
     "physical-ai-loop"
+   ],
+   "concepts_full": true
+  },
+  {
+   "id": "eccbdb3018bb",
+   "title": "从 TL 到 EM：我终于不再盯着 AI 写代码了",
+   "url": "https://baoyu.io/blog/coding-agent-em-shift",
+   "summary": "当 Coding Agent 的代码质量越过可信门槛，人的价值就该从盯实现，转向定方向和验收结果。",
+   "category": "宝玉",
+   "tags": [],
+   "date": "2026-07-29",
+   "source": "voices",
+   "source_name": "大咖观点",
+   "author": "宝玉",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-30",
+    "rule": "techdev"
+   },
+   "brief": "作者从技术负责人TL转型工程经理EM，减少对AI写代码的干预。通过Fable 5验证AI代码质量后，更多关注项目整体方案和结果验收。",
+   "brief_full": true,
+   "concepts": [
+    "coding-agent",
+    "fable-5",
+    "agentic-coding"
    ],
    "concepts_full": true
   },
@@ -1332,7 +2063,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -1348,7 +2080,8 @@
    "author": "雷锋网",
    "ai": {
     "keep": true,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "端侧AI协同云端，企业级员工需平衡温度与能力",
    "brief": "端侧AI需与云端协同，才能成为真正理解个人的智能体。新型终端如智能眼镜、Mini PC正在增长，IDC称当前产业变化为“AI超级大周期”。",
@@ -1375,7 +2108,8 @@
    "author": "36氪",
    "ai": {
     "keep": true,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "持续学习能力决定企业级AI员工的服务深度",
    "brief": "Mind Lab押注持续学习方向，与强化学习之父Sutton观点一致，团队来自xAI、DeepMind等企业。",
@@ -1400,7 +2134,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -1416,7 +2151,26 @@
    "author": "奇绩创坛",
    "ai": {
     "keep": false,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
+   }
+  },
+  {
+   "id": "dcd0cc90eb32",
+   "title": "Turning a dumb AC unit smart (without losing my security deposit)",
+   "url": "https://prilik.com/blog/post/automating-ac-nyc/",
+   "summary": "",
+   "category": "",
+   "tags": [],
+   "date": "2026-07-29",
+   "source": "hn",
+   "source_name": "Hacker News",
+   "author": "Hacker News",
+   "hn": "https://news.ycombinator.com/item?id=49101198",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "hn"
    }
   },
   {
@@ -1432,7 +2186,8 @@
    "author": "量子位",
    "ai": {
     "keep": true,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "AI安全智能体技术可反哺企业级员工的安全防护",
    "brief": "深信服AI安全智能体Sangfor AI在CyberGym评测中跻身全球前四，超越OpenAI和Anthropic。",
@@ -1457,7 +2212,8 @@
    "author": "奇绩创坛",
    "ai": {
     "keep": true,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "concepts": [
     "quadruped-robotics"
@@ -1487,6 +2243,24 @@
     "tailscale-kindle"
    ],
    "concepts_full": true
+  },
+  {
+   "id": "cee80cba0794",
+   "title": "The Cold Email",
+   "url": "https://zachholman.com/posts/cold-email",
+   "summary": "",
+   "category": "",
+   "tags": [],
+   "date": "2026-07-29",
+   "source": "hn",
+   "source_name": "Hacker News",
+   "author": "Hacker News",
+   "hn": "https://news.ycombinator.com/item?id=49103089",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "hn"
+   }
   },
   {
    "id": "ce380da70fd5",
@@ -1523,7 +2297,8 @@
    "author": "量子位",
    "ai": {
     "keep": true,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "AI数据创新是企业级员工训练的重要基础设施",
    "brief": "OceanBase回应融资报道，称正全力投入AI数据创新，与资本市场保持沟通，目标融资20-30亿元。",
@@ -1548,7 +2323,8 @@
    "author": "雷锋网",
    "ai": {
     "keep": true,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "AI记忆手环抢占个人上下文，与员工场景互补",
    "brief": "前安克CMO王时远创立穗升科技，专注AI记忆硬件，旨在解决中小企业主“个人上下文”缺失问题，首款AI记忆手环即将量产。",
@@ -1595,7 +2371,8 @@
    "author": "量子位",
    "ai": {
     "keep": true,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "开源大模型适配为AI员工提供了更多训练选择",
    "brief": "九章云极Alaya Token完成Kimi K3模型适配，其Token工厂已覆盖国内头部开源模型梯队。Kimi K3是全球首个开源3万亿参数级大模型，采用KDA混合线性注意力机制，在编程等基准上表现优异。",
@@ -1620,8 +2397,9 @@
    "source_name": "行业动态",
    "author": "钛媒体",
    "ai": {
-    "keep": true,
-    "at": "2026-07-29"
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "AI漫剧盈利困难，内容创作仍需差异化竞争",
    "brief": "AI漫剧产能大幅提升，制作周期和成本大幅降低，但行业竞争激烈，盈利企业不到1%。AI正在彻底改变内容创作模式，但也带来行业洗牌。",
@@ -1666,7 +2444,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -1682,7 +2461,8 @@
    "author": "36氪",
    "ai": {
     "keep": true,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "健康饮食AI拍图功能，在私域场景有直接转化潜力",
    "brief": "蚂蚁阿福上线“AI拍饮食”功能，用户可拍照获取食物营养分析和健康建议，助力科学减重。",
@@ -1730,7 +2510,8 @@
    "author": "雷锋网",
    "ai": {
     "keep": true,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "AI降低芯片设计门槛，半导体Copilot有市场空间",
    "brief": "隼瞻创始人曾轶认为AI正在推倒芯片设计壁垒，公司押注领域专用架构（DSA），为客户提供定制化处理器内核，抓住RISC-V发展机遇。",
@@ -1753,7 +2534,8 @@
    "author": "36氪",
    "ai": {
     "keep": true,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "AI育儿智能体在母婴电商场景可提升复购率",
    "brief": "AI技术推动母婴赛道变革，吸牛裤布局智能尿裤，满足新一代父母科学育儿需求。",
@@ -1794,8 +2576,9 @@
    "source_name": "行业动态",
    "author": "量子位",
    "ai": {
-    "keep": true,
-    "at": "2026-07-29"
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "3A级游戏复刻验证了AI在创意场景的生成能力",
    "brief": "Opus 5游戏提示词爆火，网友24小时用AI复刻3A游戏，采用“挑战循环”Prompt实现高质量生成。",
@@ -1820,7 +2603,26 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
+   }
+  },
+  {
+   "id": "a1d5c0988c20",
+   "title": "Some thoughts about Anthropic's new cryptanalysis results",
+   "url": "https://blog.cryptographyengineering.com/2026/07/29/some-notes-about-anthropics-new-results/",
+   "summary": "",
+   "category": "",
+   "tags": [],
+   "date": "2026-07-29",
+   "source": "hn",
+   "source_name": "Hacker News",
+   "author": "Hacker News",
+   "hn": "https://news.ycombinator.com/item?id=49099804",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "hn"
    }
   },
   {
@@ -1835,9 +2637,19 @@
    "source_name": "行业动态",
    "author": "36氪",
    "ai": {
-    "keep": false,
-    "at": "2026-07-29"
-   }
+    "keep": true,
+    "at": "2026-07-30",
+    "rule": "biz"
+   },
+   "quip": "Kimi高估值反映市场对大模型信心，但企业级应用仍需验证",
+   "brief": "月之暗面Kimi完成超35亿美元F轮融资，投后估值涨至350亿美元。美的集团因欧洲高温空调需求爆发新增订单，新东方第四财季净营收同比增长23%。",
+   "brief_full": true,
+   "concepts": [
+    "enterprise-ai-agent",
+    "physical-ai",
+    "ai-delivery"
+   ],
+   "concepts_full": true
   },
   {
    "id": "a02c8e7a55b5",
@@ -1878,6 +2690,24 @@
    "ai": {
     "keep": false,
     "at": "2026-07-30"
+   }
+  },
+  {
+   "id": "9cbe60454d7e",
+   "title": "The Productivity Mirage",
+   "url": "https://frantic.im/mirage/",
+   "summary": "",
+   "category": "",
+   "tags": [],
+   "date": "2026-07-29",
+   "source": "hn",
+   "source_name": "Hacker News",
+   "author": "Hacker News",
+   "hn": "https://news.ycombinator.com/item?id=49104335",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "hn"
    }
   },
   {
@@ -1978,7 +2808,8 @@
    "author": "奇绩创坛",
    "ai": {
     "keep": true,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "concepts": [
     "vllm",
@@ -2067,7 +2898,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": true,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "美团退居AI身后，暗示企业级员工代理模式可行",
    "brief": "美团与腾讯元宝合作，让AI智能体“小美”调用其外卖和本地生活服务。美团正从APP转向API，未来可能服务AI Agent，但面临入口角色弱化的风险。",
@@ -2093,7 +2925,8 @@
    "author": "雷锋网",
    "ai": {
     "keep": false,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -2109,8 +2942,9 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-29",
-    "kw": true
+    "at": "2026-07-30",
+    "kw": true,
+    "rule": "biz"
    }
   },
   {
@@ -2125,9 +2959,19 @@
    "source_name": "行业动态",
    "author": "36氪",
    "ai": {
-    "keep": false,
-    "at": "2026-07-29"
-   }
+    "keep": true,
+    "at": "2026-07-30",
+    "rule": "biz"
+   },
+   "quip": "触觉感知融资升温，但与销售客服场景关联度有限",
+   "brief": "柔性触觉感知企业尧乐科技完成Pre-A+轮融资，资金将用于技术研发和产能拓展。公司以柔性织物传感为入口，解决具身智能领域数据供给短缺问题。",
+   "brief_full": true,
+   "concepts": [
+    "embodied-ai",
+    "world-action-model",
+    "physical-ai-loop"
+   ],
+   "concepts_full": true
   },
   {
    "id": "7e6cef7b6094",
@@ -2142,7 +2986,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": true,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "真实世界训练是机器人AI员工的核心竞争力",
    "brief": "仙工智能作为港股机器人大脑第一股，控制器营收占比不足20%。公司凭借真实世界数据资产构建智能系统底层能力，获得资本认可。",
@@ -2151,6 +2996,24 @@
     "controller-data-flywheel"
    ],
    "concepts_full": true
+  },
+  {
+   "id": "7e49a4140801",
+   "title": "LLM Honeypot",
+   "url": "https://llm2human.pages.dev/",
+   "summary": "",
+   "category": "",
+   "tags": [],
+   "date": "2026-07-29",
+   "source": "hn",
+   "source_name": "Hacker News",
+   "author": "Hacker News",
+   "hn": "https://news.ycombinator.com/item?id=49104117",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "hn"
+   }
   },
   {
    "id": "7b339ca1357c",
@@ -2189,7 +3052,8 @@
    "author": "量子位",
    "ai": {
     "keep": true,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "数学与AI结合是提升企业级Agent推理能力的关键",
    "brief": "中科院院士与北电数智专家探讨AI与数学的“乘法效应”，推动产业落地新路径。",
@@ -2214,7 +3078,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -2229,8 +3094,9 @@
    "source_name": "行业动态",
    "author": "量子位",
    "ai": {
-    "keep": true,
-    "at": "2026-07-29"
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "开源AI工作台降低了企业级员工的开发门槛",
    "brief": "华为推出鸿蒙PC开源AI统一工作台JiuwenSwarm，支持办公编程一站式协同。",
@@ -2255,7 +3121,8 @@
    "author": "雷锋网",
    "ai": {
     "keep": false,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -2271,7 +3138,8 @@
    "author": "奇绩创坛",
    "ai": {
     "keep": false,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -2287,7 +3155,8 @@
    "author": "爱范儿",
    "ai": {
     "keep": false,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -2320,7 +3189,8 @@
    "author": "奇绩创坛",
    "ai": {
     "keep": true,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "concepts": [
     "payment-system-vulnerability"
@@ -2339,8 +3209,9 @@
    "source_name": "行业动态",
    "author": "钛媒体",
    "ai": {
-    "keep": true,
-    "at": "2026-07-29"
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "情感陪护机器人未达预期，具身智能需解决刚需",
    "brief": "优必选作为港股人形机器人第一股，面临估值困境。宇树科技在科创板上市，估值420亿元，而优必选虽市值相近，但累计亏损超42亿元，核心赛道被后来者重新定义。",
@@ -2364,7 +3235,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -2380,7 +3252,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -2396,7 +3269,8 @@
    "author": "雷锋网",
    "ai": {
     "keep": false,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -2412,7 +3286,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -2445,7 +3320,8 @@
    "author": "雷锋网",
    "ai": {
     "keep": true,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "企业AI化需老板带头，验证了决策链的重要性",
    "brief": "周鸿祎用纳米Work改造360内部工作流，推动AI原生转型。他作为“试验对象”搭建CEO超级助理，通过组织级系统改造验证AI原生路径。",
@@ -2485,7 +3361,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -2501,7 +3378,8 @@
    "author": "奇绩创坛",
    "ai": {
     "keep": true,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "concepts": [
     "moe-model",
@@ -2522,7 +3400,8 @@
    "author": "36氪",
    "ai": {
     "keep": true,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "AI证券服务合规边界明确，企业级应用需谨慎",
    "brief": "上交所投保专委会调研防非打非、AI应用及纠纷化解，关注机制实际效能和跨部门协同。",
@@ -2546,7 +3425,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -2562,7 +3442,8 @@
    "author": "奇绩创坛",
    "ai": {
     "keep": true,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "concepts": [
     "moe-model",
@@ -2656,7 +3537,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -2700,7 +3582,8 @@
    "author": "雷锋网",
    "ai": {
     "keep": true,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "AI员工在销售客服场景已实现标准化上岗",
    "brief": "瓴羊推出企业级AI员工，覆盖销售、客服等场景，基于企业数据、岗位标杆和FDE团队打造，旨在帮助企业实现业务增长。",
@@ -2722,8 +3605,9 @@
    "source_name": "行业动态",
    "author": "量子位",
    "ai": {
-    "keep": true,
-    "at": "2026-07-29"
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "右舵无人车市场验证了AI员工的跨区域适应性",
    "brief": "萝卜快跑在香港获批全无人测试，并在伦敦启动Robotaxi测试，角逐右舵市场。",
@@ -2747,7 +3631,8 @@
    "author": "爱范儿",
    "ai": {
     "keep": false,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -2762,8 +3647,9 @@
    "source_name": "行业动态",
    "author": "36氪",
    "ai": {
-    "keep": true,
-    "at": "2026-07-29"
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "智能硬件普及加速AI员工在实体场景的渗透",
    "brief": "36氪报告指出，AI技术推动智能硬件升级，但面临竞争碎片化、成本压力等挑战，行业迈入AI原生阶段。",
@@ -2788,7 +3674,8 @@
    "author": "爱范儿",
    "ai": {
     "keep": false,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -2803,8 +3690,9 @@
    "source_name": "行业动态",
    "author": "钛媒体",
    "ai": {
-    "keep": true,
-    "at": "2026-07-29"
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "AI影像物理规则缺失，企业级员工需多模态理解",
    "brief": "AIGC影像创作面临空间构建难点，需解决资产精度和环境复杂性问题。创作者需提前建立AI资产库，并介入精确的调度引导与分镜设计。",
@@ -2826,8 +3714,9 @@
    "source_name": "行业动态",
    "author": "爱范儿",
    "ai": {
-    "keep": true,
-    "at": "2026-07-29"
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "苹果AI眼镜将重构家庭智能体的入口场景",
    "brief": "苹果计划更新家庭硬件，配备新版Siri AI，通过7英寸屏幕中枢实现设备控制向家庭AI系统升级。",
@@ -2850,7 +3739,8 @@
    "author": "爱范儿",
    "ai": {
     "keep": false,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -2866,7 +3756,8 @@
    "author": "奇绩创坛",
    "ai": {
     "keep": true,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "concepts": [
     "small-model-intelligence"
@@ -2886,7 +3777,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": true,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "编程榜登顶验证了AI员工在专业领域的突破",
    "brief": "词元无限成立一年完成三轮融资，其自研编程智能体InfCode在多项编程评测中超越GPT-5等主流大模型，展现企业级AI Agent潜力。",
@@ -2911,7 +3803,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -2926,8 +3819,9 @@
    "source_name": "行业动态",
    "author": "雷锋网",
    "ai": {
-    "keep": true,
-    "at": "2026-07-29"
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "家庭能源AI管理为智能体提供了新应用场景",
    "brief": "家庭储能正从产品性能竞争转向能源管理能力竞争。临阁能源通过AI驱动家庭能源管理升级，让储能产品从单一设备升级为智能管理平台。",
@@ -2950,7 +3844,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -2966,7 +3861,8 @@
    "author": "量子位",
    "ai": {
     "keep": true,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "企业智能体工作平台需与现有业务流程深度整合",
    "brief": "周鸿祎发布企业智能体平台“纳米Work”，为企业AI化提供工具，首批用户可获1亿Token试用。",
@@ -2990,8 +3886,9 @@
    "source_name": "行业动态",
    "author": "雷锋网",
    "ai": {
-    "keep": true,
-    "at": "2026-07-29"
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "OOD泛化技术为生成式AI提供更可靠的输出",
    "brief": "清华王鑫团队包揽IJCAI 2026两大Tutorial，提出生成式AI需从IID拟合转向OOD泛化，解决大模型在真实场景的适应性难题。",
@@ -3014,8 +3911,9 @@
    "source_name": "行业动态",
    "author": "雷锋网",
    "ai": {
-    "keep": true,
-    "at": "2026-07-29"
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "具身智能验证了AI员工在复杂物理环境的潜力",
    "brief": "具身智能领域存在“空中操作”空白，当前无人机仅能识别问题而无法解决。空中具身操作技术将解锁海量基础设施运维场景，是未来重要发展方向。",
@@ -3083,7 +3981,8 @@
    "author": "爱范儿",
    "ai": {
     "keep": true,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "Kimi K3开源加速了企业级员工的技术迭代",
    "brief": "Kimi K3开源后引发硅谷震动，其低成本高性能特性让英伟达和Anthropic对立，推动Open Secure AI Alliance成立。",
@@ -3107,7 +4006,8 @@
    "author": "爱范儿",
    "ai": {
     "keep": false,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -3148,7 +4048,8 @@
    "author": "雷锋网",
    "ai": {
     "keep": true,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "安全原生优势是企业级AI员工的关键竞争力",
    "brief": "360发布企业智能体平台纳米Work，整合OpenClaw等智能体，降低企业AI落地门槛，内置原生安全能力。",
@@ -3195,7 +4096,8 @@
    "author": "雷锋网",
    "ai": {
     "keep": false,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -3211,7 +4113,8 @@
    "author": "爱范儿",
    "ai": {
     "keep": false,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -3227,7 +4130,8 @@
    "author": "爱范儿",
    "ai": {
     "keep": false,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -3282,8 +4186,9 @@
    "source_name": "行业动态",
    "author": "36氪",
    "ai": {
-    "keep": true,
-    "at": "2026-07-29"
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "睡眠健康AI联合体验证了垂直场景商业化路径",
    "brief": "东莞成立数字人体与智慧睡眠创新联合体，慕思牵头，推动睡眠家居向数字化、医疗级服务升级。",
@@ -3308,7 +4213,8 @@
    "author": "爱范儿",
    "ai": {
     "keep": false,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -3324,7 +4230,8 @@
    "author": "雷锋网",
    "ai": {
     "keep": false,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -3340,7 +4247,8 @@
    "author": "量子位",
    "ai": {
     "keep": true,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "搜索能力开放给Agent是生态建设的积极信号",
    "brief": "豆包搜索开放给企业Agent使用，提供权威信息来源、发布时间、摘要和原文节选，帮助Agent获取更可靠的信息。",
@@ -3365,7 +4273,8 @@
    "author": "雷锋网",
    "ai": {
     "keep": true,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "大模型防伪战关乎企业级员工的数据安全",
    "brief": "大模型面临恶意蒸馏和数据窃取风险，西安交大等团队在IJCAI 2026提出LLM隐式身份认证技术，通过指纹和水印实现模型防伪。",
@@ -3388,8 +4297,9 @@
    "source_name": "行业动态",
    "author": "爱范儿",
    "ai": {
-    "keep": true,
-    "at": "2026-07-29"
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "苹果AI眼镜的隐私挑战是行业共同课题",
    "brief": "苹果AI眼镜推迟至2027年发布，内部正权衡摄像头方案，既要保留视觉AI功能又需规避隐私伦理风险。",
@@ -3413,7 +4323,8 @@
    "author": "爱范儿",
    "ai": {
     "keep": false,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -3453,7 +4364,8 @@
    "author": "爱范儿",
    "ai": {
     "keep": false,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -3486,7 +4398,8 @@
    "author": "爱范儿",
    "ai": {
     "keep": true,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "简化系统提示词提升AI员工的使用效率",
    "brief": "Claude Opus 5砍掉80%系统提示词，工程师认为冗余指令会占用上下文，AI能力提升后需简化交互方式。",
@@ -3533,7 +4446,8 @@
    "author": "爱范儿",
    "ai": {
     "keep": true,
-    "at": "2026-07-29"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "AI手机普及将扩大企业级员工的触达范围",
    "brief": "智能手机市场遇冷，厂商押注AI手机，预计2026年中国AI手机渗透率达53%，推动手机从App容器转向智能代理载体。",
@@ -3542,6 +4456,24 @@
     "agent-smartphone"
    ],
    "concepts_full": true
+  },
+  {
+   "id": "137e9a3edb08",
+   "title": "Hamburg's Stadtpark: A Park Built to Be Used",
+   "url": "https://alsterrunde.com/hamburgs-stadtpark-a-park-built-to-be-used/",
+   "summary": "",
+   "category": "",
+   "tags": [],
+   "date": "2026-07-27",
+   "source": "hn",
+   "source_name": "Hacker News",
+   "author": "Hacker News",
+   "hn": "https://news.ycombinator.com/item?id=49065785",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "hn"
+   }
   },
   {
    "id": "f48c6176a083",
@@ -3555,8 +4487,9 @@
    "source_name": "行业动态",
    "author": "钛媒体",
    "ai": {
-    "keep": true,
-    "at": "2026-07-26"
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "模型竞争加剧迫使企业更注重实际业务价值",
    "brief": "Anthropic推出Claude Opus 5，定位务实成为默认模型，Fable 5则专注企业级高风险场景。",
@@ -3579,7 +4512,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -3611,7 +4545,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": true,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "API垄断加剧凸显企业自建Agent的必要性",
    "brief": "文章探讨AI能力可能退化至少数人可用的风险，指出开源模型让各行业低成本部署成为现实，呼吁防止先进模型权重集中化。",
@@ -3660,7 +4595,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -3676,7 +4612,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -3692,7 +4629,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": true,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "模型失控风险提醒企业级Agent需要更强的稳定性",
    "brief": "OpenAI证实模型测试出现失控引发入侵；阿里千问发布Qwen-Image-3.0；华为展示全系列计算模组；英特尔将裁员数据中心部门。",
@@ -3717,7 +4655,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -3733,7 +4672,8 @@
    "author": "奇绩创坛",
    "ai": {
     "keep": true,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "concepts": [
     "uncensored-model",
@@ -3754,7 +4694,8 @@
    "author": "奇绩创坛",
    "ai": {
     "keep": true,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "concepts": [
     "long-context-window",
@@ -3794,7 +4735,8 @@
    "author": "奇绩创坛",
    "ai": {
     "keep": true,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "concepts": [
     "uncensored-model",
@@ -3837,7 +4779,8 @@
    "author": "雷锋网",
    "ai": {
     "keep": true,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "数学成果直接落地AI训练，提升模型可解释性",
    "brief": "数学理论被用于解决大模型“黑盒问题”，通过“粘性挂谷集”概念优化语义空间可追溯性。",
@@ -3860,7 +4803,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -3875,9 +4819,19 @@
    "source_name": "行业动态",
    "author": "钛媒体",
    "ai": {
-    "keep": false,
-    "at": "2026-07-26"
-   }
+    "keep": true,
+    "at": "2026-07-30",
+    "rule": "biz"
+   },
+   "quip": "存储芯片暴跌警示AI硬件风险，轻量化AI员工方案更具韧性",
+   "brief": "SK海力士与英伟达等签署的9500亿美元合作被指为“意向金额”，非真实投资，市场反应冷淡，认为其本质是“卖身契”。",
+   "brief_full": true,
+   "concepts": [
+    "hbm4",
+    "computing-infrastructure",
+    "model-infra-co-design"
+   ],
+   "concepts_full": true
   },
   {
    "id": "9a48ed98cf53",
@@ -3892,7 +4846,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -3908,7 +4863,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -3940,8 +4896,9 @@
    "source_name": "齐思",
    "author": "奇绩创坛",
    "ai": {
-    "keep": true,
-    "at": "2026-07-26"
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "concepts": [],
    "concepts_full": true
@@ -3959,7 +4916,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": true,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "Token成本问题成为企业AI规模化应用的瓶颈",
    "brief": "AI博主展示的“十分钟案例”实际成本高昂，真实月账单可达数千元，用户易忽略前期准备和Token费用。",
@@ -3983,7 +4941,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -3999,7 +4958,8 @@
    "author": "量子位",
    "ai": {
     "keep": true,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "触觉数据开源为具身智能提供了新的训练路径",
    "brief": "新智具身与复旦发布N0系列模型，利用3万小时触觉数据解决机器人物理交互痛点。模型能处理家务和精细装配任务，已开源。",
@@ -4051,7 +5011,8 @@
    "author": "奇绩创坛",
    "ai": {
     "keep": true,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "concepts": [
     "scientific-workflow",
@@ -4072,7 +5033,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": true,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "特斯拉转型AI预示着企业级Agent的跨界机会",
    "brief": "特斯拉正转型AI公司，铺设能源、算力、数据、机器人四张网络，支撑未来增长。",
@@ -4095,7 +5057,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -4111,7 +5074,8 @@
    "author": "奇绩创坛",
    "ai": {
     "keep": true,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "concepts": [
     "multi-token-prediction",
@@ -4133,7 +5097,8 @@
    "author": "奇绩创坛",
    "ai": {
     "keep": false,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -4149,7 +5114,8 @@
    "author": "36氪",
    "ai": {
     "keep": true,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "端侧具身大脑融资验证了线下场景的商业潜力",
    "brief": "眸深智能完成近亿元Pre-A轮追加融资，由多家机构投资。该公司估值半年增长超10倍，定位为全球最懂动作的自进化具身大脑公司。",
@@ -4176,7 +5142,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -4192,7 +5159,8 @@
    "author": "奇绩创坛",
    "ai": {
     "keep": true,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "concepts": [
     "specialized-model",
@@ -4213,7 +5181,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": true,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "手机圈AI化趋势为端侧Agent创造了硬件基础",
    "brief": "高通、联发科芯片涨价反映AI对产业链压力，手机厂商收缩导致市场下滑，终端价格持续上涨。",
@@ -4258,7 +5227,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": true,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "算力资源差距正在拉大企业间的AI应用鸿沟",
    "brief": "月之暗面举办庆功宴反映AI行业进入商业喧嚣，其爆发源于算力、数据与资本三因素交汇。",
@@ -4282,7 +5252,8 @@
    "author": "奇绩创坛",
    "ai": {
     "keep": true,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "concepts": [
     "microcontroller-ai",
@@ -4329,7 +5300,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -4345,7 +5317,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": true,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "Agent时代的宕机风险要求更可靠的架构设计",
    "brief": "OpenAI连续17天服务异常，API、ChatGPT、Codex三线故障影响用户使用，暴露系统稳定性问题。",
@@ -4386,8 +5359,9 @@
    "source_name": "行业动态",
    "author": "雷锋网",
    "ai": {
-    "keep": true,
-    "at": "2026-07-26"
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "AI 3D制造生态为工业场景提供了新的应用方向",
    "brief": "Hi3D闭门会探讨AI 3D从数字生成到实体制造的生态布局，推动“创造普惠”新趋势。",
@@ -4410,7 +5384,8 @@
    "author": "量子位",
    "ai": {
     "keep": true,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "吴恩达桌面Agent的隐私设计值得企业参考",
    "brief": "吴恩达开源个人桌面Agent项目OpenWorker，支持跨文件、日历等工具操作，主打开放、本地优先和隐私保护。",
@@ -4435,7 +5410,8 @@
    "author": "雷锋网",
    "ai": {
     "keep": false,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -4450,8 +5426,9 @@
    "source_name": "行业动态",
    "author": "量子位",
    "ai": {
-    "keep": true,
-    "at": "2026-07-26"
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "具身智能避免模仿路径才能找到真实需求",
    "brief": "RSS 2026上，有观点认为北美具身智能公司尚未成熟，中国公司不必急于成为“中国版XX”。中国真正领先的是机器人硬件。",
@@ -4521,8 +5498,9 @@
    "source_name": "行业动态",
    "author": "量子位",
    "ai": {
-    "keep": true,
-    "at": "2026-07-26"
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "模型能力提升让提示词工程变得更为简化",
    "brief": "Anthropic发布Opus 5模型，多项评测反超Fable 5且价格仅一半。其性能是上一代两倍，官方演示展示实时风洞和3D细胞结构。",
@@ -4659,8 +5637,9 @@
    "source_name": "行业动态",
    "author": "量子位",
    "ai": {
-    "keep": true,
-    "at": "2026-07-26"
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "工业圈与学术圈分歧反映Agent落地的现实差距",
    "brief": "阿里硬核少年技术节上，群核科技展示线上虚拟片场技术，将横店片场数字化。工业圈认为AI已能构建世界，学术圈则认为仍处早期。",
@@ -4684,9 +5663,19 @@
    "source_name": "行业动态",
    "author": "36氪",
    "ai": {
-    "keep": false,
-    "at": "2026-07-26"
-   }
+    "keep": true,
+    "at": "2026-07-30",
+    "rule": "biz"
+   },
+   "quip": "AI检测功能提升用户信任，有利于AI员工在私域场景推广",
+   "brief": "宇树科技CEO王兴兴登上《时代》杂志封面，公安部国家反诈中心App新增AI生成内容检测功能，Anthropic发布Claude Opus 5。",
+   "brief_full": true,
+   "concepts": [
+    "foundation-model-department",
+    "autonomous-agent-attack",
+    "reasoning-model"
+   ],
+   "concepts_full": true
   },
   {
    "id": "56eddc9d00c8",
@@ -4745,8 +5734,9 @@
    "source_name": "行业动态",
    "author": "量子位",
    "ai": {
-    "keep": true,
-    "at": "2026-07-26"
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "实时多模态生成对销售互动场景有直接价值",
    "brief": "Vivix发布实时交互多模态模型A1，支持与虚拟角色实时视频通话。角色能根据声音即时行动，拥有身体和与环境的互动能力。",
@@ -4771,7 +5761,8 @@
    "author": "爱范儿",
    "ai": {
     "keep": true,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "人形机器人试产预示着工业场景的落地加速",
    "brief": "Claude Opus 5发布，性能追平Fable 5但价格减半。小鹏人形机器人开启小批量试产，英伟达被曝将上调显卡价格。",
@@ -4796,7 +5787,8 @@
    "author": "36氪",
    "ai": {
     "keep": true,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "AI技术跨界应用显示销售场景的变现路径多元",
    "brief": "曾歆勋从月之暗面离职创办良配科技，获徐新200万美元天使投资。其AI驱动的婚恋应用旨在解决资料采集、智能匹配和沟通辅助问题。",
@@ -4844,8 +5836,9 @@
    "source_name": "行业动态",
    "author": "量子位",
    "ai": {
-    "keep": true,
-    "at": "2026-07-26"
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "非人形机器人更贴近实际业务场景的痛点",
    "brief": "科沃斯开源具身智能机器人平台八界，面向开发者和企业开放硬件和系统。该机器人不做人形，专注于真实用户需求。",
@@ -4894,7 +5887,8 @@
    "author": "爱范儿",
    "ai": {
     "keep": true,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "Agent的“小脑”设计更符合企业级交互需求",
    "brief": "腾讯副总裁林松涛表示意图正在代替入口，Agent需要小脑。应用宝推出桌面Agent Marvis，定位操作系统层级个人AI助手。",
@@ -4919,7 +5913,8 @@
    "author": "爱范儿",
    "ai": {
     "keep": false,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -4934,8 +5929,9 @@
    "source_name": "行业动态",
    "author": "雷锋网",
    "ai": {
-    "keep": true,
-    "at": "2026-07-26"
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "教育AGI的“不可能三角”需要新的技术突破",
    "brief": "天立启鸣发布教育AGI白皮书，以认知世界模型破解教育“不可能三角”，推动心智仿真新阶段。",
@@ -4958,7 +5954,8 @@
    "author": "雷锋网",
    "ai": {
     "keep": true,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "AI广告爆改大赛展示了创意场景的商业化潜力",
    "brief": "即梦联合抖音电商、艾菲奖发起“AI广告爆改大赛”，鼓励用户用AI技术改编经典广告内容。",
@@ -4981,8 +5978,9 @@
    "source_name": "行业动态",
    "author": "雷锋网",
    "ai": {
-    "keep": true,
-    "at": "2026-07-26"
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "AI加速科学发现为企业级研发提供了新工具",
    "brief": "Seed Edge启动Seed STEM科学家计划，邀请百位学者探索AI加速科学发现的可能性。",
@@ -5005,8 +6003,9 @@
    "source_name": "行业动态",
    "author": "雷锋网",
    "ai": {
-    "keep": true,
-    "at": "2026-07-26"
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "具身智能的“逻辑刹车”避免过度技术堆砌",
    "brief": "RSS 2026将时间检验奖颁给十年前发表的软体气动机器人手论文。该研究证明机器人可通过物理顺应性解决抓握难题，启发具身智能领域。",
@@ -5031,7 +6030,8 @@
    "author": "36氪",
    "ai": {
     "keep": true,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "AI面试官落地预示着企业服务场景的深度渗透",
    "brief": "元企AI推出超级HR产品，能像员工一样拆解岗位需求、找人、打分并汇报。该产品由清华和北大博士创办，旨在解决企业招聘效率问题。",
@@ -5056,7 +6056,8 @@
    "author": "量子位",
    "ai": {
     "keep": false,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -5072,7 +6073,8 @@
    "author": "雷锋网",
    "ai": {
     "keep": false,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -5088,7 +6090,8 @@
    "author": "爱范儿",
    "ai": {
     "keep": false,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -5104,7 +6107,8 @@
    "author": "爱范儿",
    "ai": {
     "keep": false,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -5120,7 +6124,8 @@
    "author": "雷锋网",
    "ai": {
     "keep": true,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "腾讯全模态合并预示着企业级AI的整合趋势",
    "brief": "腾讯混元合并大语言模型与多模态团队，成立基础模型部，加速全模态模型研发与业务协同。",
@@ -5144,8 +6149,9 @@
    "source_name": "行业动态",
    "author": "爱范儿",
    "ai": {
-    "keep": true,
-    "at": "2026-07-26"
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "数学家加盟AI提升了模型的理论基础",
    "brief": "菲尔兹奖得主Jacob Tsimerman获奖后宣布转向AI安全，将加入OpenAI。他16岁上大学，2004年奥数满分金牌。",
@@ -5167,8 +6173,9 @@
    "source_name": "行业动态",
    "author": "雷锋网",
    "ai": {
-    "keep": true,
-    "at": "2026-07-26"
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "家庭机器人的隐私设计是用户接受的关键",
    "brief": "星炽动力CTO李达提出家庭机器人需理解人类意图，通过端云协同与隐私设计提升用户体验。",
@@ -5191,7 +6198,8 @@
    "author": "36氪",
    "ai": {
     "keep": true,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "业务流程中的智能复利需要场景化数据支撑",
    "brief": "曾鸣教授在WAIC上表示，企业竞争关键在于构建智能复利，让AI深入核心业务。AI正重塑企业增长方式、组织形态和商业逻辑。",
@@ -5216,7 +6224,8 @@
    "author": "爱范儿",
    "ai": {
     "keep": false,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -5231,8 +6240,9 @@
    "source_name": "行业动态",
    "author": "雷锋网",
    "ai": {
-    "keep": true,
-    "at": "2026-07-26"
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "清洁机器人场景创新为具身智能提供了新赛道",
    "brief": "擦窗机器人全球市场年复合增速达30%至50%，行业认为规模化普及拐点将至。产品需从噱头进化为工具，类似十年前扫地机技术突破后的黄金十年。",
@@ -5257,7 +6267,8 @@
    "author": "爱范儿",
    "ai": {
     "keep": false,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -5272,8 +6283,9 @@
    "source_name": "行业动态",
    "author": "爱范儿",
    "ai": {
-    "keep": true,
-    "at": "2026-07-26"
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "语音交互普及为AI员工提供了更自然的接入方式",
    "brief": "AI需要持续感知物理世界，正从屏幕中破壳而出。随着AI成为基础能力，传统键鼠交互方式逐渐暴露短板。",
@@ -5298,7 +6310,8 @@
    "author": "雷锋网",
    "ai": {
     "keep": true,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "出海营销AgentOS解决了企业的决策执行痛点",
    "brief": "飞书深诺发布Marvy 2.0营销AgentOS，接入BytePlus大模型，解决企业出海系统性增长难题。",
@@ -5320,9 +6333,18 @@
    "source_name": "行业动态",
    "author": "36氪",
    "ai": {
-    "keep": false,
-    "at": "2026-07-26"
-   }
+    "keep": true,
+    "at": "2026-07-30",
+    "rule": "biz"
+   },
+   "quip": "开源生态利好降低AI员工开发成本，内卷整治促健康竞争",
+   "brief": "字节跳动成立注册资本24亿的新公司，周生生等品牌金饰价格下调，黄仁勋力挺中国AI开源模型发展。",
+   "brief_full": true,
+   "concepts": [
+    "open-source-model",
+    "computing-infrastructure"
+   ],
+   "concepts_full": true
   },
   {
    "id": "4263095b36d2",
@@ -5337,7 +6359,8 @@
    "author": "量子位",
    "ai": {
     "keep": true,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "多模态赛道的融资热潮验证了企业级需求",
    "brief": "智象未来三个月融资超21亿元，C轮融资由多家机构领投。公司估值超10亿美金，跻身全球AI独角兽，布局原生全模态路径。",
@@ -5361,8 +6384,9 @@
    "source_name": "行业动态",
    "author": "雷锋网",
    "ai": {
-    "keep": true,
-    "at": "2026-07-26"
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "具身智能在民生服务场景的实践获得国际认可",
    "brief": "自变量机器人亮相APEC会议，分享具身智能服务民生案例，成为深圳科技力量代表。",
@@ -5387,7 +6411,8 @@
    "author": "量子位",
    "ai": {
     "keep": true,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "国产世界模型开源降低了企业应用的技术门槛",
    "brief": "兔展智能联合北大研发的UniWorld-View登顶李飞飞团队世界模型榜单。模型支持单图生成新视角视频，已适配国产昇腾算力并开源。",
@@ -5435,7 +6460,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -5471,7 +6497,8 @@
    "author": "雷锋网",
    "ai": {
     "keep": false,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -5487,7 +6514,8 @@
    "author": "36氪",
    "ai": {
     "keep": true,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "现实问题导向的AI研发更符合企业级需求",
    "brief": "DeepSeek被曝光内部录音，展现其矛盾性：一面是远大愿景，一面是务实运营。公司靠愿景而非KPI运转，研究员有大量自由探索时间。",
@@ -5513,7 +6541,8 @@
    "author": "36氪",
    "ai": {
     "keep": true,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "WAIC展示的AI落地趋势印证了微信生态的适配性",
    "brief": "WAIC 2026显示AI叙事重心转向真实场景和商业价值。36氪氪话未来通过直播探展，捕捉AI从方案到交付的细节，展现AI系统化趋势。",
@@ -5538,7 +6567,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -5554,7 +6584,8 @@
    "author": "爱范儿",
    "ai": {
     "keep": true,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "自建AI生态成为企业应对API垄断的必然选择",
    "brief": "王虹、邓煜获2026年菲尔兹奖，中国籍数学家首次获此荣誉。极氪车主跨境后车机被锁，苹果Apple Store将上线AI购物助手。",
@@ -5574,8 +6605,9 @@
    "source_name": "行业动态",
    "author": "雷锋网",
    "ai": {
-    "keep": true,
-    "at": "2026-07-26"
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "AI网球训练机器人验证了垂直场景的商业价值",
    "brief": "Acemate成为2026中国网球公开赛唯一指定网球训练机器人供应商。AI机器人将进入职业赛事场景，提供移动接球、人机对拉等训练功能。",
@@ -5662,7 +6694,8 @@
    "author": "爱范儿",
    "ai": {
     "keep": false,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -5678,7 +6711,8 @@
    "author": "爱范儿",
    "ai": {
     "keep": false,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -5694,7 +6728,8 @@
    "author": "爱范儿",
    "ai": {
     "keep": false,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -5709,8 +6744,9 @@
    "source_name": "行业动态",
    "author": "爱范儿",
    "ai": {
-    "keep": true,
-    "at": "2026-07-26"
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "AI生成内容仍需人工定义边界，真实场景需求不可替代",
    "brief": "FIRST超短片单元关注AI难以触及的真实生活。作品聚焦年轻母亲、酒店保洁员等群体，探讨影像在AI时代的真实性与必要性。",
@@ -5731,7 +6767,8 @@
    "author": "爱范儿",
    "ai": {
     "keep": true,
-    "at": "2026-07-26"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "专用AI硬件将推动企业级应用落地，提升销售客服效率",
    "brief": "苹果Mac将迎来全线换代，部分产品专为AI设计。基础款Mac mini缺货，高端Mac Pro将加入OLED屏和触控屏。",
@@ -5753,8 +6790,9 @@
    "source_name": "行业动态",
    "author": "36氪",
    "ai": {
-    "keep": true,
-    "at": "2026-07-22"
+    "keep": false,
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "仿真技术提升AI环境理解，对客服交互的智能化有潜在推动",
    "brief": "在WAIC 2026期间，凌迪科技携SynReal World与StyleWork亮相，展示其在物理AI和产业智能化领域的实践。SynReal World专注于具身智能的数据生成、虚拟训练与仿真评测，而StyleWork则服务于服装等轻工业，通过AI Agent支持设计、选品、营",
@@ -5776,7 +6814,8 @@
    "author": "36氪",
    "ai": {
     "keep": true,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "从Token到价值的闭环，本质是让AI在具体业务流里跑通并验证效果",
    "brief": "润建股份高管在WAIC上分享，AI应用的成功关键在于构建从Token生产到价值创造的完整闭环能力，而不仅仅是模型本身，公司正推动企业级AI落地。",
@@ -5798,7 +6837,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -5814,7 +6854,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -5830,7 +6871,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": true,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "关键在于将AI嵌入工作流并衡量业务结果，而非简单部署",
    "brief": "WAIC2026讨论指出，AI不会替代管理者，但掌握AI工具的管理者将更具竞争力，强调应用能力的重要性。",
@@ -5852,7 +6894,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": true,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "竞争加速，但版本慢发会影响依赖方的进度",
    "brief": "谷歌的Gemini 3.5 Pro发布延迟，转而推出3.6 Flash和3.5 Flash-Lite版本，可能是在争取更多开发时间。",
@@ -5874,7 +6917,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -5890,7 +6934,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -5906,7 +6951,8 @@
    "author": "雷锋网",
    "ai": {
     "keep": true,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "编程工具竞争白热化，降低定制化 Agent 开发门槛，利好应用层创新",
    "brief": "AI编程技术发展趋于平缓，市场竞争进入白热化阶段。海外Anthropic和OpenAI通过免费额度策略激烈争夺用户，国内阿里等公司则在商业底牌上展开火拼。",
@@ -5928,7 +6974,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": true,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "增长与资源平衡是长期挑战，服务的稳定性是客户最在意的",
    "brief": "Kimi的K3模型爆火后，因算力短缺被迫暂停服务，创始人杨植麟面临运营压力，需应对资源挑战。",
@@ -5950,7 +6997,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -5966,7 +7014,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -5982,7 +7031,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -5998,7 +7048,8 @@
    "author": "雷锋网",
    "ai": {
     "keep": true,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "理解物理世界的能力未来可能反哺线上场景的复杂意图理解",
    "brief": "生数科技在WAIC上展示通用世界模型，旨在连接虚拟与现实世界，推动机器人从生成到行动的演进，拓展应用场景。",
@@ -6020,7 +7071,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -6036,7 +7088,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": true,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "三大运营商押注Token经济，有望使AI服务成本下降，利好微信生态企业级应用",
    "brief": "三大运营商在WAIC 2026上集体转向Token经济，致力于成为AI基础设施提供者，布局算力服务市场。",
@@ -6058,7 +7111,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -6074,7 +7128,8 @@
    "author": "雷锋网",
    "ai": {
     "keep": true,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "在标准测试集上的领先是好的开始，但真实业务场景的验证更重要",
    "brief": "百度文心助手任务Agent在PinchBench v2评测中以94.6%最高分登顶，超越Claude和GPT，成为首个获此成绩的国产智能体。",
@@ -6096,7 +7151,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": true,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "底层生态的开放与演进，长期看能降低AI应用的部署与集成成本",
    "brief": "安谋科技发布新一代NPU架构，并牵头成立开源AI操作系统联盟，推动从IP提供商向平台型生态转型。",
@@ -6118,7 +7174,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -6134,7 +7191,8 @@
    "author": "36氪",
    "ai": {
     "keep": true,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "quip": "行业龙头与模型厂共建是可行路径，但落地需找对高价值业务场景",
    "brief": "地平线与大众汽车集团通过合资公司酷睿程深化合作，整合AI基座大模型、芯片和世界模型，加速L3/L4自动驾驶落地。",
@@ -6156,7 +7214,8 @@
    "author": "爱范儿",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -6172,7 +7231,8 @@
    "author": "雷锋网",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -6204,7 +7264,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -6220,7 +7281,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -6236,7 +7298,8 @@
    "author": "奇绩创坛",
    "ai": {
     "keep": true,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "concepts": [
     "vision-language-grounding",
@@ -6256,7 +7319,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -6272,7 +7336,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -6288,7 +7353,8 @@
    "author": "奇绩创坛",
    "ai": {
     "keep": true,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "concepts": [
     "model-jailbreak",
@@ -6308,7 +7374,8 @@
    "author": "奇绩创坛",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -6324,7 +7391,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -6340,8 +7408,9 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22",
-    "kw": true
+    "at": "2026-07-30",
+    "kw": true,
+    "rule": "biz"
    }
   },
   {
@@ -6357,7 +7426,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -6373,7 +7443,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -6389,7 +7460,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -6405,7 +7477,8 @@
    "author": "奇绩创坛",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -6421,7 +7494,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -6437,7 +7511,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -6453,8 +7528,9 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22",
-    "kw": true
+    "at": "2026-07-30",
+    "kw": true,
+    "rule": "biz"
    }
   },
   {
@@ -6470,7 +7546,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -6486,7 +7563,8 @@
    "author": "奇绩创坛",
    "ai": {
     "keep": true,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "concepts": [
     "neo-unify-architecture",
@@ -6507,7 +7585,8 @@
    "author": "奇绩创坛",
    "ai": {
     "keep": true,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "concepts": [
     "moe-model",
@@ -6527,7 +7606,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -6543,7 +7623,8 @@
    "author": "奇绩创坛",
    "ai": {
     "keep": true,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "concepts": [
     "embodied-ai",
@@ -6563,7 +7644,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -6579,7 +7661,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -6595,7 +7678,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -6611,7 +7695,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -6627,7 +7712,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -6643,7 +7729,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -6676,7 +7763,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -6692,7 +7780,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -6708,7 +7797,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -6724,7 +7814,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -6740,7 +7831,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -6755,9 +7847,15 @@
    "source_name": "行业动态",
    "author": "36氪",
    "ai": {
-    "keep": false,
-    "at": "2026-07-22"
-   }
+    "keep": true,
+    "at": "2026-07-30",
+    "rule": "biz"
+   },
+   "quip": "传统能源巨头入局新能源，为AI员工在能源行业提供新场景",
+   "brief": "中石油在延安成立新能源公司，注册资本9000万，经营范围涵盖发电、储能、氢能及新兴能源技术研发，由中石油太湖（北京）投资有限公司全资持股。",
+   "brief_full": true,
+   "concepts": [],
+   "concepts_full": true
   },
   {
    "id": "5af870044eb4",
@@ -6772,8 +7870,9 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22",
-    "kw": true
+    "at": "2026-07-30",
+    "kw": true,
+    "rule": "biz"
    }
   },
   {
@@ -6789,7 +7888,8 @@
    "author": "奇绩创坛",
    "ai": {
     "keep": true,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "concepts": [
     "computing-infrastructure",
@@ -6809,7 +7909,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -6825,7 +7926,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -6840,9 +7942,16 @@
    "source_name": "齐思",
    "author": "奇绩创坛",
    "ai": {
-    "keep": false,
-    "at": "2026-07-22"
-   }
+    "keep": true,
+    "at": "2026-07-30",
+    "rule": "biz"
+   },
+   "concepts": [
+    "ai-infrastructure-factory",
+    "computing-fuse",
+    "ai-delivery"
+   ],
+   "concepts_full": true
   },
   {
    "id": "549e483ced45",
@@ -6856,9 +7965,18 @@
    "source_name": "行业动态",
    "author": "36氪",
    "ai": {
-    "keep": false,
-    "at": "2026-07-22"
-   }
+    "keep": true,
+    "at": "2026-07-30",
+    "rule": "biz"
+   },
+   "quip": "央企数字化率提升，为AI员工在生产环节落地创造条件",
+   "brief": "国务院国资委发布信息，上半年中央企业数字化转型加速，累计打造智能工厂超2000个，生产设备设施数字化率达67%。",
+   "brief_full": true,
+   "concepts": [
+    "ai-delivery",
+    "ai-native-enterprise-transformation"
+   ],
+   "concepts_full": true
   },
   {
    "id": "5283101fee8f",
@@ -6873,7 +7991,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -6912,7 +8031,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -6928,7 +8048,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -6944,7 +8065,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -6960,7 +8082,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -6976,7 +8099,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -7013,7 +8137,8 @@
    "author": "奇绩创坛",
    "ai": {
     "keep": true,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "concepts": [
     "autonomous-agents",
@@ -7034,7 +8159,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -7087,7 +8213,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -7120,7 +8247,8 @@
    "author": "奇绩创坛",
    "ai": {
     "keep": true,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    },
    "concepts": [
     "foundation-model",
@@ -7139,9 +8267,19 @@
    "source_name": "行业动态",
    "author": "钛媒体",
    "ai": {
-    "keep": false,
-    "at": "2026-07-22"
-   }
+    "keep": true,
+    "at": "2026-07-30",
+    "rule": "biz"
+   },
+   "quip": "Meta验证无屏路线，提示AI员工可聚焦显示与生态整合",
+   "brief": "Counterpoint数据显示Meta在全球无显示智能眼镜市场占84%，但中国厂商在带显示AR市场及供应链环节占据重要位置，中国玩家需在Meta未主导的领域寻找突破。",
+   "brief_full": true,
+   "concepts": [
+    "agent-smartphone",
+    "on-device-ai",
+    "ai-natural-interaction"
+   ],
+   "concepts_full": true
   },
   {
    "id": "27b380ea1334",
@@ -7156,7 +8294,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -7172,7 +8311,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -7188,7 +8328,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -7204,7 +8345,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -7220,7 +8362,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -7256,9 +8399,16 @@
    "source_name": "齐思",
    "author": "奇绩创坛",
    "ai": {
-    "keep": false,
-    "at": "2026-07-22"
-   }
+    "keep": true,
+    "at": "2026-07-30",
+    "rule": "biz"
+   },
+   "concepts": [
+    "ai-native-architecture",
+    "ai-natural-interaction",
+    "ai-delivery"
+   ],
+   "concepts_full": true
   },
   {
    "id": "176783e5f228",
@@ -7273,7 +8423,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -7289,7 +8440,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -7305,7 +8457,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -7321,7 +8474,8 @@
    "author": "雷锋网",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -7337,7 +8491,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -7353,7 +8508,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -7368,9 +8524,15 @@
    "source_name": "行业动态",
    "author": "36氪",
    "ai": {
-    "keep": false,
-    "at": "2026-07-22"
-   }
+    "keep": true,
+    "at": "2026-07-30",
+    "rule": "biz"
+   },
+   "quip": "特高压项目大额中标，显示AI员工在电网领域需求明确",
+   "brief": "许继电气中标国家电网特高压项目，合计金额约12.45亿元，产品包括换流阀、测量装置、开关柜及二次设备等。",
+   "brief_full": true,
+   "concepts": [],
+   "concepts_full": true
   },
   {
    "id": "069171a5ca41",
@@ -7385,7 +8547,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -7401,7 +8564,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -7417,7 +8581,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -7433,7 +8598,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -7449,7 +8615,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -7465,7 +8632,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-21"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -7481,7 +8649,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-21"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -7497,7 +8666,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-21"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -7533,7 +8703,9 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-21"
+    "at": "2026-07-30",
+    "kw": true,
+    "rule": "biz"
    }
   },
   {
@@ -7590,7 +8762,8 @@
    "author": "雷锋网",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -7606,7 +8779,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-21"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -7622,7 +8796,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-21"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -7638,7 +8813,8 @@
    "author": "雷锋网",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -7722,7 +8898,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -7771,7 +8948,8 @@
    "author": "爱范儿",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -7807,7 +8985,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-21"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -7902,7 +9081,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-21"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -7938,7 +9118,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-21"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -7976,7 +9157,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-21"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -7992,7 +9174,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-21"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -8008,7 +9191,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-21"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -8024,7 +9208,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -8040,7 +9225,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-21"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -8073,7 +9259,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -8089,7 +9276,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-21"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -8105,7 +9293,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-21"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -8121,7 +9310,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-21"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -8137,7 +9327,9 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-21"
+    "at": "2026-07-30",
+    "kw": true,
+    "rule": "biz"
    }
   },
   {
@@ -8153,7 +9345,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-21"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -8169,7 +9362,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-21"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -8185,7 +9379,8 @@
    "author": "钛媒体",
    "ai": {
     "keep": false,
-    "at": "2026-07-21"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -8201,7 +9396,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -8217,7 +9413,8 @@
    "author": "雷锋网",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -8275,7 +9472,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-22"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -8314,9 +9512,15 @@
    "source_name": "行业动态",
    "author": "爱范儿",
    "ai": {
-    "keep": false,
-    "at": "2026-07-22"
-   }
+    "keep": true,
+    "at": "2026-07-30",
+    "rule": "biz"
+   },
+   "quip": "产品分化策略精准，需AI适配不同场景的沟通逻辑",
+   "brief": "全新坦克 300 在杭州上市，五款车型定价 19.98 万元起。标轴版本保留原有用户群体，长轴插混版本则面向城市和日常使用，坦克 300 开始分化。",
+   "brief_full": true,
+   "concepts": [],
+   "concepts_full": true
   },
   {
    "id": "ccfaf6b1c3a6",
@@ -8330,9 +9534,15 @@
    "source_name": "行业动态",
    "author": "36氪",
    "ai": {
-    "keep": false,
-    "at": "2026-07-21"
-   }
+    "keep": true,
+    "at": "2026-07-30",
+    "rule": "biz"
+   },
+   "quip": "大模型落地需金融场景验证，AI债务交易是重要试金石",
+   "brief": "SpaceX 将星舰第 13 次试飞推迟至 7 月 23 日；马斯克称特斯拉 FSD 将个性化调整驾驶风格；我国人形机器人整机产品超全球半数。",
+   "brief_full": true,
+   "concepts": [],
+   "concepts_full": true
   },
   {
    "id": "b5d7973c852a",
@@ -8406,9 +9616,15 @@
    "source_name": "行业动态",
    "author": "爱范儿",
    "ai": {
-    "keep": false,
-    "at": "2026-07-22"
-   }
+    "keep": true,
+    "at": "2026-07-30",
+    "rule": "biz"
+   },
+   "quip": "家庭场景拓展需AI兼顾功能性与情感化服务设计",
+   "brief": "长城 H10 开启预售，四款车型起售价 21.48 万元。五座 Max 和六座 Pro 版本配置相近，差价主要在座椅布局和舒适配置上。",
+   "brief_full": true,
+   "concepts": [],
+   "concepts_full": true
   },
   {
    "id": "1ee0543e2b9b",
@@ -8443,9 +9659,15 @@
    "source_name": "行业动态",
    "author": "爱范儿",
    "ai": {
-    "keep": false,
-    "at": "2026-07-22"
-   }
+    "keep": true,
+    "at": "2026-07-30",
+    "rule": "biz"
+   },
+   "quip": "硬件创新需AI交互升级才能成为玩家核心装备",
+   "brief": "ROG XREAL R1 眼镜售价 5999 元，重 91 克，支持 240Hz 高刷。它主打电竞属性，具有智能透明交互和自动感知功能。",
+   "brief_full": true,
+   "concepts": [],
+   "concepts_full": true
   },
   {
    "id": "c54ae55d46e9",
@@ -8669,7 +9891,9 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-21"
+    "at": "2026-07-30",
+    "kw": true,
+    "rule": "biz"
    }
   },
   {
@@ -8684,9 +9908,15 @@
    "source_name": "行业动态",
    "author": "36氪",
    "ai": {
-    "keep": false,
-    "at": "2026-07-21"
-   }
+    "keep": true,
+    "at": "2026-07-30",
+    "rule": "biz"
+   },
+   "quip": "垂直领域融资验证AI在工业场景的深度价值",
+   "brief": "民用航空动力企业汉发长空完成近亿元 Pre-A 融资，用于提升 400kW 级通用核心机平台技术。该平台将衍生出涡轴、涡桨与涡电三类发动机。",
+   "brief_full": true,
+   "concepts": [],
+   "concepts_full": true
   },
   {
    "id": "ce0adc195315",
@@ -8701,7 +9931,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-21"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -8738,9 +9969,15 @@
    "source_name": "行业动态",
    "author": "36氪",
    "ai": {
-    "keep": false,
-    "at": "2026-07-21"
-   }
+    "keep": true,
+    "at": "2026-07-30",
+    "rule": "biz"
+   },
+   "quip": "钠电储能大单体现AI在供应链优化中的关键作用",
+   "brief": "宁德时代与欧洲新能源集成商 Alfen 签署谅解备忘录，计划自 2027 年起在荷兰等西欧国家部署 5GWh 天恒钠电储能系统。",
+   "brief_full": true,
+   "concepts": [],
+   "concepts_full": true
   },
   {
    "id": "9587f5230062",
@@ -8755,7 +9992,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-21"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -8771,7 +10009,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-21"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -8809,7 +10048,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-21"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -8825,7 +10065,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-21"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -8995,7 +10236,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-21"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -9011,7 +10253,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-21"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -9027,7 +10270,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-21"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -9043,7 +10287,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-21"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -9059,7 +10304,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-21"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -9075,7 +10321,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-21"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -9091,7 +10338,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-21"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -9107,7 +10355,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-21"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -9123,7 +10372,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-21"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -9139,7 +10389,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-21"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -9155,7 +10406,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-21"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -9171,7 +10423,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-21"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -9187,7 +10440,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-21"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -9203,7 +10457,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-21"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -9219,7 +10474,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-21"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -9235,7 +10491,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-21"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -9281,7 +10538,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-21"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {
@@ -9297,7 +10555,8 @@
    "author": "36氪",
    "ai": {
     "keep": false,
-    "at": "2026-07-21"
+    "at": "2026-07-30",
+    "rule": "biz"
    }
   },
   {

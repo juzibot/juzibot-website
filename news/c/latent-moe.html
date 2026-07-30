@@ -3,17 +3,17 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>LatentMoE是什么？- 句子互动 AI 概念库</title>
-<meta name="description" content="LatentMoE是一种高效的大模型稀疏专家混合架构，通过下投影压缩大型线性层来降低计算开销，同时保持模型性能。它让企业在有限算力下运行更大规模模型，意味着更低推理成本和更高资源利用率，尤其适合需要平衡性能与成本的AI应用场景。" />
+<title>潜在专家混合是什么？- 句子互动 AI 概念库</title>
+<meta name="description" content="潜在专家混合（LatentMoE）是MoE模型的优化版，通过下投影压缩大型线性层，减少计算量同时保持性能。它类似多头潜在注意力，旨在提升推理效率。这种架构创新使大模型在保持能力的同时降低部署成本，对业务意味着可更经济地运行超大规模模型，优化算力支出。" />
 <meta name="robots" content="index,follow" />
 <link rel="canonical" href="https://juzibot.com/news/c/latent-moe.html" />
 <meta property="og:type" content="article" />
-<meta property="og:title" content="LatentMoE是什么？- 句子互动 AI 概念库" />
-<meta property="og:description" content="LatentMoE是一种高效的大模型稀疏专家混合架构，通过下投影压缩大型线性层来降低计算开销，同时保持模型性能。它让企业在有限算力下运行更大规模模型，意味着更低推理成本和更高资源利用率，尤其适合需要平衡性能与成本的AI应用场景。" />
+<meta property="og:title" content="潜在专家混合是什么？- 句子互动 AI 概念库" />
+<meta property="og:description" content="潜在专家混合（LatentMoE）是MoE模型的优化版，通过下投影压缩大型线性层，减少计算量同时保持性能。它类似多头潜在注意力，旨在提升推理效率。这种架构创新使大模型在保持能力的同时降低部署成本，对业务意味着可更经济地运行超大规模模型，优化算力支出。" />
 <meta property="og:url" content="https://juzibot.com/news/c/latent-moe.html" />
 <meta property="og:site_name" content="句子互动" />
 <meta name="twitter:card" content="summary" />
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "DefinedTerm", "name": "LatentMoE", "description": "LatentMoE是一种高效的大模型稀疏专家混合架构，通过下投影压缩大型线性层来降低计算开销，同时保持模型性能。它让企业在有限算力下运行更大规模模型，意味着更低推理成本和更高资源利用率，尤其适合需要平衡性能与成本的AI应用场景。", "inLanguage": "zh-CN", "url": "https://juzibot.com/news/c/latent-moe.html", "alternateName": ["潜在专家混合模型", "潜在MoE"], "inDefinedTermSet": {"@type": "DefinedTermSet", "name": "句子互动 AI 概念库", "url": "https://juzibot.com/news/c/index.html"}}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "句子互动", "item": "https://juzibot.com/"}, {"@type": "ListItem", "position": 2, "name": "动态", "item": "https://juzibot.com/news.html"}, {"@type": "ListItem", "position": 3, "name": "AI 概念库", "item": "https://juzibot.com/news/c/index.html"}, {"@type": "ListItem", "position": 4, "name": "LatentMoE", "item": "https://juzibot.com/news/c/latent-moe.html"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "DefinedTerm", "name": "潜在专家混合", "description": "潜在专家混合（LatentMoE）是MoE模型的优化版，通过下投影压缩大型线性层，减少计算量同时保持性能。它类似多头潜在注意力，旨在提升推理效率。这种架构创新使大模型在保持能力的同时降低部署成本，对业务意味着可更经济地运行超大规模模型，优化算力支出。", "inLanguage": "zh-CN", "url": "https://juzibot.com/news/c/latent-moe.html", "alternateName": ["LatentMoE", "潜在MoE", "多头潜在注意力"], "inDefinedTermSet": {"@type": "DefinedTermSet", "name": "句子互动 AI 概念库", "url": "https://juzibot.com/news/c/index.html"}}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "句子互动", "item": "https://juzibot.com/"}, {"@type": "ListItem", "position": 2, "name": "动态", "item": "https://juzibot.com/news.html"}, {"@type": "ListItem", "position": 3, "name": "AI 概念库", "item": "https://juzibot.com/news/c/index.html"}, {"@type": "ListItem", "position": 4, "name": "潜在专家混合", "item": "https://juzibot.com/news/c/latent-moe.html"}]}</script>
 <link rel="icon" href="../../logo.png" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="../../assets/site.css" />
@@ -89,16 +89,15 @@
 <div id="site-nav" class="nav-fb"><a href="../../index.html">句子互动</a><a href="../../products/miaodong.html">句子秒懂</a><a href="../../products/shouhu.html">句子守护</a><a href="../../products/canmou.html">句子问数</a><a href="../../products/dongxing.html">句子懂行</a><a href="../../products/miaohui.html">句子秒回</a><a href="../../products/cli.html">句子 CLI</a><a href="../../products/zhizao.html">句子制造</a><a href="../../fde.html">FDE</a><a href="../../enterprise.html">企业方案</a><a href="../../industries.html">行业</a><a href="../../about.html">关于我们</a><a href="../../news.html">动态</a></div>
 <main class="cp-main">
   <div class="cp-wrap">
-    <nav class="cp-crumb" aria-label="面包屑"><a href="../../index.html">句子互动</a><i aria-hidden="true">›</i><a href="../../news.html">动态</a><i aria-hidden="true">›</i><a href="index.html">AI 概念库</a><i aria-hidden="true">›</i><span aria-current="page">LatentMoE</span></nav>
+    <nav class="cp-crumb" aria-label="面包屑"><a href="../../index.html">句子互动</a><i aria-hidden="true">›</i><a href="../../news.html">动态</a><i aria-hidden="true">›</i><a href="index.html">AI 概念库</a><i aria-hidden="true">›</i><span aria-current="page">潜在专家混合</span></nav>
     <div class="cp-kicker"><i class="fa-solid fa-book-open"></i>AI 概念库</div>
-    <h1 class="cp-title">LatentMoE</h1>
-    <p class="cp-alias"><b>也叫</b> 潜在专家混合模型 / 潜在MoE</p>
-    <div class="cp-def">LatentMoE是一种高效的大模型稀疏专家混合架构，通过下投影压缩大型线性层来降低计算开销，同时保持模型性能。它让企业在有限算力下运行更大规模模型，意味着更低推理成本和更高资源利用率，尤其适合需要平衡性能与成本的AI应用场景。</div>
-    <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（2）</div>
-      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-28">2026-07-28</time><span class="src s-voices">大咖观点</span></div><div class="cp-body"><a class="t" href="../p/84c6612c7ac0.html">Kimi K3 Architecture Notes</a><p class="cp-ev">…new component compared to Kimi Linear is the <mark>LatentMoE</mark>. I omitted it in the figure below since it’s already very crowded, but that…</p></div></div>
-      <div class="cp-item"><div class="cp-meta"><time datetime="2026-06-18">2026-06-18</time><span class="src s-voices">大咖观点</span></div><div class="cp-body"><a class="t" href="../p/384f71ffddd0.html">GLM-5.2 and IndexShare for Long-Context Sparse Attention</a><p class="cp-ev">Short note on GLM-5.2, an open-weight GLM update that keeps the GLM-5 sparse MoE backbone and adds IndexShare for cheaper 1M-token…</p></div></div>
+    <h1 class="cp-title">潜在专家混合</h1>
+    <p class="cp-alias"><b>也叫</b> LatentMoE / 潜在MoE / 多头潜在注意力</p>
+    <div class="cp-def">潜在专家混合（LatentMoE）是<a class="cpt" href="moe-model.html" data-def="一种模型架构，内含多个“专家”子网络，每次推理只激活其中一部分来处理任务">MoE模型</a>的优化版，通过下投影压缩大型线性层，减少计算量同时保持性能。它类似多头潜在注意力，旨在提升推理效率。这种架构创新使大模型在保持能力的同时降低部署成本，对业务意味着可更经济地运行超大规模模型，优化算力支出。</div>
+    <div class="cp-sec"><i class="fa-solid fa-newspaper"></i>提到这个概念的动态（1）</div>
+      <div class="cp-item"><div class="cp-meta"><time datetime="2026-07-28">2026-07-28</time><span class="src s-voices">大咖观点</span></div><div class="cp-body"><a class="t" href="../p/84c6612c7ac0.html">Kimi K3架构笔记</a><p class="cp-ev">…new component compared to Kimi Linear is the <mark>LatentMoE</mark>. I omitted it in the figure below since it’s already very crowded, but that…</p></div></div>
     <div class="cp-sec"><i class="fa-solid fa-diagram-project"></i>相关概念</div>
-    <div class="cp-rel"><a href="kimi-delta-attention.html"><i class="fa-solid fa-diagram-project"></i>Kimi Delta注意力机制</a><a href="open-weight-model.html"><i class="fa-solid fa-diagram-project"></i>开放权重模型</a></div>
+    <div class="cp-rel"><a href="long-context-window.html"><i class="fa-solid fa-diagram-project"></i>长上下文窗口</a><a href="moe-model.html"><i class="fa-solid fa-diagram-project"></i>MoE模型</a></div>
     <div class="cp-actions">
       <button type="button" class="dp-btn pri" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
       <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
@@ -107,7 +106,7 @@
   </div>
 </main>
 <div id="site-footer"></div>
-<script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-concept", "type": "page", "title": "LatentMoE"};</script>
+<script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-concept", "type": "page", "title": "潜在专家混合"};</script>
 <script src="../../assets/site.js"></script>
 </body>
 </html>

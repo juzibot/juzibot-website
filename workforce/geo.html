@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>GEO 优化师 · AI 员工 · 全域营销岗 | 句子互动 AI 员工</title>
-<meta name="description" content="GEO 优化师——专管品牌在豆包、DeepSeek 等 AI 答案和公域流量里的位置。GEO 监测诊断、内容生产、渠道发布、公域承接，再把意向沉到企业微信接着跟进、复购。公域到私域跑完全域营销。" />
+<meta name="description" content="GEO 优化师——专管品牌在豆包、DeepSeek 等 AI 答案和公域流量里的位置。GEO 监测诊断、内容生产、渠道发布、公域承接，再把意向沉到私域接着跟进、复购。公域到私域跑完全域营销。" />
 <link rel="icon" href="../logo.png" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="../assets/site.css" />
@@ -102,10 +102,9 @@
 
   /* —— sec-top 副文：小字右对齐（与 fde / sales 页一致），窄屏回落左对齐 —— */
   .sec-top .sub{margin-left:auto;text-align:right;text-wrap:balance;max-width:42ch;font-size:14px;color:var(--ink-3)}
-  /* results 副文：密实两端对齐 */
+  /* results 副文：右对齐、放宽行宽（承基类） */
   #results .sec-top .sub{max-width:64ch;flex-shrink:1}
-  /* 角色画像副文：密实两端对齐（宽度贴合内容，末行也齐平，不稀疏无孤尾） */
-  /* 角色画像副文：左对齐、匀行、贴合宽度 */
+  /* 角色画像副文：右对齐、贴合内容宽度（承基类；窄屏回落左对齐） */
   #role .sec-top .sub{max-width:58ch;flex-shrink:1}
   @media(max-width:760px){.sec-top .sub{margin-left:0!important;text-align:left!important;text-align-last:auto!important;max-width:none!important}}
   /* 角色画像：能力清单 */
@@ -234,14 +233,14 @@
           <div class="sp-chip c1"><span class="l">今日监测问题</span><span class="v">1,280</span></div>
           <div class="sp-chip c2"><span class="l">品牌进入 AI 答案</span><span class="v">340</span></div>
           <div class="sp-chip c3"><span class="l">公域意向捕获</span><span class="v">86</span></div>
-          <div class="sp-chip c5"><span class="l">沉淀到企微</span><span class="v">52</span></div>
+          <div class="sp-chip c5"><span class="l">沉到私域</span><span class="v">52</span></div>
           <div class="sp-chip c4"><i class="fa-solid fa-circle-check" aria-hidden="true"></i><span>豆包「这个品类怎么选」答案已收录品牌，推荐位 #2</span></div>
         </div>
       </div>
     </div>
   </header>
   <!-- 活体工牌条 -->
-  <div class="fleet-bar"><div class="fleet-inner"><div class="fleet-id"><span class="fleet-badge"><i class="fa-solid fa-bullhorn" aria-hidden="true"></i></span><div class="fleet-who"><div class="fleet-role">GEO 优化师 · 全域营销岗</div><span class="fleet-live"><span class="ld"></span>在岗 · 当班中</span></div></div><div class="fleet-metrics" aria-live="off"><div class="fleet-metric"><div class="fm-v" data-to="1280" data-suffix="">0</div><div class="fm-l">今日监测</div></div><div class="fleet-metric"><div class="fm-v" data-to="340" data-suffix="">0</div><div class="fm-l">进入答案</div></div><div class="fleet-metric"><div class="fm-v" data-to="52" data-suffix="">0</div><div class="fm-l">企微承接</div></div><span class="fleet-demo">示例数据 · 演示</span></div><button type="button" class="fleet-chat" onclick="window.openAskbar && window.openAskbar()"><span aria-hidden="true">💬</span> 和这位 AI 员工聊</button></div></div>
+  <div class="fleet-bar"><div class="fleet-inner"><div class="fleet-id"><span class="fleet-badge"><i class="fa-solid fa-bullhorn" aria-hidden="true"></i></span><div class="fleet-who"><div class="fleet-role">GEO 优化师 · 全域营销岗</div><span class="fleet-live"><span class="ld"></span>在岗 · 当班中</span></div></div><div class="fleet-metrics" aria-live="off"><div class="fleet-metric"><div class="fm-v" data-to="1280" data-suffix="">0</div><div class="fm-l">今日监测</div></div><div class="fleet-metric"><div class="fm-v" data-to="340" data-suffix="">0</div><div class="fm-l">进入答案</div></div><div class="fleet-metric"><div class="fm-v" data-to="52" data-suffix="">0</div><div class="fm-l">私域承接</div></div><span class="fleet-demo">示例数据 · 演示</span></div><button type="button" class="fleet-chat" onclick="window.openAskbar && window.openAskbar()"><span aria-hidden="true">💬</span> 和这位 AI 员工聊</button></div></div>
 <script>
 (function(){var nums=document.querySelectorAll('.fleet-metric .fm-v[data-to]');var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
 function paint(el,val){var d=+(el.getAttribute('data-dec')||0);el.textContent=(d?val.toFixed(d):Math.round(val))+(el.getAttribute('data-suffix')||'');}
@@ -259,12 +258,12 @@ var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isInter
           <span class="sec-eyebrow">角色画像</span>
           <h2>品牌在 AI 答案里排第几，<span class="hl"><span>过去没人专管</span></span>。</h2>
         </div>
-        <p class="sub">GEO 优化师接管全域营销这条链路：监测诊断 → 内容生产 → 渠道发布 → 公域承接 → 私域复购。公域来的意向自动沉到企业微信，接着跟进、复购。</p>
+        <p class="sub">GEO 优化师接管全域营销这条链路：监测诊断 → 内容生产 → 渠道发布 → 公域承接 → 私域复购。公域来的意向自动沉到私域，接着跟进、复购。</p>
       </div>
       <div class="role-split rv">
         <div>
           <p>用户问「XX 怎么选」「哪家好」，越来越多直接问豆包、DeepSeek。这里的推荐位决定品牌还在不在候选名单里——但大多数品牌不知道自己在 AI 答案里排第几，竞品凭什么排在前面，也没人专门盯。</p>
-          <p>GEO 优化师先摸清用户怎么问、AI 怎么答、品牌和竞品分别在哪；再把品牌资料做成 AI 愿意引用的内容铺出去；公域评论、私信、搜索里的意向，自动引导到商城和企业微信，由 AI 客服、销售接力跟进复购。</p>
+          <p>GEO 优化师先摸清用户怎么问、AI 怎么答、品牌和竞品分别在哪；再把品牌资料做成 AI 愿意引用的内容铺出去；公域评论、私信、搜索里的意向，自动引导到商城和微信客服，由 AI 客服、销售接力跟进复购。</p>
         </div>
         <div class="cap-list">
           <div class="cap">
@@ -281,11 +280,11 @@ var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isInter
           </div>
           <div class="cap">
             <span class="ci"><i class="fa-solid fa-hand-pointer" aria-hidden="true"></i></span>
-            <div><div class="cb">公域承接</div><div class="cd">识别评论、私信、搜索意向，自动引导到商城和企业微信，不漏线索</div></div>
+            <div><div class="cb">公域承接</div><div class="cd">识别评论、私信、搜索意向，自动引导到商城和微信客服，不漏线索</div></div>
           </div>
           <div class="cap">
             <span class="ci"><i class="fa-solid fa-rotate" aria-hidden="true"></i></span>
-            <div><div class="cb">私域复购</div><div class="cd">企微自动打标记录来源、场景、预算，AI 客服 / 销售接力跟进</div></div>
+            <div><div class="cb">私域复购</div><div class="cd">自动打标记录来源、场景、预算，AI 客服 / 销售接力跟进</div></div>
           </div>
         </div>
       </div>
@@ -326,12 +325,12 @@ var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isInter
         <div class="fde-card k5 rv">
           <div class="fde-hd"><span class="fde-ic"><i class="fa-solid fa-hand-pointer"></i></span><div class="fde-num">05</div></div>
           <h4>公域承接</h4>
-          <p>识别小红书 / 抖音评论、私信、搜索意向，自动引导到商城和企业微信。</p>
+          <p>识别小红书 / 抖音评论、私信、搜索意向，自动引导到商城和微信客服。</p>
         </div>
         <div class="fde-card k6 rv rv-d1">
           <div class="fde-hd"><span class="fde-ic"><i class="fa-solid fa-rotate"></i></span><div class="fde-num">06</div></div>
           <h4>私域复购</h4>
-          <p>企微打标记录来源、场景、预算，AI 客服 / 销售 / 复购机器人接力跟进。</p>
+          <p>自动打标记录来源、场景、预算，AI 客服 / 销售 / 复购机器人接力跟进。</p>
         </div>
       </div>
     </div>
@@ -372,7 +371,7 @@ var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isInter
       <div class="cta-stats">
         <div class="cta-stat rv" style="--ac:#4338CA"><div class="csv">公域→私域</div><div class="csl">被看见一路接到被复购</div></div>
         <div class="cta-stat rv rv-d1" style="--ac:#6366F1"><div class="csv">GEO 诊断</div><div class="csl">看品牌在 AI 答案里的位置</div></div>
-        <div class="cta-stat rv rv-d2" style="--ac:#14B8A6"><div class="csv">90 天</div><div class="csl">内第一个 AI 员工在 IM 上岗</div></div>
+        <div class="cta-stat rv rv-d2" style="--ac:#14B8A6"><div class="csv">最快 1 天</div><div class="csl">简单角色上岗，复杂角色 90 天</div></div>
       </div>
     </div>
   </section>

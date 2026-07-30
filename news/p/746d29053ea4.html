@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>WorkBuddy重大升级，AI时代的Office来了 - 句子·动态</title>
+<meta name="description" content="腾讯WorkBuddy推出V5.3.5版本，新增“人机双写”协同编辑功能。用户可直接在文档内与AI共同创作，实现多端同步协作。" />
+<meta name="robots" content="noindex,follow" />
+<link rel="canonical" href="https://www.qbitai.com/2026/07/462979.html" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="WorkBuddy重大升级，AI时代的Office来了" />
+<meta property="og:description" content="腾讯WorkBuddy推出V5.3.5版本，新增“人机双写”协同编辑功能。用户可直接在文档内与AI共同创作，实现多端同步协作。" />
+<meta property="og:url" content="https://www.qbitai.com/2026/07/462979.html" />
+<meta property="og:site_name" content="句子互动" />
+<meta name="twitter:card" content="summary" />
+
+<link rel="icon" href="../../logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../../assets/site.css" />
+<style>
+  /* 静态兜底导航: site.js 一执行就被 outerHTML 连同占位一起换掉, 访客几乎看不到它。
+     不隐藏也不 noscript 包裹——那会让爬虫拿不到, 而它存在的唯一理由就是给不跑 JS 的爬虫看。
+     样式做朴素一行, 万一 site.js 加载失败, 这排链接本身就是可用的降级导航。 */
+  .nav-fb{display:flex;flex-wrap:wrap;gap:6px 16px;padding:12px clamp(16px,4vw,40px);
+    border-bottom:1px solid var(--line-2);font-size:12.5px}
+  .nav-fb a{color:var(--ink-3);text-decoration:none}
+  .nav-fb a:hover{color:var(--blue)}
+
+  .dp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
+  .dp-wrap{max-width:760px;margin:0 auto}
+  .dp-crumb{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:12.5px;color:var(--ink-3);margin-bottom:20px;min-width:0}
+  .dp-crumb a{color:var(--ink-3);text-decoration:none}
+  .dp-crumb a:hover{color:var(--blue)}
+  .dp-crumb i{font-style:normal;opacity:.5;font-size:11px}
+  .dp-crumb [aria-current]{color:var(--ink-2);font-weight:650;overflow-wrap:anywhere}
+  .dp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
+  .dp-back:hover{color:var(--blue)}
+  .dp-meta{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:14px}
+  .dp-srcb{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:750;color:var(--sc,var(--blue))}
+  .s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
+  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-voices{--sc:#9333EA}
+  .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
+  .dp-cat{display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ink-3);background:#F6F7FB;border:1px solid var(--line-2);border-radius:6px;padding:2px 8px}
+  .dp-read{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  /* 相关动态: 读完一篇之后的出口。此前详情页之间零链接, 读者只能回列表页重新扫,
+     爬虫也只能靠 JS 驱动的列表页做枢纽。每条都带「为什么相关」, 不做无理由的推荐。 */
+  .dp-rel{margin-top:40px;padding-top:26px;border-top:1px solid var(--line-2)}
+  .dp-rel-h{font-size:14px;font-weight:750;color:var(--ink-2);margin:0 0 14px}
+  .dp-rel ul{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+  .dp-rel a{display:block;padding:10px 12px;margin:0 -12px;border-radius:8px;text-decoration:none;transition:background .2s var(--ease)}
+  .dp-rel a:hover{background:#F6F7FB}
+  .dp-rel-t{display:block;font-size:14px;font-weight:650;color:var(--ink-1);line-height:1.5}
+  .dp-rel a:hover .dp-rel-t{color:var(--blue)}
+  .dp-rel-m{display:block;margin-top:3px;font-size:11.5px;color:var(--ink-3)}
+  .dp-read i{font-size:10px;opacity:.7}
+  .dp-date{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-3)}
+  .dp-title{font-size:clamp(24px,3.2vw,34px);font-weight:850;letter-spacing:-.03em;line-height:1.32;word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance;margin-bottom:10px}
+  .dp-orig{font-size:13px;color:var(--ink-3);overflow-wrap:anywhere;margin-bottom:8px}
+  .dp-by{font-size:12.5px;font-weight:600;color:var(--ink-3);margin-bottom:18px}
+  .dp-notice{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:1.7;color:var(--ink-2);background:#F6F7FB;border:1px solid var(--line-2);border-radius:10px;padding:10px 14px;margin-bottom:22px}
+  .dp-notice i{color:var(--blue);margin-top:4px;flex:0 0 auto}
+  .dp-notice a{color:var(--blue);font-weight:700;overflow-wrap:anywhere}
+  .dp-quip{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.66;font-weight:600;color:var(--blue-deep);background:var(--blue-50);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:18px}
+  .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
+  .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
+  .dp-brief b{display:flex;align-items:baseline;gap:8px;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  /* AI 产出物的就地标注(2026-07-30): 概念页的定义早就在页尾注明「由 AI 加工层生成、编辑
+     维护」, 而详情页的简报与锐评一直没标 —— 读者会把那句锐评当成编辑观点。283 页都有这两块,
+     不标就是 283 次误导。放在区块内而不是只放页尾: 页尾声明读者多半划不到, 而标注要落在
+     人实际阅读的位置才有意义。样式压到最小, 不抢正文。 */
+  .dp-brief b em,.dp-quip em{font-style:normal;font-family:var(--mono);font-size:10px;font-weight:600;
+    letter-spacing:0;color:var(--ink-3);white-space:nowrap}
+  .dp-brief b em{margin-left:auto}
+  .dp-quip em{display:block;margin-top:5px;opacity:.85}
+  /* 长文目录(≥3 小标题且正文 ≥2000 字才出): <details> 原生可折叠, 不用一行 JS。
+     默认 open —— 目录的用处是先看清结构再决定读哪段, 收起来就失去意义; 想收也一点即收。 */
+  .dp-toc{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:24px;background:#FBFCFF}
+  .dp-toc summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--ink-2);display:flex;align-items:center;gap:7px;list-style:none}
+  .dp-toc summary::-webkit-details-marker{display:none}
+  .dp-toc summary i{font-size:11px;color:var(--blue)}
+  .dp-toc summary span{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-3);margin-left:auto}
+  .dp-toc ol{list-style:none;margin:10px 0 2px;padding:0;counter-reset:toc}
+  .dp-toc li{counter-increment:toc;font-size:13px;line-height:1.7;padding:2px 0}
+  .dp-toc li::before{content:counter(toc) ". ";font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .dp-toc li.lv3{padding-left:16px}
+  .dp-toc li.lv4{padding-left:32px}
+  .dp-toc a{color:var(--ink-2);text-decoration:none;overflow-wrap:anywhere}
+  .dp-toc a:hover{color:var(--blue)}
+  /* 锚点跳转时标题别贴到视口顶端(站点顶栏会盖住) */
+  .dp-body h2[id],.dp-body h3[id],.dp-body h4[id]{scroll-margin-top:76px}
+  .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
+  .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
+  .dp-body p{margin:0 0 1.05em}
+  .dp-body img{max-width:100%;height:auto;border-radius:10px;margin:.4em 0}
+  .dp-body pre{background:#0F172A;color:#E2E8F0;font-family:var(--mono);font-size:12.5px;line-height:1.7;padding:14px 16px;border-radius:10px;overflow-x:auto;margin:0 0 1.1em}
+  .dp-body code{font-family:var(--mono);font-size:.92em}
+  .dp-body :not(pre)>code{background:#F1F5F9;padding:1px 5px;border-radius:5px}
+  .dp-body blockquote{border-left:3px solid var(--line);padding:2px 0 2px 14px;color:var(--ink-3);margin:0 0 1.05em}
+  .dp-body a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+  .dp-body ul,.dp-body ol{padding-left:1.5em;margin:0 0 1.05em}
+  .dp-body table{display:block;overflow-x:auto;border-collapse:collapse;margin:0 0 1.1em}
+  .dp-body td,.dp-body th{border:1px solid var(--line);padding:6px 10px;font-size:.92em}
+  .dp-excerpt{font-size:15px;line-height:1.9;color:var(--ink-2);border-left:3px solid var(--line);padding:2px 0 2px 16px;margin-bottom:8px}
+  .dp-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;padding-top:20px;border-top:1px solid var(--line-2)}
+  .dp-btn{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:750;border-radius:999px;padding:10px 20px;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+  .dp-btn.pri{background:var(--blue);color:#fff}
+  .dp-btn.pri:hover{background:var(--blue-deep)}
+  .dp-btn.sec{background:#fff;color:var(--ink-2);border:1px solid var(--line)}
+  .dp-btn.sec:hover{color:var(--blue);border-color:var(--blue)}
+  .dp-note{font-size:11.5px;line-height:1.7;color:var(--ink-3);margin-top:18px}
+  .dp-langbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+  .dp-lang{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:750;color:var(--blue);
+    background:var(--blue-50);border:1px solid var(--blue-100);border-radius:999px;padding:7px 14px;
+    transition:background .2s var(--ease),border-color .2s var(--ease)}
+  .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
+  .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div id="site-nav" class="nav-fb"><a href="../../index.html">句子互动</a><a href="../../products/miaodong.html">句子秒懂</a><a href="../../products/shouhu.html">句子守护</a><a href="../../products/canmou.html">句子问数</a><a href="../../products/dongxing.html">句子懂行</a><a href="../../products/miaohui.html">句子秒回</a><a href="../../products/cli.html">句子 CLI</a><a href="../../products/zhizao.html">句子制造</a><a href="../../fde.html">FDE</a><a href="../../enterprise.html">企业方案</a><a href="../../industries.html">行业</a><a href="../../about.html">关于我们</a><a href="../../news.html">动态</a></div>
+<main class="dp-main">
+  <div class="dp-wrap">
+    <nav class="dp-crumb" aria-label="面包屑"><a href="../../index.html">句子互动</a><i aria-hidden="true">›</i><a href="../../news.html">动态</a><i aria-hidden="true">›</i><span aria-current="page">WorkBuddy重大升级，AI时代的Office来了</span></nav>
+    <div class="dp-meta">
+      <span class="dp-srcb s-industry"><i class="fa-solid fa-rss"></i>行业动态</span>
+      <span class="dp-cat">量子位</span>
+      <time class="dp-date" datetime="2026-07-30">2026-07-30</time>
+      <span class="dp-read"><i class="fa-regular fa-clock"></i>约 4 分钟</span>
+    </div>
+    <h1 class="dp-title">WorkBuddy重大升级，AI时代的Office来了</h1>
+    
+    <p class="dp-by">来源：量子位 · 行业动态</p>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（量子位 · 行业动态）所有 · <a href="https://www.qbitai.com/2026/07/462979.html" target="_blank" rel="noopener">阅读原文</a></span></div>
+    <p class="dp-quip"><i class="fa-solid fa-quote-left"></i>效率工具升级对销售场景的渗透率有待观察<em>AI 加工层生成</em></p>
+    <div class="dp-brief"><b>简报<em>AI 加工层生成</em></b>腾讯WorkBuddy推出V5.3.5版本，新增“人机双写”协同编辑功能。用户可直接在文档内与AI共同创作，实现多端同步协作。</div>
+    <article class="dp-body"><h1>WorkBuddy重大升级，AI时代的Office来了</h1>
+    			   
+             <img loading="lazy" onerror="this.style.display='none'" src="http://www.qbitai.com/wp-content/themes/liangziwei/imagesnew/head.jpg" referrerpolicy="no-referrer" /><em><a href="https://www.qbitai.com/author/yunzhong" target="_blank" rel="noopener nofollow">允中</a></em>
+                          2026-07-30
+             13:30:06
+          
+          来源：<a href="https://www.qbitai.com" target="_blank" rel="noopener nofollow">量子位</a>            
+                          
+            <p>WorkBuddy已成为国内最受欢迎的效率智能体工具之一</p>
+                			<p>7月30日，腾讯WorkBuddy发布重大版本更新(V5.3.5)：联合腾讯文档，正式推出面向Agent时代的“<a class="cpt" href="../c/human-machine-co-writing.html" data-def="AI与人类在同一文档内实时协作的创作模式">人机双写</a>”协同编辑能力。新版本支持用户在打开Word、Excel、PPT、Markdown等格式文档时，直接与AI在同一文件内共同创作、修改并实时协同，着力解决“人机混编”团队多角色协作等痛点。</p>
+<p>从传统Office的“人与文件交互”，到在线文档的“人与人协同”，再到AI时代的“人与AI共同完成任务”，WorkBuddy该功能的上线，让AI第一次从办公协同的“外挂”变成同一文档里的协作方，并在业界内首次做到“人人、人机、机机”多端同步协同，推动Office进入AI原生协作时代。</p>
+<img loading="lazy" onerror="this.style.display='none'" src="https://i.qbitai.com/wp-content/uploads/2026/07/230c4a01dd5b29087a759bf8ac548697.jpeg" referrerpolicy="no-referrer" />
+
+<h1>AI进入文档，从「帮你写」到「和你一起写」</h1>
+<p>过去，用户使用AI辅助办公，往往需要在聊天窗口和Office软件之间反复切换。让AI生成一段内容，需要复制粘贴到文档；希望AI修改已有材料，又要重新描述背景并通篇修改；团队多人协作时，更难围绕同一份文档与同一个AI伙伴实时配合。AI虽然能生成内容，却很难真正融入用户正在进行的工作流程。</p>
+<img loading="lazy" onerror="this.style.display='none'" src="https://i.qbitai.com/wp-content/uploads/2026/07/0a5dc3b55bcdfd0e50aaad0f33b48b5d.jpeg" referrerpolicy="no-referrer" />
+
+<p>此次升级后，WorkBuddy将AI能力直接融入文档编辑环境。用户在WorkBuddy打开腾讯文档或本地Office文件后，可直接在原文件中选中文字、表格区域或PPT页面，通过自然语言告诉AI需要完成的任务。例如，选中一段市场分析报告，让AI优化表达；圈选一组Excel数据，让AI完成分析并生成图表；指定PPT页面，让AI调整结构和内容；在报告中标记空白区域，让AI补充相关章节。</p>
+<img loading="lazy" onerror="this.style.display='none'" src="https://i.qbitai.com/wp-content/uploads/2026/07/39988647a8625bdf2b92e19d1dc0d86b.jpeg" referrerpolicy="no-referrer" />
+
+<p>AI生成的内容直接呈现在原文件里，用户可以继续修改，也可以批注意见，AI会实时感知并完成修改；AI改完后，用户可以随时接手继续写。这也意味着，AI不再是“侧边栏的小助手”，成为真正参与创作的协作者。</p>
+<h1>三大核心升级，让AI从「辅助外挂」变身「第三同事」</h1>
+<p>此次升级的核心，是让AI拥有更贴近真实协作者的文档操作能力与上下文感知能力，主要体现在三个方面：</p>
+<p><strong>一、覆盖更多文件与场景，支持完整的人机共写。</strong>依托腾讯文档编辑能力，最新版WorkBuddy支持Markdown、Word、Excel、PPT等主流办公格式，并同时覆盖本地Office文件和腾讯文档在线文档。无论是论文、标书、教案、技术文档、咨询报告，还是运营周报、路演材料与数据分析，用户都可以在同一工作流中完成创作、编辑与协作。</p>
+<img loading="lazy" onerror="this.style.display='none'" src="https://i.qbitai.com/wp-content/uploads/2026/07/fa29a402eb7dbd46520cacfa96cbd3f4.jpeg" referrerpolicy="no-referrer" />
+
+<p><strong>二、框选即改，精准又高效。</strong>用户可以框选段落、数据区域或PPT画布，让AI只在指定范围内完成修改，其余版式和内容保持不变。比如在Excel里圈选几千行数据，让AI做透视分析、生成趋势图表，或批量纠错、套用复杂公式；切换到PPT，在空白区域让AI把分析结论和图表自动排版呈现。标书、教案等结构化文档，也可以圈出待补充区域，让AI按模板补全内容。</p>
+<img loading="lazy" onerror="this.style.display='none'" src="https://i.qbitai.com/wp-content/uploads/2026/07/8d69398efa43fcaa621487a1538b64cb.jpeg" referrerpolicy="no-referrer" />
+
+<p><strong>三、多人加AI，实时协同不断线。</strong>AI共创的内容可以一键上传到腾讯文档，团队成员在不同终端共同编辑同一份文档，也可和同一个AI伙伴协作。各方改动实时同步，文档上下文持续保留。从个人写作、团队共编，到多人围绕同一任务和AI一起推进，人人协同、人机协同、机机协同在同一份文档里融为一体。</p>
+<p>从第一代解决个人本地办公的Office，到第二代解决多人协同的在线文档，随着AI Agent深度融入企业生产力，办公软件正走向第三个阶段。WorkBuddy通过打通“人人、人机、机机”协作，正让Office从一个单纯的工具，变成能理解任务、看懂上下文、协同编辑、持续管理业务的<a class="cpt" href="../c/agentic-office.html" data-def="以AI Agent为核心的下一代办公范式">AI原生办公</a>系统。</p>
+<img loading="lazy" onerror="this.style.display='none'" src="https://i.qbitai.com/wp-content/uploads/2026/07/306c625044d56bc46f115b4d9a237089.jpeg" referrerpolicy="no-referrer" />
+
+<p>目前，按DAU计WorkBuddy已成为国内最受欢迎的效率智能体工具之一，并率先实现了Win、Mac、鸿蒙、安卓等主流操作系统的全覆盖。以此为底座，WorkBuddy深度集成腾讯文档、腾讯ima、腾讯会议、腾讯网盘、TAPD、腾讯乐享等生态产品，基于One ID全面打通了内容创作、知识沉淀与能力复用的链路。</p>
+<p>此次“人机双写”的上线，不仅是交互体验的一次重要提升，更重新定义了下一代工作方式，让人与AI在同一工作流中无缝配合，释放更大生产力。</p>
+                
+                
+                <em>版权所有，未经授权不得以任何形式转载及使用，违者必究。</em></article>
+    <div class="dp-actions">
+      <a class="dp-btn pri" href="https://www.qbitai.com/2026/07/462979.html" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      
+      <button type="button" class="dp-btn sec" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
+      <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
+    </div>
+    <nav class="dp-rel" aria-labelledby="dp-rel-h"><h2 id="dp-rel-h" class="dp-rel-h">相关动态</h2><ul><li><a href="14eaa03c292b.html"><span class="dp-rel-t">WorkBuddy重大升级：「人机双写」上线，AI时代的Office来了！</span><span class="dp-rel-m">都提到「智能体原生办公」 等 3 个概念 · <time datetime="2026-07-30">2026-07-30</time></span></a></li><li><a href="7860154da5f0.html"><span class="dp-rel-t">一文看懂ChatGPT、Codex、Work 的差别</span><span class="dp-rel-m">都提到「AI办公助理」 · <time datetime="2026-07-11">2026-07-11</time></span></a></li></ul></nav>
+    <p class="dp-note">本页由句子互动动态管线自动生成，聚合内容版权归各来源所有；如来源方希望调整或移除收录，请通过官网联系我们。</p>
+  </div>
+</main>
+<div id="site-footer"></div>
+<script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "WorkBuddy重大升级，AI时代的Office来了"};</script>
+<script src="../../assets/site.js"></script>
+</body>
+</html>
