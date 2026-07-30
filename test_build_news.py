@@ -1090,6 +1090,40 @@ def test_state_savers_actually_run():
             B.CONCEPTS_FILE = orig
 
 
+# ---------------------------------------------------------------- 34
+def test_seed_ref_is_a_tag():
+    """seed 的取数来源必须是 tag, 不能是裸 SHA —— 它是整套部署唯一的初始化入口。
+
+    `news-cron.yml` 的 seed 任务从 `SEED_REF` 那个提交取存量(实测含 236 详情页 / 165 概念页 /
+    279 状态文件 / 183 图片)一次性推到服务器, 之后常规轮才能增量续跑; 常规轮拉不到状态会直接
+    中止(防空状态全量重抓烧 API)。而 seed **至今一次都没跑过**。
+
+    原先写的是裸 SHA `64bec20…`, 而那个提交只被 feat 分支可达:
+    · squash 合并不会把它带进 main —— 实测它不是 main 的祖先
+    · `git clone` 只拉 refs/heads/* 与 refs/tags/*, **不拉 refs/pull/**, 镜像里根本没有它
+    · 修 CLA 要重写 88 条提交的作者邮箱, 那会改掉它的 SHA
+    tag 是永久引用, 删分支与重写历史都不影响, 名字本身也比一串 SHA 自解释。
+    """
+    wf = ROOT / ".github" / "workflows" / "news-cron.yml"
+    if not wf.exists():
+        check("(跳过)news-cron.yml 不在本分支", True)
+        return
+    txt = wf.read_text(encoding="utf-8")
+    m = re.search(r"^\s*SEED_REF:\s*(\S+)", txt, re.M)
+    check("workflow 里有 SEED_REF", bool(m), "找不到")
+    if not m:
+        return
+    ref = m.group(1)
+    check("SEED_REF 不是裸 SHA(裸 SHA 会随分支删除/历史重写失去引用)",
+          not re.fullmatch(r"[0-9a-f]{7,40}", ref), ref)
+    check("SEED_REF 是个可读的 tag 名", re.fullmatch(r"[\w.-]+", ref) and not ref.startswith("$"), ref)
+    # 文档三处要一起提到它, 否则接手人不知道 seed 从哪取数
+    for doc, label in ((ROOT / "docs" / "DEPLOY.md", "DEPLOY.md"),
+                       (ROOT / "CLAUDE.md", "CLAUDE.md")):
+        if doc.exists():
+            check(f"{label} 提到 SEED_REF 的 tag 名", ref in doc.read_text(encoding="utf-8"), ref)
+
+
 def main():
     tests = [v for k, v in sorted(globals().items()) if k.startswith("test_")]
     for fn in tests:
