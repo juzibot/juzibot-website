@@ -22,6 +22,7 @@ ZHIPU_API_KEY。代价高到"就改了个模板, 先不验了"变成常态 —�
 
 跑法: python3 test_build_news.py    (退出码非 0 即有回归)
 """
+import collections
 import json
 import os
 import pathlib
@@ -863,6 +864,79 @@ def test_concept_index_filter_and_termset():
     src = (ROOT / "build_news.py").read_text(encoding="utf-8")
     check("到上限时打印告警(不静默截断)",
           "if len(order) > IDX_SCHEMA_MAX:" in src and "只列了" in src)
+
+
+# ---------------------------------------------------------------- 30
+def test_fingerprint_covers_embedded_constants():
+    """整段进页面的常量也得进指纹 —— 否则改样式/改内联脚本不触发重算, 页面停在旧版。
+
+    这是同类问题的第四次。`DETAIL_CSS`/`CONCEPT_CSS`/`CX_FILTER_HTML`/`CX_FILTER_JS` 都是模块级
+    字符串, 原样进页面; 但函数源码里只有 `{DETAIL_CSS}` 这个引用、不含内容, 所以只哈函数源码时
+    **改 CSS 根本不触发重算**(实测四个常量全部如此)。之前没出事只是因为每次改样式时恰好也改了
+    闭包里的函数。修法照旧: 常量清单也从调用图推出来, 不手写。
+
+    反向同样要测: 运行中会被填充的容器(`_CRX_CACHE` 这类 dict)一旦进指纹, 签名就每轮不同 →
+    每轮全量重算, 增量缓存直接废掉。所以只收不可变类型。
+    """
+    fns, consts = B._tpl_parts()
+    for c in ("DETAIL_CSS", "CONCEPT_CSS", "CX_FILTER_HTML", "CX_FILTER_JS"):
+        check(f"{c} 进指纹", c in consts, f"常量清单: {consts}")
+    v0 = B.render_ver()
+    for name in ("DETAIL_CSS", "CX_FILTER_JS", "READ_CPM", "DESC_MAX_W", "TOC_OPEN_MAX"):
+        orig = getattr(B, name)
+        try:
+            setattr(B, name, orig + ("/*x*/" if isinstance(orig, str) else 1))
+            B._TPL_CACHE.clear()
+            check(f"改 {name} → 版本键变化", B.render_ver() != v0, name)
+        finally:
+            setattr(B, name, orig)
+            B._TPL_CACHE.clear()
+    check("还原后版本键回到原值", B.render_ver() == v0)
+    bad = [c for c in consts if isinstance(getattr(B, c, None), (dict, list, set))]
+    check("可变容器不进指纹(否则每轮全量重算)", not bad, bad)
+    leak = [c for c in consts if re.search(r"KEY|TOKEN|SECRET|PASSWORD", c)]
+    check("密钥类常量不进指纹", not leak, leak)
+    # 运行时缓存被填充后版本键必须稳定
+    B._CRX_CACHE["__probe__"] = 1
+    B._TPL_CACHE.clear()
+    try:
+        check("运行时缓存变动不影响版本键", B.render_ver() == v0)
+    finally:
+        B._CRX_CACHE.pop("__probe__", None)
+        B._TPL_CACHE.clear()
+
+
+# ---------------------------------------------------------------- 31
+def test_related_caps_reach_signature():
+    """相关动态的两个上限不在指纹里(它们的函数不在闭包), 但必须经 rsig 生效 —— 这里验它。
+
+    `related_items` 由 write_detail_pages 调用而非模板函数, 所以不进调用图闭包; 它的影响靠
+    「渲染结果进签名」这条路 —— 改上限 → 相关列表变 → related_html 变 → rsig 变 → 重算。
+    光断言"应该覆盖"不算验证, 得真改一遍看签名动不动。
+    fixture 特意让四个同伴里三个同源 —— 第一版四个同伴来自四个不同源, 同源上限根本没被触发,
+    测出来"改上限没反应"却不是 bug(这轮第四次 fixture 不覆盖判据)。
+    """
+    mk = lambda i, src: {"id": i, "title": f"标题{i}", "url": f"https://e.com/{i}",
+                         "date": "2026-07-20", "source": src, "source_name": src, "category": "c",
+                         "author": "a", "summary": "s", "tags": [], "concepts": ["moe"]}
+    vis = [mk("a", "industry"), mk("b", "industry"), mk("c", "industry"),
+           mk("d", "industry"), mk("e", "hn")]
+    pool = {i["id"]: i for i in vis}
+    cidx = {"moe": [i["id"] for i in vis]}
+    lib = {"moe": {"term": "MoE模型"}}
+    a = pool["a"]
+    sig = lambda: B._sha(B.related_html(B.related_items(a, pool, cidx), lib))
+    base = sig()
+    srcs = lambda: collections.Counter(r["source"] for r, _ in B.related_items(a, pool, cidx))
+    check("同源上限生效(4 个同伴里 3 个同源 → 只取 2)", srcs()["industry"] == B.RELATED_SRC_MAX, dict(srcs()))
+    for name, val in (("RELATED_MAX", 2), ("RELATED_SRC_MAX", 1), ("RELATED_SRC_MAX", 3)):
+        orig = getattr(B, name)
+        try:
+            setattr(B, name, val)
+            check(f"{name}={val} → rsig 变化(经渲染结果进签名)", sig() != base, f"{name}={val}")
+        finally:
+            setattr(B, name, orig)
+    check("还原后 rsig 回到原值", sig() == base)
 
 
 def main():
