@@ -52,7 +52,17 @@ nginx -t && systemctl reload nginx
 **② seed 存量**(GitHub Actions,一次)
 
 Actions → news-cron → Run workflow → 勾上 `seed` → Run。它会从 git 历史最后一个
-含全量产物的提交(`SEED_REF`,图片在 LFS)把存量推到 `/opt/www/jz-news/`。
+含全量产物的提交把存量(实测 236 详情页 / 165 概念页 / 279 状态文件 / 183 张图,图片在 LFS)
+推到 `/opt/www/jz-news/`。
+
+那个提交由 **tag `news-seed-baseline`** 固定(`SEED_REF` 指向它),不是裸 SHA —— 原因是它
+**只被 `feat/dynamic-news-page` 可达**:squash 合并不会把它带进 main(实测它不是 main 的祖先)、
+`git clone` 不拉 `refs/pull/*`(任何克隆/镜像里根本没有它)、而修 CLA 重写作者邮箱还会改掉它的 SHA。
+tag 是永久引用,删分支与重写历史都不影响。
+
+> **别删这个 tag。** 它是整套部署唯一的初始化入口,而 seed 至今只该跑一次、跑之前谁也没跑过。
+> 万一 tag 与提交都没了:本机 `stage-2` 分支入库着同一份存量(390 个状态文件),按下面
+> 「手动推送」那节 rsync 上去即可,只是多一小时手工活。
 
 **③ 合并 PR 进 main** —— schedule 只认默认分支上的 workflow 文件,合并后每 6
 小时自动增量同步。
