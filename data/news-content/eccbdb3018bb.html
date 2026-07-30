@@ -1,0 +1,23 @@
+<p>今年以来，我在使用 Coding Agent 方面有一个很大的变化，就是从 TL（Tech Lead）的角色变成了 EM（Engineering Manager）的角色。</p>
+<p>这两个角色主要差别在技术参与深度多少。</p>
+<h2>以前：AI 写代码，我必须盯到代码层</h2>
+<p>之前我更像一个 TL，虽然不是说事必躬亲，但是系统设计、代码审查什么的肯定是少不了的，说到底还是对 AI 写的代码不放心。</p>
+<p>这样虽然质量更有保障，但是<strong>人会成为 Agent 的瓶颈</strong>，很多事情需要人去决策，细节需要人去掌握。</p>
+<p><img src="https://s.baoyu.io/imgs/2026-07-29/coding-agent-em-shift/illustration-01-comparison-tl-em-20260729.png" alt="TL 与 EM 两种 Coding Agent 协作方式对比" referrerpolicy="no-referrer" /></p>
+<h2>转折点：Fable 5 之后，我开始相信结果</h2>
+<p>转折点在 Fable 5 前后，我发现 AI 写的代码质量已经相当可以了，只要稍加验证就不会有太大偏离，所以我越来越少的去干预 AI 写代码，而是会更站在全局去看一个项目：</p>
+<p><strong>决定项目怎么做，去验收好结果。</strong></p>
+<p>这极大的释放了 Agent 的生产力，大部分时候我想好要做什么功能，先和 Agent 一起做一个技术方案，然后确认方案没问题后，用 <code>/goal</code> 加上方案，让 Agent 去执行，写代码和自动化测试，等做好再去验收下功能，代码不怎么细看。</p>
+<p><img src="https://s.baoyu.io/imgs/2026-07-29/coding-agent-em-shift/illustration-02-flowchart-agent-loop-v3-20260729.png" alt="从功能目标到结果验收的 Coding Agent 协作闭环" referrerpolicy="no-referrer" /></p>
+<p>有 Bug 了就是把 Bug 描述给 Agent 让它自己去重现解决，并且让 Agent 补上相关测试覆盖，修复了后人再去验证一下。</p>
+<h2>技术选型，也终于不再围着自己的技能树转</h2>
+<p>这样还有一个好处，就是在技术选型时，不会局限于你自己的喜好和擅长。</p>
+<p>当你是 TL 的角色是，还是会有点过度关注技术实现，包括技术选型会偏向你自己熟悉的喜欢的，而不一定是最适合的。</p>
+<p>当你是 EM 的角色做技术选型，就不再关注自己擅长什么，而是什么技术最适合项目。</p>
+<p>我因为前端熟悉，所以最开始开发字幕翻译 App 时，就优先考虑 Electron 这样的技术栈，因为自己熟悉，有问题能解决也能写的出来。</p>
+<p>后来发现 Electron 性能很难满意，就换成了 Swift + AppKit 原生技术栈，本来我 Swift 是不熟悉的，但有 AI 辅助，整个过程毫无压力。</p>
+<p>现在在设计 BaoCut 下一个大版本的时候，要考虑跨平台方案，首选是 Rust，哪怕我从来没写过一行 Rust 代码，但我知道这是一个很好的跨平台选择。</p>
+<p>目前基于 Rust 的第一个版本已经写完了，整个过程几乎没有任何语言上的障碍。</p>
+<h2>真正的瓶颈，从写代码变成了想清楚</h2>
+<p>通过这样的模式我在开发 BaoCut 的时候，基本上可以每天一个小版本迭代。<a href="https://baocut.app/releases/" target="_blank" rel="noopener nofollow">https://baocut.app/releases/</a></p>
+<p>这两天速度慢下来了，是因为需要构思新的大版本，这时候人就又成了瓶颈了：<strong>如果人没想清楚该做什么，Agent 再厉害也帮不上。</strong></p>

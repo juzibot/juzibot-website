@@ -42,7 +42,10 @@ concurrency:
 
 env:
   NEWS_DIR: /opt/www/jz-news
-  SEED_REF: 64bec20c8339efb85f880905e179500d3b67b094  # 最后一个仓库内含全量产物的提交(此后生成物不再入库)
+  # tag 而非裸 SHA(2026-07-30): 该提交只被 feat 分支可达 —— squash 合并不会把它带进 main
+  # (实测它不是 main 的祖先)、git clone 不拉 refs/pull/*(镜像里根本没有它)、修 CLA 重写作者
+  # 邮箱又会改掉它的 SHA。tag 是永久引用, 删分支与重写历史都不影响, 名字本身也自解释。
+  SEED_REF: news-seed-baseline  # → 64bec20(2026-07-23), 最后一个含全量产物的提交
 
 jobs:
   seed:
@@ -53,6 +56,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ env.SEED_REF }}
+          fetch-tags: true   # 冗余保险: ref 本身是 tag, checkout 会直接取它; 这行只保证 tag 一定在本地(几秒)
           lfs: true  # 该历史点 news/img 存在 LFS, 拉真图而非指针
 
       - name: 装 SSH 凭据
