@@ -1,8 +1,8 @@
 {
  "generated_by": "build_news.py",
- "generated_at": "2026-07-30T07:41:11+08:00",
- "count": 621,
- "visible": 284,
+ "generated_at": "2026-07-30T08:01:15+08:00",
+ "count": 627,
+ "visible": 285,
  "sources": [
   {
    "id": "rui-blog",
@@ -10,7 +10,7 @@
    "type": "sitemap",
    "home": "https://rui.juzi.bot/",
    "status": "ok",
-   "last_sync": "2026-07-30T07:41:11+08:00",
+   "last_sync": "2026-07-30T08:01:15+08:00",
    "group": "company",
    "ai": true,
    "count": 37
@@ -21,7 +21,7 @@
    "type": "feishu-base",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T07:41:11+08:00",
+   "last_sync": "2026-07-30T08:01:15+08:00",
    "group": "company",
    "ai": false,
    "count": 0
@@ -32,7 +32,7 @@
    "type": "manual",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T07:41:11+08:00",
+   "last_sync": "2026-07-30T08:01:15+08:00",
    "group": "company",
    "ai": false,
    "count": 5
@@ -43,7 +43,7 @@
    "type": "manual",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T07:41:11+08:00",
+   "last_sync": "2026-07-30T08:01:15+08:00",
    "group": "company",
    "ai": false,
    "count": 0
@@ -54,7 +54,7 @@
    "type": "rss",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T07:41:11+08:00",
+   "last_sync": "2026-07-30T08:01:15+08:00",
    "group": "radar",
    "ai": true,
    "count": 99
@@ -65,7 +65,7 @@
    "type": "rss",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-07-30T07:41:11+08:00",
+   "last_sync": "2026-07-30T08:01:15+08:00",
    "group": "radar",
    "ai": true,
    "count": 87
@@ -76,10 +76,10 @@
    "type": "hn-algolia",
    "home": "https://news.ycombinator.com/",
    "status": "ok",
-   "last_sync": "2026-07-30T07:41:11+08:00",
+   "last_sync": "2026-07-30T08:01:15+08:00",
    "group": "radar",
    "ai": true,
-   "count": 29
+   "count": 30
   },
   {
    "id": "qisi",
@@ -87,7 +87,7 @@
    "type": "qisi-list",
    "home": "https://news.miracleplus.com/",
    "status": "ok",
-   "last_sync": "2026-07-30T07:41:11+08:00",
+   "last_sync": "2026-07-30T08:01:15+08:00",
    "group": "radar",
    "ai": true,
    "count": 27
@@ -147,6 +147,46 @@
    "title": "美联储宣布维持利率不变",
    "url": "https://36kr.com/newsflashes/3917304458734984?f=rss",
    "summary": "当地时间7月29日，美国联邦储备委员会结束为期两天的议息会议，宣布将联邦基金利率目标区间维持在3.5%至3.75%之间不变，这也是美联储今年以来第五次维持利率不变。（央视财经）",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-07-30",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-30"
+   }
+  },
+  {
+   "id": "df81aff625c8",
+   "title": "8点1氪丨超1100名AI公司员工联名请愿美国政府；桃酥吃出假牙冠？山姆、泸溪河回应；月之暗面Kimi已完成超35亿美元F轮融资",
+   "url": "https://36kr.com/p/3917362478148993?f=rss",
+   "summary": "今日热点导览 C长鑫成交额达400亿元 国家烟草专卖局约谈爱奇迹（深圳）技术有限公司 外交部回应美国实施先进机器人进口限制 宝马拟在德国裁员数千人，通过自愿离职计划削减成本 美联储宣布维持利率不变 TOP3大新闻 Anthropic首席执行官等多位AI大牛签署联名信，呼吁控制人工智能发展步伐 超过1100名来自领先人工智能公司的高管及员…",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-07-30",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-30"
+   },
+   "quip": "融资提速验证赛道价值，但需警惕资本过热带来的泡沫风险",
+   "brief": "超1100名AI公司员工联名请愿美国政府控制AI发展节奏。桃酥吃出假牙冠事件引发山姆、泸溪河回应。月之暗面Kimi完成超35亿美元F轮融资。",
+   "brief_full": true,
+   "concepts": [
+    "model-jailbreak",
+    "open-source-model"
+   ],
+   "concepts_full": true
+  },
+  {
+   "id": "dca7596c1a32",
+   "title": "三星电子第二季度销售额171.50万亿韩元",
+   "url": "https://36kr.com/newsflashes/3917367678299528?f=rss",
+   "summary": "三星电子第二季度销售额171.50万亿韩元，第二季度营业利润89.49万亿韩元。第二季度净利润71.27万亿韩元，预估68.36万亿韩元。（财联社）",
    "category": "36氪",
    "tags": [],
    "date": "2026-07-30",
@@ -271,6 +311,22 @@
    }
   },
   {
+   "id": "89c53e28a337",
+   "title": "Meta上调全年资本支出预期下限至1300亿美元",
+   "url": "https://36kr.com/newsflashes/3917359792221576?f=rss",
+   "summary": "当地时间7月29日，Meta预计全年资本支出为1300亿美元至1450亿美元，此前预估为1250亿美元至1450亿美元，市场预估为1358.6亿美元。（界面）",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-07-30",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-30"
+   }
+  },
+  {
    "id": "7e1744cf307d",
    "title": "【钛晨报】央行等九部门：加强科技金融领域数据开放共享和融合运用；公开发售获16.84倍认购，中际旭创今日登陆港交所；智驾“小蓝灯”相关国标已启动制修订",
    "url": "https://www.tmtpost.com/8084357.html",
@@ -375,6 +431,22 @@
    }
   },
   {
+   "id": "476aab2a8d1c",
+   "title": "券商佣金进入“微利时代” 向“服务竞争”转型势在必行",
+   "url": "https://36kr.com/newsflashes/3917359064444297?f=rss",
+   "summary": "上海地区佣金率呈持续下行态势。2025年平均佣金率跌破万分之二，2026年以来进一步下探，上半年A股平均佣金率降至万分之一点七。业内人士表示，当前券商佣金已进入“微利时代”，单纯依靠价格战抢占市场的粗放式发展模式已然行不通。长期来看，行业要摆脱对通道费的依赖，摒弃“低价获客，忽视服务”的模式，实现从“价格竞争”向“服务竞争”的转型，真正…",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-07-30",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-30"
+   }
+  },
+  {
    "id": "39e2f170f99d",
    "title": "OpenAI首席财务官透露：公司7月年化收入超过整个第二季度",
    "url": "https://36kr.com/newsflashes/3917355621527176?f=rss",
@@ -445,6 +517,22 @@
    }
   },
   {
+   "id": "237b95353d4e",
+   "title": "中信建投：商用车及摩托车板块配置价值凸显，积极增配机器人及智驾底部α标的",
+   "url": "https://36kr.com/newsflashes/3917358336355976?f=rss",
+   "summary": "36氪获悉，中信建投指出，基于景气度及估值、成长空间这两条投资脉络，当前时间重点提示商用车、摩托车板块及机器人、智驾等物理AI板块的配置机会，前者出海支撑高景气及盈利兑现，且或受益于当前低估值稳健红利风格；后者股价经过近期剧烈回调已处于历史低位，产业趋势及成长空间依旧清晰，建议积极配置已经深入卡位的优质底部α标的。",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-07-30",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-30"
+   }
+  },
+  {
    "id": "1acf9e30d60d",
    "title": "X与世界广告主联合会结束诉讼纠纷，双方将重启合作关系",
    "url": "https://36kr.com/newsflashes/3916871606972040?f=rss",
@@ -483,6 +571,22 @@
     "ai-digital-asset-library"
    ],
    "concepts_full": true
+  },
+  {
+   "id": "08785278eb52",
+   "title": "Arm营收展望超过预期，但未能打动对芯片业愈发谨慎的投资者",
+   "url": "https://36kr.com/newsflashes/3917361603472774?f=rss",
+   "summary": "Arm Holdings营收展望高于华尔街预期，但未能打动近期对芯片行业前景愈发谨慎的投资者，股价盘后下跌约4%。Arm周三盘后公布，预计截至9月末的第二财季营收约为13.8亿美元。分析师预测均值为13.5亿美元，一些预测接近15亿美元。剔除特定项目后，每股收益预计为47美分，高于市场预期的45美分。（新浪财经）",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-07-30",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪",
+   "ai": {
+    "keep": false,
+    "at": "2026-07-30"
+   }
   },
   {
    "id": "f34faab80331",
@@ -1428,6 +1532,30 @@
    "brief_full": true,
    "concepts": [
     "controller-data-flywheel"
+   ],
+   "concepts_full": true
+  },
+  {
+   "id": "7b339ca1357c",
+   "title": "AI's top startups are barely publishing their research",
+   "url": "https://www.science.org/content/article/ai-s-top-startups-are-barely-publishing-their-research",
+   "summary": "",
+   "category": "",
+   "tags": [],
+   "date": "2026-07-29",
+   "source": "hn",
+   "source_name": "Hacker News",
+   "author": "Hacker News",
+   "hn": "https://news.ycombinator.com/item?id=49103285",
+   "ai": {
+    "keep": true,
+    "at": "2026-07-30"
+   },
+   "brief": "许多顶级AI初创公司很少在科学文献中公开发布研究成果，这与其他研究人员评估和构建其发现的能力相悖。超过一半的AI独角兽公司在这方面表现不佳。",
+   "brief_full": true,
+   "title_zh": "AI顶级初创公司很少发表研究成果",
+   "concepts": [
+    "open-source-governance"
    ],
    "concepts_full": true
   },
@@ -5608,28 +5736,6 @@
     "keep": false,
     "at": "2026-07-22"
    }
-  },
-  {
-   "id": "be95423c034c",
-   "title": "Kimi K3爆火引发“算力荒”，“不着急上市”的杨植麒急了？",
-   "url": "https://www.tmtpost.com/8074520.html",
-   "summary": "Kimi K3爆火后，被誉为“AI六小虎”之一的月之暗面却遭遇了“算力荒”。",
-   "category": "钛媒体",
-   "tags": [],
-   "date": "2026-07-22",
-   "source": "industry",
-   "source_name": "行业动态",
-   "author": "钛媒体",
-   "ai": {
-    "keep": true,
-    "at": "2026-07-22"
-   },
-   "quip": "爆款应用对资源的需求是刚性的，这对所有应用公司都是现实课题",
-   "brief": "Kimi K3模型走红导致算力短缺，月之暗面公司面临压力，创始人杨植麟可能因此加速应对资源挑战。",
-   "concepts": [
-    "open-source-model",
-    "computing-fuse"
-   ]
   },
   {
    "id": "be3f851d20dd",

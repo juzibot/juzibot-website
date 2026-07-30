@@ -665,6 +665,133 @@ def test_related_change_invalidates_signature():
     check("新条目挤进列表 → 签名变化", rsig(pool3, cidx3) != before)
 
 
+# ---------------------------------------------------------------- 26
+def test_artifacts_ignored_and_guarded():
+    """生成物必须同时被 .gitignore 忽略、被 shell-clean 清单看住 —— 两道, 不是一道。
+
+    本轮真出过事: 在 feat 上跑完管线 `git add -A`, 一次提了 379 个产物、124818 行。
+    `.gitignore` 里当时一条生成物路径都没写, 全靠 CI 事后报红 —— **闸有效不等于防护有效**。
+    更难看的是 `news-feed.xml` 因此已经溜进仓库并带着四个提交跑了一路, 而它能溜过 shell-clean,
+    恰恰因为那份清单也漏了它(Bugbot PR#103 两处一起点出来)。
+
+    判据从源码推, 不写死清单(写死清单挡不住"新加的产物忘了加进去", 这个坑本轮栽过第五次):
+    根目录的 `.xml`/`.json` 一律是产物(模板壳是 `.html`), 管线的目录常量一律是产物目录;
+    产物 ⊆ shell-clean 清单 ⊆ .gitignore。反向也测: 两个模板壳绝不能被忽略, 否则改版丢失。
+    """
+    src = (ROOT / "build_news.py").read_text(encoding="utf-8")
+    root_files = {m for m in re.findall(r'ROOT / "([^"/]+\.(?:xml|json))"', src)}
+    # 只认**赋给模块级常量**的多段路径 = 管线自己的输出目录/状态文件。人工种子登记表是以
+    # `"file": ROOT / "data" / "product-news.json"` 写在 SOURCES 配置里的**输入**, 必须入库
+    # —— 一律按"data/ 下都是产物"推会把它们也要求忽略, 那就把配方本身赶出仓库了。
+    dirs = {"/".join(m[1:]) for m in
+            re.findall(r'^([A-Z_]+) *= *ROOT / "([^"/]+)" / "([^"/]+)"', src, re.M)}
+    gi_path, sc_path = ROOT / ".gitignore", ROOT / ".github" / "workflows" / "shell-clean.yml"
+    wf = ROOT / ".github" / "workflows" / "news-cron.yml"
+    if not (gi_path.exists() and sc_path.exists()) or "rsync" not in (
+            wf.read_text(encoding="utf-8") if wf.exists() else ""):
+        check("(跳过)当前分支是老架构/预览分支, 生成物按设计入库", True)
+        return
+    gi = [l.strip() for l in gi_path.read_text(encoding="utf-8").splitlines()
+          if l.strip() and not l.startswith("#")]
+    sc = sc_path.read_text(encoding="utf-8")
+    check(f"根目录产物({len(root_files)} 个)全在 .gitignore",
+          not [f for f in root_files if f not in gi],
+          f"缺 {[f for f in root_files if f not in gi]} —— 本地 git add -A 会把它带进仓库")
+    check(f"根目录产物({len(root_files)} 个)全在 shell-clean 清单",
+          not [f for f in root_files if f not in sc],
+          f"缺 {[f for f in root_files if f not in sc]} —— 溜进仓库时 CI 不会报")
+    miss_dir = [d for d in dirs if not any(g.rstrip("/") == d for g in gi)]
+    check(f"管线目录/状态文件({len(dirs)} 个)全在 .gitignore", not miss_dir, f"缺 {miss_dir}")
+    check("模板壳没被误忽略(否则改版会丢)",
+          not [s for s in ("news.html", "news-c.html") if s in gi])
+    # shell-clean 清单是最后一道: 它漏了什么, 就等于那样的产物可以无声入库
+    check("shell-clean 清单不比 .gitignore 松",
+          not [f for f in root_files if f in gi and f not in sc])
+
+
+# ---------------------------------------------------------------- 27
+def test_askbar_one_shot_context_reaches_request():
+    """卡片「问句子」的一次性上下文必须进 AI 请求, 而不是只改横幅文案。
+
+    栽的过程值得记: 原写法是改写全局 `window.PAGE_CTX` 再调无参 `openAskbar()`, 毛病是从不
+    还原(点过一张卡, 本页后续所有提问都被永久打上那篇文章的上下文)。我改成传参修掉了污染,
+    但只在 open() 的局部变量里用了它 —— 而 greet/suggest/askReal 各自去读全局, **上下文
+    从此根本到不了模型**。修了症状、废了功能, Bugbot PR#103 抓到。
+    根因还是判据分散: "当前上下文"有两条获取路径。收口成 oneShot + pageCtx() 一条路。
+    """
+    js_p = ROOT / "assets" / "askbar.js"
+    if not js_p.exists():
+        check("(跳过)askbar.js 不在本分支", True)
+        return
+    js = js_p.read_text(encoding="utf-8")
+    m = re.search(r"function pageCtx\(\)[^\n]*", js)
+    check("pageCtx 是取上下文的唯一入口且读一次性上下文", m and "oneShot" in m.group(0),
+          m.group(0) if m else "找不到 pageCtx")
+    for fn in ("greet", "suggest", "askReal"):
+        body = re.search(rf"function {fn}\(.*?\n  \}}", js, re.S)
+        check(f"{fn} 经 pageCtx 取上下文(不自己读全局)",
+              body and "pageCtx()" in body.group(0) and "window.PAGE_CTX" not in body.group(0),
+              fn)
+    close = re.search(r"function close\(\)[^\n]*", js)
+    check("关闭时清掉一次性上下文(否则污染后续提问)", close and "oneShot = null" in close.group(0),
+          close.group(0)[:80] if close else "")
+    # 两个列表页: 卡片入口必须传参, 不许在点击处改写全局
+    for page in ("news.html", "news-c.html"):
+        pp = ROOT / page
+        if not pp.exists():
+            continue
+        h = pp.read_text(encoding="utf-8")
+        bad = [l.strip()[:70] for l in h.splitlines()
+               if "window.PAGE_CTX" in l and "=" in l and "data-t" in l]
+        check(f"{page} 卡片入口不改写全局上下文", not bad, bad)
+        check(f"{page} 卡片入口传一次性上下文", "openAskbar(cardCtx)" in h)
+
+
+# ---------------------------------------------------------------- 28
+def test_page_desc_quality_and_width():
+    """meta description 的唯一出口: 挡掉模型元话术、按显示宽度规整长度。
+
+    实测线上真有一条: `b5f96bf69df5` 的 description 是「条目正文为空，无法提供内容简报。」——
+    模型没产出简报, 而是解释了自己为什么产不出, 那句话原样进了页面正文的简报区与 meta
+    description, 搜索结果与 AI 引擎读到的就是这句。621 条里只此一条, 但代价不对称:
+    一条烂 description 的损失远大于一条缺 description。
+    另有 26 页 description 超长(最长 388 字)在搜索结果里被截成半句, 2 页短到没有信息量。
+    宽度而非字符数: 搜索结果按像素截断, 中文约 78 字满、英文约 155 字满, 这页两种语言都有。
+    """
+    check("元话术不可用", not B.brief_usable("条目正文为空，无法提供内容简报。"))
+    check("太短不可用", not B.brief_usable("Talk Video"))
+    check("正常简报可用", B.brief_usable("阿里发布 Qwen3-Max，主打长上下文与工具调用，定价对齐 GPT 系列。"))
+    # 「作为AI」后面必须跟标点才算元话术, 否则误伤正常句子(第一版正则就误伤了这句)
+    check("含「作为AI能力」的正常句不误伤",
+          B.brief_usable("智能硬件作为AI能力落地实体场景的核心载体，已进入产品升级阶段。"))
+    check("宽度: 中文 78 字 = 英文 156 字", B.disp_width("中" * 78) == B.disp_width("a" * 156) == 156)
+    long_zh = {"summary": "阿里发布 Qwen3-Max，主打长上下文与工具调用，定价对齐 GPT 系列。" + "补充说明" * 20}
+    d = B.page_desc(long_zh, "标题")
+    check("中文超长切到句读边界", d.endswith("。") and B.disp_width(d) <= B.DESC_MAX_W, f"{len(d)}字")
+    nopunct = {"summary": "甲" * 200}
+    d2 = B.page_desc(nopunct, "标题")
+    check("无句读时硬截并加省略号", d2.endswith("…"))
+    check("加省略号后仍不超宽度上限", B.disp_width(d2) <= B.DESC_MAX_W, B.disp_width(d2))
+    en = {"summary": "The model ships with a longer context window and better tool calling. " * 4}
+    check("英文超长同样规整", B.disp_width(B.page_desc(en, "t")) <= B.DESC_MAX_W)
+    check("坏简报退回原文摘要",
+          B.page_desc({"brief": "无法提供内容简报。", "summary": "KOReader 是一款开源电子书阅读器。"},
+                      "KOReader") == "KOReader 是一款开源电子书阅读器。")
+    check("三者皆空退回标题", B.page_desc({}, "某标题") == "某标题")
+    # 渲染侧: 坏简报不出简报区块, 也不进 description
+    lib, worthy = fake_lib(), set()
+    bad = fixture_item(brief="条目正文为空，无法提供内容简报。", concepts=[])
+    html = B.detail_html(bad, lib, worthy)
+    check("坏简报不渲染简报区块", 'class="dp-brief"' not in html)
+    check("坏简报不进 meta description", "无法提供内容简报" not in html)
+    good = fixture_item(brief="阿里发布 Qwen3-Max，主打长上下文与工具调用，定价对齐 GPT 系列。", concepts=[])
+    check("好简报照常渲染", 'class="dp-brief"' in B.detail_html(good, lib, worthy))
+    # 生成侧: 元话术不入库, 且落 brief_tried 标记防每轮重烧配额
+    src = (ROOT / "build_news.py").read_text(encoding="utf-8")
+    check("入库前过 brief_usable", "if brief_usable(b):" in src)
+    check("答了但不可用时落 brief_tried(不再每轮重试烧配额)", 'it["brief_tried"] = has_full' in src)
+
+
 def main():
     tests = [v for k, v in sorted(globals().items()) if k.startswith("test_")]
     for fn in tests:
