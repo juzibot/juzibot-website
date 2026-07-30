@@ -14,6 +14,7 @@
 <style>
   /* scoped：仅补 site.css 未覆盖的轻量结构（面包屑 / hero pills / 行业版式 / 客户墙 / 场景清单 / 案例图）
      全部沿用 site.css 的 CSS 变量与节奏，无新配色、无新字号体系 —— 与 enterprise.html 同色同令牌 */
+  html{scroll-padding-top:96px}
   .crumbs{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--ink-3);margin-bottom:18px}
   .crumbs a{color:var(--ink-2)}
   .crumbs a:hover{color:var(--blue)}
@@ -45,6 +46,7 @@
   .ind-scn{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:11px}
   .ind-scn li{position:relative;padding-left:24px;font-size:14.5px;line-height:1.6;color:var(--ink)}
   .ind-scn li::before{content:"";position:absolute;left:0;top:11px;width:14px;height:2px;border-radius:2px;background:var(--ac,#4338CA)}
+  section[id]{scroll-margin-top:96px}
 
   /* 客户墙 / 落地清单面板 */
   .ind-panel{padding-top:6px}
@@ -56,6 +58,7 @@
   .logo-grid .lc:hover{border-color:var(--blue-200);box-shadow:0 8px 20px rgba(67,56,202,.12);transform:translateY(-2px)}
   .logo-grid .lc img{display:block;width:100%;height:64px;max-width:100%;max-height:64px;object-fit:contain}
   .logo-grid .lc img.brand{width:100%;height:64px;max-width:100%;max-height:64px;object-fit:contain}
+  #gov .logo-grid .lc img{height:56px;max-height:56px}
   /* 行业案例实拍图（金融 / 政务） */
   .ind-shot{margin-top:14px;border:1px solid var(--line);border-radius:var(--radius-sm);overflow:hidden;
     box-shadow:var(--shadow-soft);background:#fff}
@@ -155,21 +158,21 @@
         <aside class="ind-panel rv rv-d1">
           <div class="ip-cap">部分客户</div>
           <div class="logo-grid">
-            <div class="lc"><img class="brand" src="assets/brand/logos/consumer-0-0.png?v=20260730g" alt="巴奴毛肚火锅" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/consumer-0-1.png?v=20260730g" alt="泸州老窖" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/consumer-0-2.png?v=20260730g" alt="奈雪的茶" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/consumer-0-3.png?v=20260730g" alt="英氏" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/consumer-0-4.png?v=20260730g" alt="Baby Care" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/consumer-0-5.png?v=20260730g" alt="薇诺娜" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/consumer-0-6.png?v=20260730g" alt="润百颜" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/consumer-0-7.png?v=20260730g" alt="松下电器" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/consumer-1-1.png?v=20260730g" alt="幸福西饼" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/consumer-1-2.png?v=20260730g" alt="伊利集团" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/consumer-1-3.png?v=20260730g" alt="汇嘉时代" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/consumer-1-4.png?v=20260730g" alt="快鱼" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/consumer-1-5.png?v=20260730g" alt="热风" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/consumer-1-6.png?v=20260730g" alt="农夫山泉" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/consumer-1-7.png?v=20260730g" alt="卡姿兰" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/consumer-0-0.png?v=20260730h" alt="巴奴毛肚火锅" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/consumer-0-1.png?v=20260730h" alt="泸州老窖" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/consumer-0-2.png?v=20260730h" alt="奈雪的茶" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/consumer-0-3.png?v=20260730h" alt="英氏" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/consumer-0-4.png?v=20260730h" alt="Baby Care" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/consumer-0-5.png?v=20260730h" alt="薇诺娜" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/consumer-0-6.png?v=20260730h" alt="润百颜" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/consumer-0-7.png?v=20260730h" alt="松下电器" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/consumer-1-1.png?v=20260730h" alt="幸福西饼" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/consumer-1-2.png?v=20260730h" alt="伊利集团" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/consumer-1-3.png?v=20260730h" alt="汇嘉时代" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/consumer-1-4.png?v=20260730h" alt="快鱼" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/consumer-1-5.png?v=20260730h" alt="热风" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/consumer-1-6.png?v=20260730h" alt="农夫山泉" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/consumer-1-7.png?v=20260730h" alt="卡姿兰" loading="lazy"></div>
           </div>
         </aside>
       </div>
@@ -196,21 +199,21 @@
         <aside class="ind-panel rv rv-d1">
           <div class="ip-cap">部分客户</div>
           <div class="logo-grid">
-            <div class="lc"><img class="brand" src="assets/brand/logos/govfin-0-0.png?v=20260730g" alt="厦门银行" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/govfin-0-1.png?v=20260730g" alt="银联商务" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/govfin-0-2.png?v=20260730g" alt="创金合信基金" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/govfin-0-3.png?v=20260730g" alt="中国人寿重庆分公司" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/govfin-0-4.png?v=20260730g" alt="宁波银行" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/govfin-0-5.png?v=20260730g" alt="中信证券" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/govfin-0-6.png?v=20260730g" alt="国泰海通" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/govfin-0-7.png?v=20260730g" alt="京东金融" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/govfin-1-0.png?v=20260730g" alt="国民养老保险" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/govfin-1-1.png?v=20260730g" alt="中泰证券" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/govfin-1-2.png?v=20260730g" alt="老虎國際" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/govfin-1-3.png?v=20260730g" alt="银河证券" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/govfin-1-4.png?v=20260730g" alt="雪盈-港美股" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/govfin-1-5.png?v=20260730g" alt="有知有行" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/govfin-1-6.png?v=20260730g" alt="圆心惠保" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/govfin-0-0.png?v=20260730h" alt="厦门银行" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/govfin-0-1.png?v=20260730h" alt="银联商务" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/govfin-0-2.png?v=20260730h" alt="创金合信基金" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/govfin-0-3.png?v=20260730h" alt="中国人寿重庆分公司" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/govfin-0-4.png?v=20260730h" alt="宁波银行" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/govfin-0-5.png?v=20260730h" alt="中信证券" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/govfin-0-6.png?v=20260730h" alt="国泰海通" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/govfin-0-7.png?v=20260730h" alt="京东金融" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/govfin-1-0.png?v=20260730h" alt="国民养老保险" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/govfin-1-1.png?v=20260730h" alt="中泰证券" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/govfin-1-2.png?v=20260730h" alt="老虎國際" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/govfin-1-3.png?v=20260730h" alt="银河证券" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/govfin-1-4.png?v=20260730h" alt="雪盈-港美股" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/govfin-1-5.png?v=20260730h" alt="有知有行" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/govfin-1-6.png?v=20260730h" alt="圆心惠保" loading="lazy"></div>
           </div>
         </aside>
       </div>
@@ -237,21 +240,21 @@
         <aside class="ind-panel rv rv-d1">
           <div class="ip-cap">部分客户</div>
           <div class="logo-grid">
-            <div class="lc"><img class="brand" src="assets/brand/logos/gov-0-0.png?v=20260730g" alt="宜宾公安交警" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/gov-0-1.png?v=20260730g" alt="大同市公安局" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/gov-0-2.png?v=20260730g" alt="郑州市公安局郑东新区分局" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/gov-0-3.png?v=20260730g" alt="绵阳市公安局安州分局" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/gov-0-4.png?v=20260730g" alt="新郑市公安局" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/gov-0-5.png?v=20260730g" alt="武汉东湖高新公安局" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/gov-0-6.png?v=20260730g" alt="重庆市开州区公安局" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/gov-0-7.png?v=20260730g" alt="天津市公安局津南分局" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/gov-1-1.png?v=20260730g" alt="天津市公安局河西分局" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/gov-1-2.png?v=20260730g" alt="天津市公安局宣传中心" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/gov-1-3.png?v=20260730g" alt="北京市海淀区人民政府" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/gov-1-4.png?v=20260730g" alt="杭州市临平区公安分局" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/gov-1-5.png?v=20260730g" alt="东升镇司法所" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/gov-1-6.png?v=20260730g" alt="花园路街道" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/gov-1-7.png?v=20260730g" alt="万寿路街道" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/gov-0-0.png?v=20260730h" alt="宜宾公安交警" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/gov-0-1.png?v=20260730h" alt="大同市公安局" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/gov-0-2.png?v=20260730h" alt="郑州市公安局郑东新区分局" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/gov-0-3.png?v=20260730h" alt="绵阳市公安局安州分局" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/gov-0-4.png?v=20260730h" alt="新郑市公安局" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/gov-0-5.png?v=20260730h" alt="武汉东湖高新公安局" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/gov-0-6.png?v=20260730h" alt="重庆市开州区公安局" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/gov-0-7.png?v=20260730h" alt="天津市公安局津南分局" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/gov-1-1.png?v=20260730h" alt="天津市公安局河西分局" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/gov-1-2.png?v=20260730h" alt="天津市公安局宣传中心" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/gov-1-3.png?v=20260730h" alt="北京市海淀区人民政府" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/gov-1-4.png?v=20260730h" alt="杭州市临平区公安分局" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/gov-1-5.png?v=20260730h" alt="东升镇司法所" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/gov-1-6.png?v=20260730h" alt="花园路街道" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/gov-1-7.png?v=20260730h" alt="万寿路街道" loading="lazy"></div>
           </div>
         </aside>
       </div>
@@ -278,21 +281,21 @@
         <aside class="ind-panel rv rv-d1">
           <div class="ip-cap">部分客户</div>
           <div class="logo-grid">
-            <div class="lc"><img class="brand" src="assets/brand/logos/internet-0-0.png?v=20260730g" alt="自如" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/internet-0-1.png?v=20260730g" alt="飞书" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/internet-0-2.png?v=20260730g" alt="网易" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/internet-0-3.png?v=20260730g" alt="58到家" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/internet-0-4.png?v=20260730g" alt="京东物流" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/internet-0-5.png?v=20260730g" alt="瓜子二手车" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/internet-0-6.png?v=20260730g" alt="百度" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/internet-1-0.png?v=20260730g" alt="什么值得买" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/internet-1-1.png?v=20260730g" alt="Elementwin 元兵科技" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/internet-1-2.png?v=20260730g" alt="火山引擎" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/internet-1-3.png?v=20260730g" alt="腾讯营销" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/internet-1-4.png?v=20260730g" alt="转转" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/internet-1-5.png?v=20260730g" alt="曹操出行" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/internet-1-6.png?v=20260730g" alt="谷歌广告" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/internet-1-7.png?v=20260730g" alt="北京智源" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/internet-0-0.png?v=20260730h" alt="自如" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/internet-0-1.png?v=20260730h" alt="飞书" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/internet-0-2.png?v=20260730h" alt="网易" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/internet-0-3.png?v=20260730h" alt="58到家" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/internet-0-4.png?v=20260730h" alt="京东物流" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/internet-0-5.png?v=20260730h" alt="瓜子二手车" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/internet-0-6.png?v=20260730h" alt="百度" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/internet-1-0.png?v=20260730h" alt="什么值得买" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/internet-1-1.png?v=20260730h" alt="Elementwin 元兵科技" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/internet-1-2.png?v=20260730h" alt="火山引擎" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/internet-1-3.png?v=20260730h" alt="腾讯营销" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/internet-1-4.png?v=20260730h" alt="转转" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/internet-1-5.png?v=20260730h" alt="曹操出行" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/internet-1-6.png?v=20260730h" alt="谷歌广告" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/internet-1-7.png?v=20260730h" alt="北京智源" loading="lazy"></div>
           </div>
         </aside>
       </div>
@@ -319,21 +322,21 @@
         <aside class="ind-panel rv rv-d1">
           <div class="ip-cap">部分客户</div>
           <div class="logo-grid">
-            <div class="lc"><img class="brand" src="assets/brand/logos/edu-0-0.png?v=20260730g" alt="得到" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/edu-0-1.png?v=20260730g" alt="好未来" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/edu-0-2.png?v=20260730g" alt="叫叫阅读" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/edu-0-3.svg?v=20260730g" alt="知乎" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/edu-0-4.png?v=20260730g" alt="开开华彩" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/edu-0-5.png?v=20260730g" alt="希望学" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/edu-0-6.png?v=20260730g" alt="乐读" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/edu-1-0.png?v=20260730g" alt="作业帮" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/edu-1-1.png?v=20260730g" alt="兴趣岛" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/edu-1-2.png?v=20260730g" alt="新东方" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/edu-1-3.png?v=20260730g" alt="火花思维" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/edu-1-4.png?v=20260730g" alt="方塘有课" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/edu-1-5.png?v=20260730g" alt="少年得到" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/edu-1-6.png?v=20260730g" alt="喜马拉雅" loading="lazy"></div>
-            <div class="lc"><img class="brand" src="assets/brand/logos/edu-1-7.png?v=20260730g" alt="简知科技" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/edu-0-0.png?v=20260730h" alt="得到" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/edu-0-1.png?v=20260730h" alt="好未来" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/edu-0-2.png?v=20260730h" alt="叫叫阅读" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/edu-0-3.png?v=20260730h" alt="知乎" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/edu-0-4.png?v=20260730h" alt="开开华彩" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/edu-0-5.png?v=20260730h" alt="希望学" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/edu-0-6.png?v=20260730h" alt="乐读" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/edu-1-0.png?v=20260730h" alt="作业帮" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/edu-1-1.png?v=20260730h" alt="兴趣岛" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/edu-1-2.png?v=20260730h" alt="新东方" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/edu-1-3.png?v=20260730h" alt="火花思维" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/edu-1-4.png?v=20260730h" alt="方塘有课" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/edu-1-5.png?v=20260730h" alt="少年得到" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/edu-1-6.png?v=20260730h" alt="喜马拉雅" loading="lazy"></div>
+            <div class="lc"><img class="brand" src="assets/brand/logos/edu-1-7.png?v=20260730h" alt="简知科技" loading="lazy"></div>
           </div>
         </aside>
       </div>
