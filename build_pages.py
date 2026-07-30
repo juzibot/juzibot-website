@@ -1524,7 +1524,7 @@ def page_industries():
     for slug, name, icon, color, tagline, intro, kpis, scene, capabilities, customers in industries_detail:
         lg_cols = 3
         logo_grid_html = ''.join(
-            f'<div style="border:1px solid var(--gray-line);border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:center;padding:9px 14px;"><img src="assets/brand/logos/{p}-{ci}-{c}.png" alt="" style="width:100%;height:auto;display:block;" loading="lazy"></div>'
+            f'<div style="border:1px solid var(--gray-line);border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:center;padding:9px 14px;"><img src="assets/brand/logos/{p}-{ci}-{c}.png?v=20260730c" alt="" style="width:100%;height:auto;display:block;" loading="lazy"></div>'
             for p, ci, c in logo_cells[slug]
         )
         kpi_html = ''.join(
