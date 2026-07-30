@@ -1,0 +1,73 @@
+name: news-test
+# 动态页管线的不变量测试闸(2026-07-30)。
+#
+# 为什么必须进 CI: 今天写完 test_build_news.py 第一次跑就抓到一个已经带着四次提交跑了
+# 一路的**安全回归**——消毒的紧贴引号绕过与 style 剥离被一次反向拷贝抹掉, XSS 通道重开。
+# 而它躲过了当时全部守卫: shell-clean 只查模板壳、copy-guard 只查文案口径、管线内断言
+# 只查计数与死链, 全量重建每次都成功且产物正常(存量镜像里恰好没有带 payload 的内容,
+# 消毒退化后没有任何可观测症状)。
+#
+# 结论: 产物正常不等于逻辑正确, 只有针对不变量的测试能抓到这类退化。而测试只有**自动跑**
+# 才拦得住回归——靠人记得跑, 迟早会在"就改了个模板"的时候被跳过。
+#
+# 这个 job 不联网、不需要 ZHIPU_API_KEY、秒级完成, 没有理由不每次跑。
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+
+jobs:
+  invariants:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: 语法检查(build_news.py)
+        run: python3 -m py_compile build_news.py && echo "语法 OK"
+      - name: 不变量测试(离线, 10 组)
+        run: python3 test_build_news.py
+      - name: 两个列表页的内联 JS 语法
+        run: |
+          node -e "
+          const fs=require('fs'); let bad=0;
+          ['news.html','news-c.html'].forEach(f=>{
+            let t=fs.readFileSync(f,'utf8');
+            // 先剔掉带 type 属性的数据块(JSON/LD): 其内容里的 <script> 字面串会干扰匹配,
+            // 曾因此把 JSON 数据当 JS 报语法错, 差点去改一个没坏的文件。
+            t=t.replace(/<script[^>]+type=[^>]*>[\s\S]*?<\/script>/g,'');
+            const m=t.match(/<script>([\s\S]*?)<\/script>/g)||[]; let ok=0;
+            m.forEach(s=>{try{new Function(s.replace(/<\/?script>/g,''));ok++}catch(e){bad++;console.log('::error file='+f+'::JS 语法错: '+e.message)}});
+            console.log(f+': JS 块 '+m.length+', 通过 '+ok);
+          });
+          try{new Function(fs.readFileSync('assets/askbar.js','utf8'));console.log('askbar.js OK')}
+          catch(e){bad++;console.log('::error file=assets/askbar.js::'+e.message)}
+          if(bad){process.exit(1)}
+          "
+      - name: 分支间同步检查(消毒/安全关键代码不得退化)
+        run: |
+          python3 - <<'PY'
+          import re, sys, pathlib
+          # 白名单式硬检查: 这几段代码曾被反向拷贝抹掉过, 且抹掉后没有任何可观测症状。
+          # 测试已覆盖行为, 这里再按源码特征兜一道——防的是有人"修好行为但换了实现"时
+          # 无意退化(例如把前导集合从 [\s/"'] 改回 [\s/])。
+          src = pathlib.Path("build_news.py").read_text(encoding="utf-8")
+          need = [
+              (r'''\[\\s/"'\]\)on\[a-z\]\+''', '事件属性剥离的前导集合必须含引号(紧贴引号写法)'),
+              (r'''\[\\s/"'\]\)style\\s\*=''', 'style 属性剥离'),
+              (r'def write_atomic\(', '状态文件原子写'),
+              (r'def detail_indexable\(', '详情页可收录判据(单一事实源)'),
+              (r'def worthy_concepts\(', '概念够格判据(单一事实源)'),
+          ]
+          miss = [d for p, d in need if not re.search(p, src)]
+          if miss:
+              print(f"::error::以下关键实现缺失或被改写, 疑似分支同步事故:")
+              for d in miss:
+                  print(f"::error::  {d}")
+              print("::error::排查: git log -S'<代码片段>' -- build_news.py 查它在哪些提交出现/消失")
+              sys.exit(1)
+          print(f"关键实现齐全 ✓({len(need)} 项)")
+          PY
