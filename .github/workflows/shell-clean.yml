@@ -10,6 +10,11 @@ on:
 
 jobs:
   check:
+    # stage-2 是预览分支: 注入了数据的模板壳与生成物都**按设计**入库(产物要能直接看), 这两条闸
+    # 对它天然不成立 —— 在那里报红等于训练人忽略红灯。闸要守的是 PR 分支与 main。
+    # 注意 pull_request 事件的 ref 是 merge ref, 不等于 refs/heads/stage-2: 从 stage-2 开 PR
+    # 到 main 时这两条照样会跑 —— 那种情况本来就该报红。
+    if: github.ref != 'refs/heads/stage-2'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
