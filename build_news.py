@@ -1663,9 +1663,18 @@ def ai_enrich(items):
     def _brief_stale(it):  # 明确记为「摘要生成」(brief_full is False)、现在全文镜像到了 → 重做一次。
         # 用 is False(而非 not …)：老条目无此标记时视为已定稿, 不触发批量重刷烧配额(Bugbot PR#100)
         return it.get("brief") and it.get("brief_full") is False and bool(content_text(it["id"]))
+
+    def _brief_todo(it):
+        """还该不该给这条抽简报。brief_tried 记的是「上次失败时有没有全文」:
+        没全文时模型答不出很正常(等镜像到了再试一次), 有全文还是答不出就别每轮烧配额了。"""
+        if it.get("brief"):
+            return False
+        if "brief_tried" not in it:
+            return True
+        return it["brief_tried"] is False and bool(content_text(it["id"]))
     # title_zh_tried: 英文条目试过一轮但模型没回可用译题就落标记, 不再每轮重进(否则反复改写简报+烧配额, Bugbot PR#100)
     todo = [i for i in visible_items(items) if i["source"] in ENRICH_SOURCES
-            and (not i.get("brief")
+            and (_brief_todo(i)
                  or (title_is_en(i["title"]) and not i.get("title_zh") and not i.get("title_zh_tried"))
                  or _brief_stale(i))]
     if not todo:
@@ -1699,10 +1708,14 @@ def ai_enrich(items):
             redo = bool(it.get("brief"))  # 已有简报=本次是 stale 重做(非首抽)
             v = emap.get(it["id"])
             b = json_str(v, "brief") if isinstance(v, dict) else ""
-            if b:
+            if brief_usable(b):
                 it["brief"] = b[:140]
                 it["brief_full"] = has_full  # 记录本次简报是否基于全文, 供 _brief_stale 判重做
                 briefs += 1
+            elif b:
+                # 模型答了, 但答的是元话术("条目正文为空，无法提供内容简报。")或短到没信息量。
+                # 这种不入库 —— 它会原样进页面正文的简报区与 meta description, 实测线上真有一条。
+                it["brief_tried"] = has_full   # 记下失败时的条件, 供 _brief_todo 决定还要不要再试
             elif redo and has_full:
                 # 重做但模型漏答/给空简报: 已用全文试过, 保留旧简报并封顶标记, 不再每轮无限重做烧配额(Bugbot PR#100)
                 it["brief_full"] = True
@@ -2004,9 +2017,78 @@ def disp_title(it):
     return zh_title(it) or it["title"]
 
 
+# 模型偶尔不产出简报, 而是解释自己为什么产不出——那句话会原样进页面正文的简报区与 meta
+# description。实测线上就有一条: b5f96bf69df5 的 description 是「条目正文为空，无法提供内容简报。」
+# 搜索结果与 AI 引擎读到的就是这句。621 条里只此一条, 但代价不对称: 一条烂 description 的
+# 损失远大于一条缺 description。
+# 「作为AI」后面要求跟标点, 否则会误伤「智能硬件作为AI能力落地实体场景」这类正常句子(第一版就误伤了)。
+AI_META_RX = re.compile(r"无法(提供|生成|总结|概括|概述)|正文为空|抱歉[,，]|无内容|内容缺失"
+                        r"|暂无(内容|正文|简报)|作为(一个)?(AI|人工智能|语言模型)助?手?[,，]")
+BRIEF_MIN = 20   # 设计是 50~90 字; 短于 20 字的不是简报, 是残答
+
+
+def brief_usable(v):
+    """这段文字能不能当简报用 —— 唯一判据, 生成时(要不要入库)与渲染时(要不要显示)共用。"""
+    v = (v or "").strip()
+    return bool(v) and len(v) >= BRIEF_MIN and not AI_META_RX.search(v)
+
+
+def disp_brief(it):
+    """这条的可用简报; 存量里已有的坏简报也在这里被挡住(不必迁移数据)。"""
+    v = (it.get("brief") or "").strip()
+    return v if brief_usable(v) else ""
+
+
+DESC_MAX_W = 156   # description 的显示宽度上限
+DESC_MIN_W = 60    # 切到句读后至少要留这么宽(≈30 汉字), 不够就宁可硬截 —— 只留一句短开头比截断更没信息量
+
+
+def disp_width(s):
+    """粗略显示宽度: 中日韩与全角标点算 2, 其余算 1。
+
+    搜索结果按**像素宽度**截断, 不按字符数: 中文约 78 字就满了, 英文能放到 155 字左右。
+    用一个字符数阈值管两种语言, 必然有一边不准 —— 这页两种语言的条目都有(行业动态中文、
+    HN/大咖英文), 所以按宽度算。
+    """
+    return sum(2 if ord(c) > 0x2E7F else 1 for c in s)
+
+
+def cut_to_width(s, w):
+    """截到显示宽度不超过 w 的最长前缀。"""
+    acc, out = 0, []
+    for c in s:
+        acc += 2 if ord(c) > 0x2E7F else 1
+        if acc > w:
+            break
+        out.append(c)
+    return "".join(out)
+
+
+def page_desc(it, title):
+    """meta description / og:description 的唯一来源: 简报 → 原文摘要 → 标题, 并规整长度。
+
+    这段文字是标题之外读者与 AI 引擎最先读到的东西。实测 26 页超长(最长 388 字)——在搜索结果里
+    被截成半句; 另有 2 页短到没有信息量(一条是模型元话术, 一条只有「Talk Video」)。
+    超长时优先切到句读边界, 但边界太靠前就宁可硬截 —— 只留一句 17 字的开头, 比截断更没信息量。
+    """
+    d = disp_brief(it) or (it.get("summary") or "").strip() or title
+    d = re.sub(r"\s+", " ", d).strip()
+    if disp_width(d) <= DESC_MAX_W:
+        return d
+    head = cut_to_width(d, DESC_MAX_W)
+    # 用绝对宽度下限而不是比例: 比例会把「宽度 66 的完整一句」判成太靠前(第一版就这么误杀了,
+    # 那句 40 字的描述本来完全够用 —— 简报的设计长度就是 50~90 字)
+    cut = max((i for c in "。！？；.!?;" for i in [head.rfind(c)]
+               if i > 0 and disp_width(head[:i + 1]) >= DESC_MIN_W), default=-1)
+    if cut > 0:
+        return head[:cut + 1]
+    # 省略号自己占 2 个宽度, 得先腾出位置, 否则加完就超上限(第一版实测 157 > 156)
+    return cut_to_width(d, DESC_MAX_W - disp_width("…")).rstrip() + "…"
+
+
 def disp_summary(it):
     """展示摘要: 有译题的英文条目换中文简报(读者是中文受众), 中文条目保留来源原摘要。"""
-    return (it.get("brief") or it["summary"]) if it.get("title_zh") else it["summary"]
+    return (disp_brief(it) or it["summary"]) if it.get("title_zh") else it["summary"]
 
 
 def detail_href(it):
@@ -2523,7 +2605,8 @@ def detail_html(it, lib, worthy, rel=()):
     slugs = [s for s in (it.get("concepts") or []) if s in worthy]  # 只标有页的概念, 防死链
     full = img_render(annotate_concepts(normalize_links(full, it["url"]), slugs, lib))
     zh = img_render(annotate_concepts(normalize_links(zh, it["url"]), slugs, lib))
-    desc = it.get("brief") or it["summary"] or title
+    desc = page_desc(it, title)
+    brief_txt = disp_brief(it)
     ctx = json.dumps({"entity": "news-article", "type": "article", "title": title}, ensure_ascii=False).replace("</", "<\\/")
     origin = f"{it['author']} · {it['source_name']}" if it["author"] != it["source_name"] else it["source_name"]
     own = it["source"] in OWN_SOURCES
@@ -2645,7 +2728,7 @@ b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';})
     <p class="dp-by">来源：{esc(origin)}</p>
     <div class="dp-notice">{notice}</div>
     {f'<p class="dp-quip"><i class="fa-solid fa-quote-left"></i>{esc(it["quip"])}<em>AI 加工层生成</em></p>' if it.get("quip") else ""}
-    {f'<div class="dp-brief"><b>简报<em>AI 加工层生成</em></b>{esc(it["brief"])}</div>' if it.get("brief") else ""}
+    {f'<div class="dp-brief"><b>简报<em>AI 加工层生成</em></b>{esc(brief_txt)}</div>' if brief_txt else ""}
     {body}
     <div class="dp-actions">
       <a class="dp-btn pri" href="{safe_href(it["url"])}" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
