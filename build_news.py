@@ -172,7 +172,7 @@ SOURCES = [
         "max_items": 15,
         "keep_max": 100,  # 外部源存量上限(只数过筛条目): RSS 窗口每次都有新内容, 不修剪会让内联数据无限膨胀; 2026-07-22 扩到五 feed 后 80→100
         "home": "",
-        "ai_filter": "ai",
+        "ai_filter": "biz",
         # 关键词预过滤: 纯行情快讯类噪声不进 LLM 直接掐掉(省判定成本, 拿不到 key 时也生效)
         "kw_drop": re.compile(r"恒指|恒生科技指数|沪指|深成指|创业板指|纳指|道指|标普|收涨|收跌|高开|低开|平开|午间休盘|北向资金|南向资金|涨停|跌停|新股|打新|申购"),
     },
@@ -231,7 +231,7 @@ SOURCES = [
         "link_base": "https://news.miracleplus.com",
         "keep_max": 60,
         "home": "https://news.miracleplus.com/",
-        "ai_filter": "ai",
+        "ai_filter": "biz",
     },
 ]
 # 注: 企微/企业微信生态源(wecom-changelog)已于 2026-07-24 移除(佳芮: 企微不出现在任何页面)。
@@ -1334,6 +1334,10 @@ AI_MODEL = "glm-4-air"
 AI_URL = "https://open.bigmodel.cn/api/paas/v4/chat/completions"
 AI_KEY_FILE = Path.home() / "projects" / "API-KEYS.md"  # 本机密钥登记, 不在仓库内——严禁把 key 写进任何入库文件
 AI_BATCH = 40
+REJUDGE_MAX = 150   # 换判据后一轮最多重判多少条(有配额成本, 分轮消化; 新条目不占这个额度)
+# 2026-07-30 前的判定不带 rule 字段, 这里记下它们当时用的规则, 供判断"规则有没有换过"。
+# 只列换过的源 —— 其余源的老判定与现规则一致, 不该被重判。
+_LEGACY_RULE = {"industry": "ai", "qisi": "ai"}
 AI_MAX_TOKENS = 4000  # GLM-4 系列单次输出上限 4095, 留一点余量
 
 
@@ -1364,10 +1368,31 @@ AI_RULES = {
         "AI 员工/Agent 在企业的落地实践、团队组织与创业复盘。"
         "纯个人生活随笔、与公司无关的泛读书笔记/旅行/情感类内容 keep=false。"
     ),
+    # 判据从「和 AI 有关」换成「和我们有关」(2026-07-30, 佳芮): 来官网点「动态」的是客户,
+    # 想看句子互动在干什么, 不是来读行业资讯的。凌迪科技(物理 AI 仿真)按旧判据是**正确通过**的
+    # ——它确实与 AI 相关, 但与我们和我们的客户没关系。判据错了, 不是模型判错了。
+    # 旧的 "ai" 规则保留给不需要业务相关性的场合(现在没有源在用), 删掉会让历史判定失去参照。
     "ai": (
         "这是科技媒体的行业资讯。keep=true 的条件: 内容与 AI 直接相关——"
         "大模型/Agent/AI 产品与应用、AI 公司融资并购、AI 行业政策与研究。"
         "与 AI 无关的股市行情快讯、非 AI 领域融资、消费电子/汽车/地产等 keep=false。拿不准时 keep=false。"
+    ),
+    "biz": (
+        "这是科技媒体的行业资讯, 要挑给「句子互动」官网动态页的读者看。读者是企业客户与潜在客户,"
+        "他们关心的是自己的业务, 不是泛泛的 AI 新闻。\n"
+        "句子互动做什么: 企业级对话式 AI —— 把 AI 员工(销售/客服/导购/理财顾问/社工/HR)接进"
+        "微信客服、小程序、公众号、抖音、小红书、飞书、WhatsApp 等 IM 渠道, 做私域运营与客户接待,"
+        "服务金融、政务等高合规行业, 提供私有化部署与 FDE 陪跑交付。\n"
+        "keep=true 需**至少命中一条**:\n"
+        "① 我们的客户在做的事: 私域运营与增长、客服/销售/导购/营销自动化、IM 与社交平台生态变化、"
+        "企业采购 AI 应用的实践与成本;\n"
+        "② 我们的同行与替代方案: Agent 平台、对话式 AI、AI 客服/销售厂商、企业级 AI 应用公司的"
+        "产品与融资;\n"
+        "③ 影响客户决策的底层变化: 主流大模型的能力与定价、国产算力与合规政策、企业数据安全要求。\n"
+        "keep=false: 与上面三条都无关的 AI 应用, 哪怕它很 AI —— 工业/制造仿真、自动驾驶、"
+        "医疗影像、生物制药、AI 硬件与机器人、芯片制造工艺、游戏/影视内容生成、学术论文解读;"
+        "以及纯资本市场行情、非 AI 领域融资。\n"
+        "拿不准时 keep=false —— 少收一条噪音比多收一条无关内容好。"
     ),
     "techdev": (
         "这是独立技术博主的文章(可能是英文, 判定标准不变)。keep=true 的条件: 内容与 AI 或编程直接相关——"
@@ -1413,7 +1438,31 @@ def ai_screen(items):
     判定写进条目 ai 字段({keep,at})并随 data/news.json 持久化——每条只判一次。
     拿不到 key 或调用失败: 条目保持无 ai 字段(pending, 暂缓上站), 下次运行自动重试。"""
     rules = {s["id"]: s["ai_filter"] for s in SOURCES if s.get("ai_filter")}
-    todo = [i for i in items if i["source"] in rules and "ai" not in i]
+
+    def _stale_rule(it):
+        """这条判定是用哪条规则做的 —— 规则换了就得重判, 否则旧判定静默留着。
+
+        换判据这件事刚发生: industry/qisi 从 "ai"(和 AI 有关)换成 "biz"(和我们有关)。
+        原先判定只存 `ai` 字段、不记规则身份, 于是**换了判据也不会重判** —— 与「改了模板却不触发
+        缓存重算」是同一类错(今天已修过三次: 指纹漏函数、rsig 漏字段、常量漏收)。
+        老判定没有 rule 字段, 按 _LEGACY_RULE 补它当时的规则; 只有换过的源会被重判, 不翻全库。
+        """
+        a = it.get("ai")
+        if not isinstance(a, dict):
+            return False
+        was = a.get("rule") or _LEGACY_RULE.get(it["source"], rules.get(it["source"]))
+        return was != rules.get(it["source"])
+
+    todo = [i for i in items if i["source"] in rules and ("ai" not in i or _stale_rule(i))]
+    rejudge = sum(1 for i in todo if "ai" in i)
+    if rejudge:
+        # 重判有配额成本, 分轮消化: 一轮最多 REJUDGE_MAX 条, 新条目不占这个额度(它们还没上站)
+        fresh = [i for i in todo if "ai" not in i]
+        old_ones = [i for i in todo if "ai" in i][:REJUDGE_MAX]
+        left = rejudge - len(old_ones)
+        print(f"[AI 筛选] 判据换了, 待重判 {rejudge} 条; 本轮做 {len(old_ones)} 条"
+              + (f", 其余 {left} 条下轮继续(上限 REJUDGE_MAX={REJUDGE_MAX})" if left else ""))
+        todo = fresh + old_ones
     if not todo:
         return
     today = datetime.now().strftime("%Y-%m-%d")
@@ -1424,7 +1473,7 @@ def ai_screen(items):
     for it in todo:
         rx = kw.get(it["source"])
         if rx and rx.search(it["title"]):
-            it["ai"] = {"keep": False, "at": today, "kw": True}
+            it["ai"] = {"keep": False, "at": today, "kw": True, "rule": rules[it["source"]]}
             kw_dropped += 1
         else:
             kept_todo.append(it)
@@ -1460,7 +1509,8 @@ def ai_screen(items):
         vmap = {v["id"]: _keep(v) for v in verdicts if isinstance(v, dict) and v.get("id")}
         for it in batch:
             if it["id"] in vmap:
-                it["ai"] = {"keep": vmap[it["id"]], "at": today}
+                # rule 一起存: 换判据时靠它认出旧判定(见 _stale_rule)
+                it["ai"] = {"keep": vmap[it["id"]], "at": today, "rule": rules[it["source"]]}
                 judged += 1
                 kept += vmap[it["id"]]
     pending = len(todo) - judged

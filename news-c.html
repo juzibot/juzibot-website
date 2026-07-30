@@ -258,9 +258,11 @@
       sentinel = document.getElementById('newsSentinel');
 
   var shownInit = list.querySelectorAll('.fd-item').length;
+  // 「全部」已去掉(2026-07-30, 佳芮): 混排是纯时间倒序, 而行业源一天约 50 条、公司内容约 4 条/月
+  // —— 一切到混排, 自家内容必然被淹, 而"两边都看一点"这个视图说不出对读者的价值。
+  // 只留两个区: 默认句子动态(自家内容), 想看外部观察再切行业雷达。
   var GROUPS = [{ k: 'company', n: '句子动态', i: 'fa-solid fa-house-chimney' },
-                { k: 'radar', n: '行业雷达', i: 'fa-solid fa-satellite-dish' },
-                { k: 'all', n: '全部', i: 'fa-solid fa-layer-group' }];
+                { k: 'radar', n: '行业雷达', i: 'fa-solid fa-satellite-dish' }];
   function grpOf(id) { var s = sources.filter(function (x) { return x.id === id; })[0]; return (s && s.group) || 'radar'; }
   function inGroup(it) { return state.group === 'all' || grpOf(it.source) === state.group; }
   function groupCount(g) { return data.filter(function (it) { return g === 'all' || grpOf(it.source) === g; }).length; }

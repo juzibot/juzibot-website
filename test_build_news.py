@@ -1167,6 +1167,72 @@ def test_banned_terms_absent_from_shipped_pages():
         check("CI 闸与本测试同款后缀白名单", all(s in w for s in SUFFIX), "后缀不一致会漏一片")
 
 
+# ---------------------------------------------------------------- 36
+def test_screen_rule_identity_triggers_rejudge():
+    """判定必须记下「是哪条规则判的」—— 否则换判据后旧判定静默留着。
+
+    判据刚换过: industry/qisi 从 `ai`(和 AI 有关)换成 `biz`(和我们有关)。佳芮的原话是
+    「凌迪科技和 AI 有关，但和我们没关系」—— 那条**按旧判据是正确通过的**, 错的是判据本身。
+    而原先判定只存 `ai` 字段、不记规则身份, `todo` 只挑 `"ai" not in i` ——
+    **换了判据也不会重判**。这与「改了模板却不触发缓存重算」是同一类错, 今天已修过三次
+    (指纹漏函数 / rsig 漏字段 / 常量与容器漏收), 这是第四处同源问题。
+
+    两侧都要测: 换过规则的源要重判, **没换过的源不能被卷进来**(否则等于全库重刷烧配额)。
+    """
+    src = (ROOT / "build_news.py").read_text(encoding="utf-8")
+    check("新判据 biz 存在", "biz" in B.AI_RULES, sorted(B.AI_RULES))
+    used = {s["id"]: s.get("ai_filter") for s in B.SOURCES if s.get("ai_filter")}
+    check("industry 与 qisi 换用 biz", used.get("industry") == "biz" and used.get("qisi") == "biz", used)
+    check("其余源判据未动", used.get("rui-blog") == "company" and used.get("voices") == "techdev"
+          and used.get("hn") == "hn", used)
+    check("biz 判据写明了「与我们业务无关的 AI 也要排掉」",
+          all(k in B.AI_RULES["biz"] for k in ("私域", "IM", "keep=false")), "判据文字不完整")
+    check("判定写入时带上 rule", 'it["ai"] = {"keep": vmap[it["id"]], "at": today, "rule": rules[it["source"]]}' in src)
+    check("关键词预过滤那条也带 rule(口径一致)", '"kw": True, "rule": rules[it["source"]]' in src)
+    check("老判定的规则由 _LEGACY_RULE 补齐", B._LEGACY_RULE == {"industry": "ai", "qisi": "ai"}, B._LEGACY_RULE)
+    check("重判有分轮上限(换判据不该一轮烧完配额)", isinstance(B.REJUDGE_MAX, int) and B.REJUDGE_MAX > 0)
+    # 用假条目模拟 _stale_rule 的四种情形(它是 ai_screen 的内部函数, 这里复现同一判据)
+    rules = {s["id"]: s["ai_filter"] for s in B.SOURCES if s.get("ai_filter")}
+    def stale(it):
+        a = it.get("ai")
+        if not isinstance(a, dict):
+            return False
+        was = a.get("rule") or B._LEGACY_RULE.get(it["source"], rules.get(it["source"]))
+        return was != rules.get(it["source"])
+    check("老判定(无 rule 字段)+ 换过规则的源 → 判为过期",
+          stale({"source": "industry", "ai": {"keep": True}}))
+    check("已按新规则判过 → 不重判",
+          not stale({"source": "industry", "ai": {"keep": True, "rule": "biz"}}))
+    check("没换规则的源, 老判定不算过期(不卷进来)",
+          not stale({"source": "voices", "ai": {"keep": True}})
+          and not stale({"source": "hn", "ai": {"keep": False}}))
+    check("完全没判过的条目照常进 todo(不是靠 stale 判)", not stale({"source": "industry"}))
+
+
+# ---------------------------------------------------------------- 37
+def test_no_mixed_all_zone():
+    """去掉「全部」混排分区 —— 一切到混排, 自家内容必然被淹。
+
+    实测量级: 行业源一天约 50 条新增、公司内容约 4 条/月(2026-07 仅 4 条), 而混排是纯时间倒序。
+    所以只留两个区(默认句子动态), 想看外部观察再切行业雷达 —— 「两边都看一点」这个视图
+    说不出对读者的价值, 留着只会让人误入被淹的那一屏。
+    """
+    for page in ("news.html", "news-c.html"):
+        p = ROOT / page
+        if not p.exists():
+            continue
+        h = p.read_text(encoding="utf-8")
+        m = re.search(r"var GROUPS = \[(.*?)\];", h, re.S)
+        check(f"{page} 找到 GROUPS 定义", bool(m))
+        if not m:
+            continue
+        keys = re.findall(r"k: '([a-z]+)'", m.group(1))
+        check(f"{page} 只有两个分区", keys == ["company", "radar"], keys)
+        st = re.search(r"state = \{[^}]*group: '([a-z]+)'", h)
+        check(f"{page} 默认分区是 company", st and st.group(1) == "company",
+              st.group(1) if st else "找不到 state")
+
+
 def main():
     tests = [v for k, v in sorted(globals().items()) if k.startswith("test_")]
     for fn in tests:
