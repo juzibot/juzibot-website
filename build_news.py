@@ -2895,9 +2895,14 @@ def write_detail_pages(vis, items, lib, worthy):
         # 相关列表、旧条目下线退出列表, 都得触发本页重算, 否则页面会挂上指向已删页的死链。
         # 实测代价: 每轮波及 12%~56% 页面重算, 但那是纯本地渲染(不碰 API/网络), 换来的是
         # 「相关列表永远与实际存在的页一致」这条硬保证。
-        # 签名与渲染共用同一个 rel, 不各算一次。
+        #
+        # 签名直接哈希**渲染结果本身**, 不再列举要哈希哪些字段。第一版列举了 id/标题/理由,
+        # 漏了 `date`——相关条目的日期被修正时, 引用它的页会继续命中旧缓存, 页面上的时间卡住
+        # (Bugbot PR#103)。更要紧的是**测试里把同一个公式抄了一遍, 所以测也抓不住**: 验证手段
+        # 与被验证的错误同源, 这是交接书 §6.12 那条纪律的第三次复发, 而且就发生在写完它之后。
+        # 改成哈希渲染结果, "漏字段"在结构上不可能: 渲染里出现什么, 签名就覆盖什么。
         rel = related_items(it, pool, cidx)
-        rsig = _sha(*(f"{r['id']}|{disp_title(r)}|{related_why(cs, lib)}" for r, cs in rel))
+        rsig = _sha(related_html(rel, lib))
         sig = _sha(render_ver(),srccfg, csig, wsig, item_repr, rsig,
                    _file_sig(CONTENT_DIR / f"{it['id']}.html"), _file_sig(zh_content_path(it["id"])))
         new_sigs[it["id"]] = sig
