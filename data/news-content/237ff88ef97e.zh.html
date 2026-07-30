@@ -1,0 +1,33 @@
+<p><img src="https://docs.espressif.com/projects/rust/book/assets/esp-rs.svg" referrerpolicy="no-referrer" /></p>
+
+<h1>前言</h1>
+<p>欢迎阅读我们关于在 Espressif 产品上进行嵌入式 Rust 开发的指南。本书旨在帮助您入门，并熟练使用我们的工具和生态系统。在过程中，我们将介绍软件栈的结构，并使用项目生成和工具演示基本工作流程。最后，您将准备好通过我们的参考文档和外部培训资源探索更高级的内容。</p>
+<h2>本书读者</h2>
+<p>本书面向对嵌入式开发感兴趣的 Rust 开发者，即使他们没有嵌入式系统的经验。虽然熟悉底层编程概念会有所帮助，但我们会在介绍关键概念时进行说明。如果您想扩展基础知识，可以考虑学习附加的资源。</p>
+<h2>稳定性和可用性</h2>
+<p>尽管我们力求稳定，但随着 API 改进、性能提升和新功能引入，用户应预期会有定期更新。根据语义版本控制（<code>SemVer</code>）原则，已稳定的模块不会发生破坏性变更。然而，<code>unstable</code> 功能（如 <code>esp-hal</code> 的部分组件和某些驱动程序）仍在积极开发中，不受 <code>SemVer</code> 保证约束。这意味着使用这些 <code>unstable</code> 组件可能导致项目在执行简单的 <code>cargo update</code> 时失效，类似于使用 Rust 的 <code>nightly</code> 编译器。这种不稳定性在整个 Rust 嵌入式生态系统中普遍存在，该领域仍在快速发展。请预期频繁变更并密切跟踪依赖关系。对于所有主要 crate，我们提供版本间的迁移指南，帮助您保持最新状态。</p>
+<h2>附加资源</h2>
+<p>如果您对本书涵盖的某些概念不熟悉，或希望加深理解，以下资源可能对您有帮助：</p>
+<table>
+<thead>
+<tr><th>资源</th><th>描述</th></tr>
+</thead>
+<tbody>
+<tr><td><a href="https://doc.rust-lang.org/book/" target="_blank" rel="noopener nofollow">The Rust Programming Language</a></td><td>在开始嵌入式开发之前，请先学习 Rust 的基础知识。</td></tr>
+<tr><td><a href="https://docs.rust-embedded.org/book/index.html" target="_blank" rel="noopener nofollow">The Embedded Rust Book</a></td><td>来自 Rust 嵌入式工作组的资源集合。</td></tr>
+<tr><td><a href="https://esp-rs.github.io/no_std-training/" target="_blank" rel="noopener nofollow">Embedded Rust (<code>no_std</code>) on Espressif</a></td><td>关于在 Espressif SoC 上使用 <code>no_std</code> 环境的指南。</td></tr>
+<tr><td><a href="https://github.com/esp-rs/awesome-esp-rust.git" target="_blank" rel="noopener nofollow">Awesome ESP Rust</a></td><td>一份用于在 Espressif 产品上进行 Rust 开发的资源列表。</td></tr>
+<tr><td><a href="https://github.com/rust-embedded/awesome-embedded-rust" target="_blank" rel="noopener nofollow">Awesome Embedded Rust</a></td><td>一份与 Rust 编程语言相关的嵌入式和底层编程资源列表，包括一些有用的 crate。</td></tr>
+</tbody>
+</table>
+
+<h2>为本书做贡献</h2>
+<p>本书的工作在 <a href="https://github.com/esp-rs/book" target="_blank" rel="noopener nofollow">此仓库</a> 中协调。</p>
+<p>如果您在遵循说明时遇到困难，或发现有不清晰的章节，请在 <a href="https://github.com/esp-rs/book/issues/" target="_blank" rel="noopener nofollow">问题跟踪器</a> 中报告。我们始终欢迎以拉取请求的形式贡献，例如修复拼写错误或改进清晰度。</p>
+<h2>支持与社区</h2>
+<p>如果您需要帮助、有问题，或者想讨论与 <code>esp-rs</code> 相关的话题，您可以通过以下渠道联系我们：</p>
+<ul>
+<li><strong>Matrix</strong>: <a href="https://matrix.to/#/#esp-rs:matrix.org" target="_blank" rel="noopener nofollow">加入我们的社区聊天</a>。</li>
+<li><strong>GitHub Discussions</strong>: <a href="https://github.com/esp-rs/esp-hal/discussions" target="_blank" rel="noopener nofollow">与社区互动</a>。</li>
+</ul>
+<p>我们希望本书能为您提供知识和信心，让您能够使用 Rust 在 Espressif 产品上构建稳健、高效且安全的嵌入式应用程序。让我们开始吧！</p>

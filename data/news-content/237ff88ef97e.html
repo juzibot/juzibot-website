@@ -1,0 +1,34 @@
+<p><img src="https://docs.espressif.com/projects/rust/book/assets/esp-rs.svg" referrerpolicy="no-referrer" /></p>
+
+<h1>Preface</h1>
+<p>Welcome to our guide to embedded Rust development on Espressif products. This book is designed to help you get started and become comfortable using our tools and ecosystem. Along the way, we’ll introduce the structure of our software stack, and walk through basic workflows using project generation and tooling. By the end, you’ll be ready to explore more advanced material through our reference documentation and external training resources.</p>
+<h2>Who This Book Is For</h2>
+<p>This book is intended for Rust developers who are interested in embedded development, even if they don’t have prior experience with embedded systems. While some familiarity with low-level programming concepts can be helpful, we aim to introduce key ideas as they come up. If you would like to expand your baseline knowledge, consider studying the additional Resources.</p>
+<h2>Stability and Availability</h2>
+<p>While we strive for stability, users should expect periodic modifications as we improve the API, enhance performance, and introduce new features. <a href="https://docs.espressif.com/projects/rust/esp-hal/1.0.0/esp32c6/esp_hal/index.html#modules" target="_blank" rel="noopener nofollow">Modules</a> that are already stabilized will not be subject to breaking changes, in accordance with semantic versioning - <code>SemVer</code>. However, <code>unstable</code> features—such as parts of the <code>esp-hal</code> and certain drivers are actively being developed and are not covered by <code>SemVer</code> guarantees. This means that using these <code>unstable</code> components may break your project with a simple <code>cargo update</code>, much like working with Rust’s <code>nightly</code> compiler. This kind of instability is common across the broader Rust embedded ecosystem, which is still rapidly evolving. Expect frequent changes and track dependencies closely. For all major crates, we provide migration guides between releases to help you stay up to date.</p>
+<h2>Additional Resources</h2>
+<p>If you’re unfamiliar with certain concepts covered in this book or would like to deepen your understanding, the following resources may be helpful:</p>
+
+<table>
+<thead>
+<tr><th>Resource</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><a href="https://doc.rust-lang.org/book/" target="_blank" rel="noopener nofollow">The Rust Programming Language</a></td><td>Learn Rust fundamentals before diving into embedded development.</td></tr>
+<tr><td><a href="https://docs.rust-embedded.org/book/index.html" target="_blank" rel="noopener nofollow">The Embedded Rust Book</a></td><td>A collection of resources from Rust’s Embedded Working Group.</td></tr>
+<tr><td><a href="https://esp-rs.github.io/no_std-training/" target="_blank" rel="noopener nofollow">Embedded Rust (<code>no_std</code>) on Espressif</a></td><td>Guide for working in <code>no_std</code> environments with Espressif SoCs.</td></tr>
+<tr><td><a href="https://github.com/esp-rs/awesome-esp-rust.git" target="_blank" rel="noopener nofollow">Awesome ESP Rust</a></td><td>A list of resources for development in the Rust programming language for Espressif products</td></tr>
+<tr><td><a href="https://github.com/rust-embedded/awesome-embedded-rust" target="_blank" rel="noopener nofollow">Awesome Embedded Rust</a></td><td>A list of resources related to embedded and low-level programming in the Rust programming language, including a selection of useful crates.</td></tr>
+</tbody>
+</table>
+
+<h2>Contributing to This Book</h2>
+<p>The work on this book is coordinated in <a href="https://github.com/esp-rs/book" target="_blank" rel="noopener nofollow">this repository</a>.</p>
+<p>If you encounter difficulties following the instructions or find unclear sections, please report them in <a href="https://github.com/esp-rs/book/issues/" target="_blank" rel="noopener nofollow">the issue tracker</a>. Contributions in the form of pull requests for typo fixes or clarity improvements are always welcome!</p>
+<h2>Support and Community</h2>
+<p>If you need help, have questions, or would like to discuss topics related to <code>esp-rs</code>, you can reach out through the following channels:</p>
+<ul>
+<li><strong>Matrix</strong>: <a href="https://matrix.to/#/#esp-rs:matrix.org" target="_blank" rel="noopener nofollow">Join our community chat</a>.</li>
+<li><strong>GitHub Discussions</strong>: <a href="https://github.com/esp-rs/esp-hal/discussions" target="_blank" rel="noopener nofollow">Engage with the community</a>.</li>
+</ul>
+<p>We hope this book provides you with the knowledge and confidence to build robust, efficient, and safe embedded applications using Rust on Espressif products. Let’s get started!</p>
