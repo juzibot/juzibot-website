@@ -2772,18 +2772,29 @@ _TPL_ROOTS = ("detail_html", "concept_html", "concept_index_html", "concept_page
 _TPL_CACHE = {}   # 签名在每条目的循环里都要取一次(284 次), 闭包与哈希都只算一遍
 
 
-def _tpl_fns():
-    """参与渲染的函数名 = 根模板函数的调用图闭包(只跟进本模块定义的普通函数)。
+# 常量名里带这些字样的不进指纹: 一是它们可能每轮不同(拿不到 key 时为空), 会让签名不稳定、
+# 每轮全量重算; 二是没必要把密钥喂进任何哈希。
+_SIG_SKIP_RX = re.compile(r"KEY|TOKEN|SECRET|PASSWORD|COOKIE")
+# 只有不可变类型进指纹。运行中会被填充的缓存(`_CRX_CACHE`/`_TPL_CACHE` 等 dict)一旦进来,
+# 签名就每轮不同 → 每轮全量重算, 增量缓存直接废掉。
+_SIG_TYPES = (str, int, float, bool, tuple, frozenset)
 
+
+def _tpl_parts():
+    """参与渲染的函数名 + 它们引用的模块级常量名, 都从根模板函数的调用图推出来。
+
+    常量也得进指纹: `DETAIL_CSS`/`CONCEPT_CSS`/`CX_FILTER_HTML`/`CX_FILTER_JS` 这些整段进页面,
+    但函数源码里只有 `{DETAIL_CSS}` 这个引用、不含内容 —— **实测改样式或改内联脚本根本不触发重算**,
+    页面停在旧版。之前没出事只是因为每次改 CSS 时恰好也改了闭包里的函数(第四次同类问题)。
     排序后返回, 保证同一份代码永远给出同一个指纹(连跑字节稳定这条不能破)。
     """
-    if "fns" in _TPL_CACHE:
-        return _TPL_CACHE["fns"]
+    if "parts" in _TPL_CACHE:
+        return _TPL_CACHE["parts"]
     import ast
     import inspect
     import textwrap
     g = globals()
-    seen, stack = set(), list(_TPL_ROOTS)
+    seen, consts, stack = set(), set(), list(_TPL_ROOTS)
     while stack:
         fn = stack.pop()
         if fn in seen:
@@ -2800,8 +2811,23 @@ def _tpl_fns():
         for n in ast.walk(tree):
             if isinstance(n, ast.Call) and isinstance(n.func, ast.Name):
                 stack.append(n.func.id)
-    _TPL_CACHE["fns"] = tuple(sorted(seen))
-    return _TPL_CACHE["fns"]
+            elif isinstance(n, ast.Name) and isinstance(n.ctx, ast.Load):
+                nm = n.id
+                if (nm.isupper() or nm.lstrip("_").isupper()) and not _SIG_SKIP_RX.search(nm) \
+                        and isinstance(g.get(nm), _SIG_TYPES):
+                    consts.add(nm)
+    _TPL_CACHE["parts"] = (tuple(sorted(seen)), tuple(sorted(consts)))
+    return _TPL_CACHE["parts"]
+
+
+def _tpl_fns():
+    """参与渲染的函数名(调用图闭包)。"""
+    return _tpl_parts()[0]
+
+
+def _tpl_consts():
+    """参与渲染的模块级常量名(整段进页面的 CSS/HTML/JS 与各种阈值)。"""
+    return _tpl_parts()[1]
 
 
 def _template_sig():
@@ -2810,11 +2836,12 @@ def _template_sig():
     try:
         import inspect
         g = globals()
-        fns = _tpl_fns()
+        fns, consts = _tpl_parts()
         if not fns:
             raise OSError("闭包为空")
         # 名字一起进哈希: 函数增删/改名也算模板变化(只哈源码则"删一个加一个"可能撞上)
-        sig = _sha(*(f"{f}\x1f{inspect.getsource(g[f])}" for f in fns))[:10]
+        sig = _sha(*[f"{f}\x1f{inspect.getsource(g[f])}" for f in fns]
+                   + [f"{c}\x1f{g[c]!r}" for c in consts])[:10]
     except (OSError, TypeError):   # 源码不可得(打包/exec 场景)时退回纯人工版本号
         sig = "nosrc"
     _TPL_CACHE["sig"] = sig
