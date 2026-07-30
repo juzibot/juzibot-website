@@ -319,7 +319,7 @@
   .msg.me .m-av{background:var(--ink-2)}
   .msg.me .m-col{display:flex;flex-direction:column;align-items:flex-end}
   .msg.me .bubble{background:var(--blue);color:#fff;border-color:transparent;border-radius:14px 4px 14px 14px}
-  /* 客服直接发出的企业微信二维码 */
+  /* 客服直接发出的联系二维码 */
   .msg .bubble .chat-qr{display:block;width:172px;height:172px;margin:10px 0 2px;border-radius:10px;border:1px solid var(--line);background:#fff}
   /* 输入中省略点 */
   .msg .typing{display:inline-flex;gap:4px;align-items:center}

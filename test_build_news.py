@@ -1124,6 +1124,49 @@ def test_seed_ref_is_a_tag():
             check(f"{label} 提到 SEED_REF 的 tag 名", ref in doc.read_text(encoding="utf-8"), ref)
 
 
+# ---------------------------------------------------------------- 35
+def test_banned_terms_absent_from_shipped_pages():
+    """「企微 / 企业微信」不得出现在任何出货页面 —— 2026-07-27 定的口径。
+
+    这条口径当时**只清了动态页**: 首页与全站联系弹窗一直漏着, 佳芮 7-24 就提过, 7-30 复查时
+    首页仍有 7 处、`site.js` 2 处、`askbar.js` 1 处、两个 CSS 各 1 处 —— 其中「扫码加企业微信」
+    是联系弹窗标题, 而 `site.js` 那份**所有子页都注入**。
+    管线里的 `has_banned()` 只管概念页原文证据一处, 页面文案完全没被覆盖, 也没有任何 CI 闸。
+
+    我自己第一遍清理还漏了两个 CSS 文件 —— 因为手写的 grep 只列了 html/js/json。所以这里按
+    **后缀白名单遍历**而不是列文件名: 出货物 = 页面 + 前端资源, 少列一种后缀就等于漏一片。
+
+    范围刻意跳过源码与文档: `build_news.py` 里 `BANNED_TERMS` 就是这两个词, 查它等于自伤;
+    `news/` 下的镜像正文是生成物(不入库), 其中 10 篇是佳芮 2021–2023 的署名文章, 改不改是
+    内容决定, 不该由测试代替人拍板。
+    """
+    BANNED = ("企业微信", "企微")
+    SKIP = {".git", ".github", "docs", "node_modules", "__pycache__", "news", "data"}
+    SUFFIX = (".html", ".js", ".css", ".json", ".xml", ".txt")
+    files = [p for p in ROOT.rglob("*")
+             if p.is_file() and p.suffix in SUFFIX and not (set(p.relative_to(ROOT).parts) & SKIP)]
+    check(f"扫到出货文件 {len(files)} 个", len(files) > 50, len(files))
+    bad = []
+    for p in files:
+        try:
+            lines = p.read_text(encoding="utf-8").splitlines()
+        except (UnicodeDecodeError, OSError):
+            continue
+        for i, line in enumerate(lines, 1):
+            if any(b in line for b in BANNED):
+                bad.append(f"{p.relative_to(ROOT)}:{i}")
+                break
+    check("出货页面零命中「企微/企业微信」", not bad, bad[:6])
+    # 闸的范围不能把源码里的判据定义也算进去 —— 那会让这条永远无法通过
+    src = (ROOT / "build_news.py").read_text(encoding="utf-8")
+    check("管线里的 BANNED_TERMS 判据仍在(闸不自伤)", 'BANNED_TERMS = ("企业微信", "企微")' in src)
+    wf = ROOT / ".github" / "workflows" / "copy-guard.yml"
+    check("copy-guard CI 闸存在(此前三个分支上都没有)", wf.exists())
+    if wf.exists():
+        w = wf.read_text(encoding="utf-8")
+        check("CI 闸与本测试同款后缀白名单", all(s in w for s in SUFFIX), "后缀不一致会漏一片")
+
+
 def main():
     tests = [v for k, v in sorted(globals().items()) if k.startswith("test_")]
     for fn in tests:

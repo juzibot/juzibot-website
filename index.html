@@ -331,7 +331,7 @@
   .msg.me .m-av{background:var(--ink-2)}
   .msg.me .m-col{display:flex;flex-direction:column;align-items:flex-end}
   .msg.me .bubble{background:var(--blue);color:#fff;border-color:transparent;border-radius:14px 4px 14px 14px}
-  /* 客服直接发出的企业微信二维码 */
+  /* 客服直接发出的联系二维码 */
   .msg .bubble .chat-qr{display:block;width:172px;height:172px;margin:10px 0 2px;border-radius:10px;border:1px solid var(--line);background:#fff}
   /* 输入中省略点 */
   .msg .typing{display:inline-flex;gap:4px;align-items:center}
@@ -2290,8 +2290,8 @@ html{overflow-x:clip}
   <div class="modal modal-qr" role="dialog" aria-modal="true">
     <button class="qr-close" onclick="closeModal('contactModal')" aria-label="关闭">×</button>
     <div class="qr-eyebrow">联系我们</div>
-    <h3 class="qr-title">扫码加企业微信</h3>
-    <img class="qr-img" src="assets/brand/qr-qiwei.png" alt="企业微信二维码" width="200" height="200" />
+    <h3 class="qr-title">扫码联系我们</h3>
+    <img class="qr-img" src="assets/brand/qr-qiwei.png" alt="联系二维码" width="200" height="200" />
     <p class="qr-note">直接和我们聊，工作日当天回复</p>
   </div>
 </div>
@@ -2707,7 +2707,7 @@ function openContact(){openModal('contactModal');}
       cap:['7×24 主动加微、破冰、跟进，线索不过夜','按客户阶段自动切换话术，高意向优先推进','对话、跟进、转化全程留痕，主管可随时复盘'],
       story:'在头部客户的真实销售流程里，AI 已能独立承接九成以上的日常触达与跟进动作，人只需处理最后的临门一脚。',link:'workforce/sales.html'},
     {n:'GEO 优化师',i:'consume',d:'让品牌在豆包、DeepSeek 等 AI 答案里被推荐',m:'让品牌被 AI 推荐',f:'emp-v2-geo.svg',
-      cap:['监测品牌在 AI 答案里的提及率、推荐位与引用来源','把品牌资料做成 AI 愿意引用的内容，多渠道铺成证据链','公域意向自动沉到企微，AI 客服 / 销售接力复购'],
+      cap:['监测品牌在 AI 答案里的提及率、推荐位与引用来源','把品牌资料做成 AI 愿意引用的内容，多渠道铺成证据链','公域意向自动沉到私域，AI 客服 / 销售接力复购'],
       story:'GEO 是 AI 时代的 SEO：用户越来越多直接问 AI「怎么选」，GEO 优化师让品牌进入这些答案，再把意向接到私域复购。零售电商场景试点中。',link:'workforce/geo.html'},
     {n:'AI 跨境电商店长',i:'consume',d:'从规则驱动进化到智能决策，深度链接出海消费者',m:'有效服务时间 ↓55%',f:'emp-v2-ecom.png',
       cap:['多语种 7×24 接待，自动识别时区与下单意图','从“按规则回话”升级为“按情境决策”，复杂咨询也接得住','打通商品、物流、售后数据，一站答清'],
@@ -3362,7 +3362,7 @@ if(!sessionStorage.getItem('intro_shown')){
       a:"能。按业务结果交付——转化、有效线索、人效都对齐你的指标：头部客户人效翻倍、转人工率从 27% 压到 2.73%。",
       next:["deploy","demo"]},
     demo:{q:"怎么预约演示？",
-      a:"扫下方企业微信二维码直接找我们，工作日当天回复，会带你所在行业的真实客户场景做演示 👇",
+      a:"扫下方二维码直接找我们，工作日当天回复，会带你所在行业的真实客户场景做演示 👇",
       next:["diff","safety"],qr:true}
   };
   var STARTER=["diff","deploy","safety"];
@@ -3388,7 +3388,7 @@ if(!sessionStorage.getItem('intro_shown')){
       if(onDone)onDone();
     },reduce?80:760);
   }
-  /* 客服直接在对话里发出企业微信二维码 */
+  /* 客服直接在对话里发出联系二维码 */
   function addBotQR(text,onDone){
     var m=document.createElement('div');m.className='msg bot';
     m.innerHTML='<span class="m-av"><img src="logo.png" alt="句子互动" /></span><div class="m-col"><div class="m-who">小句 · AI 客服</div><div class="bubble"><span class="typing"><i></i><i></i><i></i></span></div></div>';
@@ -3397,7 +3397,7 @@ if(!sessionStorage.getItem('intro_shown')){
       var b=m.querySelector('.bubble');b.textContent=text;
       var img=document.createElement('img');
       img.className='chat-qr';img.src='assets/brand/qr-qiwei.png';
-      img.alt='企业微信二维码';img.width=172;img.height=172;img.loading='lazy';
+      img.alt='联系二维码';img.width=172;img.height=172;img.loading='lazy';
       b.appendChild(img);scrollDown();
       if(onDone)onDone();
     },reduce?80:760);
