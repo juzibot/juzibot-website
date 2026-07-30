@@ -919,8 +919,31 @@ def test_fingerprint_covers_embedded_constants():
             setattr(B, name, orig)
             B._TPL_CACHE.clear()
     check("还原后版本键回到原值", B.render_ver() == v0)
-    bad = [c for c in consts if isinstance(getattr(B, c, None), (dict, list, set))]
-    check("可变容器不进指纹(否则每轮全量重算)", not bad, bad)
+    # 容器: 从未被就地改写的配置表要进(SRC_ICON 原样进页面, Bugbot PR#103), 运行时缓存要挡住
+    check("SRC_ICON 进指纹(图标 class 原样进页面)", "SRC_ICON" in consts, consts)
+    orig_icon = dict(B.SRC_ICON)
+    try:
+        B.SRC_ICON["industry"] = "fa-solid fa-changed"
+        B._TPL_CACHE.clear()
+        check("改一个来源图标 → 版本键变化", B.render_ver() != v0)
+    finally:
+        B.SRC_ICON.clear()
+        B.SRC_ICON.update(orig_icon)
+        B._TPL_CACHE.clear()
+    caches = [c for c in ("_CRX_CACHE", "_TPL_CACHE", "_EV_CACHE", "_FEISHU_ROSTER") if c in consts]
+    check("运行时缓存不进指纹(否则每轮全量重算)", not caches, caches)
+    mut = B._mutated_globals()
+    check("就地改写判据认出全部运行时缓存",
+          all(c in mut for c in ("_CRX_CACHE", "_TPL_CACHE")), sorted(mut)[:6])
+    check("配置表没被误判为可变", "SRC_ICON" not in mut and "MIRROR_MODE" not in mut)
+    # 规范化: set 顺序与机器路径都不能进哈希
+    check("_const_repr 对 set 顺序不敏感",
+          B._const_repr({"b", "a", "c"}) == B._const_repr({"c", "a", "b"}))
+    check("_const_repr 把 Path 折成相对 ROOT(绝对路径含机器名)",
+          "P:data/x.json" == B._const_repr(B.ROOT / "data" / "x.json"),
+          B._const_repr(B.ROOT / "data" / "x.json"))
+    hashed = "".join(B._const_repr(getattr(B, c)) for c in consts)
+    check("进哈希的内容不含本机绝对路径", str(B.ROOT) not in hashed)
     leak = [c for c in consts if re.search(r"KEY|TOKEN|SECRET|PASSWORD", c)]
     check("密钥类常量不进指纹", not leak, leak)
     # 运行时缓存被填充后版本键必须稳定
@@ -931,6 +954,29 @@ def test_fingerprint_covers_embedded_constants():
     finally:
         B._CRX_CACHE.pop("__probe__", None)
         B._TPL_CACHE.clear()
+
+
+# ---------------------------------------------------------------- 30b
+def test_fingerprint_stable_across_processes():
+    """指纹必须跨进程稳定 —— set 的 repr 顺序取决于 PYTHONHASHSEED, 这条不测就会埋雷。
+
+    实测反证: 直接 `repr(OWN_SOURCES)` 时 seed=1 给 6e1b59ce79、seed=2 给 9b4d7c2874。
+    若指纹这样算, CI 每 6 小时一轮、每轮 hash 种子不同 → **每轮全量重写 287 页并 rsync 一遍**,
+    而日志一切正常, 没有任何可观测症状。所以 `_const_repr` 对 set 排序、对 Path 折相对路径。
+    """
+    import subprocess
+    code = ("import importlib.util,sys;"
+            "spec=importlib.util.spec_from_file_location('bn',r'%s');"
+            "B=importlib.util.module_from_spec(spec);sys.modules['bn']=B;spec.loader.exec_module(B);"
+            "print(B.render_ver())" % (ROOT / "build_news.py"))
+    outs = []
+    for seed in ("1", "2", "12345"):
+        env = dict(os.environ, PYTHONHASHSEED=seed)
+        r = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True,
+                           env=env, cwd=str(ROOT), timeout=90)
+        outs.append(r.stdout.strip())
+    check("三个不同 PYTHONHASHSEED 下版本键一致", len(set(outs)) == 1, outs)
+    check("子进程算出的版本键与本进程一致", outs and outs[0] == B.render_ver(), f"{outs[:1]} vs {B.render_ver()}")
 
 
 # ---------------------------------------------------------------- 31
@@ -964,6 +1010,84 @@ def test_related_caps_reach_signature():
         finally:
             setattr(B, name, orig)
     check("还原后 rsig 回到原值", sig() == base)
+
+
+# ---------------------------------------------------------------- 32
+def test_askbar_routes_no_intent_theft():
+    """意图路由先命中先返回, 所以**顺序本身是判据** —— 用真实问句探针钉住, 不是看词表。
+
+    Bugbot PR#103 抓到: 我给动态页加的路由里放了「文章」这个泛词, 又排在知识库路由之前,
+    于是「知识库文章怎么管理」被动态页答复抢走, 懂行/知识库意图永远拿不到。
+    我第一版自查只比对**逐词相同**, 因此漏掉了这种情形 —— 冲突发生在**短语**同时命中两条路由时,
+    而不是两条路由共用同一个词。所以这里改用问句探针。
+
+    修的过程还纠出两处存量问题与我自己的一次误伤:
+    · 「私有化部署」两边都命中(部署 / 私有), 而 enterprise 的答复才真正讲私有化 → 安全路由前移
+    · 「数据」同时在安全路由与问数路由里, 前者永远抢到 → 从安全路由移除
+    · 但整词移除是误伤: 「数据不出域吗」随即掉到问数路由(改前是对的), 补「不出域」才补回来
+    """
+    js_p = ROOT / "assets" / "askbar.js"
+    if not js_p.exists():
+        check("(跳过)askbar.js 不在本分支", True)
+        return
+    m = re.search(r"var ROUTES = \[(.*?)\n  \];", js_p.read_text(encoding="utf-8"), re.S)
+    if not m:
+        check("找到 ROUTES 数组", False)
+        return
+    routes = []
+    for line in m.group(1).split("\n"):
+        r = re.search(r"re:\s*/\((.*?)\)/i", line)
+        c = re.search(r"cards:\s*\[([^\]]*)\]", line)
+        if r:
+            routes.append((re.compile("|".join(r.group(1).split("|")), re.I),
+                           (c.group(1) or "").replace("'", "").strip()))
+    check(f"解析到 {len(routes)} 条路由", len(routes) >= 10, len(routes))
+    probes = [("知识库文章怎么管理", "dongxing"), ("有哪些文档", "dongxing"), ("资料能检索吗", "dongxing"),
+              ("最近有什么动态", "news"), ("佳芮写的博客", "news"), ("有什么文章可以看", "news"),
+              ("数据安全吗", "enterprise"), ("数据不出域吗", "enterprise"), ("私有化部署", "enterprise"),
+              ("帮我查数据", "canmou"), ("数据报表能做吗", "canmou"), ("能出图表吗", "canmou"),
+              ("接入要多久", "fde"), ("怎么落地", "fde"),
+              ("和普通机器人有什么区别", "service"), ("能接抖音吗", "miaohui")]
+    wrong = []
+    for q, want in probes:
+        got = next((c for rx, c in routes if rx.search(q)), "(无命中)")
+        if want not in got:
+            wrong.append(f"{q}→{got}(期望 {want})")
+    check(f"{len(probes)} 条问句探针全部落到该去的路由", not wrong, "; ".join(wrong))
+
+
+# ---------------------------------------------------------------- 33
+def test_state_savers_actually_run():
+    """保存状态的函数要真跑一遍 —— 光有原子写的单元测试拦不住调用点写错。
+
+    实测崩过: `save_concepts` 里 `write_atomic(CONCEPTS_FILE, json.dumps(...), encoding="utf-8")`
+    残留了从 `path.write_text(text, encoding=...)` 改过来时没删的关键字, 而 `write_atomic(path, text)`
+    只收两个位置参数 → `TypeError`。它藏得很深, 因为触发条件是 `if len(lib) != n_lib`, **只有本轮
+    新增了概念才会走到**。后果不是"报个错": 它崩在 main() 里 `save_concepts` 那一行, 而
+    `data/news.json` 要到后面才保存 —— 本轮的简报/概念/翻译全部不落盘, 下轮重做, 每次新增概念
+    就白烧一遍 AI 配额; CI 的 cron 每遇新概念必失败, 线上永远不更新。
+
+    所以这里两条一起测: ①调用点签名(AST 静态查, 覆盖所有 write_atomic 调用) ②真跑一遍存盘函数。
+    """
+    import ast
+    src = (ROOT / "build_news.py").read_text(encoding="utf-8")
+    bad = [(n.lineno, [k.arg for k in n.keywords], len(n.args))
+           for n in ast.walk(ast.parse(src))
+           if isinstance(n, ast.Call) and isinstance(n.func, ast.Name)
+           and n.func.id == "write_atomic" and (n.keywords or len(n.args) != 2)]
+    check("write_atomic 全部调用点都是两个位置参数、零关键字", not bad, bad)
+    # 真跑: 存盘函数写进临时目录, 读回来必须是合法 JSON, 且不留 .tmp
+    with tempfile.TemporaryDirectory() as d:
+        orig = B.CONCEPTS_FILE
+        try:
+            B.CONCEPTS_FILE = pathlib.Path(d) / "concepts.json"
+            B.save_concepts({"moe": {"term": "MoE模型", "aliases": ["MoE"],
+                                     "def": "一种把大模型拆成多个专家子网络的架构。", "at": "2026-07-30"}})
+            got = json.loads(B.CONCEPTS_FILE.read_text(encoding="utf-8"))
+            check("save_concepts 能跑通并写出合法 JSON", got.get("concepts", {}).get("moe"), list(got))
+            check("save_concepts 不留 .tmp 垃圾", not list(pathlib.Path(d).glob("*.tmp")))
+        finally:
+            B.CONCEPTS_FILE = orig
 
 
 def main():
