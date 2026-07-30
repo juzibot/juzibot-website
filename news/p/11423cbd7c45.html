@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Logic for Programmers - 句子·动态</title>
+<meta name="description" content="《Logic for Programmers》是一本面向程序员的书籍，介绍如何通过逻辑学设计、验证和优化软件，无需数学背景。" />
+<meta name="robots" content="noindex,follow" />
+<link rel="canonical" href="https://logicforprogrammers.com/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Logic for Programmers" />
+<meta property="og:description" content="《Logic for Programmers》是一本面向程序员的书籍，介绍如何通过逻辑学设计、验证和优化软件，无需数学背景。" />
+<meta property="og:url" content="https://logicforprogrammers.com/" />
+<meta property="og:site_name" content="句子互动" />
+<meta name="twitter:card" content="summary" />
+
+<link rel="icon" href="../../logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../../assets/site.css" />
+<style>
+  /* 静态兜底导航: site.js 一执行就被 outerHTML 连同占位一起换掉, 访客几乎看不到它。
+     不隐藏也不 noscript 包裹——那会让爬虫拿不到, 而它存在的唯一理由就是给不跑 JS 的爬虫看。
+     样式做朴素一行, 万一 site.js 加载失败, 这排链接本身就是可用的降级导航。 */
+  .nav-fb{display:flex;flex-wrap:wrap;gap:6px 16px;padding:12px clamp(16px,4vw,40px);
+    border-bottom:1px solid var(--line-2);font-size:12.5px}
+  .nav-fb a{color:var(--ink-3);text-decoration:none}
+  .nav-fb a:hover{color:var(--blue)}
+
+  .dp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
+  .dp-wrap{max-width:760px;margin:0 auto}
+  .dp-crumb{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:12.5px;color:var(--ink-3);margin-bottom:20px;min-width:0}
+  .dp-crumb a{color:var(--ink-3);text-decoration:none}
+  .dp-crumb a:hover{color:var(--blue)}
+  .dp-crumb i{font-style:normal;opacity:.5;font-size:11px}
+  .dp-crumb [aria-current]{color:var(--ink-2);font-weight:650;overflow-wrap:anywhere}
+  .dp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
+  .dp-back:hover{color:var(--blue)}
+  .dp-meta{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:14px}
+  .dp-srcb{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:750;color:var(--sc,var(--blue))}
+  .s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
+  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-voices{--sc:#9333EA}
+  .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
+  .dp-cat{display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ink-3);background:#F6F7FB;border:1px solid var(--line-2);border-radius:6px;padding:2px 8px}
+  .dp-read{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  /* 相关动态: 读完一篇之后的出口。此前详情页之间零链接, 读者只能回列表页重新扫,
+     爬虫也只能靠 JS 驱动的列表页做枢纽。每条都带「为什么相关」, 不做无理由的推荐。 */
+  .dp-rel{margin-top:40px;padding-top:26px;border-top:1px solid var(--line-2)}
+  .dp-rel-h{font-size:14px;font-weight:750;color:var(--ink-2);margin:0 0 14px}
+  .dp-rel ul{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+  .dp-rel a{display:block;padding:10px 12px;margin:0 -12px;border-radius:8px;text-decoration:none;transition:background .2s var(--ease)}
+  .dp-rel a:hover{background:#F6F7FB}
+  .dp-rel-t{display:block;font-size:14px;font-weight:650;color:var(--ink-1);line-height:1.5}
+  .dp-rel a:hover .dp-rel-t{color:var(--blue)}
+  .dp-rel-m{display:block;margin-top:3px;font-size:11.5px;color:var(--ink-3)}
+  .dp-read i{font-size:10px;opacity:.7}
+  .dp-date{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-3)}
+  .dp-title{font-size:clamp(24px,3.2vw,34px);font-weight:850;letter-spacing:-.03em;line-height:1.32;word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance;margin-bottom:10px}
+  .dp-orig{font-size:13px;color:var(--ink-3);overflow-wrap:anywhere;margin-bottom:8px}
+  .dp-by{font-size:12.5px;font-weight:600;color:var(--ink-3);margin-bottom:18px}
+  .dp-notice{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:1.7;color:var(--ink-2);background:#F6F7FB;border:1px solid var(--line-2);border-radius:10px;padding:10px 14px;margin-bottom:22px}
+  .dp-notice i{color:var(--blue);margin-top:4px;flex:0 0 auto}
+  .dp-notice a{color:var(--blue);font-weight:700;overflow-wrap:anywhere}
+  .dp-quip{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.66;font-weight:600;color:var(--blue-deep);background:var(--blue-50);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:18px}
+  .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
+  .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
+  .dp-brief b{display:flex;align-items:baseline;gap:8px;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  /* AI 产出物的就地标注(2026-07-30): 概念页的定义早就在页尾注明「由 AI 加工层生成、编辑
+     维护」, 而详情页的简报与锐评一直没标 —— 读者会把那句锐评当成编辑观点。283 页都有这两块,
+     不标就是 283 次误导。放在区块内而不是只放页尾: 页尾声明读者多半划不到, 而标注要落在
+     人实际阅读的位置才有意义。样式压到最小, 不抢正文。 */
+  .dp-brief b em,.dp-quip em{font-style:normal;font-family:var(--mono);font-size:10px;font-weight:600;
+    letter-spacing:0;color:var(--ink-3);white-space:nowrap}
+  .dp-brief b em{margin-left:auto}
+  .dp-quip em{display:block;margin-top:5px;opacity:.85}
+  /* 长文目录(≥3 小标题且正文 ≥2000 字才出): <details> 原生可折叠, 不用一行 JS。
+     默认 open —— 目录的用处是先看清结构再决定读哪段, 收起来就失去意义; 想收也一点即收。 */
+  .dp-toc{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:24px;background:#FBFCFF}
+  .dp-toc summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--ink-2);display:flex;align-items:center;gap:7px;list-style:none}
+  .dp-toc summary::-webkit-details-marker{display:none}
+  .dp-toc summary i{font-size:11px;color:var(--blue)}
+  .dp-toc summary span{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-3);margin-left:auto}
+  .dp-toc ol{list-style:none;margin:10px 0 2px;padding:0;counter-reset:toc}
+  .dp-toc li{counter-increment:toc;font-size:13px;line-height:1.7;padding:2px 0}
+  .dp-toc li::before{content:counter(toc) ". ";font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .dp-toc li.lv3{padding-left:16px}
+  .dp-toc li.lv4{padding-left:32px}
+  .dp-toc a{color:var(--ink-2);text-decoration:none;overflow-wrap:anywhere}
+  .dp-toc a:hover{color:var(--blue)}
+  /* 锚点跳转时标题别贴到视口顶端(站点顶栏会盖住) */
+  .dp-body h2[id],.dp-body h3[id],.dp-body h4[id]{scroll-margin-top:76px}
+  .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
+  .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
+  .dp-body p{margin:0 0 1.05em}
+  .dp-body img{max-width:100%;height:auto;border-radius:10px;margin:.4em 0}
+  .dp-body pre{background:#0F172A;color:#E2E8F0;font-family:var(--mono);font-size:12.5px;line-height:1.7;padding:14px 16px;border-radius:10px;overflow-x:auto;margin:0 0 1.1em}
+  .dp-body code{font-family:var(--mono);font-size:.92em}
+  .dp-body :not(pre)>code{background:#F1F5F9;padding:1px 5px;border-radius:5px}
+  .dp-body blockquote{border-left:3px solid var(--line);padding:2px 0 2px 14px;color:var(--ink-3);margin:0 0 1.05em}
+  .dp-body a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+  .dp-body ul,.dp-body ol{padding-left:1.5em;margin:0 0 1.05em}
+  .dp-body table{display:block;overflow-x:auto;border-collapse:collapse;margin:0 0 1.1em}
+  .dp-body td,.dp-body th{border:1px solid var(--line);padding:6px 10px;font-size:.92em}
+  .dp-excerpt{font-size:15px;line-height:1.9;color:var(--ink-2);border-left:3px solid var(--line);padding:2px 0 2px 16px;margin-bottom:8px}
+  .dp-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;padding-top:20px;border-top:1px solid var(--line-2)}
+  .dp-btn{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:750;border-radius:999px;padding:10px 20px;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+  .dp-btn.pri{background:var(--blue);color:#fff}
+  .dp-btn.pri:hover{background:var(--blue-deep)}
+  .dp-btn.sec{background:#fff;color:var(--ink-2);border:1px solid var(--line)}
+  .dp-btn.sec:hover{color:var(--blue);border-color:var(--blue)}
+  .dp-note{font-size:11.5px;line-height:1.7;color:var(--ink-3);margin-top:18px}
+  .dp-langbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+  .dp-lang{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:750;color:var(--blue);
+    background:var(--blue-50);border:1px solid var(--blue-100);border-radius:999px;padding:7px 14px;
+    transition:background .2s var(--ease),border-color .2s var(--ease)}
+  .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
+  .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div id="site-nav" class="nav-fb"><a href="../../index.html">句子互动</a><a href="../../products/miaodong.html">句子秒懂</a><a href="../../products/shouhu.html">句子守护</a><a href="../../products/canmou.html">句子问数</a><a href="../../products/dongxing.html">句子懂行</a><a href="../../products/miaohui.html">句子秒回</a><a href="../../products/cli.html">句子 CLI</a><a href="../../products/zhizao.html">句子制造</a><a href="../../fde.html">FDE</a><a href="../../enterprise.html">企业方案</a><a href="../../industries.html">行业</a><a href="../../about.html">关于我们</a><a href="../../news.html">动态</a></div>
+<main class="dp-main">
+  <div class="dp-wrap">
+    <nav class="dp-crumb" aria-label="面包屑"><a href="../../index.html">句子互动</a><i aria-hidden="true">›</i><a href="../../news.html">动态</a><i aria-hidden="true">›</i><span aria-current="page">Logic for Programmers</span></nav>
+    <div class="dp-meta">
+      <span class="dp-srcb s-hn"><i class="fa-brands fa-hacker-news"></i>Hacker News</span>
+      
+      <time class="dp-date" datetime="2026-07-30">2026-07-30</time>
+      <span class="dp-read"><i class="fa-regular fa-clock"></i>约 10 分钟</span>
+    </div>
+    <h1 class="dp-title">Logic for Programmers</h1>
+    
+    <p class="dp-by">来源：Hacker News</p>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（Hacker News）所有 · <a href="https://logicforprogrammers.com/" target="_blank" rel="noopener">阅读原文</a></span></div>
+    
+    <div class="dp-brief"><b>简报<em>AI 加工层生成</em></b>《Logic for Programmers》是一本面向程序员的书籍，介绍如何通过逻辑学设计、验证和优化软件，无需数学背景。</div>
+    <div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang"><i class="fa-solid fa-language"></i><span>翻译为中文</span></button><span class="dp-lang-note">中文由 AI 翻译，仅供参考</span></div><article class="dp-body" id="dpBodyOrig" lang="en"><img loading="lazy" onerror="this.style.display='none'" src="https://logicforprogrammers.com/static/cover.webp" referrerpolicy="no-referrer" />
+
+
+
+
+<h1>
+          Logic for Programmers
+        </h1>
+
+<p>A book about math, software, and using one to fix the other.</p>
+<p>Written for the working programmer. No math background required.</p>
+
+
+<p>227 pages. Ebook includes PDF and EPUB, DRM-free.</p>
+
+
+
+
+
+
+<h2>What’s this book?</h2>
+<p>This is a book about designing, verifying, and reasoning about software better. And it’s about how learning a little bit of <strong>logic</strong>, the mathematics of Booleans, unlocks all sorts of cool techniques in our field. </p>
+<p>If you want to get a feel for what it’s like, try reading <a href="https://logicforprogrammers.com/static/freesample.pdf" target="_blank" rel="noopener nofollow">a sample chapter</a>!</p>
+
+
+
+
+
+<h2>Is this mostly theoretical or does it have practical applications, too?</h2>
+<p>Everything in the book is meant to be practical. Early chapters are on topics like “simplifying conditionals” and “ensuring an API change won’t break clients”. Later chapters are on slightly more esoteric subjects, like “finding race conditions in hypothetical software designs” and “minimizing the wall clock time of a distributed task”. Not everything will be useful to everyone, but I hope everyone finds something useful!</p>
+
+
+
+
+
+<h2>Do I need to know math?</h2>
+<p>Nope! You don’t need to know math besides the Boolean AND, OR, and NOT that programmers pick up through daily experience. The book covers the rest of the math you need.</p>
+<p>That said, you do need to know some programming! This book is meant for <strong>intermediate-to-advanced</strong> programmers and I assume the reader knows universal topics like loops, version control, testing, etc. Some chapters expect more specific knowledge like SQL or API design. Chapters are independent, though, so if something doesn’t fit your needs, go ahead and skip it.</p>
+
+
+
+
+
+
+<h2>What’s with the weird A and E in the title?</h2>
+<p>Logicians use the symbols ∀ and ∃ to mean “for all” and “there exists”, respectively. For example, we could write the sentence “everybody has a favorite color” as <code>∀p ∈ Person: ∃c ∈ Color: IsFavoriteColor(p, c)</code>.</p>
+<p>To make learning the topics (and searching the book) easier, I use English words instead of math symbols. So the same expression would be <code>all p in People: (some c in Color: IsFavoriteColor(p, c))</code>.</p>
+
+
+
+
+
+<h2>How can I get it?</h2>
+<p>If you want to read the book on your phone or computer, you can <a href="https://leanpub.com/logic" target="_blank" rel="noopener nofollow">get it as a PDF or EPUB</a>. Here’s the PDF:</p>
+<p><a href="https://logicforprogrammers.com/static/ebook_page.png" target="_blank" rel="noopener nofollow">
+<img loading="lazy" onerror="this.style.display='none'" src="https://logicforprogrammers.com/static/ebook_page.png" alt="Sample ebook two-page spread" referrerpolicy="no-referrer" /></a></p>
+<p>The print version is identical except with black-and-white printing and wider page margins. You can <a href="https://www.amazon.com/dp/B0HBLP4B26" target="_blank" rel="noopener nofollow">buy it on Amazon</a>.</p>
+
+
+
+
+
+
+<h2>What’s in the book?</h2>
+<p>Here’s a table of contents and corresponding techniques:</p>
+<ol>
+<li>A Crash Course in Logic • predicates, booleans, sets, and quantifiers</li>
+<li>Refactoring Code • rewrite rules</li>
+<li>Writing Better Tests • property testing</li>
+<li>Composing Code Correctly • contracts, subtyping</li>
+<li>Proving Code Correct • formal verification, Dafny</li>
+<li>Working with Data • database theory</li>
+<li>Decoding Decisions • decision tables</li>
+<li>Modeling Domains • formal specification, Alloy</li>
+<li>Designing Systems • temporal logic, TLA+</li>
+<li>Solving Math Problems • constraint and SMT solving</li>
+<li>Logic Programming • Prolog and answer set programming</li>
+</ol>
+<p>Plus some appendices on math notation, useful rewrite rules, and advanced topics in logic. All code samples are <a href="https://logicforprogrammers.com/code" target="_blank" rel="noopener nofollow">available on GitHub</a>, along with a bunch of extra samples on the same topics that are not used in the book.</p>
+
+
+
+
+
+<h2>How long is the book?</h2>
+<p>It’s just about 50,000 words and a bit over 200 pages. The extra credits add another 4,000 words or so.</p>
+
+
+
+
+
+<h2>“Extra credits”?</h2>
+<p>There’s a lot of interesting topics that I wanted to cover but couldn’t because they weren’t useful or focused enough to be in the book. So I put them in <a href="https://logicforprogrammers.com/extras" target="_blank" rel="noopener nofollow">an extra credit repository</a> with links in the book. This covers stuff like <a href="https://logicforprogrammers.com/extras/counting-orderings" target="_blank" rel="noopener nofollow">how to calculate the size of a state space</a>, <a href="https://logicforprogrammers.com/extras/partial-orders" target="_blank" rel="noopener nofollow">the theory of partial orders</a>, and a few other small things.</p>
+
+
+
+
+
+<h2>How come in Python <code>all([]) == True</code>? That always bugged me.</h2>
+<p>Python’s <code>all</code> function is equivalent to this: </p>
+<pre><code>all(l) = l[0] &amp;&amp; l[1] &amp;&amp; l[2] ...
+</code></pre>
+<p>This has a particular <strong>property</strong>: given any two lists <code>xs</code> and <code>ys</code>, we know:</p>
+<pre><code>all(xs . ys) == all(xs) &amp;&amp; all(ys)
+</code></pre>
+<p>But that’s for <em>any</em> two lists, and that includes empty lists! What happens if we pick <code>ys = []</code>? Then <code>xs . [] == xs</code>, meaning:</p>
+<pre><code>all(xs) &amp;&amp; all([]) == all(xs . [])
+all(xs) &amp;&amp; all([]) == all(xs)
+</code></pre>
+<p>If <code>all([]) = True</code>, then this equation becomes <code>all(xs) &amp;&amp; True == all(xs)</code>, aka <code>all(xs) == all(xs)</code>. If <code>all([]) = False</code>, then this becomes <code>all(xs) &amp;&amp; False == all(xs)</code>, which means <code>all(xs) == False</code> <em>no matter what <code>xs</code> is</em>. So it makes more sense for <code>all(xs) = True</code>, to preserve the property.</p>
+<p>We say that <code>True</code> is the <strong>identity</strong> of <code>&amp;&amp;</code>: <code>p &amp;&amp; True == p</code> regardless of what <code>p</code> is. The same argument, incidentally, also explains why the sum of an empty list is 0 and the <code>any</code> of an empty list is <code>False</code>.</p>
+
+
+
+
+
+<h2>Who’s the author?</h2>
+<p>I’m a software engineer specializing in formal methods, distributed systems, and software history. Some of my past works include <em>Practical TLA+</em> and <a href="https://www.hillelwayne.com/post/are-we-really-engineers/" target="_blank" rel="noopener nofollow">The Crossover Project</a>. I’ve done formal verification and training for clients like NASA, Meta, Giesecke+Devrient, McKinsey &amp; Company, Siemens AG, and Western Digital. I usually <a href="https://buttondown.com/hillelwayne/archive/what-chocolatiering-taught-me-about-programming/" target="_blank" rel="noopener nofollow">bring homemade chocolate when I speak at conferences</a>. </p>
+<p>I also have <a href="https://www.hillelwayne.com" target="_blank" rel="noopener nofollow">a blog</a> and <a href="https://buttondown.com/hillelwayne/" target="_blank" rel="noopener nofollow">a weekly newsletter</a>.</p>
+
+
+
+
+<p>Ready to read?</p></article><article class="dp-body" id="dpBodyZh" lang="zh-CN" hidden><img loading="lazy" onerror="this.style.display='none'" src="https://logicforprogrammers.com/static/cover.webp" referrerpolicy="no-referrer" />
+
+
+
+
+<h1>
+          程序员的逻辑
+        </h1>
+
+<p>一本关于数学、软件，以及如何用前者修复后者的书。</p>
+<p>为在职程序员而写。无需数学背景。</p>
+
+
+<p>共227页。电子书包含PDF和EPUB版本，无DRM限制。</p>
+
+
+
+
+
+<h2>这本书是讲什么的？</h2>
+<p>这是一本关于如何更好地设计、验证和推理软件的书。它还讲述了学习一点<strong>逻辑</strong>——即布尔代数——是如何解锁我们领域中各种酷炫技巧的。</p>
+<p>如果你想感受一下这本书的风格，可以试着读一下<a href="https://logicforprogrammers.com/static/freesample.pdf" target="_blank" rel="noopener nofollow">样章</a>！</p>
+
+
+
+
+
+<h2>这本书主要是理论性的，还是也有实际应用？</h2>
+<p>书中的所有内容都旨在实用。前几章的主题包括“简化条件判断”和“确保API变更不会破坏客户端”。后几章则涉及一些更专业的主题，例如“在假设的软件设计中发现竞态条件”和“最小化分布式任务的挂钟时间”。不是所有内容对每个人都有用，但我希望每个人都能找到有用的东西！</p>
+
+
+
+
+
+<h2>我需要懂数学吗？</h2>
+<p>完全不需要！除了程序员在日常工作中会用到的布尔与、或、非运算，你不需要懂其他数学。书中会涵盖你所需的其他数学知识。</p>
+<p>话虽如此，你确实需要懂一些编程！这本书面向的是<strong>中级到高级</strong>程序员，我假设读者了解循环、版本控制、测试等通用主题。有些章节需要更具体的知识，比如SQL或API设计。不过各章是独立的，所以如果某些内容不符合你的需求，可以直接跳过。</p>
+
+
+
+
+
+<h2>标题里那个奇怪的A和E是什么意思？</h2>
+<p>逻辑学家使用符号 ∀ 和 ∃ 来分别表示“对于所有”和“存在”。例如，我们可以将句子“每个人都有自己喜欢的颜色”写成 <code>∀p ∈ Person: ∃c ∈ Color: IsFavoriteColor(p, c)</code>。</p>
+<p>为了让学习主题（以及在书中搜索）更容易，我使用英文单词代替数学符号。因此，同样的表达式可以写成 <code>all p in People: (some c in Color: IsFavoriteColor(p, c))</code>。</p>
+
+
+
+
+
+<h2>如何获取这本书？</h2>
+<p>如果你想用手机或电脑阅读这本书，可以<a href="https://leanpub.com/logic" target="_blank" rel="noopener nofollow">获取PDF或EPUB版本</a>。PDF版本如下：</p>
+<p><a href="https://logicforprogrammers.com/static/ebook_page.png" target="_blank" rel="noopener nofollow">
+<img loading="lazy" onerror="this.style.display='none'" src="https://logicforprogrammers.com/static/ebook_page.png" alt="Sample ebook two-page spread" referrerpolicy="no-referrer" /></a></p>
+<p>印刷版内容完全相同，只是采用黑白印刷，并且页面边距更宽。你可以在 <a href="https://www.amazon.com/dp/B0HBLP4B26" target="_blank" rel="noopener nofollow">Amazon 上买到</a>。</p>
+
+
+
+
+
+<h2>书里有什么内容？</h2>
+<p>以下是目录和对应的技术点：</p>
+<ol>
+<li>逻辑速成班 • 谓词、布尔值、集合与量词</li>
+<li>重构代码 • 重写规则</li>
+<li>编写更好的测试 • 属性测试</li>
+<li>正确组合代码 • 契约、子类型</li>
+<li>证明代码正确性 • 形式化验证、Dafny</li>
+<li>数据处理 • 数据库理论</li>
+<li>决策解码 • 决策表</li>
+<li>领域建模 • 形式化规范、Alloy</li>
+<li>系统设计 • 时序逻辑、TLA+</li>
+<li>解决数学问题 • 约束求解与 SMT 求解</li>
+<li>逻辑编程 • Prolog 与答案集编程</li>
+</ol>
+<p>此外还包含一些附录，涵盖数学符号、实用的重写规则以及逻辑学的高级主题。所有代码示例都可在 <a href="https://logicforprogrammers.com/code" target="_blank" rel="noopener nofollow">GitHub 上获取</a>，书中未使用的同主题额外示例也一并收录。</p>
+
+
+
+
+
+<h2>书有多长？</h2>
+<p>全书约 5 万字，超过 200 页。额外补充内容另有约 4 千字。</p>
+
+
+
+
+
+<h2>“额外补充内容”？</h2>
+<p>有很多有趣的主题我想涵盖，但因为不够实用或不够聚焦而未能放入书中。所以我将它们整理到了 <a href="https://logicforprogrammers.com/extras" target="_blank" rel="noopener nofollow">一个补充资料库</a>中，并在书中提供了链接。这部分内容涵盖了诸如 <a href="https://logicforprogrammers.com/extras/counting-orderings" target="_blank" rel="noopener nofollow">如何计算状态空间大小</a>、<a href="https://logicforprogrammers.com/extras/partial-orders" target="_blank" rel="noopener nofollow">偏序理论</a> 以及其他一些小知识点。</p>
+
+
+
+
+
+<h2>为什么在 Python 中 <code>all([]) == True</code>？这让我一直很困惑。</h2>
+<p>Python 的 <code>all</code> 函数等价于以下写法：</p>
+<pre><code>all(l) = l[0] &amp;&amp; l[1] &amp;&amp; l[2] ...
+</code></pre>
+<p>这具有一个特定的<strong>性质</strong>：对于任意两个列表 <code>xs</code> 和 <code>ys</code>，我们有：</p>
+<pre><code>all(xs . ys) == all(xs) &amp;&amp; all(ys)
+</code></pre>
+<p>但这个结论适用于<strong>任意</strong>两个列表，当然也包括空列表！如果我们选择 <code>ys = []</code> 会发生什么？那么 <code>xs . [] == xs</code>，也就是说：</p>
+<pre><code>all(xs) &amp;&amp; all([]) == all(xs . [])
+all(xs) &amp;&amp; all([]) == all(xs)
+</code></pre>
+<p>如果 <code>all([]) = True</code>，这个等式就变成了 <code>all(xs) &amp;&amp; True == all(xs)</code>，也就是 <code>all(xs) == all(xs)</code>。如果 <code>all([]) = False</code>，那么等式就变成了 <code>all(xs) &amp;&amp; False == all(xs)</code)，这意味着无论 <code>xs</code> 是什么，<code>all(xs)</code> 都等于 <code>False</code>。所以，为了保持这个特性，让 <code>all(xs) = True</code> 是更合理的。</p>
+<p>我们说 <code>True</code> 是 <code>&amp;&amp;</code> 的<strong>单位元</strong>：无论 <code>p</code> 是什么，<code>p &amp;&amp; True == p</code> 都成立。顺便一提，同样的道理也解释了为什么空列表的和是 0，而空列表的 <code>any</code> 是 <code>False</code>。</p>
+
+
+
+
+
+<h2>作者是谁？</h2>
+<p>我是一名软件工程师，专注于形式化方法、分布式系统和软件历史领域。我过去的一些作品包括 <em>Practical TLA+</em> 和 <a href="https://www.hillelwayne.com/post/are-we-really-engineers/" target="_blank" rel="noopener nofollow">The Crossover Project</a>。我曾为 NASA、Meta、Giesecke+Devrient、麦肯锡、西门子和西部数据等客户提供过形式化验证和培训。我通常在会议上发言时<a href="https://buttondown.com/hillelwayne/archive/what-chocolatiering-taught-me-about-programming/" target="_blank" rel="noopener nofollow">会带上自制巧克力</a>。</p>
+<p>我还有一个<a href="https://www.hillelwayne.com" target="_blank" rel="noopener nofollow">博客</a>和一份<a href="https://buttondown.com/hillelwayne/" target="_blank" rel="noopener nofollow">每周通讯</a>。</p>
+
+
+
+
+<p>准备好阅读了吗？</p></article>
+    <div class="dp-actions">
+      <a class="dp-btn pri" href="https://logicforprogrammers.com/" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      <a class="dp-btn sec" href="https://news.ycombinator.com/item?id=49104937" target="_blank" rel="noopener"><i class="fa-brands fa-hacker-news"></i>HN 讨论</a>
+      <button type="button" class="dp-btn sec" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
+      <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
+    </div>
+    
+    <p class="dp-note">本页由句子互动动态管线自动生成，聚合内容版权归各来源所有；如来源方希望调整或移除收录，请通过官网联系我们。</p>
+  </div>
+</main>
+<div id="site-footer"></div>
+<script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "Logic for Programmers"};</script>
+<script src="../../assets/site.js"></script>
+<script>
+(function(){var b=document.getElementById('dpLang');if(!b)return;
+var en=document.getElementById('dpBodyOrig'),zh=document.getElementById('dpBodyZh');
+b.addEventListener('click',function(){var on=zh.hidden;zh.hidden=!on;en.hidden=on;
+b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';});})();
+</script>
+</body>
+</html>

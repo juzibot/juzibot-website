@@ -1,0 +1,81 @@
+<h1>Claude Code之父：Harness保质期只有半年，解开缰绳吧</h1>
+    			   
+             <img src="http://www.qbitai.com/wp-content/themes/liangziwei/imagesnew/head.jpg" referrerpolicy="no-referrer" /><em><a href="https://www.qbitai.com/author/chengqian" target="_blank" rel="noopener nofollow">程浅</a></em>
+                          2026-07-30
+             16:57:55
+          
+          来源：<a href="https://www.qbitai.com" target="_blank" rel="noopener nofollow">量子位</a>            
+                          
+            <p>Claude code之父：大模型是有机生物，做好AI产品疏胜于堵</p>
+                			<h5>程浅 发自 凹非寺<br />
+量子位 | 公众号 QbitAI</h5>
+<p><strong>每六个月，删掉你的Claude.md，删掉你的skills，删掉你的hooks。</strong></p>
+<p>这是Boris Cherny——Claude Code之父给产品使用者们的建议。</p>
+<p>在<strong>YC</strong>7月28日新发布的访谈视频《Boris Cherny: We Cut 80% of Claude Code’s Prompt》中，Boris热情呼吁所有做AI产品的人都应该对自己的新产品<strong>勇敢按下删除键</strong>，大刀阔斧地去删除系统的提示词、工具、harness代码。</p>
+<h6><strong><img src="https://i.qbitai.com/wp-content/uploads/2026/07/7f4c41d30afdef43b9364a81406b8fe4.webp" alt="图片" referrerpolicy="no-referrer" />△</strong>Boris Cherny最新访谈截图</h6>
+<p>“你应该把整个系统提示词全删掉，然后一行一行加回来，看看每一行到底有什么影响。”</p>
+<p>这个观点背后的概念是<strong>消融实验（ablation study）</strong>，该概念贯穿了Boris Cherny的最新访谈，旨在控制其他条件不变的前提下，移除、替换或关闭一个模块，去比较性能、稳定性、效率或成本的变化。</p>
+<p>访谈中Boris无不自豪地声称：<strong>实际上对于Opus 5，我们真心建议大家试试把这些东西全删掉，因为模型已经不需要了。</strong></p>
+<p>尽管最近的风波……用户也可以声称，“实际上对于Claude，真心建议把它删掉，因为我们已经不需要了。”（x）</p>
+<img src="https://i.qbitai.com/wp-content/uploads/2026/07/16b3b1f9c5636425c499919bd24d5de4.webp" alt="图片" referrerpolicy="no-referrer" />
+<p>除了“大胆删除”，Boris在访谈中还透露了更多关于自己对<strong>产品设计、模型使用和编程学习</strong>的价值性思考——</p>
+<blockquote><p><strong>本文观点出自访谈视频，阅读重点如下：</strong><br />
+1、Boris的产品迭代策略：少一点预判，多去做测试<br />
+2、“产品悬余”：同一时期内，模型能力总会超出产品边界<br />
+3、“解缚”：让模型做更难的任务，独立工作更长的时间<br />
+4、顶尖Claude用户是如何使用AI的？<br />
+5、给编程学习者的3个建议</p></blockquote>
+<h2>“模型是一种活体生物，它有自己的性格”</h2>
+<p><strong>“今天Claude Code harness 里的代码，几乎只剩下安全、权限和静态分析的部分。”</strong></p>
+<p>7月24日，Anthropic发布了关于 Claude 5上下文工程的最新规则，其中针对Opus 5、Fable 5等新模型，Claude Code的system prompt被大幅精简，<strong>删除了超过 80% 的原有指令</strong>。</p>
+<p>具体可以参考量子位文章<a href="https://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw==&amp;mid=2247907527&amp;idx=2&amp;sn=8357d758bc23ed41f343742d00fbff34&amp;scene=21#wechat_redirect" target="_blank" rel="noopener nofollow">《Claude Code狂删80%提示词，Opus 5反手加回去了》</a>。</p>
+<p>针对此次变化，Boris在访谈中分享了自己的产品迭代策略：<strong>你不要去猜模型需要什么指令，因为你根本猜不对。</strong>你能做的就是一行行去删除，去测试，然后找到模型反复卡住的地方。</p>
+<p>“你得把模型想成一个活的生物，一种更有机的东西。每一代模型的行为都不一样，性格都略有不同，你得花时间去了解它，然后据此调整harness。”</p>
+<h6><strong><img src="https://i.qbitai.com/wp-content/uploads/2026/07/c314f07fd3c4a181d3e7ede2cc35c34d.webp" alt="图片" referrerpolicy="no-referrer" /></strong></h6>
+<h6><strong>△</strong>该图片系AI合成</h6>
+<p>因此这对于Boris而言是更偏向“经验性”的，需要用科学的予以对待：不加预判地尝试，查看结果，迭代，重复。</p>
+<p>而在这样一个不断推倒重来的世界里，Eval也未必能稳定使用。尽管它确实比harness和prompt耐用，但眼下模型进化太快，很多时候一套评测会被很快刷到满分。因此需要观察模型到底在哪不断挣扎，然后设计新的Eval。</p>
+<h2>一种思维：悬余、解缚</h2>
+<p>访谈中，Boris分享了一个概念叫<strong>“Product Overhang”</strong>，他认为这是一个对他做产品很有帮助的思考方式。</p>
+<p>Overhang，什么意思？<strong>悬余</strong>。</p>
+<p>大模型以不连续的跳跃式速度跃迁，而产品集成却以连续的增量式节奏推进。这导致模型所具备的能力总会超出现有产品所能释放出的边界。</p>
+<p>Boris举了一个例子：2024年底sonnet 3.5刚推出的时候，这个模型就已经能一次性写整个文件的代码了。但当时的编程产品Copilot、Cursor早期版还在做补全代码这样的小事。</p>
+<p>拥有完整终端权限的Claude Code一定程度上弥补了这种差距。这也是Boris提出的第二个概念“Unhobbling”，解缚，拿掉限制。</p>
+<h6><strong><img src="https://i.qbitai.com/wp-content/uploads/2026/07/5c99d48a9673d5ee0de1eab882eecfe2.webp" alt="图片" referrerpolicy="no-referrer" /></strong></h6>
+<h6><strong>△</strong>给大模型解缚（图片系AI生成）</h6>
+<p>他分享了Anthropic内部的案例：有人尝试给Opus 5接入OpenCV（全球最大开源计算机视觉库），结果发现模型能自己画出人物肖像、动物风景，而在此前他们从未训练过模型去画画。</p>
+<p>这就是<strong>“模型激发”</strong>（model elicitation），在不改变模型权重的前提下，通过提示词、上下文、工具或产品形态的设计，让模型表现出它本已具备、但此前未被调用的能力。</p>
+<p>尽管这里或许还存在着疑问：如何归因？究竟是模型被激发出了原本就具备的能力，还是模型因为“脚手架”设计而学会了新的技能？</p>
+<p>不过这或许并不重要，不管怎样，Boris<strong>毫不怀疑</strong>此间存有巨大的商业机会：</p>
+<blockquote><p>我不是说所有创业公司都能抓住。但我知道有人在思考这些问题，<strong>这里真的有巨大的机会</strong>，能从模型身上激发出那些令人惊叹、有趣、而且有商业价值的行为。</p></blockquote>
+<p>为此，Boris提出了三条他本人的模型“解缚”方法。</p>
+<p><strong>第一，给模型比你想象中更难做的任务。</strong>描述清楚目标和边界和退出条件，然后就放手。</p>
+<p><strong>第二，多去做实验。</strong>允许模型做一些没有明确商业目的但好玩的尝试，“给自己自由去玩模型、去做有创意的事”。</p>
+<p><strong>第三，让模型自己验证成果。</strong>如今的重点已经不是“prompt engineering”了，问题在于，“当你给Claude分配了一个非常困难的任务之后，你怎么让它在过程中就去验证自己做的工作？”</p>
+<p>Boris认为第三点可能是如今大家做的最不尽如人意的一件事。因为如果模型不能自我验证任务，它就无法<strong>长时间独立运行</strong>。</p>
+<h6><strong><img src="https://i.qbitai.com/wp-content/uploads/2026/07/f34112d2a9cc084e6f9f2668676706f5.webp" alt="图片" referrerpolicy="no-referrer" /></strong></h6>
+<h6><strong>△</strong>该图片系AI生成</h6>
+<p>他自己的例子也许能给大家启发：</p>
+<blockquote><p>Boris：“好吧，我要你做的是——把Electron 应用重写成 Swift。我要你在Mac虚拟机里运行Electron应用，截屏，然后逐像素对比，跟Swift版本比，没做完就不要停。”<br />
+主持人：这就是你的prompt？<br />
+Boris：这就是我的prompt。<br />
+主持人：跑了多久？<br />
+Boris：还在跑。<br />
+主持人：什么时候开始的？<br />
+Boris：已经跑了两个多星期了，大概 14 天、15 天吧……Claude 还决定做直播，它做的事情是在内部建了一个Slack频道，然后每隔几分钟就发一张进度截图。</p></blockquote>
+<h2>Boris给AI使用者和创业者的实用建议</h2>
+<p>在访谈末尾，主持人抛出问题：</p>
+<p>那么，Boris，我们要怎么才能像你一样用好Claude呢？</p>
+<img src="https://i.qbitai.com/wp-content/uploads/2026/07/b60c943c4ec1740c126d1668aa980e92.webp" alt="图片" referrerpolicy="no-referrer" />
+<p>Boris表示，最重要的是<strong>别去听LinkedIn上那些网红说的，别去刷Twitter。</strong></p>
+<p>关于使用AI，“每个人都在找那种‘奇技淫巧’。但根本就不存在那种东西。没有那种东西。”</p>
+<p>他建议大家用经验主义方式对待模型，忘掉过去对旧模型的经验和课堂上学的计算机科学理论，直接观察模型在哪里卡壳，再针对性调整。</p>
+<blockquote><p>所以它已经不是一门理论科学了，它已经变成了一门经验科学。我觉得那些特别擅长放下自己的先验，放下那些“以前不行”的想法，愿意再试一次的人——会非常非常成功。</p></blockquote>
+<p>更重要的是保持一种心态，那就是放下自己对模型的“控制欲”，把模型当同事一样相处，不过度指定，不做太具体的要求，不试图让模型完全按照你会做的方式去做任务。因为<strong>“模型不是那样工作的”</strong>。</p>
+<img src="https://i.qbitai.com/wp-content/uploads/2026/07/3bf20ab56f6ce2e79d0428baa9950974.webp" alt="图片" referrerpolicy="no-referrer" />
+<p>对于那些还在学习编程的人，Boris呼吁不要只学纯计算机科学理论，要学如何应用。例如他本人最初学习编程的动力也是为了在数学考试中作弊。</p>
+<blockquote><p>通常这关乎创业，关乎做产品，关乎培养你自己的设计感、商业感，学会怎么做数据科学，学会怎么跟用户对话……当你把它们和计算机科学、工程结合起来的时候，才会变得真正有价值。</p></blockquote>
+<p>总之，“先做自己想要的东西，再升级去做别人想要的东西”。</p>
+                
+                
+                <em>版权所有，未经授权不得以任何形式转载及使用，违者必究。</em>

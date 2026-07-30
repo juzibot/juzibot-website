@@ -37,7 +37,7 @@ jobs:
               if pre and len(pre.group(1).strip()) > 40:
                   bad.append(f"{f}: 预渲染区有 {len(pre.group(1))//1024}KB 生成卡片(壳里应为空)")
               if size > 60:
-                  bad.append(f"{f}: {size}KB —— 模板壳正常在 30KB 以内, 疑似混入生成物")
+                  bad.append(f"{f}: {size}KB —— 干净壳约 30KB(实测 news.html 33 / news-c.html 30), 超 60KB 判为混入生成物")
           if bad:
               print("::error::模板壳混入生成物(生成物不入库, 见 CLAUDE.md 动态页一节):")
               for b in bad:
