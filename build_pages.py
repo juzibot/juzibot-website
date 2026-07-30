@@ -1526,7 +1526,7 @@ def page_industries():
         logo_grid_html = ''
         for p, ci, c in logo_cells[slug]:
             ext = 'svg' if (p, ci, c) == ('edu', 0, 3) else 'png'
-            logo_grid_html += f'<div style="border:1px solid var(--gray-line);border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:center;padding:9px 14px;"><img src="assets/brand/logos/{p}-{ci}-{c}.{ext}?v=20260730e" alt="" style="width:100%;height:auto;display:block;" loading="lazy"></div>'
+            logo_grid_html += f'<div style="border:1px solid var(--gray-line);border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:center;padding:9px 14px;"><img src="assets/brand/logos/{p}-{ci}-{c}.{ext}?v=20260730f" alt="" style="width:100%;height:auto;display:block;" loading="lazy"></div>'
         kpi_html = ''.join(
             f'<div style="text-align:center;"><div style="font-size:24px;font-weight:800;color:var(--{color}-color, var(--blue));letter-spacing:-.01em;">{v}</div><div style="font-size:12px;color:var(--gray-text);margin-top:2px;">{l}</div></div>'
             for v, l in kpis
