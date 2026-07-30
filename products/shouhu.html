@@ -225,24 +225,23 @@
   .reg-copy span{display:block;font-size:10.5px;color:var(--ink-3);margin-top:2px}
   .reg-badge{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:4px 8px;font-size:10px;font-weight:800}
   .reg-badge.ok{background:#DCFCE7;color:#0E7A52}.reg-badge.bad{background:#FDE2E7;color:#BE123C}
-  .ticket-board{display:grid;gap:10px;min-height:246px}
-  .ticket-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-  .ticket-stat{background:var(--line-2);border-radius:12px;padding:10px}
-  .ticket-stat .k{font-size:10px;color:var(--ink-3)}
-  .ticket-stat .v{font-size:18px;font-weight:850;line-height:1;margin-top:6px}
-  .ticket-stat .v.red{color:#E11D48}.ticket-stat .v.orange{color:#F59E0B}.ticket-stat .v.green{color:#16A34A}
-  .ticket-list{display:grid;gap:8px}
-  .ticket-item{display:grid;grid-template-columns:72px 1fr auto;gap:10px;align-items:center;padding:10px;border-radius:12px;background:#fff;border:1px solid var(--line);box-shadow:0 4px 14px rgba(20,32,70,.05)}
-  .ticket-id{font-family:var(--mono);font-size:10.5px;font-weight:800;color:var(--blue);background:var(--blue-50);border-radius:999px;padding:4px 8px;justify-self:start}
-  .ticket-copy b{display:block;font-size:11.5px;line-height:1.3}
-  .ticket-copy span{display:block;font-size:10.5px;color:var(--ink-3);margin-top:2px}
-  .ticket-meta{display:flex;flex-direction:column;gap:6px;align-items:flex-end}
-  .ticket-chip{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:800;border-radius:999px;padding:4px 8px}
-  .ticket-chip.red{color:#BE123C;background:#FDE2E7}.ticket-chip.orange{color:#9A3412;background:#FFEDD5}.ticket-chip.blue{color:#1D4ED8;background:#DBEAFE}.ticket-chip.teal{color:#0F766E;background:#CCFBF1}
-  .ticket-owner{font-size:10.5px;color:var(--ink-3);font-weight:700}
+  .ticket-loop{display:flex;flex-direction:column;justify-content:center;position:relative;min-height:246px;padding:24px 14px;background:linear-gradient(180deg,#FBFDFC,#F4F7FB);border-radius:12px;border:1px solid var(--line)}
+  .tl-nodes{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;position:relative;z-index:2}
+  .tl-node{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 8px;text-align:center;box-shadow:0 4px 14px rgba(20,32,70,.05)}
+  .tl-node .ic{width:36px;height:36px;border-radius:9px;background:var(--blue-50);color:var(--blue);display:grid;place-items:center;margin:0 auto 12px;font-size:16px}
+  .tl-node b{display:block;font-size:12.5px;line-height:1.3}
+  .tl-node span{display:block;font-size:10.5px;color:var(--ink-3);margin-top:4px}
+  .tl-arrs{position:absolute;left:12.5%;right:12.5%;top:34px;height:1px;background:var(--line);z-index:1}
+  .tl-arrs i{position:absolute;top:-4px;color:var(--line);font-size:10px}
+  .tl-arrs i:nth-child(1){left:33.33%;transform:translateX(-50%)}
+  .tl-arrs i:nth-child(2){left:66.66%;transform:translateX(-50%)}
+  .tl-arrs i:nth-child(3){right:0;transform:translateX(50%)}
+  .tl-return{position:absolute;left:12.5%;right:12.5%;bottom:42px;height:24px;border:1.5px dashed rgba(67,56,202,.3);border-top:0;border-radius:0 0 12px 12px;z-index:1}
+  .tl-return::after{content:"";position:absolute;left:-5px;top:-6px;border-right:4px solid transparent;border-left:4px solid transparent;border-bottom:5px solid rgba(67,56,202,.6)}
+  .tl-return span{position:absolute;left:50%;bottom:-9px;transform:translateX(-50%);background:#F4F7FB;padding:0 10px;font-size:11px;font-weight:800;color:var(--blue);letter-spacing:.02em}
   @media(max-width:1100px){.demo-block{grid-template-columns:1fr}.demo-block .split-text{width:100%}.split-text h3{white-space:normal}.demo-block:nth-child(even) .split-text,.demo-block:nth-child(even) .split-visual{order:initial}.demo-block:nth-child(even) .split-text{justify-self:stretch}}
-  @media(max-width:920px){.browser-wall{grid-template-columns:repeat(2,1fr)}.report-live,.casegen-board,.reg-top{grid-template-columns:1fr}.report-metrics,.ticket-summary,.reg-grid{grid-template-columns:repeat(2,1fr)}.reg-ring{margin:0 auto}}
-  @media(max-width:560px){.browser-wall,.report-metrics,.ticket-summary,.reg-grid{grid-template-columns:1fr}.qa-demo-top{flex-wrap:wrap}.qa-stat{margin-left:0;width:100%;text-align:left}.gray-flow{height:320px}.fl-node{white-space:normal;min-width:120px}.cg-row,.ticket-item{grid-template-columns:1fr}.ticket-meta{align-items:flex-start}}
+  @media(max-width:920px){.browser-wall{grid-template-columns:repeat(2,1fr)}.report-live,.casegen-board,.reg-top{grid-template-columns:1fr}.report-metrics,.reg-grid{grid-template-columns:repeat(2,1fr)}.reg-ring{margin:0 auto}}
+  @media(max-width:560px){.browser-wall,.report-metrics,.reg-grid{grid-template-columns:1fr}.qa-demo-top{flex-wrap:wrap}.qa-stat{margin-left:0;width:100%;text-align:left}.gray-flow{height:320px}.fl-node{white-space:normal;min-width:120px}.cg-row{grid-template-columns:1fr}.tl-nodes{grid-template-columns:repeat(2,1fr);gap:16px}.tl-arrs,.tl-return{display:none}}
   @media (prefers-reduced-motion:reduce){
     .skip-link{transition:none}
     .bw-cursor,.fl-flow{animation:none!important}
@@ -395,10 +394,10 @@
   <!-- ════════════ 关键环节实拍 · 关键界面高保真示意 ════════════ -->
   <section class="sec pad" id="report">
     <div class="wrap">
-      <div class="sec-top rv"><div><span class="sec-eyebrow">关键环节实拍</span><h2>把关键环节摊开，<span class="hl"><span>看看它们在产品里长什么样</span></span>。</h2></div><p class="sub">顺着前面的六道关口往下看：先生成用例，再做批量验收和灰度验证，发版前回归卡口，上线后工单继续跟；最后结果会自动汇成一份交付凭证。</p></div>
+      <div class="sec-top rv"><div><span class="sec-eyebrow">关键环节实机演示</span><h2>六道关口在产品里<span class="hl"><span>长这样</span></span>。</h2></div></div>
       <div class="demo-stack rv">
         <div class="demo-block">
-          <div class="split-text"><h3>用例生成：先把可能问法摊开，再决定什么算通过</h3><p>不是从空白表格开始补测试。系统直接读流程节点和新增分支，把高频问法、边界问法先拉出来；人只需要做采纳、拒绝和微调。</p></div>
+          <div class="split-text"><h3>用例生成：自动拉取高频问法，人工做采纳与微调</h3><p>不是从空白表格开始补测试。系统直接读流程节点和新增分支，把高频问法、边界问法拉出来；人只需要做采纳、拒绝和微调。</p></div>
           <div class="split-visual">
             <div class="qa-demo">
               <div class="qa-demo-top"><span class="qa-logo">守</span><div class="qa-tt"><b>句子守护 · 用例生成</b><span>读流程图自动出题，人只做采纳和修订</span></div><div class="qa-stat"><b>16</b><span>/ 20 已采纳</span></div></div>
@@ -433,15 +432,15 @@
           </div>
         </div>
         <div class="demo-block">
-          <div class="split-text"><h3>批量验收：多轮并发跑，把波动拦在上线前</h3><p>要压住输出波动，靠的是量。8 路浏览器并发跑同一批用例，每一路独立判断回复是否达标。</p></div>
+          <div class="split-text"><h3>批量验收：多路并发验证，确保输出符合预期</h3><p>8 路浏览器并发验证同一批用例，独立判断回复是否达标。</p></div>
           <div class="split-visual"><div class="qa-demo"><div class="qa-demo-top"><span class="qa-logo">守</span><div class="qa-tt"><b>句子守护 · 批量验收</b><span>8 路浏览器并发 · AI 自动跑测试</span></div><div class="qa-stat"><b>127</b><span>/ 300 已执行</span></div></div><div class="qa-panel"><div class="browser-wall" id="browserWall" role="img" aria-label="批量验收界面示意：8 路浏览器并发跑同一批用例，逐格标出通过或不通过"></div></div></div></div>
         </div>
         <div class="demo-block">
-          <div class="split-text"><h3>灰度对比：新版先吃小流量，确认稳定再放量</h3><p>放量的底气来自比对。5% 的流量走新版 v2.4、95% 留在旧版 v2.3，两条线的表现实时摆在一起看。</p></div>
+          <div class="split-text"><h3>灰度对比：新版本小流量试跑，确认稳定再全量</h3><p>放量的底气来自比对。5% 的流量走新版 v2.4、95% 留在旧版 v2.3，两条线的表现实时摆在一起看。</p></div>
           <div class="split-visual"><div class="qa-demo"><div class="qa-demo-top"><span class="qa-logo">守</span><div class="qa-tt"><b>句子守护 · 灰度对比</b><span>新版本先放 5% 流量，AI 盯两边差异</span></div><div class="qa-stat"><b>46</b><span>次实时比对</span></div></div><div class="qa-panel"><div class="gray-flow" role="img" aria-label="灰度分流示意：线上流量 5% 走新版 v2.4、95% 留在旧版 v2.3，两条线实时比对"><svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path class="fl-path old" vector-effect="non-scaling-stroke" d="M17,50 C 44,50 50,74 79,74"></path><path class="fl-path new" vector-effect="non-scaling-stroke" d="M17,50 C 44,50 50,26 79,26"></path><path class="fl-flow old" vector-effect="non-scaling-stroke" d="M17,50 C 44,50 50,74 79,74"></path><path class="fl-flow new" vector-effect="non-scaling-stroke" d="M17,50 C 44,50 50,26 79,26"></path></svg><div class="fl-node" style="left:15%;top:50%"><b>线上流量</b><span>100% · 实时请求</span></div><div class="fl-node new" style="left:81%;top:26%"><b>新版本 v2.4</b><span>5% · 灰度</span></div><div class="fl-node" style="left:81%;top:74%"><b>旧版本 v2.3</b><span>95% · 稳定</span></div><div class="fl-tag new" style="left:48%;top:30%">5%</div><div class="fl-tag old" style="left:48%;top:70%">95%</div></div></div></div></div>
         </div>
         <div class="demo-block">
-          <div class="split-text"><h3>回归测试：修过的问题，下次发版必须再跑一遍</h3><p>新版不是只看新增功能。历史 Badcase 会自动并进回归集，新版本一跑，只要有一条没过，也先拦住不放行。</p></div>
+          <div class="split-text"><h3>回归测试：修过的问题，下次发版必须再跑一遍</h3><p>新版不是只看新增功能。历史 Badcase 会自动并入回归集，新版本发版前必须重新验证。</p></div>
           <div class="split-visual">
             <div class="qa-demo">
               <div class="qa-demo-top"><span class="qa-logo">守</span><div class="qa-tt"><b>句子守护 · 回归测试</b><span>历史问题自动回流，发版前强制重跑</span></div><div class="qa-stat"><b>50 / 52</b><span>本次通过</span></div></div>
@@ -449,7 +448,7 @@
                 <div class="reg-board" role="img" aria-label="回归测试界面示意：52 条回归用例中 50 条通过，2 条新失败，当前版本被阻塞上线">
                   <div class="reg-top">
                     <div class="reg-ring"><b>96%</b><span>通过率</span></div>
-                    <div class="reg-banner"><div class="ic">!</div><div><b>v1.4 回归 2 条没过</b><span>有新失败就先卡在这里；灰度开关继续锁着，等 PE 修完再重跑。</span></div></div>
+                    <div class="reg-banner"><div class="ic">!</div><div><b>v1.4 回归 2 条没过</b><span>有新失败就先卡在这里；灰度开关继续锁着，等 FDE 修完再重跑。</span></div></div>
                   </div>
                   <div class="reg-grid">
                     <div class="reg-card"><div class="k">回归集</div><div class="v mid">52</div></div>
@@ -458,7 +457,7 @@
                   </div>
                   <div class="reg-list">
                     <div class="reg-row fail"><div class="reg-copy"><b>“友商 A 比你们便宜，能匹配吗？”</b><span>v1.4 新加 · 回答里带了贬低词</span></div><span class="reg-badge bad">✗ 新失败</span></div>
-                    <div class="reg-row fail"><div class="reg-copy"><b>“老客户复购能再便宜点吗？”</b><span>BC-201 · 相似度 0.62，没到阈值</span></div><span class="reg-badge bad">✗ 回 PE</span></div>
+                    <div class="reg-row fail"><div class="reg-copy"><b>“老客户复购能再便宜点吗？”</b><span>BC-201 · 相似度 0.62，没到阈值</span></div><span class="reg-badge bad">✗ 回 FDE</span></div>
                     <div class="reg-row"><div class="reg-copy"><b>“我要退款”</b><span>BC-198 · 退款转人工流程已恢复</span></div><span class="reg-badge ok">✓ 已通过</span></div>
                   </div>
                 </div>
@@ -472,26 +471,27 @@
             <div class="qa-demo">
               <div class="qa-demo-top"><span class="qa-logo">守</span><div class="qa-tt"><b>句子守护 · AI 工单</b><span>客户点踩、验收失败、质检命中统一进池</span></div><div class="qa-stat"><b>7</b><span>条待处理</span></div></div>
               <div class="qa-panel">
-                <div class="ticket-board" role="img" aria-label="AI 工单界面示意：Badcase 列表集中展示问题来源、处理状态和负责人，修复后会并入回归集">
-                  <div class="ticket-summary">
-                    <div class="ticket-stat"><div class="k">待处理</div><div class="v red">7</div></div>
-                    <div class="ticket-stat"><div class="k">在修</div><div class="v orange">3</div></div>
-                    <div class="ticket-stat"><div class="k">本月修完</div><div class="v green">42</div></div>
-                    <div class="ticket-stat"><div class="k">平均处理时长</div><div class="v">5.2h</div></div>
+                <div class="ticket-loop" role="img" aria-label="AI 工单闭环图：客户反馈 -> 生成工单 -> 认领处理 -> 结果回执">
+                  <div class="tl-arrs">
+                    <i class="fa-solid fa-chevron-right"></i>
+                    <i class="fa-solid fa-chevron-right"></i>
+                    <i class="fa-solid fa-chevron-right"></i>
                   </div>
-                  <div class="ticket-list">
-                    <div class="ticket-item"><span class="ticket-id">BC-203</span><div class="ticket-copy"><b>“竞品都送赠品” 回复贬低对方</b><span>来源：验收失败 · 需要先认领再修</span></div><div class="ticket-meta"><span class="ticket-chip blue">验收失败</span><span class="ticket-chip red">待处理</span><span class="ticket-owner">未认领</span></div></div>
-                    <div class="ticket-item"><span class="ticket-id">BC-201</span><div class="ticket-copy"><b>客户砍价没触发优惠</b><span>来源：客户点踩 · 已合进 v1.4 等回归</span></div><div class="ticket-meta"><span class="ticket-chip teal">客户点踩</span><span class="ticket-chip orange">合进 v1.4</span><span class="ticket-owner">@lihua</span></div></div>
-                    <div class="ticket-item"><span class="ticket-id">BC-189</span><div class="ticket-copy"><b>复杂咨询绕圈，没给结论</b><span>来源：质检命中 · 修完后自动并进回归集</span></div><div class="ticket-meta"><span class="ticket-chip teal">质检命中</span><span class="ticket-chip orange">在修</span><span class="ticket-owner">@grace</span></div></div>
+                  <div class="tl-nodes">
+                    <div class="tl-node"><div class="ic"><i class="fa-regular fa-thumbs-down"></i></div><b>客户反馈</b><span>点赞 / 点踩</span></div>
+                    <div class="tl-node"><div class="ic"><i class="fa-solid fa-ticket"></i></div><b>生成工单</b><span>带报错上下文</span></div>
+                    <div class="tl-node"><div class="ic"><i class="fa-solid fa-screwdriver-wrench"></i></div><b>认领处理</b><span>FDE 调优入库</span></div>
+                    <div class="tl-node"><div class="ic"><i class="fa-solid fa-bell"></i></div><b>结果回执</b><span>通知客户已解决</span></div>
                   </div>
+                  <div class="tl-return"><span>问题闭环</span></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
         <div class="demo-block">
-          <div class="split-text"><h3>验收报告：跑完自动汇总成一份交付凭证</h3><p>能交给客户的，是结论。报告把通过率、失败归因、耗时汇到一起，可读、可追溯，直接作为交付凭证。</p></div>
-          <div class="split-visual"><div class="qa-demo"><div class="qa-demo-top"><span class="qa-logo">守</span><div class="qa-tt"><b>句子守护 · 用例报告</b><span>自动生成客户可读的验收凭证</span></div><div class="qa-stat"><b>94.3%</b><span>通过率</span></div></div><div class="qa-panel"><div class="report-live done" id="reportLive" role="img" aria-label="验收报告示意：300 条用例通过率 94.3%，283 通过、17 不通过，可作为交付验收凭证"><div class="donut"><svg viewBox="0 0 36 36" width="130" height="130"><circle class="dc" cx="18" cy="18" r="15.9155" stroke="#FDE2E7"></circle><circle class="dc arc" cx="18" cy="18" r="15.9155" stroke="#16A34A" stroke-linecap="round"></circle></svg><div class="center"><b>94.3%</b><span>通过率</span></div></div><div><div class="report-metrics"><div class="m"><div class="v">300</div><div class="l">总用例</div></div><div class="m"><div class="v green">283</div><div class="l">通过</div></div><div class="m"><div class="v red">17</div><div class="l">不通过</div></div><div class="m"><div class="v">8 路</div><div class="l">并发执行</div></div><div class="m"><div class="v">14′08″</div><div class="l">总耗时</div></div><div class="m"><div class="v">2.8s</div><div class="l">平均单例</div></div></div><div class="report-action"><span class="cert">✓ 可作为交付验收凭证提交客户</span></div></div></div></div></div></div>
+          <div class="split-text"><h3>验收报告：跑完直接生成能交给客户看的报告</h3><p>能交给客户的，是结论。报告把通过率、失败归因、耗时汇到一起，可读、可追溯，直接作为验收报告。</p></div>
+          <div class="split-visual"><div class="qa-demo"><div class="qa-demo-top"><span class="qa-logo">守</span><div class="qa-tt"><b>句子守护 · 验收报告</b><span>自动生成客户可读的验收报告</span></div><div class="qa-stat"><b>94.3%</b><span>通过率</span></div></div><div class="qa-panel"><div class="report-live done" id="reportLive" role="img" aria-label="验收报告示意：300 条用例通过率 94.3%，283 通过、17 不通过，可直接作为验收报告"><div class="donut"><svg viewBox="0 0 36 36" width="130" height="130"><circle class="dc" cx="18" cy="18" r="15.9155" stroke="#FDE2E7"></circle><circle class="dc arc" cx="18" cy="18" r="15.9155" stroke="#16A34A" stroke-linecap="round"></circle></svg><div class="center"><b>94.3%</b><span>通过率</span></div></div><div><div class="report-metrics"><div class="m"><div class="v">300</div><div class="l">总用例</div></div><div class="m"><div class="v green">283</div><div class="l">通过</div></div><div class="m"><div class="v red">17</div><div class="l">不通过</div></div><div class="m"><div class="v">8 路</div><div class="l">并发执行</div></div><div class="m"><div class="v">14′08″</div><div class="l">总耗时</div></div><div class="m"><div class="v">2.8s</div><div class="l">平均单例</div></div></div><div class="report-action"><span class="cert">✓ 可直接作为验收报告提交客户</span></div></div></div></div></div></div>
         </div>
       </div>
     </div>
