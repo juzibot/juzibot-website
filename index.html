@@ -406,9 +406,9 @@
   .trust-grid.swap{animation:trustSwap .5s var(--ease)}
   @keyframes trustSwap{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
   .trust-cell{position:relative;height:66px;background:#fff;border:1px solid var(--line);border-radius:14px;
-    display:flex;align-items:center;justify-content:center;padding:10px 16px;box-shadow:var(--shadow-soft);
+    display:flex;align-items:center;justify-content:center;padding:8px 10px;box-shadow:var(--shadow-soft);
     transition:border-color .22s var(--ease),box-shadow .22s var(--ease),transform .22s var(--ease)}
-  .trust-cell img{max-height:40px;width:auto;object-fit:contain;transition:transform .22s var(--ease)}
+  .trust-cell img{max-width:100%;max-height:46px;width:auto;height:auto;object-fit:contain;transition:transform .22s var(--ease)}
   .trust-cell.txt{font-size:13px;font-weight:700;color:var(--ink-2);text-align:center;line-height:1.3}
   .trust-cell:hover{border-color:var(--blue-200);box-shadow:0 10px 26px rgba(67,56,202,.16);transform:translateY(-3px);z-index:6}
   .trust-cell:hover img{transform:scale(1.04)}
@@ -1617,11 +1617,11 @@ html{overflow-x:clip}
   <div class="wrap trust rv" id="trust">
     <div class="tlabel">已为下列行业的头部企业部署 AI 员工<span class="tlabel-hint">点击行业 · 查看标杆客户</span></div>
     <div class="logo-wall" role="tablist" aria-label="按行业查看标杆客户">
-      <button type="button" class="ind-tab active" role="tab" aria-selected="true" data-ind="edu">在线教育</button>
-      <button type="button" class="ind-tab" role="tab" aria-selected="false" data-ind="consumer">消费品电商</button>
+      <button type="button" class="ind-tab active" role="tab" aria-selected="true" data-ind="consumer">消费品电商</button>
       <button type="button" class="ind-tab" role="tab" aria-selected="false" data-ind="finance">银行 · 证券 · 保险</button>
       <button type="button" class="ind-tab" role="tab" aria-selected="false" data-ind="gov">政务 · 司法</button>
       <button type="button" class="ind-tab" role="tab" aria-selected="false" data-ind="internet">泛互联网</button>
+      <button type="button" class="ind-tab" role="tab" aria-selected="false" data-ind="edu">在线教育</button>
     </div>
     <div class="trust-progress" aria-hidden="true"><i></i></div>
     <div class="trust-logos" id="trustLogos" role="tabpanel" aria-live="polite"></div>
@@ -2359,67 +2359,9 @@ html{overflow-x:clip}
 </footer>
 
 <!-- ════════════ 信任墙 · 标杆客户元数据 ════════════
-     说明：把对应 logo 的 name(客户名) 与 result(一句话成果) 填上即可在悬停时显示 tooltip；
-     留空则回退显示「行业 · 标杆客户」占位文案。
-     key = assets/brand/logos/ 下的文件名（去掉 .png）；政务·司法用街道/单位名作 key。 -->
+     客户清单直接写在下方脚本 DATA 中；这里保留可选的 result 覆盖位。 -->
 <script id="trustMeta" type="application/json">
-{
-  "edu-0-0":{"name":"","result":""},
-  "edu-0-1":{"name":"","result":""},
-  "edu-0-2":{"name":"","result":""},
-  "edu-0-3":{"name":"","result":""},
-  "edu-0-4":{"name":"","result":""},
-  "edu-0-5":{"name":"","result":""},
-  "edu-0-6":{"name":"","result":""},
-  "edu-0-7":{"name":"","result":""},
-  "edu-1-0":{"name":"","result":""},
-  "edu-1-1":{"name":"","result":""},
-  "edu-1-2":{"name":"","result":""},
-  "edu-1-3":{"name":"","result":""},
-  "edu-1-4":{"name":"","result":""},
-  "edu-1-5":{"name":"","result":""},
-  "edu-1-6":{"name":"","result":""},
-  "edu-1-7":{"name":"","result":""},
-  "consumer-0-0":{"name":"","result":""},
-  "consumer-0-1":{"name":"","result":""},
-  "consumer-0-2":{"name":"","result":""},
-  "consumer-0-3":{"name":"","result":""},
-  "consumer-0-4":{"name":"","result":""},
-  "consumer-0-5":{"name":"","result":""},
-  "consumer-0-6":{"name":"","result":""},
-  "consumer-0-7":{"name":"","result":""},
-  "consumer-1-0":{"name":"","result":""},
-  "consumer-1-1":{"name":"","result":""},
-  "consumer-1-2":{"name":"","result":""},
-  "consumer-1-3":{"name":"","result":""},
-  "consumer-1-4":{"name":"","result":""},
-  "consumer-1-5":{"name":"","result":""},
-  "consumer-1-6":{"name":"","result":""},
-  "consumer-1-7":{"name":"","result":""},
-  "govfin-0-0":{"name":"","result":""},
-  "govfin-0-1":{"name":"","result":""},
-  "govfin-0-2":{"name":"","result":""},
-  "govfin-0-3":{"name":"","result":""},
-  "govfin-0-4":{"name":"","result":""},
-  "govfin-0-5":{"name":"","result":""},
-  "govfin-0-6":{"name":"","result":""},
-  "govfin-0-7":{"name":"","result":""},
-  "internet-0-0":{"name":"","result":""},
-  "internet-0-1":{"name":"","result":""},
-  "internet-0-2":{"name":"","result":""},
-  "internet-0-3":{"name":"","result":""},
-  "internet-0-4":{"name":"","result":""},
-  "internet-0-5":{"name":"","result":""},
-  "internet-0-6":{"name":"","result":""},
-  "internet-0-7":{"name":"","result":""},
-  "海淀·东升镇":{"result":""},
-  "学院路街道":{"result":""},
-  "曙光街道":{"result":""},
-  "万寿路街道":{"result":""},
-  "清河街道":{"result":""},
-  "花园路街道":{"result":""},
-  "海淀区司法局":{"result":""}
-}
+{}
 </script>
 
 <!-- Lenis 惯性滚动（渐进增强） -->
@@ -2473,15 +2415,19 @@ function openContact(){openModal('contactModal');}
   var META={};
   try{var raw=document.getElementById('trustMeta');if(raw)META=JSON.parse(raw.textContent)||{};}catch(e){META={};}
 
-  var LABEL={edu:'在线教育',consumer:'消费品电商',finance:'银行 · 证券 · 保险',gov:'政务 · 司法',internet:'泛互联网'};
-  var ORDER=['edu','consumer','finance','gov','internet'];
-  function stems(prefix,rows){var a=[];rows.forEach(function(n,r){for(var c=0;c<n;c++){a.push(prefix+'-'+r+'-'+c);}});return a;}
+  var LABEL={consumer:'消费品电商',finance:'银行 · 证券 · 保险',gov:'政务 · 司法',internet:'泛互联网',edu:'在线教育'};
+  var ORDER=['consumer','finance','gov','internet','edu'];
+  function logos(prefix,names){
+    return names.map(function(name,i){
+      return {src:prefix+'-'+Math.floor(i/8)+'-'+(i%8),name:name};
+    });
+  }
   var DATA={
-    edu:stems('edu',[8,8]),
-    consumer:stems('consumer',[8,8]),
-    finance:stems('govfin',[8]),
-    gov:['海淀·东升镇','学院路街道','曙光街道','万寿路街道','清河街道','花园路街道','海淀区司法局'],
-    internet:stems('internet',[8])
+    consumer:logos('consumer',['巴奴毛肚火锅','泸州老窖','奈雪的茶','英氏','Baby Care','薇诺娜','润百颜','松下电器','幼岚','幸福西饼','伊利集团','汇嘉时代','快鱼','热风','农夫山泉','卡姿兰']),
+    finance:logos('govfin',['厦门银行','银联商务','创金合信基金','中国人寿重庆分公司','宁波银行','中信证券','国泰海通','京东金融','国民养老保险','中泰证券','老虎國際','银河证券','雪盈-港美股','有知有行','中国人寿云南分公司','圆心惠保']),
+    gov:logos('gov',['宜宾公安交警','大同市公安局','郑州市公安局郑东新区分局','绵阳市公安局安州分局','新郑市公安局','武汉东湖高新公安局','重庆市开州区公安局','天津市公安局津南分局','兰考县公安局','天津市公安局河西分局','天津市公安局宣传中心','北京市海淀区人民政府','杭州市临平区公安分局','东升镇司法所','花园路街道','万寿路街道']),
+    internet:logos('internet',['自如','飞书','网易','58到家','京东物流','瓜子二手车','百度','京东物流','什么值得买','Elemen Twin','火山引擎','腾讯营销','转转','曹操出行','谷歌广告','北京智源']),
+    edu:logos('edu',['得到','好未来','叫叫阅读','知乎','开开华彩','希望学','乐读','嘉学教育','作业帮','兴趣岛','新东方','火花思维','方塘有课','少年得到','喜马拉雅','简知科技'])
   };
   function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
   function tip(name,result){
@@ -2495,20 +2441,14 @@ function openContact(){openModal('contactModal');}
     grid.className='trust-grid swap';
     items.forEach(function(it){
       var cell=document.createElement('div');
-      var m=META[it]||{};
-      if(key==='gov'){
-        var gr=m.result||'';
-        cell.className='trust-cell txt';
-        cell.innerHTML='<span class="t">'+esc(it)+'</span>'+tip(it,gr);
-        if(gr)cell.setAttribute('aria-label',it+'，'+gr);
-      } else {
-        var nm=m.name||'';
-        var rs=m.result||'';
-        var show=nm||(LABEL[key]+' · 标杆客户');
-        var alt=nm?(nm+(rs?('，'+rs):'')):(LABEL[key]+' 行业客户');
-        cell.className='trust-cell';
-        cell.innerHTML='<img src="assets/brand/logos/'+it+'.png" alt="'+esc(alt)+'" loading="lazy">'+tip(show,rs);
-      }
+      var src=it.src||it;
+      var m=META[src]||{};
+      var nm=it.name||m.name||'';
+      var rs=it.result||m.result||'';
+      var show=nm||(LABEL[key]+' · 标杆客户');
+      var alt=nm?(nm+(rs?('，'+rs):'')):(LABEL[key]+' 行业客户');
+      cell.className='trust-cell';
+      cell.innerHTML='<img src="assets/brand/logos/'+src+'.png" alt="'+esc(alt)+'" loading="lazy">'+tip(show,rs);
       grid.appendChild(cell);
     });
     panel.innerHTML='';panel.appendChild(grid);
