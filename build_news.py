@@ -2894,9 +2894,15 @@ def write_detail_pages(vis, items, lib, worthy):
         # 相关动态取决于**其他条目**——这是本页唯一的跨条目依赖, 必须显式进签名: 新条目挤进
         # 相关列表、旧条目下线退出列表, 都得触发本页重算, 否则页面会挂上指向已删页的死链。
         # 实测代价: 每轮波及 12%~56% 页面重算, 但那是纯本地渲染(不碰 API/网络), 换来的是
-        # 「相关列表永远与实际存在的页一致」这条硬保证。签名与渲染共用同一个 rel, 不各算一次。
+        # 「相关列表永远与实际存在的页一致」这条硬保证。
+        #
+        # 签名直接哈希**渲染结果本身**, 不再列举要哈希哪些字段。第一版列举了 id/标题/理由,
+        # 漏了 `date`——相关条目的日期被修正时, 引用它的页会继续命中旧缓存, 页面上的时间卡住
+        # (Bugbot PR#103)。更要紧的是**测试里把同一个公式抄了一遍, 所以测也抓不住**: 验证手段
+        # 与被验证的错误同源, 这是交接书 §6.12 那条纪律的第三次复发, 而且就发生在写完它之后。
+        # 改成哈希渲染结果, "漏字段"在结构上不可能: 渲染里出现什么, 签名就覆盖什么。
         rel = related_items(it, pool, cidx)
-        rsig = _sha(*(f"{r['id']}|{disp_title(r)}|{related_why(cs, lib)}" for r, cs in rel))
+        rsig = _sha(related_html(rel, lib))
         sig = _sha(render_ver(),srccfg, csig, wsig, item_repr, rsig,
                    _file_sig(CONTENT_DIR / f"{it['id']}.html"), _file_sig(zh_content_path(it["id"])))
         new_sigs[it["id"]] = sig
@@ -3211,10 +3217,15 @@ def concept_index_html(lib, refs_map, worthy=None):
     )
     # DefinedTermSet schema(2026-07-30): 告诉 AI 引擎这些概念页是一个成体系的术语集,
     # 而不是一堆散页——术语集比孤立页面更容易被整体引用。
-    # 原先硬编码 order[:60]: 页面上 110 张卡, schema 里只有 60 个词条(覆盖 54%), 而漏掉的
-    # 50 个恰好是长尾概念。实测补满的真实代价只有 **0.51KB gzip(+4%)**——原始 +8KB, 但重复 JSON
-    # 压缩率极高, 按原始体积做的取舍在这里是错的。同时补上 description: 只读 JSON-LD 的引擎
-    # 不必逐页抓就能拿到全部释义, 这正是概念库存在的目的。
+    # 原先硬编码 order[:60]: 页面上 112 张卡, schema 里只有 60 个词条(覆盖 54%), 而漏掉的
+    # 50 个恰好是长尾概念。补满(只列 name+url)实测 +1.9KB gzip, 值。
+    #
+    # 这里犯过一个测量错误, 记下来: 先试着把 description 也塞进每个词条("只读 JSON-LD 的引擎
+    # 不必逐页抓就能拿到释义"), 并拿"重复 JSON 压缩率极高、+0.51KB gzip"当依据 —— 但那个
+    # 0.51KB 是拿 **name+url、且名字是「概念1/概念2」这种重复假数据** 量出来的。真做下去是
+    # **+13.7KB gzip**: 112 条真实中文定义几乎不可压缩。**量了 A, 拿 A 的数字为 B 辩护。**
+    # 而且这份内容本就冗余 —— 每个概念页自己的 DefinedTerm 带全文定义, 卡片上也有摘要。
+    # 所以术语集只列 name+url, 定义留在各自的页上。
     # 上限保留但放宽, 且**截断要出声**: 静默截断会让人以为"全覆盖了"(概念页 30 条引用上限就是
     # 这么埋着的, 见交接书 §7)。
     if len(order) > IDX_SCHEMA_MAX:
@@ -3227,7 +3238,6 @@ def concept_index_html(lib, refs_map, worthy=None):
         "description": "AI 行业核心概念速查：每个概念一段面向企业决策者的大白话定义。",
         "publisher": {"@type": "Organization", "name": "句子互动", "url": f"{SITE_BASE}/"},
         "hasDefinedTerm": [{"@type": "DefinedTerm", "name": lib[s]["term"],
-                            "description": (lib[s].get("def") or "").strip(),
                             "url": f"{SITE_BASE}/news/c/{s}.html"} for s in order[:IDX_SCHEMA_MAX]],
     })
     idx_crumb = breadcrumb_ld([("句子互动", f"{SITE_BASE}/"), ("动态", f"{SITE_BASE}/news.html"),

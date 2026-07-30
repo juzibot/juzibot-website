@@ -655,8 +655,9 @@ def test_related_change_invalidates_signature():
     """
     vis, pool, cidx, lib = _rel_fixture()
     a = pool["a"]
-    rsig = lambda pl, cx: B._sha(*(f"{r['id']}|{B.disp_title(r)}|{B.related_why(cs, lib)}"
-                                   for r, cs in B.related_items(a, pl, cx)))
+    # 签名必须与实现同源, 不能在测试里另抄一份公式 —— 第一版就是这么漏掉 date 的:
+    # 实现列举了 id/标题/理由, 测试抄了同一份列举, 于是两边一起漏, 测试形同没写(Bugbot PR#103)。
+    rsig = lambda pl, cx: B._sha(B.related_html(B.related_items(a, pl, cx), lib))
     before = rsig(pool, cidx)
     gone = {k: v for k, v in pool.items() if k != "b"}
     cidx2 = {s: [i for i in ids if i != "b"] for s, ids in cidx.items()}
@@ -668,6 +669,21 @@ def test_related_change_invalidates_signature():
     pool3 = dict(pool); pool3["f"] = dict(pool["b"], id="f", title="新来的", date="2026-07-25")
     cidx3 = {s: ids + (["f"] if s in ("moe", "tpu") else []) for s, ids in cidx.items()}
     check("新条目挤进列表 → 签名变化", rsig(pool3, cidx3) != before)
+    # 渲染里出现的任何字段变了都得改签名。date 是第一版漏掉的那个: 相关条目日期被修正后,
+    # 引用它的页会继续命中旧缓存, 页面上的时间卡住。
+    for field, newval in (("date", "2026-07-28"), ("title", "改过的标题")):
+        moved = {k: (dict(v, **{field: newval}) if k == "b" else v) for k, v in pool.items()}
+        check(f"相关条目的 {field} 变了 → 签名变化", rsig(moved, cidx) != before, field)
+    # 共同概念的词条名出现在理由文案里, 改它同样要重算
+    lib2 = {"moe": {"term": "混合专家模型"}, "tpu": {"term": "TPU"}}
+    check("共同概念的词条名变了 → 签名变化",
+          B._sha(B.related_html(B.related_items(a, pool, cidx), lib2)) != before)
+    # 反向: 渲染里**没有**的字段不该触发重算 —— 签名要恰好等于渲染面, 多了就是白算。
+    # 砍掉「同源近期」兜底档之后, related_html 不再渲染来源名(理由只写共同概念)。
+    for field, newval in (("source_name", "改过的来源"), ("summary", "改过的摘要"), ("category", "改过的分类")):
+        moved = {k: (dict(v, **{field: newval}) if k == "b" else v) for k, v in pool.items()}
+        check(f"相关条目的 {field} 不进渲染 → 签名不变(不制造无谓重算)",
+              rsig(moved, cidx) == before, field)
 
 
 # ---------------------------------------------------------------- 26
@@ -832,8 +848,10 @@ def test_concept_index_filter_and_termset():
     check("发 DefinedTermSet", len(ts) == 1, [x.get("@type") for x in ld])
     terms = ts[0].get("hasDefinedTerm") or []
     check("术语集覆盖全部有页概念", len(terms) == len(lib), f"{len(terms)}/{len(lib)}")
-    check("每个词条都带定义与 url",
-          all(x.get("description") and x.get("url", "").endswith(".html") for x in terms))
+    # 词条只列 name+url: 定义留在各自的概念页(那里有全文 DefinedTerm), 枢纽页再抄 112 条
+    # 是冗余, 实测要多花 13.7KB gzip —— 而最初支持"塞定义"的 0.51KB 是拿重复假数据量出来的
+    check("每个词条有名字与 url", all(x.get("name") and x.get("url", "").endswith(".html") for x in terms))
+    check("术语集不重复抄定义(定义在各概念页)", not any(x.get("description") for x in terms))
     # 只列有页的概念, 否则 schema 里就是死链
     thin = dict(lib, **{"no-page": {"term": "没页的概念", "aliases": [], "def": "只被提到一次。"}})
     h2 = B.concept_index_html(thin, {"moe-model": [1, 2]}, set(lib))

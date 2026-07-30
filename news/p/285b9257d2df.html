@@ -4,12 +4,12 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>Self-hosting Kimi K3: 20% more hardware cost, 20% better task resolution - 句子·动态</title>
-<meta name="description" content="Self-hosting Kimi K3: 20% more hardware cost, 20% better task resolution" />
+<meta name="description" content="Kimi K3模型因内存需求需使用更高配置的B300节点，硬件成本比B200节点高约20%，任务解决能力提升20%。" />
 <meta name="robots" content="noindex,follow" />
 <link rel="canonical" href="https://aistack.imec-int.com/blog/gpu-self-hosting" />
 <meta property="og:type" content="article" />
 <meta property="og:title" content="Self-hosting Kimi K3: 20% more hardware cost, 20% better task resolution" />
-<meta property="og:description" content="Self-hosting Kimi K3: 20% more hardware cost, 20% better task resolution" />
+<meta property="og:description" content="Kimi K3模型因内存需求需使用更高配置的B300节点，硬件成本比B200节点高约20%，任务解决能力提升20%。" />
 <meta property="og:url" content="https://aistack.imec-int.com/blog/gpu-self-hosting" />
 <meta property="og:site_name" content="句子互动" />
 <meta name="twitter:card" content="summary" />
@@ -137,7 +137,7 @@
     <p class="dp-by">来源：Hacker News</p>
     <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（Hacker News）所有 · <a href="https://aistack.imec-int.com/blog/gpu-self-hosting" target="_blank" rel="noopener">阅读原文</a></span></div>
     
-    
+    <div class="dp-brief"><b>简报<em>AI 加工层生成</em></b>Kimi K3模型因内存需求需使用更高配置的B300节点，硬件成本比B200节点高约20%，任务解决能力提升20%。</div>
     <div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang"><i class="fa-solid fa-language"></i><span>翻译为中文</span></button><span class="dp-lang-note">中文由 AI 翻译，仅供参考</span></div><article class="dp-body" id="dpBodyOrig" lang="en"><p><strong>Update (29 July 2026):</strong> We have run <strong>Kimi K3</strong> through the same setup, served with SGLang. At 1.4TB of weights, K3 does not fit within the memory budget of the 8×B200 node used for GLM-5.2 (1.5TB of total HBM leaves no headroom for KV cache). This run therefore used an 8×B300 node, which brings 288GB of HBM per GPU instead of 192GB, or 2.3TB per node. That averages out to around 20% higher hardware cost than the 8×B200 setup, depending on your rental provider.</p><p>In our runs, K3 served 16 concurrent sessions (GLM-5.2 managed 24). Aggregate token throughput is about 30% lower (122 vs 170 tok/s at 16 users), and median task time is about 50% longer (38 vs 26 minutes). That makes K3 roughly 8 times slower than our Claude Code baseline. However, K3 makes up for it in quality, resolving 86.4% of tasks, 24 percentage points above both GLM-5.2 and Opus 4.8 (62.5% for both). One caveat is that our benchmark tasks from SWEBench Pro may have been in K3&#x27;s training data, so treat that resolution rate with a grain of salt. Only the graphs in this article have been updated with the new K3 data.</p>
 
 01<h2>Why your token bill <br />blew up this year</h2>
