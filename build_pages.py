@@ -1523,10 +1523,10 @@ def page_industries():
     }
     for slug, name, icon, color, tagline, intro, kpis, scene, capabilities, customers in industries_detail:
         lg_cols = 3
-        logo_grid_html = ''.join(
-            f'<div style="border:1px solid var(--gray-line);border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:center;padding:9px 14px;"><img src="assets/brand/logos/{p}-{ci}-{c}.png?v=20260730c" alt="" style="width:100%;height:auto;display:block;" loading="lazy"></div>'
-            for p, ci, c in logo_cells[slug]
-        )
+        logo_grid_html = ''
+        for p, ci, c in logo_cells[slug]:
+            ext = 'svg' if (p, ci, c) == ('edu', 0, 3) else 'png'
+            logo_grid_html += f'<div style="border:1px solid var(--gray-line);border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:center;padding:9px 14px;"><img src="assets/brand/logos/{p}-{ci}-{c}.{ext}?v=20260730d" alt="" style="width:100%;height:auto;display:block;" loading="lazy"></div>'
         kpi_html = ''.join(
             f'<div style="text-align:center;"><div style="font-size:24px;font-weight:800;color:var(--{color}-color, var(--blue));letter-spacing:-.01em;">{v}</div><div style="font-size:12px;color:var(--gray-text);margin-top:2px;">{l}</div></div>'
             for v, l in kpis
