@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Self-hosting Kimi K3: 20% more hardware cost, 20% better task resolution - 句子·动态</title>
+<meta name="description" content="Self-hosting Kimi K3: 20% more hardware cost, 20% better task resolution" />
+<meta name="robots" content="noindex,follow" />
+<link rel="canonical" href="https://aistack.imec-int.com/blog/gpu-self-hosting" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Self-hosting Kimi K3: 20% more hardware cost, 20% better task resolution" />
+<meta property="og:description" content="Self-hosting Kimi K3: 20% more hardware cost, 20% better task resolution" />
+<meta property="og:url" content="https://aistack.imec-int.com/blog/gpu-self-hosting" />
+<meta property="og:site_name" content="句子互动" />
+<meta name="twitter:card" content="summary" />
+
+<link rel="icon" href="../../logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../../assets/site.css" />
+<style>
+  /* 静态兜底导航: site.js 一执行就被 outerHTML 连同占位一起换掉, 访客几乎看不到它。
+     不隐藏也不 noscript 包裹——那会让爬虫拿不到, 而它存在的唯一理由就是给不跑 JS 的爬虫看。
+     样式做朴素一行, 万一 site.js 加载失败, 这排链接本身就是可用的降级导航。 */
+  .nav-fb{display:flex;flex-wrap:wrap;gap:6px 16px;padding:12px clamp(16px,4vw,40px);
+    border-bottom:1px solid var(--line-2);font-size:12.5px}
+  .nav-fb a{color:var(--ink-3);text-decoration:none}
+  .nav-fb a:hover{color:var(--blue)}
+
+  .dp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
+  .dp-wrap{max-width:760px;margin:0 auto}
+  .dp-crumb{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:12.5px;color:var(--ink-3);margin-bottom:20px;min-width:0}
+  .dp-crumb a{color:var(--ink-3);text-decoration:none}
+  .dp-crumb a:hover{color:var(--blue)}
+  .dp-crumb i{font-style:normal;opacity:.5;font-size:11px}
+  .dp-crumb [aria-current]{color:var(--ink-2);font-weight:650;overflow-wrap:anywhere}
+  .dp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
+  .dp-back:hover{color:var(--blue)}
+  .dp-meta{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:14px}
+  .dp-srcb{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:750;color:var(--sc,var(--blue))}
+  .s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
+  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-voices{--sc:#9333EA}
+  .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
+  .dp-cat{display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ink-3);background:#F6F7FB;border:1px solid var(--line-2);border-radius:6px;padding:2px 8px}
+  .dp-read{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  /* 相关动态: 读完一篇之后的出口。此前详情页之间零链接, 读者只能回列表页重新扫,
+     爬虫也只能靠 JS 驱动的列表页做枢纽。每条都带「为什么相关」, 不做无理由的推荐。 */
+  .dp-rel{margin-top:40px;padding-top:26px;border-top:1px solid var(--line-2)}
+  .dp-rel-h{font-size:14px;font-weight:750;color:var(--ink-2);margin:0 0 14px}
+  .dp-rel ul{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+  .dp-rel a{display:block;padding:10px 12px;margin:0 -12px;border-radius:8px;text-decoration:none;transition:background .2s var(--ease)}
+  .dp-rel a:hover{background:#F6F7FB}
+  .dp-rel-t{display:block;font-size:14px;font-weight:650;color:var(--ink-1);line-height:1.5}
+  .dp-rel a:hover .dp-rel-t{color:var(--blue)}
+  .dp-rel-m{display:block;margin-top:3px;font-size:11.5px;color:var(--ink-3)}
+  .dp-read i{font-size:10px;opacity:.7}
+  .dp-date{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-3)}
+  .dp-title{font-size:clamp(24px,3.2vw,34px);font-weight:850;letter-spacing:-.03em;line-height:1.32;word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance;margin-bottom:10px}
+  .dp-orig{font-size:13px;color:var(--ink-3);overflow-wrap:anywhere;margin-bottom:8px}
+  .dp-by{font-size:12.5px;font-weight:600;color:var(--ink-3);margin-bottom:18px}
+  .dp-notice{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:1.7;color:var(--ink-2);background:#F6F7FB;border:1px solid var(--line-2);border-radius:10px;padding:10px 14px;margin-bottom:22px}
+  .dp-notice i{color:var(--blue);margin-top:4px;flex:0 0 auto}
+  .dp-notice a{color:var(--blue);font-weight:700;overflow-wrap:anywhere}
+  .dp-quip{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.66;font-weight:600;color:var(--blue-deep);background:var(--blue-50);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:18px}
+  .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
+  .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
+  .dp-brief b{display:flex;align-items:baseline;gap:8px;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  /* AI 产出物的就地标注(2026-07-30): 概念页的定义早就在页尾注明「由 AI 加工层生成、编辑
+     维护」, 而详情页的简报与锐评一直没标 —— 读者会把那句锐评当成编辑观点。283 页都有这两块,
+     不标就是 283 次误导。放在区块内而不是只放页尾: 页尾声明读者多半划不到, 而标注要落在
+     人实际阅读的位置才有意义。样式压到最小, 不抢正文。 */
+  .dp-brief b em,.dp-quip em{font-style:normal;font-family:var(--mono);font-size:10px;font-weight:600;
+    letter-spacing:0;color:var(--ink-3);white-space:nowrap}
+  .dp-brief b em{margin-left:auto}
+  .dp-quip em{display:block;margin-top:5px;opacity:.85}
+  /* 长文目录(≥3 小标题且正文 ≥2000 字才出): <details> 原生可折叠, 不用一行 JS。
+     默认 open —— 目录的用处是先看清结构再决定读哪段, 收起来就失去意义; 想收也一点即收。 */
+  .dp-toc{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:24px;background:#FBFCFF}
+  .dp-toc summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--ink-2);display:flex;align-items:center;gap:7px;list-style:none}
+  .dp-toc summary::-webkit-details-marker{display:none}
+  .dp-toc summary i{font-size:11px;color:var(--blue)}
+  .dp-toc summary span{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-3);margin-left:auto}
+  .dp-toc ol{list-style:none;margin:10px 0 2px;padding:0;counter-reset:toc}
+  .dp-toc li{counter-increment:toc;font-size:13px;line-height:1.7;padding:2px 0}
+  .dp-toc li::before{content:counter(toc) ". ";font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .dp-toc li.lv3{padding-left:16px}
+  .dp-toc li.lv4{padding-left:32px}
+  .dp-toc a{color:var(--ink-2);text-decoration:none;overflow-wrap:anywhere}
+  .dp-toc a:hover{color:var(--blue)}
+  /* 锚点跳转时标题别贴到视口顶端(站点顶栏会盖住) */
+  .dp-body h2[id],.dp-body h3[id],.dp-body h4[id]{scroll-margin-top:76px}
+  .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
+  .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
+  .dp-body p{margin:0 0 1.05em}
+  .dp-body img{max-width:100%;height:auto;border-radius:10px;margin:.4em 0}
+  .dp-body pre{background:#0F172A;color:#E2E8F0;font-family:var(--mono);font-size:12.5px;line-height:1.7;padding:14px 16px;border-radius:10px;overflow-x:auto;margin:0 0 1.1em}
+  .dp-body code{font-family:var(--mono);font-size:.92em}
+  .dp-body :not(pre)>code{background:#F1F5F9;padding:1px 5px;border-radius:5px}
+  .dp-body blockquote{border-left:3px solid var(--line);padding:2px 0 2px 14px;color:var(--ink-3);margin:0 0 1.05em}
+  .dp-body a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+  .dp-body ul,.dp-body ol{padding-left:1.5em;margin:0 0 1.05em}
+  .dp-body table{display:block;overflow-x:auto;border-collapse:collapse;margin:0 0 1.1em}
+  .dp-body td,.dp-body th{border:1px solid var(--line);padding:6px 10px;font-size:.92em}
+  .dp-excerpt{font-size:15px;line-height:1.9;color:var(--ink-2);border-left:3px solid var(--line);padding:2px 0 2px 16px;margin-bottom:8px}
+  .dp-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;padding-top:20px;border-top:1px solid var(--line-2)}
+  .dp-btn{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:750;border-radius:999px;padding:10px 20px;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+  .dp-btn.pri{background:var(--blue);color:#fff}
+  .dp-btn.pri:hover{background:var(--blue-deep)}
+  .dp-btn.sec{background:#fff;color:var(--ink-2);border:1px solid var(--line)}
+  .dp-btn.sec:hover{color:var(--blue);border-color:var(--blue)}
+  .dp-note{font-size:11.5px;line-height:1.7;color:var(--ink-3);margin-top:18px}
+  .dp-langbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+  .dp-lang{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:750;color:var(--blue);
+    background:var(--blue-50);border:1px solid var(--blue-100);border-radius:999px;padding:7px 14px;
+    transition:background .2s var(--ease),border-color .2s var(--ease)}
+  .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
+  .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div id="site-nav" class="nav-fb"><a href="../../index.html">句子互动</a><a href="../../products/miaodong.html">句子秒懂</a><a href="../../products/shouhu.html">句子守护</a><a href="../../products/canmou.html">句子问数</a><a href="../../products/dongxing.html">句子懂行</a><a href="../../products/miaohui.html">句子秒回</a><a href="../../products/cli.html">句子 CLI</a><a href="../../products/zhizao.html">句子制造</a><a href="../../fde.html">FDE</a><a href="../../enterprise.html">企业方案</a><a href="../../industries.html">行业</a><a href="../../about.html">关于我们</a><a href="../../news.html">动态</a></div>
+<main class="dp-main">
+  <div class="dp-wrap">
+    <nav class="dp-crumb" aria-label="面包屑"><a href="../../index.html">句子互动</a><i aria-hidden="true">›</i><a href="../../news.html">动态</a><i aria-hidden="true">›</i><span aria-current="page">Self-hosting Kimi K3: 20% more hardware </span></nav>
+    <div class="dp-meta">
+      <span class="dp-srcb s-hn"><i class="fa-brands fa-hacker-news"></i>Hacker News</span>
+      
+      <time class="dp-date" datetime="2026-07-29">2026-07-29</time>
+      <span class="dp-read"><i class="fa-regular fa-clock"></i>约 1.1 小时</span>
+    </div>
+    <h1 class="dp-title">Self-hosting Kimi K3: 20% more hardware cost, 20% better task resolution</h1>
+    
+    <p class="dp-by">来源：Hacker News</p>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（Hacker News）所有 · <a href="https://aistack.imec-int.com/blog/gpu-self-hosting" target="_blank" rel="noopener">阅读原文</a></span></div>
+    
+    
+    <div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang"><i class="fa-solid fa-language"></i><span>翻译为中文</span></button><span class="dp-lang-note">中文由 AI 翻译，仅供参考</span></div><article class="dp-body" id="dpBodyOrig" lang="en"><p><strong>Update (29 July 2026):</strong> We have run <strong>Kimi K3</strong> through the same setup, served with SGLang. At 1.4TB of weights, K3 does not fit within the memory budget of the 8×B200 node used for GLM-5.2 (1.5TB of total HBM leaves no headroom for KV cache). This run therefore used an 8×B300 node, which brings 288GB of HBM per GPU instead of 192GB, or 2.3TB per node. That averages out to around 20% higher hardware cost than the 8×B200 setup, depending on your rental provider.</p><p>In our runs, K3 served 16 concurrent sessions (GLM-5.2 managed 24). Aggregate token throughput is about 30% lower (122 vs 170 tok/s at 16 users), and median task time is about 50% longer (38 vs 26 minutes). That makes K3 roughly 8 times slower than our Claude Code baseline. However, K3 makes up for it in quality, resolving 86.4% of tasks, 24 percentage points above both GLM-5.2 and Opus 4.8 (62.5% for both). One caveat is that our benchmark tasks from SWEBench Pro may have been in K3&#x27;s training data, so treat that resolution rate with a grain of salt. Only the graphs in this article have been updated with the new K3 data.</p>
+
+01<h2>Why your token bill <br />blew up this year</h2>
+<p>The warning signs were everywhere the first half of this year: GitHub Copilot switched to token-based billing [1], Uber burned through its annual AI tools budget in just four months [2][3], and developers reported projected cost jumps from $29 to $750 a month [4]. We even invented words for it: &quot;tokenmaxxing&quot;, &quot;token panic&quot;, &quot;token budgets&quot;.</p><p>The median employee [5] currently spends ~$140 per year on AI API usage. Sounds harmless, until you look at the tail: the 90th percentile nears ~$7,300 per year, and the 99th approaches ~$90,000. For many organisations agentic AI adoption is only just beginning, so expect these numbers to change in the year ahead.</p>
+<p>Why is the bill so volatile? Because of how we use AI agents: Currently, over 70% of ARR across major model providers [4] comes from coding use cases. The more of your workflow you hand to agents, the higher your token bill becomes.</p>
+<p>Many organizations start their AI coding agent adoption using one of the major frontier model providers like OpenAI or Anthropic through API access. A few months in, more and more organizations are at least considering the alternatives for a number of reasons: token pricing models become more costly, users are upgrading to newer and more expensive AI models and agent adoption in the organization starts to boom. There are sensible alternatives out there that are certainly worth a closer look: switching to API routers; using cheaper model tiers for routine work while only escalating the hard 20% to a frontier model and others.</p>
+<p>However, if your token consumption becomes significant or if you&#x27;re working with sensitive data, you might want to abandon the API approach altogether and setup your own inference stack. <strong>When ownership of hardware is on the table, you&#x27;ll need to understand what renting or owning a GPU actually gives you in return. When does it make sense to make that switch? Read on as we give you the tools to decide for yourself.</strong></p>
+02<h2>You pay for the pool 24/7, <br />your team uses it 8 hours a day</h2>
+<p>So you&#x27;ve decided to investigate whether buying or leasing your own GPUs makes sense. Once configured correctly, it will give you an API endpoint you can plug into your coding tools, much like Anthropic, OpenAI or other model providers offer.</p><p>In contrast to the frontier APIs, your own endpoint has a ceiling on output tokens per second but you only reach it when the system is fully loaded. One developer working alone leaves most of that ceiling unused, but the same hardware serving forty-eight agent sessions in parallel is a different story. Your ceiling is determined by the model, the GPU(s), and the serving configuration.</p>
+<figure><figcaption>Fig. 01<h3>Total tokens/sec vs concurrent users</h3><p>Illustrative example of a model A running on a hardware setup B.</p></figcaption></figure>
+<p>Unlike an API usage model where you are charged per token consumed, running your own setup signifies you pay for the underlying infrastructure and the cost of keeping it running. In all but a few cases that means you&#x27;re also paying for it even when you&#x27;re <em>not</em> generating tokens. Whether that trade-off works for you, is decided by two questions. The first is how much of the pool are you using. Let’s tackle that one first.</p>
+<p>You size for the peak and pay for it 24/7. Utilisation, not headcount, is what makes or breaks the cost case.</p>
+<p>Real demand is not constant, but spiky. For many organizations, tokens for coding tasks will be near-zero overnight, ramp up through the morning, dip visibly at lunch, and peak again mid-afternoon. This means you buy hardware for the <em>peak</em> load, but you pay for it 24/7 (unless you rent ‘GPU spot instances’, but these are harder to rely on in this case). The shape of your peak in usage matters as much as the volume: a single-timezone team concentrates token demand into narrower spikes than the same headcount spread across timezones: same tokens, higher peak usage, but spread out longer. Published data on enterprise inference workloads serving internal developer tools reports average GPU utilization of 15–22% [6][7], though even a well-run deployment currently rarely exceeds 25–35% (and that is being generous). The graph below shows the real, actual token usage over 2 days a couple of weeks ago from our friends over at <a href="https://www.techwolf.com/" target="_blank" rel="noopener nofollow">TechWolf</a>[14], reflecting exactly what we describe above.</p>
+<figure><figcaption>Fig. 02<h3>Real-life token usage is spiky and different to each organisation</h3></figcaption></figure>
+<p>One emerging trend may work in your favor here: As organizations mature in their agent driven workflows, more and more sessions are starting to come from automated agents rather than people (scheduled jobs, agents autonomously picking up a bug report at 3am, etc.). This allows for work that doesn&#x27;t adhere to office hours. If scheduled with intent, these automated sessions can soak up overnight capacity you are paying for anyway.</p>
+<p>Now let’s tackle the second question, <strong>how many developers can share the pool before it feels slow?</strong></p>
+03<h2>What happens when <br />48 developers share a box?</h2>
+<p>A token pool occupied by just one developer feels wonderful - tokens stream in faster than you can read. The question is what happens at five, ten or twenty concurrent developer sessions, because AI coding agents are greedy, bursty clients that not only consume tokens, but also browse the web, execute files or compile code.</p>
+<p>One of your main concerns when moving away from a frontier model provider API should be developer experience. When looking at benchmark results you will often see tokens-per-second used to gauge how well a model performs on a given GPU setup. While it is an easy to understand metric, we find it less useful in this context. After all, you can burn thousands of tokens with no satisfiable result, or you can switch to a smaller model that ends up using 10 times more tokens.</p>
+<p>The better unit of value delivery is a <strong>task successfully completed</strong>, and while that is harder to quantify in general, that&#x27;s what we&#x27;ll often return to in the analysis below. You will want to understand <strong>how long a task takes start to finish</strong> and <strong>how fast tokens stream while the agent is waiting on the model</strong>.</p>
+<p>The better unit of value delivery is a task successfully completed.</p>
+<p>To make task completion measurable we use a subset of tasks from SWEBench Pro by ScaleLabs, a popular set of longer-horizon code engineering tasks. While it is most often used to pit individual models against each other, our team is using it specifically to create a more lifelike and challenging enough workload as we compare the cost and performance of different model and hardware combinations under real use cases that would make sense for your organization.</p>
+<p>A couple of graphs will help us further evaluate the performance of the model &amp; hardware combinations we have chosen. First, we run our subset of coding tasks using a given model on a specific hardware setup at increasing levels of user concurrency and evaluate how this impacts the time to complete individual tasks. This will help to find that sweet spot of how many concurrent users you can have active for your chosen setup before tasks simply start taking too long to complete.</p>
+<figure><figcaption>Fig. 03<h3>Minutes per task vs concurrent users</h3><p>Illustrative example of a model A performing coding tasks on a hardware setup B.</p></figcaption></figure>
+<p>It is convenient to see this information together. So often the trade-off between how much the hardware is in use vs. the developer experience in terms of speed is shown in one graph that allows for convenient decision making. We’ll use the graph below to show how different model / hardware combinations approach the maximum token output they can generate as user concurrency increases, while keeping an eye on how long we can keep our developers wait for a task to be resolved.</p>
+<figure><figcaption>Fig. 04<h3>Tokens/sec vs median task time</h3><p>Illustrative example of a model A performing coding tasks on a hardware setup B. C means number of concurrent users.</p></figcaption></figure>
+<p>Understanding these values will set you up to better understand the differences in performance and developer experience across the options that may be a match for your organization’s needs.</p>
+<p>Over the last weeks our team was hard at work to do ~100 runs of a selection of 64 real coding tasks from SWEBench Pro across different and appropriate hardware configurations to calculate precisely the right metrics (median time per tasks, tok/s/u and many more). Guided by open-weight quality rankings from Artificial Analysis [9], we paired each hardware tier with a leading model that fits its memory budget:</p>
+<ul><li>Qwen3.6-35B-A3B-FP8 on a single H200 served with vLLM</li><li>DeepSeek-V4-Flash on 4×H200 served with vLLM</li><li>GLM-5.2 on the 8×B200 rack served with SGLang.</li><li>Qwen3.6-35B-A3B-FP8 on NVIDIA&#x27;s DGX Spark served with vLLM</li></ul>
+<p>In the next sections we’ll dive into the actual results and round it up with a cost analysis comparing buying your own GPUs to renting them to buying tokens from either the frontier model providers as well as open weights API providers. We feel these are the kinds of questions many organizations are pondering at the moment and we wanted to give you the tools to answer them.</p>
+
+04<h2>From a Spark on a desk to an 8×B200 node: which box to buy</h2>
+<p>If you’re interested in renting or buying hardware, several options are available. Below we introduce four popular contenders that we’ll come back to throughout this post. Each of those also comes with a best-in-class open weights model that nicely fits the hardware.</p><p>You’ll see that we’re leaning heavily into NVIDIA here, which has a lot to do with what was easily available to us. There are definitely similar alternatives from other suppliers, which we’ll get to in later posts. For now, consider these as reference choices rather than specific endorsements.</p>
+<ul><li>Let’s start with the cheapest option, an NVIDIA DGX Spark. This is the box for a team that wants to try self-hosting without talking to procurement: it sits on a desk and costs less than a conference trip. It can fit Qwen3.6-35B-A3B (referred to as &quot;Qwen3.6&quot;). That’s a surprisingly big model for such a machine - We’ll see later in the article what it delivers in terms of developer experience.</li><li>Next up is the NVIDIA H200, a powerful, single accelerator. Perhaps surprisingly, It actually does not buy you a lot more in terms of the models you can host compared to a DGX Spark. This is mostly determined by the available memory (128GB for the DGX Spark vs. 141GB for the H200). However, what you do get is a bigger token pool which translates in throughput speed for higher concurrencies.</li><li>If you want to host more powerful models, but don’t want to fully break the bank, NVIDIA HGX H200 with 4xH200s is a solid option. With 4xH200s, you can host bigger models such as DeepSeek-V4-Flash, which promise a very good compromise in terms of speed, concurrency and quality.</li><li>Taking it up a notch, the HGX B200 with 8xB200’s is a powerful reference system, as it lets you serve state-of-the-art open source models like GLM-5.2 that currently come closest to the frontier models in terms of quality. This is your option if quality is the main concern.</li></ul>
+<p>At the time of writing this article, there is a lot of buzz about Kimi’s K3 model, as early benchmarks (which will need to be confirmed) indicate it would be able to compete with Anthropic’s Fable model, but at much lower cost. For now, our team is awaiting the open weights release for this model later this month to evaluate what it would take for this 2.8T to run on your own infrastructure. More on this soon.</p>
+<p>Next up, we’ll put these contenders to the test in terms of developer experience, cost, and quality of the models they can fit. Let’s do this.</p>
+05<h2>How big are those pools?</h2>
+<p>So what about having a DGX Spark sitting on your desk within reach? Well, unsurprisingly, it does not come with a big token pool. In our tests, we could not push it beyond 1-2 concurrent users and were confronted with an avalanche of time-out errors and the likes. If you’re happy with Qwen3.6, it can be a fit for you, but don’t expect it to scale in speed, concurrency or model quality. It shows that - despite Linkedin headlines - we&#x27;re not there yet that we can simply download frontier intelligence on an affordable desktop box. Simpler things like code completion? That is less of an issue.</p>
+<figure><figcaption>Fig. 05<h3>Aggregate output throughput vs concurrency</h3><p>Sustained throughput of full system (not per GPU)</p></figcaption></figure>
+<p>This is where paying extra for that professional H200 pays off, for the same model it can generate at least 30 times more tokens/s for Qwen3.6. Actually, don’t be surprised that Qwen3.6 generates so many tokens, even on a single H200 - it’s still quite a small (and thus less capable) model. We can also see here that DeepSeek-V4-Flash on the HGX H200 comes with an even bigger token pool (of course on 4xH200s) and only reaches that potential at high concurrency. In contrast, for GLM-5.2 on the HGX B200, the token pool is smaller despite it running on the most powerful hardware in our tests. Indeed, 16 concurrent sessions seems to more or less saturate the GPUs and the total pool is only about 175 tokens/s for GLM-5.2. Bigger, more powerful models come with smaller token pools, and the hardware we selected doesn’t fully compensate for that.</p>
+<p>Probably you noticed something surprising and uncomfortable - some lines crash down instead of tapering off to a maximal value. We’ll zoom in on that after we look into the developer experience.</p>
+06<h2>How happy are my developers with the speed?</h2>
+<p>You may not want to max out your token pool, as individual developers may perceive your solution as a snail compared to their trusted Codex or Claude companion. With the latter as a baseline we can see that GLM-5.2 struggles already from 8 concurrent sessions onwards despite the impressive HGX B200 hardware. Just as with the relatively small pool size, we see here that serving a frontier model at scale is very challenging. On the other end of the spectrum, the DGX Spark is slow even for 1 user, and simply unusable for multiple users.</p>
+<p>Both DeepSeek-V4-Flash and Qwen3.6 are holding up longer, up to 32 users and then take a dive. Note that DeepSeek-V4-Flash is close to Qwen3.6-35B-A3B but runs on more expensive hardware - trading off that investment for higher quality while maintaining speed under load. Of course, for both, compared to GLM-5.2, the price you pay is the lower quality, more on that later.</p>
+<figure><figcaption>Fig. 06<h3>Task time vs concurrent users</h3><p>Median minutes per task (agent phase); the Opus 4.8 (API) baseline is drawn as a horizontal line.</p></figcaption></figure>
+<p>So ballpark, you can expect to host around the following number of concurrent users on each of these setups before developers start knocking your door down complaining about the speed:</p>
+<table><thead><tr><th>Model</th><th>Comfortable concurrency</th></tr></thead><tbody><tr><th>Qwen3.6 (DGX Spark)</th><td>just 1 — and still slow, almost 3× slower than Claude Code</td></tr><tr><th>Qwen3.6 (H200)</th><td>easily 32 and at 48 you are 2X slower than Claude Code</td></tr><tr><th>DeepSeek-V4-Flash</th><td>easily 32 and at 48 you are 2X slower than Claude Code</td></tr><tr><th>GLM-5.2</th><td>8 is pushing it — already 3× slower than Claude Code</td></tr></tbody></table>
+<p>And now for the elephant in the room: both in this plot and the next ones, you see Qwen3.6 on H200 and DeepSeek-V4-Flash on the HGX H200 take a nose dive after concurrency 48 and 64. That’s surprising and not something you expect intuitively, as theoretically the lines should converge to the maximal output of the GPUs. So why do we see a collapse so early on? The reason has to do with the specifics of the inference engine (vLLM), its default parameters and how it balances compute between prefill and decode requests, as well as important resources such as the effective KV-cache size and its usage.</p>
+<p>Additionally, you are perhaps disappointed by the concurrency level provided by GLM-5.2. One culprit could be the usage of <em>speculative decoding</em> which speeds up token generation for low concurrency but can hurt performance for higher ones.</p>
+<p>But don’t despair too quickly, if you optimize the inference engine (e.g. vLLM) for your workloads, you can deal better with such issues and get even more out of the system - we’ll explain and discuss this in depth in an upcoming blogpost.</p>
+<p>Back to the plots. Be aware that at these concurrencies, keeping your devs happy, you still leave some tokens on the table. We can combine the info of previous plots in one to bring out this gap for each of the systems. For instance, for DeepSeek-V4-Flash on HGX H200 at c=32, with happy devs, you only use 1381 tokens/s, while the pool for c=64 is 1717 tokens/s, or 24% more.</p>
+<figure><figcaption>Fig. 07<h3>Throughput vs task speed</h3><p>Aggregate output tokens/s vs how fast individual tasks complete.</p></figcaption></figure>
+<p>Be aware of this trade-off, while you can adapt it in real life settings, don’t simply expect you will get the full pool out of a system as it’s often advertised.</p>
+<hr />
+07<h2>How much will this all cost me?</h2>
+<p>When it comes down to how to invest in your AI coding agents, your choices are not limited to sticking to your model API provider of choice or outright buying the hardware. There’s also the option of renting your GPUs, with suppliers ranging from Hyperscalers to NeoScalers, AI Factories or other parties. Each come with different prices, but also different guarantees, services and integrations.</p>
+<p>As always, model quality matters a lot. To compare fairly, we also reran our SWEBench Pro task set against the official APIs of the different model providers and kept track of the token costs. For buying, or renting, hardware, the cost is determined by how long it takes to run such a set of tasks. As discussed, this depends on the concurrency. For each of the systems, we take the optimal concurrency from a cost perspective, the one that uses the GPU optimally. Note this may be a point that impacts user experience.</p>
+<p>We did not include DGX Spark in this comparison as it really is a different beast in terms of pricing and performance. Qwen3.6 buy/rent costs are for 1 H200, for DeepSeek-V4-Flash it is the HGX 4xH200 and for GLM-5.2 the HGX 8xB200. We depreciate those costs over 5 years, but do not include additional power or maintenance costs as those depend a lot on organisation specifics.</p>
+<table><thead><tr><th>System (Model/HW/Walltime)</th><th>API Cost</th><th>Buy Cost</th><th>Buy Cost (30% usage)</th><th>Rented Cost</th></tr></thead><tbody><tr><th>Qwen3.6 (1xH200, 28 min)</th><td>$57.67*</td><td>$0.43</td><td>$1.43</td><td>$1.62</td></tr><tr><th>DeepSeek-V4-Flash (4xH200, 31 min)</th><td>$2.13</td><td>$1.90</td><td>$6.33</td><td>$7.19</td></tr><tr><th>GLM-5.2 (8xB200, 101 min)</th><td>$92</td><td>$13.84</td><td>$46.12</td><td>$71.23</td></tr><tr><th>Anthropic API (Opus 4.8)</th><td>$98</td><td>N/A</td><td>N/A</td><td>N/A</td></tr></tbody></table>
+<p>*Alibaba list price (no caching for the model)</p>
+<p>*Hardware purchase and rental prices are publicly advertised rates as of July 2026 [10][11][12][13].</p>
+<p>Same workload and three completely different answers. Most relevant fun takeaways from our calculations: a 4×H200 has to stay 89% busy (day and night, all five years) before owning it beats DeepSeek&#x27;s $2.13 invoice, while the B200 rack only needs 15% utilisation to beat the frontier APIs, and at rental rates it already sells frontier-quality tasks at $1.11 apiece (rented cost divided by 64 tasks), cheaper than either API charges.</p>
+<p>If you’re under that utilisation threshold of e.g. 15%, renting GPUs can be a better and more affordable option as it allows you to turn off usage during off peak hours. Is it? Well, surprisingly, it strongly depends on the model type. For Qwen3.6, renting a GPU is a factor 35 cheaper than going API. We also see a cost reduction for GLM 5.2, although a more moderate one of 23%. However, for DeepSeek, the numbers are the opposite. Without any optimization specifically for your workload, it’s actually a lot more expensive than DeepSeek’s own API.</p>
+<p>What matters when taking the cost decision is less of the open vs closed debate, and more what running your specific workloads cost. For coding agents, up to 98% of input tokens are cached, and this is where the DeepSeek-V4-Flash API pricing beats even the smaller Qwen3.6 model by a landslide.</p>
+<p>There&#x27;s no single winner. Priced at real-world utilisation, buying only pays off if you keep the box busy — a 4×H200 needs to stay <strong>89%</strong> loaded, the B200 rack just <strong>15%</strong>. Below that, renting or a cheap open-weights API often wins. Buy GPUs for what an invoice can’t price — control, privacy, latency — not for cost alone.</p>
+08<h2>But I like the closed frontier models from the labs?</h2>
+<p>And you are not alone. Yet here you are, reading about moving away from them. Truth be told, while open-weight models are always lagging a couple months behind the frontier models from Anthropic, OpenAI or Google, the best of them have become very usable in 2026. Moreover, the gap between open-weight and closed models is closing as we speak with new releases such as GLM 5.2 and Kimi K3. For those, like GLM-5.2, you’ll need at least an HGX B200 system. Don’t expect the same performance when going with a H200 or even 4xH200s.</p>
+<p>The gap between open-weight and closed models is closing as we speak.</p>
+<p>For the tasks we ran, we reproduced the prevailing insights by model quality evaluators such as Artificial Analysis [9]. For completeness sake, here are the resolution rates (pooled over all runs and concurrencies) for the models in question with Claude Code as harness on our sample of 64 tasks from SWE Bench Pro.</p>
+<table><thead><tr><th>Model</th><th>Resolution Rate</th></tr></thead><tbody><tr><th>Kimi K3</th><td>86.4%</td></tr><tr><th>GLM-5.2</th><td>62.5%</td></tr><tr><th>Anthropic Opus 4.8 (API)</th><td>62.5%</td></tr><tr><th>DeepSeek-V4-Flash</th><td>39.1%</td></tr><tr><th>Qwen3.6</th><td>35.4%</td></tr></tbody></table>
+<p>Remember though that such benchmarks are only a proxy for how good a model will work for your use case - and you will have to test that for yourself. Luckily, just for the quality of the model, you can judge that with free or cheap APIs in a limited test.</p>
+09<h2>So how many developers fit on a GPU?</h2>
+<p>Between 0 and 64. Or at least according to the configurations we looked at — but the fact that it’s a range is the point we’re making here. If you’re serious about investing in your own hardware, here are some key takeaways that can be relevant.</p>
+<ul>
+<li><b>Your DGX Spark is really only for single use.</b> It will fit one developer on a good day with a small model and a moderate token pool. If you’re looking for scale, this is not your best bet. If you’re looking for individual developer experience on moderate tasks, it’s a great workhorse.</li>
+<li><b>However, a single H200 running Qwen3.6 can easily serve 32 concurrent sessions</b>, and 4×H200s with DeepSeek-V4-Flash can do the same at higher quality. Stack eight B200s together and your team is ready to serve a near-frontier model like GLM-5.2 — but suddenly we’re back down to eight developers before task execution starts absolutely crawling.</li>
+<li><b>Renting GPUs can be a real cost saver, but it highly depends on the model.</b> In our tests we saw up to a factor 35 cost saving (!) in the case of Qwen, but higher costs than the API for DeepSeek. This shows how having the right workload to model and hardware mapping is key and that switching from one infrastructure to the other is not just a decision that gives you a flat cost saving.</li>
+<li><b>If your workload exceeds a certain threshold, buying your own hardware might become interesting.</b> It depends which combination of quality, speed, and cost your organization actually needs. If your workload could keep a rented B200 rack even 15% busy, you’re — surprisingly enough — already en route to beat frontier API pricing on near-frontier quality. If it doesn’t, don’t self-host just for the sake of escaping your token bill, as an idling GPU rack costs more per task than your current API invoice. There might be other reasons such as sensitivity of data.</li>
+</ul>
+<p>Your mileage may vary of course. Hence, measure your own workload. Get a better view on your peaks. And keep on doing it as your organization matures into using AI coding agents. While your current numbers may point towards API usage for now, in a few months’ time this may be much different. In the meantime we’ll be out here building tools and insights to help you with that puzzle.</p>
+<p>If you want to squeeze more devs onto the same hardware, that’s exactly what our next posts are about: tuning the inference engine to fit your workload, sometimes doubling what one box can do. Stay tuned.</p>
+›Contributors<p>Steven L., Wouter V.d.B., Michaël M., Ioana F., Jan F., Christian M., Maxim C., Arathy U., Bohdan D., Sepideh P., Baptist V., Jeroen B., Robbert V.C., Mathias F., Hendrik M., Jannick V.</p>
+
+<h2>References</h2>
+<p>Numbers cited above trace to these sources.</p>
+<ol>
+<li>GitHub Blog (Mario Rodriguez), “GitHub Copilot is moving to usage-based billing” (April 2026) <a href="https://github.blog/news-insights/company-news/github-copilot-is-moving-to-usage-based-billing/" target="_blank" rel="noopener nofollow">github.blog</a></li>
+<li>Forbes (Janakiram MSV), “Uber Burns Its 2026 AI Budget In Four Months On Claude Code” (May 2026) <a href="https://www.forbes.com/sites/janakirammsv/2026/05/17/uber-burns-its-2026-ai-budget-in-four-months-on-claude-code/" target="_blank" rel="noopener nofollow">forbes.com</a></li>
+<li>Bloomberg (Natalie Lung), “Uber Caps Employee Spending on AI Tools Like Claude Code to Manage Costs” (June 2026) <a href="https://www.bloomberg.com/news/articles/2026-06-02/uber-caps-usage-of-ai-tools-like-claude-code-to-cut-costs" target="_blank" rel="noopener nofollow">bloomberg.com</a></li>
+<li>SemiAnalysis (Crystal Huang, Joey Brookhart, Dylan Patel), “TokenBudgeting: Our Conversations with Enterprises on Token Spend” (June 2026) <a href="https://newsletter.semianalysis.com/p/tokenbudgeting-our-conversations" target="_blank" rel="noopener nofollow">newsletter.semianalysis.com</a></li>
+<li>Ramp Economics Lab (Ara Kharazian), “How much does it cost to be AI-pilled?” — Ramp AI Index (June 2026) <a href="https://ramp.com/data/ai-index-june-2026" target="_blank" rel="noopener nofollow">ramp.com</a></li>
+<li>Spheron (Mitrasish), “AI Inference Cost Economics in 2026: GPU FinOps Playbook” (April 2026) <a href="https://www.spheron.network/blog/ai-inference-cost-economics-2026/" target="_blank" rel="noopener nofollow">spheron.network</a></li>
+<li>VentureBeat, “5% GPU utilization: The $401 billion AI infrastructure problem enterprises can’t keep ignoring” (May 2026) <a href="https://venturebeat.com/infrastructure/5-gpu-utilization-the-401-billion-ai-infrastructure-problem-enterprises-cant-keep-ignoring" target="_blank" rel="noopener nofollow">venturebeat.com</a></li>
+<li>Hebbia (Jake Skinner), “The Hidden Economics of LLM Inference” (April 2026) <a href="https://www.hebbia.com/blog/the-hidden-economics-of-llm-inference" target="_blank" rel="noopener nofollow">hebbia.com</a></li>
+<li>Artificial Analysis, model comparison: Claude Opus 4.8, DeepSeek V4-Flash, Qwen3.6-35B-A3B, GLM-5.2 (accessed July 2026) <a href="https://artificialanalysis.ai/models?models=claude-opus-4-8%2Cdeepseek-v4-flash%2Cqwen3-6-35b-a3b" target="_blank" rel="noopener nofollow">artificialanalysis.ai</a></li>
+<li>TRG Datacenters, “NVIDIA H200 Price Guide” (accessed July 2026) <a href="https://www.trgdatacenters.com/resource/nvidia-h200-price-guide/" target="_blank" rel="noopener nofollow">trgdatacenters.com</a></li>
+<li>GetDeploying, “H200 Cloud Pricing: Compare 34+ Providers” (accessed July 2026) <a href="https://getdeploying.com/gpus/nvidia-h200" target="_blank" rel="noopener nofollow">getdeploying.com</a></li>
+<li>Tech-Insider, “NVIDIA Blackwell GPU Pricing 2026: B200, B300 &amp; DGX Costs” (July 2026) <a href="https://tech-insider.org/nvidia-blackwell-gpu-pricing/" target="_blank" rel="noopener nofollow">tech-insider.org</a></li>
+<li>Spheron, “NVIDIA B200 Cloud Pricing 2026: Per-Hour Rental Cost Across Providers” (June 2026) <a href="https://www.spheron.network/blog/nvidia-b200-cloud-pricing-2026/" target="_blank" rel="noopener nofollow">spheron.network</a></li>
+<li>TechWolf, internal developer token-usage data shared with aistack (July 2026) <a href="https://www.techwolf.com/" target="_blank" rel="noopener nofollow">techwolf.com</a></li>
+</ol>
+
+<h2>Appendix: Our methodology</h2>
+
+<p>Core to our philosophy is that the details of the real-world workload matter when thinking about your AI stack - both software and hardware. To measure this, we set up a system that mimics as much as possible the behavior of coding agents. The parts of the system that can be configured are on the one hand the inference engine:</p>
+<ul><li>The underlying hardware. We tested<ul><li>DGX Spark (Lenovo ThinkStation PGX) sitting on our desks</li><li>a single H200 hosted in our on-premise datacenter (with 24 CPU cores, 64GB memory)</li><li>a HGX 4xH200 connected via NVLink hosted in our on-premise datacenter</li><li>a HGX 8xB200, hosted by a dedicated AI cloud infra provider</li></ul></li><li>The different models as discussed<ul><li>Qwen3.6-35B-A3B on DGX Spark with vLLM settings from https://recipes.vllm.ai (using MTP speculative decoding)</li><li>Qwen3.6-35B-A3B on H200 with vLLM settings from https://recipes.vllm.ai (using MTP speculative decoding)</li><li>DeepSeek-V4-Flash hosted with tensor parallelism 4 and the vLLM settings from https://recipes.vllm.ai (we adapted the 8xH200 recipe, using MTP speculative decoding)</li><li>GLM-5.2 hosted with tensor parallelism 8 and the SGLang settings recommended by https://modal.com/blog/introducing-auto-endpoints (using EAGLE speculative decoding)</li></ul></li></ul>
+<p>On the other hand, we need to mimic the workloads, we can configure</p>
+<ul><li>The number of workers running agentic coding tasks in parallel against the endpoint. Those are different docker containers, each getting a coding task from the in the Harbor task format[reference]. Those workers are hosted on the infra of a sandbox provider and run on commodity CPUs.</li><li>Each task run consists of three phases.<ul><li>a setup to ensure prerequisites are installed</li><li>the actual code generation loop which drives requests to inference endpoint</li><li>a final evaluation to check if the generated code passes tests</li></ul></li><li>We opted to not remove the first and second phase as they act as a basic resemblance to the work a developer does outside of coding - like grabbing a coffee in between two tasks. However, we can separate them out when required for different analyses. E.g. task time in our plots is reported on the actual code generation only. The inclusion of the setup and evaluation lower the effective concurrency of the endpoint as at any time some agents are in such a phase and not sending requests.</li><li>As the fixed task set we sampled 64 tasks from SWEBench Pro by ScaleLabs. We use our own platform to orchestrate this, but have reproduced numbers obtained with Harbor to ensure correctness.</li></ul>
+<p>On both inference engine and workers we capture many metrics that allow for a deep analysis of how the workload interacts with the underlying hardware and software inference stack. These allow us to optimize the different settings further, to fit more devs on the same GPU. We discuss this in a following blogpost.</p>
+<p>To measure tokens/s, we look at sustained throughput in the bulk of the taskset, e.g. excluding the end of the queue when only few straggling tasks remain. Note there are individual short peaks that go a lot higher (especially for GLM-5.2), but for the workloads under tests, these levels are not consistent for longer times.</p>
+<p>There is a variance in observations, while it is small for tokens/s, task times and resolution rate (we average it over all runs) it is especially outspoken in the occurrence of the collapse of the throughput of Qwen3.6 and DeepSeek-V4-Flash at higher concurrences. This has to do with the stochasticity of the incoming requests when using so many workers. We have opted to pick the lowest concurrency level at which it happens, as this indicates the setup is no longer reliable for production purposes.</p></article><article class="dp-body" id="dpBodyZh" lang="zh-CN" hidden><p><strong>更新（2026年7月29日）：</strong> 我们使用相同的配置运行了 <strong>Kimi K3</strong>，并通过 SGLang提供服务。K3 的权重为 1.4TB，无法放入用于 GLM-5.2 的 8×B200 节点的内存预算中（1.5TB 的总 HBM 内存没有 KV 缓存的余量）。因此这次运行使用了 8×B300 节点，每块 GPU 拥有 288GB HBM 内存，而不是 192GB，即每节点 2.3TB。与 8×B200 配置相比，这平均高出约 20% 的硬件成本，具体取决于您的租赁服务商。</p><p>在我们的测试中，K3 支持 16 个并发会话（GLM-5.2 支持 24 个）。总体 token 吞吐量低约 30%（16 用户时为 122 vs 170 tok/s），中位任务时间长约 50%（38 vs 26 分钟）。这使得 K3 比我们的 Claude Code 基准测试慢约 8 倍。然而，K3 在质量上弥补了这一差距，解决了 86.4% 的任务，比 GLM-5.2 和 Opus 4.8（两者均为 62.5%）高出 24 个百分点。需要注意的是，我们来自 SWEBench Pro 的基准测试任务可能已在 K3 的训练数据中，因此请对该解决率持保留态度。本文中只有图表更新了新的 K3 数据。</p>
+
+01<h2>为什么你今年的 token 账单<br />爆炸式增长</h2>
+<p>今年初的警告信号无处不在：GitHub Copilot 切换为基于 token 的计费 [1]，Uber 仅用四个月就耗尽了年度 AI 工具预算 [2][3]，开发者报告称预计成本从每月 29 美元跃升至 750 美元 [4]。我们甚至为此创造了新词："tokenmaxxing"、"token 恐慌"、"token 预算"。</p><p>普通员工 [5] 目前每年在 AI API 使用上花费约 140 美元。听起来无害，直到你看看尾部数据：第 90 百分位接近每年 7,300 美元，第 99 百分位接近 90,000 美元。对于许多组织来说，智能体 AI 的采用才刚刚开始，因此预计这些数字在未来一年内会发生变化。</p>
+<p>为什么账单如此不稳定？因为我们使用 AI 智能体的方式：目前，主要模型提供商 [4] 的 ARR（年度经常性收入）中，超过 70% 来自编程用例。你交给智能体的工作流程越多，你的 token 账单就越高。</p>
+<p>许多组织开始采用 AI 编程智能体时，是通过 API 访问 OpenAI 或 Anthropic 等主要前沿模型提供商。几个月后，越来越多的组织出于多种原因至少开始考虑替代方案：token 定价模型变得更加昂贵，用户正在升级到更新、更昂贵的 AI 模型，并且组织内的智能体采用开始激增。存在一些明智的替代方案，绝对值得仔细考虑：切换到 API 路由器；为日常工作使用更便宜的模型层级，仅将困难的 20% 升级到前沿模型，等等。</p>
+<p>然而，如果你的令牌消耗量变得很大，或者你正在处理敏感数据，你可能需要完全放弃 API 方案，转而搭建自己的推理栈。<strong>当硬件所有权成为问题时，你需要弄清楚租用或拥有 GPU 到底能给你带来什么回报。什么时候做这个切换才合理？继续阅读，我们会给你工具让你自己做出决定。</strong></p>
+02<h2>你为整个资源池 24/7 付费，<br />而你的团队每天只使用 8 小时</h2>
+<p>所以你决定研究一下购买或租用自己的 GPU 是否合理。一旦正确配置，它会给你一个 API 端点，你可以将其接入到你的编码工具中，就像 Anthropic、OpenAI 或其他模型提供商提供的那样。</p><p>与前沿 API 不同，你自己的端点在每秒输出令牌数上有上限，但只有当系统完全负载时才会达到这个上限。一个开发者单独工作会留下大部分未使用的上限，但同一硬件同时为四十八个代理会话服务就是另一回事了。你的上限由模型、GPU 和服务配置决定。</p>
+<figure><figcaption>图 01<h3>每秒总令牌数 vs 并发用户数</h3><p>模型 A 在硬件配置 B 上运行的示例图。</p></figcaption></figure>
+<p>与按消耗的令牌计费的 API 使用模式不同，运行你自己的设施意味着你要为基础设施及其运行成本付费。在极少数情况下，这意味着即使你<em>没有</em>在生成令牌时，你也在为它付费。这种权衡是否适合你，取决于两个问题。第一个问题是你的资源池利用率有多高。我们先来解决这个问题。</p>
+<p>你为峰值需求配置资源，并为此 24/7 付费。决定成本效益的是利用率，而不是员工人数。</p>
+<p>真实的需求并非恒定不变，而是呈尖峰状。对许多组织而言，用于编码任务的 token 消耗量可能在夜间降至接近零，然后在上午逐步攀升，午餐时段明显下降，并在下午再次达到峰值。这意味着你为 <em>峰值</em> 负载购买硬件，却需要 24/7 全天候付费（除非你租用“GPU 现货实例”，但在这种情况下更难依赖）。使用峰值的形状与峰值量同样重要：单一时区的团队会将 token 需求集中在更狭窄的尖峰上，而同样人数分布在多个时区的团队则情况不同：消耗相同的 token，峰值更高，但持续时间更长。关于为企业内部开发者工具提供推理工作负载的公开数据显示，平均 GPU 利用率仅为 15–22% [6][7]，尽管即使是目前运行良好的部署也很少超过 25–35%（这已经是相当乐观的估计）。下图来自我们的朋友 <a href="https://www.techwolf.com/" target="_blank" rel="noopener nofollow">TechWolf</a>[14]，展示了几天前真实的 token 使用情况，准确反映了我们上述描述的现象。</p>
+<figure><figcaption>图 02<h3>真实的 token 使用情况呈尖峰状，且各组织间差异显著</h3></figcaption></figure>
+<p>这里有一个新兴的趋势可能对你有利：随着组织在基于智能体（agent）的工作流程上日趋成熟，越来越多的会话开始来自自动化智能体而非人工操作（如定时任务、智能体在凌晨 3 点自动处理错误报告等）。这使得工作不再局限于办公时间。如果能有意识地安排这些自动化会话，它们就能充分利用你本已付费的夜间闲置容量。</p>
+<p>现在我们来探讨第二个问题，<strong>在性能开始变慢之前，多少开发者可以共享这个资源池？</strong></p>
+03<h2>当 <br />48 个开发者共享一台服务器时会发生什么？</h2>
+<p>仅由一名开发者使用的 token 资源池体验极佳——token 的流入速度快到你根本读不过来。问题在于，当有五、十或二十个并发开发者会话时会发生什么，因为 AI 编码智能体是贪婪且突发的客户端，它们不仅消耗 token，还会浏览网页、执行文件或编译代码。</p>
+<p>当你不再使用前沿模型提供商的 API 时，主要关注点之一应该是开发者体验。查看基准测试结果时，你经常会看到使用 token/秒来衡量模型在特定 GPU 配置下的性能表现。虽然这是一个易于理解的指标，但我们发现它在当前场景下用处不大。毕竟，你可能消耗了数千个 token 却没有得到任何可用的结果，或者切换到一个更小的模型，结果反而使用了多 10 倍的 token。</p>
+<p>价值交付的更好单位是<strong>成功完成的任务</strong>，虽然这在通常情况下更难量化，但这正是我们在下文分析中会反复探讨的核心。你需要理解<strong>一个任务从开始到结束需要多长时间</strong>以及<strong>当代理等待模型时，token的流速能有多快</strong>。</p>
+<p>价值交付的更好单位是成功完成的任务。</p>
+<p>为了让任务完成度可衡量，我们使用了来自 ScaleLabs 的 SWEBench Pro 中的一组任务子集，这是一组流行的长期代码工程任务。虽然它最常被用于让各个模型相互竞争，但我们的团队专门用它来创建一个更逼真且具有足够挑战性的工作负载，以便我们在实际使用场景中比较不同模型和硬件组合的成本与性能，这些场景对您的组织来说是合理的。</p>
+<p>通过几张图表，我们可以进一步评估我们选择的模型和硬件组合的性能。首先，我们在不断增加的用户并发级别下，使用特定硬件配置上的给定模型运行我们的代码任务子集，并评估这如何影响单个任务的完成时间。这将帮助我们找到那个最佳平衡点：在您选择的配置下，可以有多少并发用户同时活跃，而任务不会因为耗时过长而无法完成。</p>
+<figure><figcaption>图 03<h3>每任务耗时 vs 并发用户数</h3><p>模型 A 在硬件配置 B 上执行代码任务的示例。</p></figcaption></figure>
+<p>将这些信息放在一起看会非常直观。通常，硬件使用率与开发者体验（以速度衡量）之间的权衡关系会呈现在一张图表中，方便决策。我们将使用下面的图表来展示，随着用户并发量的增加，不同的模型/硬件组合如何接近其能产生的最大 token 输出，同时我们也会密切关注开发者需要等待任务解决的时间。</p>
+<figure><figcaption>图 04<h3>Token/秒 vs 中位任务时间</h3><p>模型 A 在硬件配置 B 上执行代码任务的示例。C 代表并发用户数。</p></figcaption></figure>
+<p>理解这些数值将帮助您更好地了解不同选项在性能和开发者体验上的差异，从而找到最适合您组织需求的方案。</p>
+<p>在过去的几周里，我们的团队一直在努力工作，对 SWEBench Pro 中精选的 64 个真实编程任务进行了约 100 次测试，测试采用了不同且合适的硬件配置，以精确计算各项指标（每个任务的中位时间、每秒每设备的 token 数等）。在 Artificial Analysis [9] 的开源权重质量排名指导下，我们将每个硬件层级与符合其内存预算的领先模型进行了匹配：</p>
+<ul><li>Qwen3.6-35B-A3B-FP8 在单张 H200 上，使用 vLLM 服务</li><li>DeepSeek-V4-Flash 在 4×H200 上，使用 vLLM 服务</li><li>GLM-5.2 在 8×B200 机架上，使用 SGLang 服务</li><li>Qwen3.6-35B-A3B-FP8 在 NVIDIA 的 DGX Spark 上，使用 vLLM 服务</li></ul>
+<p>在接下来的章节中，我们将深入探讨实际结果，并通过成本分析进行总结，对比自购 GPU、租用 GPU 以及从前沿模型提供商或开源权重 API 提供商购买 token 的成本。我们认为，许多组织目前正在思考这些问题，而我们希望为您提供解答这些问题的工具。</p>
+
+04<h2>从桌上的 Spark 到 8×B200 节点：该买哪款设备</h2>
+<p>如果您有兴趣租用或购买硬件，有几种选择可供考虑。下面我们介绍四种热门的候选方案，我们将在本文中多次提及它们。每种方案都搭配了一款最适合该硬件的开源权重顶级模型。</p><p>您会发现我们在这里重点介绍了 NVIDIA，这在很大程度上是因为我们能够轻松获取到他们的设备。其他供应商肯定也有类似的替代方案，我们将在后续的文章中进行讨论。目前，请将这些方案视为参考选择，而非特定的推荐。</p>
+<ul><li>让我们从最便宜的选择开始，一台 NVIDIA DGX Spark。这是为那些想尝试自托管但又不想和采购部门打交道的团队准备的设备：它可以放在桌面上，价格还不到一次会议旅行的费用。它可以容纳 Qwen3.6-35B-A3B（简称“Qwen3.6”）。对于这样的机器来说，这已经是个相当大的模型了——我们将在文章后面看到它在开发者体验方面的表现。</li><li>接下来是 NVIDIA H200，一个功能强大的单加速器。也许有点出人意料的是，与 DGX Spark 相比，它实际上能让你托管的大模型并没有多太多。这主要取决于可用内存（DGX Spark 为 128GB，而 H200 为 141GB）。然而，你确实能得到一个更大的 token 池，这意味着在更高并发的情况下吞吐速度会更快。</li><li>如果你想托管更强大的模型，但又不想完全破费，那么搭载 4 个 H200 的 NVIDIA HGX H200 是一个不错的选择。有了 4 个 H200，你可以托管更大的模型，比如 DeepSeek-V4-Flash，它在速度、并发和质量方面提供了一个非常好的平衡点。</li><li>再上一个台阶，搭载 8 个 B200 的 HGX B200 是一个强大的参考系统，因为它能让你运行最先进的开源模型，比如在质量上目前最接近前沿模型的 GLM-5.2。如果你的首要考虑是质量，这就是你的选择。</li></ul>
+<p>在撰写本文时，Kimi 的 K3 模型引起了广泛关注，因为早期的基准测试（有待进一步确认）表明，它的性能可以与 Anthropic 的 Fable 模型相媲美，但成本要低得多。目前，我们的团队正在等待这个模型在本月底发布开源权重，以评估在自己的基础设施上运行这个 2.8T 模型需要什么条件。更多相关信息即将揭晓。</p>
+<p>接下来，我们将从开发者体验、成本以及它们能容纳的模型质量这几个方面，对这些竞争者进行测试。让我们开始吧。</p>
+05<h2>这些池子有多大？</h2>
+<p>那么，把一台 DGX Spark 放在触手可及的桌面上怎么样呢？嗯，不出所料，它的 token 池并不大。在我们的测试中，我们无法让它支持超过 1-2 个并发用户，并且遇到了大量超时错误之类的问题。如果你对 Qwen3.6 感到满意，它可能适合你，但不要指望它在速度、并发或模型质量上能有所扩展。这表明——尽管 LinkedIn 上的标题很吸引人——我们还远未达到可以在经济实惠的台式机上直接下载前沿智能模型的程度。像代码补全这样简单的任务？问题就不那么大了。</p>
+<figure><figcaption>图 05<h3>总输出吞吐量 vs 并发数</h3><p>整个系统的持续吞吐量（非单个 GPU）</p></figcaption></figure>
+<p>这就是多花点钱购买专业版 H200 的价值所在，对于同一模型，它在处理 Qwen3.6 时每秒能生成至少 30 倍的 tokens。实际上，不要对 Qwen3.6 能生成这么多 tokens 感到惊讶，即便在单张 H200 上——它仍然是个相当小（因此能力也较弱）的模型。我们还可以看到，在 HGX H200 上的 DeepSeek-V4-Flash 拥有更大的 token 池（当然是在 4 张 H200 的配置下），但只有在高并发情况下才能发挥其潜力。相比之下，尽管 GLM-5.2 运行在我们测试中最强大的硬件上（HGX B200），但其 token 池却更小。确实，16 个并发会话似乎就差不多能让 GPU 满负荷运转，而 GLM-5.2 的总吞吐量仅为每秒约 175 tokens。更大、更强大的模型往往伴随着更小的 token 池，而我们选择的硬件并不能完全弥补这一点。</p>
+<p>你可能注意到了一些令人惊讶且不安的现象——有些线条不是逐渐趋于平稳，而是直接断崖式下跌。在探讨开发者体验之后，我们会再详细分析这个问题。</p>
+06<h2>我的开发者对速度的满意度如何？</h2>
+<p>你可能不会希望将 token 池用到极限，因为单个开发者可能会觉得你的解决方案与他们信赖的 Codex 或 Claude 助手相比慢得像蜗牛。以后两者为基准，我们可以看到，尽管有强大的 HGX B200 硬件支持，GLM-5.2 从 8 个并发会话开始就表现吃力。正如其相对较小的 token 池所显示的，大规模部署前沿模型是一项极具挑战性的任务。在另一端，DGX Spark 即便只有 1 个用户也很慢，对于多用户场景更是完全无法使用。</p>
+<p>DeepSeek-V4-Flash 和 Qwen3.6 都能坚持更久，最多支持到 32 个用户，然后性能急剧下降。请注意，DeepSeek-V4-Flash 的性能接近 Qwen3.6-35B-A3B，但它运行在更昂贵的硬件上——通过这项投资换取更高质量的输出，同时保持负载下的速度。当然，与 GLM-5.2 相比，你付出的代价是质量较低，这一点我们稍后会详细讨论。</p>
+<figure><figcaption>图 06<h3>任务耗时 vs 并发用户数</h3><p>每个任务（代理阶段）的中位数分钟数；Opus 4.8 (API) 的基线被绘制为一条水平线。</p></figcaption></figure>
+<p>所以大致来说，在这些配置下，你可以预期在开发者开始抱怨速度问题并找上门之前，最多能支持以下数量的并发用户：</p>
+<table><thead><tr><th>型号</th><th>舒适并发数</th></tr></thead><tbody><tr><th>Qwen3.6 (DGX Spark)</th><td>仅 1 个 — 而且速度仍然很慢，比 Claude Code 慢了近 3 倍</td></tr><tr><th>Qwen3.6 (H200)</th><td>轻松支持 32 个，在 48 个并发时比 Claude Code 慢 2 倍</td></tr><tr><th>DeepSeek-V4-Flash</th><td>轻松支持 32 个，在 48 个并发时比 Claude Code 慢 2 倍</td></tr><tr><th>GLM-5.2</th><td>8 个已经是极限了 — 已经比 Claude Code 慢了 3 倍</td></tr></tbody></table>
+<p>现在我们来谈谈房间里的大象：在这张图和接下来的图中，你都会看到 Qwen3.6 在 H200 上和 DeepSeek-V4-Flash 在 HGX H200 上，在并发数达到 48 和 64 后性能急剧下降。这很令人意外，因为从直觉上你不会期望看到这种情况，理论上这些曲线应该会收敛到 GPU 的最大输出。那么为什么我们这么早就看到了性能崩溃呢？原因在于推理引擎（vLLM）的具体细节、其默认参数，以及它在 prefill 和 decode 请求之间如何平衡计算，还有像有效 KV-cache 大小及其使用率等重要资源。</p>
+<p>此外，你可能对 GLM-5.2 提供的并发水平感到失望。一个可能的原因是使用了 <em>speculative decoding</em>（推测解码），这种技术可以在低并发时加速 token 生成，但在高并发时反而可能损害性能。</p>
+<p>但别太快灰心，如果你针对你的工作负载优化推理引擎（例如 vLLM），就能更好地处理这些问题，从系统中获得更多收益——我们将在下一篇博文中深入解释和讨论这一点。</p>
+<p>回到图表。请注意，在这些并发水平下，即使能让你的开发者满意，你仍然没有充分利用系统的潜力。我们可以将之前图表的信息整合到一张图中，以突出显示每个系统的这种差距。例如，对于 HGX H200 上的 DeepSeek-V4-Flash，在 c=32 且开发者满意的情况下，你只使用了 1381 tokens/s，而 c=64 的池子是 1717 tokens/s，多了 24%。</p>
+<figure><figcaption>图 07<h3>吞吐量 vs 任务速度</h3><p>总输出 tokens/s 与单个任务完成速度的对比。</p></figcaption></figure>
+<p>请注意这种权衡，虽然你可以在实际应用中调整它，但不要简单地期望你能像广告宣传的那样从系统中获得全部的池子性能。</p>
+<hr />
+07<h2>这一切要花多少钱？</h2>
+<p>当涉及到如何投资你的 AI 编码助手时，你的选择并不仅限于坚持使用你选择的模型 API 提供商，或者直接购买硬件。还有一个选择是租用 GPU，供应商从超大规模云服务商到新锐云服务商、AI 工厂或其他各方都有。每种选择都有不同的价格，但也提供不同的保证、服务和集成方案。</p>
+<p>一如既往，模型质量至关重要。为了公平比较，我们还针对不同模型提供商的官方 API 重新运行了 SWEBench Pro 任务集，并跟踪了 token 成本。对于购买或租用硬件，成本取决于运行此类任务集所需的时间。如前所述，这取决于并发性。对于每个系统，我们从成本角度选择最佳并发性，即能最优化使用 GPU 的方案。请注意，这可能是影响用户体验的一个因素。</p>
+<p>我们没有在此次比较中包含 DGX Spark，因为其在定价和性能方面确实是一个不同的类别。Qwen3.6 的购买/租用成本基于 1 个 H200，DeepSeek-V4-Flash 基于 HGX 4xH200，GLM-5.2 基于 HGX 8xB200。我们将这些成本分摊到 5 年，但不包括额外的电力或维护成本，因为这些成本在很大程度上取决于具体组织情况。</p>
+<table><thead><tr><th>系统 (模型/硬件/运行时间)</th><th>API 成本</th><th>购买成本</th><th>购买成本 (30% 使用率)</th><th>租用成本</th></tr></thead><tbody><tr><th>Qwen3.6 (1xH200, 28 分钟)</th><td>$57.67*</td><td>$0.43</td><td>$1.43</td><td>$1.62</td></tr><tr><th>DeepSeek-V4-Flash (4xH200, 31 分钟)</th><td>$2.13</td><td>$1.90</td><td>$6.33</td><td>$7.19</td></tr><tr><th>GLM-5.2 (8xB200, 101 分钟)</th><td>$92</td><td>$13.84</td><td>$46.12</td><td>$71.23</td></tr><tr><th>Anthropic API (Opus 4.8)</th><td>$98</td><td>N/A</td><td>N/A</td><td>N/A</td></tr></tbody></table>
+<p>*阿里巴巴的标价（模型无缓存）</p>
+<p>*硬件购买和租用价格为截至 2026 年 7 月的公开广告费率 [10][11][12][13]。</p>
+<p>相同的工作负载，却得到了三个截然不同的答案。从我们的计算中得出的最有趣的相关结论是：一个 4×H200 服务器必须保持 89% 的忙碌状态（全天候，持续五年），其拥有成本才能低于 DeepSeek 的 $2.13 账单；而 B200 服务器机架只需 15% 的利用率就能超越前沿 API，并且以租用价格计算，其前沿质量任务的单位成本已降至 $1.11（租用成本除以 64 个任务），比任何 API 收费都便宜。</p>
+<p>如果您低于例如 15% 的利用率阈值，租用 GPU 可能是一个更好、更经济的选择，因为它允许您在非高峰时段关闭使用。是这样吗？嗯，令人惊讶的是，这很大程度上取决于模型类型。对于 Qwen3.6，租用 GPU 比 API 方案便宜 35 倍。对于 GLM 5.2，我们也看到了成本降低，尽管幅度较小，为 23%。然而，对于 DeepSeek，情况则完全相反。如果没有针对您的工作负载进行任何优化，其成本实际上远高于 DeepSeek 自身的 API。</p>
+<p>在做成本决策时，真正重要的不是开源与闭源的争论，而是运行你特定工作负载的实际成本。对于代码助手来说，高达98%的输入令牌都会被缓存，而这正是 DeepSeek-V4-Flash API 的定价能够以压倒性优势击败更小的 Qwen3.6 模型的原因所在。</p>
+<p>没有绝对的赢家。按实际使用量计价的情况下，只有当设备保持高负载时，购买才划算——4×H200 需要保持 <strong>89%</strong> 的负载，而 B200 机架只需 <strong>15%</strong>。低于这个负载，租用或廉价的开放权重 API 往往更划算。购买 GPU 是为了那些账单无法衡量的东西——控制权、隐私、延迟——而不是仅仅为了省钱。</p>
+08<h2>但我喜欢实验室里的闭源前沿模型？</h2>
+<p>你并非唯一这么想的人。然而你正在阅读这篇文章，考虑如何逐步远离它们。说实话，虽然开放权重模型在 Anthropic、OpenAI 或 Google 的前沿模型发布后总会滞后几个月，但在2026年，最好的开放权重模型已经变得非常实用。此外，随着 GLM 5.2 和 Kimi K3 等新模型的发布，开放权重与闭源模型之间的差距正在迅速缩小。对于这些模型（如 GLM-5.2），你至少需要一台 HGX B200 系统。不要指望使用 H200 甚至 4xH200 能获得相同的性能。</p>
+<p>开放权重与闭源模型之间的差距正在迅速缩小。</p>
+<p>对于我们运行的任务，我们通过 Artificial Analysis [9] 等模型质量评估机构的普遍见解进行了验证。为完整起见，以下是在我们的 SWE Bench Pro 64 个任务样本中，使用 Claude Code 作为测试工具时，各模型的解决率（所有运行和并发情况下的汇总数据）。</p>
+<table><thead><tr><th>模型</th><th>解决率</th></tr></thead><tbody><tr><th>Kimi K3</th><td>86.4%</td></tr><tr><th>GLM-5.2</th><td>62.5%</td></tr><tr><th>Anthropic Opus 4.8 (API)</th><td>62.5%</td></tr><tr><th>DeepSeek-V4-Flash</th><td>39.1%</td></tr><tr><th>Qwen3.6</th><td>35.4%</td></tr></tbody></table>
+<p>但请记住，这类基准测试只能作为模型在你用例中表现好坏的参考——你必须亲自测试才能确定。幸运的是，仅就模型质量而言，你可以通过有限测试中的免费或廉价 API 来进行评估。</p>
+09<h2>那么一个 GPU 能容纳多少开发者？</h2>
+<p>介于 0 到 64 之间。或者至少根据我们查看的配置情况——但关键在于它是一个范围。如果你认真考虑投资自己的硬件，以下是一些可能相关的关键要点。</p>
+<ul>
+<li><b>你的 DGX Spark 实际上只适合单次使用。</b> 在理想情况下，它最多只能容纳一名开发者运行小型模型，并且需要适中的 token 池。如果你追求的是大规模扩展，这并不是最佳选择。但如果你只是想在中等规模任务上获得良好的个人开发体验，它是一台非常得力的工具。</li>
+<li><b>然而，单张 H200 运行 Qwen3.6 就能轻松支持 32 个并发会话</b>，而 4 张 H200 配合 DeepSeek-V4-Flash 可以在更高画质下实现同样的效果。将 8 张 B200 组合在一起，你的团队就能部署接近前沿的模型（如 GLM-5.2）——但任务执行速度会突然变得极其缓慢，最多只能支持 8 名开发者。</li>
+<li><b>租用 GPU 可能确实能节省成本，但这高度依赖具体模型。</b> 我们的测试显示，使用 Qwen 时成本最多可降低 35 倍（！），但使用 DeepSeek 时成本反而高于 API 调用。这表明，合理的工作量与模型、硬件的匹配至关重要，而且在不同基础设施间切换并非简单的成本优化决策。</li>
+<li><b>如果你的工作量超过某个阈值，自购硬件可能变得划算。</b> 这取决于你的组织对质量、速度和成本的实际需求。如果你的工作量能让租用的 B200 机架保持 15% 的利用率，那么——令人惊讶的是——你已经在用接近前沿的模型质量，击败了前沿 API 的定价。如果达不到这个利用率，仅仅为了节省 token 费用而自托管是不明智的，因为闲置的 GPU 机架每任务成本反而高于你当前的 API 账单。当然，数据敏感性等其他因素也可能影响决策。</li>
+</ul>
+<p>当然，实际情况可能因人而异。因此，请务必测量自己的实际工作量，了解峰值需求，并随着组织逐步采用 AI 编程助手持续跟踪这些数据。虽然当前数据可能指向使用 API，但几个月后情况可能大不相同。在此期间，我们会持续开发工具和提供洞察，帮助你解决这个难题。</p>
+<p>如果你想让更多开发者在同一硬件上高效工作，我们接下来的文章将专门讨论这个话题：如何调整推理引擎以适配你的工作负载，有时能让单台设备的性能翻倍。敬请关注。</p>
+›Contributors<p>Steven L., Wouter V.d.B., Michaël M., Ioana F., Jan F., Christian M., Maxim C., Arathy U., Bohdan D., Sepideh P., Baptist V., Jeroen B., Robbert V.C., Mathias F., Hendrik M., Jannick V.</p>
+
+<h2>参考资料</h2>
+<p>上述数据引用来源如下。</p>
+<ol>
+<li>GitHub Blog (Mario Rodriguez)，“GitHub Copilot 将转向按使用量计费”（2026年4月） <a href="https://github.blog/news-insights/company-news/github-copilot-is-moving-to-usage-based-billing/" target="_blank" rel="noopener nofollow">github.blog</a></li>
+<li>Forbes (Janakiram MSV)，“优步在四个月内耗尽2026年AI预算，全部用于Claude Code”（2026年5月） <a href="https://www.forbes.com/sites/janakirammsv/2026/05/17/uber-burns-its-2026-ai-budget-in-four-months-on-claude-code/" target="_blank" rel="noopener nofollow">forbes.com</a></li>
+<li>Bloomberg (Natalie Lung)，“优步限制员工在Claude Code等AI工具上的支出以控制成本”（2026年6月） <a href="https://www.bloomberg.com/news/articles/2026-06-02/uber-caps-usage-of-ai-tools-like-claude-code-to-cut-costs" target="_blank" rel="noopener nofollow">bloomberg.com</a></li>
+<li>SemiAnalysis (Crystal Huang, Joey Brookhart, Dylan Patel)，“代币预算：与企业关于代币支出的对话”（2026年6月） <a href="https://newsletter.semianalysis.com/p/tokenbudgeting-our-conversations" target="_blank" rel="noopener nofollow">newsletter.semianalysis.com</a></li>
+<li>Ramp Economics Lab (Ara Kharazian)，“被AI‘洗脑’要花多少钱？”——Ramp AI指数（2026年6月） <a href="https://ramp.com/data/ai-index-june-2026" target="_blank" rel="noopener nofollow">ramp.com</a></li>
+<li>Spheron (Mitrasish)，“2026年AI推理成本经济学：GPU FinOps操作手册”（2026年4月） <a href="https://www.spheron.network/blog/ai-inference-cost-economics-2026/" target="_blank" rel="noopener nofollow">spheron.network</a></li>
+<li>VentureBeat，“5%的GPU利用率：企业无法再忽视的4010亿美元AI基础设施问题”（2026年5月） <a href="https://venturebeat.com/infrastructure/5-gpu-utilization-the-401-billion-ai-infrastructure-problem-enterprises-cant-keep-ignoring" target="_blank" rel="noopener nofollow">venturebeat.com</a></li>
+<li>Hebbia (Jake Skinner)，“LLM推理的隐藏经济学”（2026年4月） <a href="https://www.hebbia.com/blog/the-hidden-economics-of-llm-inference" target="_blank" rel="noopener nofollow">hebbia.com</a></li>
+<li>Artificial Analysis，模型对比：Claude Opus 4.8、DeepSeek V4-Flash、Qwen3.6-35B-A3B、GLM-5.2（2026年7月访问） <a href="https://artificialanalysis.ai/models?models=claude-opus-4-8%2Cdeepseek-v4-flash%2Cqwen3-6-35b-a3b" target="_blank" rel="noopener nofollow">artificialanalysis.ai</a></li>
+<li>TRG Datacenters，“NVIDIA H200价格指南”（2026年7月访问） <a href="https://www.trgdatacenters.com/resource/nvidia-h200-price-guide/" target="_blank" rel="noopener nofollow">trgdatacenters.com</a></li>
+<li>GetDeploying，“H200云定价：对比34+家服务商”（2026年7月访问） <a href="https://getdeploying.com/gpus/nvidia-h200" target="_blank" rel="noopener nofollow">getdeploying.com</a></li>
+<li>Tech-Insider，“2026年NVIDIA Blackwell GPU定价：B200、B300及DGX成本”（2026年7月） <a href="https://tech-insider.org/nvidia-blackwell-gpu-pricing/" target="_blank" rel="noopener nofollow">tech-insider.org</a></li>
+<li>Spheron，“2026年NVIDIA B200云定价：各服务商按小时租赁成本”（2026年6月） <a href="https://www.spheron.network/blog/nvidia-b200-cloud-pricing-2026/" target="_blank" rel="noopener nofollow">spheron.network</a></li>
+<li>TechWolf，与aistack共享的内部开发者代币使用数据（2026年7月） <a href="https://www.techwolf.com/" target="_blank" rel="noopener nofollow">techwolf.com</a></li>
+</ol>
+<h2>附录：我们的研究方法</h2>
+
+<p>我们的核心理念是，在考虑 AI 技术栈（包括软件和硬件）时，实际工作负载的细节至关重要。为了衡量这一点，我们搭建了一个尽可能模拟智能编程代理行为的系统。系统中可配置的部分，一方面是推理引擎：</p>
+<ul><li>底层硬件。我们测试了<ul><li>放在我们桌上的 DGX Spark（联想 ThinkStation PGX）</li><li>托管在我们本地数据中心的一块 H200（配备 24 个 CPU 核心和 64GB 内存）</li><li>通过 NVLink 连接、托管在我们本地数据中心的 HGX 4xH200</li><li>由专用 AI 云基础设施提供商托管的 HGX 8xB200</li></ul></li><li>不同的模型，如讨论中提到的<ul><li>在 DGX Spark 上运行 Qwen3.6-35B-A3B，使用 https://recipes.vllm.ai 上的 vLLM 配置（采用 MTP 推理解码）</li><li>在 H200 上运行 Qwen3.6-35B-A3B，使用 https://recipes.vllm.ai 上的 vLLM 配置（采用 MTP 推理解码）</li><li>托管时使用 4 张张量并行和 https://recipes.vllm.ai 上的 vLLM 配置运行 DeepSeek-V4-Flash（我们调整了 8xH200 的配置，采用 MTP 推理解码）</li><li>托管时使用 8 张张量并行和 https://modal.com/blog/introducing-auto-endpoints 推荐的 SGLang 配置运行 GLM-5.2（采用 EAGLE 推理解码）</li></ul></li></ul>
+<p>另一方面，我们需要模拟工作负载，可以配置</p>
+<ul><li>并行运行智能编程任务的工作者数量。这些是不同的 Docker 容器，每个容器从 Harbor 任务格式[reference]中获取一个编程任务。这些工作者托管在沙盒提供商的基础设施上，并在通用 CPU 上运行。</li><li>每次任务运行包含三个阶段。<ul><li>设置阶段，确保已安装所有先决条件</li><li>实际的代码生成循环，向推理端点发送请求</li><li>最终评估，检查生成的代码是否通过测试</li></ul></li><li>我们选择不删除第一和第二阶段，因为它们基本模拟了开发人员在编码之外的工作——比如在两个任务之间喝杯咖啡。不过，在需要不同分析时，我们可以将它们分开。例如，我们图表中的任务时间仅报告实际的代码生成时间。包含设置和评估阶段会降低端点的有效并发性，因为任何时候都有一些代理处于这些阶段，而不是在发送请求。</li><li>作为固定的任务集，我们从 ScaleLabs 的 SWEBench Pro 中采样了 64 个任务。我们使用自己的平台来编排这些任务，但已复现了使用 Harbor 获得的数字，以确保准确性。</li></ul>
+<p>在推理引擎和工作节点上，我们捕获了大量指标，这些指标能够深入分析工作负载与底层软硬件推理栈的交互情况。这些指标帮助我们进一步优化各项设置，以便在同一个 GPU 上容纳更多开发者。我们将在下一篇博客文章中详细讨论这一点。</p>
+<p>为了测量 tokens/s，我们关注任务集主体部分的持续吞吐量，例如在队列末尾（此时只剩下少数未完成的任务）的数据会被排除。需要注意的是，存在一些短暂的峰值会高得多（尤其是 GLM-5.2），但在测试的工作负载中，这些峰值无法长时间保持稳定。</p>
+<p>观察结果存在一定差异，虽然 tokens/s、任务时间和解决率的差异较小（我们在所有运行中取平均值），但在高并发情况下，Qwen3.6 和 DeepSeek-V4-Flash 吞吐量崩溃的发生率差异尤为明显。这与使用大量工作节点时请求的随机性有关。我们选择选择发生这种情况的最低并发级别，因为这表明该配置已不再适用于生产环境。</p></article>
+    <div class="dp-actions">
+      <a class="dp-btn pri" href="https://aistack.imec-int.com/blog/gpu-self-hosting" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      <a class="dp-btn sec" href="https://news.ycombinator.com/item?id=49098130" target="_blank" rel="noopener"><i class="fa-brands fa-hacker-news"></i>HN 讨论</a>
+      <button type="button" class="dp-btn sec" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
+      <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
+    </div>
+    <nav class="dp-rel" aria-labelledby="dp-rel-h"><h2 id="dp-rel-h" class="dp-rel-h">相关动态</h2><ul><li><a href="4b664fa5afe5.html"><span class="dp-rel-t">LM Studio 0.4.14 Beta 增加支持 MTP 推测解码功能</span><span class="dp-rel-m">都提到「推理部署」 等 2 个概念 · <time datetime="2026-07-26">2026-07-26</time></span></a></li><li><a href="c57c419013a8.html"><span class="dp-rel-t">九章云极Alaya Token完成Kimi K3适配 全球首个开源3T级模型入驻Token工厂</span><span class="dp-rel-m">都提到「Kimi K3模型」 · <time datetime="2026-07-29">2026-07-29</time></span></a></li><li><a href="97854c7d008d.html"><span class="dp-rel-t">Show HN: 在任何 M 系列 Mac 的 2GB RAM 上运行开源的 Gemma 4 26B 引擎</span><span class="dp-rel-m">都提到「推理部署」 · <time datetime="2026-07-29">2026-07-29</time></span></a></li><li><a href="f48c6176a083.html"><span class="dp-rel-t">Opus 5冲上第一，还需要Fable 5吗？</span><span class="dp-rel-m">都提到「Token成本」 · <time datetime="2026-07-26">2026-07-26</time></span></a></li></ul></nav>
+    <p class="dp-note">本页由句子互动动态管线自动生成，聚合内容版权归各来源所有；如来源方希望调整或移除收录，请通过官网联系我们。</p>
+  </div>
+</main>
+<div id="site-footer"></div>
+<script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "Self-hosting Kimi K3: 20% more hardware cost, 20% better task resolution"};</script>
+<script src="../../assets/site.js"></script>
+<script>
+(function(){var b=document.getElementById('dpLang');if(!b)return;
+var en=document.getElementById('dpBodyOrig'),zh=document.getElementById('dpBodyZh');
+b.addEventListener('click',function(){var on=zh.hidden;zh.hidden=!on;en.hidden=on;
+b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';});})();
+</script>
+</body>
+</html>

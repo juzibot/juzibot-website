@@ -35,6 +35,16 @@
   .cp-crumb [aria-current]{color:var(--ink-2);font-weight:650;overflow-wrap:anywhere}
   .cp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
   .cp-back:hover{color:var(--blue)}
+  .cx-filter{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin:0 0 18px}
+  .cx-fl{display:inline-flex;align-items:center;gap:8px;flex:1 1 260px;min-width:0;padding:9px 13px;
+    border:1px solid var(--line-2);border-radius:10px;color:var(--ink-3);font-size:13px;background:#fff}
+  .cx-fl:focus-within{border-color:var(--blue);box-shadow:0 0 0 3px rgba(67,56,202,.1)}
+  .cx-fl input{flex:1;min-width:0;border:none;outline:none;background:transparent;font:inherit;
+    font-size:14px;color:var(--ink-1)}
+  .cx-count{font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+  .cx-empty{font-size:13.5px;color:var(--ink-3);margin:18px 0 0}
+  .cx-empty button{border:none;background:none;padding:0;font:inherit;color:var(--blue);
+    font-weight:650;cursor:pointer;text-decoration:underline}
   .cp-kicker{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:750;letter-spacing:.08em;color:var(--blue);margin-bottom:10px}
   .cp-title{font-size:clamp(26px,3.4vw,38px);font-weight:850;letter-spacing:-.03em;line-height:1.25;word-break:keep-all;overflow-wrap:anywhere;margin-bottom:8px}
   .cp-alias{font-size:12.5px;color:var(--ink-3);margin-bottom:18px}

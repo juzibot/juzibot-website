@@ -2949,6 +2949,16 @@ CONCEPT_CSS = """
   .cp-crumb [aria-current]{color:var(--ink-2);font-weight:650;overflow-wrap:anywhere}
   .cp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
   .cp-back:hover{color:var(--blue)}
+  .cx-filter{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin:0 0 18px}
+  .cx-fl{display:inline-flex;align-items:center;gap:8px;flex:1 1 260px;min-width:0;padding:9px 13px;
+    border:1px solid var(--line-2);border-radius:10px;color:var(--ink-3);font-size:13px;background:#fff}
+  .cx-fl:focus-within{border-color:var(--blue);box-shadow:0 0 0 3px rgba(67,56,202,.1)}
+  .cx-fl input{flex:1;min-width:0;border:none;outline:none;background:transparent;font:inherit;
+    font-size:14px;color:var(--ink-1)}
+  .cx-count{font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+  .cx-empty{font-size:13.5px;color:var(--ink-3);margin:18px 0 0}
+  .cx-empty button{border:none;background:none;padding:0;font:inherit;color:var(--blue);
+    font-weight:650;cursor:pointer;text-decoration:underline}
   .cp-kicker{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:750;letter-spacing:.08em;color:var(--blue);margin-bottom:10px}
   .cp-title{font-size:clamp(26px,3.4vw,38px);font-weight:850;letter-spacing:-.03em;line-height:1.25;word-break:keep-all;overflow-wrap:anywhere;margin-bottom:8px}
   .cp-alias{font-size:12.5px;color:var(--ink-3);margin-bottom:18px}
@@ -3127,12 +3137,57 @@ def concept_html(slug, c, refs, related, lib, worthy=None):
                               f"{SITE_BASE}/news/c/{slug}.html", inner, c["term"], schema + crumb)
 
 
+# 概念索引页的页内过滤: 110 个概念平铺时, 查一个词只能靠浏览器 Ctrl+F(手机上埋得很深)。
+# 判据用 data-k(词条名 + 别名 + slug), 因为读者常常只记得别名。role=searchbox 不用 <form>,
+# 免得回车触发页面刷新; 计数区 aria-live 让读屏也拿到结果数(与两个列表页的筛选区同一口径)。
+CX_FILTER_HTML = (
+    '<div class="cx-filter">'
+    '<label class="cx-fl" for="cxq"><i class="fa-solid fa-magnifying-glass"></i>'
+    '<input id="cxq" type="search" placeholder="搜概念名或别名，如 RLHF、MoE" '
+    'autocomplete="off" spellcheck="false" /></label>'
+    '<span class="cx-count" id="cxCount" aria-live="polite"></span>'
+    '</div>')
+
+CX_FILTER_JS = """<script>
+(function(){
+  var q=document.getElementById('cxq'), grid=document.getElementById('cxGrid'),
+      cnt=document.getElementById('cxCount'), empty=document.getElementById('cxEmpty'),
+      clr=document.getElementById('cxClear');
+  if(!q||!grid) return;
+  var cards=[].slice.call(grid.querySelectorAll('.cx-card')), total=cards.length;
+  function run(){
+    var v=q.value.trim().toLowerCase(), n=0;
+    for(var i=0;i<total;i++){
+      var hit = !v || (cards[i].getAttribute('data-k')||'').indexOf(v)>=0;
+      cards[i].hidden=!hit; if(hit) n++;
+    }
+    cnt.textContent = v ? (n+' / '+total+' 个概念') : '';
+    if(empty) empty.hidden = !(v && n===0);
+  }
+  q.addEventListener('input', run);
+  if(clr) clr.addEventListener('click', function(){ q.value=''; run(); q.focus(); });
+  run();
+})();
+</script>"""
+
+def concept_keys(slug, rec):
+    """页内过滤用的检索键: 词条名 + 别名 + slug, 小写空格归一。"""
+    parts = [rec.get("term") or "", slug.replace("-", " ")] + list(rec.get("aliases") or [])
+    return " ".join(p.strip().lower() for p in parts if p).replace("\u3000", " ")
+
+
+IDX_SCHEMA_MAX = 300   # 术语集 schema 里最多列多少词条(当前 110, 留出增长空间)
+
+
 def concept_index_html(lib, refs_map, worthy=None):
     """概念总目录页: 按被引次数降序铺卡片; 只铺发了独立页的概念(不够格的没有页, 铺上去是死链)。"""
     keys = [s for s in lib if worthy is None or s in worthy]
     order = sorted(keys, key=lambda s: (-len(refs_map.get(s, [])), lib[s]["term"]))
+    # data-k 收词条名 + 别名 + slug: 读者常常只记得别名(记得「RLHF」但词条名是「人类反馈强化学习」),
+    # 按显示文字过滤会查不到。小写化后给页内过滤用, 对读屏与爬虫都不可见, 也不影响卡片文案。
     cards = "\n".join(
-        f'      <a class="cx-card" href="{s}.html"><b>{esc(lib[s]["term"])}</b>'
+        f'      <a class="cx-card" href="{s}.html" data-k="{esc(concept_keys(s, lib[s]))}">'
+        f'<b>{esc(lib[s]["term"])}</b>'
         f'<p>{esc(concept_tip(lib[s]["def"]))}</p>'
         f'<span>{len(refs_map.get(s, []))} 条相关动态</span></a>'
         for s in order)
@@ -3145,11 +3200,26 @@ def concept_index_html(lib, refs_map, worthy=None):
         # 却只有 107 张卡, 数字不实。
         f'    <p class="cp-lede">动态页聚合的内容里绕不开的 {len(lib)} 个概念，每个都用一段大白话讲清楚它是什么、'
         f'对业务意味着什么；其中被反复提到的 {len(worthy or lib)} 个已成独立页，可反查提到它的动态。</p>\n'
-        f'    <div class="cx-grid">\n{cards}\n    </div>\n'
-        '    <p class="cp-note">概念定义由句子互动动态管线的 AI 加工层生成、编辑维护；点击概念查看完整定义与相关动态。</p>'
+        # 110 张卡没有查找入口时, 读者只能靠浏览器 Ctrl+F ——手机上那个入口埋得很深。
+        # 纯前端过滤, 不跑 JS 时全部卡片照常可见(渐进增强, 爬虫拿到的内容不变)。
+        f'    {CX_FILTER_HTML}\n'
+        f'    <div class="cx-grid" id="cxGrid">\n{cards}\n    </div>\n'
+        f'    <p class="cx-empty" id="cxEmpty" hidden>没有匹配的概念。<button type="button" id="cxClear">看全部 {len(order)} 个</button></p>\n'
+        '    <p class="cp-note">概念定义由句子互动动态管线的 AI 加工层生成、编辑维护；点击概念查看完整定义与相关动态。</p>\n'
+        # 脚本放 inner 末尾而不是改 concept_page_shell 的签名: 只有这一页需要它, 壳保持不动
+        + CX_FILTER_JS
     )
     # DefinedTermSet schema(2026-07-30): 告诉 AI 引擎这些概念页是一个成体系的术语集,
     # 而不是一堆散页——术语集比孤立页面更容易被整体引用。
+    # 原先硬编码 order[:60]: 页面上 110 张卡, schema 里只有 60 个词条(覆盖 54%), 而漏掉的
+    # 50 个恰好是长尾概念。实测补满的真实代价只有 **0.51KB gzip(+4%)**——原始 +8KB, 但重复 JSON
+    # 压缩率极高, 按原始体积做的取舍在这里是错的。同时补上 description: 只读 JSON-LD 的引擎
+    # 不必逐页抓就能拿到全部释义, 这正是概念库存在的目的。
+    # 上限保留但放宽, 且**截断要出声**: 静默截断会让人以为"全覆盖了"(概念页 30 条引用上限就是
+    # 这么埋着的, 见交接书 §7)。
+    if len(order) > IDX_SCHEMA_MAX:
+        print(f"  [概念页] 术语集 schema 只列了 {IDX_SCHEMA_MAX}/{len(order)} 个词条(到上限了, "
+              f"要么放宽 IDX_SCHEMA_MAX, 要么接受机器只看到前 {IDX_SCHEMA_MAX} 个)")
     set_schema = ld_json({
         "@context": "https://schema.org", "@type": "DefinedTermSet",
         "name": "句子互动 AI 概念库", "inLanguage": "zh-CN",
@@ -3157,7 +3227,8 @@ def concept_index_html(lib, refs_map, worthy=None):
         "description": "AI 行业核心概念速查：每个概念一段面向企业决策者的大白话定义。",
         "publisher": {"@type": "Organization", "name": "句子互动", "url": f"{SITE_BASE}/"},
         "hasDefinedTerm": [{"@type": "DefinedTerm", "name": lib[s]["term"],
-                            "url": f"{SITE_BASE}/news/c/{s}.html"} for s in order[:60]],
+                            "description": (lib[s].get("def") or "").strip(),
+                            "url": f"{SITE_BASE}/news/c/{s}.html"} for s in order[:IDX_SCHEMA_MAX]],
     })
     idx_crumb = breadcrumb_ld([("句子互动", f"{SITE_BASE}/"), ("动态", f"{SITE_BASE}/news.html"),
                                ("AI 概念库", f"{SITE_BASE}/news/c/index.html")])
