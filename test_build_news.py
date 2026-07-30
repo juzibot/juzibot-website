@@ -48,6 +48,31 @@ def check(name, cond, detail=""):
     print(f"  {'✓' if cond else '✗'} {name}" + (f"  ← {detail}" if detail and not cond else ""))
 
 
+def _preview_branch():
+    """预览分支名只写在一处(shell-clean.yml 的 job 守卫), 这里派生, 不抄第二遍。
+
+    stage-2 按设计把注入过的模板壳与生成物入库, 所以「产物必须被忽略」这条对它天然不成立。
+    原判别是「news-cron.yml 里没有 rsync 就算老架构、跳过」—— 一旦把新版 workflow 同步到
+    预览分支, 这个判别立刻失效(实测正是如此: 同步后这条检查在 stage-2 上跑起来并报 10 项缺失,
+    而那 10 项全是设计如此)。改成认分支名, 与 CI 侧同一个判据。
+    """
+    wf = ROOT / ".github" / "workflows" / "shell-clean.yml"
+    if not wf.exists():
+        return None
+    m = re.search(r"github\.ref != 'refs/heads/([\w./-]+)'", wf.read_text(encoding="utf-8"))
+    return m.group(1) if m else None
+
+
+def _current_branch():
+    """当前分支名; CI 里 PR 事件是 detached HEAD 返回 'HEAD' —— 那种情况**不跳过**(进 main 必须过闸)。"""
+    try:
+        import subprocess
+        return subprocess.run(["git", "rev-parse", "--abbrev-ref", "HEAD"], cwd=str(ROOT),
+                              capture_output=True, text=True, timeout=5).stdout.strip()
+    except Exception:  # noqa: BLE001
+        return ""
+
+
 def fixture_item(**kw):
     """一条最小可渲染条目; 字段与 make_item 的产出对齐。"""
     base = {
@@ -708,10 +733,12 @@ def test_artifacts_ignored_and_guarded():
     dirs = {"/".join(m[1:]) for m in
             re.findall(r'^([A-Z_]+) *= *ROOT / "([^"/]+)" / "([^"/]+)"', src, re.M)}
     gi_path, sc_path = ROOT / ".gitignore", ROOT / ".github" / "workflows" / "shell-clean.yml"
-    wf = ROOT / ".github" / "workflows" / "news-cron.yml"
-    if not (gi_path.exists() and sc_path.exists()) or "rsync" not in (
-            wf.read_text(encoding="utf-8") if wf.exists() else ""):
-        check("(跳过)当前分支是老架构/预览分支, 生成物按设计入库", True)
+    if not (gi_path.exists() and sc_path.exists()):
+        check("(跳过)本分支没有忽略规则或闸门文件", True)
+        return
+    pv = _preview_branch()
+    if pv and _current_branch() == pv:
+        check(f"(跳过){pv} 是预览分支, 注入过的壳与生成物按设计入库", True)
         return
     gi = [l.strip() for l in gi_path.read_text(encoding="utf-8").splitlines()
           if l.strip() and not l.startswith("#")]
