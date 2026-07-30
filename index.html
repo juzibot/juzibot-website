@@ -402,13 +402,13 @@
   .trust.paused .trust-progress i{animation-play-state:paused}
   .trust-logos{margin-top:clamp(22px,3vw,34px);min-height:88px}
   .trust-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:12px;
-    max-width:1040px;margin:0 auto}
+    max-width:1120px;margin:0 auto}
   .trust-grid.swap{animation:trustSwap .5s var(--ease)}
   @keyframes trustSwap{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-  .trust-cell{position:relative;height:72px;background:#fff;border:1px solid var(--line);border-radius:14px;
-    display:flex;align-items:center;justify-content:center;padding:8px 10px;box-shadow:var(--shadow-soft);
+  .trust-cell{position:relative;height:76px;background:#fff;border:1px solid var(--line);border-radius:14px;
+    display:flex;align-items:center;justify-content:center;padding:7px 8px;box-shadow:var(--shadow-soft);
     transition:border-color .22s var(--ease),box-shadow .22s var(--ease),transform .22s var(--ease)}
-  .trust-cell img{max-width:100%;max-height:52px;width:auto;height:auto;object-fit:contain;transition:transform .22s var(--ease)}
+  .trust-cell img{width:100%;height:60px;max-width:100%;max-height:60px;object-fit:contain;transition:transform .22s var(--ease)}
   .trust-cell.txt{font-size:13px;font-weight:700;color:var(--ink-2);text-align:center;line-height:1.3}
   .trust-cell:hover{border-color:var(--blue-200);box-shadow:0 10px 26px rgba(67,56,202,.16);transform:translateY(-3px);z-index:6}
   .trust-cell:hover img{transform:scale(1.04)}
@@ -429,7 +429,7 @@
     .trust .tlabel-hint{display:none}
     .trust-grid{grid-template-columns:repeat(auto-fill,minmax(94px,1fr));gap:9px}
     .trust-cell{height:54px;padding:8px 11px}
-    .trust-cell img{max-height:30px}
+    .trust-cell img{height:30px;max-height:30px}
     .lt-tip{max-width:170px}
   }
   @media (prefers-reduced-motion:reduce){
@@ -2417,7 +2417,7 @@ function openContact(){openModal('contactModal');}
 
   var LABEL={consumer:'消费品电商',finance:'银行 · 证券 · 保险',gov:'政务 · 司法',internet:'泛互联网',edu:'在线教育'};
   var ORDER=['consumer','finance','gov','internet','edu'];
-  var LOGO_VERSION='20260730f';
+  var LOGO_VERSION='20260730g';
   function logos(prefix,names){
     return names.map(function(name,i){
       return {src:prefix+'-'+Math.floor(i/8)+'-'+(i%8),name:name};
@@ -2425,7 +2425,7 @@ function openContact(){openModal('contactModal');}
   }
   var DATA={
     consumer:logos('consumer',['巴奴毛肚火锅','泸州老窖','奈雪的茶','英氏','Baby Care','薇诺娜','润百颜','松下电器','幼岚','幸福西饼','伊利集团','汇嘉时代','快鱼','热风','农夫山泉','卡姿兰']),
-    finance:logos('govfin',['厦门银行','银联商务','创金合信基金','中国人寿重庆分公司','宁波银行','中信证券','国泰海通','京东金融','国民养老保险','中泰证券','老虎國際','银河证券','雪盈-港美股','有知有行','中国人寿云南分公司','圆心惠保']),
+    finance:logos('govfin',['厦门银行','银联商务','创金合信基金','中国人寿重庆分公司','宁波银行','中信证券','国泰海通','京东金融','国民养老保险','中泰证券','老虎國際','银河证券','雪盈-港美股','有知有行','圆心惠保','中国人民保险']),
     gov:logos('gov',['宜宾公安交警','大同市公安局','郑州市公安局郑东新区分局','绵阳市公安局安州分局','新郑市公安局','武汉东湖高新公安局','重庆市开州区公安局','天津市公安局津南分局','兰考县公安局','天津市公安局河西分局','天津市公安局宣传中心','北京市海淀区人民政府','杭州市临平区公安分局','东升镇司法所','花园路街道','万寿路街道']),
     internet:logos('internet',['自如','飞书','网易','58到家','京东物流','瓜子二手车','百度','快手','什么值得买','Elementwin 元兵科技','火山引擎','腾讯营销','转转','曹操出行','谷歌广告','北京智源']),
     edu:logos('edu',['得到','好未来','叫叫阅读','知乎','开开华彩','希望学','乐读','嘉学教育','作业帮','兴趣岛','新东方','火花思维','方塘有课','少年得到','喜马拉雅','简知科技'])

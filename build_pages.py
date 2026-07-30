@@ -1517,7 +1517,7 @@ def page_industries():
     logo_cells = {
         'education': [('edu', ci, c) for ci in range(2) for c in range(8)][:15],
         'ecommerce': [('consumer', ci, c) for ci in range(2) for c in range(8)][:15],
-        'finance':   [('govfin', 0, c) for c in range(6)],
+        'finance':   [('govfin', ci, c) for ci in range(2) for c in range(8)][:15],
         'gov':       [],
         'internet':  [('internet', 0, c) for c in range(8)],
     }
@@ -1526,7 +1526,7 @@ def page_industries():
         logo_grid_html = ''
         for p, ci, c in logo_cells[slug]:
             ext = 'svg' if (p, ci, c) == ('edu', 0, 3) else 'png'
-            logo_grid_html += f'<div style="border:1px solid var(--gray-line);border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:center;padding:9px 14px;"><img src="assets/brand/logos/{p}-{ci}-{c}.{ext}?v=20260730f" alt="" style="width:100%;height:auto;display:block;" loading="lazy"></div>'
+            logo_grid_html += f'<div style="border:1px solid var(--gray-line);border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:center;padding:8px 10px;"><img src="assets/brand/logos/{p}-{ci}-{c}.{ext}?v=20260730g" alt="" style="width:100%;height:64px;object-fit:contain;display:block;" loading="lazy"></div>'
         kpi_html = ''.join(
             f'<div style="text-align:center;"><div style="font-size:24px;font-weight:800;color:var(--{color}-color, var(--blue));letter-spacing:-.01em;">{v}</div><div style="font-size:12px;color:var(--gray-text);margin-top:2px;">{l}</div></div>'
             for v, l in kpis
