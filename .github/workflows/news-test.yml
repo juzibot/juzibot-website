@@ -28,6 +28,9 @@ jobs:
           python-version: '3.12'
       - name: 语法检查(build_news.py)
         run: python3 -m py_compile build_news.py && echo "语法 OK"
+      - name: 静态资源版本戳(改了 assets 必须打戳, 否则老访客一周内看不到)
+        run: python3 stamp_assets.py --check
+
       - name: 不变量测试(离线, 10 组)
         run: python3 test_build_news.py
       - name: 两个列表页的内联 JS 语法
