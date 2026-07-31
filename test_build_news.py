@@ -1255,7 +1255,7 @@ def test_news_page_is_reachable():
     """
     ROOT_HTML = [p for p in ROOT.rglob("*.html")
                  if not (set(p.relative_to(ROOT).parts) & {".git", "node_modules", "assets", "docs"})]
-    SKIP_PREFIX = ("zh/", "en/", "news/", "products/shouhu-app/")
+    SKIP_PREFIX = ("zh/", "en/", "news/", "data/", "products/shouhu-app/")
     site_js = (ROOT / "assets" / "site.js")
     # 注意结尾不带单引号: site.js 里是 `REL + 'news.html">动态</a></div>'`, `.html` 后面
     # 紧跟的是 `"` 而不是 `'` —— 第一版按 `'news.html'` 写, 全不命中却报成"页面缺入口"(自己坑自己)
@@ -1267,6 +1267,11 @@ def test_news_page_is_reachable():
         if rel.startswith(SKIP_PREFIX):
             continue
         s = p.read_text(encoding="utf-8", errors="ignore")
+        # 按**形状**兜底而不是只靠我列目录: 没有 <html> 标签的是正文片段(data/news-content/ 下的
+        # 镜像碎片就是这种, 只在预览分支入库, 所以在 PR 分支上根本暴露不出来)。
+        # 目录清单会漏, 形状判据不会 —— 同一个道理: 判据的粒度要比问题的粒度细。
+        if "<html" not in s[:2000].lower():
+            continue
         checked += 1
         injected = 'id="site-nav"' in s          # 用共享导航 → 上面那条已覆盖
         own_link = bool(re.search(r'href="[^"]*news\.html"', s))
