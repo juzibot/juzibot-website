@@ -1235,43 +1235,53 @@ def test_no_mixed_all_zone():
 
 # ---------------------------------------------------------------- 36
 def test_news_page_is_reachable():
-    """动态页必须能从站内导航走到 —— 「建好了但没人能走到」是最贵的一类缺陷。
+    """**每一个真实页面**的导航里都要能看到动态页 —— 遍历全站, 不是查几个写死的文件。
 
-    实测发现(2026-07-30, 骐畅在 http://…:8082 上看不到入口): 整个 PR 建了 293 个详情页、
-    131 个概念页、sitemap、RSS、四种 schema, 而 **`index.html` / `careers/index.html` /
-    `assets/site.js` 三处导航里指向 `news.html` 的链接都是 0 处** —— 访客只能直接输 URL 才能到。
+    两轮教训叠在一起:
+    ① 第一版根本没有入口: 整个 PR 建了 293 详情页 / 131 概念页 / sitemap / RSS / 四种 schema,
+       而 `index.html`、`careers/index.html`、`assets/site.js` 三处导航指向 news.html 的链接
+       **都是 0 处** —— 访客只能直接输 URL 才能到。三道闸一个都没拦住, 因为它们查的是
+       「页面内容对不对」「模板壳干不干净」「口径有没有破」, **没有一条查「这页可达吗」**。
+    ② 第二版补了入口, 但测试只查那三个文件 —— **结构上就发现不了"还有哪页漏了"**。
+       骐畅一句「我希望每个页面的导航栏都能看到」点破: 判据的粒度比问题的粒度小。
+       所以这里改成遍历全站 HTML, 逐页判定。
 
-    它躲过了当时所有守卫: `news-test` 查管线不变量(页面内容对不对)、`shell-clean` 查模板壳、
-    `copy-guard` 查口径, **没有任何一条查「这页可达吗」**。与今天那批缺陷同一类:
-    产物正常 ≠ 功能生效。
-
-    判据是**可达性**而不是某个写死的链接文案: 从首页出发, 沿站内链接一跳能到 news.html。
-    这样将来改导航结构、换文案、调顺序都不会误报。
+    两类页面按设计**不需要**入口, 判据里显式排除并写明理由(不是留白):
+    · `zh/**` `en/**` —— 旧双语站的 301 跳转桩(实测 609 字节, meta refresh 立即跳首页 +
+      noindex, 由 build_redirects.py 生成)。没有导航也没有内容, 访客停不住。
+    · `products/shouhu-app/` —— 产品界面原型 demo(108KB, nav 是应用内面包屑
+      「句子秒懂 / 测试中心 / Agent 总览」), 给产品界面加官网导航是错的。
+    · `news/**` —— 管线生成物, 用 nav_fallback() 另一套。
     """
-    def links_to(path, target="news.html"):
-        p = ROOT / path
-        if not p.exists():
-            return None
-        s = p.read_text(encoding="utf-8")
-        # 直接 href, 或 site.js 里 REL 拼接的形式
-        return len(re.findall(r'href="[^"]*' + re.escape(target) + r'"', s)) + \
-               len(re.findall(r"REL \+ '" + re.escape(target) + r"'", s))
-
-    home = links_to("index.html")
-    check("首页导航能到动态页", home and home > 0, f"index.html 里 {home} 处")
-    shared = links_to("assets/site.js")
-    check("共享导航(所有子页注入)能到动态页", shared and shared > 0, f"site.js 里 {shared} 处")
-    careers = links_to("careers/index.html")
-    if careers is not None:
-        check("招聘页(自带导航)能到动态页", careers > 0, f"{careers} 处")
-    # 反向: 动态页也要能回到站内(否则是单向死胡同)
-    for page in ("news.html", "news-c.html"):
-        p = ROOT / page
-        if not p.exists():
+    ROOT_HTML = [p for p in ROOT.rglob("*.html")
+                 if not (set(p.relative_to(ROOT).parts) & {".git", "node_modules", "assets", "docs"})]
+    SKIP_PREFIX = ("zh/", "en/", "news/", "products/shouhu-app/")
+    site_js = (ROOT / "assets" / "site.js")
+    # 注意结尾不带单引号: site.js 里是 `REL + 'news.html">动态</a></div>'`, `.html` 后面
+    # 紧跟的是 `"` 而不是 `'` —— 第一版按 `'news.html'` 写, 全不命中却报成"页面缺入口"(自己坑自己)
+    shared_ok = bool(site_js.exists() and re.search(r"REL \+ 'news\.html", site_js.read_text(encoding="utf-8")))
+    check("共享导航(注入到所有子页)含动态入口", shared_ok)
+    missing, checked = [], 0
+    for p in sorted(ROOT_HTML):
+        rel = str(p.relative_to(ROOT))
+        if rel.startswith(SKIP_PREFIX):
             continue
-        s = p.read_text(encoding="utf-8")
-        back = len(re.findall(r'href="(?:index\.html|/|\.\./)"', s)) + s.count('id="site-nav"') + s.count("SITE_REL")
-        check(f"{page} 有回站内的路径", back > 0, back)
+        s = p.read_text(encoding="utf-8", errors="ignore")
+        checked += 1
+        injected = 'id="site-nav"' in s          # 用共享导航 → 上面那条已覆盖
+        own_link = bool(re.search(r'href="[^"]*news\.html"', s))
+        if not (injected and shared_ok) and not own_link:
+            missing.append(rel)
+    check(f"全部 {checked} 个真实页面都有动态入口", not missing, f"缺 {missing}")
+    check("排除项有据可依(跳转桩确实是 301 桩)",
+          not (ROOT / "zh" / "index.html").exists()
+          or "http-equiv=\"refresh\"" in (ROOT / "zh" / "index.html").read_text(encoding="utf-8"))
+    # 反向: 动态页也要能回站内(别成单向死胡同)
+    for page in ("news.html", "news-c.html"):
+        q = ROOT / page
+        if q.exists():
+            s = q.read_text(encoding="utf-8")
+            check(f"{page} 有回站内的路径", ('id="site-nav"' in s) or ('href="index.html"' in s))
 
 
 def main():
