@@ -16,7 +16,7 @@
 
 <link rel="icon" href="../../logo.png" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet" href="../../assets/site.css" />
+<link rel="stylesheet" href="../../assets/site.css?v=72b48ba4" />
 <style>
   /* 静态兜底导航: site.js 一执行就被 outerHTML 连同占位一起换掉, 访客几乎看不到它。
      不隐藏也不 noscript 包裹——那会让爬虫拿不到, 而它存在的唯一理由就是给不跑 JS 的爬虫看。
@@ -142,7 +142,7 @@
 <p>This post only focuses on prompt engineering for autoregressive language models, so nothing with Cloze tests, image generation or multimodality models. At its core, the goal of prompt engineering is about alignment and model steerability. Check my <a href="https://lilianweng.github.io/posts/2021-01-02-controllable-text-generation/" target="_blank" rel="noopener nofollow">previous post</a> on controllable text generation.</p>
 <p>[My personal spicy take] In my opinion, some prompt engineering papers are not worthy 8 pages long, since those tricks can be explained in one or a few sentences and the rest is all about benchmarking. An easy-to-use and shared benchmark infrastructure should be more beneficial to the community. Iterative prompting or external tool use would not be trivial to set up. Also non-trivial to align the whole research community to adopt it.</p>
 <h1>Basic Prompting#</h1>
-<p>Zero-shot and few-shot learning are two most basic approaches for prompting the model, pioneered by many LLM papers and commonly used for benchmarking LLM performance.</p>
+<p>Zero-shot and <a class="cpt" href="../c/few-shot-learning.html" data-def="少样本学习是通过提供少量示例来指导模型完成任务的方法">few-shot learning</a> are two most basic approaches for prompting the model, pioneered by many LLM papers and commonly used for benchmarking LLM performance.</p>
 <h2>Zero-Shot#</h2>
 <p><strong>Zero-shot learning</strong> is to simply feed the task text to the model and ask for results.</p>
 <p>(All the sentiment analysis examples are from SST-2)</p>
@@ -472,7 +472,7 @@ Knowledge:
 <p>本文仅专注于自回归语言模型的提示工程，因此不涉及完形填测试、图像生成或多模态模型。其核心目标是实现对齐和模型可控性。可以参考我关于可控文本生成的<a href="https://lilianweng.github.io/posts/2021-01-02-controllable-text-generation/" target="_blank" rel="noopener nofollow">上一篇博文</a>。</p>
 <p>[我的个人观点] 我认为，有些提示工程论文不值得写满8页，因为那些技巧一两句话就能说清楚，其余部分全是基准测试。一个易于使用且共享的基准测试基础设施对社区会更有益。迭代提示或使用外部工具的设置并不简单，要让整个研究社区都采用它也非易事。</p>
 <h1>基础提示法#</h1>
-<p>零样本学习和少样本学习是两种最基础的提示模型方法，由许多大型语言模型论文开创，并常用于基准测试模型性能。</p>
+<p>零样本学习和<a class="cpt" href="../c/few-shot-learning.html" data-def="少样本学习是通过提供少量示例来指导模型完成任务的方法">少样本学习</a>是两种最基础的提示模型方法，由许多大型语言模型论文开创，并常用于基准测试模型性能。</p>
 <h2>零样本#</h2>
 <p><strong>零样本学习</strong>就是直接将任务文本输入模型并请求结果。</p>
 <p>（所有情感分析示例均来自SST-2数据集）</p>
@@ -804,13 +804,13 @@ Knowledge:
       <button type="button" class="dp-btn sec" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
       <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
     </div>
-    <nav class="dp-rel" aria-labelledby="dp-rel-h"><h2 id="dp-rel-h" class="dp-rel-h">相关动态</h2><ul><li><a href="7e0b368892ad.html"><span class="dp-rel-t">“母病速归”式 AI：号称省 65% Token，实测只有 8.5%</span><span class="dp-rel-m">都提到「提示工程」 · <time datetime="2026-07-12">2026-07-12</time></span></a></li></ul></nav>
+    <nav class="dp-rel" aria-labelledby="dp-rel-h"><h2 id="dp-rel-h" class="dp-rel-h">相关动态</h2><ul><li><a href="3ed24fcb2f03.html"><span class="dp-rel-t">长音频不丢词，行业词不用教，阿里发布Qwen-Audio-3.0-ASR-Flash</span><span class="dp-rel-m">都提到「少样本学习」 · <time datetime="2026-07-31">2026-07-31</time></span></a></li><li><a href="7e0b368892ad.html"><span class="dp-rel-t">“母病速归”式 AI：号称省 65% Token，实测只有 8.5%</span><span class="dp-rel-m">都提到「提示工程」 · <time datetime="2026-07-12">2026-07-12</time></span></a></li></ul></nav>
     <p class="dp-note">本页由句子互动动态管线自动生成，聚合内容版权归各来源所有；如来源方希望调整或移除收录，请通过官网联系我们。</p>
   </div>
 </main>
 <div id="site-footer"></div>
 <script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "Prompt Engineering"};</script>
-<script src="../../assets/site.js"></script>
+<script src="../../assets/site.js?v=f57b1388"></script>
 <script>
 (function(){var b=document.getElementById('dpLang');if(!b)return;
 var en=document.getElementById('dpBodyOrig'),zh=document.getElementById('dpBodyZh');

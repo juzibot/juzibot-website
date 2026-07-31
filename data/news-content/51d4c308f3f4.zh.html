@@ -1,0 +1,18 @@
+<p><strong>发布：</strong> <a href="https://github.com/simonw/llm/releases/tag/0.32rc2">llm 0.32rc2</a></p>
+        <p>紧随 <a href="https://simonwillison.net/2026/Jul/30/llm-rc1/">RC1</a> 版本之后，此版本修复了一个依赖问题，并新增了两个很棒的功能：</p>
+<blockquote>
+<ul>
+<li>对于未设置默认模型的用户，其默认模型现在是 <a href="https://developers.openai.com/api/docs/models/gpt-5.6-luna">GPT-5.6 Luna</a>。之前是 <a href="https://developers.openai.com/api/docs/models/gpt-4o-mini">GPT-4o mini</a>。Luna 是一个更好、更新的模型，不过价格也稍微高一点——输入每百万个 token 0.20 美元，输出每百万个 token 1.20 美元，而 4o mini 的价格是 0.15/0.60 美元。你可以使用 <code>llm models default gpt-4o-mini</code> 切换回 4o mini，或者使用 <code>llm models default gpt-5-nano</code> 切换到 <a href="https://developers.openai.com/api/docs/models/gpt-5-nano">GPT-5 nano</a>，这是一个更便宜的默认模型（0.05/0.40 美元）。<a href="https://github.com/simonw/llm/issues/1576">#1576</a></li>
+<li>新增了 <a href="https://llm.datasette.io/en/latest/other-models.html#openai-endpoint">llm openai endpoint</a> 命令，无需预先配置模型，即可直接对任意 OpenAI 兼容的端点运行提示词、聊天和模型列表。这些调用不会被记录。<a href="https://github.com/simonw/llm/issues/1565">#1565</a></li>
+</ul>
+</blockquote>
+<p><code>llm openai endpoint</code> 这个命令真的非常酷。我因为没有找到合适的 CLI 工具来测试任意 OpenAI Chat Completions 仿制端点上的提示词而感到很沮丧，所以我决定把这个功能直接加到 LLM 项目里。</p>
+<p>你甚至都不用安装 LLM 就能使用这个功能。下面是一个使用 <code>uvx</code> 运行提示词（带工具）的命令，用于与一个 <a href="https://lmstudio.ai">LM Studio</a> 的本地模型交互：</p>
+<pre><code>uvx --pre llm openai endpoint http://127.0.0.1:1234/v1 \
+  T llm_version -T llm_time --td \
+  -m google/gemma-4-31b 'what is the current LLM version? And the time?'
+</code></pre>
+<p><a href="https://github.com/simonw/llm/pull/1568#issuecomment-5136163707">输出结果在这里</a>。</p>
+    
+    
+        <p>标签: <a href="https://simonwillison.net/tags/llm">llm</a>, <a href="https://simonwillison.net/tags/uv">uv</a>, <a href="https://simonwillison.net/tags/lm-studio">lm-studio</a></p>

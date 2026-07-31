@@ -1,0 +1,18 @@
+<p><strong>Release:</strong> <a href="https://github.com/simonw/llm/releases/tag/0.32rc2">llm 0.32rc2</a></p>
+        <p>Hot on the heels of <a href="https://simonwillison.net/2026/Jul/30/llm-rc1/">RC1</a>, this fixes a dependency issue and also adds two neat new features:</p>
+<blockquote>
+<ul>
+<li>The default model for users who have not set their own default is now <a href="https://developers.openai.com/api/docs/models/gpt-5.6-luna">GPT-5.6 Luna</a>. It was previously <a href="https://developers.openai.com/api/docs/models/gpt-4o-mini">GPT-4o mini</a>. Luna is a much better and more recent model, albeit slightly more expensive - $0.20 per million input tokens and $1.20 per million output tokens, compared to $0.15/$0.60 for 4o mini. You can switch back to 4o mini using <code>llm models default gpt-4o-mini</code>, or switch to <a href="https://developers.openai.com/api/docs/models/gpt-5-nano">GPT-5 nano</a>, an even cheaper default model ($0.05/$0.40), using <code>llm models default gpt-5-nano</code>. <a href="https://github.com/simonw/llm/issues/1576">#1576</a></li>
+<li>New <a href="https://llm.datasette.io/en/latest/other-models.html#openai-endpoint">llm openai endpoint</a> command for running prompts, chats and model listings against arbitrary OpenAI-compatible endpoints without first configuring a model. These calls are not logged. <a href="https://github.com/simonw/llm/issues/1565">#1565</a></li>
+</ul>
+</blockquote>
+<p>The <code>llm openai endpoint</code> command is <em>really</em> cool. I got frustrated at the lack of an obvious CLI tool for trying out prompts against arbitrary OpenAI Chat Completions imitation endpoints, so I decided to add that to LLM itself.</p>
+<p>You don't even have to install LLM to use this. Here's a <code>uvx</code> one-liner for running a prompt - with tools - against an <a href="https://lmstudio.ai">LM Studio</a> local model:</p>
+<pre><code>uvx --pre llm openai endpoint http://127.0.0.1:1234/v1 \
+  T llm_version -T llm_time --td \
+  -m google/gemma-4-31b 'what is the current LLM version? And the time?'
+</code></pre>
+<p><a href="https://github.com/simonw/llm/pull/1568#issuecomment-5136163707">Output here</a>.</p>
+    
+    
+        <p>Tags: <a href="https://simonwillison.net/tags/llm">llm</a>, <a href="https://simonwillison.net/tags/uv">uv</a>, <a href="https://simonwillison.net/tags/lm-studio">lm-studio</a></p>

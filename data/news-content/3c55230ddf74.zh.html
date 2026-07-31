@@ -1,0 +1,10 @@
+<p><strong>发布：</strong> <a href="https://github.com/simonw/llm/releases/tag/0.32rc1">llm 0.32rc1</a></p>
+        <p>LLM 0.32 的这个 RC 版本完成了在 <a href="https://simonwillison.net/2026/Apr/29/llm/">LLM 0.32a0</a> 中开始的工作——它增加了一个 <a href="https://llm.datasette.io/en/latest/logging.html#the-message-store">新的模式设计</a>，能更好地捕捉最新模型家族返回的提示和响应的详细信息。</p>
+<p>最重要的变化是使用内容可寻址的哈希 ID 来存储消息。这实现了数据库中的去重，并且意味着 LLM 现在可以表示分支对话的消息树。</p>
+<p>由于这是一个重大的模式变更（仅新增表，旧数据完全不受影响），因此在升级到 RC 版本前，最好先备份你现有的 <code>logs.db</code>：</p>
+<pre><code>llm logs backup logs-backup.db
+</code></pre>
+<p>该 RC 版本还增加了对 <code>gpt-5.6-sol</code>、<code>gpt-5.6-terra</code> 和 <code>gpt-5.6-luna</code> 的支持。</p>
+    
+    
+        <p>标签: <a href="https://simonwillison.net/tags/llm">llm</a></p>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Stacked PRs are now live on GitHub - 句子·动态</title>
+<meta name="description" content="GitHub 上线了 Stacked PRs 功能，可将大型变更拆分为小型可审查的 PR，支持独立审查后一键合并，避免单个大型 PR 难以审查或手动变基多个分支的问题。" />
+<meta name="robots" content="noindex,follow" />
+<link rel="canonical" href="https://github.blog/changelog/2026-07-30-stacked-pull-requests-are-now-in-public-preview/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Stacked PRs are now live on GitHub" />
+<meta property="og:description" content="GitHub 上线了 Stacked PRs 功能，可将大型变更拆分为小型可审查的 PR，支持独立审查后一键合并，避免单个大型 PR 难以审查或手动变基多个分支的问题。" />
+<meta property="og:url" content="https://github.blog/changelog/2026-07-30-stacked-pull-requests-are-now-in-public-preview/" />
+<meta property="og:site_name" content="句子互动" />
+<meta name="twitter:card" content="summary" />
+
+<link rel="icon" href="../../logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../../assets/site.css?v=72b48ba4" />
+<style>
+  /* 静态兜底导航: site.js 一执行就被 outerHTML 连同占位一起换掉, 访客几乎看不到它。
+     不隐藏也不 noscript 包裹——那会让爬虫拿不到, 而它存在的唯一理由就是给不跑 JS 的爬虫看。
+     样式做朴素一行, 万一 site.js 加载失败, 这排链接本身就是可用的降级导航。 */
+  .nav-fb{display:flex;flex-wrap:wrap;gap:6px 16px;padding:12px clamp(16px,4vw,40px);
+    border-bottom:1px solid var(--line-2);font-size:12.5px}
+  .nav-fb a{color:var(--ink-3);text-decoration:none}
+  .nav-fb a:hover{color:var(--blue)}
+
+  .dp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
+  .dp-wrap{max-width:760px;margin:0 auto}
+  .dp-crumb{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:12.5px;color:var(--ink-3);margin-bottom:20px;min-width:0}
+  .dp-crumb a{color:var(--ink-3);text-decoration:none}
+  .dp-crumb a:hover{color:var(--blue)}
+  .dp-crumb i{font-style:normal;opacity:.5;font-size:11px}
+  .dp-crumb [aria-current]{color:var(--ink-2);font-weight:650;overflow-wrap:anywhere}
+  .dp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
+  .dp-back:hover{color:var(--blue)}
+  .dp-meta{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:14px}
+  .dp-srcb{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:750;color:var(--sc,var(--blue))}
+  .s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
+  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-voices{--sc:#9333EA}
+  .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
+  .dp-cat{display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ink-3);background:#F6F7FB;border:1px solid var(--line-2);border-radius:6px;padding:2px 8px}
+  .dp-read{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  /* 相关动态: 读完一篇之后的出口。此前详情页之间零链接, 读者只能回列表页重新扫,
+     爬虫也只能靠 JS 驱动的列表页做枢纽。每条都带「为什么相关」, 不做无理由的推荐。 */
+  .dp-rel{margin-top:40px;padding-top:26px;border-top:1px solid var(--line-2)}
+  .dp-rel-h{font-size:14px;font-weight:750;color:var(--ink-2);margin:0 0 14px}
+  .dp-rel ul{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+  .dp-rel a{display:block;padding:10px 12px;margin:0 -12px;border-radius:8px;text-decoration:none;transition:background .2s var(--ease)}
+  .dp-rel a:hover{background:#F6F7FB}
+  .dp-rel-t{display:block;font-size:14px;font-weight:650;color:var(--ink-1);line-height:1.5}
+  .dp-rel a:hover .dp-rel-t{color:var(--blue)}
+  .dp-rel-m{display:block;margin-top:3px;font-size:11.5px;color:var(--ink-3)}
+  .dp-read i{font-size:10px;opacity:.7}
+  .dp-date{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-3)}
+  .dp-title{font-size:clamp(24px,3.2vw,34px);font-weight:850;letter-spacing:-.03em;line-height:1.32;word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance;margin-bottom:10px}
+  .dp-orig{font-size:13px;color:var(--ink-3);overflow-wrap:anywhere;margin-bottom:8px}
+  .dp-by{font-size:12.5px;font-weight:600;color:var(--ink-3);margin-bottom:18px}
+  .dp-notice{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:1.7;color:var(--ink-2);background:#F6F7FB;border:1px solid var(--line-2);border-radius:10px;padding:10px 14px;margin-bottom:22px}
+  .dp-notice i{color:var(--blue);margin-top:4px;flex:0 0 auto}
+  .dp-notice a{color:var(--blue);font-weight:700;overflow-wrap:anywhere}
+  .dp-quip{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.66;font-weight:600;color:var(--blue-deep);background:var(--blue-50);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:18px}
+  .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
+  .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
+  .dp-brief b{display:flex;align-items:baseline;gap:8px;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  /* AI 产出物的就地标注(2026-07-30): 概念页的定义早就在页尾注明「由 AI 加工层生成、编辑
+     维护」, 而详情页的简报与锐评一直没标 —— 读者会把那句锐评当成编辑观点。283 页都有这两块,
+     不标就是 283 次误导。放在区块内而不是只放页尾: 页尾声明读者多半划不到, 而标注要落在
+     人实际阅读的位置才有意义。样式压到最小, 不抢正文。 */
+  .dp-brief b em,.dp-quip em{font-style:normal;font-family:var(--mono);font-size:10px;font-weight:600;
+    letter-spacing:0;color:var(--ink-3);white-space:nowrap}
+  .dp-brief b em{margin-left:auto}
+  .dp-quip em{display:block;margin-top:5px;opacity:.85}
+  /* 长文目录(≥3 小标题且正文 ≥2000 字才出): <details> 原生可折叠, 不用一行 JS。
+     默认 open —— 目录的用处是先看清结构再决定读哪段, 收起来就失去意义; 想收也一点即收。 */
+  .dp-toc{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:24px;background:#FBFCFF}
+  .dp-toc summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--ink-2);display:flex;align-items:center;gap:7px;list-style:none}
+  .dp-toc summary::-webkit-details-marker{display:none}
+  .dp-toc summary i{font-size:11px;color:var(--blue)}
+  .dp-toc summary span{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-3);margin-left:auto}
+  .dp-toc ol{list-style:none;margin:10px 0 2px;padding:0;counter-reset:toc}
+  .dp-toc li{counter-increment:toc;font-size:13px;line-height:1.7;padding:2px 0}
+  .dp-toc li::before{content:counter(toc) ". ";font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .dp-toc li.lv3{padding-left:16px}
+  .dp-toc li.lv4{padding-left:32px}
+  .dp-toc a{color:var(--ink-2);text-decoration:none;overflow-wrap:anywhere}
+  .dp-toc a:hover{color:var(--blue)}
+  /* 锚点跳转时标题别贴到视口顶端(站点顶栏会盖住) */
+  .dp-body h2[id],.dp-body h3[id],.dp-body h4[id]{scroll-margin-top:76px}
+  .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
+  .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
+  .dp-body p{margin:0 0 1.05em}
+  .dp-body img{max-width:100%;height:auto;border-radius:10px;margin:.4em 0}
+  .dp-body pre{background:#0F172A;color:#E2E8F0;font-family:var(--mono);font-size:12.5px;line-height:1.7;padding:14px 16px;border-radius:10px;overflow-x:auto;margin:0 0 1.1em}
+  .dp-body code{font-family:var(--mono);font-size:.92em}
+  .dp-body :not(pre)>code{background:#F1F5F9;padding:1px 5px;border-radius:5px}
+  .dp-body blockquote{border-left:3px solid var(--line);padding:2px 0 2px 14px;color:var(--ink-3);margin:0 0 1.05em}
+  .dp-body a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+  .dp-body ul,.dp-body ol{padding-left:1.5em;margin:0 0 1.05em}
+  .dp-body table{display:block;overflow-x:auto;border-collapse:collapse;margin:0 0 1.1em}
+  .dp-body td,.dp-body th{border:1px solid var(--line);padding:6px 10px;font-size:.92em}
+  .dp-excerpt{font-size:15px;line-height:1.9;color:var(--ink-2);border-left:3px solid var(--line);padding:2px 0 2px 16px;margin-bottom:8px}
+  .dp-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;padding-top:20px;border-top:1px solid var(--line-2)}
+  .dp-btn{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:750;border-radius:999px;padding:10px 20px;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+  .dp-btn.pri{background:var(--blue);color:#fff}
+  .dp-btn.pri:hover{background:var(--blue-deep)}
+  .dp-btn.sec{background:#fff;color:var(--ink-2);border:1px solid var(--line)}
+  .dp-btn.sec:hover{color:var(--blue);border-color:var(--blue)}
+  .dp-note{font-size:11.5px;line-height:1.7;color:var(--ink-3);margin-top:18px}
+  .dp-langbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+  .dp-lang{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:750;color:var(--blue);
+    background:var(--blue-50);border:1px solid var(--blue-100);border-radius:999px;padding:7px 14px;
+    transition:background .2s var(--ease),border-color .2s var(--ease)}
+  .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
+  .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div id="site-nav" class="nav-fb"><a href="../../index.html">句子互动</a><a href="../../products/miaodong.html">句子秒懂</a><a href="../../products/shouhu.html">句子守护</a><a href="../../products/canmou.html">句子问数</a><a href="../../products/dongxing.html">句子懂行</a><a href="../../products/miaohui.html">句子秒回</a><a href="../../products/cli.html">句子 CLI</a><a href="../../products/zhizao.html">句子制造</a><a href="../../fde.html">FDE</a><a href="../../enterprise.html">企业方案</a><a href="../../industries.html">行业</a><a href="../../about.html">关于我们</a><a href="../../news.html">动态</a></div>
+<main class="dp-main">
+  <div class="dp-wrap">
+    <nav class="dp-crumb" aria-label="面包屑"><a href="../../index.html">句子互动</a><i aria-hidden="true">›</i><a href="../../news.html">动态</a><i aria-hidden="true">›</i><span aria-current="page">Stacked PRs are now live on GitHub</span></nav>
+    <div class="dp-meta">
+      <span class="dp-srcb s-hn"><i class="fa-brands fa-hacker-news"></i>Hacker News</span>
+      
+      <time class="dp-date" datetime="2026-07-30">2026-07-30</time>
+      <span class="dp-read"><i class="fa-regular fa-clock"></i>约 8 分钟</span>
+    </div>
+    <h1 class="dp-title">Stacked PRs are now live on GitHub</h1>
+    
+    <p class="dp-by">来源：Hacker News</p>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（Hacker News）所有 · <a href="https://github.blog/changelog/2026-07-30-stacked-pull-requests-are-now-in-public-preview/" target="_blank" rel="noopener">阅读原文</a></span></div>
+    
+    <div class="dp-brief"><b>简报<em>AI 加工层生成</em></b>GitHub 上线了 Stacked PRs 功能，可将大型变更拆分为小型可审查的 PR，支持独立审查后一键合并，避免单个大型 PR 难以审查或手动变基多个分支的问题。</div>
+    <div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang"><i class="fa-solid fa-language"></i><span>翻译为中文</span></button><span class="dp-lang-note">中文由 AI 翻译，仅供参考</span></div><article class="dp-body" id="dpBodyOrig" lang="en"><p>Stacked pull requests break large changes into small, reviewable pull requests. They’re an ordered series of pull requests that each represent focused layers of your change. With stacks, you can independently review and check each pull request, then merge everything together in one click. No more opening a single large pull request that takes forever to review, or splitting work across multiple branches you have to keep manually rebasing.</p>
+<blockquote><p>
+  “We’ve been using GitHub stacked PRs for Next.js for the past few months. It has helped us introduce smaller individual changes while shipping larger features, making it easier to review PRs. – Tim Neutkens, NextJS lead, Vercel”
+</p></blockquote>
+
+<p>With stacked pull requests, teams can:</p>
+<ul>
+<li><strong>Keep large changes moving</strong> by reviewing short, narrowly scoped pull requests in parallel.</li>
+<li><strong>Maintain quality across every layer</strong> by using focused pull request reviews alongside existing branch protections to protect <code>main</code>.</li>
+<li><strong>Merge one, some, or all</strong> by landing an entire stack altogether or individual layers one at a time.</li>
+</ul>
+<p>And because stacked pull requests are built into GitHub, your existing reviews, checks, and merge requirements all work out of the box.</p>
+<blockquote><p>
+  “The new Github Stacked PRs preview is incredible. Landing 5 stacked PRs directly to a merge queue all at once! A+++! This removes so much friction (and the gh cli tools + agent skill help a ton)” – John Resig, creator, jQuery
+</p></blockquote>
+<h2>Get started with the CLI extension</h2>
+<p>Install the CLI extension and create your first stack in under a minute:</p>
+<pre><code>gh extension install github/gh-stack
+</code></pre>
+<h2>Create stacks from your terminal or github.com</h2>
+<p>Work with stacks on github.com, the GitHub CLI, the GitHub mobile app, or with a coding agent such as GitHub Copilot using the gh-stack skill. Start with a branch and pull request for your first change. Then add branches and pull requests on top of it; each pull request targets the layer below it.</p>
+
+<h2>Review each layer independently</h2>
+<p>Open any pull request in the stack to review only the diff for that specific layer. Use the stack map at the top of the pull request to see how the change you’re reviewing fits into the larger work. You and your teammates can each review different layers in parallel without blocking further work.</p>
+<blockquote><p>
+  “AI has made TED’s developers dramatically more productive, but that created a new bottleneck: PRs were growing large enough that reviewers were struggling. Stacked PRs help to solve that. By breaking large changes into small, dependency-ordered pieces, review happens in smaller logical chunks – not just faster PR reviews, but more accurate ones. Stacked PRs tighten our feedback loop and help get stable code to ted.com faster.” – Andy Merryman, CTO, TED
+</p></blockquote>
+<p><img loading="lazy" onerror="this.style.display='none'" src="https://github.com/user-attachments/assets/0937148e-b9fd-4f5c-849a-8bc4499ea838" alt="view of the GitHub pull request page displaying details about the pull request stack" referrerpolicy="no-referrer" /></p>
+<h2>Merge everything in a single click</h2>
+<p>Merge the latest ready pull request to land it and every unmerged layer below it in one single operation. To land part of a stack, merge one or more lower layers—the pull requests above it stay open and automatically rebase and retarget. Your existing branch protections and required checks still govern what reaches <code>main</code>.</p>
+<blockquote><p>
+  “A big change used to mean one giant PR nobody wanted to review. Now it’s a stack of small ones reviewers can actually follow, and the whole stack merges in one shot. It stopped feeling like a tool on top of GitHub and started feeling like GitHub.” – Mayank Saini, connectivity engineer, WHOOP
+</p></blockquote>
+
+
+<p>Stacked pull requests are rolling out in public preview to all repositories over the coming days. <a href="https://docs.github.com/repositories/configuring-branches-and-merges-in-your-repository/configuring-pull-request-merges/managing-a-merge-queue?utm_source=changelog-merge-queue-docs&amp;utm_medium=changelog&amp;utm_campaign=stacked-prs-gtm-public-preview-2026" target="_blank" rel="noopener nofollow">Merge queue</a> support for stacked pull requests is rolling out progressively over the coming weeks.</p>
+<p>For more information, check out the <a href="https://gh.io/stacks?utm_source=changelog-stacked-pr-docs&amp;utm_medium=changelog&amp;utm_campaign=stacked-prs-gtm-public-preview-2026" target="_blank" rel="noopener nofollow">stacked pull requests documentation</a>, and share your feedback with us in the <a href="https://gh.io/stacks-feedback?utm_source=changelog-pr-stacks-feedback&amp;utm_medium=changelog&amp;utm_campaign=stacked-prs-gtm-public-preview-2026" target="_blank" rel="noopener nofollow">stacks discussion</a>.</p></article><article class="dp-body" id="dpBodyZh" lang="zh-CN" hidden><p>堆叠式拉取请求将大型改动拆分为小型、可审查的拉取请求。它们是一系列有序的拉取请求，每个请求都代表你改动中的一个专注层级。通过堆叠，你可以独立审查和检查每个拉取请求，然后一键合并所有内容。再也不用打开一个需要花费大量时间审查的大型拉取请求，也不用将工作分散到多个需要手动变基的分支上。</p>
+<blockquote><p>
+  “在过去的几个月里，我们一直在为 Next.js 使用 GitHub 的堆叠式 PR。这帮助我们在发布大型功能的同时引入更小的独立改动，让 PR 审查变得更容易。—— Tim Neutkens，NextJS 负责人，Vercel”
+</p></blockquote>
+
+<p>使用堆叠式拉取请求，团队可以：</p>
+<ul>
+<li><strong>让大型改动持续推进</strong>：通过并行审查简短、范围明确的拉取请求。</li>
+<li><strong>确保每一层的质量</strong>：使用专注的拉取请求审查，并结合现有的分支保护来保护 <code>main</code> 分支。</li>
+<li><strong>合并一个、部分或全部</strong>：可以一次性合并整个堆叠，也可以逐个合并各个层级。</li>
+</ul>
+<p>而且，由于堆叠式拉取请求是 GitHub 的内置功能，你现有的审查、检查和合并要求都能开箱即用。</p>
+<blockquote><p>
+  “新的 GitHub 堆叠式 PR 预览功能太棒了。一次性将 5 个堆叠式 PR 直接推送到合并队列！A+++！这解决了大量的摩擦（而且 gh cli 工具和代理技能帮了大忙）” – John Resig，jQuery 创始人
+</p></blockquote>
+<h2>通过 CLI 扩展开始使用</h2>
+<p>安装 CLI 扩展，不到一分钟就能创建你的第一个堆叠：</p>
+<pre><code>gh extension install github/gh-stack
+</code></pre>
+<h2>从终端或 github.com 创建堆叠</h2>
+<p>你可以在 github.com、GitHub CLI、GitHub 移动应用上使用堆叠，或者使用带有 gh-stack 技能的编码代理（如 GitHub Copilot）来操作。从一个分支和拉取请求开始你的第一次改动。然后在其上添加分支和拉取请求；每个拉取请求都指向其下方的层级。</p>
+
+<h2>独立审查每一层</h2>
+<p>打开堆叠中的任意一个拉取请求，只审查该特定层级的差异。使用拉取请求顶部的堆叠地图，来查看你正在审查的改动如何融入更大的工作中。你和你的团队成员可以并行审查不同的层级，而不会阻塞后续工作。</p>
+<blockquote>
+<p>
+  “AI 让 TED 的开发团队效率大幅提升，但这带来了新的瓶颈：合并请求（PR）变得越来越大，审查人员难以应对。堆叠式 PR 解决了这个问题。通过将大型改动拆分成按依赖顺序排列的小块，审查工作可以在更小的逻辑单元中进行——这不仅让 PR 审查更快，也提高了准确性。堆叠式 PR 缩短了我们的反馈周期，帮助 ted.com 更快地获得稳定的代码。” – Andy Merryman，首席技术官，TED
+</p></blockquote>
+<p><img loading="lazy" onerror="this.style.display='none'" src="https://github.com/user-attachments/assets/0937148e-b9fd-4f5c-849a-8bc4499ea838" alt="view of the GitHub pull request page displaying details about the pull request stack" referrerpolicy="no-referrer" /></p>
+<h2>一键合并所有内容</h2>
+<p>合并最新的就绪合并请求，即可一次性将其以及下方所有未合并的层级都合并到目标分支。如果要合并堆叠的一部分，可以合并一个或多个底层 PR——其上方的 PR 将保持开启状态，并自动变基和重定向。你现有的分支保护和必要检查规则仍然决定哪些内容可以合并到 <code>main</code> 分支。</p>
+<blockquote><p>
+  “过去，一个大型改动意味着一个没人愿意审查的巨型 PR。现在，它变成了一堆小 PR，审查人员可以真正跟进，整个堆叠也能一次性合并。这不再感觉像是 GitHub 上的一个附加工具，而像是 GitHub 本身的功能了。” – Mayank Saini，连接工程师，WHOOP
+</p></blockquote>
+
+
+<p>堆叠式 PR 正在未来几天内向所有仓库公开发布预览版。<a href="https://docs.github.com/repositories/configuring-branches-and-merges-in-your-repository/configuring-pull-request-merges/managing-a-merge-queue?utm_source=changelog-merge-queue-docs&amp;utm_medium=changelog&amp;utm_campaign=stacked-prs-gtm-public-preview-2026" target="_blank" rel="noopener nofollow">合并队列</a> 对堆叠式 PR 的支持也将在未来几周内逐步推出。</p>
+<p>欲了解更多信息，请查阅<a href="https://gh.io/stacks?utm_source=changelog-stacked-pr-docs&amp;utm_medium=changelog&amp;utm_campaign=stacked-prs-gtm-public-preview-2026" target="_blank" rel="noopener nofollow">堆叠式 PR 文档</a>，并在<a href="https://gh.io/stacks-feedback?utm_source=changelog-pr-stacks-feedback&amp;utm_medium=changelog&amp;utm_campaign=stacked-prs-gtm-public-preview-2026" target="_blank" rel="noopener nofollow">堆叠式 PR 讨论区</a>与我们分享您的反馈。</p></article>
+    <div class="dp-actions">
+      <a class="dp-btn pri" href="https://github.blog/changelog/2026-07-30-stacked-pull-requests-are-now-in-public-preview/" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      <a class="dp-btn sec" href="https://news.ycombinator.com/item?id=49112232" target="_blank" rel="noopener"><i class="fa-brands fa-hacker-news"></i>HN 讨论</a>
+      <button type="button" class="dp-btn sec" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
+      <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
+    </div>
+    
+    <p class="dp-note">本页由句子互动动态管线自动生成，聚合内容版权归各来源所有；如来源方希望调整或移除收录，请通过官网联系我们。</p>
+  </div>
+</main>
+<div id="site-footer"></div>
+<script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "Stacked PRs are now live on GitHub"};</script>
+<script src="../../assets/site.js?v=f57b1388"></script>
+<script>
+(function(){var b=document.getElementById('dpLang');if(!b)return;
+var en=document.getElementById('dpBodyOrig'),zh=document.getElementById('dpBodyZh');
+b.addEventListener('click',function(){var on=zh.hidden;zh.hidden=!on;en.hidden=on;
+b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';});})();
+</script>
+</body>
+</html>

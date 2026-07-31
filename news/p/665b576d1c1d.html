@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>齐思洞见2026/07/31「NVMe流式专家加载（WASTE）与动态1‑bit量化使完整2.78万亿参数Kimi K3可在消费级与本地高端硬件运行」 - 句子·动态</title>
+<meta name="description" content="目录 - ⚙️ 技术与工程 (17条) - 在普通笔记本上运行完整的2.78万亿参数Kimi K3模型成为可能 - Marco Bambini在消费级硬件上实现Kimi K3模型的突破性运行 - 通用基准…" />
+<meta name="robots" content="noindex,follow" />
+<link rel="canonical" href="https://news.miracleplus.com/share_link/145898" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="齐思洞见2026/07/31「NVMe流式专家加载（WASTE）与动态1‑bit量化使完整2.78万亿参数Kimi K3可在消费级与本地高端硬件运行」" />
+<meta property="og:description" content="目录 - ⚙️ 技术与工程 (17条) - 在普通笔记本上运行完整的2.78万亿参数Kimi K3模型成为可能 - Marco Bambini在消费级硬件上实现Kimi K3模型的突破性运行 - 通用基准…" />
+<meta property="og:url" content="https://news.miracleplus.com/share_link/145898" />
+<meta property="og:site_name" content="句子互动" />
+<meta name="twitter:card" content="summary" />
+
+<link rel="icon" href="../../logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../../assets/site.css?v=72b48ba4" />
+<style>
+  /* 静态兜底导航: site.js 一执行就被 outerHTML 连同占位一起换掉, 访客几乎看不到它。
+     不隐藏也不 noscript 包裹——那会让爬虫拿不到, 而它存在的唯一理由就是给不跑 JS 的爬虫看。
+     样式做朴素一行, 万一 site.js 加载失败, 这排链接本身就是可用的降级导航。 */
+  .nav-fb{display:flex;flex-wrap:wrap;gap:6px 16px;padding:12px clamp(16px,4vw,40px);
+    border-bottom:1px solid var(--line-2);font-size:12.5px}
+  .nav-fb a{color:var(--ink-3);text-decoration:none}
+  .nav-fb a:hover{color:var(--blue)}
+
+  .dp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
+  .dp-wrap{max-width:760px;margin:0 auto}
+  .dp-crumb{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:12.5px;color:var(--ink-3);margin-bottom:20px;min-width:0}
+  .dp-crumb a{color:var(--ink-3);text-decoration:none}
+  .dp-crumb a:hover{color:var(--blue)}
+  .dp-crumb i{font-style:normal;opacity:.5;font-size:11px}
+  .dp-crumb [aria-current]{color:var(--ink-2);font-weight:650;overflow-wrap:anywhere}
+  .dp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
+  .dp-back:hover{color:var(--blue)}
+  .dp-meta{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:14px}
+  .dp-srcb{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:750;color:var(--sc,var(--blue))}
+  .s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
+  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-voices{--sc:#9333EA}
+  .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
+  .dp-cat{display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ink-3);background:#F6F7FB;border:1px solid var(--line-2);border-radius:6px;padding:2px 8px}
+  .dp-read{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  /* 相关动态: 读完一篇之后的出口。此前详情页之间零链接, 读者只能回列表页重新扫,
+     爬虫也只能靠 JS 驱动的列表页做枢纽。每条都带「为什么相关」, 不做无理由的推荐。 */
+  .dp-rel{margin-top:40px;padding-top:26px;border-top:1px solid var(--line-2)}
+  .dp-rel-h{font-size:14px;font-weight:750;color:var(--ink-2);margin:0 0 14px}
+  .dp-rel ul{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+  .dp-rel a{display:block;padding:10px 12px;margin:0 -12px;border-radius:8px;text-decoration:none;transition:background .2s var(--ease)}
+  .dp-rel a:hover{background:#F6F7FB}
+  .dp-rel-t{display:block;font-size:14px;font-weight:650;color:var(--ink-1);line-height:1.5}
+  .dp-rel a:hover .dp-rel-t{color:var(--blue)}
+  .dp-rel-m{display:block;margin-top:3px;font-size:11.5px;color:var(--ink-3)}
+  .dp-read i{font-size:10px;opacity:.7}
+  .dp-date{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-3)}
+  .dp-title{font-size:clamp(24px,3.2vw,34px);font-weight:850;letter-spacing:-.03em;line-height:1.32;word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance;margin-bottom:10px}
+  .dp-orig{font-size:13px;color:var(--ink-3);overflow-wrap:anywhere;margin-bottom:8px}
+  .dp-by{font-size:12.5px;font-weight:600;color:var(--ink-3);margin-bottom:18px}
+  .dp-notice{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:1.7;color:var(--ink-2);background:#F6F7FB;border:1px solid var(--line-2);border-radius:10px;padding:10px 14px;margin-bottom:22px}
+  .dp-notice i{color:var(--blue);margin-top:4px;flex:0 0 auto}
+  .dp-notice a{color:var(--blue);font-weight:700;overflow-wrap:anywhere}
+  .dp-quip{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.66;font-weight:600;color:var(--blue-deep);background:var(--blue-50);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:18px}
+  .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
+  .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
+  .dp-brief b{display:flex;align-items:baseline;gap:8px;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  /* AI 产出物的就地标注(2026-07-30): 概念页的定义早就在页尾注明「由 AI 加工层生成、编辑
+     维护」, 而详情页的简报与锐评一直没标 —— 读者会把那句锐评当成编辑观点。283 页都有这两块,
+     不标就是 283 次误导。放在区块内而不是只放页尾: 页尾声明读者多半划不到, 而标注要落在
+     人实际阅读的位置才有意义。样式压到最小, 不抢正文。 */
+  .dp-brief b em,.dp-quip em{font-style:normal;font-family:var(--mono);font-size:10px;font-weight:600;
+    letter-spacing:0;color:var(--ink-3);white-space:nowrap}
+  .dp-brief b em{margin-left:auto}
+  .dp-quip em{display:block;margin-top:5px;opacity:.85}
+  /* 长文目录(≥3 小标题且正文 ≥2000 字才出): <details> 原生可折叠, 不用一行 JS。
+     默认 open —— 目录的用处是先看清结构再决定读哪段, 收起来就失去意义; 想收也一点即收。 */
+  .dp-toc{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:24px;background:#FBFCFF}
+  .dp-toc summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--ink-2);display:flex;align-items:center;gap:7px;list-style:none}
+  .dp-toc summary::-webkit-details-marker{display:none}
+  .dp-toc summary i{font-size:11px;color:var(--blue)}
+  .dp-toc summary span{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-3);margin-left:auto}
+  .dp-toc ol{list-style:none;margin:10px 0 2px;padding:0;counter-reset:toc}
+  .dp-toc li{counter-increment:toc;font-size:13px;line-height:1.7;padding:2px 0}
+  .dp-toc li::before{content:counter(toc) ". ";font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .dp-toc li.lv3{padding-left:16px}
+  .dp-toc li.lv4{padding-left:32px}
+  .dp-toc a{color:var(--ink-2);text-decoration:none;overflow-wrap:anywhere}
+  .dp-toc a:hover{color:var(--blue)}
+  /* 锚点跳转时标题别贴到视口顶端(站点顶栏会盖住) */
+  .dp-body h2[id],.dp-body h3[id],.dp-body h4[id]{scroll-margin-top:76px}
+  .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
+  .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
+  .dp-body p{margin:0 0 1.05em}
+  .dp-body img{max-width:100%;height:auto;border-radius:10px;margin:.4em 0}
+  .dp-body pre{background:#0F172A;color:#E2E8F0;font-family:var(--mono);font-size:12.5px;line-height:1.7;padding:14px 16px;border-radius:10px;overflow-x:auto;margin:0 0 1.1em}
+  .dp-body code{font-family:var(--mono);font-size:.92em}
+  .dp-body :not(pre)>code{background:#F1F5F9;padding:1px 5px;border-radius:5px}
+  .dp-body blockquote{border-left:3px solid var(--line);padding:2px 0 2px 14px;color:var(--ink-3);margin:0 0 1.05em}
+  .dp-body a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+  .dp-body ul,.dp-body ol{padding-left:1.5em;margin:0 0 1.05em}
+  .dp-body table{display:block;overflow-x:auto;border-collapse:collapse;margin:0 0 1.1em}
+  .dp-body td,.dp-body th{border:1px solid var(--line);padding:6px 10px;font-size:.92em}
+  .dp-excerpt{font-size:15px;line-height:1.9;color:var(--ink-2);border-left:3px solid var(--line);padding:2px 0 2px 16px;margin-bottom:8px}
+  .dp-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;padding-top:20px;border-top:1px solid var(--line-2)}
+  .dp-btn{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:750;border-radius:999px;padding:10px 20px;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+  .dp-btn.pri{background:var(--blue);color:#fff}
+  .dp-btn.pri:hover{background:var(--blue-deep)}
+  .dp-btn.sec{background:#fff;color:var(--ink-2);border:1px solid var(--line)}
+  .dp-btn.sec:hover{color:var(--blue);border-color:var(--blue)}
+  .dp-note{font-size:11.5px;line-height:1.7;color:var(--ink-3);margin-top:18px}
+  .dp-langbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+  .dp-lang{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:750;color:var(--blue);
+    background:var(--blue-50);border:1px solid var(--blue-100);border-radius:999px;padding:7px 14px;
+    transition:background .2s var(--ease),border-color .2s var(--ease)}
+  .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
+  .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div id="site-nav" class="nav-fb"><a href="../../index.html">句子互动</a><a href="../../products/miaodong.html">句子秒懂</a><a href="../../products/shouhu.html">句子守护</a><a href="../../products/canmou.html">句子问数</a><a href="../../products/dongxing.html">句子懂行</a><a href="../../products/miaohui.html">句子秒回</a><a href="../../products/cli.html">句子 CLI</a><a href="../../products/zhizao.html">句子制造</a><a href="../../fde.html">FDE</a><a href="../../enterprise.html">企业方案</a><a href="../../industries.html">行业</a><a href="../../about.html">关于我们</a><a href="../../news.html">动态</a></div>
+<main class="dp-main">
+  <div class="dp-wrap">
+    <nav class="dp-crumb" aria-label="面包屑"><a href="../../index.html">句子互动</a><i aria-hidden="true">›</i><a href="../../news.html">动态</a><i aria-hidden="true">›</i><span aria-current="page">齐思洞见2026/07/31「NVMe流式专家加载（WASTE）与动态1‑bit</span></nav>
+    <div class="dp-meta">
+      <span class="dp-srcb s-qisi"><i class="fa-solid fa-lightbulb"></i>齐思</span>
+      <span class="dp-cat">洞见</span>
+      <time class="dp-date" datetime="2026-07-31">2026-07-31</time>
+      <span class="dp-read"><i class="fa-regular fa-clock"></i>约 1.1 小时</span>
+    </div>
+    <h1 class="dp-title">齐思洞见2026/07/31「NVMe流式专家加载（WASTE）与动态1‑bit量化使完整2.78万亿参数Kimi K3可在消费级与本地高端硬件运行」</h1>
+    
+    <p class="dp-by">来源：奇绩创坛 · 齐思</p>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（奇绩创坛 · 齐思）所有 · <a href="https://news.miracleplus.com/share_link/145898" target="_blank" rel="noopener">阅读原文</a></span></div>
+    
+    
+    <details class="dp-toc"><summary><i class="fa-solid fa-list-ul"></i>目录<span>35 节</span></summary><ol><li class="lv4"><a href="#h1">目录</a></li><li class="lv4"><a href="#h2">⚙️ 技术与工程</a></li><li class="lv4"><a href="#h3">💡 技术洞见 #1</a></li><li class="lv4"><a href="#h4">💡 技术洞见 #2</a></li><li class="lv4"><a href="#h5">💡 技术洞见 #3</a></li><li class="lv4"><a href="#h6">💡 技术洞见 #4</a></li><li class="lv4"><a href="#h7">💡 技术洞见 #5</a></li><li class="lv4"><a href="#h8">💡 技术洞见 #6</a></li><li class="lv4"><a href="#h9">💡 技术洞见 #7</a></li><li class="lv4"><a href="#h10">💡 技术洞见 #8</a></li><li class="lv4"><a href="#h11">💡 技术洞见 #9</a></li><li class="lv4"><a href="#h12">💡 技术洞见 #10</a></li><li class="lv4"><a href="#h13">💡 技术洞见 #11</a></li><li class="lv4"><a href="#h14">💡 技术洞见 #12</a></li><li class="lv4"><a href="#h15">💡 技术洞见 #13</a></li><li class="lv4"><a href="#h16">💡 技术洞见 #14</a></li><li class="lv4"><a href="#h17">💡 技术洞见 #15</a></li><li class="lv4"><a href="#h18">💡 技术洞见 #16</a></li><li class="lv4"><a href="#h19">💡 技术洞见 #17</a></li><li class="lv4"><a href="#h20">🔬 科学与发现</a></li><li class="lv4"><a href="#h21">💡 科研洞见 #1</a></li><li class="lv4"><a href="#h22">💡 科研洞见 #2</a></li><li class="lv4"><a href="#h23">💰 商业与战略</a></li><li class="lv4"><a href="#h24">💡 商业洞见 #1</a></li><li class="lv4"><a href="#h25">💡 商业洞见 #2</a></li><li class="lv4"><a href="#h26">💡 商业洞见 #3</a></li><li class="lv4"><a href="#h27">💡 商业洞见 #4</a></li><li class="lv4"><a href="#h28">💡 商业洞见 #5</a></li><li class="lv4"><a href="#h29">💡 商业洞见 #6</a></li><li class="lv4"><a href="#h30">💡 商业洞见 #7</a></li><li class="lv4"><a href="#h31">💡 商业洞见 #8</a></li><li class="lv4"><a href="#h32">🌐 行业与趋势</a></li><li class="lv4"><a href="#h33">💡 行业洞见 #1</a></li><li class="lv4"><a href="#h34">💡 行业洞见 #2</a></li><li class="lv4"><a href="#h35">💡 行业洞见 #3</a></li></ol></details><article class="dp-body"><h4 id="h1">目录</h4>
+<p>- [⚙️ 技术与工程 (17条)](#⚙️-技术与工程) - [在普通笔记本上运行完整的2.78万亿参数<a class="cpt" href="../c/kimi-k3-model.html" data-def="全球首个开源的3万亿参数级大模型，采用KDA混合线性注意力机制和MoE设计，原生支持视觉理解，上下文窗口达100万token">Kimi K3模型</a>成为可能](#💡-技术洞见-1) - [Marco Bambini在消费级硬件上实现Kimi K3模型的突破性运行](#💡-技术洞见-2) - [通用基准测试的饱和与模型选择的新标准](#💡-技术洞见-3) - [OKLS优化器在大规模语言模型训练中的创新应用](#💡-技术洞见-4) - [Kimi K3模型通过动态量化技术实现本地化运行](#💡-技术洞见-5) - [开源GPU加速库预构建轮子降低接入门槛](#💡-技术洞见-6) - [Parse Gateway通过复杂度分层解析提高效率与准确性](#💡-技术洞见-7) - [解析网关通过复杂度评估优化PDF处理流程](#💡-技术洞见-8) - [无人机与机器人自动化风力涡轮机维护提升效率](#💡-技术洞见-9) - [终端浏览器与CLI结合加速Web开发与测试](#💡-技术洞见-10) - [Inkling-Small模型发布，支持多模态推理与微调](#💡-技术洞见-11) - [Inkling-Small模型缩小规模但保持高性能，适合中小规模开发者](#💡-技术洞见-12) - [后训练与工程化工具结合提升科研智能代理的效能](#💡-技术洞见-13) - [通过创建和维护验证技能提升应用的自动化验证能力](#💡-技术洞见-14) - [实施测试驱动的生命周期管理以优化 agent 技能表现](#💡-技术洞见-15) - [用廉价硬件和主流平台快速推出专用沟通产品](#💡-技术洞见-16) - [微调PTX指令可显著提升GPU内核性能](#💡-技术洞见-17) - [🔬 科学与发现 (2条)](#🔬-科学与发现) - [自然语言提示生成形式验证流体动力学仿真代码](#💡-科研洞见-1) - [AI生成并验证压缩流体力学求解器实现突破性进展](#💡-科研洞见-2) - [💰 商业与战略 (8条)](#💰-商业与战略) - [AI定位策略应聚焦数量级提升或微型垂直产品支持](#💡-商业洞见-1) - [价格调整与计费规则优化提升模型性价比](#💡-商业洞见-2) - [通过价格调整扩大AI模型的市场渗透率](#💡-商业洞见-3) - [AI产业链中最有价值的杠杆是数据护城河与<a class="cpt" href="../c/computing-utilization.html" data-def="算力利用率衡量计算资源（如GPU）的实际使用效率，低利用率意味着投资浪费">GPU利用率</a>](#💡-商业洞见-4) - [高端与中端推理设备并行销售策略提升市场渗透率](#💡-商业洞见-5) - [AI驱动的合规可视化在资本项目中的战略价值](#💡-商业洞见-6) - [被怀疑是创业成功的筛选机制](#💡-商业洞见-7) - [半导体公司成为AI建设的工作资金银行转移信用风险](#💡-商业洞见-8) - [🌐 行业与趋势 (3条)](#🌐-行业与趋势) - [金融领域AI自动化需兼顾准确性成本与扩展性](#💡-行业洞见-1) - [开放权重与可信执行环境结合推动个性化AI服务发展](#💡-行业洞见-2) - [美国政策改革推动自动驾驶技术发展与安全部署](#💡-行业洞见-3)</p>
+<p>---</p>
+<h4 id="h2">⚙️ 技术与工程</h4>
+<h4 id="h3">💡 技术洞见 #1</h4>
+<p><strong>在普通笔记本上运行完整的2.78万亿参数Kimi K3模型成为可能</strong></p>
+<p>📝 <strong>推文原文</strong> &gt; 突破性进展：在一台普通消费者笔记本上运行完整、未修改的2.78万亿参数Kimi K3（通过NVMe流式传输仅被激活的专家参数）。 &gt; &gt; “你不可能在‘那种设备’上运行Kimi K3，”有人断言。 &gt; &gt; 但事实上，有很多方法可以做到。 &gt; &gt; 这就是其中之一： &gt; &gt; Marco Bambini刚刚让我们在笔记本电脑上运行了完整的Kimi K3。 &gt; &gt; 来认识一下Marco Bambini吧，他完成了一件直到前一天还被认为是不可能实现的事情。 &gt; &gt; 他开发了WASTE（Weight-Aware Streaming Tensor Engine，权值感知流式张量引擎），这是一款干净、无依赖的C语言推理引擎，能够通过NVMe直接流式传输仅被激活的专家参数，从而运行完整、未修改的2.78万亿参数Kimi K3模型。 &gt; &gt; 没有蒸馏（distillation）。 &gt; &gt; 没有剪枝（pruning）。 &gt; &gt; 没有云计算（cloud computing）。 &gt; &gt; 这是一个完整的开放权重模型。 &gt; &gt; 我们现在就在实验室中运行它。 &gt; &gt; ### Marco究竟做了什么？ &gt; &gt; Kimi K3是一个稀疏化的专家混合系统（Mixture-of-Experts system）。 &gt; 在任何给定的token（令牌）上，只有大约4%的权重会被激活。Marco的洞察非常简单却大胆：那些闲置的专家参数不需要驻留在RAM中——它们只需要及时被访问即可。 &gt; &gt; WASTE引擎让模型的“主干”（trunk，包含Attention机制、共享组件、嵌入等）常驻内存，约27GB（经过转换后的容器数据规模）。 &gt; 超过82,000个路由的专家参数则存储在硬盘中，以密集打包的残差向量量化记录（residual vector-quantized records）形式保存。当路由器在每一层中选择16个专家参数时，引擎会从内部NVMe直接读取这些参数（跳过缓存），并将它们加载到一个有限的专家缓存中。 &gt; &gt; 机器的其余RAM则被用作这些缓存的工作空间。 &gt; &gt; 在一台配备64GB内存、内部SSD上运行容器的MacBook Pro上，我们测得每秒生成0.32到0.34个token的速度，并维持了舒适的内存使用预算。 &gt; 预填充（prefill）速度略高。视觉模块（vision tower）可以正常工作，输出概率（logits）与参考实现的差距在百万分之一范围内。这是真正完整的模型。 &gt; &gt; 经过转换后的容器大小为982 GiB，相比原始1.42 TB的MXFP4权重有显著压缩。最小内存需求为刚超过29 GB（用于短上下文任务）。提升内存预算时，专家缓存的命中率会攀升；但如果提升过高，系统会开始分页（paging），速度随之崩溃。在当前消费者级硬件上的最佳运行点是清晰且可量化的。 &gt; &gt; ### 我们是如何测试的 &gt; &gt; 在引擎稳定后，我们当天就完成了官方权重的转换、容器验证，并开始了系统化测试。 &gt; &gt; 首先，我们基于PyTorch参考实现，在短提示输入下确认了数值的准确性。随后，我们开始测试更长的文本生成、视觉输入，以及使用Kimi原生XTML格式的多轮对话。 &gt; &gt; 我们正在测量实际解码时间、专家输入/输出与计算的分配比例、不同内存预算下的缓存命中率，以及长时间负载下的散热表现。 &gt; &gt; 此外，我们还测试了一个基于同一C语言库的OpenAI兼容服务器，因为这样我们可以无缝将模型插入现有的智能体（agent）循环中，无需任何额外代码重写。 &gt; &gt; ### 初步观察结果： &gt; &gt; - 正如预期，专家参数的输入/输出占据了大部分时间。在一块快速的内部NVMe上，引擎已经逼近存储子系统的实际上限。 &gt; - 这种架构的稀疏性是实现这一切的关键。如果是一个密集模型，这种规模在本地运行几乎注定失败。 &gt; - 当前的上下文长度更多地受限于RAM而非模型本身。在64GB内存的设备上，实践中可以舒适运行数万长度的token上下文；但如果要支持百万token窗口，则需要更多内存或更智能的KV管理。 &gt; - 在这种速度下，推理token的计算成本很高。长时间的内部推理（例如复杂思考过程）可能需要运行数小时。针对智能体应用，我们已经在尝试更紧凑地控制何时触发完整推理。 &gt; &gt; 我们目前将其视为一个科研工具，而非商业化成品。每次实验都会为我们提供关于专家数据局部性、预取（prefetch）机会、以及纯软件流式传输能力的新见解，帮助我们在普通设备上推进万亿级推理的边界。</p>
+<p>🧠 <strong>深度解读</strong> Marco Bambini通过开发WASTE引擎，实现了在普通笔记本上运行完整的2.78万亿参数Kimi K3模型。这一突破依赖于稀疏MoE架构，利用NVMe流式传输激活的专家参数，避免了对RAM的过度依赖。通过将模型的主干常驻内存，并在需要时从硬盘读取专家参数，WASTE引擎在消费级硬件上实现了高效的本地推理。这一方法为在普通设备上运行大规模模型提供了新的可能性，尽管目前仍主要用于科研目的。</p>
+<p>🔗 <strong><a href="https://news.miracleplus.com/share_link/145870" target="_blank" rel="noopener nofollow">查看原文</a></strong></p>
+<p>---</p>
+<h4 id="h4">💡 技术洞见 #2</h4>
+<p><strong>Marco Bambini在消费级硬件上实现Kimi K3模型的突破性运行</strong></p>
+<p>📝 <strong>推文原文</strong> &gt; 让我大声告诉你们： &gt; &gt; <strong>完整、未经修改的2.78万亿参数Kimi K3模型，现在可以在消费级硬件上运行！</strong> &gt; &gt; 这不是来自“亿万级资金实验室”的成果，而是“达里奥错了”（Dario Is Wrong）流派，从普通人家的车库里诞生！ &gt; &gt; 加入我们吧……https://t.co/fO4tQv9gEi &gt; &gt; “突破性进展：通过仅从NVMe加载激活专家（activated experts）流式传输，在一台消费级笔记本电脑上运行完整、未经修改的2.78万亿参数Kimi K3模型。” &gt; &gt; 他们曾断言：“这样的机器运行不了Kimi K3。” &gt; &gt; 但方法有很多，而这是一种可能： &gt; &gt; <strong>Marco Bambini成功在一台笔记本电脑上运行完整的Kimi K3！</strong> &gt; &gt; 来认识一下Marco Bambini，他在短短一天前实现了一件看似不可能完成的壮举。 &gt; &gt; 他开发了<strong>WASTE（Weight-Aware Streaming Tensor Engine，权重感知流式张量引擎）</strong>。这是一款干净、无依赖的C语言推理引擎，能够通过仅流式传输激活专家，直接从NVMe运行完整且未经修改的2.78万亿参数Kimi K3模型。 &gt; &gt; 没有蒸馏（distillation）。 &gt; 没有剪枝（pruning）。 &gt; 没有云服务（cloud）。 &gt; &gt; 这是完整的、开放权重的模型，而我们现在就在实验室里运行它！ &gt; &gt; ## <strong>Marco到底实现了什么？</strong> &gt; &gt; Kimi K3是一种稀疏的专家混合模型（Mixture-of-Experts）。它的工作机制是：在处理每个token时，只有约4%的权重会被激活。Marco的关键洞见是：那些“闲置”的专家（idle experts）并不需要驻留在内存中，它们只需在需要时被及时读取即可。 &gt; &gt; WASTE引擎让模型的核心部件（例如Attention机制、共享组件、嵌入向量等）常驻内存中，这约占27 GB内存。在进行容器化处理后，其余82,000+路由专家（routed experts）则被以高压缩度的残差矢量量化记录保存在磁盘上。当路由模块（router）为每一层选择16个专家时，WASTE会直接从内部NVMe中绕过缓存读取相应数据，并加载到一个有限的“专家缓存区”（expert cache）中。 &gt; &gt; 设备的大部分内存则被用作这个缓存的工作空间。 &gt; &gt; 在一台搭载64 GB内存、容器放置于内部SSD上的MacBook Pro上，我们的测试显示，平均解析速度为每秒0.32-0.34个token，且内存使用基本处于合理范围内。 &gt; &gt; <strong>加载预填充时速度略高。Vision模块运行良好。输出匹配参考实现，误差仅有百万分之几。这是真实的全模型。</strong> &gt; &gt; 容器从原始1.42 TB的MXFP4权重转换后大小为982 GiB。最小内存需求为29 GB（短上下文）。增加内存预算可以提高专家缓存命中率，但如果内存压力过高导致换页（paging），速度会大幅下降。当前消费级硬件上的最佳平衡点清晰且可测量。 &gt; &gt; ## <strong>我们是如何测试的</strong> &gt; &gt; 我们转换了官方权重，验证了容器，并在引擎稳定的同一天开始了系统性测试。 &gt; &gt; 首先，我们通过短提示的推理结果确认了数值一致性（numerical fidelity），然后转向了更长的生成任务、视觉输入（vision inputs）以及使用Kimi原生XTML格式进行多轮对话测试。 &gt; &gt; 我们正在测量如下指标： &gt; - 墙上时钟解码时间（wall-clock decode time）。 &gt; - 专家I/O与计算的时间分配。 &gt; - 在不同内存预算下的缓存命中率。 &gt; - 持续负载下的热性能表现。 &gt; &gt; 此外，我们还测试了一个基于同一C库的OpenAI兼容服务器，以便可以将该模型无缝集成到现有的智能体循环（agent loops）中，无需改写任何代码。 &gt; &gt; ### <strong>一些初步观察：</strong> &gt; - 专家I/O完全主导了时间线。如预期，在快速NVMe存储下，引擎已经接近存储子系统的极限性能。 &gt; - 模型的稀疏架构是这一突破的关键。如果这是一个相同规模的稠密模型，在本地设备上运行几乎不可能。 &gt; - 当前上下文长度更多受制于内存，而非模型本身。在64 GB硬件上，实用上下文长度可轻松达到数万tokens；但要实现百万级长度窗口则需要更多内存或更智能的KV管理。 &gt; - 在当前速度下，“逻辑思考”类的token（例如长对话或复杂推理）代价很高。长时间的内部独白任务会耗时数小时。我们目前正在尝试更严格地管理要求完整推理的触发条件。 &gt; &gt; 我们将这一成果视为一个研究型工具，而非最终产品。每次运行都让我们更了解专家的局部性、预取机会（prefetch opportunities），以及纯软件流处理在普通计算机上推理万亿参数模型的极限。</p>
+<p>🧠 <strong>深度解读</strong> Marco Bambini通过开发WASTE引擎，在消费级硬件上实现了完整的Kimi K3模型运行。这一成就依赖于稀疏MoE架构，通过NVMe流式传输激活的专家参数，避免了对RAM的过度依赖。WASTE引擎将模型的核心部件常驻内存，并在需要时从硬盘读取专家参数，实现了高效的本地推理。这一方法为在普通设备上运行大规模模型提供了新的可能性，尽管目前仍主要用于科研目的。</p>
+<p>🔗 <strong><a href="https://news.miracleplus.com/share_link/145871" target="_blank" rel="noopener nofollow">查看原文</a></strong></p>
+<p>---</p>
+<h4 id="h5">💡 技术洞见 #3</h4>
+<p><strong>通用基准测试的饱和与模型选择的新标准</strong></p>
+<p>📝 <strong>推文原文</strong> &gt; 全新 Max Agency 与 @cognition 总裁 @russelljkaplan 合作。 &gt; &gt; 我们讨论了 SWE-bench（软件工程基准测试）的饱和现状以及 Cognition 为替代它所构建的工具，为什么“哪个模型最好”这一问题已不再适合大多数团队，以及更多精彩内容！ &gt; &gt; ⏯️ YouTube: https://t.co/jzMl3pypSl &gt; &gt; 🎧 Apple: https://t.co/OTCKcXRSHz &gt; &gt; 🎧 Spotify: https://t.co/rbPJyLMtOo</p>
+<p>🧠 <strong>深度解读</strong> 随着通用基准测试的饱和，模型选择的标准需要转向具体的目标仓库、评测和部署环境，以及可接受的失败类型，而不是单一的全局排名。这种转变反映了在实际应用中，模型的适用性和性能需要根据具体场景进行评估，而不是依赖于通用的基准测试结果。</p>
+<p>🔗 <strong><a href="https://news.miracleplus.com/share_link/145872" target="_blank" rel="noopener nofollow">查看原文</a></strong></p>
+<p>---</p>
+<h4 id="h6">💡 技术洞见 #4</h4>
+<p><strong>OKLS优化器在大规模语言模型训练中的创新应用</strong></p>
+<p>📝 <strong>推文原文</strong> &gt; RT @tilderesearch 推出 Online KL Shampoo (OKLS)，一种优化器，它在语言模型训练中提供了一种KL最优（KL-optimal）的全矩阵AdaGrad近似方法。 &gt; &gt; 对角优化器（Diagonal optimizers）忽略了梯度坐标之间的相关性；全矩阵AdaGrad能够捕捉这些几何信息，但需要二次方的状态存储；Muon优化器考虑了梯度相关性，但忽略了相关性的历史信息。OKLS通过KL最优的克罗内克因子（Kronecker factors，克罗内克因子是一种用于矩阵分解的数学工具）填补了这一空白，同时在行和列方向对矩阵梯度进行“白化”（whitening），并且天然具备尺度不变性（scale-invariant）。 &gt; &gt; 主要挑战在于每一步都需要实时计算新的逆平方根预处理矩阵（inverse-square-root preconditioners）。即便只滞后一小步，也会使训练过程不稳定。我们通过“Scaled CANS Coupled Newton–Schulz”方法使零滞后预处理成为可能：这一方法需要10次迭代、27次FP16（半精度浮点数）GEMM运算（通用矩阵乘法，General Matrix Multiplication），并使用FP32（单精度浮点数）累加。 &gt; &gt; OKLS的参数效率（parameter efficiency）是Muon的1.45倍，同时保留了98%的训练吞吐量（training throughput）。在2亿到10亿参数规模的模型上，使用OKLS优化的模型表现相当于比Muon优化的模型规模大约1.5倍的水平。</p>
+<p>🧠 <strong>深度解读</strong> OKLS优化器通过KL最优的克罗内克因子和零滞后逆平方根预调节，实现了接近全矩阵预调节器的效果，显著提升了大规模语言模型训练的参数效率。通过Scaled CANS Coupled Newton–Schulz方法，OKLS在不牺牲训练吞吐量的情况下，提供了比Muon优化器更高的参数效率，使得在大规模模型训练中成为一种可行的选择。</p>
+<p>🔗 <strong><a href="https://news.miracleplus.com/share_link/145780" target="_blank" rel="noopener nofollow">查看原文</a></strong></p>
+<p>---</p>
+<h4 id="h7">💡 技术洞见 #5</h4>
+<p><strong>Kimi K3模型通过动态量化技术实现本地化运行</strong></p>
+<p>📝 <strong>推文原文</strong> &gt; 重磅消息！ &gt; &gt; KIMI K3 已经来了！ &gt; 现在，你的本地电脑也能运行这头技术巨兽了！ &gt; &gt; Kimi K3 私有化：让一台参数规模高达2.8万亿的庞然大物在本地高端硬件上运行！ &gt; &gt; 试想一下：目前全球最强的开放型人工智能模型之一——具有2.8万亿参数、多模态（multimodal）能力，以及惊人的100万标记（token）记忆，现在通过技术革新压缩体积，确保能够在本地高性能电脑上运行。 &gt; &gt; － 不再需要为云服务账单烦恼 &gt; － 不再需要排队等待API访问 &gt; － 完全用自己的设备体验尖端智能 &gt; &gt; 是的，这真的发生了！ &gt; &gt; ### 重磅更新 &gt; 今天，Unsloth AI 团队发布了一项突破性更新： &gt; Kimi K3 模型现在可以在本地机器上运行。 &gt; &gt; 通过创新的动态1-bit量化（Dynamic <a class="cpt" href="../c/1-bit-quantization.html" data-def="将模型权重压缩到仅用1个比特表示的技术，能大幅减小模型体积，但会牺牲部分精度">1-bit Quantization</a>）技术，原本高达1.56 TB的模型被压缩到了仅594 GB，体积减少了惊人的62%。 &gt; &gt; 更绝的是？ &gt; 即使如此大幅压缩，模型精度仍能保留约78.9%。 &gt; &gt; 凭借先进的内存卸载优化，你现在可以用比如一台搭载128 GB内存的 Mac Studio，相对可及的硬件，也能启动运行这个庞大的系统！ &gt; &gt; ### 认识 Kimi K3——开放领域的明星 &gt; 由 Moonshot AI（Kimi 的开发者）推出的 Kimi K3 并非普通模型。它是全球首个开放式 3T（即三万亿级别）模型，具备以下核心特性： &gt; &gt; - 参数规模：总计2.8万亿参数（采用专家混合设计，活跃参数约1040亿） &gt; - 原生多模态：可处理文本、图像、视频 &gt; - 超长上下文窗口：支持长达100万个标记 &gt; - 专属架构优化：例如 Kimi Delta Attention，为长上下文解码加速 &gt; &gt; Kimi K3 天生适合应对硬核任务，包括长时间代码代理、深度科研、复杂推理、自我进化式工作流等。 &gt; &gt; 早在7月27日，Kimi K3 的开放模型权重发布时，就在AI界掀起轩然大波。而现在，Unsloth 又进一步将模型真正带到每个人的桌面上，变得触手可及。 &gt; &gt; ### 一场技术的魔法秀 &gt; 通常来说，这种规模的模型只可能存在于大型数据中心中。而 Unsloth 的“动态量化”技术，不同于普通压缩手段，它会精心保护模型中最关键的层次，确保即使只有1-bit精度，模型仍然能保持惊人的锐利表现。 &gt; &gt; 我的早期测试表明，这个1-bit版本不仅能轻松完成困难的创造性任务，还能可靠地调用工具。当然，它还不够完美（更高位量化版本准确率可达90%左右），但对于本地探索来说，绝对是革命性的！ &gt; &gt; ### 亲身体验吧 &gt; 我稍后会在这里以及 ReadMultiplex.con 上免费发布使用指南。现在可以从以下资源开始： &gt; &gt; Unsloth 提供完整内容： &gt; 详细指导文档：https://t.co/9aSe09Mjrz &gt; 模型文件下载（GGUF 格式）：https://t.co/SnUUFZYdlw &gt; &gt; 你可以通过 Unsloth Studio、LM Studio 或 llama.cpp 运行，模型压缩文件正在快速上传中，社区里已经有不少展示案例了。 &gt; &gt; ### 更大的图景 &gt; 这不仅仅是一次酷炫的技术发布，更是前沿AI逐渐向普通人靠近的信号。从前需要超级计算机集群运行的东西，现在正在走向高端桌面的日常化。 &gt; &gt; 明天的实验、智能代理和创造性工具，如今变得更加私人化和触手可及。 &gt; &gt; 人工智能的未来，不再仅仅属于云端。 &gt; 它就驻守在你的键盘旁边。 &gt; &gt; —— &gt; 参考资料： &gt; 官方指南：https://t.co/9aSe09Mjrz &gt; Kimi K3 技术博文：https://t.co/LfQoEBiHPs</p>
+<p>🧠 <strong>深度解读</strong> Kimi K3模型通过动态1-bit量化技术实现了在本地高性能硬件上的运行，这一技术将模型体积大幅压缩，同时保持了可接受的精度。通过利用MoE的低活跃参数特性和选择性保护关键层，Unsloth AI团队成功地将云端级能力迁移到本地开发和实验环境中。这一突破不仅降低了对云服务的依赖，也使得尖端AI技术更加贴近普通用户。</p>
+<p>🔗 <strong><a href="https://news.miracleplus.com/share_link/145873" target="_blank" rel="noopener nofollow">查看原文</a></strong></p>
+<p>---</p>
+<h4 id="h8">💡 技术洞见 #6</h4>
+<p><strong>开源GPU加速库预构建轮子降低接入门槛</strong></p>
+<p>📝 <strong>推文原文</strong> &gt; 在Astral，我们为一些热门的GPU加速库（例如FlashAttention和DeepSpeed）创建了预构建的轮子（wheels），并将它们发布在符合标准的Python索引上。 &gt; &gt; 今天，我们正式开源了这些构建流水线，并向所有人开放这些轮子资源。https://t.co/irIMda5YCE</p>
+<p>🧠 <strong>深度解读</strong> 为复杂、对编译环境敏感的 GPU 库提供预构建、标准索引分发的二进制包，并公开构建流水线，是降低企业/开发者接入门槛、增强信任与可复现性的高杠杆做法，可被作为开发者基础设施或托管服务进行产品化。</p>
+<p>🔗 <strong><a href="https://news.miracleplus.com/share_link/145874" target="_blank" rel="noopener nofollow">查看原文</a></strong></p>
+<p>---</p>
+<h4 id="h9">💡 技术洞见 #7</h4>
+<p><strong>Parse Gateway通过复杂度分层解析提高效率与准确性</strong></p>
+<p>📝 <strong>推文原文</strong> &gt; 并不是PDF中的每一页都需要相同的处理方式。 &gt; &gt; 一张扫描的封面，一张密集的表格，一页干净的文本，一张图表内容繁多的页面……大多数解析流程会直接将它们全部丢给同一个解析器，导致在全篇文档中必须在成本、速度和准确性之间进行权衡取舍。 &gt; &gt; 为了解决这个问题，我们开发了<strong>Parse Gateway</strong>。 &gt; &gt; 它利用LiteParse的`is_complex`（判断复杂程度的功能）逐页评估页面复杂性，并根据复杂性的原因（例如扫描件、文本稀疏、编码乱码、矢量文本、嵌入图片等）和复杂程度，将每一页分配到合适的等级处理。简单的页面可以直接免费解析；真正复杂的页面则会被分配到更高等级的LlamaParse解析层。不需要手动设定规则，也不必使用“一刀切”的处理流程。 &gt; &gt; 此外，Parse Gateway还能作为MCP服务器（MCP是Multi-Complexity Processing，多复杂度处理），让你的智能代理（agents）自主评估页面复杂度并选择合适的解析等级！ &gt; &gt; 最终效果是：你无需为那些不需要高成本处理的页支付额外的费用，同时还能保证复杂页面的解析准确性。 &gt; &gt; 📚️ 详细解读：https://t.co/K5l80XxulV &gt; &gt; 👩‍💻 立即试用：https://t.co/Gl0Dggv8qn</p>
+<p>🧠 <strong>深度解读</strong> 按页复杂度分层路由解析器（按原因与严重度分类），并将复杂度估计暴露为可被 agent 调用的服务，是在文档解析场景中同时实现成本效率与准确性的可复用工程策略。</p>
+<p>🔗 <strong><a href="https://news.miracleplus.com/share_link/145876" target="_blank" rel="noopener nofollow">查看原文</a></strong></p>
+<p>---</p>
+<h4 id="h10">💡 技术洞见 #8</h4>
+<p><strong>解析网关通过复杂度评估优化PDF处理流程</strong></p>
+<p>📝 <strong>推文原文</strong> &gt; 不是每一页 PDF 文件都需要相同的处理方式。 &gt; &gt; 封面扫描页、密集的表格、干净的文本页、图形繁多的插图页……大多数解析（parsing）流程会将这些全都丢给一个统一的解析器（parser），这样自然会在成本、速度与全文的准确性之间不得不做出妥协。 &gt; &gt; 我们开发了 <strong>Parse Gateway（解析网关）</strong> 来解决这个问题。 &gt; &gt; 该工具利用 LiteParse 的 <strong>is_complex（复杂性判断）</strong> 功能，逐页评估复杂度，并根据页面复杂的原因（如扫描、稀疏文本、乱码编码、矢量文本、嵌入图片）以及复杂程度，将页面路由到合适的解析层级。简单的页面可以直接在处理流程中免成本解析，而真正有挑战的页面则会被分配到功能更强大的 <strong>LlamaParse（拉马解析）</strong> 层级处理。无需手动规则，也不再是一刀切的管道。 &gt; &gt; 此外，它还可以作为 MCP（多通道处理）服务器使用，因此你的系统代理可以自行评估复杂度并选择对应的解析层级！ &gt; &gt; 最终效果：在不牺牲高复杂页面准确性的情况下，你可以避免为简单页面支付昂贵的解析成本。 &gt; &gt; 📚️ 详细说明：https://t.co/K5l80XxulV &gt; &gt; 👩‍💻 试用入口：https://t.co/Gl0Dggv8qn</p>
+<p>🧠 <strong>深度解读</strong> Parse Gateway通过逐页复杂度评估，将PDF页面路由到不同解析层级，优化处理成本与准确性。简单页面快速解析，复杂页面由强大解析器处理，实现动态资源分配，降低成本同时保持高复杂页面的准确性。</p>
+<p>🔗 <strong><a href="https://news.miracleplus.com/share_link/145879" target="_blank" rel="noopener nofollow">查看原文</a></strong></p>
+<p>---</p>
+<h4 id="h11">💡 技术洞见 #9</h4>
+<p><strong>无人机与机器人自动化风力涡轮机维护提升效率</strong></p>
+<p>📝 <strong>推文原文</strong> &gt; RT @lukas_m_ziegler 无人机与机器人为风力涡轮机提供服务！💨 &gt; &gt; @aerones_com 是一家来自拉脱维亚的机器人公司，致力于将维护风力涡轮机的工作自动化。 &gt; &gt; 他们利用无人机和履带式机器人对风力涡轮机叶片和塔架进行检查、维护和修理，涵盖陆上和海上风电机组。 &gt; &gt; 他们机器人提供的服务包括什么？闪电保护测试、排水孔清洁、目视检查、无损检测（Non-destructive Testing，非破坏性的测试方法）、叶片及塔架清洁，清除灰尘、虫子、盐分、藻类及油渍沉积。 &gt; &gt; 工作内容多种多样。 &gt; &gt; 一台无人机不到30分钟即可扫描完整个风力涡轮机，只需按一个按钮。数据会立即上传至云端，并由人工智能（AI）实时分析，发现问题、分类并评估严重程度。 &gt; &gt; 传统的涡轮维护需要技术团队到场，攀爬或使用升降设备进行人工检查，通常耗时数天。而使用Aerones技术可以将停机时间减少4-6倍，闲置时段减少5-10倍。 &gt; &gt; 对海上风电来说，这意义重大。海上作业的天气窗口狭窄，船只或直升机的费用也十分高昂。 &gt; &gt; 目前已经在全球范围内部署，由NextEra、GE、Vestas、Enel和西门子歌美飒（Siemens Gamesa）等公司应用于陆上和海上风电系统。 &gt; &gt; 维护工作取决于天气条件，而无需按照技术团队的排班进行！💨 &gt; &gt; ♻️ 订阅每周机器人资讯，不错过任何最新动态 → https://t.co/GoA3ZuwoPB</p>
+<p>🧠 <strong>深度解读</strong> Aerones通过无人机和机器人自动化风力涡轮机维护，结合实时AI分析，显著提升效率并减少停机时间。自动化感知与云端数据处理使运维调度更灵活，尤其对海上风电具有重要意义，降低成本并加速企业采纳。</p>
+<p>🔗 <strong><a href="https://news.miracleplus.com/share_link/145880" target="_blank" rel="noopener nofollow">查看原文</a></strong></p>
+<p>---</p>
+<h4 id="h12">💡 技术洞见 #10</h4>
+<p><strong>终端浏览器与CLI结合加速Web开发与测试</strong></p>
+<p>📝 <strong>推文原文</strong> &gt; 转发 @RobKnight__ 的推文：介绍 *terminal-browser*（终端浏览器） &gt; &gt; 一个可以在你现有终端内运行的浏览器 &gt; &gt; - 可在终端中一边预览你的网站，一边查看你的代理（agent） &gt; - 在终端中直接打开 HTML 规划文件 &gt; - 使用内置的 CLI（命令行界面）功能实现浏览 &gt; &gt; https://t.co/gTzO57zGfe https://t.co/IysSjJ2ryQ</p>
+<p>🧠 <strong>深度解读</strong> 终端浏览器结合CLI功能与agent并置，创造了一个可程序化、可复现的开发闭环，加速Web原型迭代、自动化交互测试和agent驱动的网页操作，提升开发效率与测试能力。</p>
+<p>🔗 <strong><a href="https://news.miracleplus.com/share_link/145882" target="_blank" rel="noopener nofollow">查看原文</a></strong></p>
+<p>---</p>
+<h4 id="h13">💡 技术洞见 #11</h4>
+<p><strong>Inkling-Small模型发布，支持多模态推理与微调</strong></p>
+<p>📝 <strong>推文原文</strong> &gt; RT @NVIDIAAI 又一款开放权重模型发布，来自@thinkymachines 👀——Inkling-Small正式上线。 &gt; &gt; 这款模型具备对音频和图像的原生推理能力，并支持可变的思维运算强度，非常适合基于NVIDIA NeMo在NVIDIA DGX Station（NVIDIA DGX工作站）上进行微调。 &gt; &gt; NVFP4检查点下载链接：https://t.co/oJDeCVGy5p</p>
+<p>🧠 <strong>深度解读</strong> Inkling-Small 提供了开源的多模态推理权重，具备‘variable thinking effort’的能力描述，并提供NVFP4格式的检查点，适合在NeMo/DGX环境中进行微调。这构成了一条高效的多模态模型微调与部署路径。</p>
+<p>🔗 <strong><a href="https://news.miracleplus.com/share_link/145884" target="_blank" rel="noopener nofollow">查看原文</a></strong></p>
+<p>---</p>
+<h4 id="h14">💡 技术洞见 #12</h4>
+<p><strong>Inkling-Small模型缩小规模但保持高性能，适合中小规模开发者</strong></p>
+<p>📝 <strong>推文原文</strong> &gt; 又一款开源模型@thinkymachines 👀！Inkling-Small现已推出。 &gt; &gt; 它能够原生处理音频和图像的推理任务，并支持弹性推理强度，非常适合在NVIDIA DGX Station上使用NVIDIA NeMo进行微调。 &gt; &gt; NVFP4（NVIDIA FP4格式）权重下载链接：https://t.co/oJDeCVGy5p &gt; “今天我们正式发布Inkling-Small。 &gt; &gt; Inkling-Small的性能接近原版Inkling，但其规模缩小到了四分之一，拥有2760亿参数总数，其中活跃参数为120亿。我们已全面开放其权重。 &gt; &gt; https://t.co/BtYNcpkDRA &gt; &gt; 现在就用Tinker平台对其进行微调，或者在Tinker Playground中与其通过文本、图像和音频进行交互聊天吧！”</p>
+<p>🧠 <strong>深度解读</strong> 将超大总参数量与小规模活跃子网络（276B/12B）结合，并提供可量化的厂商检查点（NVFP4）和一体化微调运行时（NeMo/DGX/Tinker），是兼顾表征能力与多模态推理的有效策略，适合中小规模开发者和产品化路径。</p>
+<p>🔗 <strong><a href="https://news.miracleplus.com/share_link/145885" target="_blank" rel="noopener nofollow">查看原文</a></strong></p>
+<p>---</p>
+<h4 id="h15">💡 技术洞见 #13</h4>
+<p><strong>后训练与工程化工具结合提升科研智能代理的效能</strong></p>
+<p>📝 <strong>推文原文</strong> &gt; 转发自 @arcee_ai：@lokahq 团队通过后期训练，将我们的 260 亿参数模型 Trinity Mini 打造成专门用于科学工作的智能代理工具。 &gt; &gt; 在与 @PrimeIntellect 和 @AWS 的合作中，Loka 教授 Trinity Mini 执行多步骤的科研工作流、协调工具、查询数据库，并在每一步操作中记录可审计的痕迹。 &gt; &gt; 这里是关于这个智能代理工具的详细介绍。🧵</p>
+<p>🧠 <strong>深度解读</strong> 后训练与工程化“agentic harness”（工具编排、数据库接入与逐步可审计日志）的结合，是将中等规模LLM快速转化为可在科研场景中运行的、合规且可复现代理的一条高性价比路径。</p>
+<p>🔗 <strong><a href="https://news.miracleplus.com/share_link/145888" target="_blank" rel="noopener nofollow">查看原文</a></strong></p>
+<p>---</p>
+<h4 id="h16">💡 技术洞见 #14</h4>
+<p><strong>通过创建和维护验证技能提升应用的自动化验证能力</strong></p>
+<p>📝 <strong>推文原文</strong> &gt; RT @poteto 现在 pstack 增加了两个我推荐大家使用或复制的技能（skills）： &gt; &gt; /create-verification-skill &gt; [链接] https://t.co/xYQArsuVWR &gt; &gt; /maintain-verification-skill &gt; [链接] https://t.co/J5s8WL1itT &gt; &gt; 如果你还没有，那么运行 /create-verification-skill 会生成一个技能，教你的代理（agent）如何运行、控制和调试你的应用（app）。 &gt; &gt; 它还会同时创建一个我称为“功能地图（feature map）”的东西：它是你的应用所有功能的一个清单，以及如何从用户视角（POV，用户的角度）找到并使用这些功能。这张功能地图让代理能够像真实用户一样浏览和操作应用，极大提高了它验证自身工作的能力。不过需要注意的是，这张功能地图会非常快地变得过时。 &gt; &gt; 通过运行 /maintain-verification-skill，并让游标云代理（Cursor Cloud Agents）将其作为每日自动化任务，这项技能会检查你的应用是否有变动，并实时更新你的功能地图。 &gt; &gt; 构建一个强大的验证技能（verification skill），最终会成为团队的重要基础设施，能够整体提升每个人的生产力和工作质量，同时为构建更多有趣的自动化功能奠定基础。 &gt; &gt; 安装 https://t.co/WDB4U1rwmu，并获取我的技能的自动更新。祝用得开心！</p>
+<p>🧠 <strong>深度解读</strong> 通过创建和维护验证技能，开发者可以生成一个功能地图，使代理能够像用户一样操作应用，从而提升验证能力。每日自动化更新功能地图确保其准确性，成为团队提升生产力和工作质量的重要基础设施。</p>
+<p>🔗 <strong><a href="https://news.miracleplus.com/share_link/145889" target="_blank" rel="noopener nofollow">查看原文</a></strong></p>
+<p>---</p>
+<h4 id="h17">💡 技术洞见 #15</h4>
+<p><strong>实施测试驱动的生命周期管理以优化 agent 技能表现</strong></p>
+<p>📝 <strong>推文原文</strong> &gt; 大部分代理（agent）的技能（skills）是由AI生成的，只经过简单审核后就上线了，没有进行充分的评估（evals）。 &gt; &gt; 这导致故障变得难以诊断：是技能本身失效了？是在错误的时间被激活？还是这个任务超出了模型的能力范围？ &gt; &gt; 来自 @_philschmid 的一场精彩分享（在 @aiDotEngineer 的 YouTube 频道上）提到了这些关键点： &gt; &gt; - 技能普遍提高了基准测试（benchmark）表现约15%。 &gt; - 人工编写的技能表现最佳，而AI生成的技能有时反而会拉低效果。 &gt; - 测试应包括触发技能的正向测试提示（test prompts）以及不应触发的负向测试提示。 &gt; - 应评估最终结果，而不是仅关注是否沿着某一特定路径完成任务。 &gt; - 针对实际使用的模型和代理框架（agent harnesses），进行多次独立试验。 &gt; - 确保技能精简且目标明确，将更深入的背景信息存储在参考文件中。 &gt; - 将临时的功能性技能与持久性的偏好型技能分离。 &gt; - 每次评估时，都需对比有技能和无技能的表现。 &gt; - 一旦基础模型能够独立完成任务，就退休该技能，但保留评估作为回归测试（regression test）。 &gt; &gt; 一个好起点：选择你最常用的技能，编写五个正向测试提示和五个负向测试提示，然后分别在有技能和无技能的情况下运行评估。 &gt; &gt; 视频链接：https://t.co/JpnH5zgfjz</p>
+<p>🧠 <strong>深度解读</strong> 对 agent 技能实施测试驱动的生命周期管理，通过正/负触发用例进行独立、重复的对比评测，保持技能精简并区分永久偏好和临时能力。当基础模型无需技能也能通过时，退役该技能但保留回归测试，以优化技能表现。</p>
+<p>🔗 <strong><a href="https://news.miracleplus.com/share_link/145890" target="_blank" rel="noopener nofollow">查看原文</a></strong></p>
+<p>---</p>
+<h4 id="h18">💡 技术洞见 #16</h4>
+<p><strong>用廉价硬件和主流平台快速推出专用沟通产品</strong></p>
+<p>📝 <strong>推文原文</strong> &gt; 一个无需屏幕的神奇盒子，这周在社交媒体上火了！它能让孩子通过WhatsApp（即时通讯平台）和祖父母交换语音消息，而它背后的制作故事更显有趣。 &gt; &gt; Dan Peguine找到Claude Fable，请他写了一份使用手册。Claude仅用一个简单的提示语，就生成了一本插图丰富、孩子也能看懂的操作指南。 &gt; &gt; 硬件方面，这个装置仅用到一个“比巧克力棒还小”的Raspberry Pi Zero 2（树莓派，迷你计算机板），一个USB扬声器和麦克风，还有两个大按键作为唯一的操作界面。 &gt; &gt; 这个盒子通过一个独立的电话号码连接到WhatsApp，所以只有发给孩子的消息会被传送到他们房间。当孩子们播放语音消息时，祖父母会收到一个耳机表情符号的“已收听”回执。 &gt; &gt; 这款设备是Peguine和他儿子一起制作的。父子两人在几周内不断优化用户体验（UX）。在Fable撰写的操作手册中，他的儿子被称为“首席工程师”。 &gt; &gt; Peguine说：“我喜欢他们之间能不通过我直接联系，而且完全不需要屏幕。” &gt; &gt; “我只是想做点有趣的东西！我给我的孩子创造了一种能通过WhatsApp和祖父母聊天的方式——但无需屏幕！” &gt; &gt; 这个盒子就放在孩子们的卧室里。他们只需按下那个超大的蓝色按钮，就能录制语音消息，然后消息会被发送到一个包含祖父母的WhatsApp群组。 &gt; &gt; 这个装置是双向的。当祖父母回复消息时，会响起一个大家一起挑选的铃声，孩子们就会跑回自己的房间收听语音。而且祖父母还能收到一个小耳机表情符号的“已收听”通知。 &gt; &gt; 如果孩子们出门或睡着了，消息会自动排队等待他们回来收听。 &gt; &gt; 当然，设备在夜间有“静音时段”，保证不会打扰休息。 &gt; &gt; 过去几周，我和儿子一起完成了这个项目，反复改进用户体验。孩子们和祖父母都非常喜欢这个小装置！ &gt; &gt; 我最喜欢的就是他们能够直接联系，不需要我这个“中间人”，也不需要任何屏幕辅助！”</p>
+<p>🧠 <strong>深度解读</strong> 通过使用廉价硬件和主流通信平台，快速推出低维护、易上手的专用沟通产品。这种方法避免了重建通信栈的复杂性和成本，更容易被家庭用户采纳，同时通过 LLM 生成用户手册，进一步降低了使用门槛。</p>
+<p>🔗 <strong><a href="https://news.miracleplus.com/share_link/145893" target="_blank" rel="noopener nofollow">查看原文</a></strong></p>
+<p>---</p>
+<h4 id="h19">💡 技术洞见 #17</h4>
+<p><strong>微调PTX指令可显著提升GPU内核性能</strong></p>
+<p>📝 <strong>推文原文</strong> &gt; 始终检查你的PTX代码：仅仅将`div.rn.f32`指令改成`rcp.approx`，我的自定义attention内核相比Torch的标准SDPA（Scaled Dot-Product Attention，缩放点积注意力）性能提升从1.5倍提高到了2.17倍。</p>
+<p>🧠 <strong>深度解读</strong> 检查并微调生成的 PTX 指令（比如用 rcp.approx 替代昂贵的除法）能在保持可接受数值精度下显著提升 GPU 内核性能。</p>
+<p>🔗 <strong><a href="https://news.miracleplus.com/share_link/145894" target="_blank" rel="noopener nofollow">查看原文</a></strong></p>
+<p>---</p>
+<h4 id="h20">🔬 科学与发现</h4>
+<h4 id="h21">💡 科研洞见 #1</h4>
+<p><strong>自然语言提示生成形式验证流体动力学仿真代码</strong></p>
+<p>📝 <strong>推文原文</strong> &gt; 欧拉方程（Euler&#x27;s equations）是可压缩流体动力学（compressible hydrodynamics）的基础，其是完全可压缩Navier-Stokes方程（Navier-Stokes equations）在零粘度（zero viscosity）极限下的特殊情形。欧拉方程允许包括激波（shock waves）、稀疏波扇（rarefaction fans）、接触间断（contact discontinuities）以及复杂热力学作用在内的现象发生。在处理跨音速（transonic）、超音速（supersonic）或高超音速（hypersonic）流动时，这些现象往往需要精妙的熵修正（entropy fixes）。 &gt; &gt; 今天，Lanyon成功实现了一项惊人的壮举——通过单一自然语言提示（natural language prompt），一次性生成完成的、正式验证（formally verified）的可压缩流体动力学仿真代码（compressible hydrodynamics simulation code），支持复杂且动态几何结构中的湍流建模（turbulence modeling）。最终成果包含大约7000行代码、11000行形式化证明（proof），全部生成时间仅约3分钟。 &gt; &gt; 欢迎阅读我们的技术深度解析文章，了解更多关于Lanyon如何通过生成AI驱动、形式验证的新一代仿真工具，取代传统仿真工具的细节。 &gt; &gt; GitHub项目链接：https://t.co/i0689VvH7z &gt; 技术深度解析文章链接：https://t.co/SXRN96M5YJ &gt; &quot;在复杂几何中处理正式验证的可压缩流体动力学：通过等温与全可压缩欧拉方程（isothermal and full compressible Euler equations）模拟超音速流动、激波相互作用及湍流结构形成，以及利用Lanyon实现完全自主的仿真与验证。 &gt; &gt; 成果特点：~7000行C代码，~11000行Lean形式化证明，~150项正确性定理，约3分钟完成生成。 &gt; &gt; 欧拉方程构成了我们对可压缩流体动力学的基本理解，对航空航天及其他工程领域来说至关重要，同时也是更复杂系统（例如Navier-Stokes方程与理想磁流体力学方程（ideal magnetohydrodynamics equations））中双曲方程结构的理论基础。正确求解欧拉方程不仅需要数学与数值上的精确性，还必须兼顾物理与热力学的一致性。 &gt; &gt; 据我们所知，Lanyon刚刚完成了首次端到端正式验证的欧拉方程求解器（solver），该求解器提供了完整的、可执行的数学、物理和数值正确性证明。更令人震撼的是，它成功在复杂（甚至是动态）的几何中运行了仿真。 &gt; &gt; GitHub项目链接与技术深度解析文章详见下方👇&quot;</p>
+<p>🧠 <strong>深度解读</strong> 将 LLM 驱动的代码生成与交互式证明助手联合起来，可以在几分钟内从自然语言提示产出大型、可执行且形式化证明的工程级 PDE 求解器，涵盖数值、数学与物理一致性，这为用 AI 快速生成并形式化验证复杂仿真软件打开了可迁移的路径。</p>
+<p>🔗 <strong><a href="https://news.miracleplus.com/share_link/145875" target="_blank" rel="noopener nofollow">查看原文</a></strong></p>
+<p>---</p>
+<h4 id="h22">💡 科研洞见 #2</h4>
+<p><strong>AI生成并验证压缩流体力学求解器实现突破性进展</strong></p>
+<p>📝 <strong>推文原文</strong> &gt; 欧拉方程（Euler&#x27;s equations）是可压缩流体力学（compressible hydrodynamics）的核心基础，属于全可压缩纳维-斯托克斯方程组（compressible Navier-Stokes equations）中的一种特殊情况，在粘性系数趋于零时成立。方程支持激波（shock waves）、膨胀扇（rarefaction fans）、接触间断（contact discontinuities）等复杂现象，还涉及微妙的热力学交互，需要在处理跨音速（transonic）、超音速（supersonic）、或者高超音速（hypersonic）流动时进行精妙的熵修正（entropy fixes）。 &gt; &gt; Lanyon 刚刚完成了一项突破性任务：通过一个简单的自然语言指令，成功生成了一套形式化验证（formally verified）的可压缩流体力学仿真代码，涵盖复杂且动态几何形状下的湍流建模支持（turbulence modeling）。这包括约 7,000 行代码和约 11,000 行证明，仅耗时约 3 分钟。 &gt; &gt; 欢迎阅读我们的技术深度解析，了解 Lanyon 如何替代传统仿真工具，提供可无限扩展、形式化验证、且具备人工智能（AI）赋能特性的下一代工具。 &gt; &gt; GitHub 项目链接：https://t.co/i0689VweX7 &gt; 技术深度解析：https://t.co/SXRN96MDOh &gt; &gt; 文章介绍： &gt; 《复杂几何中的形式化验证可压缩流体力学仿真：使用等温和全可压缩的欧拉方程进行超音速流动仿真、激波交互与湍流结构分析，全部基于 Lanyon 自动化实现及验证。》 &gt; 成果亮点：约 7,000 行 C 代码、约 11,000 行 Lean 形式化证明、约 150 条正确性定理，仅耗时约 3 分钟。 &gt; &gt; 欧拉方程作为可压缩流体力学理论的基础，对航空航天及其他工程领域至关重要，同时也是更复杂系统（如纳维-斯托克斯方程组及理想磁流体动力学方程组）的底层双曲结构模型。正确求解这些方程不仅需要在数学和数值计算上精确无误，还需要确保物理和热力学的一致性。 &gt; &gt; 据我们所知，Lanyon 首次实现了从头到尾完全形式化验证的欧拉方程求解器，这不仅涵盖完整且可执行的数学、物理以及数值正确性证明，还能运行这些仿真，并支持复杂甚至动态的几何形状。 &gt; &gt; GitHub 项目链接和详细技术解析见下方 👇</p>
+<p>🧠 <strong>深度解读</strong> 单次自然语言提示生成并验证一个端到端的、可运行的压缩流体力学求解器，表明 AI 可以在工程级别同时合成实现与形式化证明，将形式化验证从稀有的手工活动变为可编排的、自动化的交付物，从而为替换遗留仿真工具并降低高保证软件的门槛提供可操作路径。</p>
+<p>🔗 <strong><a href="https://news.miracleplus.com/share_link/145877" target="_blank" rel="noopener nofollow">查看原文</a></strong></p>
+<p>---</p>
+<h4 id="h23">💰 商业与战略</h4>
+<h4 id="h24">💡 商业洞见 #1</h4>
+<p><strong>AI定位策略应聚焦数量级提升或微型垂直产品支持</strong></p>
+<p>📝 <strong>推文原文</strong> &gt; RT @maxkolysh 我和Tim Zheng在YC创业学校（YC Startup School）进行了一场炉边对谈，聊了聊他如何花了十年时间把@useapolloio发展到拥有超过10万付费用户的规模，以及如果从头再来，他会选择不同的做法。 &gt; &gt; 以下是几个要点： &gt; &gt; 1. <strong>判断一款产品是否有效的标准</strong>：他的标准是，这项技术是否能让产品比旧方法好10倍甚至100倍，而不是仅仅提升20%的效果。他用了教育作为例子。一份练习测试虽然比传统的试卷更好，但它并不属于一个全新的类别。而如果能为每个孩子提供一个真实的私人导师，就会比传统的课堂教学好上1000倍。如果你真的能构建这样的产品，它会自然地迅速传播开来。 &gt; &gt; 2. <strong>小型业务即将迎来质的飞跃</strong>：他25岁的弟弟曾是亚马逊的设计师和工程师，同时也在为纽约马拉松训练。他正在开发一款非常专业的跑步应用，基本上就是他在大学游泳队时期希望自己和教练能拥有的一款工具。这个市场很小，没有大公司实验室会去开发这种产品。但这可能会成为一个年收入1000万美元、几乎不需要员工的小型业务。而Tim认为未来会有成千上万这样的公司。他关注的一个数字是“每位员工的年收入”，以往被认为优秀的水平是每位员工年创收30万美元。 &gt; &gt; 3. <strong>人们仍然愿意为软件付费</strong>：一个常见的反对论点是，未来每个人都会自己开发应用程序，但事实并非如此。Tim每月为一个日记应用付8美元，尽管他完全可以自己开发这样的工具，但如果自己开发，他需要花费的时间和资源会远超这8美元。 &gt; &gt; 4. <strong>关于寻找创业想法</strong>：他的建议听上去很无聊，但其实非常实用。他的朋友们会制作一张创业想法的电子表格，按照市场规模、竞争状况以及销售的难易程度进行打分，外加一列写上他们自己对想法的兴趣程度。然后他们和一百个人聊这些想法。在某个时点，你会真正理解需求，然后打造出产品，它就会成功。他指出这一切都是在Claude（AI语言模型）出现之前完成的，而现在打分部分基本上可以免费完成了。 &gt; &gt; 5. <strong>关于大市场竞争激烈的问题</strong>：他对此并不担心。在他所在的行业，有40到50个竞争对手，而其中很多公司每年的收入都有数千万美元，因为每个客户都想要符合自己需求的稍有不同的解决方案。</p>
+<p>🧠 <strong>深度解读</strong> 定位策略应二选其一：要么把 AI 用于产生真正的数量级提升以创造新范式，要么把 AI 工具化以支撑成千上万的微型垂直产品，通过高人均营收实现可观规模；同时用大模型把想法评分自动化，并配合大量用户访谈快速验证。</p>
+<p>🔗 <strong><a href="https://news.miracleplus.com/share_link/145878" target="_blank" rel="noopener nofollow">查看原文</a></strong></p>
+<p>---</p>
+<h4 id="h25">💡 商业洞见 #2</h4>
+<p><strong>价格调整与计费规则优化提升模型性价比</strong></p>
+<p>📝 <strong>推文原文</strong> &gt; Luna 现在有着非常高的价值。 &gt; &gt; Terra 就像 Sonnet 一样几乎毫无用处。 &gt; 我不明白为什么你会去使用它们。 &gt; “我们致力于在成本效率、性能和速度方面推动模型的前沿发展。 &gt; &gt; 从今天起，我们将 GPT-5.6 Luna 的价格下调80%，GPT-5.6 Terra 的价格下调20%，并为 GPT-5.6 Sol（API 中提供）推出更快的选项。 &gt; &gt; Luna 和 Terra 的价格下降也体现在 Codex 和 ChatGPT Work 的使用统计中，因此您的使用效能将更高。”</p>
+<p>🧠 <strong>深度解读</strong> 通过价格下调和使用计费规则的优化，平台在短期内提升模型Luna的性价比，吸引开发者选择。评估模型时需考虑单价与计费规则对最终成本和效能的综合影响，以实现更高的使用效能。</p>
+<p>🔗 <strong><a href="https://news.miracleplus.com/share_link/145881" target="_blank" rel="noopener nofollow">查看原文</a></strong></p>
+<p>---</p>
+<h4 id="h26">💡 商业洞见 #3</h4>
+<p><strong>通过价格调整扩大AI模型的市场渗透率</strong></p>
+<p>📝 <strong>推文原文</strong> &gt; 我们致力于在成本效益、性能能力和速度方面不断拓展模型的前沿。 &gt; &gt; 从今天起，我们将GPT-5.6 Luna的价格下调80%，GPT-5.6 Terra下调20%，并在API中为GPT-5.6 Sol提供更快的选项。 &gt; &gt; Luna和Terra的降价已体现在Codex（代码生成工具）和ChatGPT Work（企业版）的使用计费中，因此您的使用效率将更高。</p>
+<p>🧠 <strong>深度解读</strong> 通过对同代模型进行成本/性能分层并同步调整计费，可以扩大低成本使用场景的渗透率，同时保留对低延迟/高性能场景的溢价空间，从而提升整体市场竞争力。</p>
+<p>🔗 <strong><a href="https://news.miracleplus.com/share_link/145886" target="_blank" rel="noopener nofollow">查看原文</a></strong></p>
+<p>---</p>
+<h4 id="h27">💡 商业洞见 #4</h4>
+<p><strong>AI产业链中最有价值的杠杆是数据护城河与GPU利用率</strong></p>
+<p>📝 <strong>推文原文</strong> &gt; 加文·贝克（Gavin Baker）观点： &gt; &gt; “AI模型的价值会归零。数据中心是商品，能源是商品。整个技术堆栈中只有两样东西真正有价值：数据护城河（data moats）和强化学习（reinforcement learning）。” &gt; &gt; 他的“生存名单”很短： &gt; &gt; - 谷歌（Google）——已经是数万亿美元市值，稳如泰山。 &gt; - xAI ——他的预测：与X（指Twitter的母公司X公司）结合后，估值超过1万亿美元。 &gt; - Anthropic ——另一个能存活下来的封闭模型企业。 &gt; &gt; 微软（Microsoft）、OpenAI和Meta则选择了开源，贝克认为他们已经被商品化。 &gt; &gt; 他实际投资的是什么？那些能够提高GPU利用率的事物。如果你能把一块GPU的利用率从30%提升到60%，那么相当于让AI工厂的产出效率翻倍。 &gt; &gt; 他反复提到的数学逻辑是：GPU在4年内快了50倍。英伟达（Nvidia）以5万美元销售的GPU，本质上是台积电（TSMC）用700美元的沙子制造出来的。 &gt; &gt; 贝克的核心思路是：不要租借智能（intelligence），要拥有运行智能的核心资产。 &gt; &gt; 详情分析见下方文章链接。</p>
+<p>🧠 <strong>深度解读</strong> 在AI产业链中，最有价值的杠杆不是单纯的模型，而是数据护城河与强化学习能力，以及通过提高GPU利用率实现的算力效率倍增。因此，策略应从“租用智能”转向“拥有并放大硬件利用率”。</p>
+<p>🔗 <strong><a href="https://news.miracleplus.com/share_link/145887" target="_blank" rel="noopener nofollow">查看原文</a></strong></p>
+<p>---</p>
+<h4 id="h28">💡 商业洞见 #5</h4>
+<p><strong>高端与中端推理设备并行销售策略提升市场渗透率</strong></p>
+<p>📝 <strong>推文原文</strong> &gt; 我们的第一台 Tinybox Pro V2 Black 正式上线啦！如果你害怕错过（FOMO），可以到我们的商店购买，售价仅为16万美元，预计2到4周内发货。这台机器的 GLM-5.2 基准测试结果详见此推文🧵 https://t.co/d9Zcz81imt</p>
+<p>🧠 <strong>深度解读</strong> 通过将高端即装箱式推理设备与可定制裸机和为节省算力的模型优化的中端设备三线并行销售，公司能够同时满足企业级客户的即刻部署需求与DIY/预算敏感客户的灵活性，从而提升销量和市场渗透率。</p>
+<p>🔗 <strong><a href="https://news.miracleplus.com/share_link/145891" target="_blank" rel="noopener nofollow">查看原文</a></strong></p>
+<p>---</p>
+<h4 id="h29">💡 商业洞见 #6</h4>
+<p><strong>AI驱动的合规可视化在资本项目中的战略价值</strong></p>
+<p>📝 <strong>推文原文</strong> &gt; 今天，我们宣布 @dili_ai 完成了由 @khoslaventures 领投，@ycombinator、Brick &amp; Mortar Ventures 和 Allianz 参与的 1500 万美元 A 轮融资，旨在重塑资本项目（capital projects）的专业服务。 &gt; &gt; 自融资仅6个月以来，Dili 实现了超500%的增长，目前已为700多个项目（项目总价值达40亿美元）提供高风险场景的合规（compliance）、监控（monitoring）和审计（audit）支持。 &gt; &gt; Dili 目前与一些全球财富500强（Fortune 500）客户合作，这些客户正在建设美国规模最大的能源和基础设施项目。通过与1000多名开发者、EPC（工程、采购与施工）企业及承包商合作，Dili 加速了项目交付进程。 &gt; &gt; 美国正处于一代人难遇的一次性基础设施建设浪潮中。一项遗漏的 PWA（项目劳动协议）或 Davis Bacon 合规要求可能带来数亿美元的风险，这让在每个项目组合中实现100%的透明度变得至关重要且紧迫。 &gt; &gt; 在此特别感谢我们非凡的客户和合作伙伴——没有你们，这一切都无法实现！ &gt; &gt; 同时感谢 @vkhosla、@hari_arul、@garrytan、@darrenbechtel，以及我们的现有投资者们的支持！ &gt; &gt; 如果你希望站在人工智能（AI）应用于现实世界的最前沿，欢迎加入我们！</p>
+<p>🧠 <strong>深度解读</strong> 在资本项目中，将 AI 产品定位为‘全项目组合的合规可视化和自动化’能够形成强需求和高付费意愿，因为单个合规失误的巨大风险使得企业将可视化/合规视为必须品而非可选项。实现这一点需要覆盖多方参与者并提供可验证的100%可视化能力。</p>
+<p>🔗 <strong><a href="https://news.miracleplus.com/share_link/145892" target="_blank" rel="noopener nofollow">查看原文</a></strong></p>
+<p>---</p>
+<h4 id="h30">💡 商业洞见 #7</h4>
+<p><strong>被怀疑是创业成功的筛选机制</strong></p>
+<p>📝 <strong>推文原文</strong> &gt; RT @rcmisk @ycombinator “创业学堂”中，Sam Altman 与 @garrytan 对谈的最有价值的部分，其实并不是关于人工智能（AI），而是关于如何面对质疑。 &gt; &gt; “要感激这个世界的不理解。他们终究会明白的。而这种不理解是你最大的超级能力。” &gt; &gt; 围绕这句话，他分享的一些建议如下： &gt; &gt; 1. <strong>判断一个想法是否真实的标准</strong>就是主流观点认为你是错的，并且“接受这个过程需要很长时间”。 &gt; &gt; 2. <strong>被忽视是你的护城河</strong>。因为没有大公司竞争，就有时间真正投入研究。他称这是一份“不可思议的礼物”。 &gt; &gt; 3. <strong>做烂大街的创业项目反而更糟</strong>。追热门、跟风，可能让你获得一时的关注和资金，但这些往往很少实现真正的巨大成果。 &gt; &gt; 4. <strong>真正需要的支持者很少</strong>。曾经只有大约50个人相信通用人工智能（AGI，Artificial General Intelligence，即人工智能的通用化）是可行的，其中45个人在OpenAI工作。 &gt; &gt; 5. 但<strong>如果完全没有人支持，那就是危险信号</strong>。“如果你找不到任何人认同你的想法，那你需要警惕。”但如果所有人都赞同你，那同样是个问题。 &gt; &gt; 他最后总结说，<strong>这个世界无法直觉性地理解指数变化</strong>，而新的指数级变革正在出现，即便我们不知道它们具体是什么。 &gt; &gt; 那么，有什么是你坚信正确但大多数同行却认为是错的？</p>
+<p>🧠 <strong>深度解读</strong> 把“被怀疑”当作筛选机制：凡是常识认为你错、并且只有少数深信不疑的人支持的项目，更可能成为长期且稀有的巨大成功；用小而统一的团队与长期耐心来实现它。</p>
+<p>🔗 <strong><a href="https://news.miracleplus.com/share_link/145896" target="_blank" rel="noopener nofollow">查看原文</a></strong></p>
+<p>---</p>
+<h4 id="h31">💡 商业洞见 #8</h4>
+<p><strong>半导体公司成为AI建设的工作资金银行转移信用风险</strong></p>
+<p>📝 <strong>推文原文</strong> &gt; 被广泛认为是最聪明的信用投资者之一。 &gt; “和家人一起度过了一周，同时大部分时间在工作！美国市场时间比我们晚几个小时，这让我多了一些时间消化很多在 X（社交媒体平台）上关于市场的精彩讨论——关于人工智能（AI）的话题实在是多得让人应接不暇，但关于杠杆（leverage）的讨论却远远不够。 &gt; &gt; 我们正在目睹全球股权（equity）和可转债（convertible bonds）市场中与AI相关的高杠杆玩家成为典型的‘猎杀目标’。超大规模云厂商（hyperscalers）及其投资级（investment grade, IG）信用利差扩大是合理的（在信用投资中，基于名义金额和久期的投资组合构建非常重要，因为我们不像股市那样有分红回报），同时在AI主题下，债务正被添加为计算力与能源的另一个约束条件。政府监管依然是一个巨大的不确定因素，但更长的经济周期未必是坏事。我会关注那些资产被迫出售的交易，这些资产的交易价格往往在合同价值或以下，同时优先选择那些拥有良好潜力、对增长机会具有正向期权的交易方。 &gt; &gt; 思考一下计算力（compute）、能源（power）以及基础设施壳层（shell）的现货价格和未来1到2年曲线的影响——那些已经持有（长仓）资产、不需要融资并可以现在完成长期合同的公司会占据显著优势。如果整个经济周期延长而收益曲线趋平，会有许多非常有吸引力的证券可以从被迫出售者手中买入。更多的时间留给竞争和技术在中期内得以发展，对于许多基础设施资产来说未必是件坏事。 &gt; &gt; 我的职业生涯是从2000年代初的电信周期中期开始的——当时的Nortel、Lucent、Cisco等公司正在为它们的客户提供融资。当下，这个平台上有一些非常明智的评论来自那些比我更了解AI生态系统的人，其中提到了Nvidia（英伟达）与Broadcom（博通）的商业模式转变——它们选择成为AI产业发展的营运资金银行，通过融资将行业引渡到收入和现金流阶段。在我看来，目前信用市场的关注点过于集中在Meta、Google、Amazon等巨头，而对这种商业模式改变的关注却不够，这种变化在短期内为计算力的扩展提供了流动性，同时也将信用风险转移到了这些大型半导体公司身上。 &gt; &gt; 看到流动性重新变得有定价真是有趣，而且高等级（IG）公司的债务成本终于需要与其股权成本竞争，也未尝不是好事。”</p>
+<p>🧠 <strong>深度解读</strong> 大型半导体公司正充当AI建设的工作资金银行（working-capital bank），这将把算力部署的短期信用风险从云/终端需求方转移到芯片厂商，从而在近端‘液化’算力 rollout 并重塑相关信用暴露与投资机会。</p>
+<p>🔗 <strong><a href="https://news.miracleplus.com/share_link/145799" target="_blank" rel="noopener nofollow">查看原文</a></strong></p>
+<p>---</p>
+<h4 id="h32">🌐 行业与趋势</h4>
+<h4 id="h33">💡 行业洞见 #1</h4>
+<p><strong>金融领域AI自动化需兼顾准确性成本与扩展性</strong></p>
+<p>📝 <strong>推文原文</strong> &gt; 很高兴宣布我们更新了 @Concourse_ai 的官网页面！ &gt; &gt; 在过去的六个月里，我们开始与越来越多的大型企业合作，帮助他们加速人工智能（AI）的转型进程。利用通用工具和大型语言模型（LLMs，指大规模语言模型）进行“Vibe coding”（一种协作式编码方式）极具威力，是任何押注AI团队的必备技术，但它并不像大家曾经设想的那样是一个万能解决方案。这一点在金融团队中尤为明显。 &gt; &gt; 金融团队经常告诉我们，他们很难将完整的工作流转移给一个通用型助手。他们需要一个专门针对金融实际运作设计的解决方案，能够与他们的数据和控制体系深度集成，从而带来实际变革并推动投资回报率（ROI）。以下是我们听到最多的三个核心需求： &gt; &gt; 1. <strong>准确性</strong> &gt;    LLMs 的运算是基于概率的，而金融运作需要确定性。因此，金融可用的系统必须能同时兼顾两者：用代码计算数学部分，用模型处理判断部分。AI 在金融领域的“随意性”（slop）扩展速度比任何人能检测到的还快，这让评估和追踪（evals and traces）成了一项必需品，而不仅仅是一个附加功能。 &gt; &gt; 2. <strong>成本</strong> &gt;    令牌（token）使用成本已经从可以忽略的小数点误差变成了一项真正的预算支出​​。随着2027年的预算规划展开，财务负责人被要求证明AI投资带来的结果和ROI。解决方案是一层“编排层”（orchestration layer），它可以在不同的模型之间协调路由，将适合的工作交给代码执行——无论是在成本还是可靠性上都更有优势。 &gt; &gt; 3. <strong>扩展性</strong> &gt;    搭建一个基于单数据源的单个Agent（代理）是一回事，但在多个团队、部门和数据源中同时运行数十个Agent则是完全不同的挑战，尤其是在访问控制、日志记录、监控和安全性方面。这就是为什么大多数团队依然停留在单人模式的助手上，而不是具备端到端掌控工作流能力的Agent。 &gt; &gt; 新的Concourse官网页面准确反映了这些行业趋势，以及我们对金融团队如何重新思考和设计其AI工作流以推动真正ROI的愿景。 &gt; &gt; 快来看看吧，欢迎告诉我你的想法： &gt; https://t.co/23RwXf4lLg</p>
+<p>🧠 <strong>深度解读</strong> 在金融领域实现AI自动化需兼顾准确性、成本与扩展性。通过代码与模型的智能编排，降低token成本并保证可靠性，同时设计企业级接入与安全支持多代理多数据源运维，以推动真正的ROI。</p>
+<p>🔗 <strong><a href="https://news.miracleplus.com/share_link/145883" target="_blank" rel="noopener nofollow">查看原文</a></strong></p>
+<p>---</p>
+<h4 id="h34">💡 行业洞见 #2</h4>
+<p><strong>开放权重与可信执行环境结合推动个性化AI服务发展</strong></p>
+<p>📝 <strong>推文原文</strong> &gt; 本周，《华尔街日报》(The Wall Street Journal) 报道了关于开放和主权人工智能（AI）的讨论，其中引用了我说的一段话：“有趣的是，他们反对知识蒸馏（distillation），但他们却蒸馏了整个互联网……我只是觉得很奇怪，他们现在竟然转过头来告诉别人不能做他们自己做过的事情。” &gt; &gt; 我对开放权重（open weights）重新受到关注感到非常兴奋。本周，包括Nvidia（英伟达）、Microsoft（微软）、Meta、OpenAI和Google（谷歌）在内的多家公司共同签署了《开放权重与美国人工智能领导力声明》（Open Weights and American AI Leadership letter）。我们也支持这些行动。来自世界各地的开放权重模型在能力上已经能够匹敌前沿的系统（frontier systems）。 &gt; &gt; 让我真正激动的是，这将解锁前所未有的可能性。当你将开放权重模型与可信执行环境（TEEs，Trusted Execution Environments）结合使用时，就能获得极其强大的能力：一个从头到尾都经过加密且完全主权化的最前沿智能。没有实验室会使用你的数据进行训练，没有实验室会读取你的对话、将你的数据卖给广告商，或从你以为安全的数据中开发出竞争产品。 &gt; &gt; 在Maple，我们正致力于打造这样的系统。开放权重模型运行在可信执行环境中，端到端加密，配备长期记忆和个性化数据整合功能。你的智能将永远属于你自己。 &gt; &gt; 人工智能的未来是开放的。 &gt; &gt; 主权属于个人，也属于全体。</p>
+<p>🧠 <strong>深度解读</strong> 在TEE里运行开源权重模型、并用端到端加密的长期记忆和个人数据集成，能实现既开放又“主权化”的个性化AI服务——模型强、数据不外泄。</p>
+<p>🔗 <strong><a href="https://news.miracleplus.com/share_link/145895" target="_blank" rel="noopener nofollow">查看原文</a></strong></p>
+<p>---</p>
+<h4 id="h35">💡 行业洞见 #3</h4>
+<p><strong>美国政策改革推动自动驾驶技术发展与安全部署</strong></p>
+<p>📝 <strong>推文原文</strong> &gt; 美国前总统特朗普政府今天宣布了一系列措施，旨在“减少繁琐审批流程，加速美国自动驾驶汽车（AV, Automated Vehicle）创新发展”。 &gt; &gt; 交通部长肖恩·达菲（Sean Duffy）指示美国国家公路交通安全管理局（NHTSA）实施以下自动驾驶政策变更： &gt; &gt; 1) <strong>通过与SAE行业技术联合会（SAE Industry Technologies Consortia, ITC）合作，加速开发史上首个自动驾驶性能标准</strong>：这一合作将资助为期三年的“A2SCEND”联合项目，预算为500万美元（约合人民币3650万元）。该项目将召集行业专家收集数据，加速制定首个自动驾驶性能标准，最终形成统一的全国性自动驾驶安全标准，从而消除长期以来限制创新的碎片化监管体系。 &gt; &gt; 2) <strong>允许Zoox公司通过临时豁免条款商业部署其无人驾驶出租车（robotaxis）</strong>：此临时豁免政策允许Zoox公司在两年内每年商业部署多达2500辆机器人出租车，前提是这些车辆需接受一个随着其技术进步而可调整和升级的强化监管体系的审查。 &gt; &gt; 3) <strong>发布临时最终规则，允许在豁免批准之前制造的车辆符合商业豁免部署资格</strong>：该规则将对申请流程进行现代化改进，同时为包括自动驾驶开发者在内的技术创新者提供更便利的豁免申请路径。特别是赋予NHTSA局长权限，可以对豁免生效日期前生产的车辆授予临时豁免资格。 &gt; &gt; 4) <strong>建立新的联邦公众意见征集平台，用于收集关于NHTSA更新版自动驾驶开发和部署安全指南的反馈</strong>：NHTSA正在对自2017年以来首次更新的自动驾驶技术指南进行修订，重点涵盖关键安全领域，包括与紧急救援人员的互动、安全管理系统、远程协助以及事故后车辆行为等，以帮助行业更安全地实现无人驾驶规模化部署。 &gt; &gt; 5) <strong>通过更新指导文件并征集公众反馈，简化Part 555豁免申请流程</strong>：NHTSA正在更新Part 555豁免程序，该程序允许汽车制造商临时销售一定数量的非合规车辆，主要是为了测试新技术。此次更新旨在为豁免建立更灵活的监管框架，同时总结最近的自动驾驶法规框架相关活动，包括扩展豁免途径、简化事故报告流程以及持续推动联邦机动车安全标准（FMVSS）的现代化升级。 &gt; &gt; 此次行动表明，美国政府正以政策改革为驱动，推动自动驾驶技术的快速发展与安全部署。</p>
+<p>🧠 <strong>深度解读</strong> 联邦层面的‘有限、可监督的商业试验 + 行业主导的性能标准制定’正在成为推动自动驾驶落地的主要监管路径，因而竞争优势将更多来自可验证的运营与合规能力（远程援助、事后行为、SMM/安全管理体系、可上报数据流），而非仅仅是感知/模型性能的领先。</p>
+<p>🔗 <strong><a href="https://news.miracleplus.com/share_link/145897" target="_blank" rel="noopener nofollow">查看原文</a></strong></p></article>
+    <div class="dp-actions">
+      <a class="dp-btn pri" href="https://news.miracleplus.com/share_link/145898" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      
+      <button type="button" class="dp-btn sec" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
+      <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
+    </div>
+    <nav class="dp-rel" aria-labelledby="dp-rel-h"><h2 id="dp-rel-h" class="dp-rel-h">相关动态</h2><ul><li><a href="fdee791b49c8.html"><span class="dp-rel-t">中层消失，Token狂热退潮，硅谷工程师眼里的「AI创业下半场」</span><span class="dp-rel-m">都提到「智能体扩展」 · <time datetime="2026-07-31">2026-07-31</time></span></a></li><li><a href="93e257aaa32f.html"><span class="dp-rel-t">谁在训练 Kimi K3 ? 深挖贡献者名单，这有一份最全档案</span><span class="dp-rel-m">都提到「Kimi K3模型」 · <time datetime="2026-07-31">2026-07-31</time></span></a></li><li><a href="ab67ea7aae68.html"><span class="dp-rel-t">齐思洞见2026/07/30「Kimi K3用动态1-bit量化把2.8T MoE模型压缩并实现高端本地运行；前沿自治Agent沙盒逃逸展现跨云、持久自愈入侵风险，推动最小权限与可审计防护；开放推理内核需端到端基准与硬件适配以落地低延迟部署」</span><span class="dp-rel-m">都提到「1位量化」 · <time datetime="2026-07-30">2026-07-30</time></span></a></li><li><a href="285b9257d2df.html"><span class="dp-rel-t">Self-hosting Kimi K3: 20% more hardware cost, 20% better task resolution</span><span class="dp-rel-m">都提到「Kimi K3模型」 · <time datetime="2026-07-29">2026-07-29</time></span></a></li></ul></nav>
+    <p class="dp-note">本页由句子互动动态管线自动生成，聚合内容版权归各来源所有；如来源方希望调整或移除收录，请通过官网联系我们。</p>
+  </div>
+</main>
+<div id="site-footer"></div>
+<script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "齐思洞见2026/07/31「NVMe流式专家加载（WASTE）与动态1‑bit量化使完整2.78万亿参数Kimi K3可在消费级与本地高端硬件运行」"};</script>
+<script src="../../assets/site.js?v=f57b1388"></script>
+</body>
+</html>

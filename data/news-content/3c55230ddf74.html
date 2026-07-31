@@ -1,0 +1,10 @@
+<p><strong>Release:</strong> <a href="https://github.com/simonw/llm/releases/tag/0.32rc1">llm 0.32rc1</a></p>
+        <p>This RC for LLM 0.32 finishes the work that <a href="https://simonwillison.net/2026/Apr/29/llm/">started in LLM 0.32a0</a> - it adds a <a href="https://llm.datasette.io/en/latest/logging.html#the-message-store">new schema design</a> that does a much better job of capturing the details of the prompts and responses returned by the latest model families.</p>
+<p>The most important change is the use of content-addressable hash IDs for stored messages. This allows de-duplication in the database, and means that LLM can now represent trees of messages for forked conversations.</p>
+<p>Since it involves a significant schema change - new tables only, and old data should not be affected at all - it's worth running a backup of your existing <code>logs.db</code> before upgrading to the RC:</p>
+<pre><code>llm logs backup logs-backup.db
+</code></pre>
+<p>The RC also adds support for <code>gpt-5.6-sol</code>, <code>gpt-5.6-terra</code>, and <code>gpt-5.6-luna</code>.</p>
+    
+    
+        <p>Tags: <a href="https://simonwillison.net/tags/llm">llm</a></p>

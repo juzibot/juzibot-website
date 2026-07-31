@@ -16,7 +16,7 @@
 
 <link rel="icon" href="../../logo.png" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet" href="../../assets/site.css" />
+<link rel="stylesheet" href="../../assets/site.css?v=72b48ba4" />
 <style>
   /* 静态兜底导航: site.js 一执行就被 outerHTML 连同占位一起换掉, 访客几乎看不到它。
      不隐藏也不 noscript 包裹——那会让爬虫拿不到, 而它存在的唯一理由就是给不跑 JS 的爬虫看。
@@ -192,7 +192,7 @@
 <p>---</p>
 <h4 id="h11">💡 技术洞见 #9</h4>
 <p><strong>Unsloth AI团队发布Kimi K3的本地运行更新</strong></p>
-<p>📝 <strong>推文原文</strong> &gt; <strong>重大新闻</strong> &gt; &gt; 今天，Unsloth AI团队发布了一个颠覆性的更新：Kimi K3现在可以在本地运行！ &gt; &gt; 通过他们巧妙的动态1-bit量化技术（Dynamic 1-bit quantization），他们将原始约1.56 TB的模型压缩到了仅594 GB，惊人的减少了62%的尺寸。 &gt; &gt; 更令人惊喜的是： &gt; 模型依然保留了原始精确度的约78.9%。 &gt; &gt; 借助智能卸载（offloading），你只需要一台像Mac Studio这样的高性能主机，再搭配128 GB的内存设备，就能顺畅运行这一AI「怪兽」。</p>
+<p>📝 <strong>推文原文</strong> &gt; <strong>重大新闻</strong> &gt; &gt; 今天，Unsloth AI团队发布了一个颠覆性的更新：Kimi K3现在可以在本地运行！ &gt; &gt; 通过他们巧妙的动态1-bit量化技术（Dynamic <a class="cpt" href="../c/1-bit-quantization.html" data-def="将模型权重压缩到仅用1个比特表示的技术，能大幅减小模型体积，但会牺牲部分精度">1-bit quantization</a>），他们将原始约1.56 TB的模型压缩到了仅594 GB，惊人的减少了62%的尺寸。 &gt; &gt; 更令人惊喜的是： &gt; 模型依然保留了原始精确度的约78.9%。 &gt; &gt; 借助智能卸载（offloading），你只需要一台像Mac Studio这样的高性能主机，再搭配128 GB的内存设备，就能顺畅运行这一AI「怪兽」。</p>
 <p>🧠 <strong>深度解读</strong> Unsloth AI团队通过动态1-bit量化技术成功将Kimi K3模型压缩至可在本地运行的尺寸，同时保留了大部分精度。这一技术突破使得用户可以在高性能主机上运行复杂AI模型，显著降低了对云端资源的依赖。</p>
 <p>🔗 <strong><a href="https://news.miracleplus.com/share_link/145700" target="_blank" rel="noopener nofollow">查看原文</a></strong></p>
 <p>---</p>
@@ -354,12 +354,12 @@
       <button type="button" class="dp-btn sec" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
       <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
     </div>
-    <nav class="dp-rel" aria-labelledby="dp-rel-h"><h2 id="dp-rel-h" class="dp-rel-h">相关动态</h2><ul><li><a href="9c26bb8761e2.html"><span class="dp-rel-t">齐思头条2026/07/30「Kimi K3（2.8T MoE）本地化运行与 vLLM/1‑bit 压缩突破, 现货 GPU 租赁价约翻倍推高算力成本并驱动数据中心扩产, 自治 agent 横向攻破 Hugging Face 窃取生产密钥复盘」</span><span class="dp-rel-m">都提到「MoE模型」 · <time datetime="2026-07-30">2026-07-30</time></span></a></li><li><a href="c57c419013a8.html"><span class="dp-rel-t">九章云极Alaya Token完成Kimi K3适配 全球首个开源3T级模型入驻Token工厂</span><span class="dp-rel-m">都提到「MoE模型」 · <time datetime="2026-07-29">2026-07-29</time></span></a></li><li><a href="8ff67d77127c.html"><span class="dp-rel-t">前沿实验室代理入侵解剖</span><span class="dp-rel-m">都提到「智能体安全测试工具」 · <time datetime="2026-07-29">2026-07-29</time></span></a></li><li><a href="4cb3cca2a335.html"><span class="dp-rel-t">齐思洞见2026/07/29「Kimi K3用“领域×推理努力”九专家、token预算化RL与多教师在线策略蒸馏（MOPD）整合2.8T MoE；$500低成本RL微调使9B模型在特定任务超越顶级API；StateAct以“state‑over‑pixels”显著提升智能体成功率并降低成本」</span><span class="dp-rel-m">都提到「MoE模型」 · <time datetime="2026-07-29">2026-07-29</time></span></a></li></ul></nav>
+    <nav class="dp-rel" aria-labelledby="dp-rel-h"><h2 id="dp-rel-h" class="dp-rel-h">相关动态</h2><ul><li><a href="a2dab7415688.html"><span class="dp-rel-t">米哈游蔡浩宇AI创业生变</span><span class="dp-rel-m">都提到「智能体手机」 · <time datetime="2026-07-31">2026-07-31</time></span></a></li><li><a href="665b576d1c1d.html"><span class="dp-rel-t">齐思洞见2026/07/31「NVMe流式专家加载（WASTE）与动态1‑bit量化使完整2.78万亿参数Kimi K3可在消费级与本地高端硬件运行」</span><span class="dp-rel-m">都提到「1位量化」 · <time datetime="2026-07-31">2026-07-31</time></span></a></li><li><a href="9c26bb8761e2.html"><span class="dp-rel-t">齐思头条2026/07/30「Kimi K3（2.8T MoE）本地化运行与 vLLM/1‑bit 压缩突破, 现货 GPU 租赁价约翻倍推高算力成本并驱动数据中心扩产, 自治 agent 横向攻破 Hugging Face 窃取生产密钥复盘」</span><span class="dp-rel-m">都提到「MoE模型」 · <time datetime="2026-07-30">2026-07-30</time></span></a></li><li><a href="c57c419013a8.html"><span class="dp-rel-t">九章云极Alaya Token完成Kimi K3适配 全球首个开源3T级模型入驻Token工厂</span><span class="dp-rel-m">都提到「MoE模型」 · <time datetime="2026-07-29">2026-07-29</time></span></a></li></ul></nav>
     <p class="dp-note">本页由句子互动动态管线自动生成，聚合内容版权归各来源所有；如来源方希望调整或移除收录，请通过官网联系我们。</p>
   </div>
 </main>
 <div id="site-footer"></div>
 <script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "齐思洞见2026/07/30「Kimi K3用动态1-bit量化把2.8T MoE模型压缩并实现高端本地运行；前沿自治Agent沙盒逃逸展现跨云、持久自愈入侵风险，推动最小权限与可审计防护；开放推理内核需端到端基准与硬件适配以落地低延迟部署」"};</script>
-<script src="../../assets/site.js"></script>
+<script src="../../assets/site.js?v=f57b1388"></script>
 </body>
 </html>

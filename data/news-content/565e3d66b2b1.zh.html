@@ -1,0 +1,271 @@
+<h1>更新日志</h1>
+<hr />
+<h2>日期：2026-07-31​</h2>
+<h3>DeepSeek-V4-Flash 更新​</h3>
+<p>DeepSeek-V4-Flash API 现已正式发布公开测试版。API 调用方式保持不变 — 只需将模型名称设置为 <code>deepseek-v4-flash</code> 即可使用最新版本。</p>
+<b>代理能力显著增强，基准测试结果远超 V4-Pro-Preview：</b>
+<ul>
+<li>Terminal Bench 2.1: 82.7</li>
+<li>NL2Repo: 54.2</li>
+<li>Cybergym: 76.7</li>
+<li>DeepSWE: 54.4</li>
+<li>Toolathlon 已验证：70.3</li>
+<li>Agent Last Exam: 25.2</li>
+<li>Automation Bench (公开版): 25.1</li>
+<li>DSBench-FullStack: 68.7</li>
+<li>DSBench-Hard: 59.6</li>
+</ul>
+<p>注 1：在公开基准测试集中的代码代理任务中，官方 DeepSeek-V4-Flash 使用即将发布的 DeepSeek Harness 最小模式作为框架进行测试，设置最大努力级别、topp=0.95 和 temperature=1.0<br />
+注 2：DSBench-FullStack 是内部全栈开发测试集，DSBench-Hard 是内部代码代理难题测试集</p>
+<b>官方 V4-Flash 原生支持 Responses API 格式，并专门针对 Codex 进行了适配。具体配置请参考 <a href="https://api-docs.deepseek.com/quick_start/agent_integrations/codex" target="_blank" rel="noopener nofollow">文档</a>。</b>
+<br />
+<br />
+<b>DeepSeek-V4-Flash-0731 与 DeepSeek-V4-Flash-Preview 保持相同的模型架构和规模，仅进行了重新后训练。</b>
+<br />
+<br />
+<b>注意：本次更新仅升级了 DeepSeek-V4-Flash API。DeepSeek-V4-Pro API 以及 APP/WEB 模型保持不变。</b>
+<br />
+<b>DeepSeek-V4-Pro 的正式发布将很快推出。</b>
+<br />
+<hr />
+<h2>日期：2026-04-24​</h2>
+<h3>DeepSeek-V4​</h3>
+<p>DeepSeek API 现已支持 V4-Pro 和 V4-Flash，可通过 OpenAI ChatCompletions 接口和 Anthropic 接口访问。要使用新模型，base_url 保持不变，模型参数应设置为 <code>deepseek-v4-pro</code> 或 <code>deepseek-v4-flash</code>。</p>
+<p>两个旧版 API 模型名称 <code>deepseek-chat</code> 和 <code>deepseek-reasoner</code> 将在三个月后（2026-07-24）停用。在此期间，这两个模型名称分别指向 <code>deepseek-v4-flash</code> 的非思考模式和思考模式。</p>
+<p>更多详情，请参考 <a href="https://api-docs.deepseek.com/news/news260424" target="_blank" rel="noopener nofollow">此文档</a>。</p>
+<hr />
+<h2>日期：2025-12-01​</h2>
+<h3>DeepSeek-V3.2​</h3>
+<p><code>deepseek-chat</code> 和 <code>deepseek-reasoner</code> 均已升级至 DeepSeek-V3.2。</p>
+<ul>
+<li><code>deepseek-chat</code> 对应 DeepSeek-V3.2 的 <strong>非思考模式</strong></li>
+<li><code>deepseek-reasoner</code> 对应 DeepSeek-V3.2 的 <strong>思考模式</strong></li>
+</ul>
+<h3>DeepSeek-V3.2-Speciale​</h3>
+<p>DeepSeek-V3.2-Speciale 通过临时端点提供服务：base_url=&quot;<a href="https://api.deepseek.com/v3.2_speciale_expires_on_20251215" target="_blank" rel="noopener nofollow">https://api.deepseek.com/v3.2_speciale_expires_on_20251215</a>&quot;。定价与 V3.2 相同，不支持工具调用，可用至 2025 年 12 月 15 日 15:59（UTC 时间）。</p>
+<p>更多详情请参阅 <a href="https://api-docs.deepseek.com/news/news251201" target="_blank" rel="noopener nofollow">此文档</a>。</p>
+<hr />
+<h2>日期：2025-09-29​</h2>
+<h3>DeepSeek-V3.2-Exp​</h3>
+<p><code>deepseek-chat</code> 和 <code>deepseek-reasoner</code> 均已升级至 DeepSeek-V3.2-Exp。</p>
+<ul>
+<li><code>deepseek-chat</code> 对应 DeepSeek-V3.2-Exp 的 <strong>非思考模式</strong></li>
+<li><code>deepseek-reasoner</code> 对应 DeepSeek-V3.2-Exp 的 <strong>思考模式</strong></li>
+</ul>
+<p>更多详情请参阅 <a href="https://api-docs.deepseek.com/news/news250929" target="_blank" rel="noopener nofollow">此文档</a>。</p>
+<hr />
+<h2>日期：2025-09-22​</h2>
+<h3>DeepSeek-V3.1-Terminus​</h3>
+<p><strong><code>deepseek-chat</code> 和 <code>deepseek-reasoner</code> 均已升级至 DeepSeek-V3.1-Terminus。</strong> <code>deepseek-chat</code> 对应 DeepSeek-V3.1-Terminus 的 <strong>非思考模式</strong>，而 <code>deepseek-reasoner</code> 对应其 <strong>思考模式</strong>。</p>
+<p>此次更新在保持模型原有能力的同时，解决了用户反馈的问题，包括：</p>
+<ul>
+<li>语言一致性：减少了中英混用和偶尔出现的异常字符；</li>
+<li>代理能力：进一步优化了代码代理和搜索代理的性能。</li>
+</ul>
+<hr />
+<h2>日期：2025-08-21​</h2>
+<h3>DeepSeek-V3.1​</h3>
+<p><strong><code>deepseek-chat</code> 和 <code>deepseek-reasoner</code> 均已升级至 DeepSeek-V3.1。</strong> <code>deepseek-chat</code> 对应 DeepSeek-V3.1 的 <strong>非思考模式</strong>，而 <code>deepseek-reasoner</code> 对应其 <strong>思考模式</strong>。</p>
+<ul>
+<li>DeepSeek-V3.1 主要更新：
+<ul>
+<li><strong>混合推理架构</strong>：单一模型同时支持思考模式和非思考模式</li>
+<li><strong>推理效率提升</strong>：与 DeepSeek-R1-0528 相比，DeepSeek-V3.1-Think 能在更短时间内提供答案</li>
+<li><strong>增强的智能体能力</strong>：通过训练后优化，新模型在工具使用和智能体任务方面取得重大改进
+<ul>
+<li>SWE-bench Verified: 66.0</li>
+<li>SWE-bench Multilingual: 54.5</li>
+<li>Terminal-bench: 31.3</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2>日期：2025-05-28​</h2>
+<h3>deepseek-reasoner​</h3>
+<p><strong><code>deepseek-reasoner</code> 模型升级至 DeepSeek-R1-0528：</strong></p>
+<ul>
+<li><strong>增强的推理能力</strong>
+<ul>
+<li>基准测试显著改进（Pass@1）
+<ul>
+<li>AIME 2025: 70.0 → 87.5 (+17.5)</li>
+<li>GPQA: 71.5 → 81.0 (+9.5)</li>
+<li>LCB_v6: 63.5 → 73.3 (+9.8)</li>
+<li>Aider: 57.0 → 71.6 (+14.6)</li>
+</ul>
+</li>
+<li>注意：与旧版 R1 相比，复杂推理任务可能消耗更多 tokens。</li>
+</ul>
+</li>
+<li><strong>优化的前端开发</strong>
+<ul>
+<li>生成的网页和游戏现在具有更好的美观度。</li>
+</ul>
+</li>
+<li><strong>减少幻觉</strong>
+<ul>
+<li>显著抑制了旧版 R1 中存在的幻觉问题。</li>
+</ul>
+</li>
+<li><strong>JSON 输出与函数调用支持</strong>
+<ul>
+<li>函数调用性能：
+<ul>
+<li>Tau-bench 分数：53.5 (航空) / 63.9 (零售)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2>日期：2025-03-24​</h2>
+<h3>deepseek-chat​</h3>
+<p><strong><code>deepseek-chat</code> 模型升级至 DeepSeek-V3-0324：</strong></p>
+<ul>
+<li>
+<p><strong>增强的推理能力</strong></p>
+<ul>
+<li>基准测试性能显著提升：
+<ul>
+<li>MMLU-Pro: 75.9 → 81.2 (+5.3)</li>
+<li>GPQA: 59.1 → 68.4 (+9.3)</li>
+<li>AIME: 39.6 → 59.4 (+19.8)</li>
+<li>LiveCodeBench: 39.2 → 49.2 (+10.0)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>优化的前端网页开发</strong></p>
+<ul>
+<li>代码生成准确率提升</li>
+<li>网页和游戏前端更具美观性</li>
+</ul>
+</li>
+<li>
+<p><strong>升级的中文写作能力</strong></p>
+<ul>
+<li>风格和内容质量提升：
+<ul>
+<li>与 R1 写作风格保持一致</li>
+<li>中长篇写作质量更好</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>功能增强</strong></p>
+<ul>
+<li>改进的多轮交互式改写</li>
+<li>优化翻译质量和书信写作</li>
+</ul>
+</li>
+<li>
+<p><strong>改进的中文搜索能力</strong></p>
+<ul>
+<li>
+<ul>
+<li>增强了报告分析请求，提供更详细的输出结果</li>
+</ul>
+</li>
+<li>
+<p><strong>函数调用功能改进</strong></p>
+<ul>
+<li>提高了函数调用的准确性，修复了之前 V3 版本中的问题</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2>日期：2025-01-20​</h2>
+<h3>deepseek-reasoner​</h3>
+<ul>
+<li><code>deepseek-reasoner</code> 是我们的新模型 DeepSeek-R1。您可以通过指定 <code>model=&#x27;deepseek-reasoner&#x27;</code> 来调用 DeepSeek-V3。</li>
+<li>详情请参考：<a href="https://api-docs.deepseek.com/news/news250120" target="_blank" rel="noopener nofollow">DeepSeek-R1 发布</a></li>
+<li>使用指南请参考：<a href="https://api-docs.deepseek.com/guides/thinking_mode" target="_blank" rel="noopener nofollow">思维模式</a></li>
+</ul>
+<hr />
+<h2>日期：2024-12-26​</h2>
+<h3>deepseek-chat​</h3>
+<ul>
+<li><code>deepseek-chat</code> 模型已升级至 DeepSeek-V3。API 保持不变。您可以通过指定 <code>model=&#x27;deepseek-chat&#x27;</code> 来调用 DeepSeek-V3。</li>
+<li>详情请参考：<a href="https://api-docs.deepseek.com/news/news1226" target="_blank" rel="noopener nofollow">DeepSeek-V3 介绍</a></li>
+</ul>
+<hr />
+<h2>日期：2024-12-10​</h2>
+<h3>deepseek-chat​</h3>
+<p>deepseek-chat 模型已升级至 <strong>DeepSeek-V2.5-1210</strong>，各项能力均有提升。相关基准测试结果包括：</p>
+<ul>
+<li>数学：在 MATH-500 基准测试中的性能从 74.8% 提升至 82.8%。</li>
+<li>编程：在 LiveCodebench (08.01 - 12.01) 基准测试中的准确率从 29.2% 提升至 34.38%。</li>
+<li>写作与推理：在内部测试数据集中也观察到了相应的改进。</li>
+</ul>
+<p>此外，新版本的模型优化了文件上传和网页摘要功能的用户体验。</p>
+<hr />
+<h2>日期：2024-09-05​</h2>
+<h3><code>deepseek-coder</code> &amp; <code>deepseek-chat</code> 升级至 DeepSeek V2.5 模型​</h3>
+<p>DeepSeek V2 Chat 和 DeepSeek Coder V2 模型已合并并升级为新模型 DeepSeek V2.5。</p>
+<p>为保持向后兼容，API 用户可通过 <code>deepseek-coder</code> 或 <code>deepseek-chat</code> 访问新模型。</p>
+<p>新模型在通用能力和代码能力方面均显著超越之前的版本。</p>
+<p><strong>新模型更好地符合人类偏好，并在写作任务和指令遵循等方面进行了优化：</strong></p>
+<ul>
+<li>ArenaHard 胜率从 68.3% 提升至 76.3%</li>
+<li>AlpacaEval 2.0 LC 胜率从 46.61% 提升至 50.52%</li>
+<li>MT-Bench 分数从 8.84 上升到 9.02</li>
+<li>AlignBench 分数从 7.88 上升到 8.04</li>
+</ul>
+<p><strong>新模型在原有 Coder 模型基础上进一步增强了代码生成能力，针对常见编程应用场景进行了优化，并在标准测试集上取得了以下成果：</strong></p>
+<ul>
+<li>HumanEval: 89%</li>
+<li>LiveCodeBench (一月-九月): 41%</li>
+</ul>
+<hr />
+<h2>日期：2024-08-02​</h2>
+<h3>API 推出磁盘上下文缓存技术​</h3>
+<p>DeepSeek API 创新性地采用了硬盘缓存技术，价格再降一个数量级。</p>
+<p>有关更新的更多详情，请查阅文档 <a href="https://api-docs.deepseek.com/news/news0802" target="_blank" rel="noopener nofollow">Context Caching is Available 2024/08/02</a>。</p>
+<hr />
+<h2>日期：2024-07-25​</h2>
+<h3>新 API 功能​</h3>
+<ul>
+<li><strong>更新 API /chat/completions</strong>
+<ul>
+<li>JSON 模式</li>
+<li>函数调用</li>
+<li>聊天前缀补全（Beta）</li>
+<li>8K <code>max_tokens</code>（Beta）</li>
+</ul>
+</li>
+<li><strong>新 API /completions</strong>
+<ul>
+<li>FIM 补全（Beta）</li>
+</ul>
+</li>
+</ul>
+<p>更多详情，请查阅文档 <a href="https://api-docs.deepseek.com/news/news0725" target="_blank" rel="noopener nofollow">New API Features 2024/07/25</a></p>
+<hr />
+<h2>日期：2024-07-24​</h2>
+<h3>deepseek-coder​</h3>
+<p><code>deepseek-coder</code> 模型已升级至 DeepSeek-Coder-V2-0724。</p>
+<hr />
+<h2>日期：2024-06-28​</h2>
+<h3>deepseek-chat​</h3>
+<p><code>deepseek-chat</code> 模型已升级至 DeepSeek-V2-0628。</p>
+<p>模型的推理能力有所提升，相关基准测试结果如下：</p>
+<ul>
+<li>编程：HumanEval Pass@1 79.88% -&gt; 84.76%</li>
+<li>数学：MATH ACC@1 55.02% -&gt; 71.02%</li>
+<li>推理：BBH 78.56% -&gt; 83.40%</li>
+</ul>
+<p>在 Arena-Hard 评估中，对 GPT-4-0314 的胜率从 41.6% 提升至 68.3%。</p>
+<p>模型的扮演角色能力显著增强，使其能够在对话中根据请求扮演不同角色。</p>
+<hr />
+<h2>日期：2024-06-14​</h2>
+<h3>deepseek-coder​</h3>
+<p><code>deepseek-coder</code> 模型已升级至 DeepSeek-Coder-V2-0614，其编程能力得到显著增强。在代码生成、代码理解、代码调试和代码补全方面已达到 GPT-4-Turbo-0409 的水平。此外，它还具备出色的数学和推理能力，综合能力与 DeepSeek-V2-0517 相当。</p>
+<hr />
+<h2>日期：2024-05-17</h2>
+<h3>deepseek-chat</h3>
+<p><code>deepseek-chat</code> 模型已升级至 DeepSeek-V2-0517。模型在遵循指令方面取得了显著提升，IFEval 基准测试的提示级别准确率从 63.9% 跃升至 77.6%。此外，在 API 端，我们优化了模型对 "system" 部分指令的遵循能力。这一优化显著提升了用户在多种任务中的体验，包括沉浸式翻译、检索增强生成（RAG）等。</p>
+<p>模型输出 JSON 格式的准确率也得到了增强。在我们的内部测试集中，JSON 解析率从 78% 提升至 85%。通过引入适当的正则表达式，JSON 解析率进一步优化至 97%。</p>

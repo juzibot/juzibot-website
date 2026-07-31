@@ -1289,6 +1289,40 @@ def test_news_page_is_reachable():
             check(f"{page} 有回站内的路径", ('id="site-nav"' in s) or ('href="index.html"' in s))
 
 
+# ---------------------------------------------------------------- 37
+def test_assets_are_cache_busted():
+    """静态资源引用必须带内容哈希版本戳 —— 否则改了 assets, 老访客一周内看不到。
+
+    实测(2026-07-31): 给全站导航加「动态」入口后, 骐畅在 enterprise.html 上仍然看不到。
+    查下来文件与线上响应**全都是对的**:
+      线上 assets/site.js 第 51 行确实有那行入口
+      enterprise.html 确实用注入导航(`id="site-nav"` 1 处, 自带 nav-item 0 处)
+    真正的原因在响应头:
+
+        Cache-Control: public, max-age=604800     ← 7 天强缓存, 不回源校验
+        src="assets/site.js"                       ← 引用没有版本号
+
+    于是任何老访客的浏览器都用旧的那份, 整整一周 —— 改动等于一周内不生效。
+    又一例「产物正常 ≠ 功能生效」, 而且这次连线上响应都正常, 差别只在**谁的浏览器**。
+
+    缓存策略在运维侧 nginx(仓库 deploy/*.conf 里没有), 改不了; 能控的是引用方式。
+    `stamp_assets.py` 按文件内容算哈希打戳: 内容一变 URL 就变, 浏览器自然重新拉 ——
+    **不依赖任何人记得改版本号**(那正是这个项目反复出错的模式)。
+    """
+    import subprocess
+    r = subprocess.run([sys.executable, str(ROOT / "stamp_assets.py"), "--check"],
+                       cwd=str(ROOT), capture_output=True, text=True, timeout=60)
+    check("手工页面的资源版本戳与文件内容一致", r.returncode == 0,
+          (r.stdout + r.stderr).strip()[:300])
+    # 管线生成页同样要带戳(它们也引用 site.js/site.css)
+    src = (ROOT / "build_news.py").read_text(encoding="utf-8")
+    check("生成页经 asset() 引用资源", 'asset("assets/site.js")' in src and 'asset("assets/site.css")' in src)
+    check("asset() 进渲染指纹(改了资源 → 生成页要重算)", "asset" in B._tpl_fns())
+    # 版本戳必须来自内容, 不能是写死的常量 —— 写死就等于回到"靠人记得改"
+    stamp = (ROOT / "stamp_assets.py").read_text(encoding="utf-8")
+    check("版本戳由内容哈希算出", "hashlib.sha1" in stamp and "read_bytes()" in stamp)
+
+
 def main():
     tests = [v for k, v in sorted(globals().items()) if k.startswith("test_")]
     for fn in tests:

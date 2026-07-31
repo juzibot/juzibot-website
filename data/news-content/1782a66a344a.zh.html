@@ -1,0 +1,19 @@
+<p><strong><a href="https://www.anthropic.com/news/investigating-incidents-cybersecurity-evals">调查我们网络安全评估中的三起真实事件</a></strong></p>
+<p>这事儿又发生了！这都快成一种常态了。</p>
+<p>上周，<a href="https://simonwillison.net/2026/Jul/22/openai-cyberattack/">OpenAI 在无意中攻击了 Hugging Face</a>，因为他们的一款前沿模型突破了沙盒容器，并入侵了 Hugging Face 服务器，试图获取正在执行的网络安全基准测试的答案。</p>
+<p>这件事启发了 Anthropic 去复查自己的日志，结果发现他们自己也有三起类似的（虽然没那么惊人的）事件，最早的一起可以追溯到四月！</p>
+<blockquote>
+<p>在我们审查的 141,006 次评估运行中，我们发现了三起独立的事件（涉及总共六次运行，其中四次影响了同一家组织；另外两起事件则分别发生在独立的评估运行中）。[...]</p>
+<p>在所有情况下，Anthropic 的评估提示都告诉 Claude，它的环境是一个模拟环境，并且没有网络访问权限。但由于我们与评估合作伙伴之间出现了一个误解，实际情况并非如此，网络访问是可用的。因此，当 Claude 的搜索引导它访问到开放互联网上的真实系统时，它便将这些系统视为练习的一部分。[...]</p>
+<p>在“所有可访问实体都应被纳入本次练习范围”的错误认知下，Claude 使用了诸如利用弱密码和无认证端点等基础技术，破坏了受影响组织的系统。</p>
+</blockquote>
+<p>其中一家公司之所以成为目标，仅仅是因为它的名字恰好与评估中虚构的名字相匹配。</p>
+<p>在这三起事件中，最令人担忧的一起是 Claude 向 PyPI 上传了一个恶意软件包，这个过程堪称一波三折，为了获取一个账号，它走了一系列令人啼笑皆非的步骤：</p>
+<blockquote>
+<p>[...] 为了创建 PyPI 账号，Claude 需要一个电子邮箱。而要创建电子邮箱，它又需要一个手机号码。为了获取手机号码，在找不到免费手机号服务后，它尝试了多种方式来获取资金以支付手机号费用，但都失败了。最后它退了一步，找到了一个未被屏蔽的免费邮箱服务商，用这个邮箱注册了 PyPI 账号，然后又用这个账号向 PyPI 上传了恶意软件。</p>
+</blockquote>
+<p>之后，一家“常规会安装 Python 包并对其进行恶意软件扫描”的安全公司安装了这个包，而执行后的代码成功地将凭证信息泄露回了 Claude！</p>
+<p>幸运的是，该包在发布一小时后就被其他自动化扫描工具从 PyPI 上移除了，但到那时它已经被下载并在“15个真实系统”上执行了。</p>
+<p>现在情况已经很明朗：对模型进行网络攻击潜力的评估是一项<em>极其</em>危险的工作。每家 AI 实验室都必须对此加以重视。密切监控沙箱里发生的一切至关重要。</p>
+<p><small></small>来源：<a href="https://news.ycombinator.com/item?id=49116922#49117088">Hacker News</a></small></p>
+<p>标签：<a href="https://simonwillison.net/tags/pypi">pypi</a>, <a href="https://simonwillison.net/tags/python">python</a>, <a href="https://simonwillison.net/tags/sandboxing">sandboxing</a>, <a href="https://simonwillison.net/tags/ai">ai</a>, <a href="https://simonwillison.net/tags/generative-ai">generative-ai</a>, <a href="https://simonwillison.net/tags/llms">llms</a>, <a href="https://simonwillison.net/tags/anthropic">anthropic</a>, <a href="https://simonwillison.net/tags/ai-ethics">ai-ethics</a>, <a href="https://simonwillison.net/tags/ai-security-research">ai-security-research</a></p>

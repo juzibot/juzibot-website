@@ -1,0 +1,14 @@
+<p><strong><a href="https://openai.com/index/advancing-the-price-performance-frontier-with-gpt-5-6/">通过 GPT‑5.6 推进价格性能前沿</a></strong></p>
+<p>OpenAI 今天宣布了大幅降价：GPT-5.6 Terra 降价 20%，而 GPT-5.6 Luna 更是惊人地降价 80%。</p>
+<p>OpenAI 将此归功于 5.6 Sol：在<a href="https://openai.com/index/gpt-5-6-frontier-intelligence-efficiency/">《GPT‑5.6 如何将前沿智能与前沿效率融为一体》</a>一文中，他们描述了使用 5.6 Sol 来优化负载均衡，更令人印象深刻的是，用它来优化推理过程本身：</p>
+<blockquote>
+<p>我们还使用 GPT‑5.6 Sol 来优化模型的正向传播：即将输入转化为下一个词预测的计算过程。即便单个操作很快，多余的内存传输、同步以及低效的数据布局仍可能导致 GPU 空闲。为避免这种情况，GPT‑5.6 Sol 找到了可以被预计算、避免或并行化的任务。借助 Codex，GPT‑5.6 Sol 自动重写并优化了我们的生产内核——即执行模型数学运算的核心代码。这部分功能之所以能实现，是因为我们训练 GPT‑5.6 让其擅长用 <a href="https://triton-lang.org/main/index.html">Triton⁠</a> 和 <a href="https://triton-lang.org/main/gluon/index.html">Gluon⁠</a> 这两个由 OpenAI 维护的开源 GPU 编程语言来编写和改进内核。这些努力，加上 GPT‑5.6 Sol 在内核方面的更广泛进展，将端到端的部署成本降低了 20%。</p>
+</blockquote>
+<p>Luna 的降价彻底改变了低价模型的市场格局。现在，Luna 的输入价格为每百万词 0.20 美元，输出价格为每百万词 1.20 美元，已经比谷歌的 Gemini 3.1 Flash-Lite（0.025/1.50 美元）更便宜了。</p>
+<p>Anthropic 目前最便宜的模型是 Claude Haiku 4.5，价格为 1/5 美元——现在 Luna 的输入价格仅为它的五分之一，而以前两者价格相同。</p>
+<p>我的 <a href="https://agent.datasette.io/">agent.datasette.io</a> 演示站点之前运行在 Gemini 3.1 Flash-Lite 上，我已经将其切换到了 Luna。
+
+    <p><small></small>来源：<a href="https://news.ycombinator.com/item?id=49112867">Hacker News</a></small></p>
+
+
+    <p>标签：<a href="https://simonwillison.net/tags/ai">ai</a>, <a href="https://simonwillison.net/tags/openai">openai</a>, <a href="https://simonwillison.net/tags/generative-ai">generative-ai</a>, <a href="https://simonwillison.net/tags/llms">llms</a>, <a href="https://simonwillison.net/tags/anthropic">anthropic</a>, <a href="https://simonwillison.net/tags/gemini">gemini</a>, <a href="https://simonwillison.net/tags/llm-pricing">llm-pricing</a></p>

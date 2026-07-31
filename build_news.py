@@ -2572,6 +2572,21 @@ def read_time(body):
     return f"约 {m} 分钟" if m < 60 else f"约 {round(m / 60, 1)} 小时"
 
 
+# 静态资源带内容哈希版本戳: 服务器给 assets 发 `Cache-Control: public, max-age=604800`
+# (7 天强缓存, 不回源校验), 而引用没有版本号 —— 实测改完全站导航后, 老访客一周内看不到
+# 新入口, 而我们查文件、查线上响应都一切正常。版本戳由内容算出, 不靠人记得改。
+try:
+    from stamp_assets import asset_url as _asset_url
+except Exception:  # noqa: BLE001  独立部署没有该模块时退回无版本(功能不受影响, 只是回到旧缓存行为)
+    def _asset_url(rel, prefix=""):
+        return f"{prefix}{rel}"
+
+
+def asset(rel, prefix="../../"):
+    """生成页引用静态资源的地址(带版本戳)。"""
+    return _asset_url(rel, prefix)
+
+
 RELATED_MAX = 4       # 详情页「相关动态」条数上限
 RELATED_SRC_MAX = 2   # 同一来源最多占几条(见下: 不设限时 77% 的页四条同源)
 
@@ -2759,7 +2774,7 @@ b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';})
 {schema}{crumb}
 <link rel="icon" href="../../logo.png" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet" href="../../assets/site.css" />
+<link rel="stylesheet" href="{asset("assets/site.css")}" />
 <style>{DETAIL_CSS}</style>
 </head>
 <body>
@@ -2792,7 +2807,7 @@ b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';})
 </main>
 <div id="site-footer"></div>
 <script>window.SITE_REL='../../';window.PAGE_CTX={ctx};</script>
-<script src="../../assets/site.js"></script>{lang_js}
+<script src="{asset("assets/site.js")}"></script>{lang_js}
 </body>
 </html>
 """
@@ -3188,7 +3203,7 @@ def concept_page_shell(title, desc, canonical, inner, ctx_title, schema=""):
 {schema}
 <link rel="icon" href="../../logo.png" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet" href="../../assets/site.css" />
+<link rel="stylesheet" href="{asset("assets/site.css")}" />
 <style>{CONCEPT_CSS}</style>
 </head>
 <body>
@@ -3200,7 +3215,7 @@ def concept_page_shell(title, desc, canonical, inner, ctx_title, schema=""):
 </main>
 <div id="site-footer"></div>
 <script>window.SITE_REL='../../';window.PAGE_CTX={ctx};</script>
-<script src="../../assets/site.js"></script>
+<script src="{asset("assets/site.js")}"></script>
 </body>
 </html>
 """

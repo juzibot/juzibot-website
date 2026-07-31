@@ -1,0 +1,38 @@
+<p>堆叠式拉取请求将大型改动拆分为小型、可审查的拉取请求。它们是一系列有序的拉取请求，每个请求都代表你改动中的一个专注层级。通过堆叠，你可以独立审查和检查每个拉取请求，然后一键合并所有内容。再也不用打开一个需要花费大量时间审查的大型拉取请求，也不用将工作分散到多个需要手动变基的分支上。</p>
+<blockquote><p>
+  “在过去的几个月里，我们一直在为 Next.js 使用 GitHub 的堆叠式 PR。这帮助我们在发布大型功能的同时引入更小的独立改动，让 PR 审查变得更容易。—— Tim Neutkens，NextJS 负责人，Vercel”
+</p></blockquote>
+
+<p>使用堆叠式拉取请求，团队可以：</p>
+<ul>
+<li><strong>让大型改动持续推进</strong>：通过并行审查简短、范围明确的拉取请求。</li>
+<li><strong>确保每一层的质量</strong>：使用专注的拉取请求审查，并结合现有的分支保护来保护 <code>main</code> 分支。</li>
+<li><strong>合并一个、部分或全部</strong>：可以一次性合并整个堆叠，也可以逐个合并各个层级。</li>
+</ul>
+<p>而且，由于堆叠式拉取请求是 GitHub 的内置功能，你现有的审查、检查和合并要求都能开箱即用。</p>
+<blockquote><p>
+  “新的 GitHub 堆叠式 PR 预览功能太棒了。一次性将 5 个堆叠式 PR 直接推送到合并队列！A+++！这解决了大量的摩擦（而且 gh cli 工具和代理技能帮了大忙）” – John Resig，jQuery 创始人
+</p></blockquote>
+<h2>通过 CLI 扩展开始使用</h2>
+<p>安装 CLI 扩展，不到一分钟就能创建你的第一个堆叠：</p>
+<pre><code>gh extension install github/gh-stack
+</code></pre>
+<h2>从终端或 github.com 创建堆叠</h2>
+<p>你可以在 github.com、GitHub CLI、GitHub 移动应用上使用堆叠，或者使用带有 gh-stack 技能的编码代理（如 GitHub Copilot）来操作。从一个分支和拉取请求开始你的第一次改动。然后在其上添加分支和拉取请求；每个拉取请求都指向其下方的层级。</p>
+
+<h2>独立审查每一层</h2>
+<p>打开堆叠中的任意一个拉取请求，只审查该特定层级的差异。使用拉取请求顶部的堆叠地图，来查看你正在审查的改动如何融入更大的工作中。你和你的团队成员可以并行审查不同的层级，而不会阻塞后续工作。</p>
+<blockquote>
+<p>
+  “AI 让 TED 的开发团队效率大幅提升，但这带来了新的瓶颈：合并请求（PR）变得越来越大，审查人员难以应对。堆叠式 PR 解决了这个问题。通过将大型改动拆分成按依赖顺序排列的小块，审查工作可以在更小的逻辑单元中进行——这不仅让 PR 审查更快，也提高了准确性。堆叠式 PR 缩短了我们的反馈周期，帮助 ted.com 更快地获得稳定的代码。” – Andy Merryman，首席技术官，TED
+</p></blockquote>
+<p><img src="https://github.com/user-attachments/assets/0937148e-b9fd-4f5c-849a-8bc4499ea838" alt="view of the GitHub pull request page displaying details about the pull request stack" referrerpolicy="no-referrer" /></p>
+<h2>一键合并所有内容</h2>
+<p>合并最新的就绪合并请求，即可一次性将其以及下方所有未合并的层级都合并到目标分支。如果要合并堆叠的一部分，可以合并一个或多个底层 PR——其上方的 PR 将保持开启状态，并自动变基和重定向。你现有的分支保护和必要检查规则仍然决定哪些内容可以合并到 <code>main</code> 分支。</p>
+<blockquote><p>
+  “过去，一个大型改动意味着一个没人愿意审查的巨型 PR。现在，它变成了一堆小 PR，审查人员可以真正跟进，整个堆叠也能一次性合并。这不再感觉像是 GitHub 上的一个附加工具，而像是 GitHub 本身的功能了。” – Mayank Saini，连接工程师，WHOOP
+</p></blockquote>
+
+
+<p>堆叠式 PR 正在未来几天内向所有仓库公开发布预览版。<a href="https://docs.github.com/repositories/configuring-branches-and-merges-in-your-repository/configuring-pull-request-merges/managing-a-merge-queue?utm_source=changelog-merge-queue-docs&amp;utm_medium=changelog&amp;utm_campaign=stacked-prs-gtm-public-preview-2026" target="_blank" rel="noopener nofollow">合并队列</a> 对堆叠式 PR 的支持也将在未来几周内逐步推出。</p>
+<p>欲了解更多信息，请查阅<a href="https://gh.io/stacks?utm_source=changelog-stacked-pr-docs&amp;utm_medium=changelog&amp;utm_campaign=stacked-prs-gtm-public-preview-2026" target="_blank" rel="noopener nofollow">堆叠式 PR 文档</a>，并在<a href="https://gh.io/stacks-feedback?utm_source=changelog-pr-stacks-feedback&amp;utm_medium=changelog&amp;utm_campaign=stacked-prs-gtm-public-preview-2026" target="_blank" rel="noopener nofollow">堆叠式 PR 讨论区</a>与我们分享您的反馈。</p>

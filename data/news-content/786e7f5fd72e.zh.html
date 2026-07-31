@@ -1,0 +1,24 @@
+<p><strong>发布：</strong> <a href="https://github.com/simonw/llm-chat-completions-server/releases/tag/0.1a0">llm-chat-completions-server 0.1a0</a></p>
+        <p>新版本中基于内容寻址的日志（<a href="https://simonwillison.net/2026/Jul/30/llm-rc1/">LLM 0.32rc1</a>）的一个关键目标，是支持 OpenAI Chat Completion 风格的请求，即每条新消息都延续之前的对话，就像这样：</p>
+<pre><code>curl http://localhost:8002/v1/chat/completions \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "model": "qwen3.5-4b",
+    "messages": [
+      {"role": "user", "content": "法国的首都是什么？"},
+      {"role": "assistant", "content": "巴黎。"},
+      {"role": "user", "content": "德国呢？"}
+    ]
+  }'
+</code></pre>
+<p>在这种模式下，对话状态由客户端维护，因此每次请求的长度都会越来越长。LLM 中的新方案设计旨在通过为每条消息内容生成哈希值，来去重这些重复的请求。</p>
+<p>为了测试这个功能，我构建了这个插件：</p>
+<pre><code>uv tool install llm --pre
+llm install llm-chat-completions-server
+llm chat-completions-server -p 9001
+</code></pre>
+<p>运行此命令后，会在本地 9001 端口启动一个服务器，它通过一个与 ChatGPT 兼容的 API 端点，为你展示所有已安装的 LLM 插件中的模型集合。</p>
+<p>整个项目由 GPT-5.6 Sol <a href="https://gist.github.com/simonw/53be513c1bd4a29a7aa480d9bde9b4a5">独立完成</a>——事实证明，它对 OpenAI Chat Completions API 的结构了如指掌。</p>
+    
+    
+        <p>标签：<a href="https://simonwillison.net/tags/projects">projects</a>, <a href="https://simonwillison.net/tags/openai">openai</a>, <a href="https://simonwillison.net/tags/llm">llm</a></p>
