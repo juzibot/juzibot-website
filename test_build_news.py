@@ -1233,6 +1233,47 @@ def test_no_mixed_all_zone():
               st.group(1) if st else "找不到 state")
 
 
+# ---------------------------------------------------------------- 36
+def test_news_page_is_reachable():
+    """动态页必须能从站内导航走到 —— 「建好了但没人能走到」是最贵的一类缺陷。
+
+    实测发现(2026-07-30, 骐畅在 http://…:8082 上看不到入口): 整个 PR 建了 293 个详情页、
+    131 个概念页、sitemap、RSS、四种 schema, 而 **`index.html` / `careers/index.html` /
+    `assets/site.js` 三处导航里指向 `news.html` 的链接都是 0 处** —— 访客只能直接输 URL 才能到。
+
+    它躲过了当时所有守卫: `news-test` 查管线不变量(页面内容对不对)、`shell-clean` 查模板壳、
+    `copy-guard` 查口径, **没有任何一条查「这页可达吗」**。与今天那批缺陷同一类:
+    产物正常 ≠ 功能生效。
+
+    判据是**可达性**而不是某个写死的链接文案: 从首页出发, 沿站内链接一跳能到 news.html。
+    这样将来改导航结构、换文案、调顺序都不会误报。
+    """
+    def links_to(path, target="news.html"):
+        p = ROOT / path
+        if not p.exists():
+            return None
+        s = p.read_text(encoding="utf-8")
+        # 直接 href, 或 site.js 里 REL 拼接的形式
+        return len(re.findall(r'href="[^"]*' + re.escape(target) + r'"', s)) + \
+               len(re.findall(r"REL \+ '" + re.escape(target) + r"'", s))
+
+    home = links_to("index.html")
+    check("首页导航能到动态页", home and home > 0, f"index.html 里 {home} 处")
+    shared = links_to("assets/site.js")
+    check("共享导航(所有子页注入)能到动态页", shared and shared > 0, f"site.js 里 {shared} 处")
+    careers = links_to("careers/index.html")
+    if careers is not None:
+        check("招聘页(自带导航)能到动态页", careers > 0, f"{careers} 处")
+    # 反向: 动态页也要能回到站内(否则是单向死胡同)
+    for page in ("news.html", "news-c.html"):
+        p = ROOT / page
+        if not p.exists():
+            continue
+        s = p.read_text(encoding="utf-8")
+        back = len(re.findall(r'href="(?:index\.html|/|\.\./)"', s)) + s.count('id="site-nav"') + s.count("SITE_REL")
+        check(f"{page} 有回站内的路径", back > 0, back)
+
+
 def main():
     tests = [v for k, v in sorted(globals().items()) if k.startswith("test_")]
     for fn in tests:
