@@ -104,3 +104,43 @@ tag 是永久引用,删分支与重写历史都不影响。
 |---|---|
 | `SSH_KEY` / `HOST` / `USER` | rsync/SSH 到服务器(与 deploy.yml 共用) |
 | `ZHIPU_API_KEY` | 智谱 GLM(筛选/简报/翻译/概念);缺失时管线优雅降级 |
+
+## ⑤ 缓存策略(必做,否则改动对老访客最长一周不生效)
+
+把 `deploy/nginx-cache.conf` include 进 `jz-main` 与 `jz-stage-*` 的每个 server 块。
+
+**2026-07-31 的真事故**:给全站导航加「动态」入口并部署完成后,访客在 `enterprise.html`
+仍然看不到。每一层单独查都是对的(线上 site.js 有那条入口、页面用注入导航、引用也带了
+版本戳),原因在响应头且是**两层叠加**:
+
+| 层 | 现状 | 后果 |
+|---|---|---|
+| HTML | 只有 `Last-Modified` + `ETag`,**没有 `Cache-Control`** | 浏览器走启发式缓存,按 (现在−Last-Modified) 的 ~10% 定新鲜期。页面上次改动在三周前 → 算出 **约 2 天**不问服务器 |
+| 静态资源 | `Cache-Control: public, max-age=604800` 且引用无版本号 | 旧 HTML 引用的旧 URL 被强缓存 **7 天** |
+
+两层一叠,老访客最长一周拿不到新东西,而我们这边 `curl`(不带缓存)怎么查都正常 ——
+**服务端和客户端拿到的是两份不同的文件**。
+
+正确配法是一对,缺一不可:**HTML 每次回源校验**(`no-cache` 配 ETag,没变回 304,几乎零成本)
++ **带内容哈希的资源长缓存 `immutable`**(URL 变了才算新文件,打戳见下)。
+
+生效自查:
+```bash
+curl -sI https://<host>/enterprise.html | grep -i cache-control   # 应为 no-cache
+curl -sI https://<host>/assets/site.js  | grep -i cache-control   # 应为 immutable
+```
+
+> 在运维加上这段之前,页面里的 `<meta http-equiv="Cache-Control" content="no-cache">`
+> 是兜底 —— 只对**新拿到的** HTML 生效,救不了已经缓存在访客手里的那份,所以 nginx 那条必须做。
+
+## ⑥ 静态资源版本戳
+
+改过 `assets/site.js`、`assets/site.css`、`assets/askbar.js` 之后必须打戳:
+
+```bash
+python3 stamp_assets.py           # 打戳
+python3 stamp_assets.py --check   # 只校验(CI 里 news-test 会跑)
+```
+
+戳是文件内容的 sha1 前 8 位,**不需要人记版本号**。管线生成的详情页/概念页由
+`build_news.py` 的 `asset()` 自动带戳,不用手工处理。
