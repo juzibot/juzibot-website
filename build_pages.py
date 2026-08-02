@@ -25,7 +25,7 @@ def nav_html(rel):
           <a href="{rel}products/miaodong.html"><div class="d-title">句子秒懂 · 大脑</div><div class="d-desc">业务人员不写代码也能搭 Agent</div></a>
           <a href="{rel}products/shouhu.html"><div class="d-title">句子守护 · 主管</div><div class="d-desc">Agent 上线前测过、上线后管着</div></a>
           <a href="{rel}products/canmou.html"><div class="d-title">句子参谋 · 参谋</div><div class="d-desc">对话式数据洞察，一句话问数</div></a>
-          <a href="{rel}products/dongxing.html"><div class="d-title">句子懂行 · 知识中枢</div><div class="d-desc">把原始资料变成 AI 能用的干净知识</div></a>
+          <a href="{rel}products/dongxing.html"><div class="d-title">句子懂行 · 记忆</div><div class="d-desc">把资料沉淀成 AI 可用的组织记忆</div></a>
           <a href="{rel}products/miaohui.html"><div class="d-title">句子秒回 · 工位</div><div class="d-desc">Agent 和人协作的 IM 工作台</div></a>
           <a href="{rel}products/cli.html"><div class="d-title">句子 CLI · 手</div><div class="d-desc">操作一切人用软件的执行层</div></a>
           <a href="{rel}products/zhizao.html"><div class="d-title">句子智造 · 地基</div><div class="d-desc">补齐客户数字化基建，一客一环境</div></a>
@@ -81,7 +81,7 @@ def footer_html(rel):
           <li><a href="{rel}products/miaodong.html">句子秒懂 · 大脑</a></li>
           <li><a href="{rel}products/shouhu.html">句子守护 · 主管</a></li>
           <li><a href="{rel}products/canmou.html">句子参谋 · 参谋</a></li>
-          <li><a href="{rel}products/dongxing.html">句子懂行 · 知识中枢</a></li>
+          <li><a href="{rel}products/dongxing.html">句子懂行 · 记忆</a></li>
           <li><a href="{rel}products/cli.html">句子 CLI · 手</a></li>
           <li><a href="{rel}products/zhizao.html">句子智造 · 地基</a></li>
         </ul>
@@ -453,7 +453,7 @@ def page_miaohui():
 
     body += block(        "结果",
         "客户用句子秒回拿到的实际效果",
-        "数据来自 多年部署的真实客户案例。",
+        "数据来自句子秒回真实客户场景与长期部署经验。",
         kpi_row([
             ("11 个", "已接入 IM 通道"),
             ("89%", "对话自动完成率"),
@@ -2070,9 +2070,9 @@ def page_fde():
 
 def page_dongxing():
     body = ''
-    body += block(        "知识中枢",
-        "三个 Agent，分工维护 AI 能用的知识中枢",
-        "很多客户以为把知识库直接接进 AI 就行，结果命中率反而更低、答得更乱。句子懂行把知识中枢拆成三段稳定分工：归档 Agent 接住原始资料，体检 Agent 持续找问题，检索 Agent 按范围带出处回答。",
+    body += block(        "记忆",
+        "三个 Agent，分工维护 AI 员工的组织记忆",
+        "很多客户以为把知识库直接接进 AI 就行，结果命中率反而更低、答得更乱。句子懂行把组织记忆拆成三段稳定分工：归档 Agent 接住原始资料，体检 Agent 持续找问题，检索 Agent 按范围带出处回答。",
         feat_grid([
             ("📦", "归档 Agent", "解析客户上传的原始素材，拆成知识单元，并建议目录、标签和归属范围。", "bl"),
             ("🩺", "体检 Agent", "持续扫描冲突、缺口、过期、重复和表达歧义，把问题变成任务清单。", "or"),
@@ -2083,7 +2083,7 @@ def page_dongxing():
         eyebrow="协作闭环",
         title="入库、体检、检索各管一段",
         paragraphs=[
-            "知识中枢不止于把文档存进数据库。客户的经验、文档、历史对话先进入统一素材库，再按范围变成可维护、可检索、可追溯的知识单元。",
+            "组织记忆不止于把文档存进数据库。客户的经验、文档、历史对话先进入统一素材库，再按范围变成可维护、可检索、可追溯的知识单元。",
             "通常先让归档、体检、检索三类 Agent 跑通，再引入其余产品与 FDE 团队。顺序颠倒，Agent 很容易拿到过期、冲突或无出处的内容。",
         ],
         bullets=[
@@ -2099,7 +2099,7 @@ def page_dongxing():
 <div style="font-size:22px;color:var(--purple);">→</div>
 <div style="text-align:center;flex:1;"><div style="font-size:26px;font-weight:900;color:var(--purple);">知识资产</div><div style="font-size:12px;color:var(--gray-text);margin-top:4px;">干净、可检索、带出处</div></div>
 </div>
-<div style="margin-top:16px;font-size:11.5px;color:var(--gray-text);background:var(--purple-lt);padding:10px 12px;border-radius:8px;">先把这层做对，AI 才查得准。知识中枢是 Agent 上岗的前提，不是上线后再补的活。</div>
+<div style="margin-top:16px;font-size:11.5px;color:var(--gray-text);background:var(--purple-lt);padding:10px 12px;border-radius:8px;">先把这层做对，AI 才查得准。组织记忆是 Agent 上岗的前提，不是上线后再补的活。</div>
 </div>
 """,
         color="pu",
@@ -2108,18 +2108,18 @@ def page_dongxing():
     body += f"""
 <section class="section-block">
   <div class="container">
-    {cta_band("先把你的知识中枢跑通，再上 AI 员工")}
+    {cta_band("先把你的组织记忆跑通，再上 AI 员工")}
   </div>
 </section>
 """.strip()
     return page_layout(
-        title="句子懂行 · AI 员工的知识中枢 | 句子互动",
-        description="句子懂行是 AI 员工的知识中枢：原件上传后自动归档成知识单元，持续体检冲突、缺口与过期内容，并让 Agent 在指定范围内精准检索、带出处回答。",
+        title="句子懂行 · 记忆 | 句子互动",
+        description="句子懂行是 AI 员工的记忆：原件上传后自动归档成知识单元，持续体检冲突、缺口与过期内容，并让 Agent 在指定范围内精准检索、带出处回答。",
         rel="../",
         breadcrumbs=[("首页", "../index.html"), ("产品", None), ("句子懂行", None)],
-        hero_kicker="产品 · 懂行 · 知识中枢",
-        hero_h1='句子懂行 · <span class="accent">AI 员工的知识中枢</span>',
-        hero_lede="句子懂行是 AI 员工的知识中枢。客户把资料丢进来，<strong>归档 Agent 自动拆成知识单元；体检 Agent 持续找冲突和缺口；检索 Agent 在指定范围内带出处作答</strong>。AI 答得准不准，先看知识库是否干净。",
+        hero_kicker="产品 · 懂行 · 记忆",
+        hero_h1='句子懂行 · <span class="accent">AI 员工的记忆</span>',
+        hero_lede="句子懂行是 AI 员工的记忆。客户把资料丢进来，<strong>归档 Agent 自动拆成知识单元；体检 Agent 持续找冲突和缺口；检索 Agent 在指定范围内带出处作答</strong>。AI 答得准不准，先看记忆是否干净、可追溯。",
         pills=["归档 Agent", "体检 Agent", "检索 Agent", "带出处回答"],
         body=body,
     )

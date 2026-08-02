@@ -83,31 +83,6 @@
   .log-step:nth-child(3) i{background:#F59E0B;box-shadow:0 0 0 4px #FFF7D6}
   .log-step b{display:block;font-size:11.5px;line-height:1.3;color:var(--ink)}
   .log-step span{display:block;margin-top:2px;font-size:10.5px;line-height:1.35;color:var(--ink-3)}
-  .ph-zoom{margin-left:auto;display:inline-flex;align-items:center;gap:6px;flex-shrink:0;
-    font-size:11px;font-weight:740;color:var(--ink);background:rgba(255,255,255,.82);backdrop-filter:blur(8px);
-    border:1px solid rgba(201,206,251,.9);border-radius:999px;padding:5px 10px;cursor:pointer;
-    box-shadow:0 8px 18px -14px rgba(14,20,48,.45);transition:background .2s,transform .2s,color .2s,border-color .2s}
-  .ph-zoom:hover{background:var(--blue);color:#fff;border-color:var(--blue);transform:translateY(-1px)}
-  /* 放大模态：苹果式丝滑开合 · 虚化背景 + 大窗工作台 */
-  .wbm{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;
-    padding:clamp(12px,3vw,34px);background:rgba(11,16,32,.5);backdrop-filter:blur(13px);-webkit-backdrop-filter:blur(13px)}
-  .wbm.open{display:flex;animation:wbm-bg .34s ease both}
-  .wbm.closing{animation:wbm-bg-out .24s ease both}
-  @keyframes wbm-bg{from{opacity:0}to{opacity:1}}
-  @keyframes wbm-bg-out{from{opacity:1}to{opacity:0}}
-  .wbm-panel{position:relative;background:#fff;border-radius:18px;overflow:hidden;
-    box-shadow:0 50px 140px rgba(11,16,32,.55),0 0 0 1px rgba(255,255,255,.05)}
-  .wbm.open .wbm-panel{animation:wbm-pop .46s cubic-bezier(.22,1,.36,1) both}
-  .wbm.closing .wbm-panel{animation:wbm-pop-out .24s cubic-bezier(.4,0,1,1) both}
-  @keyframes wbm-pop{from{opacity:0;transform:scale(.9) translateY(16px)}to{opacity:1;transform:none}}
-  @keyframes wbm-pop-out{from{opacity:1;transform:none}to{opacity:0;transform:scale(.96) translateY(8px)}}
-  .wbm-stage{position:relative;overflow:hidden;background:#fff}
-  .wbm-stage iframe{position:absolute;top:0;left:0;border:0;background:#fff;transform-origin:top left}
-  .wbm-x{position:absolute;right:14px;top:14px;z-index:3;width:36px;height:36px;border-radius:50%;border:none;
-    background:rgba(11,16,32,.55);backdrop-filter:blur(6px);color:#fff;font-size:19px;line-height:1;cursor:pointer;
-    display:grid;place-items:center;transition:background .2s,transform .2s}
-  .wbm-x:hover{background:var(--blue);transform:scale(1.06)}
-  @media(prefers-reduced-motion:reduce){.wbm.open,.wbm.closing,.wbm.open .wbm-panel,.wbm.closing .wbm-panel{animation:none}}
   @media(min-width:981px) and (max-width:1240px){
     .ph-grid{grid-template-columns:1fr;gap:clamp(38px,5vw,54px)}
     .ph-copy{max-width:760px}
@@ -127,6 +102,7 @@
     .focus-msg{max-width:96%}
   }
   /* —— 真实界面：工作流证据区 —— */
+  @media(min-width:761px){.sec-top h2{word-break:keep-all}.sec-top h2 .hl span{white-space:nowrap}}
   #screens{padding-top:clamp(58px,8vw,108px)}
   #screens .sec-top{margin-bottom:clamp(28px,4vw,44px)}
   #screens .sec-top h2{font-size:clamp(34px,3vw,44px);letter-spacing:-.035em;word-break:keep-all}
@@ -342,7 +318,6 @@
             <div class="hero-kpi"><div class="v">11 个</div><div class="l">IM 通道</div></div>
             <div class="hero-kpi"><div class="v">1000+</div><div class="l">企业客户</div></div>
             <div class="hero-kpi"><div class="v">89%</div><div class="l">对话自动完成率</div></div>
-            <div class="hero-kpi"><div class="v">多年</div><div class="l">通道适配积累</div></div>
           </div>
         </div>
         <div class="ph-art">
@@ -350,7 +325,6 @@
             <div class="win">
               <span class="d r"></span><span class="d y"></span><span class="d g"></span>
               <span class="t">句子秒回 · 聚合聊天工作台</span>
-              <button class="ph-zoom" type="button" onclick="wbOpen()" aria-label="查看完整工作台演示"><i class="fa-solid fa-up-right-and-down-left-from-center" aria-hidden="true"></i> 完整工作台</button>
             </div>
             <div class="ph-focus" role="group" aria-label="句子秒回 Agent 协作工作台局部示意">
               <div class="focus-grid">
@@ -360,19 +334,19 @@
                       <div class="focus-avatar">李</div>
                       <div>
                         <div class="chat-title">李可</div>
-                        <div class="chat-sub">抖音私信 · 所在群：课程交流群</div>
+                        <div class="chat-sub">小红书私信 · 课程咨询</div>
                       </div>
                     </div>
                     <span class="intent-pill"><i class="fa-solid fa-bolt" aria-hidden="true"></i> 高意向 92%</span>
                   </div>
-                  <div class="focus-msg customer">课程贵了点，我还想再看看。孩子最近也不太想上课。</div>
+                  <div class="focus-msg customer">看了你们的小红书笔记，课程贵了点，孩子最近也不太想上课。</div>
                   <div class="agent-card">
                     <div class="agent-top"><b>Agent A1 已接住</b><span class="score">置信 92%</span></div>
-                    <p>价格异议 + 学习动力下降。先共情，再给出免费评估承接。</p>
+                    <p>小红书私信进线：价格异议 + 学习动力下降，建议先共情，再给出免费评估承接。</p>
                   </div>
-                  <div class="focus-msg agent">理解，孩子状态我们也很在意。方便先了解下这两周卡在哪些点吗？</div>
+                  <div class="focus-msg agent">理解，孩子状态我们也会先看清楚。方便说下年级和最近卡在哪门课吗？</div>
                   <div class="assist-row">
-                    <div class="assist-copy">AI 建议：免费评估 · 转人工确认</div>
+                    <div class="assist-copy">AI 建议：免费评估 · 人工确认</div>
                     <span class="assist-send" aria-hidden="true"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i></span>
                   </div>
                 </section>
@@ -434,14 +408,14 @@
             <div class="proof-body">
               <div class="proof-chatline">
                 <div class="proof-avatar">李</div>
-                <div class="proof-bubble">课程贵了点，我还想再看看。孩子最近也不太想上课。</div>
+                <div class="proof-bubble">看了你们的小红书笔记，课程贵了点，孩子最近也不太想上课。</div>
               </div>
               <div class="proof-ai">
                 <div class="proof-ai-top">Agent A1 已接住 <span>92%</span></div>
-                <p>识别为价格异议 + 学习动力下降，建议先共情，再交给人工确认优惠动作。</p>
+                <p>识别为小红书私信进线：价格异议 + 学习动力下降，建议先共情，再交给人工确认评估动作。</p>
               </div>
               <div class="proof-action">
-                <div><b>免费评估方案</b><span>等待主管确认</span></div>
+                <div><b>免费评估邀约</b><span>等待人工确认</span></div>
                 <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
               </div>
             </div>
@@ -615,7 +589,7 @@
           <span class="sec-eyebrow">结果</span>
           <h2>客户用句子秒回拿到的<span class="hl"><span>实际效果。</span></span></h2>
         </div>
-        <p class="sub">数据来自 多年部署的真实客户案例。</p>
+        <p class="sub">数据来自句子秒回真实客户场景与长期部署经验。</p>
       </div>
       <div class="kpiband rv">
         <div class="kpicard"><div class="v">11 个</div><div class="l">已接入 IM 通道</div></div>
@@ -647,31 +621,6 @@
     </div>
   </section>
 
-  <!-- 工作台放大模态（虚化背景 + 大窗） -->
-  <div class="wbm" id="wbModal" role="dialog" aria-modal="true" aria-label="句子秒回 工作台 · 放大演示">
-    <div class="wbm-panel">
-      <button class="wbm-x" type="button" onclick="wbClose()" aria-label="关闭放大">&times;</button>
-      <div class="wbm-stage" id="wbBigStage"><iframe id="wbFrameBig" title="句子秒回 工作台 · 放大演示"></iframe></div>
-    </div>
-  </div>
-  <script>
-  (function(){
-    var big=document.getElementById('wbFrameBig'),bstg=document.getElementById('wbBigStage'),modal=document.getElementById('wbModal');
-    if(!big||!bstg||!modal)return;
-    var mq=matchMedia('(max-width:760px)');
-    function mode(){return mq.matches?{src:'../assets/demos/miaohui-workbench-mobile.html',w:430,h:860}:{src:'../assets/demos/miaohui-workbench.html',w:1440,h:780};}
-    function fitBig(){var m=mode();var availW=Math.min(window.innerWidth*0.96,m.w),availH=window.innerHeight*0.9;var s=Math.min(availW/m.w,availH/m.h,1);
-      var want=mq.matches?'m':'d';
-      if(big.getAttribute('data-mode')!==want){big.setAttribute('src',m.src);big.setAttribute('data-mode',want);}
-      big.style.width=m.w+'px';big.style.height=m.h+'px';big.style.transform=(s>=.999?'none':'scale('+s+')');
-      bstg.style.width=Math.round(m.w*s)+'px';bstg.style.height=Math.round(m.h*s)+'px';}
-    window.wbOpen=function(){modal.classList.remove('closing');modal.classList.add('open');document.body.style.overflow='hidden';fitBig();};
-    window.wbClose=function(){if(!modal.classList.contains('open')||modal.classList.contains('closing'))return;modal.classList.add('closing');document.body.style.overflow='';setTimeout(function(){modal.classList.remove('open');modal.classList.remove('closing');},250);};
-    modal.addEventListener('click',function(e){if(e.target===modal)window.wbClose();});
-    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&modal.classList.contains('open'))window.wbClose();});
-    var rt;window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){if(modal.classList.contains('open'))fitBig();},120);});
-  })();
-  </script>
 </main>
 <div id="site-footer"></div>
 <script>window.SITE_REL='../';window.PAGE_CTX={entity:'miaohui',type:'product',title:'句子秒回 · 工作台'};</script>
