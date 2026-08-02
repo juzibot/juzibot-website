@@ -364,7 +364,7 @@ def page_miaohui():
         eyebrow="架构",
         title="两大控制台 + 两个工作台，覆盖企业全角色",
         paragraphs=[
-            "句子秒回按企业组织结构搭协作系统。管理者、小组负责人、一线客服、AI 运营各有自己的入口，权限和数据分开。",
+            "按角色拆出入口：管理者、组长、客服、运营，权限和数据分开。",
         ],
         bullets=[
             "<strong>企业控制台</strong>：管理者全局视角，跨小组操作，全公司数据看板",
@@ -2118,7 +2118,7 @@ def page_dongxing():
         rel="../",
         breadcrumbs=[("首页", "../index.html"), ("产品", None), ("句子懂行", None)],
         hero_kicker="产品 · 懂行 · 记忆",
-        hero_h1='句子懂行 · <span class="accent">AI 员工的记忆</span>',
+        hero_h1='句子懂行 · <span class="accent">记忆</span>',
         hero_lede="句子懂行是 AI 员工的记忆。客户把资料丢进来，<strong>归档 Agent 自动拆成知识单元；体检 Agent 持续找冲突和缺口；检索 Agent 在指定范围内带出处作答</strong>。AI 答得准不准，先看记忆是否干净、可追溯。",
         pills=["归档 Agent", "体检 Agent", "检索 Agent", "带出处回答"],
         body=body,
