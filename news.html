@@ -40,13 +40,17 @@
   .news-hero h1 .accent{color:var(--blue)}
   .news-lede{font-size:clamp(15.5px,1.35vw,18.5px);color:var(--ink-2);max-width:52ch;line-height:1.7}
   .news-lede strong{color:var(--ink);font-weight:700}
-  .news-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:clamp(18px,2.4vw,26px)}
-  .news-meta .pill{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:650;color:var(--ink-2);
-    white-space:nowrap;background:#fff;border:1px solid var(--line);padding:7px 12px;border-radius:999px;box-shadow:var(--shadow-soft)}
-  .news-meta .pill i{color:var(--blue);font-size:11.5px}
-  .news-meta .pill b{color:var(--ink);font-weight:800}
-  .news-meta a.pill{transition:color .2s var(--ease),border-color .2s var(--ease)}
-  .news-meta a.pill:hover{color:var(--blue);border-color:var(--blue)}
+/* 页头整块居中(佳芮第 1 条: 原先贴左, 宽屏右侧一大片空白) */
+  .news-hero .wrap{text-align:center}
+  .news-lede{margin-left:auto;margin-right:auto}
+  /* 信息=纯文本, 不做 pill(佳芮第 2 条: 一种样式只做一件事) */
+  .news-info{margin-top:clamp(16px,2.2vw,24px);font-size:13px;color:var(--ink-3);line-height:1.8}
+  .news-info b{color:var(--ink-2);font-weight:750}
+  /* 链接长得像链接: 蓝色 + 悬停下划线 */
+  .news-links{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 26px;margin-top:12px}
+  .news-links a{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:700;color:var(--blue)}
+  .news-links a i{font-size:12px}
+  .news-links a:hover{text-decoration:underline;text-underline-offset:4px}
 
   /* 工具条：来源筛选（一级）+ 分类筛选（二级，选中单一来源时浮现）+ 搜索，吸顶 */
   .news-bar{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.86);
@@ -105,7 +109,7 @@
   .nc-top{display:flex;align-items:center;gap:9px;margin-bottom:12px}
   .nc-srcb{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:750;color:var(--sc,var(--blue));white-space:nowrap}
   .nc-srcb i{font-size:11px}
-  .s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
+  .s-company{--sc:#2563EB}.s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
   .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-voices{--sc:#9333EA}
   .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
   .nc-cat{display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ink-3);
@@ -165,14 +169,15 @@
     <div class="wrap">
       <h1>句子·<span class="accent">动态</span></h1>
       <p class="news-lede">句子在做什么、写什么、被谁报道——都在这一页。<strong>行业雷达</strong>另起一区，放我们在看的 AI 动态和一句自己的看法。每条都能点开原文，也能按住 <strong>⌘K</strong> 直接问 AI。</p>
-      <div class="news-meta">
-        <span class="pill"><i class="fa-solid fa-house-chimney"></i>句子动态&nbsp;<b id="newsTotal">0</b>&nbsp;条</span>
-        <span class="pill"><i class="fa-solid fa-satellite-dish"></i>行业雷达&nbsp;<b id="newsRadar">0</b>&nbsp;条</span>
-        <span class="pill"><i class="fa-solid fa-tower-broadcast"></i>博客 · 公众号 · 产品 · 媒体 · 行业 · 大咖</span>
-        <span class="pill"><i class="fa-solid fa-rotate"></i>更新于&nbsp;<b id="newsFresh">—</b></span>
-        <a class="pill" href="news/c/index.html"><i class="fa-solid fa-book-open"></i>概念索引</a>
-        <a class="pill" href="news-c.html"><i class="fa-solid fa-layer-group"></i>切换聚合版</a>
-        <a class="pill" href="news-feed.xml" title="RSS 2.0：只含句子动态（博客/公众号/产品/媒体），行业资讯请订阅各自源头"><i class="fa-solid fa-rss"></i>订阅句子动态</a>
+      <!-- 一种样式只做一件事(佳芮 2026-08-02 第 2 条): 原先 4 个信息 span 和 3 个链接做成
+           同一款 pill, 和下方筛选器长得也一样, 看不出谁能点。现在信息=纯文本一行、链接=链接样式;
+           条数只在这一行出现(分区 tab 只留名字)。
+           #newsTotal/#newsRadar/#newsFresh 是管线注入标记 + 页内 JS 运行时更新目标, id 不能动 -->
+      <p class="news-info">博客 · 公众号 · 产品 · 媒体 · 行业 · 大咖&ensp;——&ensp;句子动态 <b id="newsTotal">0</b> 条 · 行业雷达 <b id="newsRadar">0</b> 条 · 更新于 <b id="newsFresh">—</b></p>
+      <div class="news-links">
+        <a href="news/c/index.html"><i class="fa-solid fa-book-open"></i>概念索引</a>
+        <a href="news-c.html"><i class="fa-solid fa-layer-group"></i>聚合版</a>
+        <a href="news-feed.xml" title="RSS 2.0：只含句子动态（博客/公众号/产品/媒体），行业资讯请订阅各自源头"><i class="fa-solid fa-rss"></i>订阅 RSS</a>
       </div>
     </div>
   </section>
@@ -223,7 +228,7 @@
   var payload = {};
   try { payload = JSON.parse(document.getElementById('news-data').textContent.trim() || '{}') || {}; } catch (e) {}
   var data = payload.items || [], sources = payload.sources || [];
-  var ICON = { 'rui-blog': 'fa-solid fa-pen-nib', 'wechat-mp': 'fa-brands fa-weixin', 'product': 'fa-solid fa-rocket', 'press': 'fa-solid fa-bullhorn', 'industry': 'fa-solid fa-rss', 'voices': 'fa-solid fa-feather', 'hn': 'fa-brands fa-hacker-news', 'qisi': 'fa-solid fa-lightbulb' };
+  var ICON = { 'company': 'fa-solid fa-building', 'rui-blog': 'fa-solid fa-pen-nib', 'wechat-mp': 'fa-brands fa-weixin', 'product': 'fa-solid fa-rocket', 'press': 'fa-solid fa-bullhorn', 'industry': 'fa-solid fa-rss', 'voices': 'fa-solid fa-feather', 'hn': 'fa-brands fa-hacker-news', 'qisi': 'fa-solid fa-lightbulb' };
 
   var list = document.getElementById('newsList'),
       srcs = document.getElementById('newsSrcs'),
