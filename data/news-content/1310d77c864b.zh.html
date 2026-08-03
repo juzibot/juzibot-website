@@ -1,0 +1,34 @@
+<p><strong><a href="https://primeradiant.com/blog/2026/smevals.html">smevals - 一个小型评估套件，用于评估模型、提示词和测试框架</a></strong></p>
+<p>我一直在与 Jesse Vincent 的 <a href="https://primeradiant.com">Prime Radiant</a> 应用人工智能研究实验室合作，共同构建这个评估框架，以帮助解答关于不同模型能力的问题。</p>
+<p>最终成果是 <strong><a href="https://github.com/prime-radiant-inc/smevals">smevals</a></strong>，一个用于在不同模型配置上运行小型评估套件并对结果进行评分的新工具。</p>
+<p>这篇<a href="https://primeradiant.com/blog/2026/smevals.html">博客文章</a>详细介绍了该工具。以下是十秒钟的速览版本：</p>
+<ol>
+<li>让你的编程代理执行 <code>run uvx smevals docs</code> 来学习这个工具（这会输出<a href="https://github.com/prime-radiant-inc/smevals/blob/main/README.md">README 文件</a>）</li>
+<li>然后让它为你构建一个评估套件</li>
+</ol>
+<p>一旦你创建了一个评估（它表现为一个包含一些 YAML 文件的目录），你就可以像这样用它来测试模型：</p>
+<pre><code>uvx smevals run path-to-eval/ -m gpt-5.5 -m claude-opus-4.6
+</code></pre>
+<p>运行操作与评分操作是分开的 - 你可以使用以下命令对你的运行结果进行评分（针对你定义的检查集）：</p>
+<pre><code>uvx smevals grade path-to-eval/
+</code></pre>
+<p>然后你可以运行一个本地网络服务器来探索结果：</p>
+<pre><code>uvx smevals serve path-to-eval/
+</code></pre>
+<p>或者运行 <code>smevals build</code> 命令将报告构建为静态 HTML 文件，然后你就可以在任何地方托管它。这是一个<a href="https://static.simonwillison.net/static/2026/smevals-haiku-build/#/haiku">示例</a>，展示了我构建的一个用于评估模型写俳句能力的评估套件。</p>
+<p><img alt="一个俳句写作基准的评估仪表盘截图，测试模型是否能回复恰好三行非空内容。一个标题描述了该评估，下方面板显示了按分数排名的三个 GPT 模型的排行榜、最近的运行和评分列表、标签通过率、测试过的两个俳句提示词，以及使用的评分器详情，通过阈值为 0.8。" src="https://static.simonwillison.net/static/2026/smevals-report.webp" /></p>
+<p>这个项目中耗时最长的部分是为它确定术语！以下是我最终确定的词汇，引自公告：</p>
+<blockquote>
+<ul>
+<li><strong>eval</strong> 是一系列挑战的集合，旨在回答关于模型的问题，例如，该模型生成 SVG 的能力有多强？</li>
+<li>每个 eval 都是一组<strong>任务</strong>。任务是一个具体的挑战，例如“生成一张鹈鹕骑自行车的 SVG 图片”。</li>
+<li>当你运行 eval 时，需要针对一个或多个<strong>配置</strong>进行。每个配置都指定了要评估的模型，但也可能包含其他要测试的参数，例如不同的系统提示、模型参数或代理工具。</li>
+<li><strong>运行</strong>记录了使用特定配置执行特定任务时发生的情况。<strong>运行器</strong>是执行运行的脚本。</li>
+<li>当你收集到一个或多个运行结果后，需要评估结果，以了解模型（或配置）的表现如何。这项工作由<strong>评分器</strong>完成，它会生成一个<strong>评分</strong>。</li>
+<li>每个评分器都会运行一系列<strong>检查</strong>。这些检查可以很简单，比如检查输出中是否包含特定字符串，或确认输出是否为有效的 XML。它们也可以是更复杂的自定义操作（作为名为<strong>检查器</strong>的脚本实现），包括使用其他模型来回答关于运行结果的问题。</li>
+</ul>
+</blockquote>
+<p>几年来，我一直在尝试寻找一种我喜欢的评估方法。<code>smevals</code>是我在这个想法上的第三次迭代，我觉得这次的感觉对了。我期待着未来能进一步扩展它，并将其应用于我自己的项目中。
+
+
+    <p>标签: <a href="https://simonwillison.net/tags/projects">projects</a>, <a href="https://simonwillison.net/tags/ai">ai</a>, <a href="https://simonwillison.net/tags/generative-ai">generative-ai</a>, <a href="https://simonwillison.net/tags/llms">llms</a>, <a href="https://simonwillison.net/tags/llm">llm</a>, <a href="https://simonwillison.net/tags/evals">evals</a>, <a href="https://simonwillison.net/tags/jesse-vincent">jesse-vincent</a></p>

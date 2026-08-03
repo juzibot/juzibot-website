@@ -1,0 +1,439 @@
+<h1>Research</h1><hr />
+    <p>
+    F* is an active topic of research, both in the programming languages and formal methods community, 
+    as well as from an application perspective in the security and systems communities.
+    We list a few of them below, with <a href="https://fstar-lang.org/fstar_bib.php" target="_blank" rel="noopener nofollow">full citations to these papers available in this bibliography</a>.
+    If you would like your paper included in this list, please contact fstar-maintainers@googlegroups.com.
+
+
+    <h2>The Design of F* and its DSLs</h2>
+    <ul>
+        <li><a href="https://fstar-lang.org/papers/mumon/" target="_blank" rel="noopener nofollow">Dependent
+            Types and Multi-monadic Effects in F*</a> (POPL 2016) This
+            is the canonical reference describing the F* system. The
+            language has evolved in significant ways since 2016,
+            however, its core design and implementation is based on
+            this paper.
+        </li>
+        <li><a href="https://arxiv.org/abs/1703.00053" target="_blank" rel="noopener nofollow">Verified
+            Low-level Programming Embedded in F*</a> (ICFP 2017) which
+            describes the Low* fragment of F* which is a low-level
+            subset of F* that can be compiled to C by KaRaMeL.
+        </li>
+        <li><a href="https://dl.acm.org/doi/10.1145/3290376" target="_blank" rel="noopener nofollow">A
+            Verified, Efficient Embedding of a Verifiable Assembly
+            Language</a> (POPL 2019) which describes the Vale
+            language, a verified assembly language embedded in F*.
+        </li>
+        <li><a href="https://fstar-lang.org/papers/metafstar/" target="_blank" rel="noopener nofollow">Meta-F*:
+            Proof Automation with SMT, Tactics, and Metaprograms</a>
+            (ESOP 2019) which describes MetaF*, a metaprogramming
+            system within F* used to implement various aspects of F*,
+            ranging from its tactic engine to its support for
+            typeclasses.
+        </li>
+        <li><a href="https://fstar-lang.org/papers/indexedeffects/" target="_blank" rel="noopener nofollow">Programming
+            and Proving with Indexed Effects</a> (TR 2021) which
+            describes the design of F*&#x27;s support for user-defined
+            effects and provides a calculus that describes the logical
+            core of F*.
+        </li>
+        <li><a href="https://fstar-lang.org/papers/steel/" target="_blank" rel="noopener nofollow">Steel:
+            Proof-oriented Programming in a Dependently Typed
+            Concurrent Separation Logic</a> (ICFP 2021), which
+            describes the Steel language and its use of the SteelCore
+            concurrent separation logic for proofs of imperative
+            programs with various forms of concurrency.
+        </li>
+    </ul>
+
+    <h2>Semantics and Effects</h2>
+    <ul>    
+        <li><a href="https://dl.acm.org/doi/10.1145/2499370.2491978" target="_blank" rel="noopener nofollow">Verifying
+            Higher-order Programs with the Dijkstra Monad</a> (PLDI
+            2013), which introduces the concept of the Dijkstra monad,
+            a core feature of F*&#x27;s system of effects.</li>
+
+        <li><a href="https://fstar-lang.org/papers/dm4free/" target="_blank" rel="noopener nofollow">Dijkstra
+            Monads for Free</a> (POPL 2017), which shows how to
+            automatically derive Dijkstra monads for a class of
+            computational monads using a continuation-passing
+            transformation
+        </li>
+
+        <li><a href="https://arxiv.org/abs/1703.00055" target="_blank" rel="noopener nofollow">A Monadic
+        Framework for Relational Verification: Applied to Information
+        Security, Program Equivalence, and Optimizations</a> (CPP
+        2018), which builds on the Dijkstra Monads for Free work to
+        construct a framework for proving properties that relate
+        multiple programs or program executions.
+        </li>
+
+        <li><a href="https://arxiv.org/abs/1903.01237" target="_blank" rel="noopener nofollow">Dijkstra Monads
+        for All</a> (ICFP 2019), which generalizes the notion of a
+        Dijkstra monad and shows how to systematically relate
+        computational and specificational monads via monad morphisms.
+        </li>
+
+        <li><a href="https://arxiv.org/abs/1707.02466" target="_blank" rel="noopener nofollow">Recalling a
+            Witness: Foundations and Applications of Monotonic
+            State</a> (POPL 2018), which describes the design of a
+            program logic for reasoning about programs whose state
+            evolves monotonically, e.g., where the state is an
+            append-only log.  This logic underpins both Low* and
+            Steel.
+        </li>
+
+        <li><a href="https://fstar-lang.org/papers/steelcore/" target="_blank" rel="noopener nofollow">SteelCore:
+        An Extensible Concurrent Separation Logic for Effectful
+        Dependently Typed Programs</a> (ICFP 2020), which describes
+        the SteelCore concurrent separation logic, the basis of the
+        Steel DSL.
+        </li> 
+
+        <li><a href="https://fstar-lang.org/papers/ussl.pdf" target="_blank" rel="noopener nofollow">
+          USSL: A Universe-Stratified, Predicative Concurrent Separation Logic</a>
+          a foundational, axiom-free concurrent separation logic shallowly
+          embedded in F*, supporting dynamic invariants and higher-order ghost
+          state in a predicative setting, by stratifying predicates according to
+          the hierarchy of universe levels.
+        </li> 
+
+        <li><a href="https://fstar-lang.org/papers/pulsecore-indirection-2025.pdf" target="_blank" rel="noopener nofollow">
+          PulseCore: An Impredicative Concurrent Separation Logic for
+          Dependently Typed Programs</a> (PLDI 2025), a foundational, axiom-free
+          concurrent separation logic shallowly embedded in F*, supporting
+          dynamic invariants and higher-order ghost state, with impredicative
+          invariants and later credits. PulseCore is the foundation for <a href="https://fstar-lang.org/tutorial/book/pulse/pulse.html#pulse-proof-oriented-programming-in-concurrent-separation-logic" target="_blank" rel="noopener nofollow">Pulse</a>,
+          an embedded language in F* for proof-oriented programming in
+          concurrent separation logic.
+        </li> 
+
+    </ul>
+
+    <h2>Applications in Security and Cryptography</h2>
+    <p>Many papers applying F* in security and cryptography can be
+       found in
+       the <a href="https://project-everest.github.io/papers/" target="_blank" rel="noopener nofollow">Project
+       Everest bibliography</a>.  We mention a few prominent ones here
+       as well as other applications not related to Project Everest.
+
+    <ul>
+        <li><a href="https://arxiv.org/abs/1711.06467" target="_blank" rel="noopener nofollow">WYS*: A DSL for
+        Verified Secure Multi-party Computations</a> (POST 2017),
+        which describes the WYS* language, a domain-specific language
+        for writing verified mixed-mode secure multi-party
+        computations.
+        </li>
+
+        <li><a href="https://eprint.iacr.org/2016/1178" target="_blank" rel="noopener nofollow">Implementing
+        and Proving the TLS 1.3 Record Layer</a>(S&amp;P 2017), which
+        describes a verified implementaion of the TLS-1.3 record layer
+        in Low*.</li>
+
+        <li><a href="https://eprint.iacr.org/2017/536" target="_blank" rel="noopener nofollow">HACL*: A
+        Verified Modern Cryptographic Library</a> (CCS 2017), which
+        describes HACL*, a verified cryptographic library
+        implemented in Low*.</li>
+
+        <li><a href="https://ieeexplore.ieee.org/document/8835291" target="_blank" rel="noopener nofollow">Formally
+            Verified Cryptographic Web Applications in WebAssembly</a>
+            (S&amp;P 2019), which develops LibSignal*, an implementation
+            of the Signal protocol in F* using HACL*, compiled to Wasm
+            by KaRaMeL.</li>
+                  
+        <li><a href="https://project-everest.github.io/assets/evercrypt.pdf" target="_blank" rel="noopener nofollow">EverCrypt:
+            A Fast, Verified, Cross-Platform Cryptographic
+            Provider</a> (S&amp;P 2020), a crypto provider combining C and
+            assembly code from HACL* and Vale, as well as some
+            applications built on top of it, including a verified
+            high-performance Merkle tree that was used in an initial
+            version of Microsoft Azure CCF.</li>
+
+        <li><a href="https://project-everest.github.io/assets/haclxn.pdf" target="_blank" rel="noopener nofollow">HACL×N:
+          Verified Generic SIMD Crypto (for all your favorite
+          platforms)</a> (CCS 2020), which metaprograms vectorized
+          versions of cryptographic primitives, enabling a
+          &quot;write-once, get vectorized versions for free&quot; style.</li>
+          
+        <li><a href="https://project-everest.github.io/assets/everquic.pdf" target="_blank" rel="noopener nofollow">A
+        Security Model and Fully Verified Implementation for the IETF
+        QUIC Record Layer</a> (S&amp;P 2021), a verified implementation of
+        the QUIC record layer in Low* combined with the protocol logic
+        implemented in Dafny.</li>
+
+        <li><a href="https://www.microsoft.com/en-us/research/publication/dice-a-formally-verified-implementation-of-dice-measured-boot/" target="_blank" rel="noopener nofollow">DICE*:
+        A Formally Verified Implementation of DICE Measured Boot</a>
+        (USENIX Security 2021), which proves the correctness &amp;
+        security of the DICE measured boot protocol for
+        micro-controllers, implemented in Low*, using EverCrypt and
+        EverParse.</li>
+
+        <li><a href="https://ieeexplore.ieee.org/document/9581188" target="_blank" rel="noopener nofollow">DY*:
+        A Modular Symbolic Verification Framework for Executable
+        Cryptographic Protocol Code</a> (Euro S&amp;P 2021), a framework
+        for type-based symbolic security analysis of cryptographic
+          protocol implementations developed in F*.</li>
+
+        <li><a href="https://link.springer.com/chapter/10.1007/978-3-030-91631-2_4" target="_blank" rel="noopener nofollow">A
+            Tutorial-Style Introduction to DY*</a> (LNCS 2021), which is, yes,
+            a tutorial-style introduction to DY*.</li>
+          
+        <li><a href="https://dl.acm.org/doi/10.1145/3460120.3484588" target="_blank" rel="noopener nofollow">An
+            In-Depth Symbolic Security Analysis of the ACME
+            Standard</a> (CCS 2021), which proves the security of a
+            model of the ACME certificate issuance and management
+            protocol using DY*.</li>
+               
+        <li><a href="https://ieeexplore.ieee.org/document/9833621" target="_blank" rel="noopener nofollow">Noise*:
+        A Library of Verified High-Performance Secure Channel Protocol
+        Implementations</a> (S&amp;P 2022), which metaprograms provably
+        secure implementations for a family of secure channel
+        protocols.</li>
+
+        <li><a href="https://www.usenix.org/system/files/sec23fall-prepub-372-wallez.pdf" target="_blank" rel="noopener nofollow">TreeSync:
+          Authenticated Group Management for Messaging Layer
+          Security</a> (USENIX Security 2023), a reference
+          implementation of MLS in F*, proven secure using the DY*
+          framework.</li>
+
+        <li><a href="https://dl.acm.org/doi/10.1145/3607844" target="_blank" rel="noopener nofollow">Modularity,
+        Code Specialization, and Zero-Cost Abstractions for Program
+        Verification</a> (ICFP 2023), which describes
+        proof-engineering techniques used in HACL* for generic
+        implementations of cryptographic constructions that can be
+        specialized repeatedly to many concrete implementations in
+        C. The techniques used here led to the adoption of verified
+        cryptographic code into the libraries of the Python
+          programming language.</li>
+
+        <li><a href="https://kirby.linvill.net/pdfs/indistinguishability_paper.pdf" target="_blank" rel="noopener nofollow">Verifying
+            Indistinguishability of Privacy-Preserving Protocols</a>
+            (OOPSLA 2023), which provides a library called Waldo in F*
+            that enables proofs of indistinguishability over traces of
+            communication in networking protocols. </li>
+  
+        
+       <li><a href="https://eprint.iacr.org/2023/1390" target="_blank" rel="noopener nofollow">Comparse:
+       Provably Secure Formats for Cryptographic Protocols</a> (CCS
+       2023), which provides a parsing library for data formats that
+       are appropriate for use with symbolic protocol
+       analyzers. Comparse provides bit-level precise accounting of
+       formats allowing the DY* protocol analysis framework to reason
+       about concrete messages and identify protocol flaws that it
+       previously would have missed.</li>
+
+       <li><a href="https://eprint.iacr.org/2025/980" target="_blank" rel="noopener nofollow">Formal Security and
+       Functional Verification of Cryptographic Protocol Implementations in
+       Rust</a> (CCS 2025), which develops Bert13, an implementation of TLS-1.3
+       in Rust with post-quantum features, and proves it correct and secure via
+       translation (using Hax) to a variety of prover backends, including F*,
+       which is used to prove the Rust code panic free and to prove that the
+       transcript formats are injective.</li>
+         
+    </ul>
+    
+    <h2>Applications in Systems</h2>
+    <ul>    
+        <li><a href="https://www.jaybosamiya.com/publications/2022/usenix/provably-safe-sandboxing-wasm.pdf" target="_blank" rel="noopener nofollow">Provably-Safe
+        Multilingual Software Sandboxing using WebAssembly</a> (USENIX
+        2022), which describes a verified implementation of a sandbox
+        for WebAssembly modules in Low* and Rust.</li>
+
+        <li><a href="https://dl.acm.org/doi/10.1145/3448016.3457312" target="_blank" rel="noopener nofollow">FastVer:
+        Making Data Integrity a Commodity</a> (SIGMOD 2021), which
+        formalizes a protocol for data integrity monitoring in F*.</li>
+
+        <li><a href="https://fstar-lang.org/papers/fastver2.pdf" target="_blank" rel="noopener nofollow">FastVer2:
+        A Provably Correct Monitor for Concurrent, Key-Value
+        Stores</a> (CPP 2022), which proves the correctness of a
+        low-level, concurrent implementation of the FastVer protocol
+        in Steel.</li>
+
+        <li><a href="https://amosr.amospheric.com/papers/robinson2024pipitfull.pdf" target="_blank" rel="noopener nofollow">Pipit on the
+        Post: Proving Pre- and Post-Conditions of Reactive Systems</a> (ECOOP
+        2024), which embeds a reactive language in F* and uses it to verify
+        some control systems that execute in real time.</li>
+
+        <li><a href="https://arxiv.org/abs/2403.09435v1" target="_blank" rel="noopener nofollow">StarMalloc: Verifying a
+        Modern, Hardened Memory Allocator</a> (SPLASH 2024), a
+        security-oriented, concurrent memory allocator that can be used as a
+        drop-in replacement in real-world projects, verified in Steel.</li>
+    </ul>
+    
+    <h2>Applications in Parsing</h2>
+    <ul>        
+        <li><a href="ttps://www.usenix.org/conference/usenixsecurity19/presentation/delignat-lavaud" target="_blank" rel="noopener nofollow">EverParse:
+            Verified Secure Zero-Copy Parsers for Authenticated
+            Message Formats</a> (USENIX Security 2019), which 
+            describes the EverParse parser generator for parsing
+            binary formats, producing C code.
+        </li>
+        
+        <li><a href="https://fstar-lang.org/papers/EverParse3D.pdf" target="_blank" rel="noopener nofollow">Hardening
+            Attack Surfaces with Formally Proven Binary Format
+            Parsers</a> (PLDI 2022), which uses EverParse to harden
+            network packet parsers in Windows Network Virtualization
+            and Hyper-V. </li>
+
+        <li><a href="https://fstar-lang.org/papers/asn1star.pdf" target="_blank" rel="noopener nofollow">ASN1*:
+            Provably Correct Non-Malleable Parsing for ASN.1 DER </a>
+            (CPP 2022), which formalizes the ASN.1 DER format in F*
+            and proves the correctness of a parser for it in
+            EverParse.</li>
+
+        <li><a href="https://www.microsoft.com/en-us/research/wp-content/uploads/2025/10/evercbor.pdf" target="_blank" rel="noopener nofollow">
+          Secure Parsing and Serializing with Separation Logic Applied to CBOR,
+          CDDL, and COSE (CCS 2025)</a>, which formalizes the RFCs for the CBOR
+          binary object format and the CDDL data description language in F*,
+          develops provably correct and secure parsers and formatters for CBOR,
+          and a compiler for CDDL specifications, all implemented in Pulse, and
+          applied to various applications, including the validation of COSE
+          signed objects.</li>
+
+    </ul>
+
+    <h2>Applications in Programming, Program Proof, and Program Analysis</h2>
+    <ul>
+
+        <li><a href="https://arxiv.org/pdf/1603.01635.pdf" target="_blank" rel="noopener nofollow">Verified
+         Compilation of Space-Efficient Reversible Circuits</a> (CAV
+         2018), which presents ReVerC, a compiler for reversible
+         circuits proven correct in F*.
+
+        <li><a href="https://www.jaybosamiya.com/publications/2020/vstte/transformers.pdf" target="_blank" rel="noopener nofollow">
+            Verified Transformations and Hoare Logic: Beautiful Proofs for Ugly Assembly Language
+          </a> (VSTTE 2020), which develops verified transformations
+          for assembly programs in the Vale framework.</li>
+          
+        <li><a href="https://dl.acm.org/doi/10.1145/3428216" target="_blank" rel="noopener nofollow">Statically
+        verified refinements for multiparty protocols</a> (OOPSLA
+        2020), which presents Session*, a session-typed programming
+        language for multiparty protocols, formalized in F*.</li>
+
+        <li><a href="https://arxiv.org/abs/2107.09472" target="_blank" rel="noopener nofollow">Verified
+        Functional Programming of an Abstract Interpreter</a> (SAS
+        2021), which develops an abstract interpretation framework for
+        an imperative language with a very compact proof of soundness
+          developed in F*.</li>
+
+        <li><a href="https://dl.acm.org/doi/abs/10.1145/3473582" target="_blank" rel="noopener nofollow">Catala:
+          a programming language for the law</a> (ICFP 2021), where
+          core parts of the compiler are formalized and proven correct
+          in F*.</li>
+
+        <li><a href="https://arxiv.org/abs/2106.04826" target="_blank" rel="noopener nofollow">Verification of
+        a Merkle Patricia Tree Library Using F*</a>, which ports a
+        Merkle tree library from OCaml to F*, finds and fixes a bug,
+        and eventually proves it correct.</li>
+          
+        <li><a href="https://dl.acm.org/doi/10.1145/3519939.3523735" target="_blank" rel="noopener nofollow">Certified
+        mergeable replicated data types</a> (PLDI 2022), which
+        presents PEEPUL, a framework in which to build replicated data
+        types for use in distributed programming, formalized in
+          F*.</li>
+
+        <li><a href="https://dl.acm.org/doi/10.1145/3547647" target="_blank" rel="noopener nofollow">Aeneas:
+            Rust verification by functional translation</a> (ICFP
+            2022), which translates Rust into pure F* enabling
+          functional correctness proofs.</li>
+
+        <li><a href="https://icfp22.sigplan.org/details/planqc-2022/8/Q-Implementing-Quantum-Separation-Logic-in-F-" target="_blank" rel="noopener nofollow">Q*:
+        Implementing Quantum Separation Logic in F*</a> (PlanQC 2022),
+        which adapts the SteelCore separation logic for use with a
+        quantum programming language.</li>
+          
+        <li><a href="https://amosr.amospheric.com/papers/robinson2023pipit.pdf" target="_blank" rel="noopener nofollow">Pipit:
+            Reactive Systems in F* (Extended Abstract)</a> (TyDe 2023),
+            which describes a embedded DSL for verifying reactive systems.</li>
+
+        <li><a href="https://dl.acm.org/doi/10.1145/3632916" target="_blank" rel="noopener nofollow">Securing
+            Verified IO Programs Against Unverified Code in F*</a>
+            (POPL 2024), which presents SCIO*, a formally secure
+            compilation framework for statically verified programs
+            performing input-output (IO).</li>
+
+        <li><a href="https://dl.acm.org/doi/10.1145/3747522" target="_blank" rel="noopener nofollow">SecRef*: Securely Sharing Mutable References
+            between Verified and Unverified Code in F* (ICFP 2025)</a>, which presents SecRef*, a formally
+            secure compilation framework for statically verified stateful programs.
+            It also presents a Dijkstra Monad for Monotonic State.</li>
+
+        <li><a href="https://dl.acm.org/doi/pdf/10.1145/3720452" target="_blank" rel="noopener nofollow">Automatically
+        Verifying Replication-Aware Linearizability</a> (OOPSLA 2025), which
+        develops a novel fully automated technique for verifying
+        replication-aware linearizability for Mergeable Replicated Data
+        Types, with proofs in F*, and verified code extracted to OCaml.</li>
+
+        <li><a href="https://link.springer.com/article/10.1007/s10817-025-09721-0" target="_blank" rel="noopener nofollow">A
+        Mechanically Verified Garbage Collector for OCaml</a> (JAR 2025), which
+        develops a verified stop-the-world mark-and-sweep GC for OCaml, verified
+        in F* and Low*.</li> 
+        
+    </li></ul>
+ 
+    <h2>AI-assisted Programming</h2>
+    <ul>
+      
+      <li><a href="https://arxiv.org/abs/2405.01787" target="_blank" rel="noopener nofollow">Towards Neural Synthesis for SMT-Assisted Proof-Oriented Programming</a> 
+        (ICSE 2025), which curates a dataset of 940KLOC of F* code and proof and develops AI models to automate program and proof synthesis</li>
+
+      <li><a href="https://arxiv.org/abs/2404.10362" target="_blank" rel="noopener nofollow">3DGen: AI-Assisted
+      Generation of Provably Correct Binary Format Parsers</a>, which developsAI
+      agents to transform mixed informal input, including natural language
+      documents (i.e., RFCs) and example inputs into format specifications into 
+      3D, a data format specification language used with EverParse.</li>
+
+    </ul>
+
+    <h2>Miscellaneous</h2>
+
+    <ul>
+      <li><a href="https://ieeexplore.ieee.org/abstract/document/10172578" target="_blank" rel="noopener nofollow">A
+      Theorem Proving Approach to Programming Language Semantics</a>
+      (ICSE-SEET 2023), which reports on experiences teaching
+      operational, denotational, and axiomatic semantics to students
+      using F*.</li>
+    </ul>
+    
+    <h2>Papers about an older version of F*</h2>
+    <p>
+    The first paper to introduce a system called F* was in
+    2011. Although the current version of F* was redesigned and
+    implemented in 2015, we include some of these older papers here
+    for completeness.
+    <ul>
+      <li><a href="https://dl.acm.org/doi/10.1145/2034773.2034811" target="_blank" rel="noopener nofollow">Secure
+      Distributed Programming with Value-dependent Types</a> (ICFP
+      2011), a longer version of which also appeared
+        in <a href="https://www.cambridge.org/core/journals/journal-of-functional-programming/article/secure-distributed-programming-with-valuedependent-types/14288BBFE9B373738DC8F60C3E89E3E3" target="_blank" rel="noopener nofollow">JFP</a>.</li>
+
+      <li><a href="https://inria.hal.science/inria-00628775/document/" target="_blank" rel="noopener nofollow">Self-certification:
+      bootstrapping certified typecheckers in F* with Coq</a> (POPL
+      2012), which certifies the correctness of the F* typechecker by
+      programming it in F* itself and bootstrapping the process by
+      checking about 7GB of proof using Coq in about 24 machine-days
+      of compute time.</li>
+
+      <li><a href="https://dl.acm.org/doi/10.1145/2429069.2429114" target="_blank" rel="noopener nofollow">Fully
+      abstract compilation to JavaScript</a> (POPL 2013), which
+      models a subset of JavaScript in F* and develops a secure
+        compiler from an ML-like language to JavaScript.</li>
+
+      <li><a href="https://doi.org/10.1145/2535838.2535889" target="_blank" rel="noopener nofollow">Gradual
+          typing embedded securely in JavaScript</a> (POPL 2014),
+          which develops a source-to-source compiler for
+          JavaScript with defensive checks to ensure the soundness of
+          gradual typing in adversarial contexts, proven corrent in
+        F*.</li>
+
+      <li><a href="https://dl.acm.org/doi/10.1145/2535838.2535847" target="_blank" rel="noopener nofollow">Probabilistic
+      relational verification for cryptographic implementations</a>
+      (POPL 2014), which develops RF*, a relational dialect of the
+      language useful for proving security properties like
+      noninterference and for game-based cryptographic proofs.</li>
+
+    </ul>
+    
+  
+    <br /><br />
+</p></p></p>

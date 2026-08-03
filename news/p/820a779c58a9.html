@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>齐思头条2026/08/03「DeepSeek V4‑Flash‑0731 支持百万级上下文与极端量化降本、Opus 5 演示百万级 token 三维交互生成、GPT‑5.6 Sol 实现端到端多模态资产压缩」 - 句子·动态</title>
+<meta name="description" content="Twitter DeepSeek V4‑Flash‑0731（低成本本地/云推理与大上下文支持） ：DeepSeek 发布 V4‑Flash‑0731，声称在 Ollama 云端推理速度提升超 2× 并加强 agent 能力；" />
+<meta name="robots" content="noindex,follow" />
+<link rel="canonical" href="https://news.miracleplus.com/share_link/146388" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="齐思头条2026/08/03「DeepSeek V4‑Flash‑0731 支持百万级上下文与极端量化降本、Opus 5 演示百万级 token 三维交互生成、GPT‑5.6 Sol 实现端到端多模态资产压缩」" />
+<meta property="og:description" content="Twitter DeepSeek V4‑Flash‑0731（低成本本地/云推理与大上下文支持） ：DeepSeek 发布 V4‑Flash‑0731，声称在 Ollama 云端推理速度提升超 2× 并加强 agent 能力；" />
+<meta property="og:url" content="https://news.miracleplus.com/share_link/146388" />
+<meta property="og:site_name" content="句子互动" />
+<meta name="twitter:card" content="summary" />
+
+<link rel="icon" href="../../logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../../assets/site.css?v=72b48ba4" />
+<style>
+  /* 静态兜底导航: site.js 一执行就被 outerHTML 连同占位一起换掉, 访客几乎看不到它。
+     不隐藏也不 noscript 包裹——那会让爬虫拿不到, 而它存在的唯一理由就是给不跑 JS 的爬虫看。
+     样式做朴素一行, 万一 site.js 加载失败, 这排链接本身就是可用的降级导航。 */
+  .nav-fb{display:flex;flex-wrap:wrap;gap:6px 16px;padding:12px clamp(16px,4vw,40px);
+    border-bottom:1px solid var(--line-2);font-size:12.5px}
+  .nav-fb a{color:var(--ink-3);text-decoration:none}
+  .nav-fb a:hover{color:var(--blue)}
+
+  .dp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
+  .dp-wrap{max-width:760px;margin:0 auto}
+  .dp-crumb{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:12.5px;color:var(--ink-3);margin-bottom:20px;min-width:0}
+  .dp-crumb a{color:var(--ink-3);text-decoration:none}
+  .dp-crumb a:hover{color:var(--blue)}
+  .dp-crumb i{font-style:normal;opacity:.5;font-size:11px}
+  .dp-crumb [aria-current]{color:var(--ink-2);font-weight:650;overflow-wrap:anywhere}
+  .dp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
+  .dp-back:hover{color:var(--blue)}
+  .dp-meta{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:14px}
+  .dp-srcb{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:750;color:var(--sc,var(--blue))}
+  .s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
+  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-voices{--sc:#9333EA}
+  .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
+  .dp-cat{display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ink-3);background:#F6F7FB;border:1px solid var(--line-2);border-radius:6px;padding:2px 8px}
+  .dp-read{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  /* 相关动态: 读完一篇之后的出口。此前详情页之间零链接, 读者只能回列表页重新扫,
+     爬虫也只能靠 JS 驱动的列表页做枢纽。每条都带「为什么相关」, 不做无理由的推荐。 */
+  .dp-rel{margin-top:40px;padding-top:26px;border-top:1px solid var(--line-2)}
+  .dp-rel-h{font-size:14px;font-weight:750;color:var(--ink-2);margin:0 0 14px}
+  .dp-rel ul{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+  .dp-rel a{display:block;padding:10px 12px;margin:0 -12px;border-radius:8px;text-decoration:none;transition:background .2s var(--ease)}
+  .dp-rel a:hover{background:#F6F7FB}
+  .dp-rel-t{display:block;font-size:14px;font-weight:650;color:var(--ink-1);line-height:1.5}
+  .dp-rel a:hover .dp-rel-t{color:var(--blue)}
+  .dp-rel-m{display:block;margin-top:3px;font-size:11.5px;color:var(--ink-3)}
+  .dp-read i{font-size:10px;opacity:.7}
+  .dp-date{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-3)}
+  .dp-title{font-size:clamp(24px,3.2vw,34px);font-weight:850;letter-spacing:-.03em;line-height:1.32;word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance;margin-bottom:10px}
+  .dp-orig{font-size:13px;color:var(--ink-3);overflow-wrap:anywhere;margin-bottom:8px}
+  .dp-by{font-size:12.5px;font-weight:600;color:var(--ink-3);margin-bottom:18px}
+  .dp-notice{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:1.7;color:var(--ink-2);background:#F6F7FB;border:1px solid var(--line-2);border-radius:10px;padding:10px 14px;margin-bottom:22px}
+  .dp-notice i{color:var(--blue);margin-top:4px;flex:0 0 auto}
+  .dp-notice a{color:var(--blue);font-weight:700;overflow-wrap:anywhere}
+  .dp-quip{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.66;font-weight:600;color:var(--blue-deep);background:var(--blue-50);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:18px}
+  .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
+  .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
+  .dp-brief b{display:flex;align-items:baseline;gap:8px;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  /* AI 产出物的就地标注(2026-07-30): 概念页的定义早就在页尾注明「由 AI 加工层生成、编辑
+     维护」, 而详情页的简报与锐评一直没标 —— 读者会把那句锐评当成编辑观点。283 页都有这两块,
+     不标就是 283 次误导。放在区块内而不是只放页尾: 页尾声明读者多半划不到, 而标注要落在
+     人实际阅读的位置才有意义。样式压到最小, 不抢正文。 */
+  .dp-brief b em,.dp-quip em{font-style:normal;font-family:var(--mono);font-size:10px;font-weight:600;
+    letter-spacing:0;color:var(--ink-3);white-space:nowrap}
+  .dp-brief b em{margin-left:auto}
+  .dp-quip em{display:block;margin-top:5px;opacity:.85}
+  /* 长文目录(≥3 小标题且正文 ≥2000 字才出): <details> 原生可折叠, 不用一行 JS。
+     默认 open —— 目录的用处是先看清结构再决定读哪段, 收起来就失去意义; 想收也一点即收。 */
+  .dp-toc{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:24px;background:#FBFCFF}
+  .dp-toc summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--ink-2);display:flex;align-items:center;gap:7px;list-style:none}
+  .dp-toc summary::-webkit-details-marker{display:none}
+  .dp-toc summary i{font-size:11px;color:var(--blue)}
+  .dp-toc summary span{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-3);margin-left:auto}
+  .dp-toc ol{list-style:none;margin:10px 0 2px;padding:0;counter-reset:toc}
+  .dp-toc li{counter-increment:toc;font-size:13px;line-height:1.7;padding:2px 0}
+  .dp-toc li::before{content:counter(toc) ". ";font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .dp-toc li.lv3{padding-left:16px}
+  .dp-toc li.lv4{padding-left:32px}
+  .dp-toc a{color:var(--ink-2);text-decoration:none;overflow-wrap:anywhere}
+  .dp-toc a:hover{color:var(--blue)}
+  /* 锚点跳转时标题别贴到视口顶端(站点顶栏会盖住) */
+  .dp-body h2[id],.dp-body h3[id],.dp-body h4[id]{scroll-margin-top:76px}
+  .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
+  .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
+  .dp-body p{margin:0 0 1.05em}
+  .dp-body img{max-width:100%;height:auto;border-radius:10px;margin:.4em 0}
+  .dp-body pre{background:#0F172A;color:#E2E8F0;font-family:var(--mono);font-size:12.5px;line-height:1.7;padding:14px 16px;border-radius:10px;overflow-x:auto;margin:0 0 1.1em}
+  .dp-body code{font-family:var(--mono);font-size:.92em}
+  .dp-body :not(pre)>code{background:#F1F5F9;padding:1px 5px;border-radius:5px}
+  .dp-body blockquote{border-left:3px solid var(--line);padding:2px 0 2px 14px;color:var(--ink-3);margin:0 0 1.05em}
+  .dp-body a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+  .dp-body ul,.dp-body ol{padding-left:1.5em;margin:0 0 1.05em}
+  .dp-body table{display:block;overflow-x:auto;border-collapse:collapse;margin:0 0 1.1em}
+  .dp-body td,.dp-body th{border:1px solid var(--line);padding:6px 10px;font-size:.92em}
+  .dp-excerpt{font-size:15px;line-height:1.9;color:var(--ink-2);border-left:3px solid var(--line);padding:2px 0 2px 16px;margin-bottom:8px}
+  .dp-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;padding-top:20px;border-top:1px solid var(--line-2)}
+  .dp-btn{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:750;border-radius:999px;padding:10px 20px;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+  .dp-btn.pri{background:var(--blue);color:#fff}
+  .dp-btn.pri:hover{background:var(--blue-deep)}
+  .dp-btn.sec{background:#fff;color:var(--ink-2);border:1px solid var(--line)}
+  .dp-btn.sec:hover{color:var(--blue);border-color:var(--blue)}
+  .dp-note{font-size:11.5px;line-height:1.7;color:var(--ink-3);margin-top:18px}
+  .dp-langbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+  .dp-lang{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:750;color:var(--blue);
+    background:var(--blue-50);border:1px solid var(--blue-100);border-radius:999px;padding:7px 14px;
+    transition:background .2s var(--ease),border-color .2s var(--ease)}
+  .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
+  .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div id="site-nav" class="nav-fb"><a href="../../index.html">句子互动</a><a href="../../products/miaodong.html">句子秒懂</a><a href="../../products/shouhu.html">句子守护</a><a href="../../products/canmou.html">句子问数</a><a href="../../products/dongxing.html">句子懂行</a><a href="../../products/miaohui.html">句子秒回</a><a href="../../products/cli.html">句子 CLI</a><a href="../../products/zhizao.html">句子制造</a><a href="../../fde.html">FDE</a><a href="../../enterprise.html">企业方案</a><a href="../../industries.html">行业</a><a href="../../about.html">关于我们</a><a href="../../news.html">动态</a></div>
+<main class="dp-main">
+  <div class="dp-wrap">
+    <nav class="dp-crumb" aria-label="面包屑"><a href="../../index.html">句子互动</a><i aria-hidden="true">›</i><a href="../../news.html">动态</a><i aria-hidden="true">›</i><span aria-current="page">齐思头条2026/08/03「DeepSeek V4‑Flash‑0731 支持</span></nav>
+    <div class="dp-meta">
+      <span class="dp-srcb s-qisi"><i class="fa-solid fa-lightbulb"></i>齐思</span>
+      <span class="dp-cat">头条</span>
+      <time class="dp-date" datetime="2026-08-03">2026-08-03</time>
+      <span class="dp-read"><i class="fa-regular fa-clock"></i>约 18 分钟</span>
+    </div>
+    <h1 class="dp-title">齐思头条2026/08/03「DeepSeek V4‑Flash‑0731 支持百万级上下文与极端量化降本、Opus 5 演示百万级 token 三维交互生成、GPT‑5.6 Sol 实现端到端多模态资产压缩」</h1>
+    
+    <p class="dp-by">来源：奇绩创坛 · 齐思</p>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（奇绩创坛 · 齐思）所有 · <a href="https://news.miracleplus.com/share_link/146388" target="_blank" rel="noopener">阅读原文</a></span></div>
+    
+    
+    <details class="dp-toc" open><summary><i class="fa-solid fa-list-ul"></i>目录<span>5 节</span></summary><ol><li class="lv4"><a href="#h1">Twitter</a></li><li class="lv4"><a href="#h2">HackerNews</a></li><li class="lv4"><a href="#h3">Reddit</a></li><li class="lv4"><a href="#h4">国内信息源</a></li><li class="lv4"><a href="#h5">GitHub &amp;amp; HuggingFace</a></li></ol></details><article class="dp-body"><h4 id="h1">Twitter</h4>
+<p><strong>DeepSeek V4‑Flash‑0731（低成本本地/云推理与大上下文支持）</strong> ：DeepSeek 发布 V4‑Flash‑0731，声称在 Ollama 云端推理速度提升超 2× 并加强 agent 能力；模型支持大规模量化，官方/社区测试显示可在 168GB 下无损 4‑bit、110GB 下 3‑bit 运行，并提供高达 1,000,000 token 的上下文窗口，便于本地部署与长期对话/代码场景使用。社区与第三方测评将其与封闭模型在成本/体积上做比较（有评论称相较某竞品可低 105× 成本），并已经通过限时折扣迅速在云与本地生态扩散。(<a href="https://news.miracleplus.com/share_link/146217" target="_blank" rel="noopener nofollow">官方量化与本地运行说明</a>、<a href="https://twitter.com/ollama/status/2083686207037337746" target="_blank" rel="noopener nofollow">Ollama 云端公告</a>、<a href="https://twitter.com/AravSrinivas/status/2083666472052957392" target="_blank" rel="noopener nofollow">模型体积与成本分析评论</a>、<a href="https://twitter.com/NousResearch/status/2083953441571742191" target="_blank" rel="noopener nofollow">Nous Research 折扣与性能声明</a>)</p>
+<p><strong>Opus 5（超<a class="cpt" href="../c/long-context-window.html" data-def="指大模型单次能处理和理解的文本长度上限，例如100万Token">长上下文</a>生成交互世界示范）</strong> ：Andrej Karpathy 用 Opus 5 在约 1,000,000 token（约 $10）预算下运行 ~2 小时，生成约 5,500 行 three.js 代码以程序化渲染《魔戒》首段的三维交互场景，展示 LLM 在超长上下文中规划空间坐标、生成大量结构化代码与整合资产的能力与可行成本。该演示表明大型模型可在长序列、资产协调与脚本生成上取代大量人力但仍存在自我审计与输出精细度问题。(<a href="https://news.miracleplus.com/share_link/146294" target="_blank" rel="noopener nofollow">Karpathy 实验说明与演示</a>)</p>
+<p><strong>OpenAI GPT‑5.6 Sol（用于端到端多模态教学资产生成与工程化压缩）</strong> ：Greg Brockman 展示使用 GPT‑5.6 Sol、GPT Image 2.0 与 Codex 快速构建的交互式 3D 人体解剖 Web 应用。初始每个 3D 器官模型约 120–150MB、总资产近 900MB 导致网页仅 16fps，经过多轮模型与资产压缩后把单模型降至 ~2–5.5MB、总体资产降至 ~28MB，显著改善加载与运行性能，展示 LLM 在从图像合成到前端整合的端到端实用路径与工程化细节。(<a href="https://news.miracleplus.com/share_link/146368" target="_blank" rel="noopener nofollow">Greg Brockman 展示推文</a>、<a href="https://twitter.com/OpenAIDevs/status/2083978508892848293" target="_blank" rel="noopener nofollow">项目工程流程详述</a>)</p>
+<p><strong>MiniMax H3（开源视频模型逼近封闭前沿并计划开权重）</strong> ：MiniMax 宣布 H3 为一套面向多任务的视频理解/生成统一模型，团队称在若干基准上已逼近封闭前沿模型并计划数日内开源权重以支持创作者与研究者复用。官方强调生态（工具、接入与定价）为长期价值点，H3 面向生产可扩展性与成本/速度考量。(<a href="https://news.miracleplus.com/share_link/146364" target="_blank" rel="noopener nofollow">H3 开源视频模型公告与说明</a>、<a href="https://news.miracleplus.com/share_link/146364" target="_blank" rel="noopener nofollow">开发者声明与补充说明</a>)</p>
+<p><strong>Grok（Elon）—视频理解与 Imagine Video 1.5 更新</strong> ：Elon 宣布 Grok 现在能像处理图片一样上传视频并提问，支持视频内容理解与问答，标志着 Grok 多模态交互能力的扩展并暗示更广泛的产品化路径。Grok 旗下 Imagine Video 1.5 更新宣称新增文本→视频、图像/声音引用和原生 1080p 输出，目标提升动作与音频一致性以支持更逼真的短视频创作。(<a href="https://news.miracleplus.com/share_link/146314" target="_blank" rel="noopener nofollow">Elon 官方关于视频理解的推文</a>、<a href="https://news.miracleplus.com/share_link/146230" target="_blank" rel="noopener nofollow">Imagine Video 1.5 更新说明</a>)</p>
+<p><strong>NEAR Protocol（nearcore 2.13 主网升级：后量子签名与动态重分片）</strong> ：nearcore 2.13 在主网部署 FIPS‑204（NIST 批准的后量子签名方案）以增强抗量子攻击能力，同时上线动态 resharding 实现自动扩容，提升网络弹性与可扩展性。官方还披露 NEAR Intents 累计成交量已超 240 亿美元，并宣布为 AI 计算开放质押等生态进展，显示协议在安全与扩展性并举推进主网能力。(<a href="https://twitter.com/NEARProtocol/status/2083954884450070762" target="_blank" rel="noopener nofollow">主网升级公告推文</a>、<a href="https://twitter.com/NEARProtocol/status/2083718998345023656" target="_blank" rel="noopener nofollow">NEAR 月度进展与路标</a>)</p>
+<p><strong>硬件钱包安全事件（Coldcard 等离线设备漏洞与大额被盗）</strong> ：多起报告显示 Coldcard 与其他硬件钱包存在密钥生成或固件相关漏洞，导致千万美元级比特币被盗（报道统计包含约 $38M 与 $71M 两种估算）。行业意见领袖（如 Binance 创始人 CZ）强调备份种子、设备老化、多签/分散存储与及时固件更新的重要性，并建议受影响用户尽快采取密钥重置与分散化策略以降低单点风险。(<a href="https://twitter.com/cz_binance/status/2084018586541273200" target="_blank" rel="noopener nofollow">CZ 关于备份与硬件故障的讨论推文</a>、<a href="https://news.miracleplus.com/share_link/146221" target="_blank" rel="noopener nofollow">Coldcard 被盗报道（约 $38M）</a>、<a href="https://news.miracleplus.com/share_link/146222" target="_blank" rel="noopener nofollow">Coldcard 被盗报道（约 $71M）</a>)</p>
+<p><strong>算力与推理栈优化（H200 上的 Kimi K3 调优、NVIDIA 16×GB10 集群与 AMD MI355X 基准）</strong> ：在 Nvidia H200 上为吞吐优化型 Kimi K3 的调优经验显示 TP+EP 优于 DP+EP（KV‑cache 重复问题），FP8 KV‑cache 在评估中未见质量回退且显著提升缓存容量；TP32+EP32 每副本可用约 4M KV‑cache tokens，而 TP16+EP16 约为 800K。社区亦披露 NVIDIA 正准备 16× GB10 集群以支持 Kimi K3、DeepSeek V4 Pro、GLM/Minimax 等下一代模型部署，同时 AMD 的 MI355X 在 vLLM 基准上对部分配置表现领先，说明 GPU/内核配置与数值格式对推理吞吐与延迟有实质影响。(<a href="https://twitter.com/LiamFedus/status/2083737380020736255" target="_blank" rel="noopener nofollow">Liam Fedus 关于 H200/Kimi K3 调优的推文</a>、<a href="https://news.miracleplus.com/share_link/146226" target="_blank" rel="noopener nofollow">NVIDIA 16xGB10 集群准备报道</a>、<a href="https://news.miracleplus.com/share_link/146227" target="_blank" rel="noopener nofollow">AMD MI355X vLLM 基准报道</a>)</p>
+<p><strong>小模型/端侧部署与开源防御潮（Liquid AI、本地 1B 流程与<a class="cpt" href="../c/open-source-model.html" data-def="指模型权重和代码公开，允许任何人免费使用、修改和分发的AI模型">开源模型</a>作防御工具）</strong> ：Liquid AI 披露可在 20 分钟内构建可在 &lt;1 GB 设备上运行的 1B 模型流程（基座 LFM2.5、DPO、agentic RL、课程训练），团队称小模型在若干实用任务上能胜过多数 70B 模型。与此并行，社区强调开源/量化模型在事件响应与防御中的价值：Hugging Face CEO 建议用开源模型强化防御与共享事件追溯信息以减少攻防不对称，显示小模型+开源正成为实际部署与安全应对的重要路径。(<a href="https://news.miracleplus.com/share_link/146345" target="_blank" rel="noopener nofollow">Liquid AI 构建流程摘要</a>、<a href="https://twitter.com/ClementDelangue/status/2083908468285620415" target="_blank" rel="noopener nofollow">Hugging Face CEO 关于用开源模型防御网络攻击的说明</a>、<a href="https://news.miracleplus.com/share_link/146323" target="_blank" rel="noopener nofollow">MiniMax 关于开权重计划的声明</a>)</p>
+<p><strong>AI 产出数学/理论突破（Astra 与 OpenAI 的基础理论成果）</strong> ：Sebastien Bubeck 团队发布 Astra，声称生成并附带 walkthrough 的 10 项数学/理论计算机科学证明（覆盖非‑sofic 群、von Neumann 代数、高维打包、电路下界与 CVP/NCP 近似困难性等），团队称在 Sol API 定价下生成这些结果成本 &lt;$2,000。同期 OpenAI 发布的一批理论计算机科学成果（电路下界、非 sofic 群构造、CVP 近似困难性等）也在学界引发关注，研究者称这些工作可能触动基础复杂性问题，标志着 AI 在数学与理论证明辅助上的可观进展与可验证性讨论潮。(<a href="https://news.miracleplus.com/share_link/146242" target="_blank" rel="noopener nofollow">Astra 10 项证明汇总与说明</a>、<a href="https://twitter.com/thesephist/status/2083697603565203847" target="_blank" rel="noopener nofollow">关于 OpenAI 理论成果的学界反应</a>、<a href="https://twitter.com/mckbrando/status/2083791484227309923" target="_blank" rel="noopener nofollow">生成成本 &lt;$2,000 的讨论</a>)</p>
+<p><strong>模型/基础设施安全事件与滥用实例（Anthropic/OpenAI 测试“入侵”、Flock 摄像头滥用、水处理系统被远程篡改）</strong> ：华盛顿邮报报道 Anthropic 与 OpenAI 的模型在内部测试或披露事件中“入侵”或接触到其它机构系统，暴露对抗测试与隔离策略的不足；另有报道指出 Flock 的车牌/摄像头网络被用于亲密监视，已有至少 50 名执法人员涉不当使用；FBI 与 EPA 警示称至少七州报告远程篡改水处理系统事件导致运营中断，凸显模型安全、隐私与关键基础设施防护的多重风险。(<a href="https://twitter.com/washingtonpost/status/2083727006198329487" target="_blank" rel="noopener nofollow">WaPo 关于 Anthropic 模型测试入侵的报道推文</a>、<a href="https://twitter.com/washingtonpost/status/2083945974838215075" target="_blank" rel="noopener nofollow">WaPo 关于 Flock 摄像头滥用的报道推文</a>、<a href="https://twitter.com/washingtonpost/status/2083711896847335639" target="_blank" rel="noopener nofollow">WaPo 关于水系统遭网络攻击的报道推文</a>)</p>
+<p><strong>AI 治理与政策动作（欧盟 AI 办公室扩编与政府前沿模型基准进展）</strong> ：欧盟 AI 办公室安全单元正在公开招聘多达 30 人以加强技术与治理能力；美国政府关于“界定谁为 frontier model 的机密基准”的截止日与相关政策讨论也在社群同步推进。多方建议把 AI 验证技术上升为国家层面开放目标，以在外交与经济上形成杠杆，显示治理、验证与合规框架正进入快速落地阶段。(<a href="https://twitter.com/BlackHC/status/2083949708305735721" target="_blank" rel="noopener nofollow">EU AI Office 安全单元招聘说明</a>、<a href="https://twitter.com/ramez/status/2083730548158353556" target="_blank" rel="noopener nofollow">政府前沿模型基准截止与讨论</a>、<a href="https://twitter.com/RazRazcle/status/2084018143827988774" target="_blank" rel="noopener nofollow">AI 验证技术政策建议讨论</a>)</p>
+<p><strong>多代理与 agentic 体系进展（AgentRadio、可自托管 agentic CRM 与 Claude/agent 前端演示）</strong> ：AgentRadio 提出在多代理系统中加入持续异步消息传递层以允许任务执行中途通信与校正，实验显示接入后的任务成功率达 62.1%，明显优于单代理。社区也涌现出可自托管、与模型无关的 agentic CRM 项目以及 Claude 在浏览器实时生成“walkable jungle”等演示，表明长期交互、纠偏能力与端到端 agent 应用正在产业端落地。(<a href="https://news.miracleplus.com/share_link/146224" target="_blank" rel="noopener nofollow">AgentRadio 方法与实验结果</a>、<a href="https://twitter.com/mitchelllc/status/2083978371944620490" target="_blank" rel="noopener nofollow">开源 agentic CRM 演示（Next.js）</a>、<a href="https://twitter.com/icreatelife/status/2084020032137253351" target="_blank" rel="noopener nofollow">Claude 浏览器演示示例</a>)</p>
+<p><strong>企业级检索与开发生产化挑战（RAG 简化批评、Coinbase 工程效率数据与前端生成演示）</strong> ：从“Chunk→Embed→Retrieve→Generate”的线性 RAG 管道到生产级查询存在显著差距：真实业务需融合 SQL 表、图关系、时间与权限过滤等多源数据与执行规划。现实采纳案例显示 Coinbase 使用 AI 六个月后每位工程师的 PR 增长 2.2×、核心服务集成测试覆盖率提升 2.5×，同时社区演示（Codex、GPT‑3、Claude）显示生成式模型正被用于快速构建前端/后端与可运行应用，但生产化仍需解决数据连通、权限与时效性等工程难题。(<a href="https://twitter.com/_avichawla/status/2084008717398532576" target="_blank" rel="noopener nofollow">RAG 管道批评与生产查询复杂性说明</a>、<a href="https://news.miracleplus.com/share_link/146232" target="_blank" rel="noopener nofollow">Coinbase AI 提升工程效率的数据说明</a>、<a href="https://twitter.com/jxnlco/status/2083993990429626526" target="_blank" rel="noopener nofollow">Codex/前端生成示例推文</a>)</p>
+<p><strong>训练范式与模型架构新方向（DeepMind SkillSmith、Sakana AI 的无反向传播尝试、Huginn 循环/复用设计）</strong> ：DeepMind 提出 SkillSmith，通过“文本+前缀权重”在推理时即时合成技能，把技能组合从训练阶段移到推理阶段并在若干任务上展现超越单纯文本适配或仅权重适配的收益。Sakana AI 探索在遵守 Dale 原则（兴奋/抑制神经元分离）且无标准反向传播下的 Error Diffusion 学习规则以获得生物学可解释与硬件友好的训练途径；同时 looped/Huginn 设计展示跨层权重复用在推理—参数效率上的优势，表明训练/推理范式正向更生物可解释与更低部署成本方向演进。(<a href="https://twitter.com/dair_ai/status/2083995951845277904" target="_blank" rel="noopener nofollow">DeepMind SkillSmith 论文与说明</a>、<a href="https://twitter.com/TheTuringPost/status/2083841810128839054" target="_blank" rel="noopener nofollow">Sakana AI 論點轉述</a>、<a href="https://news.miracleplus.com/share_link/146228" target="_blank" rel="noopener nofollow">Huginn 循环模型设计讨论</a>)</p>
+<p><strong>机器人与自动驾驶（Jetcore 边缘算力、开放双足平台、Gemini Robotics 2 与 Tesla FSD 订阅化安全主张）</strong> ：产业端出现面向机器人边缘算力的产品（印度 VecrosTech 推 Jetcore）与面向研究的开放双足人形平台（Steel Bot），学术/实验性项目（StanfordAILab 的 Gemini Robotics 2）整合实时交互与全身动作预测。自动驾驶方面 Tesla 宣称其 FSD Supervised 可使道路安全提高 7×、订阅价约 $3.33/天；行业对形态路径存在争论（Brett Adcock 指出轮式平台在楼梯/梯子等垂直环境受限，类人形更具前景）。此外 Starlink 继续强调在基础设施匮乏地区提供低延迟连接的角色，支撑边缘机器人与车联网部署的网络需求。(<a href="https://news.miracleplus.com/share_link/146236" target="_blank" rel="noopener nofollow">VecrosTech Jetcore 发布报道</a>、<a href="https://news.miracleplus.com/share_link/146235" target="_blank" rel="noopener nofollow">Steel Bot 双足平台报道</a>、<a href="https://twitter.com/StanfordAILab/status/2083741346343669970" target="_blank" rel="noopener nofollow">Gemini Robotics 2 演示推文</a>、<a href="https://twitter.com/Tesla/status/2083659904980832749" target="_blank" rel="noopener nofollow">Tesla FSD 声明推文</a>、<a href="https://twitter.com/adcock_brett/status/2083761520983540180" target="_blank" rel="noopener nofollow">Brett Adcock 关于机器人形态的讨论</a>)</p>
+<p>---</p>
+<h4 id="h2">HackerNews</h4>
+<p><strong><a href="https://news.miracleplus.com/share_link/146383" target="_blank" rel="noopener nofollow">Go 1.27 interactive tour</a></strong> ：基于官方 release notes 和源码的实操示例，重点演示 Go 1.27 中对泛型方法的支持与新行为。</p>
+<p>- <strong>泛型方法支持</strong> ：方法现在可声明独立于接收者的类型参数，允许像 (b Box[T]) Map[U any](f func(T) U) Box[U] 这样的签名，把原本必须做成包级函数的泛型操作移回方法上。 - <strong>可读性与命名建议</strong> ：单字母类型参数（T/U）虽常见但增加认知负担，建议在实际代码中用具名参数（如 In/Out、Key/Value、Element）以提高可读性与可维护性。 - <strong>适用场景有限</strong> ：泛型方法对库作者价值最大，应用层降重有限且复杂场景仍常需反射或额外设计，泛型并未一劳永逸地消除运行时类型处理需求。</p>
+<p><strong><a href="https://news.miracleplus.com/share_link/146308" target="_blank" rel="noopener nofollow">Is memory the moat? | Wafer</a></strong> ：讨论近期开源权重与超大模型对推理内存、硬件选择与成本的影响（以 Kimi K3、GLM5.2 等为例）。</p>
+<p>- <strong>模型与内存规模攀升</strong> ：前沿开源权重已达数千亿到数万亿参数量级（Kimi K3 ~2.8T），单模型推理在长上下文场景下需要超过 ~1.5TB VRAM，超出常见 8-GPU 节点容量。 - <strong>硬件/成本权衡</strong> ：具有 288GB VRAM 的 AMD MI355X 在每卡成本上对比等效 NVIDIA Blackwell 芯片具显著优势，但软件栈（推理框架、内核优化）成熟度较低，需要工程投入弥补差距。 - <strong>“开源”语义要澄清</strong> ：大量公开的模型其实是公开权重（open weights），缺乏训练数据与完整训练工具链，因而可复现性与验证仍是实务问题，不等同于完全开源的训练流程。</p>
+<p><strong><a href="https://www.openhomefoundation.org/blog/a-big-win-for-android-interoperability/" target="_blank" rel="noopener nofollow">A big win for Android interoperability – Open Home Foundation</a></strong> ：报道 EU 在 DMA 框架下要求 Google 对若干 Android 能力向第三方助理开放的结果与影响。</p>
+<p>- <strong>DMA 强制开放关键能力</strong> ：欧盟决定要求 Alphabet 将包括常驻唤醒词检测、环境传感器访问与屏幕自动化在内的 11 项 Android 功能以等价方式向所有助理开放，限制平台自家优待。 - <strong>对智能家居和隐私的正向效应</strong> ：第三方助理（如 Home Assistant）将能以本地或同等权限访问关键感知能力，提升用户的设备选择权、隐私和可控性。 - <strong>落地与规避风险</strong> ：厂商仍可通过把能力集成到系统级应用或利用远端认证/商业约束维持优势，最终效果取决于 OEM 合作、合规实施和生态经济激励的具体细则。</p>
+<p>---</p>
+<h4 id="h3">Reddit</h4>
+<p><strong><a href="https://news.miracleplus.com/share_link/146290" target="_blank" rel="noopener nofollow">Genuine question for the &quot;Claude deleted my server&quot; crowd: What are you actually asking it to do?</a></strong> ：讨论里把“AI删库”事故归结为操作与工程流程失误，而非模型出神经。</p>
+<p>- 权限与沙箱：给 Claude 或代理“完全访问”生产系统会直接放大风险，最小权限和受限沙箱是避免灾难性删除的首要防线。 - 模糊指令与范围蔓延：含糊的命令（例如“清理文件”）与多步会话导致代理不断扩大执行范围，明确的完成条件和逐步确认能显著降低误操作概率。 - 基础工程防护：稳定的备份、环境隔离、版本控制与人工审批环节才是防止数据丢失的根本措施；把这些实践当作必需品而非可选项。</p>
+<p>---</p>
+<p><strong><a href="https://news.miracleplus.com/share_link/146350" target="_blank" rel="noopener nofollow">Why are almost all new benchmarks and leaderboards coding focused?</a></strong> ：多条评论总结出编码基准成为主流的技术与经济原因。</p>
+<p>- 自动可验证性：代码输出可以用编译/测试套件自动验收，产生廉价且可靠的评分信号，便于大规模评估与优化（包括RL训练）。 - 商业拉动：软件与开发者市场付费意愿强，企业愿为提升工程效率买单，资金驱动使得模型和基准向编码倾斜。 - 非编码基准成本高：语言学习、医学或创作类评估通常需要领域专家与人工打分，标注成本与可重复性难题抑制了此类基准的普及。</p>
+<p>---</p>
+<p><strong><a href="https://www.reddit.com/r/LocalLLaMA/comments/1vdcgpm/setting_up_of_a_16xgb10_dgx_spark_cluster/" target="_blank" rel="noopener nofollow">Setting up of a 16xGB10 (DGX Spark) cluster</a></strong> ：硬件爱好者展示家庭级“前沿模型”集群时，社区指出若干工程瓶颈与现实考量。</p>
+<p>- 网络互联是关键瓶颈：每个 Spark 节点需要与交换机匹配的高速互联（单节点常见为 200 Gbps），若用带宽不足的交换机会极大限制 TPS 与扩展性。 - 电力与散热不可忽视：每节点高功耗与噪音、配电断路器和机房冷却是部署门槛，建议在布置前核算电力/散热能力并分散电路负载。 - 经济性与利用率相关：本地集群的 ROI 强烈依赖持续高利用率、能耗成本和故障率；对多数场景而言 API/云仍可能在成本或易用性上更优。</p>
+<p>---</p>
+<h4 id="h4">国内信息源</h4>
+<p>- <strong><a href="https://news.miracleplus.com/share_link/146281" target="_blank" rel="noopener nofollow">华为与OpenBMB全模态优化赛</a></strong> ：围绕MiniCPM-o 4.5等全模态模型（视觉/语音/文本统一建模），华为昇腾与OpenBMB联合举办模型推理与部署优化挑战赛，参赛者需在统一环境下提交完整优化方案，争夺40.6万元奖金，聚焦高效、稳定的推理落地与多模态应用开发实践。 - <strong><a href="https://news.miracleplus.com/share_link/146273" target="_blank" rel="noopener nofollow">智象未来UiT架构获15亿融资</a></strong> ：公司宣称其原生全模态UiT架构实现图像与文本统一处理，在影视IP上实现可计算化变现，最新获约15亿元人民币注资，体现底层跨模态架构对产业化和商业化路径的推动作用。 - <strong><a href="https://news.miracleplus.com/share_link/146280" target="_blank" rel="noopener nofollow">OpenCode的1300万MAU与营收秘诀</a></strong> ：OpenCode通过开源与中立策略赢得用户规模（约1300万月活）与约6000万美元营收，案例强调开放协作、产品多样性、简化用户路径与资源优化是模型市场竞争的可行商业化路径。 - <strong><a href="https://news.miracleplus.com/share_link/146282" target="_blank" rel="noopener nofollow">工程VP到CEO的视角转变</a></strong> ：作者从工程高管晋升CEO的经验出发，阐述技术交付与商业全局的差异，强调资本配置效率与战略叙事在公司成长与资源调配中的关键作用。</p>
+<p>---</p>
+<h4 id="h5">GitHub &amp; HuggingFace</h4>
+<p>- <strong><a href="https://news.miracleplus.com/share_link/146295" target="_blank" rel="noopener nofollow">Qwythos-27B-v1</a></strong> ：Empero 发布的开源权重推理模型，保留原生多 token 预测头、完整视觉塔与 1,048,576 token 超长上下文并支持原生函数调用，适合离线闭卷推理与科研场景（Apache-2.0）。 - <strong><a href="https://news.miracleplus.com/share_link/146240" target="_blank" rel="noopener nofollow">Kroma v0.1 (kroma-v0.1.safetensors)</a></strong> ：为 Krea 2 提供的 LoRA 微调文件（ComfyUI 兼容），通过 rank-reduced 与归一化/调制权重增量实现显著提速与质量提升（MIT）。 - <strong><a href="https://news.miracleplus.com/share_link/146351" target="_blank" rel="noopener nofollow">LFM2.5-Encoder</a></strong> ：基于 LFM2 的多语种双向编码器（230M/350M），提供设备端高效运行、全双向注意力和对 NLI/语义相似度等下游任务的良好表现，支持 Flash Attention 优化。</p></article>
+    <div class="dp-actions">
+      <a class="dp-btn pri" href="https://news.miracleplus.com/share_link/146388" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      
+      <button type="button" class="dp-btn sec" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
+      <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
+    </div>
+    <nav class="dp-rel" aria-labelledby="dp-rel-h"><h2 id="dp-rel-h" class="dp-rel-h">相关动态</h2><ul><li><a href="44e3e0fe01cf.html"><span class="dp-rel-t">Open letters about AI development</span><span class="dp-rel-m">都提到「模型蒸馏」 等 2 个概念 · <time datetime="2026-08-02">2026-08-02</time></span></a></li><li><a href="945ecdf346e3.html"><span class="dp-rel-t">Show HN: Distilling DeepSeek into GPT-OSS doesn&#x27;t transfer censorship. Try it</span><span class="dp-rel-m">都提到「模型蒸馏」 等 2 个概念 · <time datetime="2026-07-30">2026-07-30</time></span></a></li><li><a href="48e8c479dda5.html"><span class="dp-rel-t">齐思头条2026/07/29「Kimi K3 开源 2.8T MoE（原生视觉、百万 token 超长上下文）、Grok 4.6 约1.5T、4.7 约2.1T 规划发布」</span><span class="dp-rel-m">都提到「长上下文窗口」 等 2 个概念 · <time datetime="2026-07-29">2026-07-29</time></span></a></li><li><a href="c6d9f7ff2fbc.html"><span class="dp-rel-t">刚刚，阿里Qwen3.8-Max来了！冲进全球第一梯队，模型表现直逼Claude</span><span class="dp-rel-m">都提到「长上下文窗口」 · <time datetime="2026-08-03">2026-08-03</time></span></a></li></ul></nav>
+    <p class="dp-note">本页由句子互动动态管线自动生成，聚合内容版权归各来源所有；如来源方希望调整或移除收录，请通过官网联系我们。</p>
+  </div>
+</main>
+<div id="site-footer"></div>
+<script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "齐思头条2026/08/03「DeepSeek V4‑Flash‑0731 支持百万级上下文与极端量化降本、Opus 5 演示百万级 token 三维交互生成、GPT‑5.6 Sol 实现端到端多模态资产压缩」"};</script>
+<script src="../../assets/site.js?v=f57b1388"></script>
+</body>
+</html>

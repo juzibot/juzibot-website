@@ -1,0 +1,13 @@
+<p><strong>发布：</strong> <a href="https://github.com/datasette/datasette-apps/releases/tag/0.2a0">datasette-apps 0.2a0</a></p>
+        <blockquote>
+<p>在使用 <a href="https://agent.datasette.io/">Datasette Agent</a> 创建和编辑 Datasette Apps 时，以下改进提升了体验：</p>
+<ul>
+<li>新增 <code>app_debug()</code> 工具，允许 Agent 打开一个应用（不可见地）并使用 JavaScript 对其进行测试。<a href="https://github.com/datasette/datasette-apps/pull/33">#33</a></li>
+<li>新增 <code>app_list()</code> 工具，用于列出用户有权限编辑的应用，以便 Agent 可以编辑它们。<a href="https://github.com/datasette/datasette-apps/issues/36">#36</a></li>
+</ul>
+</blockquote>
+<p><code>app_debug()</code> 工具非常巧妙：它的工作方式是在一个设置了 <code>opacity: 0</code> 和 <code>pointer-events: none</code> 的 iframe 中显示应用（因此它不可见也无法交互），然后在该沙盒化的 iframe 中执行 Agent 提供的 JavaScript。这意味着 Agent 可以对应用进行冒烟测试，甚至可以测量不同元素的尺寸。</p>
+<p>这使用了在 <a href="https://simonwillison.net/2026/Jul/31/datasette-agent/">datasette-agent 0.4a0</a> 中新增的 <code>context.browser_task()</code> 机制。</p>
+    
+    
+        <p>标签：<a href="https://simonwillison.net/tags/iframes">iframes</a>, <a href="https://simonwillison.net/tags/datasette">datasette</a>, <a href="https://simonwillison.net/tags/datasette-apps">datasette-apps</a></p>

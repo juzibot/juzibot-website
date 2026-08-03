@@ -1,0 +1,102 @@
+<p>在2019年轰动宣布七年后，SwiftUI本应成为所有苹果平台上跨平台UI开发的成熟、可投入生产使用的未来。然而，即便到了2026年，SwiftUI给人的感觉依然像个永久测试版。在这篇深度分析中，我将剖析为什么最初的热情已转变为资深工程师的深度职业挫败感。我分析了性能和布局可预测性方面的系统性问题，SwiftUI不断变化的数据流所导致的混乱状态，以及令人沮丧的向后兼容性缺失——这迫使开发者陷入补丁和变通方案的噩梦。</p>
+<p>通过真实案例——包括苹果自己的SwiftUI教程（这个教程本身就有问题）以及与UIKit的正面性能对比（猜猜谁赢了）——我将展示SwiftUI如何为了追求便利的假象而牺牲了精确的工程实践。</p>
+<p>除了代码层面，这段视频还探讨了库比蒂诺更广泛、更令人担忧的转变：从最初Cocoa、Aqua和Auto Layout时代那种毫不妥协的工艺精神，转向现代企业“够用就好”的产品文化。如果你厌倦了为有问题的功能找借口、与布局错误作斗争，甚至帮苹果完成他们的质量保证工作，那么这个观点就是为你准备的。</p>
+<h1>相关链接</h1>
+<ul>
+<li><a href="https://developer.apple.com/tutorials/swiftui/creating-a-macos-app" target="_blank" rel="noopener nofollow">Landmarks</a>（苹果有问题的SwiftUI教程）</li>
+<li><a href="https://developer.apple.com/documentation/swift-playgrounds/console-print-debugging" target="_blank" rel="noopener nofollow">未公开的 <code>Self._printChanges()</code> 方法</a>（及其他调试技巧）</li>
+<li><a href="https://daringfireball.net/2026/06/swiftui_only_makes_it_easy_to_develop_bad_apps" target="_blank" rel="noopener nofollow">SwiftUI 只让你更容易开发出糟糕的应用</a></li>
+<li><a href="https://twocentstudios.com/2025/12/12/swiftui-group-still-considered-harmful/" target="_blank" rel="noopener nofollow">SwiftUI Group 仍然(?)被认为是有害的</a>（SwiftUI隐藏陷阱的另一个例子）</li>
+</ul>
+<h1>视频文字稿</h1>
+<h2>开场白</h2>
+<p>好了，我们开始吧。</p>
+<p>这是一篇关于SwiftUI的长文，内容涵盖它的问题所在，以及为什么我不相信它近期会有任何改善。过去七年并没有让SwiftUI成为一个真正可投入生产使用的UI框架：它仍然长期受困于布局一致性和性能问题。</p>
+<p>但你不必听我的一面之词；你可以亲自在<a href="https://developer.apple.com/tutorials/swiftui/creating-a-macos-app" target="_blank" rel="noopener nofollow">苹果官方的 SwiftUI 教程</a>中亲眼见证。只需在下方链接下载完整的演示项目，然后在你的 Mac 上运行即可。</p>
+<p>我稍后会在本视频中回到这个具体案例。但让我们先从简短的回顾开始。</p>
+<p>SwiftUI 在 2019 年一经<a href="https://www.apple.com/newsroom/2019/06/apple-unveils-groundbreaking-new-technologies-for-app-development/" target="_blank" rel="noopener nofollow">发布</a>就引起了巨大轰动。我当时就在现场，亲眼见证了这一切。苹果承诺将终结与 Auto Layout 的斗争，以及每次做出最微小的改动时都要重建应用的时代。</p>
+<p>取而代之的是，你将获得声明式语法、单一数据源、内置动画、即时预览以及代码的跨平台复用能力。对我来说，这听起来好得令人难以置信。</p>
+<p>事实证明，确实如此。</p>
+<p>到了现在，最初的兴奋感早已消退，取而代之的是日益加剧的专业挫败感。</p>
+<p>七年过去了，“SwiftUI 仍然是个年轻框架”的借口，嗯，已经站不住脚了。在这个行业，七年简直像永恒一样。这大致相当于<a href="https://en.wikipedia.org/wiki/Windows_XP" target="_blank" rel="noopener nofollow">这个</a>和<a href="https://en.wikipedia.org/wiki/Windows_7" target="_blank" rel="noopener nofollow">这个</a>之间的时间跨度，甚至比从第一代 iPhone 到 iOS 7 重新设计的时间还要长。相比之下，SwiftUI 感觉永远处于测试阶段。每个新功能都附带着小字体的免责声明。每次布局修复都会破坏另外两个你甚至没碰过的地方。说真的？我已经厌倦了在自己的项目中为这一切找借口了。</p>
+<h2>为什么 SwiftUI 会存在</h2>
+<p>但在我们探讨 SwiftUI 的具体优缺点——主要是缺点——之前，让我们先看看 SwiftUI 为什么会存在。</p>
+<p>与其说苹果是<want>想要</want>给你提供优秀的开发工具，不如说它<want>不得不</want>这么做。苹果必须应对来自竞争对手的压力。到 2010 年代中期，Facebook 的 React 已成为 web 事实上的标准，很快<a href="https://reactnative.dev/" target="_blank" rel="noopener nofollow">React Native</a>和谷歌的<a href="https://flutter.dev/" target="_blank" rel="noopener nofollow">Flutter</a>就开始征服移动平台。这两个框架都是响应式和声明式的。</p>
+<p>从任何企业的角度来看，开发原生应用变得越来越没有吸引力。相反，他们可以在 iOS 和 Android 上使用相同的代码库，同时还能复用自己网站上的组件。</p>
+<p>我认为还有一个原因，那就是 Mac App Store。你上一次打开它是什么时候？你上一次在 Mac 上安装新的原生应用又是什么时候？是啊，情况差不多就是这样。</p>
+<p>iOS App Store 是苹果向服务业务转型的重要一步，这要归功于它对每笔交易收取 30% 的费用。但在 Mac 上，很多应用只能在浏览器中运行，或者是以 Electron 封装的网页应用。</p>
+<p>SwiftUI 本应解决这两个问题：让开发者留在原生生态系统中构建新应用，并让将现有应用移植到 Mac 变得更简单。</p>
+<p>响应式数据流、声明式布局和跨平台支持是 SwiftUI 的主要卖点。苹果兑现了这些承诺吗？让我们来仔细看看。</p>
+<h2>数据流</h2>
+<p>数据流一直是困扰资深工程师（包括我在内）的最大痛点之一。理论上，单一数据源听起来像个美梦。但实际上，现实却是一片混乱，充斥着属性包装器、宏和不断变化的支持框架。</p>
+<p>我们从 @State、@Binding 和 ObservedObject 开始。然后苹果意识到性能实在太差，SwiftUI 总在重新渲染视图。于是它引入了 Observation 框架和 @Observable 宏。他们试图用编译器技巧来解决问题，但这显然远远不够，所以布局引擎继续在“猜谜”。</p>
+<p>在 SwiftUI 中，你永远无法确定一个视图会更新多少次，以及它为什么选择在那个时候更新。即使使用未公开的调试 API，也无法让你看清全貌。</p>
+<p>SwiftUI 的数据流确实是响应式的——但有时候我真希望它不是，因为它在所有错误的地方都表现得过于响应式。它常常会去响应那些本该忽略的变化，却又忽略了你真正关心的变化。对我来说，SwiftUI 的响应机制就像一个黑盒：它让实现可预测的行为几乎变得不可能。</p>
+<h2>布局系统</h2>
+<p>这就引出了架构层面的问题。让我们来谈谈 SwiftUI 的布局系统。如果你花过时间构建非平凡的界面，你就会对 SwiftUI 感到沮丧。它的布局引擎极其不可预测。它建立在尺寸协商的理念之上，这在主题演讲中听起来都合乎逻辑，但当你尝试构建浮动视图或自定义侧边栏时，感觉就像一场噩梦。</p>
+<p>说到自定义侧边栏，那个来自 <a href="https://developer.apple.com/tutorials/swiftui/creating-a-macos-app" target="_blank" rel="noopener nofollow">SwiftUI 教程</a> 的演示项目有一个 <em>非常标准、非自定义</em> 的侧边栏。你用最新的 Xcode 构建项目，在最新的 macOS 上启动应用——结果却看到了 <a href="https://www.youtube.com/watch?v=3XaHHFOZeJg&amp;t=290" target="_blank" rel="noopener nofollow">这种情况</a>。我第一次注意到这个问题是在两年多以前，从那以后，什么都没变过。</p>
+<p>啊，抱歉，有一件事确实变了。多亏了 Liquid Glass，按钮现在也有了不同的大小——不过这 hardly 算是 SwiftUI 的问题。</p>
+<p>真正算得上 SwiftUI 问题的是 UI 布局的整体脆弱性。它们在最意想不到的方式和最不幸的时刻崩溃。你可以在像 <a href="https://getutm.app/" target="_blank" rel="noopener nofollow">UTM</a> 这样真实的生产应用中看到这一点。这是一个很棒的工程作品，但它对 SwiftUI 的依赖有时让它感觉像个早期的原型。</p>
+<p>最终，你发现自己会把所有东西都用 <a href="https://developer.apple.com/documentation/swiftui/geometryreader" target="_blank" rel="noopener nofollow"><code>GeometryReader</code></a> 包起来。这简直就是最终的认输。一旦你使用了 <code>GeometryReader</code>，你就完全失去了声明式编程的优势。现在你必须手动计算坐标，甚至比 Auto Layout 还要啰嗦（这很讽刺）。最糟糕的是，你可能会在下一个更新中就必须重写所有坐标计算，仅仅因为 SwiftUI 的布局系统又变了。</p>
+<h2>API 稳定性与功能对等</h2>
+<p>接下来谈谈 API 的稳定性和功能对等性——或者说，缺乏这种对等性。如果你查看任何现代的 SwiftUI 代码库，你会发现里面到处都是那些 <code>if #available</code> 检查，多到几乎有点可笑——但实际上这挺尴尬的。早在 2019 年，就有人在说要编写更少、更好的代码。那么七年过去了，我们得到了什么呢？</p>
+<p>假设你想在滚动时关闭键盘，就像 iOS 7 以来一直实现的那样。抱歉，但在 SwiftUI 中，你需要 <a href="https://developer.apple.com/documentation/swiftui/view/scrolldismisseskeyboard(_:)" target="_blank" rel="noopener nofollow">使用 iOS 16</a> 才能实现这个功能。</p>
+<p>好吧，也许你想让用户自定义窗口工具栏，就像他们自 2001 年以来（或类似时间）就能做的那样。嗯，SwiftUI 几年前才获得了 <a href="https://developer.apple.com/documentation/swiftui/view/toolbar(content:)" target="_blank" rel="noopener nofollow">这项“突破性”功能</a>。</p>
+<p>然后还有最基本的任务：显示从网络获取的图片。嗯，你最好自己写个获取器，因为 <a href="https://developer.apple.com/documentation/SwiftUI/AsyncImage" target="_blank" rel="noopener nofollow"><code>AsyncImage</code></a> 直到 iOS 15 才被引入。</p>
+<p>但如果你想缓存这些图片，我有个坏消息告诉你：你完全做不到，因为在 2026 年 7 月的现在，<a href="https://developer.apple.com/documentation/swiftui/asyncimage/init(request:scale:)" target="_blank" rel="noopener nofollow">这个 API</a> 仍处于测试阶段。</p>
+<p>对于所有这些情况，开发者通常都会自己想出一些变通方法。而当 Apple 最终提供了在 AppKit 或 UIKit 中已经存在几十年的 API 时，你又必须维护多个实现版本。</p>
+<p>但即便你使用的 API 是在 SwiftUI 的第一个版本中引入的，它也很可能被重命名或替换成了类似的东西。一个例子就是 <a href="https://developer.apple.com/documentation/swiftui/navigationview" target="_blank" rel="noopener nofollow"><code>NavigationView</code></a>。它以超级多 bug 而闻名。看起来 Apple 没有修复它，而是决定用 <a href="https://developer.apple.com/documentation/swiftui/navigationstack" target="_blank" rel="noopener nofollow"><code>NavigationStack</code></a> 替换整个组件。但这样一来，你又必须为新旧版本分别保留不同的代码分支。</p>
+<p>所以，这是“更少的代码”还是“更好的代码”？你来告诉我，因为我也有点搞不清了。</p>
+<p>这种频繁变更的 API 导致了开发困境。我们无法一次性声明 UI 结构，反而要为兼容性编写各种适配层和补丁，然后还得祈祷它们在下一次更新时不会崩溃。我们基本上是在帮苹果做 QA 的工作。</p>
+<p>所有这些问题本该在 2019 年——好吧，也许是 2020 年——就解决的。然而七年过去了，SwiftUI 仍然没有达到与“传统”框架功能对等的地步。SwiftUI 就像在原地打转，而我们不得不跟着跑，只是为了留在原地。</p>
+<p>但你知道吗？如果苹果不假装 SwiftUI 坚如磐石、经久耐用，这一切本来不会成为大问题。如果你能编写调用最新 API 的代码，然后回退到旧版本的 iOS 上运行，这本来也不会是个问题。是的，你仍然需要更频繁地重构和淘汰旧代码。但至少当前版本能在所有设备上保持一致的工作状态。</p>
+<p>这就是现代 UI 在 Android 上的工作方式：<a href="https://developer.android.com/compose" target="_blank" rel="noopener nofollow">Jetpack Compose</a> 只是一个通过依赖管理器获取和更新的包。然后它会被直接打包到你的可执行文件中，可以在 2014 年的设备上运行——同时提供完全相同的 UI。</p>
+<h2>性能</h2>
+<p>我们来谈谈性能。在这方面你无法糊弄任何人——尽管苹果仍然试图只展示 SwiftUI 在最新硬件上的运行情况。但事实是，无论苹果承诺改进多少次，SwiftUI 的性能就是达不到标准。对于一个运行在“高端平台”上的“一流框架”，我期待的并非如此。</p>
+<p>例如，这是我亲自对比 UIKit 和 SwiftUI 的测试。测试的是一个简单的图片画廊，用在我上一个版本的游乐场应用中。</p>
+<p>为什么是上一个版本？因为后来我用那个“终极跨平台框架”重建了整个应用。但那是另一个故事了。</p>
+<p>所以，尽管采取了各种性能优化手段，比如在后台线程解码图片，SwiftUI 网格的滚动仍然感觉明显不够流畅。不用说，如果你必须记住一些晦涩的优化技巧才能让它正常工作，SwiftUI 最初的简单性就荡然无存了。</p>
+<p>这只是我进行的众多测试之一，而且我特意使用了一款旧款 iPhone 进行测试。但这不应该有任何区别，因为如果你需要 M5 Pro Max 芯片才能显示一堆 JPEG 图片，那你的整个架构就有严重问题了。这不是构建高质量软件的方式；事情本不该如此。</p>
+<h2>跨平台的神话</h2>
+<p>这就引出了 SwiftUI 的最后一个承诺——它的跨平台支持。我看了几场早期的 SwiftUI 发布会，公平地说，我没有听到任何一场提到“一次编写，到处运行”的说法——通常是“学会那些工具一次，然后到处应用它们。”</p>
+<p>但这里有个问题。你在 iOS 上学到的 SwiftUI 知识很少能直接应用到 Mac 的布局上。也就是说，除非你想要做出感觉格格不入的 UI，就像 <a href="https://arstechnica.com/features/2018/09/macos-10-14-mojave-the-ars-technica-review/" target="_blank" rel="noopener nofollow">那些苹果带到 Mac 上的 iPad 应用</a>（没错，就是 <a href="https://www.theverge.com/2018/9/24/17896252/mac-os-mojave-review-updates-dark-mode-new-features" target="_blank" rel="noopener nofollow">这些应用</a>）。</p>
+<p>是的，像数据流和组合布局这样的核心 SwiftUI 概念大致相同。但你使用的具体组件以及配置它们的方式往往有很大不同。更不用说，同样的视图在不同平台上可能有不一致的实现。</p>
+<p>换句话说，为 6 英寸手机和 27 英寸桌面设计的 UI 并不是一回事。谁会想到呢？</p>
+<p>以我的经验，SwiftUI 的“学会一次，到处应用”往往变成了“学会一次，再学一次，在某处应用，到处调试。”</p>
+<p>当然，这是在你想要构建看起来原生又专业的 UI 的前提下。如果不是的话，SwiftUI 实际上可以给你“凑合用”或者“足够好”的结果。</p>
+<h2>理念转变</h2>
+<p>实际上，我把这个“足够好”看作是这里最大的问题。我相信这标志着苹果整个软件开发方法发生了重大转变。有了 SwiftUI，我们进入了一个“基本能用”就被认为足够好的时代。或者说，一个只覆盖 90% 用例就算成功的时代。对生产级质量和稳定性的期望让位于所谓的 <em>velocity</em>——这个词通常用于你想快速发布垃圾产品时。</p>
+<p>在 Cocoa 时代，这是不可想象的。在 Mac OS X 早期，这会是一场灾难。你能想象一下原始 Aqua 发布会的 SwiftUI 版本吗？想象一下，乔布斯展示的不是那些“好到你想舔一口”的“液体”按钮，而是闪烁的侧边栏和跳动的按钮。他会被批得体无完肤。</p>
+<p>但现在，我们似乎在满足于“足够好”的产品和“凑合用”的心态。这是我不愿接受的工艺标准。</p>
+<p>这不仅仅是某个框架的问题，而是一场系统性的转变。首先，一家公司开始推崇“快速行动，打破常规”的理念，渐渐地，更多开发者加入进来；他们并非都追求速度，但发布有缺陷的产品却成了常态，甚至在一流的应用和系统组件中也屡见不鲜。</p>
+<p>例如，Apple Music 多年来一直有个 bug：编辑播放队列时，曲目列表会跳转，然后播放一首完全错误的歌。</p>
+<p>TestFlight 的选择区域裁剪没有内边距。</p>
+<p>iPad 的“设置”应用会显示这样的崩溃报告，而且尽管我是在一月份截的图，直到现在这个问题仍未修复。</p>
+<p>主屏幕会为同一个应用显示重复的图标，导致状态栏来回跳动，还会显示那些本不该显示的图标轮廓。</p>
+<p>就连 Logic Pro 这样的专业应用现在发布时也缺少本地化翻译。你知道的，那些本应是质量和稳定性标杆的专业应用。</p>
+<p>这样的例子我可以举出很多。</p>
+<p>虽然这些例子并非都使用了 SwiftUI，但它们展示了苹果现在认为“可以接受”的质量水平。我并没有刻意去寻找，这些都是我过去几个月里亲眼所见的问题。</p>
+<p>考虑到这些例子，旗舰级系统框架几乎不可能让你构建出一个没有任何问题的应用，这一点也就不足为奇了。</p>
+<p>尤其是在苹果平台上，这种转变始于 2018 年，从我之前提到过的那些“异类”应用开始。当时，Project Marzipan（后来更名为 <a href="https://developer.apple.com/documentation/uikit/mac-catalyst" target="_blank" rel="noopener nofollow">Catalyst</a>）首次让 UIKit 代码可以在 Mac 上复用。科技评论家们对结果进行了猛烈抨击，这里还有一些截图。</p>
+<p>但苹果没有去弥补这些不足，反而加倍押注跨平台开发，推出了 SwiftUI。而这个全新的、未经充分测试的框架，只是在性能、稳定性和视觉吸引力方面带来了更多问题。</p>
+<p>我认为，降低质量标准是一个选择，而非无奈之举。我拒绝接受这个选择。这就是为什么即使七年过去了，我依然无法信任 SwiftUI。</p>
+<h2>总结</h2>
+<p>总而言之，为了回答开篇的问题，SwiftUI 到底有什么问题？</p>
+<p>如果你把七年来所有未被修复的问题都考虑在内，答案就是：</p>
+<p><strong>一切。</strong></p>
+<p>或者至少，是所有对构建稳定、高性能、可维护的系统至关重要的一切。</p>
+<p>SwiftUI 的故事是一个关于平庸和标准不断下降的故事。我们被要求用可预测的精确性去交换一种便利的假象。然后我们被迫要么花时间去调试这个框架，要么直接发布有缺陷的应用程序。</p>
+<p>作为一名高级工程师，我这两个选项都不喜欢。我不认同“能凑合就行”的心态，我相信用户值得拥有比“还行”更好的东西。</p>
+<p>SwiftUI 并非真的糟糕，它只是平庸。而在我看来，平庸比糟糕要糟糕得多。</p>
+<p>所以目前，我仍然更喜欢那些“传统”的 UI 框架。</p>
+<h2>后记</h2>
+<p>写这篇文章的想法，甚至在我开始这个频道之前就有了。多年来，我一直观察着 SwiftUI 试图成为 AppKit 和 UIKit 的可靠替代品——换句话说，就是努力实现苹果在 2019 年时承诺它应该成为的样子。</p>
+<p>多年来，我一直测试 SwiftUI 的新版本，希望那些困扰它的问题最终能得到解决。</p>
+<p>但随着时间的推移， SwiftUI 并没有从根本上变得更好。它和七年前一样半生不熟，而用 SwiftUI 构建的应用程序大多也依然毫无亮点。</p>
+<p>但我观察到的不仅仅是 SwiftUI 的挣扎。我也观察着那些软件工程师，他们真心相信，如果一个用 SwiftUI 构建的功能在“此时此刻”能正常工作，那么他们的工作就完成了。除非他们故意选择 inferior 的工具，否则我并不想责备他们。</p>
+<p>好吧，可能有一点点，因为你无法不付出代价就忽略长期的维护成本。</p>
+<p>不管怎样，通常不是工程师个人来承担这个成本；他们的雇主才是。但在如今企业痴迷于用 AI 代理取代人类的时代，我们很难期望他们的产品质量能有所提升。而且，这些同样将软件开发视为商品或线性生产的公司，通常想要的是“快速”发布，而不是“正确”发布。我们已经能看到这种做法带来的结果，未来我们还会看到更多。</p>
+<h2>结尾</h2>
+<p>今天的 Code Bird 视频就到这里了，但我非常想听听你的看法，尤其是如果你不同意我的观点的话。我很乐意阅读你在下面的评论。</p>
+<p>如果你觉得这个视频值得，请给它点个赞。订阅频道获取更多工程相关的内容。</p>
+<p>我们下个视频再见。在那之前，让你的工具飞起来吧。</p>

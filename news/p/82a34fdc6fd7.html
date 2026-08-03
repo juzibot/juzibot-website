@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>实测 DeepSeek V4 正式版：3 块钱干完 5 件事，AI「智价比」之战开打了 - 句子·动态</title>
+<meta name="description" content="DeepSeek发布V4-Flash模型，OpenAI也宣布GPT-5.6系列降价，顶级模型竞争转向争夺“智价比”。这对需要多次调用模型的Agent尤为重要。" />
+<meta name="robots" content="noindex,follow" />
+<link rel="canonical" href="https://www.ifanr.com/1673553?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="实测 DeepSeek V4 正式版：3 块钱干完 5 件事，AI「智价比」之战开打了" />
+<meta property="og:description" content="DeepSeek发布V4-Flash模型，OpenAI也宣布GPT-5.6系列降价，顶级模型竞争转向争夺“智价比”。这对需要多次调用模型的Agent尤为重要。" />
+<meta property="og:url" content="https://www.ifanr.com/1673553?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=" />
+<meta property="og:site_name" content="句子互动" />
+<meta name="twitter:card" content="summary" />
+
+<link rel="icon" href="../../logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../../assets/site.css?v=72b48ba4" />
+<style>
+  /* 静态兜底导航: site.js 一执行就被 outerHTML 连同占位一起换掉, 访客几乎看不到它。
+     不隐藏也不 noscript 包裹——那会让爬虫拿不到, 而它存在的唯一理由就是给不跑 JS 的爬虫看。
+     样式做朴素一行, 万一 site.js 加载失败, 这排链接本身就是可用的降级导航。 */
+  .nav-fb{display:flex;flex-wrap:wrap;gap:6px 16px;padding:12px clamp(16px,4vw,40px);
+    border-bottom:1px solid var(--line-2);font-size:12.5px}
+  .nav-fb a{color:var(--ink-3);text-decoration:none}
+  .nav-fb a:hover{color:var(--blue)}
+
+  .dp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
+  .dp-wrap{max-width:760px;margin:0 auto}
+  .dp-crumb{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:12.5px;color:var(--ink-3);margin-bottom:20px;min-width:0}
+  .dp-crumb a{color:var(--ink-3);text-decoration:none}
+  .dp-crumb a:hover{color:var(--blue)}
+  .dp-crumb i{font-style:normal;opacity:.5;font-size:11px}
+  .dp-crumb [aria-current]{color:var(--ink-2);font-weight:650;overflow-wrap:anywhere}
+  .dp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
+  .dp-back:hover{color:var(--blue)}
+  .dp-meta{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:14px}
+  .dp-srcb{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:750;color:var(--sc,var(--blue))}
+  .s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
+  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-voices{--sc:#9333EA}
+  .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
+  .dp-cat{display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ink-3);background:#F6F7FB;border:1px solid var(--line-2);border-radius:6px;padding:2px 8px}
+  .dp-read{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  /* 相关动态: 读完一篇之后的出口。此前详情页之间零链接, 读者只能回列表页重新扫,
+     爬虫也只能靠 JS 驱动的列表页做枢纽。每条都带「为什么相关」, 不做无理由的推荐。 */
+  .dp-rel{margin-top:40px;padding-top:26px;border-top:1px solid var(--line-2)}
+  .dp-rel-h{font-size:14px;font-weight:750;color:var(--ink-2);margin:0 0 14px}
+  .dp-rel ul{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+  .dp-rel a{display:block;padding:10px 12px;margin:0 -12px;border-radius:8px;text-decoration:none;transition:background .2s var(--ease)}
+  .dp-rel a:hover{background:#F6F7FB}
+  .dp-rel-t{display:block;font-size:14px;font-weight:650;color:var(--ink-1);line-height:1.5}
+  .dp-rel a:hover .dp-rel-t{color:var(--blue)}
+  .dp-rel-m{display:block;margin-top:3px;font-size:11.5px;color:var(--ink-3)}
+  .dp-read i{font-size:10px;opacity:.7}
+  .dp-date{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-3)}
+  .dp-title{font-size:clamp(24px,3.2vw,34px);font-weight:850;letter-spacing:-.03em;line-height:1.32;word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance;margin-bottom:10px}
+  .dp-orig{font-size:13px;color:var(--ink-3);overflow-wrap:anywhere;margin-bottom:8px}
+  .dp-by{font-size:12.5px;font-weight:600;color:var(--ink-3);margin-bottom:18px}
+  .dp-notice{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:1.7;color:var(--ink-2);background:#F6F7FB;border:1px solid var(--line-2);border-radius:10px;padding:10px 14px;margin-bottom:22px}
+  .dp-notice i{color:var(--blue);margin-top:4px;flex:0 0 auto}
+  .dp-notice a{color:var(--blue);font-weight:700;overflow-wrap:anywhere}
+  .dp-quip{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.66;font-weight:600;color:var(--blue-deep);background:var(--blue-50);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:18px}
+  .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
+  .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
+  .dp-brief b{display:flex;align-items:baseline;gap:8px;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  /* AI 产出物的就地标注(2026-07-30): 概念页的定义早就在页尾注明「由 AI 加工层生成、编辑
+     维护」, 而详情页的简报与锐评一直没标 —— 读者会把那句锐评当成编辑观点。283 页都有这两块,
+     不标就是 283 次误导。放在区块内而不是只放页尾: 页尾声明读者多半划不到, 而标注要落在
+     人实际阅读的位置才有意义。样式压到最小, 不抢正文。 */
+  .dp-brief b em,.dp-quip em{font-style:normal;font-family:var(--mono);font-size:10px;font-weight:600;
+    letter-spacing:0;color:var(--ink-3);white-space:nowrap}
+  .dp-brief b em{margin-left:auto}
+  .dp-quip em{display:block;margin-top:5px;opacity:.85}
+  /* 长文目录(≥3 小标题且正文 ≥2000 字才出): <details> 原生可折叠, 不用一行 JS。
+     默认 open —— 目录的用处是先看清结构再决定读哪段, 收起来就失去意义; 想收也一点即收。 */
+  .dp-toc{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:24px;background:#FBFCFF}
+  .dp-toc summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--ink-2);display:flex;align-items:center;gap:7px;list-style:none}
+  .dp-toc summary::-webkit-details-marker{display:none}
+  .dp-toc summary i{font-size:11px;color:var(--blue)}
+  .dp-toc summary span{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-3);margin-left:auto}
+  .dp-toc ol{list-style:none;margin:10px 0 2px;padding:0;counter-reset:toc}
+  .dp-toc li{counter-increment:toc;font-size:13px;line-height:1.7;padding:2px 0}
+  .dp-toc li::before{content:counter(toc) ". ";font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .dp-toc li.lv3{padding-left:16px}
+  .dp-toc li.lv4{padding-left:32px}
+  .dp-toc a{color:var(--ink-2);text-decoration:none;overflow-wrap:anywhere}
+  .dp-toc a:hover{color:var(--blue)}
+  /* 锚点跳转时标题别贴到视口顶端(站点顶栏会盖住) */
+  .dp-body h2[id],.dp-body h3[id],.dp-body h4[id]{scroll-margin-top:76px}
+  .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
+  .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
+  .dp-body p{margin:0 0 1.05em}
+  .dp-body img{max-width:100%;height:auto;border-radius:10px;margin:.4em 0}
+  .dp-body pre{background:#0F172A;color:#E2E8F0;font-family:var(--mono);font-size:12.5px;line-height:1.7;padding:14px 16px;border-radius:10px;overflow-x:auto;margin:0 0 1.1em}
+  .dp-body code{font-family:var(--mono);font-size:.92em}
+  .dp-body :not(pre)>code{background:#F1F5F9;padding:1px 5px;border-radius:5px}
+  .dp-body blockquote{border-left:3px solid var(--line);padding:2px 0 2px 14px;color:var(--ink-3);margin:0 0 1.05em}
+  .dp-body a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+  .dp-body ul,.dp-body ol{padding-left:1.5em;margin:0 0 1.05em}
+  .dp-body table{display:block;overflow-x:auto;border-collapse:collapse;margin:0 0 1.1em}
+  .dp-body td,.dp-body th{border:1px solid var(--line);padding:6px 10px;font-size:.92em}
+  .dp-excerpt{font-size:15px;line-height:1.9;color:var(--ink-2);border-left:3px solid var(--line);padding:2px 0 2px 16px;margin-bottom:8px}
+  .dp-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;padding-top:20px;border-top:1px solid var(--line-2)}
+  .dp-btn{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:750;border-radius:999px;padding:10px 20px;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+  .dp-btn.pri{background:var(--blue);color:#fff}
+  .dp-btn.pri:hover{background:var(--blue-deep)}
+  .dp-btn.sec{background:#fff;color:var(--ink-2);border:1px solid var(--line)}
+  .dp-btn.sec:hover{color:var(--blue);border-color:var(--blue)}
+  .dp-note{font-size:11.5px;line-height:1.7;color:var(--ink-3);margin-top:18px}
+  .dp-langbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+  .dp-lang{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:750;color:var(--blue);
+    background:var(--blue-50);border:1px solid var(--blue-100);border-radius:999px;padding:7px 14px;
+    transition:background .2s var(--ease),border-color .2s var(--ease)}
+  .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
+  .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div id="site-nav" class="nav-fb"><a href="../../index.html">句子互动</a><a href="../../products/miaodong.html">句子秒懂</a><a href="../../products/shouhu.html">句子守护</a><a href="../../products/canmou.html">句子问数</a><a href="../../products/dongxing.html">句子懂行</a><a href="../../products/miaohui.html">句子秒回</a><a href="../../products/cli.html">句子 CLI</a><a href="../../products/zhizao.html">句子制造</a><a href="../../fde.html">FDE</a><a href="../../enterprise.html">企业方案</a><a href="../../industries.html">行业</a><a href="../../about.html">关于我们</a><a href="../../news.html">动态</a></div>
+<main class="dp-main">
+  <div class="dp-wrap">
+    <nav class="dp-crumb" aria-label="面包屑"><a href="../../index.html">句子互动</a><i aria-hidden="true">›</i><a href="../../news.html">动态</a><i aria-hidden="true">›</i><span aria-current="page">实测 DeepSeek V4 正式版：3 块钱干完 5 件事，AI「智价比」之战</span></nav>
+    <div class="dp-meta">
+      <span class="dp-srcb s-industry"><i class="fa-solid fa-rss"></i>行业动态</span>
+      <span class="dp-cat">爱范儿</span>
+      <time class="dp-date" datetime="2026-07-31">2026-07-31</time>
+      <span class="dp-read"><i class="fa-regular fa-clock"></i>约 11 分钟</span>
+    </div>
+    <h1 class="dp-title">实测 DeepSeek V4 正式版：3 块钱干完 5 件事，AI「智价比」之战开打了</h1>
+    
+    <p class="dp-by">来源：爱范儿 · 行业动态</p>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（爱范儿 · 行业动态）所有 · <a href="https://www.ifanr.com/1673553?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=" target="_blank" rel="noopener">阅读原文</a></span></div>
+    <p class="dp-quip"><i class="fa-solid fa-quote-left"></i>智价比竞争将推动AI员工在中小企业普及<em>AI 加工层生成</em></p>
+    <div class="dp-brief"><b>简报<em>AI 加工层生成</em></b>DeepSeek发布V4-Flash模型，OpenAI也宣布GPT-5.6系列降价，顶级模型竞争转向争夺“智价比”。这对需要多次调用模型的Agent尤为重要。</div>
+    <details class="dp-toc" open><summary><i class="fa-solid fa-list-ul"></i>目录<span>3 节</span></summary><ol><li class="lv3"><a href="#h1">模型还是那个模型，但更会干活了</a></li><li class="lv3"><a href="#h2">5 个任务跑下来，V4-Flash 的惊喜不只是便宜</a></li><li class="lv3"><a href="#h3">当大模型开始从「做大」转向「做精」</a></li></ol></details><article class="dp-body"><p>科技圈的刺激，总是来得猝不及防。</p>
+<p>同一天，两家大模型领域的绝对顶流，不约而同地丢出了自己的重磅炸弹。一边是 OpenAI 突然宣布 GPT-5.6 系列模型价格大跳水；另一边，DeepSeek 正式发布 V4-Flash 模型，带着通过<a class="cpt" href="../c/post-training.html" data-def="在模型预训练后，通过特定任务数据进一步优化模型性能的过程">后训练</a>（Post-Training）全面强化的推理与代码能力，霸气登场。</p>
+<p><img loading="lazy" onerror="this.style.display='none'" src="https://s3.ifanr.com/images/ep/uploads/lark2pad_upload/913658a3-a6ab-4c1f-a77a-bccfe0626bee.png!720" referrerpolicy="no-referrer" /></p>
+<p>过去两年，大模型的竞争主线是追赶能力上限：参数更大、上下文更长、跑分更高。今天这两份公告放在一起，则释放出另一个信号：</p>
+<blockquote><p>顶级模型的竞争，正在从单纯比拼能力，转向争夺「<a class="cpt" href="../c/cost-performance-ratio.html" data-def="大模型领域新兴的竞争维度，指模型能力与其调用成本的综合比值">智价比</a>」。</p></blockquote>
+<p>这种变化对 Agent 尤其重要。</p>
+<p>让聊天机器人写一封邮件，模型回答一次，工作基本结束。让 Codex 修一个 Bug，它却要先读项目文件、搜索代码、应用补丁，再运行测试；一旦测试报错，还得回头检查并重新执行。</p>
+<p>任务越长，模型调用次数越多，价格就越直接地影响 Agent 能否真正投入日常工作。</p>
+<p>DeepSeek V4-Flash 的 API 价格仍是每百万 token 输入 1 元、输出 2 元。OpenAI 则把 GPT-5.6 Luna 的 API 价格下调约 80%，Terra 也便宜了 20%。</p>
+<p><img loading="lazy" onerror="this.style.display='none'" src="https://s3.ifanr.com/images/ep/uploads/lark2pad_upload/2373288b-7449-44b0-9fc1-c9260754e88f.png!720" referrerpolicy="no-referrer" /></p>
+<p>能力继续往上走，调用成本却开始往下掉。这次我们更想知道的是：价格更低的模型，能不能把事情同样做好？</p>
+<h3 id="h1">模型还是那个模型，但更会干活了</h3>
+<p>DeepSeek 今天更新的 V4-Flash，目前只能通过 API 使用，网页版和 App 都没有更新。</p>
+<p>开发者使用 API 调用 <code>deepseek-v4-flash</code>，后台则会自动换成新发布的 V4-Flash-0731。它可以一次读取 100 万 token 的内容，适合塞进大份文档或整个代码项目，也原生支持 OpenAI 的 Responses API，可以接入 Codex。</p>
+<p><strong>有意思的是，DeepSeek 称，V4-Flash-0731 与预览版的模型结构、尺寸完全一致，这次只重新进行了后训练。</strong></p>
+<p>可以把基础训练理解成上学，后训练更像入职后的专项练习。模型原本已经会写代码、读文档，接下来还要反复练习怎么拆解任务、选择工具、发现错误，以及如何把一件事情从头做到尾。身板没变，做事的习惯变了。</p>
+<p>官方给出的提升幅度确实很大，甚至宣称<strong>「远超 V4-Pro-Preview」</strong>。在测试模型能否操作终端、连续完成任务的 Terminal Bench 2.1 中，它从 61.8 分涨到 82.7 分；另一项代码 Agent 测试 DeepSWE，则从 7.3 分涨到 54.4 分。</p>
+<p><img loading="lazy" onerror="this.style.display='none'" src="https://s3.ifanr.com/images/ep/uploads/lark2pad_upload/c5fa7558-e46e-416b-8d17-c7a8f692b5c8.png!720" referrerpolicy="no-referrer" /></p>
+<p>这些数字翻译成人话就是，新版不只更会写代码，也更擅长调用工具，把一件事情从头做到尾。</p>
+<p>更关键的是，能力上涨并没有伴随涨价。V4-Flash 仍维持每百万 token 输入 1 元、输出 2 元。</p>
+<p>几乎同一时间，OpenAI 也在降低模型调用门槛。据 Axios 报道，上线仅 3 周的 GPT-5.6 Luna 输入和输出价格均下调约 80%，Terra 也降价 20%。降价后的 Luna 每百万 token 输入 0.2 美元、输出 1.2 美元。</p>
+<p>但便宜的前提是能把活干完。Agent 往往要连续调用模型几十次，任何一步出错，整个任务都可能返工。</p>
+<p>所以这次，我们把 DeepSeek V4-Flash 接入了 Proma，给它安排了 5 个从简单到复杂的任务。过程中不追加提示，也不替它处理问题，看看它拿出的第一版到底能不能用。</p>
+<h3 id="h2">5 个任务跑下来，V4-Flash 的惊喜不只是便宜</h3>
+<p>第一轮，我们把爱范儿和 APPSO 的 320 篇早报数据交给 V4-Flash，让它分析两个账号的阅读、互动、选题和发布节奏，并把结果做成一份网页报告。</p>
+<p><img loading="lazy" onerror="this.style.display='none'" src="https://s3.ifanr.com/images/ep/uploads/lark2pad_upload/6176becb-2558-4396-a07d-f290200348c4.png!720" referrerpolicy="no-referrer" /></p>
+
+
+<p>查看文件夹里的早报文章数据，多维度分析数据，然后给我清晰明了的分析报告，输出为交互式的 html
+</p>
+<p>V4-Flash 先用几张数字卡片交代整体情况，再把内容拆成账号对比、阅读趋势、互动画像、选题分析、结构透视、爆款榜单和全量明细。页面里混用了柱状图、折线图、环形图、雷达图和散点图，散点图还能切换账号、缩放查看。</p>
+<p>视觉上也相当成熟。深色背景、蓝黄色强调色和卡片层级保持一致，十几张图塞在同一页里，依然能一眼分清重点。虽然这份报告很长，但好在并没有明显的拼贴感。</p>
+<p>接下来，我让 DeepSeek V4 做了一个稍微复杂一些的任务——一个打砖块小游戏，既要处理球、挡板和砖块的碰撞，又要加入重力、动量传递、砖块耐久、连锁爆炸、4 种道具和粒子效果。</p>
+<p>它给出的结果意外地还不错，普通砖、金属砖和爆炸砖在视觉上有明确区分；金属砖被击中后会出现裂纹，爆炸砖会波及周围砖块。多球、加宽挡板、粘性挡板和激光也不是只出现在说明里，实际游玩时都能触发。</p>
+<p><img loading="lazy" onerror="this.style.display='none'" src="https://s3.ifanr.com/images/ep/uploads/lark2pad_upload/f1402a4a-4deb-4a52-a026-60e18c68bd8e.gif" referrerpolicy="no-referrer" /></p>
+
+
+请为我编写一个单文件 HTML 格式的打砖块小游戏。要求使用 HTML5 Canvas 绘制，且具备以下核心要素：
+<ol>
+<li>真实的物理引擎：球与砖块、墙壁和挡板的碰撞遵循弹性碰撞与动量守恒。挡板移动时的速度应该能传递给球（例如：向右快速移动挡板击球时，球会获得额外的向右水平速度）。加入轻微的重力效果，使轨迹更丰富。</li>
+<li>砖块类型与生命值：设计不同颜色和耐久度的砖块（如普通砖块需要击打 1 次，金属砖块需要击打 3 次并伴有视觉开裂效果，爆炸砖块被击碎时会炸毁周围的砖块）。</li>
+<li>道具系统：击碎特定砖块会随机掉落道具，包括：多球模式（分裂出 3 个球）、挡板加宽、粘性挡板（球碰到挡板后先粘住，按空格键再发射）、以及激光射击（挡板可以发射子弹直接摧毁砖块）。</li>
+<li>视觉与特效：包含击碎砖块时的粒子散落效果、球撞击时的微弱屏幕抖动、流畅的 60 FPS 动画，以及简洁现代的 UI 界面（计分板、生命值显示、暂停和重新开始按钮）。</li>
+<li>代码结构：所有的 HTML、CSS 和 JavaScript 代码必须全部打包在一个文件中，确保可以直接双击在浏览器中运行，且无外部依赖库。</li>
+</ol>
+
+<p>接下来，我们又把题目换成了三体轨道模拟器。这类页面很容易靠星空、光球和拖尾蒙混过关，真正的难点是算出三颗星体下一秒各自会去哪里，并让轨道持续运行。</p>
+<p><img loading="lazy" onerror="this.style.display='none'" src="https://s3.ifanr.com/images/ep/uploads/lark2pad_upload/7d92b8e7-32de-4e58-bf0f-519215452d56.gif" referrerpolicy="no-referrer" /></p>
+
+
+请写一个单文件 HTML 的三体运动轨道交互式模拟器，具体要求：
+<ol>
+<li>物理计算：使用龙格-库塔法（RK4）或 Verlet 积分算法来计算三个质点在万有引力作用下的运动轨迹。允许用户实时调整引力常数 G、三个质点的质量、初始位置和初始速度矢量。</li>
+<li>交互与控制：用户可以通过鼠标拖拽来改变质点的初始位置，或者通过轨迹线上的箭头调整初始速度。包含暂停、单步调试、重置、以及内置几种经典稳定轨道（如 figure-8 八字形轨道、Lagrange 轨道等）的一键预设功能。</li>
+<li>可视化效果：使用 Canvas 绘制质点的实时运动，并保留渐隐的运动轨迹拖尾（利用半透明背景刷新实现）。实时显示每个质点的位置、速度和加速度数值。</li>
+<li>代码要求：完全原生 JavaScript 实现，无需外部库，界面设计美观、富有科技感。</li>
+</ol>
+
+<p>V4-Flash 交付的页面采用了四阶龙格-库塔法，也就是 RK4 来计算轨道。它还加入了引力软化，避免两个质点距离太近时数值突然爆炸；当加速度变大、天体接近相遇时，程序会自动把一个计算步长继续拆细，降低轨迹发散的概率。</p>
+<p>界面完成度同样在线。主要画面留给轨道，复杂参数集中在右侧，状态信息收在左上角，没有因为控制项多就变成一块密密麻麻的工程面板。</p>
+<p>算完轨道，我们再换个方向，看看它的审美。任务是一张科幻控制舱仪表盘，不仅要有实时波形、环形进度和滚动日志，点击「超载模式」后，整套界面还要同时进入警报状态。</p>
+<p><img loading="lazy" onerror="this.style.display='none'" src="https://s3.ifanr.com/images/ep/uploads/lark2pad_upload/c702aca6-99e6-440c-8ae0-5d169fc3b991.gif" referrerpolicy="no-referrer" /></p>
+
+
+请为我设计一个单文件 HTML 格式的未来感科幻控制舱仪表盘（Sci-Fi Dashboard）。具体要求：
+<ol>
+<li>视觉风格：深色调背景，使用荧光蓝、霓虹绿和警示橙作为主配色。加入网格背景暗纹、发光特效（box-shadow）和数字科技感字体。</li>
+<li>动态组件：包含一个实时波形图（使用 Canvas 绘制的音频波形或心率图模拟）、几个带有平滑过渡动画的环形进度条（展示 CPU 占用率、能源百分比等），以及一个不断滚动的实时日志终端（Terminal）。</li>
+<li>交互控制：用户可以点击「超载模式」按钮，此时仪表盘所有指示灯变为闪烁的红色，数据刷新速度加倍，且有警告音效（用 Web Audio API 合成，无需外部音频文件）。</li>
+<li>代码规范：使用响应式设计，所有 CSS、HTML 和 JS 代码必须内嵌于同一个文件中，保持现代优雅的视觉表现力。</li>
+</ol>
+
+<p>V4-Flash 这一版却做得像模像样，挺有内味的。实时波形、环形进度、能量流、系统状态和日志终端有清楚的主次关系，发光效果没有盖过数据本身。波形持续运动，环形数字平滑变化，终端也会不断刷出新的系统日志。</p>
+<p>前面的任务都可以在本地完成。最后，我们加入联网、调用 API 和读取外部资料，让 V4-Flash 从一句话开始，做出一份开源 AI 项目周报。</p>
+<p><img loading="lazy" onerror="this.style.display='none'" src="https://s3.ifanr.com/images/ep/uploads/lark2pad_upload/fcdcb875-8052-4534-9d6b-6e84118a1294.gif" referrerpolicy="no-referrer" /></p>
+
+
+请帮我写一个 Python 脚本，调用 GitHub API 拉取过去 7 天内 Stars 增长最快的 10 个开源 AI 项目。提取它们的 README 摘要，并自动生成一份 Markdown 格式的周报。
+<p>把这个周报做成一个美观、有科技感的网页，略有极客风，简洁明了的界面。</p>
+
+<p>它创建了 Python 脚本，实际运行并检查结果，最终交付了脚本、Markdown 周报和一份 JSON 原始数据，以及一个精致的网页。</p>
+<p>5 个任务全部结束后，我回头看了一眼费用——</p>
+<p>DeepSeek 后台一共记录了 393 次 API 请求，累计消耗约 3422 万 token，前前后后只花了 2.85 元。测试前充进去的 10 元，连三分之一都没用完。</p>
+<p><img loading="lazy" onerror="this.style.display='none'" src="https://s3.ifanr.com/images/ep/uploads/lark2pad_upload/0285519b-5752-4863-80f6-9c111f4dcf4c.png!720" referrerpolicy="no-referrer" /></p>
+<h3 id="h3">当大模型开始从「做大」转向「做精」</h3>
+<p>5 个任务当然无法测出一个模型的全部能力，但它们已经足够让我们一窥 V4-Flash 的优势：速度快、价格低，也能把一段含糊、抽象的要求变成完整、可操作的成品。</p>
+<p>过去几年，AI 行业主要遵循 Scaling Law：模型参数更多、训练数据更大、投入算力更高，能力通常也会随之提升。</p>
+<p>华为何庭波提出的「韬（τ）定律」，代表的则是另一种思路——当几何缩微越来越困难，就把优化范围从单个器件扩展到电路、芯片和整个系统，通过缩短信号传播时间、提高协同效率，继续挖掘性能。</p>
+<p>两者讨论的并不是同一个技术问题，却代表了两种不同的发展路径：一条继续扩大规模，另一条想办法让现有系统运行得更有效率。</p>
+<p>V4-Flash 这次的变化，更接近后一种思路。模型结构和尺寸没有变化，仅靠后训练，它在代码、工具调用和连续执行任务上的表现就有了明显提升。它没有否定 Scaling Law，只是说明继续堆参数之外，数据质量、强化学习、推理策略和训练方法，依然可以从现有模型里挖出更多能力。</p>
+<p><img loading="lazy" onerror="this.style.display='none'" src="https://s3.ifanr.com/images/ep/uploads/lark2pad_upload/8362227d-db9d-4ea4-b386-5d7b94b3828c.png!720" referrerpolicy="no-referrer" /></p>
+<p>无独有偶，OpenAI 今天也宣布 GPT-5.6 系列模型大幅降价。顶级模型的竞争，正在从单纯比拼能力上限，转向同时争夺「智价比」。</p>
+<p>模型厂商之间的价格战已经全面展开。对厂商而言，这会继续压缩利润空间，并加速行业洗牌；但对开发者和普通用户而言，模型价格下降意味着 Agent 可以调用更多次、思考更长时间，也能承担过去因成本过高而无法落地的任务。</p>
+<p>当模型能力继续提升，调用成本持续下降，真正被打开的，或许不只是一个更便宜的聊天机器人，而是一个可以长时间运行、反复试错，并真正替人完成复杂工作的 Agent 时代。</p></article>
+    <div class="dp-actions">
+      <a class="dp-btn pri" href="https://www.ifanr.com/1673553?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      
+      <button type="button" class="dp-btn sec" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
+      <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
+    </div>
+    <nav class="dp-rel" aria-labelledby="dp-rel-h"><h2 id="dp-rel-h" class="dp-rel-h">相关动态</h2><ul><li><a href="b3612e44ed8c.html"><span class="dp-rel-t">刚刚，DeepSeek V4 系列更新，架构没变，Agent 能力为何大涨</span><span class="dp-rel-m">都提到「后训练」 等 2 个概念 · <time datetime="2026-07-31">2026-07-31</time></span></a></li><li><a href="c6d9f7ff2fbc.html"><span class="dp-rel-t">刚刚，阿里Qwen3.8-Max来了！冲进全球第一梯队，模型表现直逼Claude</span><span class="dp-rel-m">都提到「智价比」 · <time datetime="2026-08-03">2026-08-03</time></span></a></li><li><a href="565e3d66b2b1.html"><span class="dp-rel-t">DeepSeek-V4-Flash Update</span><span class="dp-rel-m">都提到「Terminal-Bench」 · <time datetime="2026-07-31">2026-07-31</time></span></a></li><li><a href="4c9d5872c695.html"><span class="dp-rel-t">VibeThinker-3B and the Strength of Post-Training</span><span class="dp-rel-m">都提到「后训练」 · <time datetime="2026-06-17">2026-06-17</time></span></a></li></ul></nav>
+    <p class="dp-note">本页由句子互动动态管线自动生成，聚合内容版权归各来源所有；如来源方希望调整或移除收录，请通过官网联系我们。</p>
+  </div>
+</main>
+<div id="site-footer"></div>
+<script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "实测 DeepSeek V4 正式版：3 块钱干完 5 件事，AI「智价比」之战开打了"};</script>
+<script src="../../assets/site.js?v=f57b1388"></script>
+</body>
+</html>

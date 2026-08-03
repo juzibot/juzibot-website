@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Open letters about AI development - 句子·动态</title>
+<meta name="description" content="微软牵头签署《开放权重与美国AI领导力》公开信，235家AI相关公司参与，旨在应对当前AI发展可能面临的挑战。" />
+<meta name="robots" content="noindex,follow" />
+<link rel="canonical" href="https://simonwillison.net/2026/Aug/2/open-letters/#atom-everything" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Open letters about AI development" />
+<meta property="og:description" content="微软牵头签署《开放权重与美国AI领导力》公开信，235家AI相关公司参与，旨在应对当前AI发展可能面临的挑战。" />
+<meta property="og:url" content="https://simonwillison.net/2026/Aug/2/open-letters/#atom-everything" />
+<meta property="og:site_name" content="句子互动" />
+<meta name="twitter:card" content="summary" />
+
+<link rel="icon" href="../../logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../../assets/site.css?v=72b48ba4" />
+<style>
+  /* 静态兜底导航: site.js 一执行就被 outerHTML 连同占位一起换掉, 访客几乎看不到它。
+     不隐藏也不 noscript 包裹——那会让爬虫拿不到, 而它存在的唯一理由就是给不跑 JS 的爬虫看。
+     样式做朴素一行, 万一 site.js 加载失败, 这排链接本身就是可用的降级导航。 */
+  .nav-fb{display:flex;flex-wrap:wrap;gap:6px 16px;padding:12px clamp(16px,4vw,40px);
+    border-bottom:1px solid var(--line-2);font-size:12.5px}
+  .nav-fb a{color:var(--ink-3);text-decoration:none}
+  .nav-fb a:hover{color:var(--blue)}
+
+  .dp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
+  .dp-wrap{max-width:760px;margin:0 auto}
+  .dp-crumb{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:12.5px;color:var(--ink-3);margin-bottom:20px;min-width:0}
+  .dp-crumb a{color:var(--ink-3);text-decoration:none}
+  .dp-crumb a:hover{color:var(--blue)}
+  .dp-crumb i{font-style:normal;opacity:.5;font-size:11px}
+  .dp-crumb [aria-current]{color:var(--ink-2);font-weight:650;overflow-wrap:anywhere}
+  .dp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
+  .dp-back:hover{color:var(--blue)}
+  .dp-meta{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:14px}
+  .dp-srcb{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:750;color:var(--sc,var(--blue))}
+  .s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
+  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-voices{--sc:#9333EA}
+  .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
+  .dp-cat{display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ink-3);background:#F6F7FB;border:1px solid var(--line-2);border-radius:6px;padding:2px 8px}
+  .dp-read{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  /* 相关动态: 读完一篇之后的出口。此前详情页之间零链接, 读者只能回列表页重新扫,
+     爬虫也只能靠 JS 驱动的列表页做枢纽。每条都带「为什么相关」, 不做无理由的推荐。 */
+  .dp-rel{margin-top:40px;padding-top:26px;border-top:1px solid var(--line-2)}
+  .dp-rel-h{font-size:14px;font-weight:750;color:var(--ink-2);margin:0 0 14px}
+  .dp-rel ul{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+  .dp-rel a{display:block;padding:10px 12px;margin:0 -12px;border-radius:8px;text-decoration:none;transition:background .2s var(--ease)}
+  .dp-rel a:hover{background:#F6F7FB}
+  .dp-rel-t{display:block;font-size:14px;font-weight:650;color:var(--ink-1);line-height:1.5}
+  .dp-rel a:hover .dp-rel-t{color:var(--blue)}
+  .dp-rel-m{display:block;margin-top:3px;font-size:11.5px;color:var(--ink-3)}
+  .dp-read i{font-size:10px;opacity:.7}
+  .dp-date{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-3)}
+  .dp-title{font-size:clamp(24px,3.2vw,34px);font-weight:850;letter-spacing:-.03em;line-height:1.32;word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance;margin-bottom:10px}
+  .dp-orig{font-size:13px;color:var(--ink-3);overflow-wrap:anywhere;margin-bottom:8px}
+  .dp-by{font-size:12.5px;font-weight:600;color:var(--ink-3);margin-bottom:18px}
+  .dp-notice{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:1.7;color:var(--ink-2);background:#F6F7FB;border:1px solid var(--line-2);border-radius:10px;padding:10px 14px;margin-bottom:22px}
+  .dp-notice i{color:var(--blue);margin-top:4px;flex:0 0 auto}
+  .dp-notice a{color:var(--blue);font-weight:700;overflow-wrap:anywhere}
+  .dp-quip{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.66;font-weight:600;color:var(--blue-deep);background:var(--blue-50);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:18px}
+  .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
+  .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
+  .dp-brief b{display:flex;align-items:baseline;gap:8px;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  /* AI 产出物的就地标注(2026-07-30): 概念页的定义早就在页尾注明「由 AI 加工层生成、编辑
+     维护」, 而详情页的简报与锐评一直没标 —— 读者会把那句锐评当成编辑观点。283 页都有这两块,
+     不标就是 283 次误导。放在区块内而不是只放页尾: 页尾声明读者多半划不到, 而标注要落在
+     人实际阅读的位置才有意义。样式压到最小, 不抢正文。 */
+  .dp-brief b em,.dp-quip em{font-style:normal;font-family:var(--mono);font-size:10px;font-weight:600;
+    letter-spacing:0;color:var(--ink-3);white-space:nowrap}
+  .dp-brief b em{margin-left:auto}
+  .dp-quip em{display:block;margin-top:5px;opacity:.85}
+  /* 长文目录(≥3 小标题且正文 ≥2000 字才出): <details> 原生可折叠, 不用一行 JS。
+     默认 open —— 目录的用处是先看清结构再决定读哪段, 收起来就失去意义; 想收也一点即收。 */
+  .dp-toc{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:24px;background:#FBFCFF}
+  .dp-toc summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--ink-2);display:flex;align-items:center;gap:7px;list-style:none}
+  .dp-toc summary::-webkit-details-marker{display:none}
+  .dp-toc summary i{font-size:11px;color:var(--blue)}
+  .dp-toc summary span{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-3);margin-left:auto}
+  .dp-toc ol{list-style:none;margin:10px 0 2px;padding:0;counter-reset:toc}
+  .dp-toc li{counter-increment:toc;font-size:13px;line-height:1.7;padding:2px 0}
+  .dp-toc li::before{content:counter(toc) ". ";font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .dp-toc li.lv3{padding-left:16px}
+  .dp-toc li.lv4{padding-left:32px}
+  .dp-toc a{color:var(--ink-2);text-decoration:none;overflow-wrap:anywhere}
+  .dp-toc a:hover{color:var(--blue)}
+  /* 锚点跳转时标题别贴到视口顶端(站点顶栏会盖住) */
+  .dp-body h2[id],.dp-body h3[id],.dp-body h4[id]{scroll-margin-top:76px}
+  .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
+  .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
+  .dp-body p{margin:0 0 1.05em}
+  .dp-body img{max-width:100%;height:auto;border-radius:10px;margin:.4em 0}
+  .dp-body pre{background:#0F172A;color:#E2E8F0;font-family:var(--mono);font-size:12.5px;line-height:1.7;padding:14px 16px;border-radius:10px;overflow-x:auto;margin:0 0 1.1em}
+  .dp-body code{font-family:var(--mono);font-size:.92em}
+  .dp-body :not(pre)>code{background:#F1F5F9;padding:1px 5px;border-radius:5px}
+  .dp-body blockquote{border-left:3px solid var(--line);padding:2px 0 2px 14px;color:var(--ink-3);margin:0 0 1.05em}
+  .dp-body a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+  .dp-body ul,.dp-body ol{padding-left:1.5em;margin:0 0 1.05em}
+  .dp-body table{display:block;overflow-x:auto;border-collapse:collapse;margin:0 0 1.1em}
+  .dp-body td,.dp-body th{border:1px solid var(--line);padding:6px 10px;font-size:.92em}
+  .dp-excerpt{font-size:15px;line-height:1.9;color:var(--ink-2);border-left:3px solid var(--line);padding:2px 0 2px 16px;margin-bottom:8px}
+  .dp-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;padding-top:20px;border-top:1px solid var(--line-2)}
+  .dp-btn{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:750;border-radius:999px;padding:10px 20px;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+  .dp-btn.pri{background:var(--blue);color:#fff}
+  .dp-btn.pri:hover{background:var(--blue-deep)}
+  .dp-btn.sec{background:#fff;color:var(--ink-2);border:1px solid var(--line)}
+  .dp-btn.sec:hover{color:var(--blue);border-color:var(--blue)}
+  .dp-note{font-size:11.5px;line-height:1.7;color:var(--ink-3);margin-top:18px}
+  .dp-langbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+  .dp-lang{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:750;color:var(--blue);
+    background:var(--blue-50);border:1px solid var(--blue-100);border-radius:999px;padding:7px 14px;
+    transition:background .2s var(--ease),border-color .2s var(--ease)}
+  .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
+  .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div id="site-nav" class="nav-fb"><a href="../../index.html">句子互动</a><a href="../../products/miaodong.html">句子秒懂</a><a href="../../products/shouhu.html">句子守护</a><a href="../../products/canmou.html">句子问数</a><a href="../../products/dongxing.html">句子懂行</a><a href="../../products/miaohui.html">句子秒回</a><a href="../../products/cli.html">句子 CLI</a><a href="../../products/zhizao.html">句子制造</a><a href="../../fde.html">FDE</a><a href="../../enterprise.html">企业方案</a><a href="../../industries.html">行业</a><a href="../../about.html">关于我们</a><a href="../../news.html">动态</a></div>
+<main class="dp-main">
+  <div class="dp-wrap">
+    <nav class="dp-crumb" aria-label="面包屑"><a href="../../index.html">句子互动</a><i aria-hidden="true">›</i><a href="../../news.html">动态</a><i aria-hidden="true">›</i><span aria-current="page">Open letters about AI development</span></nav>
+    <div class="dp-meta">
+      <span class="dp-srcb s-voices"><i class="fa-solid fa-feather"></i>大咖观点</span>
+      <span class="dp-cat">Simon Willison</span>
+      <time class="dp-date" datetime="2026-08-02">2026-08-02</time>
+      <span class="dp-read"><i class="fa-regular fa-clock"></i>约 7 分钟</span>
+    </div>
+    <h1 class="dp-title">Open letters about AI development</h1>
+    
+    <p class="dp-by">来源：Simon Willison · 大咖观点</p>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（Simon Willison · 大咖观点）所有 · <a href="https://simonwillison.net/2026/Aug/2/open-letters/#atom-everything" target="_blank" rel="noopener">阅读原文</a></span></div>
+    
+    <div class="dp-brief"><b>简报<em>AI 加工层生成</em></b>微软牵头签署《开放权重与美国AI领导力》公开信，235家AI相关公司参与，旨在应对当前AI发展可能面临的挑战。</div>
+    <div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang"><i class="fa-solid fa-language"></i><span>翻译为中文</span></button><span class="dp-lang-note">中文由 AI 翻译，仅供参考</span></div><article class="dp-body" id="dpBodyOrig" lang="en"><h4>Open letters about AI development</h4>
+<p><em>I wrote this summary of the past few weeks of open letters as a section of <a href="https://simonwillison.net/2026/Aug/2/july-newsletter/">my sponsors-only newsletter</a> but I've decided to share it here as well.</em></p>
+<p><strong><a href="https://www.microsoft.com/en-us/corporate-responsibility/topics/open-weight/">Open Weights and American AI Leadership</a></strong> was shepherded by Microsoft, dated July 24th, and signed by 235 AI-adjacent companies including NVIDIA (see Jensen's <a href="https://twitter.com/jensenhuang/status/2080643682408321103">first ever tweet</a>), Amazon, Y Combinator, The Linux Foundation, and (a later signer) OpenAI.</p>
+<p>It's clearly an argument designed to counter <a href="https://www.axios.com/2026/07/20/ai-us-china-open-source-kimi">any instincts</a> by the current US government to ban or limit open weight models over "safety" concerns - a reasonable consideration given <a href="https://simonwillison.net/2026/Jun/13/us-government-directive-to-suspend-access/">what happened to Claude Fable 5</a>!</p>
+<blockquote>
+<p>Relying solely on closed models is not inherently safe: they can be breached, misused, or fail in ways that outsiders cannot detect. And concentrating advanced AI capabilities behind a small number of closed models compounds that risk. It results in a small number of single points of failure, weakens competition, and leaves critical technology in the hands of a few providers. Open weight models, on the other hand, allow a broad community of researchers and developers to examine their behavior, identify vulnerabilities, develop safeguards, and improve them over time.</p>
+</blockquote>
+<p>The one surprising note in the letter is that it comes out in support of distillation, where models train on output from other models:</p>
+<blockquote>
+<p>In shaping this ecosystem, policymakers should be careful not to conflate legitimate model-development techniques with misappropriation. Distillation, or the practice of using one model’s outputs to help train or improve another, is a widely used technique for model improvement, evaluation, and validation. It reflects a long tradition of learning from, building upon, and improving existing technologies, a tradition that has helped drive innovation since the rise of the open-source software movement.</p>
+</blockquote>
+<p>Notably absent from the signatures: Anthropic, who published their own response <a href="https://www.anthropic.com/news/position-open-weights-models">Our position on open-weights models</a> three days later. CEO Dario Amodei doubled down on the risk of authoritarian governments building "AI models that are more powerful than those built by the US", and models being "misused to carry out cyberattacks or biological attacks", and called for "a crack down on industrial-scale <a href="https://www.anthropic.com/news/detecting-and-preventing-distillation-attacks">distillation operations</a>", while also stating that "Anthropic has never advocated for a ban on open-weights models".</p>
+<p>Then on July 28th <a href="https://www.pacingthefrontier.com">Pacing the Frontier</a> was published, featuring signatures from "1,324 employees of frontier AI companies" - with names like Jakub Pachocki (Chief Scientist, OpenAI), Ilya Sutskever (Safe Superintelligence Inc, previously OpenAI), Dario Amodei (Anthropic), Jack Clark (Anthropic) and more. Their core message:</p>
+<blockquote>
+<p>We request that the U.S. government support an international effort to develop the technical and governance tools needed to deliberately pace the frontier of automated AI development.</p>
+</blockquote>
+<p>Their concern is intense competitive pressure combined with accelerated AI progress caused by automated AI research - and given that Anthropic <a href="https://www.anthropic.com/institute/recursive-self-improvement">produce 80% of their code with Claude Code</a>, OpenAI had Sol <a href="https://openai.com/index/gpt-5-6-frontier-intelligence-efficiency/">reduce their end-to-end serving costs by 20%</a>, and Kimi K3 <a href="https://www.kimi.com/blog/kimi-k3#chip-design">designed a chip to serve a nano model built on its own architecture</a>, you can see why people are taking that risk more seriously right now.</p>
+
+    <p>Tags: <a href="https://simonwillison.net/tags/anthropic">anthropic</a>, <a href="https://simonwillison.net/tags/generative-ai">generative-ai</a>, <a href="https://simonwillison.net/tags/openai">openai</a>, <a href="https://simonwillison.net/tags/ai">ai</a>, <a href="https://simonwillison.net/tags/llms">llms</a>, <a href="https://simonwillison.net/tags/ai-ethics">ai-ethics</a></p></article><article class="dp-body" id="dpBodyZh" lang="zh-CN" hidden><h4>关于人工智能发展的公开信</h4>
+<p><em>我将过去几周公开信的摘要写在了<a href="https://simonwillison.net/2026/Aug/2/july-newsletter/">我的专属赞助者简报</a>的一个章节里，但我决定也在这里分享。</em></p>
+<p><strong><a href="https://www.microsoft.com/en-us/corporate-responsibility/topics/open-weight/">开放权重与美国人工智能领导地位</a></strong>由微软牵头，发布于7月24日，共有235家与人工智能相关的公司签署，包括NVIDIA（参见Jensen的<a href="https://twitter.com/jensenhuang/status/2080643682408321103">第一条推文</a>）、亚马逊、Y Combinator、Linux基金会以及（后来加入的）OpenAI。</p>
+<p>这显然是一份旨在反驳美国政府当前任何因“安全”考虑而禁止或限制<a class="cpt" href="../c/open-source-model.html" data-def="指模型权重和代码公开，允许任何人免费使用、修改和分发的AI模型">开放权重模型</a>的倾向的声明——考虑到<a href="https://simonwillison.net/2026/Jun/13/us-government-directive-to-suspend-access/">Claude Fable 5事件</a>的发生，这种担忧是合理的！</p>
+<blockquote>
+<p>完全依赖封闭模型并非天生安全：它们可能被攻破、被滥用，或以外部无法检测的方式失效。而将先进的人工智能能力集中在少数几个封闭模型上，会加剧这种风险。这导致了少数几个单点故障，削弱了竞争，并将关键技术掌握在少数提供商手中。另一方面，开放权重模型允许广泛的研发人员社区检查其行为，发现漏洞，开发防护措施，并随着时间的推移不断改进它们。</p>
+</blockquote>
+<p>这封信中一个令人意外的观点是它支持蒸馏技术，即模型通过学习其他模型的输出来进行训练：</p>
+<blockquote>
+<p>在塑造这一生态系统时，政策制定者应谨慎，切勿将合法的模型开发技术与挪用混为一谈。蒸馏，即使用一个模型的输出来帮助训练或改进另一个模型，是一种广泛用于模型改进、评估和验证的技术。它反映了从现有技术中学习、在其基础上构建并加以改进的悠久传统，这一传统自开源软件运动兴起以来一直推动着创新。</p>
+</blockquote>
+<p>值得注意的是，签名中缺少了 Anthropic 公司，该公司在三天后发布了他们自己的回应<a href="https://www.anthropic.com/news/position-open-weights-models">《我们对开源权重模型的立场》</a>。CEO Dario Amodei 强调了威权政府构建“比美国更强大的 AI 模型”的风险，以及模型被“滥用于网络攻击或生物攻击”的风险，并呼吁“打击工业规模的<a href="https://www.anthropic.com/news/detecting-and-preventing-distillation-attacks">蒸馏操作</a>”，同时表示“Anthropic 从未倡导禁止开源权重模型”。</p>
+<p>随后在 7 月 28 日，<a href="https://www.pacingthefrontier.com">《前沿节奏》</a>报告发布，其中包含了“1324 家前沿 AI 公司员工”的签名——其中包括 Jakub Pachocki（OpenAI 首席科学家）、Ilya Sutskever（Safe Superintelligence Inc，前 OpenAI）、Dario Amodei（Anthropic）、Jack Clark（Anthropic）等人的名字。他们的核心信息是：</p>
+<blockquote>
+<p>我们请求美国政府支持一项国际努力，以开发必要的技术和治理工具，有意识地控制自动化 AI 开发的前沿节奏。</p>
+</blockquote>
+<p>他们担心的是，由自动化 AI 研究引发的激烈竞争压力与加速的 AI 进步相结合——考虑到 Anthropic <a href="https://www.anthropic.com/institute/recursive-self-improvement">80% 的代码由 Claude Code 生成</a>，OpenAI 让 Sol <a href="https://openai.com/index/gpt-5-6-frontier-intelligence-efficiency/">将他们的端到端服务成本降低了 20%</a>，而 Kimi K3 <a href="https://www.kimi.com/blog/kimi-k3#chip-design">设计了一款芯片来服务于基于自身架构构建的纳米模型</a>，你就能理解为什么人们现在更认真地对待这一风险了。</p>
+
+    <p>标签：<a href="https://simonwillison.net/tags/anthropic">anthropic</a>, <a href="https://simonwillison.net/tags/generative-ai">generative-ai</a>, <a href="https://simonwillison.net/tags/openai">openai</a>, <a href="https://simonwillison.net/tags/ai">ai</a>, <a href="https://simonwillison.net/tags/llms">llms</a>, <a href="https://simonwillison.net/tags/ai-ethics">ai-ethics</a></p></article>
+    <div class="dp-actions">
+      <a class="dp-btn pri" href="https://simonwillison.net/2026/Aug/2/open-letters/#atom-everything" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      
+      <button type="button" class="dp-btn sec" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
+      <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
+    </div>
+    <nav class="dp-rel" aria-labelledby="dp-rel-h"><h2 id="dp-rel-h" class="dp-rel-h">相关动态</h2><ul><li><a href="820a779c58a9.html"><span class="dp-rel-t">齐思头条2026/08/03「DeepSeek V4‑Flash‑0731 支持百万级上下文与极端量化降本、Opus 5 演示百万级 token 三维交互生成、GPT‑5.6 Sol 实现端到端多模态资产压缩」</span><span class="dp-rel-m">都提到「模型蒸馏」 等 2 个概念 · <time datetime="2026-08-03">2026-08-03</time></span></a></li><li><a href="945ecdf346e3.html"><span class="dp-rel-t">Show HN: Distilling DeepSeek into GPT-OSS doesn&#x27;t transfer censorship. Try it</span><span class="dp-rel-m">都提到「模型蒸馏」 等 2 个概念 · <time datetime="2026-07-30">2026-07-30</time></span></a></li><li><a href="b5c67a88eeb4.html"><span class="dp-rel-t">Qwen3.8-Max模型发布，开创2.4T参数新标准</span><span class="dp-rel-m">都提到「开源模型」 · <time datetime="2026-08-03">2026-08-03</time></span></a></li><li><a href="8903d86b2f7e.html"><span class="dp-rel-t">我们用 Kimi K3 搓了一颗火影螺旋丸，只花129元就顶一个前端团队？</span><span class="dp-rel-m">都提到「模型蒸馏」 · <time datetime="2026-08-03">2026-08-03</time></span></a></li></ul></nav>
+    <p class="dp-note">本页由句子互动动态管线自动生成，聚合内容版权归各来源所有；如来源方希望调整或移除收录，请通过官网联系我们。</p>
+  </div>
+</main>
+<div id="site-footer"></div>
+<script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "Open letters about AI development"};</script>
+<script src="../../assets/site.js?v=f57b1388"></script>
+<script>
+(function(){var b=document.getElementById('dpLang');if(!b)return;
+var en=document.getElementById('dpBodyOrig'),zh=document.getElementById('dpBodyZh');
+b.addEventListener('click',function(){var on=zh.hidden;zh.hidden=!on;en.hidden=on;
+b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';});})();
+</script>
+</body>
+</html>

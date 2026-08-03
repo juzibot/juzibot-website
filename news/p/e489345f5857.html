@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Show HN: Kakehashi – Experimental userspace to run macOS binaries on Linux ARM - 句子·动态</title>
+<meta name="description" content="Kakehashi 是一个实验性用户空间工具，可在Linux ARM系统上运行macOS ARM64二进制文件，支持实时执行和检查。" />
+<meta name="robots" content="noindex,follow" />
+<link rel="canonical" href="https://github.com/wie-project/kakehashi" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Show HN: Kakehashi – Experimental userspace to run macOS binaries on Linux ARM" />
+<meta property="og:description" content="Kakehashi 是一个实验性用户空间工具，可在Linux ARM系统上运行macOS ARM64二进制文件，支持实时执行和检查。" />
+<meta property="og:url" content="https://github.com/wie-project/kakehashi" />
+<meta property="og:site_name" content="句子互动" />
+<meta name="twitter:card" content="summary" />
+
+<link rel="icon" href="../../logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../../assets/site.css?v=72b48ba4" />
+<style>
+  /* 静态兜底导航: site.js 一执行就被 outerHTML 连同占位一起换掉, 访客几乎看不到它。
+     不隐藏也不 noscript 包裹——那会让爬虫拿不到, 而它存在的唯一理由就是给不跑 JS 的爬虫看。
+     样式做朴素一行, 万一 site.js 加载失败, 这排链接本身就是可用的降级导航。 */
+  .nav-fb{display:flex;flex-wrap:wrap;gap:6px 16px;padding:12px clamp(16px,4vw,40px);
+    border-bottom:1px solid var(--line-2);font-size:12.5px}
+  .nav-fb a{color:var(--ink-3);text-decoration:none}
+  .nav-fb a:hover{color:var(--blue)}
+
+  .dp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
+  .dp-wrap{max-width:760px;margin:0 auto}
+  .dp-crumb{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:12.5px;color:var(--ink-3);margin-bottom:20px;min-width:0}
+  .dp-crumb a{color:var(--ink-3);text-decoration:none}
+  .dp-crumb a:hover{color:var(--blue)}
+  .dp-crumb i{font-style:normal;opacity:.5;font-size:11px}
+  .dp-crumb [aria-current]{color:var(--ink-2);font-weight:650;overflow-wrap:anywhere}
+  .dp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
+  .dp-back:hover{color:var(--blue)}
+  .dp-meta{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:14px}
+  .dp-srcb{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:750;color:var(--sc,var(--blue))}
+  .s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
+  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-voices{--sc:#9333EA}
+  .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
+  .dp-cat{display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ink-3);background:#F6F7FB;border:1px solid var(--line-2);border-radius:6px;padding:2px 8px}
+  .dp-read{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  /* 相关动态: 读完一篇之后的出口。此前详情页之间零链接, 读者只能回列表页重新扫,
+     爬虫也只能靠 JS 驱动的列表页做枢纽。每条都带「为什么相关」, 不做无理由的推荐。 */
+  .dp-rel{margin-top:40px;padding-top:26px;border-top:1px solid var(--line-2)}
+  .dp-rel-h{font-size:14px;font-weight:750;color:var(--ink-2);margin:0 0 14px}
+  .dp-rel ul{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+  .dp-rel a{display:block;padding:10px 12px;margin:0 -12px;border-radius:8px;text-decoration:none;transition:background .2s var(--ease)}
+  .dp-rel a:hover{background:#F6F7FB}
+  .dp-rel-t{display:block;font-size:14px;font-weight:650;color:var(--ink-1);line-height:1.5}
+  .dp-rel a:hover .dp-rel-t{color:var(--blue)}
+  .dp-rel-m{display:block;margin-top:3px;font-size:11.5px;color:var(--ink-3)}
+  .dp-read i{font-size:10px;opacity:.7}
+  .dp-date{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-3)}
+  .dp-title{font-size:clamp(24px,3.2vw,34px);font-weight:850;letter-spacing:-.03em;line-height:1.32;word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance;margin-bottom:10px}
+  .dp-orig{font-size:13px;color:var(--ink-3);overflow-wrap:anywhere;margin-bottom:8px}
+  .dp-by{font-size:12.5px;font-weight:600;color:var(--ink-3);margin-bottom:18px}
+  .dp-notice{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:1.7;color:var(--ink-2);background:#F6F7FB;border:1px solid var(--line-2);border-radius:10px;padding:10px 14px;margin-bottom:22px}
+  .dp-notice i{color:var(--blue);margin-top:4px;flex:0 0 auto}
+  .dp-notice a{color:var(--blue);font-weight:700;overflow-wrap:anywhere}
+  .dp-quip{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.66;font-weight:600;color:var(--blue-deep);background:var(--blue-50);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:18px}
+  .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
+  .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
+  .dp-brief b{display:flex;align-items:baseline;gap:8px;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  /* AI 产出物的就地标注(2026-07-30): 概念页的定义早就在页尾注明「由 AI 加工层生成、编辑
+     维护」, 而详情页的简报与锐评一直没标 —— 读者会把那句锐评当成编辑观点。283 页都有这两块,
+     不标就是 283 次误导。放在区块内而不是只放页尾: 页尾声明读者多半划不到, 而标注要落在
+     人实际阅读的位置才有意义。样式压到最小, 不抢正文。 */
+  .dp-brief b em,.dp-quip em{font-style:normal;font-family:var(--mono);font-size:10px;font-weight:600;
+    letter-spacing:0;color:var(--ink-3);white-space:nowrap}
+  .dp-brief b em{margin-left:auto}
+  .dp-quip em{display:block;margin-top:5px;opacity:.85}
+  /* 长文目录(≥3 小标题且正文 ≥2000 字才出): <details> 原生可折叠, 不用一行 JS。
+     默认 open —— 目录的用处是先看清结构再决定读哪段, 收起来就失去意义; 想收也一点即收。 */
+  .dp-toc{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:24px;background:#FBFCFF}
+  .dp-toc summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--ink-2);display:flex;align-items:center;gap:7px;list-style:none}
+  .dp-toc summary::-webkit-details-marker{display:none}
+  .dp-toc summary i{font-size:11px;color:var(--blue)}
+  .dp-toc summary span{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-3);margin-left:auto}
+  .dp-toc ol{list-style:none;margin:10px 0 2px;padding:0;counter-reset:toc}
+  .dp-toc li{counter-increment:toc;font-size:13px;line-height:1.7;padding:2px 0}
+  .dp-toc li::before{content:counter(toc) ". ";font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .dp-toc li.lv3{padding-left:16px}
+  .dp-toc li.lv4{padding-left:32px}
+  .dp-toc a{color:var(--ink-2);text-decoration:none;overflow-wrap:anywhere}
+  .dp-toc a:hover{color:var(--blue)}
+  /* 锚点跳转时标题别贴到视口顶端(站点顶栏会盖住) */
+  .dp-body h2[id],.dp-body h3[id],.dp-body h4[id]{scroll-margin-top:76px}
+  .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
+  .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
+  .dp-body p{margin:0 0 1.05em}
+  .dp-body img{max-width:100%;height:auto;border-radius:10px;margin:.4em 0}
+  .dp-body pre{background:#0F172A;color:#E2E8F0;font-family:var(--mono);font-size:12.5px;line-height:1.7;padding:14px 16px;border-radius:10px;overflow-x:auto;margin:0 0 1.1em}
+  .dp-body code{font-family:var(--mono);font-size:.92em}
+  .dp-body :not(pre)>code{background:#F1F5F9;padding:1px 5px;border-radius:5px}
+  .dp-body blockquote{border-left:3px solid var(--line);padding:2px 0 2px 14px;color:var(--ink-3);margin:0 0 1.05em}
+  .dp-body a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+  .dp-body ul,.dp-body ol{padding-left:1.5em;margin:0 0 1.05em}
+  .dp-body table{display:block;overflow-x:auto;border-collapse:collapse;margin:0 0 1.1em}
+  .dp-body td,.dp-body th{border:1px solid var(--line);padding:6px 10px;font-size:.92em}
+  .dp-excerpt{font-size:15px;line-height:1.9;color:var(--ink-2);border-left:3px solid var(--line);padding:2px 0 2px 16px;margin-bottom:8px}
+  .dp-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;padding-top:20px;border-top:1px solid var(--line-2)}
+  .dp-btn{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:750;border-radius:999px;padding:10px 20px;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+  .dp-btn.pri{background:var(--blue);color:#fff}
+  .dp-btn.pri:hover{background:var(--blue-deep)}
+  .dp-btn.sec{background:#fff;color:var(--ink-2);border:1px solid var(--line)}
+  .dp-btn.sec:hover{color:var(--blue);border-color:var(--blue)}
+  .dp-note{font-size:11.5px;line-height:1.7;color:var(--ink-3);margin-top:18px}
+  .dp-langbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+  .dp-lang{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:750;color:var(--blue);
+    background:var(--blue-50);border:1px solid var(--blue-100);border-radius:999px;padding:7px 14px;
+    transition:background .2s var(--ease),border-color .2s var(--ease)}
+  .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
+  .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div id="site-nav" class="nav-fb"><a href="../../index.html">句子互动</a><a href="../../products/miaodong.html">句子秒懂</a><a href="../../products/shouhu.html">句子守护</a><a href="../../products/canmou.html">句子问数</a><a href="../../products/dongxing.html">句子懂行</a><a href="../../products/miaohui.html">句子秒回</a><a href="../../products/cli.html">句子 CLI</a><a href="../../products/zhizao.html">句子制造</a><a href="../../fde.html">FDE</a><a href="../../enterprise.html">企业方案</a><a href="../../industries.html">行业</a><a href="../../about.html">关于我们</a><a href="../../news.html">动态</a></div>
+<main class="dp-main">
+  <div class="dp-wrap">
+    <nav class="dp-crumb" aria-label="面包屑"><a href="../../index.html">句子互动</a><i aria-hidden="true">›</i><a href="../../news.html">动态</a><i aria-hidden="true">›</i><span aria-current="page">Show HN: Kakehashi – Experimental usersp</span></nav>
+    <div class="dp-meta">
+      <span class="dp-srcb s-hn"><i class="fa-brands fa-hacker-news"></i>Hacker News</span>
+      
+      <time class="dp-date" datetime="2026-08-02">2026-08-02</time>
+      <span class="dp-read"><i class="fa-regular fa-clock"></i>约 20 分钟</span>
+    </div>
+    <h1 class="dp-title">Show HN: Kakehashi – Experimental userspace to run macOS binaries on Linux ARM</h1>
+    
+    <p class="dp-by">来源：Hacker News</p>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（Hacker News）所有 · <a href="https://github.com/wie-project/kakehashi" target="_blank" rel="noopener">阅读原文</a></span></div>
+    
+    <div class="dp-brief"><b>简报<em>AI 加工层生成</em></b>Kakehashi 是一个实验性用户空间工具，可在Linux ARM系统上运行macOS ARM64二进制文件，支持实时执行和检查。</div>
+    <div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang"><i class="fa-solid fa-language"></i><span>翻译为中文</span></button><span class="dp-lang-note">中文由 AI 翻译，仅供参考</span></div><article class="dp-body" id="dpBodyOrig" lang="en"><h1>Kakehashi</h1>
+<p>Userspace <strong>macOS ARM64 → Linux aarch64</strong> translation layer (CLI-first, no JIT).</p>
+<p>Load Darwin Mach-O on Linux aarch64, map a freestanding <code>libSystem</code>, translate
+BSD syscalls, and run real guests (clang probes, <strong>7-Zip <code>7zz</code></strong>, <strong>curl</strong>,
+threads).</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Live execution</td>
+<td><strong>Linux aarch64</strong> (bare metal, VM, Colima/Docker)</td>
+</tr>
+<tr>
+<td>Dry-load / inspect</td>
+<td>Any host (including macOS)</td>
+</tr>
+<tr>
+<td>Design reference</td>
+<td><a href="https://github.com/wie-project/kakehashi/blob/main/docs/README.md" target="_blank" rel="noopener nofollow"><code>docs/</code></a></td>
+</tr>
+</tbody>
+</table>
+<h2>What works</h2>
+<p>Verified on <strong>Docker/Colima</strong> and <strong>UTM</strong> (Linux aarch64). Install once:</p>
+<pre>cargo install kakehashi
+# or from a checkout:
+cargo install --path crates/kh-cli --force
+
+kh bottle ensure
+kh install 7zip    # Darwin 7zz → guest /usr/local/bin/7zz
+kh install curl    # Darwin curl → guest /usr/local/bin/curl</pre>
+<p>Relative <code>-o</code> / archive paths resolve against the <strong>host CWD</strong> of the <code>kh</code>
+process (create parent dirs yourself, or rely on auto-mkdir for <code>O_CREAT</code>).
+Through the bottle, <code>/Volumes/linux/…</code> bridges to the host root (<code>/</code> → host <code>/</code>).</p>
+<h3>7-Zip (<code>7zz</code>)</h3>
+<pre># Version / help
+kh run 7zz --
+kh run 7zz -- --help
+
+# Create archive (cwd-relative)
+kh run 7zz -- a demo.7z README.md
+kh run 7zz -- t demo.7z
+kh run 7zz -- l demo.7z
+kh run 7zz -- x -o./out demo.7z
+
+# Multi-thread compress (correctness gate)
+kh run 7zz -- a -t7z -m0=lzma2 -mx=5 -mmt=4 mt.7z README.md
+kh run 7zz -- t mt.7z
+# expect: Everything is Ok, exit 0</pre>
+<p><strong>Docker helpers</strong> (artifacts under host <code>.tmp/kh-out/</code>):</p>
+<pre>./scripts/docker-7zz.sh --help
+./scripts/docker-7zz.sh a /Volumes/linux/out/demo.7z /Volumes/linux/src/README.md
+ls -lh .tmp/kh-out/demo.7z
+
+KAKEHASHI_HYPERCALL=1 ./scripts/docker-7zz.sh a -t7z -m0=lzma2 -mx=5 -mmt=4 \
+  /Volumes/linux/out/mt.7z /Volumes/linux/src/README.md
+./scripts/docker-7zz.sh t /Volumes/linux/out/mt.7z</pre>
+<h3>curl</h3>
+<pre># Banner (G1)
+kh run curl -- --version
+
+# HTTP GET → file (G3 / G5). Parents for -o are created when missing.
+kh run curl -- -sS -o .tmp/kh-out/body http://example.com/
+# expect: exit 0, ~559 bytes, HTML contains &quot;Example Domain&quot;
+wc -c .tmp/kh-out/body
+head -c 80 .tmp/kh-out/body; echo
+
+# HTTP to stdout
+kh run curl -- -sS http://example.com/ | head -c 80; echo
+
+# HTTPS GET (G4) — OpenSSL + bottle CA (from host or curl.se download)
+kh run curl -- -sS -o .tmp/kh-out/https-body https://example.com/
+wc -c .tmp/kh-out/https-body
+
+# Negative: bad / self-signed cert must fail (rc ≠ 0)
+kh run curl -- -sS -o /dev/null https://self-signed.badssl.com/; echo exit:$?</pre>
+<p><strong>Docker helpers:</strong></p>
+<pre>./scripts/docker-curl.sh --version
+./scripts/docker-curl.sh -sS -o /Volumes/linux/out/body http://example.com/
+./scripts/docker-curl.sh -sS -o /Volumes/linux/out/https-body https://example.com/
+ls -lh .tmp/kh-out/body .tmp/kh-out/https-body
+
+# Trace-first probe logs → .tmp/kh-curl-probe/
+./scripts/docker-curl-probe.sh --version
+
+# Option matrix (large tiers) → .tmp/kh-curl-options/
+./scripts/docker-curl-options.sh tier1
+./scripts/docker-curl-options.sh tier9-10
+./scripts/docker-curl-options.sh all          # tier1..10</pre>
+<p>Harmless noise on many runs:</p>
+<ul>
+<li><code>kh: open fail ENOENT(openat) path=/etc/ssl/openssl.cnf</code> — OpenSSL optional config; HTTP/HTTPS still work via the seeded CA bundle.</li>
+<li><code>WARN … skip dylib … Security/CoreFoundation</code> — Apple frameworks not in the bottle; soft stubs cover the load path.</li>
+<li><code>unresolved strong symbol; bound to named missing trampoline</code> — symbols not hit on the happy path.</li>
+</ul>
+<p>Details and gates: <a href="https://github.com/wie-project/kakehashi/blob/main/docs/curl.md" target="_blank" rel="noopener nofollow"><code>docs/curl.md</code></a>.</p>
+<h3>Also green</h3>
+<table>
+<thead>
+<tr>
+<th>Surface</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Clang / fixture probes</td>
+<td><code>tests/clang-probe/</code>, <code>tests/fixtures/</code></td>
+</tr>
+<tr>
+<td>Multi-thread <code>7zz -mmt=4</code></td>
+<td>Docker + UTM</td>
+</tr>
+<tr>
+<td>Bottle + freestanding <code>libSystem</code></td>
+<td><code>kh bottle ensure</code> embeds dylib</td>
+</tr>
+<tr>
+<td>Unit tests + clippy</td>
+<td><code>cargo test</code> / <code>clippy</code> workspace (excl. <code>kh-libsystem</code>)</td>
+</tr>
+</tbody>
+</table>
+<h3>Not a product claim (yet)</h3>
+<p>Full curl feature set (POST bodies, proxies, HTTP/3 end-to-end, every scheme),
+real Apple Security.framework, <code>git</code> / CLT, GUI, codesign. Next product slice:
+<strong>git</strong> via <code>kh install xcode-tools</code> — see <a href="https://github.com/wie-project/kakehashi/blob/main/docs/git.md" target="_blank" rel="noopener nofollow"><code>docs/git.md</code></a>.</p>
+<h2>Crates</h2>
+<table>
+<thead>
+<tr>
+<th>Crate</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>kakehashi</code></strong></td>
+<td>Binary <code>kh</code> (install this)</td>
+</tr>
+<tr>
+<td><code>kh-loader</code></td>
+<td>Mach-O parse, map, execute</td>
+</tr>
+<tr>
+<td><code>kh-runtime</code></td>
+<td>Memory, traps, BSD syscalls, bottle; embeds freestanding <code>libSystem.B.dylib</code></td>
+</tr>
+<tr>
+<td><code>kh-libsystem</code></td>
+<td>Source for that dylib (<code>aarch64-apple-darwin</code> only; not a Linux host crate)</td>
+</tr>
+</tbody>
+</table>
+<p>The guest dylib is vendored at <code>crates/kh-runtime/resources/libSystem.B.dylib</code>
+and compiled into the runtime with <code>include_bytes!</code>. Publishing <code>kh-runtime</code>
+ships the dylib; end users do not need a separate download.</p>
+<h2>Requirements</h2>
+<ul>
+<li>Rust 1.88+</li>
+<li><strong>Linux aarch64</strong> for live <code>kh run</code> / <code>kh trace</code></li>
+<li>Page sizes: <strong>4 KiB</strong> (containers) and <strong>16 KiB</strong> (Asahi-class)</li>
+<li>Optional: <code>curl</code>/<code>wget</code> + <code>tar</code> for <code>kh install 7zip</code> / <code>kh install curl</code></li>
+</ul>
+<h2>Install</h2>
+<pre>cargo install kakehashi
+# or from a checkout: cargo install --path crates/kh-cli
+
+kh bottle ensure
+kh install 7zip
+kh install curl</pre>
+<h3>Bottle layout</h3>
+<p>Default root: <code>~/.local/share/kakehashi/bottle/</code> (override with
+<code>KAKEHASHI_DATA_DIR</code> / <code>KAKEHASHI_ROOT</code>).</p>
+<table>
+<thead>
+<tr>
+<th>Host</th>
+<th>Guest</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>…/bottle/</code></td>
+<td><code>/</code></td>
+</tr>
+<tr>
+<td><code>…/usr/local/bin/7zz</code></td>
+<td><code>/usr/local/bin/7zz</code></td>
+</tr>
+<tr>
+<td><code>…/usr/local/bin/curl</code></td>
+<td><code>/usr/local/bin/curl</code></td>
+</tr>
+<tr>
+<td><code>…/usr/lib/libSystem.B.dylib</code></td>
+<td><code>/usr/lib/libSystem.B.dylib</code></td>
+</tr>
+<tr>
+<td><code>…/private/etc/ssl/cert.pem</code></td>
+<td><code>/etc/ssl/cert.pem</code> (host CA or downloaded Mozilla)</td>
+</tr>
+<tr>
+<td><code>…/Volumes/linux/…</code></td>
+<td><code>/Volumes/linux/…</code> → host FS</td>
+</tr>
+</tbody>
+</table>
+<h2>Performance (honest)</h2>
+<p>Kakehashi runs guest code <strong>natively</strong> on the CPU. The tax is the <strong>syscall
+boundary</strong> (TLS switch, alt stack, NEON save/restore, Rust dispatch) × how
+chatty the guest is — not an instruction emulator.</p>
+<h3>Measured gap</h3>
+<p>On Ubuntu aarch64 bare-metal (UTM), multi-file <code>7zz</code> archive
+(<code>-t7z -m0=lzma2 -mx=5 -mmt=4</code>, ~8k files / ~240 MiB tree):</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>native Linux <code>7zz</code></th>
+<th>Darwin <code>7zz</code> under <code>kh</code></th>
+<th>ratio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>wall</td>
+<td>~22.5 s</td>
+<td>~118 s</td>
+<td><strong>~×5.2</strong></td>
+</tr>
+</tbody>
+</table>
+<p>On compression-heavy, few-file samples the gap is often much smaller
+(~×1.1–1.2). The large multi-file gap is dominated by <strong>path walk + per-syscall
+boundary</strong>, not “wrong LZMA”.</p>
+<p>Hypercall is on by default for all guest threads. Opt out with
+<code>KAKEHASHI_HYPERCALL=0</code> only for debug (residual <code>svc</code>→<code>brk</code> / SIGTRAP).</p>
+<h3>Why ~×5 is still useful in CI</h3>
+<p>The product goal for CI is not “as fast as native macOS,” but <strong>run Darwin
+CLI/tools on cheap Linux aarch64 runners</strong> instead of scarce, expensive
+macOS capacity.</p>
+<p><strong>GitHub Actions hosted runners</strong> (private-repo overage rates, USD per
+minute; see <a href="https://docs.github.com/en/billing/reference/actions-runner-pricing" target="_blank" rel="noopener nofollow">Actions runner pricing</a>):</p>
+<table>
+<thead>
+<tr>
+<th>Runner</th>
+<th>Per-minute rate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Linux 2-core arm64</td>
+<td><strong>$0.005</strong></td>
+</tr>
+<tr>
+<td>Linux 2-core x64</td>
+<td>$0.006</td>
+</tr>
+<tr>
+<td>macOS 3–4 core (M1/Intel)</td>
+<td><strong>$0.062</strong></td>
+</tr>
+<tr>
+<td>macOS larger (e.g. 12-core / M2 Pro)</td>
+<td>$0.077–$0.102</td>
+</tr>
+</tbody>
+</table>
+<p>macOS standard is roughly <strong>×10–×12</strong> the Linux arm64 minute rate before any
+wall-time difference. Even if a job runs <strong>×5 slower</strong> under <code>kh</code> on Linux
+arm64 than the same work on a macOS runner, billable cost can still be lower
+because the macOS minute is an order of magnitude more expensive
+(illustrative: 5 × $0.005 ≈ $0.025 vs 1 × $0.062). Public-repo free minutes
+and self-hosted Linux amplify that further; macOS hosted capacity also tends
+to queue longer and (on GitLab SaaS) is Premium/Ultimate / beta-gated.</p>
+<p><strong>When macOS runners still win:</strong> GUI, codesign/notarization, Xcode UI tests,
+or any workload that is not a pure CLI Darwin binary under freestanding
+<code>libSystem</code>.</p>
+<p><strong>Gates, not benches:</strong> CI correctness is <code>cargo test</code> / smoke / <code>7zz -mmt=4</code>,
+not “match native wall clock.” Perf work is tracked in
+<a href="https://github.com/wie-project/kakehashi/blob/main/docs/roadmap.md" target="_blank" rel="noopener nofollow"><code>docs/roadmap.md</code></a>.</p>
+<h2>Quick start (Docker / Colima on Apple Silicon)</h2>
+<pre>docker build -t kakehashi:dev -f Dockerfile.dev .
+docker run --rm -v &quot;$PWD&quot;:/src -w /src kakehashi:dev \
+  cargo test --workspace --exclude kh-libsystem
+
+# Full smoke (build + clippy + test + micro run)
+./scripts/docker-smoke.sh</pre>
+<h2>Build</h2>
+<pre>cargo build -p kakehashi --release
+cargo test --workspace --exclude kh-libsystem
+cargo clippy --workspace --exclude kh-libsystem --all-targets -- -D warnings
+
+# Maintainers: refresh embed after freestanding ABI changes
+cargo build -p kh-libsystem --release --target aarch64-apple-darwin
+./scripts/stage-libsystem.sh   # → crates/kh-runtime/resources/libSystem.B.dylib</pre>
+<p><code>libSystem</code> discovery: <code>--libsystem</code> → <code>KAKEHASHI_LIBSYSTEM</code> → paths next to
+<code>kh</code> → crate <code>resources/</code> → <strong>embedded</strong> bytes in <code>kh-runtime</code>.</p>
+<h2>Testing map</h2>
+<table>
+<thead>
+<tr>
+<th>Goal</th>
+<th>Command</th>
+<th>Artifacts</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Unit tests</td>
+<td><code>cargo test --workspace --exclude kh-libsystem</code></td>
+<td>terminal</td>
+</tr>
+<tr>
+<td>Docker smoke</td>
+<td><code>./scripts/docker-smoke.sh</code></td>
+<td>ends with <code>smoke ok</code></td>
+</tr>
+<tr>
+<td>Fixtures</td>
+<td><code>kh run --expect-code … tests/fixtures/…</code></td>
+<td>see <code>tests/fixtures/README.md</code></td>
+</tr>
+<tr>
+<td>Clang probes</td>
+<td><code>kh run --root tests/fixtures/bottle tests/clang-probe/puts_hello</code></td>
+<td>stdout <code>hello</code></td>
+</tr>
+<tr>
+<td>Real Darwin <code>7zz</code></td>
+<td><code>./scripts/docker-7zz.sh …</code></td>
+<td>host <code>.tmp/kh-out/</code></td>
+</tr>
+<tr>
+<td>Real Darwin <code>curl</code></td>
+<td><code>./scripts/docker-curl.sh …</code></td>
+<td>host <code>.tmp/kh-out/</code>; probe → <code>.tmp/kh-curl-probe/</code></td>
+</tr>
+<tr>
+<td>Fair CPU bench</td>
+<td><code>./scripts/bench-fair-local.sh</code></td>
+<td>host <code>.tmp/kh-bench-fair/</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>.tmp/</code>, <code>.kh/</code>, and <code>target/</code> are gitignored.</p>
+<h3>Guest path ↔ host path (Docker helpers)</h3>
+<p>Bottle bridges the Linux FS as <code>/Volumes/linux/…</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Guest path</th>
+<th>Host</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/Volumes/linux/src/README.md</code></td>
+<td><code>&lt;repo&gt;/README.md</code></td>
+</tr>
+<tr>
+<td><code>/Volumes/linux/out/demo.7z</code></td>
+<td><code>&lt;repo&gt;/.tmp/kh-out/demo.7z</code> (durable; default for <code>docker-7zz.sh</code>)</td>
+</tr>
+<tr>
+<td><code>/Volumes/linux/tmp/…</code></td>
+<td>container <code>/tmp/…</code> — <strong>gone</strong> after <code>docker run --rm</code></td>
+</tr>
+</tbody>
+</table>
+<h2>Scripts</h2>
+<table>
+<thead>
+<tr>
+<th>Script</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>scripts/stage-libsystem.sh</code></td>
+<td>Build product → <code>crates/kh-runtime/resources/</code></td>
+</tr>
+<tr>
+<td><code>scripts/install-linux.sh</code></td>
+<td>Local build + install <code>kh</code> + <code>bottle ensure</code></td>
+</tr>
+<tr>
+<td><code>scripts/docker-smoke.sh</code></td>
+<td>Smoke suite inside <code>Dockerfile</code> image</td>
+</tr>
+<tr>
+<td><code>scripts/docker-7zz.sh</code></td>
+<td>Darwin <code>7zz</code> under <code>kh</code> (outputs → <code>.tmp/kh-out</code>)</td>
+</tr>
+<tr>
+<td><code>scripts/docker-curl.sh</code></td>
+<td>Darwin <code>curl</code> under <code>kh</code> (same shape as <code>docker-7zz</code>)</td>
+</tr>
+<tr>
+<td><code>scripts/docker-curl-probe.sh</code></td>
+<td><code>KH_CURL_PROBE=1</code> wrapper (logs → <code>.tmp/kh-curl-probe</code>)</td>
+</tr>
+<tr>
+<td><code>scripts/docker-curl-options.sh</code></td>
+<td>Tiered curl flag smoke (<code>tier1</code>…<code>tier10</code>, <code>tier9-10</code>, <code>all</code> → <code>.tmp/kh-curl-options</code>)</td>
+</tr>
+<tr>
+<td><code>scripts/docker-git.sh</code></td>
+<td>Apple <code>git</code> from CLT under <code>kh</code> (swscan + <code>.kh/data</code> cache)</td>
+</tr>
+<tr>
+<td><code>scripts/bench-fair-local.sh</code></td>
+<td>Native vs kh compress (artifacts → <code>.tmp/kh-bench-fair</code>)</td>
+</tr>
+</tbody>
+</table>
+<h2>License</h2>
+<p>Apache License 2.0. See <a href="https://github.com/wie-project/kakehashi/blob/main/LICENSE.txt" target="_blank" rel="noopener nofollow"><code>LICENSE.txt</code></a> and <a href="https://github.com/wie-project/kakehashi/blob/main/NOTICE" target="_blank" rel="noopener nofollow"><code>NOTICE</code></a>.</p>
+<p>This project is <strong>not</strong> derived from Darling. Do not vendor proprietary Apple
+SDKs or blobs.</p></article><article class="dp-body" id="dpBodyZh" lang="zh-CN" hidden><h1>Kakehashi</h1>
+<p>用户态 <strong>macOS ARM64 → Linux aarch64</strong> 转换层（优先命令行，无 JIT）。</p>
+<p>在 Linux aarch64 上加载 Darwin Mach-O 文件，映射一个独立的 <code>libSystem</code>，转换 BSD 系统调用，并运行真实的应用程序（clang 探测、<strong>7-Zip <code>7zz</code></strong>、<strong>curl</strong>、多线程）。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>实时执行</td>
+<td><strong>Linux aarch64</strong>（裸机、虚拟机、Colima/Docker）</td>
+</tr>
+<tr>
+<td>预加载 / 检查</td>
+<td>任意主机（包括 macOS）</td>
+</tr>
+<tr>
+<td>设计参考</td>
+<td><a href="https://github.com/wie-project/kakehashi/blob/main/docs/README.md" target="_blank" rel="noopener nofollow"><code>docs/</code></a></td>
+</tr>
+</tbody>
+</table>
+<h2>可用功能</h2>
+<p>已在 <strong>Docker/Colima</strong> 和 <strong>UTM</strong>（Linux aarch64）上验证。安装一次即可：</p>
+<pre>cargo install kakehashi
+# 或从源码安装：
+cargo install --path crates/kh-cli --force
+
+kh bottle ensure
+kh install 7zip    # Darwin 7zz → 客户端 /usr/local/bin/7zz
+kh install curl    # Darwin curl → 客户端 /usr/local/bin/curl</pre>
+<p>相对的 <code>-o</code> / 归档路径会相对于 <code>kh</code> 进程的<strong>主机当前工作目录</strong>解析（需自行创建父目录，或依赖 <code>O_CREAT</code> 的自动创建目录功能）。
+通过 bottle，<code>/Volumes/linux/…</code> 会桥接到主机根目录（<code>/</code> → 主机 <code>/</code>）。</p>
+<h3>7-Zip (<code>7zz</code>)</h3>
+<pre># 版本 / 帮助
+kh run 7zz --
+kh run 7zz -- --help
+
+# 创建归档文件（相对于当前工作目录）
+kh run 7zz -- a demo.7z README.md
+kh run 7zz -- t demo.7z
+kh run 7zz -- l demo.7z
+kh run 7zz -- x -o./out demo.7z
+
+# 多线程压缩（正确性校验）
+kh run 7zz -- a -t7z -m0=lzma2 -mx=5 -mmt=4 mt.7z README.md
+kh run 7zz -- t mt.7z
+# 预期输出：Everything is Ok, 退出码 0</pre>
+<p><strong>Docker 辅助工具</strong>（产物位于主机的 <code>.tmp/kh-out/</code> 下）：</p>
+<pre>./scripts/docker-7zz.sh --help
+./scripts/docker-7zz.sh a /Volumes/linux/out/demo.7z /Volumes/linux/src/README.md
+ls -lh .tmp/kh-out/demo.7z
+
+KAKEHASHI_HYPERCALL=1 ./scripts/docker-7zz.sh a -t7z -m0=lzma2 -mx=5 -mmt=4 \
+  /Volumes/linux/out/mt.7z /Volumes/linux/src/README.md
+./scripts/docker-7zz.sh t /Volumes/linux/out/mt.7z</pre>
+<h3>curl</h3>
+<pre># Banner (G1)
+kh run curl -- --version
+
+# HTTP GET → file (G3 / G5). Parents for -o are created when missing.
+kh run curl -- -sS -o .tmp/kh-out/body http://example.com/
+# expect: exit 0, ~559 bytes, HTML contains &quot;Example Domain&quot;
+wc -c .tmp/kh-out/body
+head -c 80 .tmp/kh-out/body; echo
+
+# HTTP to stdout
+kh run curl -- -sS http://example.com/ | head -c 80; echo
+
+# HTTPS GET (G4) — OpenSSL + bottle CA (from host or curl.se download)
+kh run curl -- -sS -o .tmp/kh-out/https-body https://example.com/
+wc -c .tmp/kh-out/https-body
+
+# Negative: bad / self-signed cert must fail (rc ≠ 0)
+kh run curl -- -sS -o /dev/null https://self-signed.badssl.com/; echo exit:$?</pre>
+<p><strong>Docker 辅助工具:</strong></p>
+<pre>./scripts/docker-curl.sh --version
+./scripts/docker-curl.sh -sS -o /Volumes/linux/out/body http://example.com/
+./scripts/docker-curl.sh -sS -o /Volumes/linux/out/https-body https://example.com/
+ls -lh .tmp/kh-out/body .tmp/kh-out/https-body
+
+# Trace-first probe logs → .tmp/kh-curl-probe/
+./scripts/docker-curl-probe.sh --version
+
+# Option matrix (large tiers) → .tmp/kh-curl-options/
+./scripts/docker-curl-options.sh tier1
+./scripts/docker-curl-options.sh tier9-10
+./scripts/docker-curl-options.sh all          # tier1..10</pre>
+<p>多次运行时出现的无害信息：</p>
+<ul>
+<li><code>kh: open fail ENOENT(openat) path=/etc/ssl/openssl.cnf</code> — OpenSSL 可选配置；HTTP/HTTPS 仍可通过种子 CA 包正常工作。</li>
+<li><code>WARN … skip dylib … Security/CoreFoundation</code> — Apple 框架未在 bottle 中；软存根覆盖了加载路径。</li>
+<li><code>unresolved strong symbol; bound to named missing trampoline</code> — 符号在正常路径上未被命中。</li>
+</ul>
+<p>详情和门控: <a href="https://github.com/wie-project/kakehashi/blob/main/docs/curl.md" target="_blank" rel="noopener nofollow"><code>docs/curl.md</code></a>.</p>
+<h3>同样通过</h3>
+<table>
+<thead>
+<tr>
+<th>测试项</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Clang / fixture probes</td>
+<td><code>tests/clang-probe/</code>, <code>tests/fixtures/</code></td>
+</tr>
+<tr>
+<td>多线程 <code>7zz -mmt=4</code></td>
+<td>Docker + UTM</td>
+</tr>
+<tr>
+<td>Bottle + freestanding <code>libSystem</code></td>
+<td><code>kh bottle ensure</code> 嵌入 dylib</td>
+</tr>
+<tr>
+<td>单元测试 + clippy</td>
+<td><code>cargo test</code> / <code>clippy</code> workspace (excl. <code>kh-libsystem</code>)</td>
+</tr>
+</tbody>
+</table>
+<h3>暂不作为产品功能声明</h3>
+<p>完整的功能集（POST 请求体、代理、HTTP/3 端到端、所有协议）、真正的 Apple Security.framework、<code>git</code> / 命令行工具、图形界面、代码签名。下一个产品组件：
+通过 <code>kh install xcode-tools</code> 安装 <strong>git</strong> — 参见 <a href="https://github.com/wie-project/kakehashi/blob/main/docs/git.md" target="_blank" rel="noopener nofollow"><code>docs/git.md</code></a>。</p>
+<h2>组件库</h2>
+<table>
+<thead>
+<tr>
+<th>组件库</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>kakehashi</code></strong></td>
+<td>二进制文件 <code>kh</code>（安装这个）</td>
+</tr>
+<tr>
+<td><code>kh-loader</code></td>
+<td>Mach-O 解析、映射、执行</td>
+</tr>
+<tr>
+<td><code>kh-runtime</code></td>
+<td>内存、陷阱、BSD 系统调用、沙瓶；内嵌独立的 <code>libSystem.B.dylib</code></td>
+</tr>
+<tr>
+<td><code>kh-libsystem</code></td>
+<td>该动态库的源码（仅限 <code>aarch64-apple-darwin</code>；不是 Linux 主机组件库）</td>
+</tr>
+</tbody>
+</table>
+<p>访客端的动态库位于 <code>crates/kh-runtime/resources/libSystem.B.dylib</code>，
+并通过 <code>include_bytes!</code> 编译到运行时中。发布 <code>kh-runtime</code>
+时会包含该动态库；最终用户无需单独下载。</p>
+<h2>要求</h2>
+<ul>
+<li>Rust 1.88+</li>
+<li>运行 <code>kh run</code> / <code>kh trace</code> 需要 <strong>Linux aarch64</strong></li>
+<li>页面大小：<strong>4 KiB</strong>（容器）和 <strong>16 KiB</strong>（Asahi 级别）</li>
+<li>可选：<code>curl</code>/<code>wget</code> + <code>tar</code> 用于 <code>kh install 7zip</code> / <code>kh install curl</code></li>
+</ul>
+<h2>安装</h2>
+<pre>cargo install kakehashi
+# 或从源码安装：cargo install --path crates/kh-cli
+
+kh bottle ensure
+kh install 7zip
+kh install curl</pre>
+<h3>沙瓶布局</h3>
+<p>默认根目录：<code>~/.local/share/kakehashi/bottle/</code>（可通过
+<code>KAKEHASHI_DATA_DIR</code> / <code>KAKEHASHI_ROOT</code> 覆盖）。</p>
+<table>
+<thead>
+<tr>
+<th>主机</th>
+<th>访客端</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>…/bottle/</code></td>
+<td><code>/</code></td>
+</tr>
+<tr>
+<td><code>…/usr/local/bin/7zz</code></td>
+<td><code>/usr/local/bin/7zz</code></td>
+</tr>
+<tr>
+<td><code>…/usr/local/bin/curl</code></td>
+<td><code>/usr/local/bin/curl</code></td>
+</tr>
+<tr>
+<td><code>…/usr/lib/libSystem.B.dylib</code></td>
+<td><code>/usr/lib/libSystem.B.dylib</code></td>
+</tr>
+<tr>
+<td><code>…/private/etc/ssl/cert.pem</code></td>
+<td><code>/etc/ssl/cert.pem</code>（主机 CA 或下载的 Mozilla 证书）</td>
+</tr>
+<tr>
+<td><code>…/Volumes/linux/…</code></td>
+<td><code>/Volumes/linux/…</code> → 主机文件系统</td>
+</tr>
+</tbody>
+</table>
+<h2>性能（如实说明）</h2>
+<p>Kakehashi 在 CPU 上<strong>原生</strong>运行客户机代码。性能损耗主要来自<strong>系统调用边界</strong>（TLS 切换、备用栈、NEON 保存/恢复、Rust 分发）乘以客户机调用频率 —— 而非指令模拟器。</p>
+<h3>实测性能差距</h3>
+<p>在 Ubuntu aarch64 裸机环境（UTM）上，多文件 <code>7zz</code> 压缩包
+（<code>-t7z -m0=lzma2 -mx=5 -mmt=4</code>，约 8k 文件 / 240 MiB 目录树）：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>原生 Linux <code>7zz</code></th>
+<th>通过 <code>kh</code> 运行的 Darwin <code>7zz</code></th>
+<th>性能比</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>总耗时</td>
+<td>约 22.5 秒</td>
+<td>约 118 秒</td>
+<td><strong>约 ×5.2</strong></td>
+</tr>
+</tbody>
+</table>
+<p>在压缩密集型、少量文件的场景下，差距通常更小（约 ×1.1–1.2）。多文件场景的大幅性能差距主要源于<strong>路径遍历 + 每次系统调用边界</strong>，而非“LZMA 算法错误”。</p>
+<p>默认情况下所有客户机线程都启用超级调用。调试时可设置 <code>KAKEHASHI_HYPERCALL=0</code> 禁用（仅残留 <code>svc</code>→<code>brk</code> / SIGTRAP 开销）。</p>
+<h3>为何 ×5 性能比在 CI 中仍有价值</h3>
+<p>CI 的产品目标并非“达到原生 macOS 速度”，而是<strong>在廉价的 Linux aarch64 运行器上运行 Darwin CLI/工具</strong>，替代稀缺昂贵的 macOS 资源。</p>
+<p><strong>GitHub Actions 托管运行器</strong>（私有仓库超额费率，美元/分钟；详见 <a href="https://docs.github.com/en/billing/reference/actions-runner-pricing" target="_blank" rel="noopener nofollow">Actions 运行器定价</a>）：</p>
+<table>
+<thead>
+<tr>
+<th>运行器类型</th>
+<th>每分钟费率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Linux 2核 arm64</td>
+<td><strong>$0.005</strong></td>
+</tr>
+<tr>
+<td>Linux 2核 x64</td>
+<td>$0.006</td>
+</tr>
+<tr>
+<td>macOS 3–4核（M1/Intel）</td>
+<td><strong>$0.062</strong></td>
+</tr>
+<tr>
+<td>macOS 大型实例（如 12核 / M2 Pro）</td>
+<td>$0.077–$0.102</td>
+</tr>
+</tbody>
+</table>
+<p>不考虑实际运行时间差异，macOS 的标准费率已是 Linux arm64 的<strong>10–12倍</strong>。即便作业在 Linux arm64 的 <code>kh</code> 环境下比 macOS 运行器<strong>慢5倍</strong>，计费成本仍可能更低，因为 macOS 每分钟费用贵一个数量级（示例：5 × $0.005 ≈ $0.025 对比 1 × $0.062）。公共仓库免费分钟数和自托管 Linux 会进一步放大优势；macOS 托管资源也常排队更久，且在 GitLab SaaS 中需 Premium/Ultimate 版本或 beta 权限。</p>
+<p><strong>macOS 运行器仍占优的场景：</strong>GUI 应用、代码签名/公证、Xcode UI 测试，或任何非纯 CLI Darwin 二进制文件（依赖完整 <code>libSystem</code>）的工作负载。</p>
+<p><strong>关注门，而不是长凳：</strong> CI 的正确性是 <code>cargo test</code> / 冒烟测试 / <code>7zz -mmt=4</code>，
+而不是“匹配原生挂钟时间”。性能工作在
+<a href="https://github.com/wie-project/kakehashi/blob/main/docs/roadmap.md" target="_blank" rel="noopener nofollow"><code>docs/roadmap.md</code></a> 中跟踪。</p>
+<h2>快速入门 (Docker / Apple Silicon 上的 Colima)</h2>
+<pre>docker build -t kakehashi:dev -f Dockerfile.dev .
+docker run --rm -v &quot;$PWD&quot;:/src -w /src kakehashi:dev \
+  cargo test --workspace --exclude kh-libsystem
+
+# 完整冒烟测试 (构建 + clippy + 测试 + 微型运行)
+./scripts/docker-smoke.sh</pre>
+<h2>构建</h2>
+<pre>cargo build -p kakehashi --release
+cargo test --workspace --exclude kh-libsystem
+cargo clippy --workspace --exclude kh-libsystem --all-targets -- -D warnings
+
+# 维护者：在 freestanding ABI 更改后刷新嵌入文件
+cargo build -p kh-libsystem --release --target aarch64-apple-darwin
+./scripts/stage-libsystem.sh   # → crates/kh-runtime/resources/libSystem.B.dylib</pre>
+<p><code>libSystem</code> 发现： <code>--libsystem</code> → <code>KAKEHASHI_LIBSYSTEM</code> → <code>kh</code> 旁边的路径 → 
+crate <code>resources/</code> → <strong>嵌入</strong>到 <code>kh-runtime</code> 中的字节。</p>
+<h2>测试映射</h2>
+<table>
+<thead>
+<tr>
+<th>目标</th>
+<th>命令</th>
+<th>产物</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>单元测试</td>
+<td><code>cargo test --workspace --exclude kh-libsystem</code></td>
+<td>终端</td>
+</tr>
+<tr>
+<td>Docker 冒烟测试</td>
+<td><code>./scripts/docker-smoke.sh</code></td>
+<td>以 <code>smoke ok</code> 结尾</td>
+</tr>
+<tr>
+<td>测试固件</td>
+<td><code>kh run --expect-code … tests/fixtures/…</code></td>
+<td>参见 <code>tests/fixtures/README.md</code></td>
+</tr>
+<tr>
+<td>Clang 探测</td>
+<td><code>kh run --root tests/fixtures/bottle tests/clang-probe/puts_hello</code></td>
+<td>stdout <code>hello</code></td>
+</tr>
+<tr>
+<td>真实的 Darwin <code>7zz</code></td>
+<td><code>./scripts/docker-7zz.sh …</code></td>
+<td>主机 <code>.tmp/kh-out/</code></td>
+</tr>
+<tr>
+<td>真实的 Darwin <code>curl</code></td>
+<td><code>./scripts/docker-curl.sh …</code></td>
+<td>主机 <code>.tmp/kh-out/</code>; 探测 → <code>.tmp/kh-curl-probe/</code></td>
+</tr>
+<tr>
+<td>公平的 CPU 基准测试</td>
+<td><code>./scripts/bench-fair-local.sh</code></td>
+<td>主机 <code>.tmp/kh-bench-fair/</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>.tmp/</code>, <code>.kh/</code>, 和 <code>target/</code> 都被 git 忽略了。</p>
+<h3>客户机路径 ↔ 主机路径 (Docker 辅助工具)</h3>
+<p>Bottle 将 Linux 文件系统桥接为 <code>/Volumes/linux/…</code>：</p>
+<table>
+<thead>
+<tr>
+<th>访客路径</th>
+<th>主机</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/Volumes/linux/src/README.md</code></td>
+<td><code>&lt;repo&gt;/README.md</code></td>
+</tr>
+<tr>
+<td><code>/Volumes/linux/out/demo.7z</code></td>
+<td><code>&lt;repo&gt;/.tmp/kh-out/demo.7z</code> (持久化存储；<code>docker-7zz.sh</code> 的默认输出位置)</td>
+</tr>
+<tr>
+<td><code>/Volumes/linux/tmp/…</code></td>
+<td>容器内的 <code>/tmp/…</code> — 在执行 <code>docker run --rm</code> 后会<strong>被清除</strong></td>
+</tr>
+</tbody>
+</table>
+<h2>脚本</h2>
+<table>
+<thead>
+<tr>
+<th>脚本</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>scripts/stage-libsystem.sh</code></td>
+<td>构建产品 → <code>crates/kh-runtime/resources/</code></td>
+</tr>
+<tr>
+<td><code>scripts/install-linux.sh</code></td>
+<td>本地构建与安装 <code>kh</code> + 执行 <code>bottle ensure</code></td>
+</tr>
+<tr>
+<td><code>scripts/docker-smoke.sh</code></td>
+<td>在 <code>Dockerfile</code> 镜像内执行冒烟测试套件</td>
+</tr>
+<tr>
+<td><code>scripts/docker-7zz.sh</code></td>
+<arg_value>
+</tr>
+<tr>
+<td><code>scripts/docker-curl.sh</code></td>
+<td>在 <code>kh</code> 环境下运行 Darwin 版的 <code>curl</code> (模式与 <code>docker-7zz</code> 相同)</td>
+</tr>
+<tr>
+<td><code>scripts/docker-curl-probe.sh</code></td>
+<td><code>KH_CURL_PROBE=1</code> 的封装脚本 (日志输出至 <code>.tmp/kh-curl-probe</code>)</td>
+</tr>
+<tr>
+<td><code>scripts/docker-curl-options.sh</code></td>
+<td>分层的 curl 标志冒烟测试 (<code>tier1</code>…<code>tier10</code>, <code>tier9-10</code>, <code>all</code> → <code>.tmp/kh-curl-options</code>)</td>
+</tr>
+<tr>
+<td><code>scripts/docker-git.sh</code></td>
+<td>在 <code>kh</env> 环境下运行来自命令行工具 (CLT) 的 Apple <code>git</code> (包含 swscan + <code>.kh/data</code> 缓存)</td>
+</tr>
+<tr>
+<td><code>scripts/bench-fair-local.sh</code></td>
+<td>原生压缩 vs kh 压缩性能对比 (测试产物 → <code>.tmp/kh-bench-fair</code>)</td>
+</tr>
+</tbody>
+</table>
+<h2>许可证</h2>
+<p>Apache License 2.0。参见 <a href="https://github.com/wie-project/kakehashi/blob/main/LICENSE.txt" target="_blank" rel="noopener nofollow"><code>LICENSE.txt</code></a> 和 <a href="https://github.com/wie-project/kakehashi/blob/main/NOTICE" target="_blank" rel="noopener nofollow"><code>NOTICE</code></a>。</p>
+<p>本项目<strong>并非</strong>衍生自 Darling。请不要使用任何专有的 Apple SDK 或二进制文件。</p></article>
+    <div class="dp-actions">
+      <a class="dp-btn pri" href="https://github.com/wie-project/kakehashi" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      <a class="dp-btn sec" href="https://news.ycombinator.com/item?id=49145937" target="_blank" rel="noopener"><i class="fa-brands fa-hacker-news"></i>HN 讨论</a>
+      <button type="button" class="dp-btn sec" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
+      <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
+    </div>
+    <nav class="dp-rel" aria-labelledby="dp-rel-h"><h2 id="dp-rel-h" class="dp-rel-h">相关动态</h2><ul><li><a href="7240f81abb0e.html"><span class="dp-rel-t">硅谷忽视的AI真正风险：量子计算与数据所有权问题</span><span class="dp-rel-m">都提到「API包装器」 · <time datetime="2026-07-30">2026-07-30</time></span></a></li><li><a href="51d4c308f3f4.html"><span class="dp-rel-t">llm 0.32rc2</span><span class="dp-rel-m">都提到「API包装器」 · <time datetime="2026-07-30">2026-07-30</time></span></a></li><li><a href="329a99c34f6f.html"><span class="dp-rel-t">soluna 外挂 C 模块</span><span class="dp-rel-m">都提到「API包装器」 · <time datetime="2026-03-11">2026-03-11</time></span></a></li></ul></nav>
+    <p class="dp-note">本页由句子互动动态管线自动生成，聚合内容版权归各来源所有；如来源方希望调整或移除收录，请通过官网联系我们。</p>
+  </div>
+</main>
+<div id="site-footer"></div>
+<script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "Show HN: Kakehashi – Experimental userspace to run macOS binaries on Linux ARM"};</script>
+<script src="../../assets/site.js?v=f57b1388"></script>
+<script>
+(function(){var b=document.getElementById('dpLang');if(!b)return;
+var en=document.getElementById('dpBodyOrig'),zh=document.getElementById('dpBodyZh');
+b.addEventListener('click',function(){var on=zh.hidden;zh.hidden=!on;en.hidden=on;
+b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';});})();
+</script>
+</body>
+</html>

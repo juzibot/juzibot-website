@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>smevals - a small eval suite for evaluating models, prompts, and harnesses - 句子·动态</title>
+<meta name="description" content="smevals 是一个新工具，用于在不同模型配置上运行小型评估套件并评分，帮助回答关于不同模型能力的问题。" />
+<meta name="robots" content="noindex,follow" />
+<link rel="canonical" href="https://simonwillison.net/2026/Jul/31/smevals/#atom-everything" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="smevals - a small eval suite for evaluating models, prompts, and harnesses" />
+<meta property="og:description" content="smevals 是一个新工具，用于在不同模型配置上运行小型评估套件并评分，帮助回答关于不同模型能力的问题。" />
+<meta property="og:url" content="https://simonwillison.net/2026/Jul/31/smevals/#atom-everything" />
+<meta property="og:site_name" content="句子互动" />
+<meta name="twitter:card" content="summary" />
+
+<link rel="icon" href="../../logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../../assets/site.css?v=72b48ba4" />
+<style>
+  /* 静态兜底导航: site.js 一执行就被 outerHTML 连同占位一起换掉, 访客几乎看不到它。
+     不隐藏也不 noscript 包裹——那会让爬虫拿不到, 而它存在的唯一理由就是给不跑 JS 的爬虫看。
+     样式做朴素一行, 万一 site.js 加载失败, 这排链接本身就是可用的降级导航。 */
+  .nav-fb{display:flex;flex-wrap:wrap;gap:6px 16px;padding:12px clamp(16px,4vw,40px);
+    border-bottom:1px solid var(--line-2);font-size:12.5px}
+  .nav-fb a{color:var(--ink-3);text-decoration:none}
+  .nav-fb a:hover{color:var(--blue)}
+
+  .dp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
+  .dp-wrap{max-width:760px;margin:0 auto}
+  .dp-crumb{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:12.5px;color:var(--ink-3);margin-bottom:20px;min-width:0}
+  .dp-crumb a{color:var(--ink-3);text-decoration:none}
+  .dp-crumb a:hover{color:var(--blue)}
+  .dp-crumb i{font-style:normal;opacity:.5;font-size:11px}
+  .dp-crumb [aria-current]{color:var(--ink-2);font-weight:650;overflow-wrap:anywhere}
+  .dp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
+  .dp-back:hover{color:var(--blue)}
+  .dp-meta{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:14px}
+  .dp-srcb{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:750;color:var(--sc,var(--blue))}
+  .s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
+  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-voices{--sc:#9333EA}
+  .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
+  .dp-cat{display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ink-3);background:#F6F7FB;border:1px solid var(--line-2);border-radius:6px;padding:2px 8px}
+  .dp-read{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  /* 相关动态: 读完一篇之后的出口。此前详情页之间零链接, 读者只能回列表页重新扫,
+     爬虫也只能靠 JS 驱动的列表页做枢纽。每条都带「为什么相关」, 不做无理由的推荐。 */
+  .dp-rel{margin-top:40px;padding-top:26px;border-top:1px solid var(--line-2)}
+  .dp-rel-h{font-size:14px;font-weight:750;color:var(--ink-2);margin:0 0 14px}
+  .dp-rel ul{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+  .dp-rel a{display:block;padding:10px 12px;margin:0 -12px;border-radius:8px;text-decoration:none;transition:background .2s var(--ease)}
+  .dp-rel a:hover{background:#F6F7FB}
+  .dp-rel-t{display:block;font-size:14px;font-weight:650;color:var(--ink-1);line-height:1.5}
+  .dp-rel a:hover .dp-rel-t{color:var(--blue)}
+  .dp-rel-m{display:block;margin-top:3px;font-size:11.5px;color:var(--ink-3)}
+  .dp-read i{font-size:10px;opacity:.7}
+  .dp-date{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-3)}
+  .dp-title{font-size:clamp(24px,3.2vw,34px);font-weight:850;letter-spacing:-.03em;line-height:1.32;word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance;margin-bottom:10px}
+  .dp-orig{font-size:13px;color:var(--ink-3);overflow-wrap:anywhere;margin-bottom:8px}
+  .dp-by{font-size:12.5px;font-weight:600;color:var(--ink-3);margin-bottom:18px}
+  .dp-notice{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:1.7;color:var(--ink-2);background:#F6F7FB;border:1px solid var(--line-2);border-radius:10px;padding:10px 14px;margin-bottom:22px}
+  .dp-notice i{color:var(--blue);margin-top:4px;flex:0 0 auto}
+  .dp-notice a{color:var(--blue);font-weight:700;overflow-wrap:anywhere}
+  .dp-quip{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.66;font-weight:600;color:var(--blue-deep);background:var(--blue-50);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:18px}
+  .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
+  .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
+  .dp-brief b{display:flex;align-items:baseline;gap:8px;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  /* AI 产出物的就地标注(2026-07-30): 概念页的定义早就在页尾注明「由 AI 加工层生成、编辑
+     维护」, 而详情页的简报与锐评一直没标 —— 读者会把那句锐评当成编辑观点。283 页都有这两块,
+     不标就是 283 次误导。放在区块内而不是只放页尾: 页尾声明读者多半划不到, 而标注要落在
+     人实际阅读的位置才有意义。样式压到最小, 不抢正文。 */
+  .dp-brief b em,.dp-quip em{font-style:normal;font-family:var(--mono);font-size:10px;font-weight:600;
+    letter-spacing:0;color:var(--ink-3);white-space:nowrap}
+  .dp-brief b em{margin-left:auto}
+  .dp-quip em{display:block;margin-top:5px;opacity:.85}
+  /* 长文目录(≥3 小标题且正文 ≥2000 字才出): <details> 原生可折叠, 不用一行 JS。
+     默认 open —— 目录的用处是先看清结构再决定读哪段, 收起来就失去意义; 想收也一点即收。 */
+  .dp-toc{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:24px;background:#FBFCFF}
+  .dp-toc summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--ink-2);display:flex;align-items:center;gap:7px;list-style:none}
+  .dp-toc summary::-webkit-details-marker{display:none}
+  .dp-toc summary i{font-size:11px;color:var(--blue)}
+  .dp-toc summary span{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-3);margin-left:auto}
+  .dp-toc ol{list-style:none;margin:10px 0 2px;padding:0;counter-reset:toc}
+  .dp-toc li{counter-increment:toc;font-size:13px;line-height:1.7;padding:2px 0}
+  .dp-toc li::before{content:counter(toc) ". ";font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .dp-toc li.lv3{padding-left:16px}
+  .dp-toc li.lv4{padding-left:32px}
+  .dp-toc a{color:var(--ink-2);text-decoration:none;overflow-wrap:anywhere}
+  .dp-toc a:hover{color:var(--blue)}
+  /* 锚点跳转时标题别贴到视口顶端(站点顶栏会盖住) */
+  .dp-body h2[id],.dp-body h3[id],.dp-body h4[id]{scroll-margin-top:76px}
+  .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
+  .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
+  .dp-body p{margin:0 0 1.05em}
+  .dp-body img{max-width:100%;height:auto;border-radius:10px;margin:.4em 0}
+  .dp-body pre{background:#0F172A;color:#E2E8F0;font-family:var(--mono);font-size:12.5px;line-height:1.7;padding:14px 16px;border-radius:10px;overflow-x:auto;margin:0 0 1.1em}
+  .dp-body code{font-family:var(--mono);font-size:.92em}
+  .dp-body :not(pre)>code{background:#F1F5F9;padding:1px 5px;border-radius:5px}
+  .dp-body blockquote{border-left:3px solid var(--line);padding:2px 0 2px 14px;color:var(--ink-3);margin:0 0 1.05em}
+  .dp-body a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+  .dp-body ul,.dp-body ol{padding-left:1.5em;margin:0 0 1.05em}
+  .dp-body table{display:block;overflow-x:auto;border-collapse:collapse;margin:0 0 1.1em}
+  .dp-body td,.dp-body th{border:1px solid var(--line);padding:6px 10px;font-size:.92em}
+  .dp-excerpt{font-size:15px;line-height:1.9;color:var(--ink-2);border-left:3px solid var(--line);padding:2px 0 2px 16px;margin-bottom:8px}
+  .dp-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;padding-top:20px;border-top:1px solid var(--line-2)}
+  .dp-btn{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:750;border-radius:999px;padding:10px 20px;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+  .dp-btn.pri{background:var(--blue);color:#fff}
+  .dp-btn.pri:hover{background:var(--blue-deep)}
+  .dp-btn.sec{background:#fff;color:var(--ink-2);border:1px solid var(--line)}
+  .dp-btn.sec:hover{color:var(--blue);border-color:var(--blue)}
+  .dp-note{font-size:11.5px;line-height:1.7;color:var(--ink-3);margin-top:18px}
+  .dp-langbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+  .dp-lang{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:750;color:var(--blue);
+    background:var(--blue-50);border:1px solid var(--blue-100);border-radius:999px;padding:7px 14px;
+    transition:background .2s var(--ease),border-color .2s var(--ease)}
+  .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
+  .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div id="site-nav" class="nav-fb"><a href="../../index.html">句子互动</a><a href="../../products/miaodong.html">句子秒懂</a><a href="../../products/shouhu.html">句子守护</a><a href="../../products/canmou.html">句子问数</a><a href="../../products/dongxing.html">句子懂行</a><a href="../../products/miaohui.html">句子秒回</a><a href="../../products/cli.html">句子 CLI</a><a href="../../products/zhizao.html">句子制造</a><a href="../../fde.html">FDE</a><a href="../../enterprise.html">企业方案</a><a href="../../industries.html">行业</a><a href="../../about.html">关于我们</a><a href="../../news.html">动态</a></div>
+<main class="dp-main">
+  <div class="dp-wrap">
+    <nav class="dp-crumb" aria-label="面包屑"><a href="../../index.html">句子互动</a><i aria-hidden="true">›</i><a href="../../news.html">动态</a><i aria-hidden="true">›</i><span aria-current="page">smevals - a small eval suite for evaluat</span></nav>
+    <div class="dp-meta">
+      <span class="dp-srcb s-voices"><i class="fa-solid fa-feather"></i>大咖观点</span>
+      <span class="dp-cat">Simon Willison</span>
+      <time class="dp-date" datetime="2026-07-31">2026-07-31</time>
+      <span class="dp-read"><i class="fa-regular fa-clock"></i>约 6 分钟</span>
+    </div>
+    <h1 class="dp-title">smevals - a small eval suite for evaluating models, prompts, and harnesses</h1>
+    
+    <p class="dp-by">来源：Simon Willison · 大咖观点</p>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（Simon Willison · 大咖观点）所有 · <a href="https://simonwillison.net/2026/Jul/31/smevals/#atom-everything" target="_blank" rel="noopener">阅读原文</a></span></div>
+    
+    <div class="dp-brief"><b>简报<em>AI 加工层生成</em></b>smevals 是一个新工具，用于在不同模型配置上运行小型评估套件并评分，帮助回答关于不同模型能力的问题。</div>
+    <div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang"><i class="fa-solid fa-language"></i><span>翻译为中文</span></button><span class="dp-lang-note">中文由 AI 翻译，仅供参考</span></div><article class="dp-body" id="dpBodyOrig" lang="en"><p><strong><a href="https://primeradiant.com/blog/2026/smevals.html">smevals - a small eval suite for evaluating models, prompts, and harnesses</a></strong></p>
+I've been working with Jesse Vincent's <a href="https://primeradiant.com">Prime Radiant</a> applied AI research lab building out this evals framework to help answer questions about the capabilities of different models.</p>
+<p>The result is <strong><a href="https://github.com/prime-radiant-inc/smevals">smevals</a></strong>, a new tool for running small eval suites across different model configurations and grading the results.</p>
+<p>The <a href="https://primeradiant.com/blog/2026/smevals.html">blog entry</a> describes the tool in detail. Here's the 10 second version:</p>
+<ol>
+<li>Tell your coding agent to <code>run uvx smevals docs</code> to learn the tool (this outputs <a href="https://github.com/prime-radiant-inc/smevals/blob/main/README.md">the README</a>)</li>
+<li>Then tell it to build you an eval suite</li>
+</ol>
+<p>Once you've created an eval - which takes the form of a directory with some YAML files - you can run it against models like this:</p>
+<pre><code>uvx smevals run path-to-eval/ -m gpt-5.5 -m claude-opus-4.6
+</code></pre>
+<p>Runs are treated separately from grading operations - you can grade your runs (against your defined set of checks) using:</p>
+<pre><code>uvx smevals grade path-to-eval/
+</code></pre>
+<p>Then you can run a localhost web server to explore the results:</p>
+<pre><code>uvx smevals serve path-to-eval/
+</code></pre>
+<p>Or run the <code>smevals build</code> command to build that report as static HTML, which you can then host anywhere. Here's <a href="https://static.simonwillison.net/static/2026/smevals-haiku-build/#/haiku">an example</a> showing an eval suite I built to evaluate how well models can write haikus.</p>
+<p><img loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'" alt="Screenshot of an evaluation dashboard for a haiku-writing benchmark, testing whether models can reply with exactly three non-empty lines. A header describes the eval, with panels below showing a leaderboard ranking three GPT models by score, lists of recent runs and recent grades, tag pass rates, the two haiku prompts that were tested, and details of the graders used with a 0.8 pass threshold." src="https://static.simonwillison.net/static/2026/smevals-report.webp" /></p>
+<p>The most time-consuming part of this project was figuring out the vocabulary for it! Here's what I settled on, quoted from the announcement:</p>
+<blockquote>
+<ul>
+<li>An <strong>eval</strong> is a collection of challenges designed to answer a question about a model, for example, how good is that model at generating SVGs?</li>
+<li>Each eval is a collection of <strong>tasks</strong>. A task is a specific challenge, for example "Generate an SVG of a pelican riding a bicycle".</li>
+<li>When you run the eval you do so against one or more <strong>configs</strong>. Each config specifies a model to be evaluated, but may also include other parameters to test, such as different system prompts, model parameters, or agent harnesses.</li>
+<li>A <strong>run</strong> records what happened when a specific config was used to execute a specific task. A <strong>runner</strong> is the script that executes a run.</li>
+<li>Once you have collected one or more runs, you need to evaluate the results to see how well the model (or config) did. This is done by a <strong>grader</strong>, which produces a <strong>grade</strong>.</li>
+<li>Each grader runs a sequence of <strong>checks</strong>. These can be simple operations, like checking for a specific string in the output, or confirming that the output is valid XML. They can also be more complicated custom operations (implemented as scripts called <strong>checkers</strong>), including using other models to answer questions about the run.</li>
+</ul>
+</blockquote>
+<p>I've been trying to figure out an approach I like for evals for several years now. <code>smevals</code> is my third iteration on the idea and it feels right to me. I'm looking forward to expanding this more in the future, as well as pointing it at some of my own projects.
+
+
+    <p>Tags: <a href="https://simonwillison.net/tags/projects">projects</a>, <a href="https://simonwillison.net/tags/ai">ai</a>, <a href="https://simonwillison.net/tags/generative-ai">generative-ai</a>, <a href="https://simonwillison.net/tags/llms">llms</a>, <a href="https://simonwillison.net/tags/llm">llm</a>, <a href="https://simonwillison.net/tags/evals">evals</a>, <a href="https://simonwillison.net/tags/jesse-vincent">jesse-vincent</a></p></article><article class="dp-body" id="dpBodyZh" lang="zh-CN" hidden><p><strong><a href="https://primeradiant.com/blog/2026/smevals.html">smevals - 一个小型评估套件，用于评估模型、提示词和测试框架</a></strong></p>
+<p>我一直在与 Jesse Vincent 的 <a href="https://primeradiant.com">Prime Radiant</a> 应用人工智能研究实验室合作，共同构建这个评估框架，以帮助解答关于不同模型能力的问题。</p>
+<p>最终成果是 <strong><a href="https://github.com/prime-radiant-inc/smevals">smevals</a></strong>，一个用于在不同模型配置上运行小型评估套件并对结果进行评分的新工具。</p>
+<p>这篇<a href="https://primeradiant.com/blog/2026/smevals.html">博客文章</a>详细介绍了该工具。以下是十秒钟的速览版本：</p>
+<ol>
+<li>让你的编程代理执行 <code>run uvx smevals docs</code> 来学习这个工具（这会输出<a href="https://github.com/prime-radiant-inc/smevals/blob/main/README.md">README 文件</a>）</li>
+<li>然后让它为你构建一个评估套件</li>
+</ol>
+<p>一旦你创建了一个评估（它表现为一个包含一些 YAML 文件的目录），你就可以像这样用它来测试模型：</p>
+<pre><code>uvx smevals run path-to-eval/ -m gpt-5.5 -m claude-opus-4.6
+</code></pre>
+<p>运行操作与评分操作是分开的 - 你可以使用以下命令对你的运行结果进行评分（针对你定义的检查集）：</p>
+<pre><code>uvx smevals grade path-to-eval/
+</code></pre>
+<p>然后你可以运行一个本地网络服务器来探索结果：</p>
+<pre><code>uvx smevals serve path-to-eval/
+</code></pre>
+<p>或者运行 <code>smevals build</code> 命令将报告构建为静态 HTML 文件，然后你就可以在任何地方托管它。这是一个<a href="https://static.simonwillison.net/static/2026/smevals-haiku-build/#/haiku">示例</a>，展示了我构建的一个用于评估模型写俳句能力的评估套件。</p>
+<p><img loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'" alt="一个俳句写作基准的评估仪表盘截图，测试模型是否能回复恰好三行非空内容。一个标题描述了该评估，下方面板显示了按分数排名的三个 GPT 模型的排行榜、最近的运行和评分列表、标签通过率、测试过的两个俳句提示词，以及使用的评分器详情，通过阈值为 0.8。" src="https://static.simonwillison.net/static/2026/smevals-report.webp" /></p>
+<p>这个项目中耗时最长的部分是为它确定术语！以下是我最终确定的词汇，引自公告：</p>
+<blockquote>
+<ul>
+<li><strong>eval</strong> 是一系列挑战的集合，旨在回答关于模型的问题，例如，该模型生成 SVG 的能力有多强？</li>
+<li>每个 eval 都是一组<strong>任务</strong>。任务是一个具体的挑战，例如“生成一张鹈鹕骑自行车的 SVG 图片”。</li>
+<li>当你运行 eval 时，需要针对一个或多个<strong>配置</strong>进行。每个配置都指定了要评估的模型，但也可能包含其他要测试的参数，例如不同的系统提示、模型参数或代理工具。</li>
+<li><strong>运行</strong>记录了使用特定配置执行特定任务时发生的情况。<strong>运行器</strong>是执行运行的脚本。</li>
+<li>当你收集到一个或多个运行结果后，需要评估结果，以了解模型（或配置）的表现如何。这项工作由<strong>评分器</strong>完成，它会生成一个<strong>评分</strong>。</li>
+<li>每个评分器都会运行一系列<strong>检查</strong>。这些检查可以很简单，比如检查输出中是否包含特定字符串，或确认输出是否为有效的 XML。它们也可以是更复杂的自定义操作（作为名为<strong>检查器</strong>的脚本实现），包括使用其他模型来回答关于运行结果的问题。</li>
+</ul>
+</blockquote>
+<p>几年来，我一直在尝试寻找一种我喜欢的评估方法。<code>smevals</code>是我在这个想法上的第三次迭代，我觉得这次的感觉对了。我期待着未来能进一步扩展它，并将其应用于我自己的项目中。
+
+
+    <p>标签: <a href="https://simonwillison.net/tags/projects">projects</a>, <a href="https://simonwillison.net/tags/ai">ai</a>, <a href="https://simonwillison.net/tags/generative-ai">generative-ai</a>, <a href="https://simonwillison.net/tags/llms">llms</a>, <a href="https://simonwillison.net/tags/llm">llm</a>, <a href="https://simonwillison.net/tags/evals">evals</a>, <a href="https://simonwillison.net/tags/jesse-vincent">jesse-vincent</a></p></article>
+    <div class="dp-actions">
+      <a class="dp-btn pri" href="https://simonwillison.net/2026/Jul/31/smevals/#atom-everything" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      
+      <button type="button" class="dp-btn sec" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
+      <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
+    </div>
+    <nav class="dp-rel" aria-labelledby="dp-rel-h"><h2 id="dp-rel-h" class="dp-rel-h">相关动态</h2><ul><li><a href="c6d9f7ff2fbc.html"><span class="dp-rel-t">刚刚，阿里Qwen3.8-Max来了！冲进全球第一梯队，模型表现直逼Claude</span><span class="dp-rel-m">都提到「模型基准测试」 · <time datetime="2026-08-03">2026-08-03</time></span></a></li><li><a href="b5c67a88eeb4.html"><span class="dp-rel-t">Qwen3.8-Max模型发布，开创2.4T参数新标准</span><span class="dp-rel-m">都提到「模型基准测试」 · <time datetime="2026-08-03">2026-08-03</time></span></a></li><li><a href="6559b1d2432c.html"><span class="dp-rel-t">Google 牺牲了图片分辨率、编辑能力和准确性换取了 「它」 的极致性价比！</span><span class="dp-rel-m">都提到「模型基准测试」 · <time datetime="2026-08-03">2026-08-03</time></span></a></li><li><a href="565e3d66b2b1.html"><span class="dp-rel-t">DeepSeek-V4-Flash Update</span><span class="dp-rel-m">都提到「Agent能力」 · <time datetime="2026-07-31">2026-07-31</time></span></a></li></ul></nav>
+    <p class="dp-note">本页由句子互动动态管线自动生成，聚合内容版权归各来源所有；如来源方希望调整或移除收录，请通过官网联系我们。</p>
+  </div>
+</main>
+<div id="site-footer"></div>
+<script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "smevals - a small eval suite for evaluating models, prompts, and harnesses"};</script>
+<script src="../../assets/site.js?v=f57b1388"></script>
+<script>
+(function(){var b=document.getElementById('dpLang');if(!b)return;
+var en=document.getElementById('dpBodyOrig'),zh=document.getElementById('dpBodyZh');
+b.addEventListener('click',function(){var on=zh.hidden;zh.hidden=!on;en.hidden=on;
+b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';});})();
+</script>
+</body>
+</html>

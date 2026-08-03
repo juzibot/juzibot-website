@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>字节ToB变阵，一次新AI入口之争 - 句子·动态</title>
+<meta name="description" content="字节跳动整合飞书、豆包和火山引擎团队，将豆包从C端聊天机器人改造为嵌入企业工作流的B端AI助手，飞书成为关键桥梁。" />
+<meta name="robots" content="noindex,follow" />
+<link rel="canonical" href="https://www.tmtpost.com/8088903.html" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="字节ToB变阵，一次新AI入口之争" />
+<meta property="og:description" content="字节跳动整合飞书、豆包和火山引擎团队，将豆包从C端聊天机器人改造为嵌入企业工作流的B端AI助手，飞书成为关键桥梁。" />
+<meta property="og:url" content="https://www.tmtpost.com/8088903.html" />
+<meta property="og:site_name" content="句子互动" />
+<meta name="twitter:card" content="summary" />
+
+<link rel="icon" href="../../logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../../assets/site.css?v=72b48ba4" />
+<style>
+  /* 静态兜底导航: site.js 一执行就被 outerHTML 连同占位一起换掉, 访客几乎看不到它。
+     不隐藏也不 noscript 包裹——那会让爬虫拿不到, 而它存在的唯一理由就是给不跑 JS 的爬虫看。
+     样式做朴素一行, 万一 site.js 加载失败, 这排链接本身就是可用的降级导航。 */
+  .nav-fb{display:flex;flex-wrap:wrap;gap:6px 16px;padding:12px clamp(16px,4vw,40px);
+    border-bottom:1px solid var(--line-2);font-size:12.5px}
+  .nav-fb a{color:var(--ink-3);text-decoration:none}
+  .nav-fb a:hover{color:var(--blue)}
+
+  .dp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
+  .dp-wrap{max-width:760px;margin:0 auto}
+  .dp-crumb{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:12.5px;color:var(--ink-3);margin-bottom:20px;min-width:0}
+  .dp-crumb a{color:var(--ink-3);text-decoration:none}
+  .dp-crumb a:hover{color:var(--blue)}
+  .dp-crumb i{font-style:normal;opacity:.5;font-size:11px}
+  .dp-crumb [aria-current]{color:var(--ink-2);font-weight:650;overflow-wrap:anywhere}
+  .dp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
+  .dp-back:hover{color:var(--blue)}
+  .dp-meta{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:14px}
+  .dp-srcb{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:750;color:var(--sc,var(--blue))}
+  .s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
+  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-voices{--sc:#9333EA}
+  .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
+  .dp-cat{display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ink-3);background:#F6F7FB;border:1px solid var(--line-2);border-radius:6px;padding:2px 8px}
+  .dp-read{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  /* 相关动态: 读完一篇之后的出口。此前详情页之间零链接, 读者只能回列表页重新扫,
+     爬虫也只能靠 JS 驱动的列表页做枢纽。每条都带「为什么相关」, 不做无理由的推荐。 */
+  .dp-rel{margin-top:40px;padding-top:26px;border-top:1px solid var(--line-2)}
+  .dp-rel-h{font-size:14px;font-weight:750;color:var(--ink-2);margin:0 0 14px}
+  .dp-rel ul{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+  .dp-rel a{display:block;padding:10px 12px;margin:0 -12px;border-radius:8px;text-decoration:none;transition:background .2s var(--ease)}
+  .dp-rel a:hover{background:#F6F7FB}
+  .dp-rel-t{display:block;font-size:14px;font-weight:650;color:var(--ink-1);line-height:1.5}
+  .dp-rel a:hover .dp-rel-t{color:var(--blue)}
+  .dp-rel-m{display:block;margin-top:3px;font-size:11.5px;color:var(--ink-3)}
+  .dp-read i{font-size:10px;opacity:.7}
+  .dp-date{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-3)}
+  .dp-title{font-size:clamp(24px,3.2vw,34px);font-weight:850;letter-spacing:-.03em;line-height:1.32;word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance;margin-bottom:10px}
+  .dp-orig{font-size:13px;color:var(--ink-3);overflow-wrap:anywhere;margin-bottom:8px}
+  .dp-by{font-size:12.5px;font-weight:600;color:var(--ink-3);margin-bottom:18px}
+  .dp-notice{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:1.7;color:var(--ink-2);background:#F6F7FB;border:1px solid var(--line-2);border-radius:10px;padding:10px 14px;margin-bottom:22px}
+  .dp-notice i{color:var(--blue);margin-top:4px;flex:0 0 auto}
+  .dp-notice a{color:var(--blue);font-weight:700;overflow-wrap:anywhere}
+  .dp-quip{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.66;font-weight:600;color:var(--blue-deep);background:var(--blue-50);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:18px}
+  .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
+  .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
+  .dp-brief b{display:flex;align-items:baseline;gap:8px;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  /* AI 产出物的就地标注(2026-07-30): 概念页的定义早就在页尾注明「由 AI 加工层生成、编辑
+     维护」, 而详情页的简报与锐评一直没标 —— 读者会把那句锐评当成编辑观点。283 页都有这两块,
+     不标就是 283 次误导。放在区块内而不是只放页尾: 页尾声明读者多半划不到, 而标注要落在
+     人实际阅读的位置才有意义。样式压到最小, 不抢正文。 */
+  .dp-brief b em,.dp-quip em{font-style:normal;font-family:var(--mono);font-size:10px;font-weight:600;
+    letter-spacing:0;color:var(--ink-3);white-space:nowrap}
+  .dp-brief b em{margin-left:auto}
+  .dp-quip em{display:block;margin-top:5px;opacity:.85}
+  /* 长文目录(≥3 小标题且正文 ≥2000 字才出): <details> 原生可折叠, 不用一行 JS。
+     默认 open —— 目录的用处是先看清结构再决定读哪段, 收起来就失去意义; 想收也一点即收。 */
+  .dp-toc{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:24px;background:#FBFCFF}
+  .dp-toc summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--ink-2);display:flex;align-items:center;gap:7px;list-style:none}
+  .dp-toc summary::-webkit-details-marker{display:none}
+  .dp-toc summary i{font-size:11px;color:var(--blue)}
+  .dp-toc summary span{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-3);margin-left:auto}
+  .dp-toc ol{list-style:none;margin:10px 0 2px;padding:0;counter-reset:toc}
+  .dp-toc li{counter-increment:toc;font-size:13px;line-height:1.7;padding:2px 0}
+  .dp-toc li::before{content:counter(toc) ". ";font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .dp-toc li.lv3{padding-left:16px}
+  .dp-toc li.lv4{padding-left:32px}
+  .dp-toc a{color:var(--ink-2);text-decoration:none;overflow-wrap:anywhere}
+  .dp-toc a:hover{color:var(--blue)}
+  /* 锚点跳转时标题别贴到视口顶端(站点顶栏会盖住) */
+  .dp-body h2[id],.dp-body h3[id],.dp-body h4[id]{scroll-margin-top:76px}
+  .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
+  .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
+  .dp-body p{margin:0 0 1.05em}
+  .dp-body img{max-width:100%;height:auto;border-radius:10px;margin:.4em 0}
+  .dp-body pre{background:#0F172A;color:#E2E8F0;font-family:var(--mono);font-size:12.5px;line-height:1.7;padding:14px 16px;border-radius:10px;overflow-x:auto;margin:0 0 1.1em}
+  .dp-body code{font-family:var(--mono);font-size:.92em}
+  .dp-body :not(pre)>code{background:#F1F5F9;padding:1px 5px;border-radius:5px}
+  .dp-body blockquote{border-left:3px solid var(--line);padding:2px 0 2px 14px;color:var(--ink-3);margin:0 0 1.05em}
+  .dp-body a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+  .dp-body ul,.dp-body ol{padding-left:1.5em;margin:0 0 1.05em}
+  .dp-body table{display:block;overflow-x:auto;border-collapse:collapse;margin:0 0 1.1em}
+  .dp-body td,.dp-body th{border:1px solid var(--line);padding:6px 10px;font-size:.92em}
+  .dp-excerpt{font-size:15px;line-height:1.9;color:var(--ink-2);border-left:3px solid var(--line);padding:2px 0 2px 16px;margin-bottom:8px}
+  .dp-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;padding-top:20px;border-top:1px solid var(--line-2)}
+  .dp-btn{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:750;border-radius:999px;padding:10px 20px;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+  .dp-btn.pri{background:var(--blue);color:#fff}
+  .dp-btn.pri:hover{background:var(--blue-deep)}
+  .dp-btn.sec{background:#fff;color:var(--ink-2);border:1px solid var(--line)}
+  .dp-btn.sec:hover{color:var(--blue);border-color:var(--blue)}
+  .dp-note{font-size:11.5px;line-height:1.7;color:var(--ink-3);margin-top:18px}
+  .dp-langbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+  .dp-lang{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:750;color:var(--blue);
+    background:var(--blue-50);border:1px solid var(--blue-100);border-radius:999px;padding:7px 14px;
+    transition:background .2s var(--ease),border-color .2s var(--ease)}
+  .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
+  .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div id="site-nav" class="nav-fb"><a href="../../index.html">句子互动</a><a href="../../products/miaodong.html">句子秒懂</a><a href="../../products/shouhu.html">句子守护</a><a href="../../products/canmou.html">句子问数</a><a href="../../products/dongxing.html">句子懂行</a><a href="../../products/miaohui.html">句子秒回</a><a href="../../products/cli.html">句子 CLI</a><a href="../../products/zhizao.html">句子制造</a><a href="../../fde.html">FDE</a><a href="../../enterprise.html">企业方案</a><a href="../../industries.html">行业</a><a href="../../about.html">关于我们</a><a href="../../news.html">动态</a></div>
+<main class="dp-main">
+  <div class="dp-wrap">
+    <nav class="dp-crumb" aria-label="面包屑"><a href="../../index.html">句子互动</a><i aria-hidden="true">›</i><a href="../../news.html">动态</a><i aria-hidden="true">›</i><span aria-current="page">字节ToB变阵，一次新AI入口之争</span></nav>
+    <div class="dp-meta">
+      <span class="dp-srcb s-industry"><i class="fa-solid fa-rss"></i>行业动态</span>
+      <span class="dp-cat">钛媒体</span>
+      <time class="dp-date" datetime="2026-08-03">2026-08-03</time>
+      <span class="dp-read"><i class="fa-regular fa-clock"></i>约 11 分钟</span>
+    </div>
+    <h1 class="dp-title">字节ToB变阵，一次新AI入口之争</h1>
+    
+    <p class="dp-by">来源：钛媒体 · 行业动态</p>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（钛媒体 · 行业动态）所有 · <a href="https://www.tmtpost.com/8088903.html" target="_blank" rel="noopener">阅读原文</a></span></div>
+    
+    <div class="dp-brief"><b>简报<em>AI 加工层生成</em></b>字节跳动整合飞书、豆包和火山引擎团队，将豆包从C端聊天机器人改造为嵌入企业工作流的B端AI助手，飞书成为关键桥梁。</div>
+    <details class="dp-toc" open><summary><i class="fa-solid fa-list-ul"></i>目录<span>3 节</span></summary><ol><li class="lv2"><a href="#h1">字节AI ToB变阵：产品归产品，商业归商业</a></li><li class="lv2"><a href="#h2">飞书，给豆包提供最稀缺的东西</a></li><li class="lv2"><a href="#h3">AI时代，企业服务的逻辑变了</a></li></ol></details><article class="dp-body"><blockquote><p>文｜光锥智能，作者 | 白鸽 ，编辑｜王一粟 </p></blockquote><p>字节跳动的ToB业务，正迎来一场史诗级调整。</p><p>7月30日，字节跳动发布了一封内部邮件，主要涉及到飞书、豆包和火山引擎团队的整合：</p><p>一是，飞书产品团队将与豆包团队整合，成立新的豆包产品团队，由豆包负责人赵祺统筹，飞书负责人谢欣向其汇报。</p><p>二是，飞书的GTM（市场、销售、客户服务）团队则与火山引擎团队合并，成立名为“<a class="cpt" href="../c/creativity-service-platform.html" data-def="字节跳动整合飞书GTM与火山引擎后成立的ToB业务组织，统一负责MaaS和SaaS云服务的市场、销售与客户服务">创造力服务平台</a>”的全新To B GTM组织，由火山引擎负责人谭待掌舵，飞书销售负责人林婵、战略及市场负责人史志隽均向谭待汇报。</p><p>而这，是字节跳动2021年成立6个BU（业务单元）后，针对To B业务规模最大的一次组织调整。此前，飞书与抖音、TikTok、火山引擎等是并列的BU，谢欣向字节跳动CEO梁汝波汇报。</p><p>表面上看，这是一次汇报线的重排。</p><p><strong>但拨开迷雾，真正发生的一件更具战略分量的事，是字节正在把豆包从一个C端的聊天机器人，改造成一个嵌入企业工作流的B端AI助手，而飞书，就是这个改造过程中最关键的桥梁。</strong></p><p>字节在内部信中把这次调整的初衷说得相当直白：AI将深刻影响B端企业的生产力和每个人的工作方式，整合是为了更好地打造面向办公与生产力场景的优质产品，更好地服务B端客户。</p><p>换句话说，这是字节在AI优先的战略下，把原本各自为战的卖软件的（飞书）、卖算力的（火山引擎）、做模型的（豆包）三块业务，重新编组为一个面向企业客户的统一作战单元。</p><p>截至2026年6月，豆包大模型日均Token调用量已突破180万亿。调用量爆发的背后，是企业级调用正在成为豆包最重要的增长引擎。</p><p><strong>字节试图争夺的，也不只是大模型的市场份额，而是AI时代个人和企业调用数字世界的入口。</strong></p><p>在当前大厂们都在整合AI ToB业务线的档口，这或许也是字节跳动面向AI ToB时代，打出的一张全新底牌。</p><h2 id="h1"><strong>字节AI ToB变阵：产品归产品，商业归商业</strong></h2><p><strong>2026年，整个AI行业正在经历一次大的转向，AI Agent正从C端尝鲜玩具，走向B端生产工具。</strong></p><p>在今年世界人工智能大会期间，企业级Agent则成了各论坛的高频词，行业的关注点已经从“模型能力能不能用”，实质性地转向“能不能规模化落地、能不能验证商业价值”。“老百姓尝鲜需求低了，B端价值才开始慢慢验证。”中关村数智人工智能产业联盟秘书长贾昊如此说道。</p><p>而从C端转向B端，这也恰好是字节当下的AI战略重心。</p><p>今年6月的火山引擎FORCE原动力大会上，字节跳动CEO梁汝波在开场致辞里说得很直白：“攀登AI高峰是字节当下最重要的事情”，字节正“把精力重点聚焦到AI，在AI里聚焦到提升模型能力”，“火山引擎MaaS业务正在变成字节的基础业务”。</p><p>在这大背景下，字节跳动此次组织调整，可以看作是一次对AI To B战略的“对齐”——把产品归产品，把商业归商业，让三块原本并列的业务，按“生产力”的逻辑重新编组。</p><p>产品层面上的调整很清晰，飞书产品团队和豆包产品团队整合成立新的豆包产品团队，这也意味着，未来字节面向企业的AI产品形态，将更多由豆包产品团队统一定义，飞书的产品能力则作为底层基础设施，被深度嵌入到豆包的企业级产品形态中。</p><p>字节方面明确表示，整合后飞书现有产品及服务保持不变，双方将重点在办公生产力场景深化产品融合。</p><p>这一点非常关键。它说明飞书作为一款面向企业的协同办公产品，既有功能、存量客户服务和用户体验并不会因为组织架构的调整而中断。</p><p><strong>也就是说，飞书依然是一款独立运行的产品，但它现在需要在豆包的产品框架下，思考如何让办公场景与AI能力产生更深层的化学反应。</strong></p><p>事实上，这种化学反应已经开始发生。</p><p>由飞书产品团队深度参与开发的豆包企业版，已经在部分飞书客户中开启内测。</p><p>豆包企业版最大的特点，是原生集成了飞书生态体系。用户无需额外部署，即可打通飞书文档、多维表格、线上会议、群组沟通等全办公场景，并支持基于企业自有知识库的精准问答与智能创作。同时，它还配备了完善的企业级数据隔离、权限管控与安全审计能力。</p><figure><p><img loading="lazy" onerror="this.style.display='none'" src="https://images.tmtpost.com/uploads/images/2026/08/03/82be34427ba01011892b18f20bd57f2c_1785723864.jpeg?imageMogr2/auto-orient/strip/interlace/1/quality/85/thumbnail/1440x1738/gravity/center/crop/!1440x1738&amp;ext=.jpeg" referrerpolicy="no-referrer" /></p></figure><p>换句话说，豆包企业版不是简单地把豆包聊天机器人搬到企业场景里，而是让AI能力直接长在飞书的工作流上，<strong>顺着飞书这条已经铺进企业内部的管道，流到每一个企业办公场景里</strong>。</p><p><strong>如果说产品侧的整合是“技术故事”，那么商业化侧的整合就是“生意故事”，而且这个故事的战略含金量，可能比产品整合更大。</strong></p><p>过去字节To B是什么状态？</p><p>飞书一套销售团队，火山引擎一套销售团队。企业客户有办公协同需求，对接飞书销售，如果有大模型调用、云服务需求，对接火山引擎销售，按照旧架构，如果想用豆包企业版，可能又要找另一拨人。</p><p>而创造力服务平台的成立，则把这三个窗口合并成一个出口。</p><p>对企业客户而言：不再需要分别对接飞书销售和火山引擎销售，而是通过一个团队，一次性解决办公协同、云计算和AI应用的全部需求。对字节而言：To B业务的获客成本、交付效率和服务一致性都将得到显著提升。</p><p>一个有说服力的数据是：飞书二季度新增客户中，超九成同步采购了AI产品。</p><p>这说明，办公协同与AI采购的耦合度已经非常高了，客户一旦用了飞书，几乎必然会用豆包的AI能力，既然需求侧已经一体化了，供给侧的销售体系如果不一体化，本身就是一种内耗。</p><p>这也是为什么字节选择在2026年7月这个时间点动手——产品侧的融合（豆包企业版内测）已经跑通，现在需要商业化侧跟上，形成完整的闭环。</p><h2 id="h2"><strong>飞书，给豆包提供最稀缺的东西</strong></h2><p><strong>字节跳动将AI战略重心转向B端这件事，其实早就有迹可循。</strong></p><p>此前就有媒体报道称，今年上半年，字节高层到访Anthropic，回来不久，字节开始调整AI资源分配，重心从豆包这类面向大众的产品，转向服务企业的产品。</p><p>所以，此次字节组织架构的调整，也算是旗子终于落地。</p><p>那么，回归到这次调整，很核心的一个问题在于，关键为什么是飞书？</p><p>业内都知道，一个在APP里陪你聊天的豆包，和企业里真正能够用得起来的AI助手，中间隔着一堵墙，也就是“工作流。”</p><p>一个聊天机器人，缺的是企业里的组织架构、权限体系、文档知识、会议与群聊上下文。它知道得很多，但不知道“你们公司”是谁、谁能看什么、哪份文档是最新的、哪个项目进行到哪一步。而这些，恰恰是飞书沉淀了多年的东西。</p><p>飞书诞生于2016年，2019年正式对外发布，至今已经走过了近十年。在这十年里，飞书积累的最核心价值，不是某一项具体的功能，而是一个完整的企业办公场景生态。</p><p>其拥有着企业最稀缺的三样东西：</p><p>一是真实办公场景的入口，其覆盖了文档、表格、会议、群聊、知识库、审批、人事、项目等几乎全部企业协作场景。它是员工每天8小时以上“生活”的地方。</p><p>二是企业组织架构与权限体系，谁能看什么文档、哪个部门有什么数据权限、谁在哪个项目里——这套体系是AI安全、合规地介入企业工作流的前提。</p><p>三则是企业知识的沉淀，如企业的制度、方案、会议纪要、客户资料、研发文档，大量沉淀在飞书里，而这则是企业AI“活起来”的燃料。</p><p>这些能力，恰恰是豆包从C端走向B端最需要的“土壤”。</p><p>更重要的是，飞书已经证明了企业客户对AI办公的需求正在快速释放。这意味着，飞书不仅提供了场景，还提供了已经被验证的付费意愿和客户基础。<strong>豆包要做B端AI助手，飞书是最短的路径。</strong></p><p>从更宏观的视角看，这也是全球科技巨头的共同选择。</p><p>Google把Gemini嵌入Workspace，微软用Copilot接管了整个Office体验，腾讯把AI直接塞进企业微信和腾讯文档，阿里让通义千问覆盖办公场景。</p><p>全球头部公司几乎同时做了一个动作：放弃“超级入口”的独立平台逻辑，把AI直接嵌入工作流。</p><p>飞书过去十年一直在打一场独立战争，试图证明自己是中国的Office、中国的Slack、中国的Notion。但在AI时代，这个逻辑正在发生根本性的转变——不是办公平台需要AI，而是AI需要办公平台作为载体。</p><p>所以，飞书的价值没有被削弱。相反，它的价值被重新定位了：从一款独立的协同办公产品，变成豆包进入企业工作流最关键的桥梁，成为字节AI ToB赛道的底层关键基础设施。</p><h2 id="h3"><strong>AI时代，企业服务的逻辑变了</strong></h2><p><strong>可以看到，字节跳动此次是选择用组织调整的方式，强行把产品、商业化、基础设施三条线拧成一股绳</strong>。而这种“顶层设计驱动协同”的做法，在国内互联网大厂中相当罕见，也相当坚决。</p><p>此次调整，将给字节带来三个核心变化：<strong>战略优先级显性化、资源集中化、商业化路径清晰化。</strong></p><p>梁汝波“攀登AI高峰是字节最重要的事”被落到组织架构上，豆包产品团队承载AI To B产品优先级，创造力服务平台承载商业优先级。</p><p>过去飞书、豆包、火山引擎各自为战，调整后在产品开发、客户获取、交付服务上形成协作，火山引擎MaaS作为基础业务、豆包作为AI中枢、飞书作为企业场景入口的定位都被强化。</p><p>商业化逻辑也随之清晰，以火山引擎已验证的B端通道，承载豆包的技术势能，形成“技术—场景—商业化”闭环。</p><p>这些改变背后，有着清晰的商业化数据支撑。</p><p>按7月平均消耗口径统计，字节大模型业务ARR（年化营收运行速率）达40亿美元，超过国内其他模型公司ARR总和。截至2026年6月，豆包大模型日均Token调用量突破180万亿。</p><p>这些数据说明，字节的大模型业务已经具备了相当的商业化体量。在这个节点上进行组织架构调整，不是被动收缩，而是主动升级，即用更高效的组织形态，去承接已经做大的业务盘子。</p><p>而把视野放到整个行业，会发现国内大厂们都在整合AI业务线，并以AI办公为主要入口：</p><p>如阿里宣布QoderWork、悟空、MuleRun 三款分散的Agent产品整合为千问办公，由钉钉新任CEO陈宇森牵头。钉钉背后是超2600万家企业组织、覆盖近八成上市公司的数据与权限资产。</p><p>腾讯的WorkBuddy 6月单月访问量达2097万次，并宣布将QClaw产品中心调整至云产品六部，与WorkBuddy归入同一管理体系。</p><figure><p><img loading="lazy" onerror="this.style.display='none'" src="https://images.tmtpost.com/uploads/images/2026/08/03/1c91f1dc57b05e2a2b064916c3a07db0_1785723864.jpeg?imageMogr2/auto-orient/strip/interlace/1/quality/85/thumbnail/1440x1959&amp;ext=.jpeg" referrerpolicy="no-referrer" /></p></figure><p><strong>可以看到，一个清晰规律浮现出来：在B端AI这场仗里，模型能力只是入场券，真正的护城河，是谁掌握了企业的组织架构、权限体系、文档知识与业务流程，谁就掌握了AI进企业的入口。</strong></p><p>这也就解释了为什么三家都不约而同地把办公协同产品推到最前面：钉钉、企业微信、飞书三款头部产品，据QuestMobile数据合计市场覆盖率已达92%，几乎覆盖国内绝大多数企业组织。它们手里攥着的，不是聊天框，而是企业运转的“中枢神经系统”。</p><p>飞书积累十年的办公场景，恰恰是字节能够“无缝嵌入”的唯一通路。<strong>没有飞书这种级别的企业场景入口，豆包再强，也只能是个API。</strong></p><p>更重要的一点是，大厂对AI业务的整合，也标志着，企业AI赛道的竞争，已经彻底摆脱了单一模型、单一办公软件的单点比拼，升级为“云+模型+数据+入口”的全栈式综合竞争。</p><p><strong>当企业客户采购AI时，他们不想面对“模型找A、云找B、办公找C”的碎片化体验。谁能提供一个口子解决所有问题，谁或许就能在To B AI的竞争中占据先机。</strong></p><p>总的来看，今年也被称为企业级AI应用的元年。大厂们的AI ToB业务从赛马走向整合，说明窗口期正在收紧，先发优势或许大概只有3到6个月。</p><p>字节把飞书做成桥梁、把豆包推上工作台、把火山引擎当作统一出口，是在用一次组织调整，赌一个更大的赌注：<strong>下一代企业软件的形态，不是人在软件里点，而是AI在工作流里。</strong></p><p>而飞书，正是字节押在这条赛道上最关键的那块拼图。</p></article>
+    <div class="dp-actions">
+      <a class="dp-btn pri" href="https://www.tmtpost.com/8088903.html" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      
+      <button type="button" class="dp-btn sec" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
+      <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
+    </div>
+    <nav class="dp-rel" aria-labelledby="dp-rel-h"><h2 id="dp-rel-h" class="dp-rel-h">相关动态</h2><ul><li><a href="0c993116122e.html"><span class="dp-rel-t">阿里“千问办公”开启公测</span><span class="dp-rel-m">都提到「智能体原生办公」 · <time datetime="2026-08-03">2026-08-03</time></span></a></li><li><a href="b9ca22e291b0.html"><span class="dp-rel-t">从翻译到桌面Agent，网易有道全线产品完成DeepSeek-V4-Flash正式版升级</span><span class="dp-rel-m">都提到「智能体原生办公」 · <time datetime="2026-08-02">2026-08-02</time></span></a></li></ul></nav>
+    <p class="dp-note">本页由句子互动动态管线自动生成，聚合内容版权归各来源所有；如来源方希望调整或移除收录，请通过官网联系我们。</p>
+  </div>
+</main>
+<div id="site-footer"></div>
+<script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "字节ToB变阵，一次新AI入口之争"};</script>
+<script src="../../assets/site.js?v=f57b1388"></script>
+</body>
+</html>

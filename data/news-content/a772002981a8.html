@@ -1,0 +1,200 @@
+<h1>AI不再用完即忘：华为诺亚开源MindMemOS，记忆和Skill一起进化</h1>
+    			   
+             <img src="http://www.qbitai.com/wp-content/themes/liangziwei/imagesnew/head.jpg" referrerpolicy="no-referrer" /><em><a href="https://www.qbitai.com/author/mengchen" target="_blank" rel="noopener nofollow">梦晨</a></em>
+                          2026-08-03
+             10:51:33
+          
+          来源：<a href="https://www.qbitai.com" target="_blank" rel="noopener nofollow">量子位</a>            
+                          
+            <p>面向AI Agent的可迁移、自演进记忆操作层MindMemOS</p>
+                			<blockquote>
+<p>允中 发自 凹非寺<br />量子位 | 公众号 QbitAI</p>
+</blockquote>
+<p>Agent的能力越来越强，但使用体验仍有一个尴尬之处：</p>
+<p><strong>每换一个Agent甚至换一个session，就像换了一个完全不了解你的新员工。</strong></p>
+<p>用户偏好、项目背景和踩坑经验无法迁移，只能从头解释，再把新Agent“重新养一遍”。</p>
+<p>真正的挑战不只在于“有没有记忆”，还在于四件事：</p>
+<ul>
+<li><strong>记忆带不走</strong>：记忆依附于单个Agent，无法跨应用和框架复用。</li>
+<li><strong>记忆视角不同</strong>：不同业务关注的实体、属性和提取规则完全不同，一套固定模板难以通用。</li>
+<li><strong>记忆系统不会成长</strong>：提取、检索和组织策略在开发完成后便基本固化，无法从真实使用与用户纠偏中持续演进。</li>
+<li><strong>记忆缺少时间维度</strong>：系统既要知道最新事实，也要保留事实如何变化、旧状态如何被新状态取代的过程。</li>
+</ul>
+<p>为此，华为诺亚方舟实验室推出了面向AI Agent的<strong>可迁移、自演进记忆操作层MindMemOS</strong>：</p>
+
+<p><img src="https://i.qbitai.com/wp-content/uploads/2026/08/a9598dea9fc33482d5faad5364fbb1d8.jpeg" referrerpolicy="no-referrer" /></p>
+
+<p>它将记忆从单个Agent中解耦；</p>
+<p>记忆建模以实体、属性、时间三维结构同时保存最新状态与完整演化轨迹；</p>
+<p>通过MindSchema记忆模式预设记忆提取规则，或围绕给定任务与标注问答离线演化提取策略；</p>
+<p>Feedback挖掘用户隐式的纠正性反馈，有选择地强化或降级已有记忆，从而提升记忆的可靠性及其与用户意图的一致性。</p>
+<p>Dreaming离线巩固记忆，消解冲突，持续提升记忆质量。</p>
+<p>MindMemOS想解决的不只是“怎样让Agent记住”，而是<strong>记忆怎样带得走，系统怎样知道该记什么，以及记忆与记忆系统怎样一起进化。</strong></p>
+<p>更直接的是结果：</p>
+<ul>
+<li>MindMemOS在LoCoMo上取得<strong>94.03</strong>分，在PersonaMem上达到<strong>70.63%</strong>；</li>
+<li>在MemoryAgentBench的FactConsolidation测试中，Dreaming压缩<strong>19.4%-23.5%</strong>活跃记忆的同时，将问答准确率最高提升<strong>10.3个百分点</strong>；</li>
+<li>基于真实执行轨迹的Skill演进，则把SpreadsheetBench-Verified的任务成功率提升至<strong>57.2%±2.4%</strong>。</li>
+</ul>
+<p>项目地址：<br />
+https://github.com/mindscale-noah/MindMemOS<br />项目官网：https://mindmemos.cn</p>
+
+<p><img src="https://i.qbitai.com/wp-content/uploads/2026/08/4a026cfef0dc7a4d5c25909de2c6f4f2.jpeg" referrerpolicy="no-referrer" /></p>
+
+<p>△MindMemOS将Agent接入、记忆算法与底层记忆结构解耦，并把质量优化和Skill Evolution纳入同一系统。</p>
+<h1>用「实体-属性-时间」重建记忆中的世界</h1>
+<p>MindMemOS首先改变了记忆的基本组织方式。</p>
+<p>传统方案常把记忆保存为一组文本片段或向量块。MindMemOS则用一个三维结构描述开放世界的信息流：</p>
+<ul>
+<li><strong>实体（Entity）</strong>：人、项目、文件、工具、组织等持续存在的对象；</li>
+<li><strong>属性（Property）</strong>：对象的事实、偏好、状态和高阶特征；</li>
+<li><strong>时间（Time）</strong>：属性在什么时间成立，又在何时发生变化。</li>
+</ul>
+
+<p><img src="https://i.qbitai.com/wp-content/uploads/2026/08/82829ad51ba4f90761b5e01ff1535aea.jpeg" referrerpolicy="no-referrer" /></p>
+
+<p>△每条记忆都可以落到“实体、属性、时间”的唯一坐标，同时保留实体关系和属性演变轨迹。</p>
+<p>这相当于不再把“用户以前喜欢X”和“用户现在改用Y”当成两段互不相干的文本，而是把它们放回同一实体、同一属性的时间轴上。</p>
+<p>实体之间可以建立语义关联，每个属性的演变也能被追踪。</p>
+<p>在此之上，MindMemOS提供两条互补的记忆生成路径。</p>
+<p>一条是<strong>MindVanilla模式</strong>。</p>
+<p>它不依赖预先定义的建模模板，可以接收对话、文本和工具执行轨迹，适合开放域信息快速进入统一记忆库。</p>
+<p>另一条是<strong>MindSchema模式</strong>。</p>
+<p>系统先通过实体建模规定当前领域关注哪些实体和属性，再完成话题片段切分、属性级记忆生成、等价实体融合和图结构合并。</p>
+<p>不同场景可以调整记忆提取规则种子，让同一套系统适配不同任务，而不必重写整个记忆基础设施。</p>
+<p>检索时，MindMemOS也不是只做一次向量相似度匹配。</p>
+<p>它设计了一套Compact Search：</p>
+<ul>
+<li>外层Agentic模块负责分析查询、规划检索路径和判断信息是否充分；</li>
+<li>内层工具则执行从实体到属性、从属性反查实体、多跳关系扩展和属性时间线追踪等多路径搜索。</li>
+</ul>
+<p>简单来说，系统不只是寻找“最像问题的一段话”，而是在记忆图中寻找抵达答案最短、同时覆盖信息最充分的路径。</p>
+<h1>Dreaming：让Agent在「空闲时间」整理记忆</h1>
+<p>人类不会永久保留每个细节。我们会在回顾中合并重复信息、淘汰过时判断，并从多次经历中形成更抽象的认识。</p>
+<p>业界把类似过程称为<strong>Dreaming</strong>。</p>
+<p>Dreaming在离线阶段从尚未整理的记忆出发，围绕相关实体扩展局部范围，识别重复、冲突和演化关系，再生成具体操作：合并冗余内容、归档被新事实取代的旧记忆、补充关系，或发现更高阶的模式。</p>
+<p>关键在于，这种整理结果会变成持久的记忆状态，而不是把判断压力留给每一次回答时的语言模型。</p>
+<p>例如，当同一个实体对应两条相互冲突的事实时，普通检索可能把两条内容一起返回，再期待回答模型临场判断。</p>
+<p>MindMemOS会在Dreaming阶段识别其中的替代关系，归档已经失效的版本，并保留supersedes关系。之后的普通检索拿到的是更干净、没有歧义的上下文。</p>
+<p>这里有一个更直观的Case Study。</p>
+<p>MemoryAgentBench先后写入两条互相冲突的事实，并规定后写入的事实应当覆盖旧版本。</p>
+<p>Dreaming之前，两条记忆都会进入检索上下文，回答模型受到现实世界知识干扰而选择了旧答案；</p>
+<p>Dreaming之后，系统把较早版本归档、建立supersedes关系，同一查询便只会得到当前有效的事实。</p>
+
+<p><img src="https://i.qbitai.com/wp-content/uploads/2026/08/f21b6733d3839b4f3e06d93886481996.jpeg" referrerpolicy="no-referrer" /></p>
+
+<p>△Dreaming将冲突判断从每次查询时的临场推理，前移为可持续保存的离线记忆状态。</p>
+<p>MindMemOS在MemoryAgentBench的FactConsolidation子集上，测试了这一机制：</p>
+
+<p><img src="https://i.qbitai.com/wp-content/uploads/2026/08/307a1477f61e8f3e6ec0204b16706b4a.jpeg" referrerpolicy="no-referrer" /></p>
+
+<p>结果显示，Dreaming并不是通过“记得更多”换取提升。</p>
+<p>相反，它在提高Single-hop和Multi-hop得分的同时，将大约五分之一的活跃记忆转入归档（归档则不会被主动召回）。</p>
+<p>这是一种典型的“少即是多”：减少干扰，本身就是提升记忆质量的一部分。</p>
+<h1>Feedback：用户的一次纠正，不应该只修一条答案</h1>
+<p>Dreaming负责系统主动整理，Feedback则让用户交互中的纠错信号回到记忆系统。</p>
+<p>MindMemOS同时支持显式与隐式反馈。</p>
+<p>用户可以直接用自然语言指出某条记忆错误，也可以在后续对话中表达不满、修正或新的偏好。</p>
+<p>系统会判断这条信号是当前任务临时信息、特定场景偏好，还是适合长期保留的规律，再决定新增、更新、归档、删除或强化相关记忆。</p>
+<p>这一步很重要，因为用户偏好往往不只是一个“是什么”的事实。</p>
+<p>一个用户说自己偏好临时约见，真正影响推荐的可能是背后的原因：低压力安排反而能让其更可靠地赴约。</p>
+<p>随着更多交互出现，系统需要逐渐补全“为什么”和“在什么场景下成立”，而不是无限新增相似的碎片。</p>
+<p>论文中的PersonaMem-Evo案例展示了这种变化。</p>
+<p>Feedback之前，系统只留下“偏好临时安排”这条表层信息，在Top-10中仅召回一条模糊相关记忆，最终给出了结构化群体活动这一错误选项。</p>
+<p>Feedback从多轮交互中识别出真正稳定的关系是“喜欢临时或当天计划，担心长期计划有变”，并为其补上社交场景边界。</p>
+<p>更新后，三条一致的社交规划记忆共同进入Top-10，答案也转向正确的“自发一对一活动”。</p>
+
+<p><img src="https://i.qbitai.com/wp-content/uploads/2026/08/0aae7f17b036ba3aa0ced9b864f2cf47.jpeg" referrerpolicy="no-referrer" /></p>
+
+<p>△Feedback不只是增加一条记忆，而是更新原记忆的语义结构、归档旧版本，并改变后续检索结果。</p>
+<p>因此，Feedback的目标不只是修改单条记忆。</p>
+<p>期望是让反馈继续作用于记忆提取、检索和组织策略，实现记忆内容与记忆系统的共同演进。</p>
+<h1>不只记住发生过什么，还要沉淀「下一次怎么做」，持续优化Skills</h1>
+<p>如果说事实和偏好让Agent更懂用户，那么Skill决定了它能否把经验真正变成能力。</p>
+<p>MindMemOS将Skill视为记忆系统的一个关键应用。</p>
+<p>系统提供云端Skill注册、版本链、同步和回滚能力，并通过统一的Memory Add接口收集真实任务轨迹。</p>
+<p>不同Agent框架只需在轨迹中附带本次使用的Skill上下文，系统便能把执行结果绑定到对应版本。</p>
+<p>当轨迹积累到一定数量后，MindMemOS会依次完成：</p>
+<pre><code>真实任务轨迹
+→ 提取目标、关键转折、工具使用和最终结果
+→ 聚合反复成功的策略与反复出现的失败
+→ 生成针对当前SKILL.md的修改计划
+→ 应用编辑并生成新的Skill版本
+→ 同步回后续任务</code></pre>
+<p>如果轨迹没有任务得分，系统可以从反复出现的成功路径和失败模式中做无监督演进（MindEvolve-Unsup）；</p>
+<p>如果有评分，则会强化高分轨迹中的有效行为，并抑制低分轨迹里的常见错误（MindEvolve-Sup）。</p>
+<p>论文在包含400个真实表格操作任务的SpreadsheetBench-Verified上。进行了三次重复实验：</p>
+
+<p><img src="https://i.qbitai.com/wp-content/uploads/2026/08/61afa430b3c02e6a0022123316f023e6.jpeg" referrerpolicy="no-referrer" /></p>
+
+<p>△SpreadsheetBench-Verified任务成功率。结果为三次重复实验的均值与标准差；亮蓝和深蓝分别代表MindEvolve的无监督与监督演进配置。</p>
+<p>这里有一个颇有意思的结果：<strong>未经优化的初始Skill甚至低于No-skill</strong>。</p>
+<p>换句话说，给Agent一份操作指南并不必然带来提升，过时、冗余或不适配任务分布的规则反而可能制造干扰。</p>
+<p>而MindMemOS的无监督演进仅依靠执行轨迹，就将成功率从51.3%提升到55.3%；加入任务评分后进一步达到57.2%，相比No-skill提升5.9个百分点，相比未经演进的Init-skill提升9.2个百分点。</p>
+<p>这进一步解释了这些数字从何而来：</p>
+<p>最初的表格Skill主要是一份openpyxl、pandas使用说明，只告诉Agent怎样打开、编辑和保存工作簿，却没有覆盖真实任务中反复出现的失败：公式不会被openpyxl自动重算、格式化空行会让ws.max_row虚高、在活动工作表上一边读取一边写入可能移动行或覆盖源数据，保存成功也不代表结果已经通过验证。</p>
+<p>无监督演进从失败轨迹中把这些经验改写成可执行约束，例如：不要把公式文本当作数值；筛选、排序和删除时先从源表构造稳定快照；保存后必须重新打开文件并按评测读取方式复核。</p>
+<p>它完成的不是“增加更多API教程”，而是把反复踩坑的历史压缩成通用避错规则。</p>
+<p>加入任务分数后，监督式演进又学会了规则的适用边界。</p>
+<p>例如，它不会为了通过缓存值检查而把所有公式粗暴替换成硬编码数值；写入复杂工作簿前，还要先确认源列、目标列和映射关系。</p>
+<p>也就是说，监督信号带来的不只是更多规则，而是让Skill逐渐知道一条规则何时应该使用、何时应该停止。</p>
+<p><strong>Skill不再是一份写完就不动的提示词文件，而可以成为一项带版本、带证据、可持续更新的长期能力资产。</strong></p>
+<h1>记忆基准SOTA</h1>
+<p>除了Dreaming与Skill演进，MindMemOS还在两项主流长期记忆基准上评估了基础记忆能力。</p>
+<p>LoCoMo包含10组超长多会话对话。使用gpt-4.1-mini作为回答模型，并将系统、检索、回答和评判配置与EverOS默认实现对齐。</p>
+<p>MindMemOS-Modeling的Overall Accuracy达到<strong>94.03</strong>，成为所有对比方法中的最高结果。</p>
+
+<p><img src="https://i.qbitai.com/wp-content/uploads/2026/08/5cc59480ed4c8fea334548143a2523d6.jpeg" referrerpolicy="no-referrer" /></p>
+
+<p>△LoCoMo Overall Accuracy。灰色为对比方法，蓝色为MindMemOS两种配置。</p>
+<p>在面向长期个性化的PersonaMem上，MindMemOS-MindSchema的Overall Accuracy为<strong>70.63%</strong>；MindMemOS-MindVanilla也以67.74%略高于Baseline。</p>
+
+<p><img src="https://i.qbitai.com/wp-content/uploads/2026/08/b7d0b3bf532f6fa94df6959d8b40a127.jpeg" referrerpolicy="no-referrer" /></p>
+
+<p>△PersonaMem Overall Accuracy。灰色为对比方法，蓝色为MindMemOS两种配置</p>
+<p>这些结果共同指向一个结论：结构化建模的价值，不只是让记忆“看起来更整齐”，而是<strong>让系统在长期事实召回、用户画像和个性化推断中获得可测量的提升</strong>。</p>
+<h1>从API、SDK到插件：记忆应该独立于某个Agent</h1>
+<p>MindMemOS在架构上将Agent接入层、记忆算法层与记忆结构层解耦。</p>
+<p>当前开源代码提供FastAPI HTTP接口、Python SDK、CLI、Skills以及OpenClaw插件等接入方式，覆盖add、search、update、delete、feedback和dreaming等完整记忆生命周期操作。</p>
+<p>这种解耦带来的直接价值是可迁移性：记忆不必继续绑定在某个Agent的私有实现中，而可以作为用户、项目或组织独立维护的长期资产，在不同应用和Agent框架之间复用。</p>
+<p>开发者既可以本地部署完整服务，也可以从云端API、SDK或CLI开始接入。</p>
+<p>项目采用MIT License，详细部署配置与评测流程均已随代码公开。</p>
+<blockquote>
+<p><strong>Tips</strong>：MindMemOS云服务现已开放注册试用；</p>
+<p>在GitHub为项目点亮Star后，还可获得更多使用额度。</p>
+</blockquote>
+<p>项目官网：https://mindmemos.cn</p>
+<h1>当自动算法设计开始积累经验：MindMemOS在LLM4AD NEXT中的应用</h1>
+<p>基于大模型的自动算法设计正在展现潜力，但这类任务通常需要经历大量候选生成、评测与迭代。</p>
+<p>若缺少长期记忆，模型很容易反复尝试已经被证明无效的方案；切换任务后，上一轮探索积累的设计经验也可能随上下文一起消失。</p>
+<p>为此，MindMemOS已接入自动算法设计平台<strong>LLM4AD_Next</strong>，将算法搜索过程中产生的反馈转化为可存储、可检索、可复用的经验资产。</p>
+<p>针对算法设计任务层次多、周期长的特点，平台构建了三层记忆：</p>
+<ul>
+<li><strong>任务记忆（Task Memory）</strong>：动态捕捉并提炼当前算法设计任务中的即时灵感与失败教训。</li>
+<li><strong>项目记忆（Project Memory）</strong>：深度沉淀特定应用场景（如组合优化任务等）下的专家共识与先验知识。</li>
+<li><strong>全局记忆（Global Memory）</strong>：固化跨项目、普适性的底层算法设计规范与基本范式。</li>
+</ul>
+<p>基于该架构，平台能够将从高分结果中提炼的“有效经验”与从低分试错中总结的“避坑指南”进行系统化存储。</p>
+<p>为了精准适配复杂多变的科研场景，系统支持两种灵活的记忆调度机制：</p>
+<p>LLM4AD_Next提供两种记忆调度方式：<strong>Auto Mode</strong>根据当前任务和上下文自动匹配历史经验，<strong>Manual Mode</strong>则允许研究人员精确选择需要注入的记忆。</p>
+<p>记忆的调用、注入与流转过程全程可视化，使研究人员能够观察某条经验如何影响算法生成，也更方便开展消融实验与对照分析。</p>
+<p>MindMemOS的核心愿景，是确保大模型的每一份反馈都能转化为高价值、可复用的数字资产。</p>
+<p>在MindMemOS的赋能下，LLM4AD_Next所执行的每一次算法搜索，都不再是孤立的尝试，而是通往下一次“进化”的坚实起点。</p>
+<p><strong>由MindMemOS赋能的全新自动算法发现平台LLM4AD_Next已开放体验，欢迎广大研究者前往探索：</strong></p>
+<p>GitHub开源项目：<br />
+https://github.com/Optima-CityU/LLM4AD_Next<br />在线体验地址：https://llm4ad-next.cn/</p>
+<p><strong>Coming Features</strong></p>
+<ul>
+<li><strong>技术报告</strong>：MindMemOS完整技术报告即将发布，将进一步披露算法设计、系统实现、评测设置与更多案例分析。</li>
+<li><strong>Skills系统</strong>：与经验记忆联动，自动合成Skills；基于真实执行轨迹持续演化，并针对新问题智能分发和推荐合适的Skills。</li>
+<li><strong>文件系统记忆</strong>：把散落在本地文件、文档、项目产物和Agent输出中的知识结构化为可检索、可关联的知识对象或知识图谱，让Agent更可靠地使用用户的文件知识。</li>
+</ul>
+<h1>结语：Agent的下一场竞争，可能是「谁更会积累」</h1>
+<p>今天的Agent已经拥有越来越强的模型和越来越丰富的工具，但长期智能并不只取决于一次任务能做多好。</p>
+<p>真正拉开差距的，可能是完成一百次任务之后，它留下了什么。</p>
+<p>是越来越长、越来越混乱的历史记录，还是一套能追踪变化、主动整理、接受纠正，并把成功与失败继续沉淀为Skill的记忆系统？</p>
+<p>MindMemOS的答案，是把记忆从Agent的附属缓存提升为独立的操作层：信息可以跨场景建模，冲突可以在离线阶段被消解，反馈可以反向修改记忆，任务轨迹还能继续推动Skill演进。</p>
+<p>从“记住用户”到“学会做事”，这或许也是Agent从一次性工具走向长期协作者必须补上的一层基础设施。</p>
+                
+                
+                <em>版权所有，未经授权不得以任何形式转载及使用，违者必究。</em>

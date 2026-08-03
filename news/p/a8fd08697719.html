@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Loop才火了六周，AI Coding为什么又开始谈Graph？ - 句子·动态</title>
+<meta name="description" content="在AI Coding领域，Loop Engineering走红仅六周后，Graph Engineering成为新的热词。当Coding Agent走向连续执行和多单元协作时，工程范式随之变化。" />
+<meta name="robots" content="noindex,follow" />
+<link rel="canonical" href="https://www.tmtpost.com/8088190.html" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Loop才火了六周，AI Coding为什么又开始谈Graph？" />
+<meta property="og:description" content="在AI Coding领域，Loop Engineering走红仅六周后，Graph Engineering成为新的热词。当Coding Agent走向连续执行和多单元协作时，工程范式随之变化。" />
+<meta property="og:url" content="https://www.tmtpost.com/8088190.html" />
+<meta property="og:site_name" content="句子互动" />
+<meta name="twitter:card" content="summary" />
+
+<link rel="icon" href="../../logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../../assets/site.css?v=72b48ba4" />
+<style>
+  /* 静态兜底导航: site.js 一执行就被 outerHTML 连同占位一起换掉, 访客几乎看不到它。
+     不隐藏也不 noscript 包裹——那会让爬虫拿不到, 而它存在的唯一理由就是给不跑 JS 的爬虫看。
+     样式做朴素一行, 万一 site.js 加载失败, 这排链接本身就是可用的降级导航。 */
+  .nav-fb{display:flex;flex-wrap:wrap;gap:6px 16px;padding:12px clamp(16px,4vw,40px);
+    border-bottom:1px solid var(--line-2);font-size:12.5px}
+  .nav-fb a{color:var(--ink-3);text-decoration:none}
+  .nav-fb a:hover{color:var(--blue)}
+
+  .dp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
+  .dp-wrap{max-width:760px;margin:0 auto}
+  .dp-crumb{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:12.5px;color:var(--ink-3);margin-bottom:20px;min-width:0}
+  .dp-crumb a{color:var(--ink-3);text-decoration:none}
+  .dp-crumb a:hover{color:var(--blue)}
+  .dp-crumb i{font-style:normal;opacity:.5;font-size:11px}
+  .dp-crumb [aria-current]{color:var(--ink-2);font-weight:650;overflow-wrap:anywhere}
+  .dp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
+  .dp-back:hover{color:var(--blue)}
+  .dp-meta{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:14px}
+  .dp-srcb{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:750;color:var(--sc,var(--blue))}
+  .s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
+  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-voices{--sc:#9333EA}
+  .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
+  .dp-cat{display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ink-3);background:#F6F7FB;border:1px solid var(--line-2);border-radius:6px;padding:2px 8px}
+  .dp-read{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  /* 相关动态: 读完一篇之后的出口。此前详情页之间零链接, 读者只能回列表页重新扫,
+     爬虫也只能靠 JS 驱动的列表页做枢纽。每条都带「为什么相关」, 不做无理由的推荐。 */
+  .dp-rel{margin-top:40px;padding-top:26px;border-top:1px solid var(--line-2)}
+  .dp-rel-h{font-size:14px;font-weight:750;color:var(--ink-2);margin:0 0 14px}
+  .dp-rel ul{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+  .dp-rel a{display:block;padding:10px 12px;margin:0 -12px;border-radius:8px;text-decoration:none;transition:background .2s var(--ease)}
+  .dp-rel a:hover{background:#F6F7FB}
+  .dp-rel-t{display:block;font-size:14px;font-weight:650;color:var(--ink-1);line-height:1.5}
+  .dp-rel a:hover .dp-rel-t{color:var(--blue)}
+  .dp-rel-m{display:block;margin-top:3px;font-size:11.5px;color:var(--ink-3)}
+  .dp-read i{font-size:10px;opacity:.7}
+  .dp-date{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-3)}
+  .dp-title{font-size:clamp(24px,3.2vw,34px);font-weight:850;letter-spacing:-.03em;line-height:1.32;word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance;margin-bottom:10px}
+  .dp-orig{font-size:13px;color:var(--ink-3);overflow-wrap:anywhere;margin-bottom:8px}
+  .dp-by{font-size:12.5px;font-weight:600;color:var(--ink-3);margin-bottom:18px}
+  .dp-notice{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:1.7;color:var(--ink-2);background:#F6F7FB;border:1px solid var(--line-2);border-radius:10px;padding:10px 14px;margin-bottom:22px}
+  .dp-notice i{color:var(--blue);margin-top:4px;flex:0 0 auto}
+  .dp-notice a{color:var(--blue);font-weight:700;overflow-wrap:anywhere}
+  .dp-quip{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.66;font-weight:600;color:var(--blue-deep);background:var(--blue-50);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:18px}
+  .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
+  .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
+  .dp-brief b{display:flex;align-items:baseline;gap:8px;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  /* AI 产出物的就地标注(2026-07-30): 概念页的定义早就在页尾注明「由 AI 加工层生成、编辑
+     维护」, 而详情页的简报与锐评一直没标 —— 读者会把那句锐评当成编辑观点。283 页都有这两块,
+     不标就是 283 次误导。放在区块内而不是只放页尾: 页尾声明读者多半划不到, 而标注要落在
+     人实际阅读的位置才有意义。样式压到最小, 不抢正文。 */
+  .dp-brief b em,.dp-quip em{font-style:normal;font-family:var(--mono);font-size:10px;font-weight:600;
+    letter-spacing:0;color:var(--ink-3);white-space:nowrap}
+  .dp-brief b em{margin-left:auto}
+  .dp-quip em{display:block;margin-top:5px;opacity:.85}
+  /* 长文目录(≥3 小标题且正文 ≥2000 字才出): <details> 原生可折叠, 不用一行 JS。
+     默认 open —— 目录的用处是先看清结构再决定读哪段, 收起来就失去意义; 想收也一点即收。 */
+  .dp-toc{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:24px;background:#FBFCFF}
+  .dp-toc summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--ink-2);display:flex;align-items:center;gap:7px;list-style:none}
+  .dp-toc summary::-webkit-details-marker{display:none}
+  .dp-toc summary i{font-size:11px;color:var(--blue)}
+  .dp-toc summary span{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-3);margin-left:auto}
+  .dp-toc ol{list-style:none;margin:10px 0 2px;padding:0;counter-reset:toc}
+  .dp-toc li{counter-increment:toc;font-size:13px;line-height:1.7;padding:2px 0}
+  .dp-toc li::before{content:counter(toc) ". ";font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .dp-toc li.lv3{padding-left:16px}
+  .dp-toc li.lv4{padding-left:32px}
+  .dp-toc a{color:var(--ink-2);text-decoration:none;overflow-wrap:anywhere}
+  .dp-toc a:hover{color:var(--blue)}
+  /* 锚点跳转时标题别贴到视口顶端(站点顶栏会盖住) */
+  .dp-body h2[id],.dp-body h3[id],.dp-body h4[id]{scroll-margin-top:76px}
+  .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
+  .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
+  .dp-body p{margin:0 0 1.05em}
+  .dp-body img{max-width:100%;height:auto;border-radius:10px;margin:.4em 0}
+  .dp-body pre{background:#0F172A;color:#E2E8F0;font-family:var(--mono);font-size:12.5px;line-height:1.7;padding:14px 16px;border-radius:10px;overflow-x:auto;margin:0 0 1.1em}
+  .dp-body code{font-family:var(--mono);font-size:.92em}
+  .dp-body :not(pre)>code{background:#F1F5F9;padding:1px 5px;border-radius:5px}
+  .dp-body blockquote{border-left:3px solid var(--line);padding:2px 0 2px 14px;color:var(--ink-3);margin:0 0 1.05em}
+  .dp-body a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+  .dp-body ul,.dp-body ol{padding-left:1.5em;margin:0 0 1.05em}
+  .dp-body table{display:block;overflow-x:auto;border-collapse:collapse;margin:0 0 1.1em}
+  .dp-body td,.dp-body th{border:1px solid var(--line);padding:6px 10px;font-size:.92em}
+  .dp-excerpt{font-size:15px;line-height:1.9;color:var(--ink-2);border-left:3px solid var(--line);padding:2px 0 2px 16px;margin-bottom:8px}
+  .dp-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;padding-top:20px;border-top:1px solid var(--line-2)}
+  .dp-btn{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:750;border-radius:999px;padding:10px 20px;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+  .dp-btn.pri{background:var(--blue);color:#fff}
+  .dp-btn.pri:hover{background:var(--blue-deep)}
+  .dp-btn.sec{background:#fff;color:var(--ink-2);border:1px solid var(--line)}
+  .dp-btn.sec:hover{color:var(--blue);border-color:var(--blue)}
+  .dp-note{font-size:11.5px;line-height:1.7;color:var(--ink-3);margin-top:18px}
+  .dp-langbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+  .dp-lang{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:750;color:var(--blue);
+    background:var(--blue-50);border:1px solid var(--blue-100);border-radius:999px;padding:7px 14px;
+    transition:background .2s var(--ease),border-color .2s var(--ease)}
+  .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
+  .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div id="site-nav" class="nav-fb"><a href="../../index.html">句子互动</a><a href="../../products/miaodong.html">句子秒懂</a><a href="../../products/shouhu.html">句子守护</a><a href="../../products/canmou.html">句子问数</a><a href="../../products/dongxing.html">句子懂行</a><a href="../../products/miaohui.html">句子秒回</a><a href="../../products/cli.html">句子 CLI</a><a href="../../products/zhizao.html">句子制造</a><a href="../../fde.html">FDE</a><a href="../../enterprise.html">企业方案</a><a href="../../industries.html">行业</a><a href="../../about.html">关于我们</a><a href="../../news.html">动态</a></div>
+<main class="dp-main">
+  <div class="dp-wrap">
+    <nav class="dp-crumb" aria-label="面包屑"><a href="../../index.html">句子互动</a><i aria-hidden="true">›</i><a href="../../news.html">动态</a><i aria-hidden="true">›</i><span aria-current="page">Loop才火了六周，AI Coding为什么又开始谈Graph？</span></nav>
+    <div class="dp-meta">
+      <span class="dp-srcb s-industry"><i class="fa-solid fa-rss"></i>行业动态</span>
+      <span class="dp-cat">钛媒体</span>
+      <time class="dp-date" datetime="2026-08-02">2026-08-02</time>
+      <span class="dp-read"><i class="fa-regular fa-clock"></i>约 14 分钟</span>
+    </div>
+    <h1 class="dp-title">Loop才火了六周，AI Coding为什么又开始谈Graph？</h1>
+    
+    <p class="dp-by">来源：钛媒体 · 行业动态</p>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（钛媒体 · 行业动态）所有 · <a href="https://www.tmtpost.com/8088190.html" target="_blank" rel="noopener">阅读原文</a></span></div>
+    <p class="dp-quip"><i class="fa-solid fa-quote-left"></i>Graph Engineering更适合复杂销售任务的协同处理<em>AI 加工层生成</em></p>
+    <div class="dp-brief"><b>简报<em>AI 加工层生成</em></b>在AI Coding领域，Loop Engineering走红仅六周后，Graph Engineering成为新的热词。当Coding Agent走向连续执行和多单元协作时，工程范式随之变化。</div>
+    <details class="dp-toc" open><summary><i class="fa-solid fa-list-ul"></i>目录<span>4 节</span></summary><ol><li class="lv2"><a href="#h1">Loop解决不了的新问题？概念是新瓶、技术是旧酒</a></li><li class="lv2"><a href="#h2">从Prompt到Graph，AI Coding仍在向更高复杂度项目进化</a></li><li class="lv2"><a href="#h3">主流Coding Agent已经在用Graph，只是没有把图画出来</a></li><li class="lv2"><a href="#h4">Graph适合可拆分、可验收的复杂任务，而不是所有复杂任务</a></li></ol></details><article class="dp-body"><blockquote><p>文 | 智讯智库，作者 | 施展</p></blockquote><p>Open Claw创造者Peter Steinberger在X上问了一句：“我们还在谈Loop，还是已经转向Graph了？”截至7月28日，这条帖子获得约307万次浏览[1]。仅仅只在一个多月前，正是他用“不要再亲自提示Coding Agent，而要设计能够提示它的循环”这句话，帮Loop Engineering走红[2]。</p><p><img loading="lazy" onerror="this.style.display='none'" src="https://images.tmtpost.com/uploads/images/2026/08/aae27cc58e37a23639d763c2efa0239d_1785669876.jpg?imageMogr2/auto-orient/strip/interlace/1/quality/85/thumbnail/1440x530/gravity/center/crop/!1440x530&amp;ext=.jpg" referrerpolicy="no-referrer" /></p><p>短短六周，Loop就被宣布“过时”了。</p><p>同一天，拥有20年经验、曾在Airbnb和GitHub工作的机器学习工程师Hamel Husain，发布了一篇题为《Loop Engineering Is Dead.Enter Graph Engineering》的调侃文章。正文只有一张写着“Stop it”的动图，却也获得了约68万次浏览。[3]</p><p><img loading="lazy" onerror="this.style.display='none'" src="https://images.tmtpost.com/uploads/images/2026/08/aa842149094191a72019a80d98386b30_1785669877.jpg?imageMogr2/auto-orient/strip/interlace/1/quality/85/thumbnail/1440x1582/gravity/center/crop/!1440x1582&amp;ext=.jpg" referrerpolicy="no-referrer" /></p><p><strong>Graph Engineering几乎在一个周末里从一句半开玩笑的提问，变成了新的AICoding热词。</strong></p><h2 id="h1">Loop解决不了的新问题？概念是新瓶、技术是旧酒</h2><p>Loop并没有真正过时，实际发生的变化是：<strong>当Coding Agent从一次回答走向连续执行，又从单个Agent走向多个执行单元协作时，工程师要处理的问题从“怎样让它继续做”扩展到了“这些工作该怎样连接”</strong>。</p><p><strong>Loop解决的是：一个Agent如何根据环境反馈不断检查、修改，再次尝试</strong>。</p><p>例如代码没有通过测试，就读取报错、修改代码、重新运行，直到通过验收或触发停止条件。</p><p>Loop让一个Agent可以自己多干一会儿，但当Agent真的可以连续工作，新的问题又出现了：</p><p><strong>研究需求的Agent、写代码的Agent、做测试的Agent，谁先开始？哪些工作可以同时进行？测试失败后应该回到哪里？它们怎样看到同一份需求、研究笔记和测试结果？如果审查者不同意实现者，听谁的？</strong></p><p>一个Loop只有一条主要路径，<strong>复杂任务却开始出现分工、并行、回退和交接</strong>。这个时候，<strong>工程师不再只是设计“怎样重复”，还要设计“这些重复工作的单元怎样连接”。</strong></p><p><strong>因此Graph实际是一个任务的编排系统，管理多个工作单元之间的连接、共享状态与选择路径。</strong></p><p>一个Graph通常至少包含四样东西：</p><p>黄仁勋在Startup School 2026大会上表达了类似的观点，<strong>当底层实现越来越多地被 Agent 自动化，人类的核心价值将从“亲手完成每个步骤”转向“设计系统、明确约束、组织信息流，并以细粒度方式控制 Agent”</strong>，Graph Engineering本质上就是设计一个可观察、可路由、可约束、可局部修正的执行系统。</p><p>尽管“Graph Engineering”最近才成为热词，但状态机、工作流引擎、DAG调度、任务队列和知识图谱早已存在。<strong>新变化不在于发明了Graph这种编排模式，而在于今天的节点可以放进能够理解目标、使用工具并自行循环的Agent</strong>。</p><p>2024年进入ACL的ChatDev，把软件开发组织成由不同角色参与的“软件公司”，通过通信完成设计、编码和测试；同年进入ICLR的MetaGPT，则把标准作业流程写入多Agent协作框架。[4][5]它们当时不叫Graph Engineering，却已经在实践角色分工、阶段交接和共享产物。</p><p>2024年12月，Anthropic在《Building Effective Agents》中总结了提示链、路由、并行、编排者/工作者和评价者/优化者等常见结构。把这些结构画出来，得到的正是不同形状的执行图。[6]</p><p>学术研究走得更早，GPTSwarm的论文《Language Agents as Optimizable Graphs》发表于ICML2024：节点负责处理信息或调用模型，边负责在Agent之间传递信息；研究者还尝试共同优化节点中的Prompt和节点之间的连接。[7]</p><p>“Graph Engineering”这一精确说法也并非2026年才出现。</p><p>2025年5月，Anthony Alcaraz在LinkedIn写道，构建Agentic AI最终是一种Graph Engineering：<strong>横向的工作流图记录Agent处于多步骤流程的哪一环，以及允许哪些状态转移；纵向的知识图谱则组织实体和关系，用于检索、事实验证与约束检查。</strong>[8]</p><p><img loading="lazy" onerror="this.style.display='none'" src="https://images.tmtpost.com/uploads/images/2026/08/2b7a465e298510e4efb90ba31a70b519_1785669877.jpg?imageMogr2/auto-orient/strip/interlace/1/quality/85/thumbnail/1440x805/gravity/center/crop/!1440x805&amp;ext=.jpg" referrerpolicy="no-referrer" /></p><p>到2026年，框架层已经把这套思想做得更加明确。LangGraph将节点、边、共享状态、持久化执行和人工介入作为核心能力，允许确定性代码与模型驱动步骤存在于同一张图中[9]。Google在ADK2.0中进一步推出Graph-first的工作流引擎：开发者可以定义节点和边，由调度器负责并发、状态持久化、暂停、恢复、重试和人工审批[10]。</p><h2 id="h2">从Prompt到Graph，AI Coding仍在向更高复杂度项目进化</h2><p>随着对AI coding使用的深入，处理任务的复杂度也越来越高，不能只靠LLM单打独斗，而是需要通过<strong>更多结构化的工程手段</strong>（上下文、环境、反馈循环、多Agent拓扑）<strong>来不断拓宽AI的自治边界</strong>。</p><p><img loading="lazy" onerror="this.style.display='none'" src="https://images.tmtpost.com/uploads/images/2026/08/47df9fd043b18eb1adebfad8065e7846_1785669877.jpg?imageMogr2/auto-orient/strip/interlace/1/quality/85/thumbnail/1440x1536&amp;ext=.jpg" referrerpolicy="no-referrer" /></p><h2 id="h3">主流Coding Agent已经在用Graph，只是没有把图画出来</h2><p>Graph Engineering听起来像需要先学习一套复杂框架，实际使用中未必如此。2026年7月25日，OpenAI Harness Engineering研究员Alex Kotliarskyi在X上给出了一份只有两步的教程：<strong>先画一张Graph，画在纸上也可以；再把图交给Codex，让它编写并运行实现该工作流的脚本。“没有第三步。”</strong>[11]</p><p><img loading="lazy" onerror="this.style.display='none'" src="https://images.tmtpost.com/uploads/images/2026/08/0ee06bd94448af7b6433989e1dd7c795_1785669878.jpg?imageMogr2/auto-orient/strip/interlace/1/quality/85/thumbnail/1440x1856&amp;ext=.jpg" referrerpolicy="no-referrer" /></p><p>越来越多Coding Agent已经把任务拆解、子Agent、并行执行、隔离工作区、失败重试和结果汇总做进产品，只是不会始终把底层结构展示成流程图。</p><p><strong>这些产品更接近“运行时生成Graph”：用户给出目标，Agent临时决定怎样拆解和协作。</strong>LangGraph和GoogleADK则允许开发者把关键节点、边、状态和路由显式写出来。</p><p>我们更熟悉的<strong>Kimi Agent Swarm</strong>与<strong>Coze Studio</strong>，则把类似思想包装成普通用户可以直接调用的“AI组织”。</p><p><img loading="lazy" onerror="this.style.display='none'" src="https://images.tmtpost.com/uploads/images/2026/08/630f92f42e4a5a84080c60862515ea3c_1785669878.jpg?imageMogr2/auto-orient/strip/interlace/1/quality/85/thumbnail/1440x1357/gravity/center/crop/!1440x1357&amp;ext=.jpg" referrerpolicy="no-referrer" /></p><h2 id="h4">Graph适合可拆分、可验收的复杂任务，而不是所有复杂任务</h2><p>Graph更常用于复杂任务，但“复杂”不只是步骤多。真正决定它是否合适的，是任务结构：</p><p><strong>例如，一个需要调研需求、选择技术方案、实现前后端、运行测试并通过安全审查的产品，适合组织成Graph。研究与界面原型可以并行，测试失败可以回到实现节点，资料不足可以退回研究节点。</strong></p><p>但修改一个按钮颜色、解释一段代码或生成一个简单页面，通常交给一个Agent更快。<strong>即使任务很难，如果每一步都严格依赖上一步、所有参与者必须共享完整上下文，也未必适合Graph，不必为了“组队”而组队。</strong></p><p>2026年7月24日，《Nature Machine Intelligence》发表了一项覆盖260种配置、六类基准、五种架构和三家模型系列的研究。<strong>结果并不支持“Agent越多越好”</strong>：在可拆分的金融任务中，多Agent相对单Agent最高提升80.8%；在顺序依赖很强的Plan Craft规划任务中，最高下降70%；在SWE-benchVerified上，四类多Agent架构均出现1.3%至12.8%的下降[19]。关键变量不是抽象的“复杂度”，而是任务能否被有效拆分，以及协调成本会不会超过任务本身。</p><p><strong>与此同时，Graph也会面临成本的风险：</strong>每增加一个Agent，系统都要准备上下文、调用模型、传递结果并进行汇总。如果职责划分不清，多个Agent可能重复搜索同一资料、同时修改相同文件，甚至用大量Token讨论彼此制造的问题。Graph的目标不是召集尽可能多的Agent，而是用尽可能少的节点稳定完成任务。</p><p>如Anthropic的Research使用一个主Agent制订计划，再创建多个子Agent并行搜索，最后交给引用检查Agent处理来源。内部评测中，这套架构在适合广度搜索的任务上比单Agent高90.2%；代价同样明显：<strong>普通Agent的Token消耗约为聊天模式的4倍，多Agent系统约为15倍</strong>。Anthropic也指出，大量顺序依赖、要求所有Agent共享相同上下文的任务，目前并不适合这种架构。[20]</p><p>Graph Engineering并没有宣判Loop过时。恰恰相反，Graph的每个节点都可能运行自己的Loop。<strong>它新增的工程问题是：哪些Loop应该存在，它们怎样交接，谁能修改共享状态，失败后回到哪里，以及什么时候必须停下来。</strong></p><p>这也是从Prompt到Graph的真正递进：工程师的注意力从“怎样写一句更好的指令”，逐步扩展到“怎样准备信息、提供工具、建立反馈，再把多个执行单元组织成一个可观察、可恢复、可控制成本的系统”。</p><p><strong><strong> </strong></strong></p><p><strong>    参考资料：</strong></p><p>[1] Steinberger P. [Are we still talking loops or did we shift to graphs yet?][EB/OL]. [2026-07-29].</p><p>[2] Osmani A. Loop Engineering[EB/OL]. (2026-06-08)[2026-07-29].</p><p>[3] Husain H. Loop Engineering Is Dead. Enter Graph Engineering[EB/OL]. [2026-07-29].</p><p>[4] Qian C, Liu W, Liu H, et al. ChatDev: Communicative Agents for Software Development[C/OL]//Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers). Bangkok: Association for Computational Linguistics, 2024: 15174-15186[2026-07-29].</p><p>[5] Hong S, Zhuge M, Chen J, et al. MetaGPT: Meta Programming for A Multi-Agent Collaborative Framework[C/OL]//International Conference on Learning Representations. 2024[2026-07-29].</p><p>[6] Erik S, Zhang B. Building effective agents[EB/OL]. (2024-12-19)[2026-07-29].</p><p>[7] Zhuge M, Wang W, Kirsch L, et al. GPTSwarm: Language Agents as Optimizable Graphs[C/OL]//Proceedings of the 41st International Conference on Machine Learning. Proceedings of Machine Learning Research, 2024, 235: 62743-62767[2026-07-29].</p><p>[8] Alcaraz A. [Building an agentic AI is ultimately an act of graph engineering][EB/OL]. [2026-07-29].</p><p>[9] LangChain Inc. LangGraph overview[EB/OL]. [2026-07-29].</p><p>[10] Klopfenstein T, Maddula S K. Build reliable multi-agent applications with ADK Go 2.0. Discover our new graph-based workflow engine, built-in human-in-the-loop, and dynamic orchestration[EB/OL]. (2026-06-30)[2026-07-29].</p><p>[11] Kotliarskyi A. [How to graph-max with Codex and 5.6 Sol][EB/OL]. (2026-07-25)[2026-07-29].</p><p>[12] OpenAI. Subagents[EB/OL]. [2026-07-29].</p><p>[13] Anthropic. Create custom subagents[EB/OL]. [2026-07-29].</p><p>[14] Anthropic. Orchestrate teams of Claude Code sessions[EB/OL]. [2026-07-29].</p><p>[15] Cursor. Subagents, Skills, and Image Generation[EB/OL]. (2026-01-22)[2026-07-29].</p><p>[16] Cursor. New Coding Model and Agent Interface[EB/OL]. (2025-10-29)[2026-07-29].</p><p>[17] Moonshot AI. Agent Swarm 能力[EB/OL]. [2026-07-29].</p><p>[18] Coze Studio. Add new workflow node types (backend)[EB/OL]. (2025-09-12)[2026-07-29].</p><p>[19] Kim Y, Gu K, Park C, et al. Capable language models can outgrow the benefits of collaboration[J/OL]. Nature Machine Intelligence, 2026, 8: 1157-1172[2026-07-29].</p><p>[20] Hadfield J, Zhang B, Lien K, et al. How we built our multi-agent research system[EB/OL]. (2025-06-13)[2026-07-29].</p></article>
+    <div class="dp-actions">
+      <a class="dp-btn pri" href="https://www.tmtpost.com/8088190.html" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      
+      <button type="button" class="dp-btn sec" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
+      <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
+    </div>
+    <nav class="dp-rel" aria-labelledby="dp-rel-h"><h2 id="dp-rel-h" class="dp-rel-h">相关动态</h2><ul><li><a href="41f6985585a6.html"><span class="dp-rel-t">我们让 vivago R1 拍了一部土耳其山寨「星战」，结果出乎意料</span><span class="dp-rel-m">都提到「多智能体编排」 · <time datetime="2026-08-03">2026-08-03</time></span></a></li><li><a href="04235e071072.html"><span class="dp-rel-t">让Agent在协作中自进化，清华00后博士获千万元融资 | 36氪首发</span><span class="dp-rel-m">都提到「多智能体编排」 · <time datetime="2026-08-03">2026-08-03</time></span></a></li><li><a href="cf35390eaf69.html"><span class="dp-rel-t">Developers are attached to tools because tools encode trust</span><span class="dp-rel-m">都提到「工具使用」 · <time datetime="2026-07-29">2026-07-29</time></span></a></li><li><a href="8ff67d77127c.html"><span class="dp-rel-t">前沿实验室代理入侵解剖</span><span class="dp-rel-m">都提到「多智能体编排」 · <time datetime="2026-07-29">2026-07-29</time></span></a></li></ul></nav>
+    <p class="dp-note">本页由句子互动动态管线自动生成，聚合内容版权归各来源所有；如来源方希望调整或移除收录，请通过官网联系我们。</p>
+  </div>
+</main>
+<div id="site-footer"></div>
+<script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "Loop才火了六周，AI Coding为什么又开始谈Graph？"};</script>
+<script src="../../assets/site.js?v=f57b1388"></script>
+</body>
+</html>

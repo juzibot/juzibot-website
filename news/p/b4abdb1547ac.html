@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Stateless MCP has recaptured my interest (and inspired mcp-explorer and datasett - 句子·动态</title>
+<meta name="description" content="MCP 2.0（无状态模型上下文协议）是协议自发布以来最重大的更新，重新激发了作者对MCP的兴趣并促成了新工具的开发。" />
+<meta name="robots" content="noindex,follow" />
+<link rel="canonical" href="https://simonwillison.net/2026/Jul/31/stateless-mcp/#atom-everything" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Stateless MCP has recaptured my interest (and inspired mcp-explorer and datasett" />
+<meta property="og:description" content="MCP 2.0（无状态模型上下文协议）是协议自发布以来最重大的更新，重新激发了作者对MCP的兴趣并促成了新工具的开发。" />
+<meta property="og:url" content="https://simonwillison.net/2026/Jul/31/stateless-mcp/#atom-everything" />
+<meta property="og:site_name" content="句子互动" />
+<meta name="twitter:card" content="summary" />
+
+<link rel="icon" href="../../logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../../assets/site.css?v=72b48ba4" />
+<style>
+  /* 静态兜底导航: site.js 一执行就被 outerHTML 连同占位一起换掉, 访客几乎看不到它。
+     不隐藏也不 noscript 包裹——那会让爬虫拿不到, 而它存在的唯一理由就是给不跑 JS 的爬虫看。
+     样式做朴素一行, 万一 site.js 加载失败, 这排链接本身就是可用的降级导航。 */
+  .nav-fb{display:flex;flex-wrap:wrap;gap:6px 16px;padding:12px clamp(16px,4vw,40px);
+    border-bottom:1px solid var(--line-2);font-size:12.5px}
+  .nav-fb a{color:var(--ink-3);text-decoration:none}
+  .nav-fb a:hover{color:var(--blue)}
+
+  .dp-main{padding:clamp(96px,12vh,132px) var(--gut) clamp(56px,7vw,96px);background:#fff}
+  .dp-wrap{max-width:760px;margin:0 auto}
+  .dp-crumb{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:12.5px;color:var(--ink-3);margin-bottom:20px;min-width:0}
+  .dp-crumb a{color:var(--ink-3);text-decoration:none}
+  .dp-crumb a:hover{color:var(--blue)}
+  .dp-crumb i{font-style:normal;opacity:.5;font-size:11px}
+  .dp-crumb [aria-current]{color:var(--ink-2);font-weight:650;overflow-wrap:anywhere}
+  .dp-back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--ink-3);margin-bottom:22px;transition:color .2s var(--ease)}
+  .dp-back:hover{color:var(--blue)}
+  .dp-meta{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:14px}
+  .dp-srcb{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:750;color:var(--sc,var(--blue))}
+  .s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
+  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-voices{--sc:#9333EA}
+  .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
+  .dp-cat{display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ink-3);background:#F6F7FB;border:1px solid var(--line-2);border-radius:6px;padding:2px 8px}
+  .dp-read{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  /* 相关动态: 读完一篇之后的出口。此前详情页之间零链接, 读者只能回列表页重新扫,
+     爬虫也只能靠 JS 驱动的列表页做枢纽。每条都带「为什么相关」, 不做无理由的推荐。 */
+  .dp-rel{margin-top:40px;padding-top:26px;border-top:1px solid var(--line-2)}
+  .dp-rel-h{font-size:14px;font-weight:750;color:var(--ink-2);margin:0 0 14px}
+  .dp-rel ul{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+  .dp-rel a{display:block;padding:10px 12px;margin:0 -12px;border-radius:8px;text-decoration:none;transition:background .2s var(--ease)}
+  .dp-rel a:hover{background:#F6F7FB}
+  .dp-rel-t{display:block;font-size:14px;font-weight:650;color:var(--ink-1);line-height:1.5}
+  .dp-rel a:hover .dp-rel-t{color:var(--blue)}
+  .dp-rel-m{display:block;margin-top:3px;font-size:11.5px;color:var(--ink-3)}
+  .dp-read i{font-size:10px;opacity:.7}
+  .dp-date{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-3)}
+  .dp-title{font-size:clamp(24px,3.2vw,34px);font-weight:850;letter-spacing:-.03em;line-height:1.32;word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance;margin-bottom:10px}
+  .dp-orig{font-size:13px;color:var(--ink-3);overflow-wrap:anywhere;margin-bottom:8px}
+  .dp-by{font-size:12.5px;font-weight:600;color:var(--ink-3);margin-bottom:18px}
+  .dp-notice{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:1.7;color:var(--ink-2);background:#F6F7FB;border:1px solid var(--line-2);border-radius:10px;padding:10px 14px;margin-bottom:22px}
+  .dp-notice i{color:var(--blue);margin-top:4px;flex:0 0 auto}
+  .dp-notice a{color:var(--blue);font-weight:700;overflow-wrap:anywhere}
+  .dp-quip{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.66;font-weight:600;color:var(--blue-deep);background:var(--blue-50);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:18px}
+  .dp-quip i{font-size:10px;opacity:.55;margin-top:5px;flex:0 0 auto}
+  .dp-brief{font-size:14px;line-height:1.85;color:var(--ink);background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:14px 18px;margin-bottom:24px}
+  .dp-brief b{display:flex;align-items:baseline;gap:8px;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+  /* AI 产出物的就地标注(2026-07-30): 概念页的定义早就在页尾注明「由 AI 加工层生成、编辑
+     维护」, 而详情页的简报与锐评一直没标 —— 读者会把那句锐评当成编辑观点。283 页都有这两块,
+     不标就是 283 次误导。放在区块内而不是只放页尾: 页尾声明读者多半划不到, 而标注要落在
+     人实际阅读的位置才有意义。样式压到最小, 不抢正文。 */
+  .dp-brief b em,.dp-quip em{font-style:normal;font-family:var(--mono);font-size:10px;font-weight:600;
+    letter-spacing:0;color:var(--ink-3);white-space:nowrap}
+  .dp-brief b em{margin-left:auto}
+  .dp-quip em{display:block;margin-top:5px;opacity:.85}
+  /* 长文目录(≥3 小标题且正文 ≥2000 字才出): <details> 原生可折叠, 不用一行 JS。
+     默认 open —— 目录的用处是先看清结构再决定读哪段, 收起来就失去意义; 想收也一点即收。 */
+  .dp-toc{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:24px;background:#FBFCFF}
+  .dp-toc summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--ink-2);display:flex;align-items:center;gap:7px;list-style:none}
+  .dp-toc summary::-webkit-details-marker{display:none}
+  .dp-toc summary i{font-size:11px;color:var(--blue)}
+  .dp-toc summary span{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-3);margin-left:auto}
+  .dp-toc ol{list-style:none;margin:10px 0 2px;padding:0;counter-reset:toc}
+  .dp-toc li{counter-increment:toc;font-size:13px;line-height:1.7;padding:2px 0}
+  .dp-toc li::before{content:counter(toc) ". ";font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .dp-toc li.lv3{padding-left:16px}
+  .dp-toc li.lv4{padding-left:32px}
+  .dp-toc a{color:var(--ink-2);text-decoration:none;overflow-wrap:anywhere}
+  .dp-toc a:hover{color:var(--blue)}
+  /* 锚点跳转时标题别贴到视口顶端(站点顶栏会盖住) */
+  .dp-body h2[id],.dp-body h3[id],.dp-body h4[id]{scroll-margin-top:76px}
+  .dp-body{font-size:15.5px;line-height:1.92;color:var(--ink-2);overflow-wrap:anywhere}
+  .dp-body h1,.dp-body h2,.dp-body h3,.dp-body h4{color:var(--ink);font-weight:800;line-height:1.45;margin:1.6em 0 .6em;font-size:1.15em}
+  .dp-body p{margin:0 0 1.05em}
+  .dp-body img{max-width:100%;height:auto;border-radius:10px;margin:.4em 0}
+  .dp-body pre{background:#0F172A;color:#E2E8F0;font-family:var(--mono);font-size:12.5px;line-height:1.7;padding:14px 16px;border-radius:10px;overflow-x:auto;margin:0 0 1.1em}
+  .dp-body code{font-family:var(--mono);font-size:.92em}
+  .dp-body :not(pre)>code{background:#F1F5F9;padding:1px 5px;border-radius:5px}
+  .dp-body blockquote{border-left:3px solid var(--line);padding:2px 0 2px 14px;color:var(--ink-3);margin:0 0 1.05em}
+  .dp-body a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+  .dp-body ul,.dp-body ol{padding-left:1.5em;margin:0 0 1.05em}
+  .dp-body table{display:block;overflow-x:auto;border-collapse:collapse;margin:0 0 1.1em}
+  .dp-body td,.dp-body th{border:1px solid var(--line);padding:6px 10px;font-size:.92em}
+  .dp-excerpt{font-size:15px;line-height:1.9;color:var(--ink-2);border-left:3px solid var(--line);padding:2px 0 2px 16px;margin-bottom:8px}
+  .dp-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;padding-top:20px;border-top:1px solid var(--line-2)}
+  .dp-btn{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:750;border-radius:999px;padding:10px 20px;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+  .dp-btn.pri{background:var(--blue);color:#fff}
+  .dp-btn.pri:hover{background:var(--blue-deep)}
+  .dp-btn.sec{background:#fff;color:var(--ink-2);border:1px solid var(--line)}
+  .dp-btn.sec:hover{color:var(--blue);border-color:var(--blue)}
+  .dp-note{font-size:11.5px;line-height:1.7;color:var(--ink-3);margin-top:18px}
+  .dp-langbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+  .dp-lang{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:750;color:var(--blue);
+    background:var(--blue-50);border:1px solid var(--blue-100);border-radius:999px;padding:7px 14px;
+    transition:background .2s var(--ease),border-color .2s var(--ease)}
+  .dp-lang:hover{background:var(--blue-100);border-color:var(--blue-200)}
+  .dp-lang-note{font-size:11px;color:var(--ink-3)}
+  /* 概念标注(概念层 v1): 虚线下划线, 悬停浮层一句话定义, 点击进概念页——克制不做满屏蓝链 */
+  a.cpt{position:relative;color:inherit;text-decoration:underline dashed;text-decoration-color:#A5B4CF;text-decoration-thickness:1px;text-underline-offset:3.5px;cursor:help}
+  a.cpt:hover{color:var(--blue);text-decoration-color:var(--blue)}
+  a.cpt::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translate(-50%,4px);width:max-content;max-width:min(300px,74vw);background:#0F172A;color:#E2E8F0;font-size:12px;line-height:1.65;font-weight:500;font-style:normal;text-align:left;white-space:normal;border-radius:9px;padding:8px 12px;box-shadow:0 8px 24px rgba(15,23,42,.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s;z-index:40}
+  a.cpt:hover::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div id="site-nav" class="nav-fb"><a href="../../index.html">句子互动</a><a href="../../products/miaodong.html">句子秒懂</a><a href="../../products/shouhu.html">句子守护</a><a href="../../products/canmou.html">句子问数</a><a href="../../products/dongxing.html">句子懂行</a><a href="../../products/miaohui.html">句子秒回</a><a href="../../products/cli.html">句子 CLI</a><a href="../../products/zhizao.html">句子制造</a><a href="../../fde.html">FDE</a><a href="../../enterprise.html">企业方案</a><a href="../../industries.html">行业</a><a href="../../about.html">关于我们</a><a href="../../news.html">动态</a></div>
+<main class="dp-main">
+  <div class="dp-wrap">
+    <nav class="dp-crumb" aria-label="面包屑"><a href="../../index.html">句子互动</a><i aria-hidden="true">›</i><a href="../../news.html">动态</a><i aria-hidden="true">›</i><span aria-current="page">Stateless MCP has recaptured my interest</span></nav>
+    <div class="dp-meta">
+      <span class="dp-srcb s-voices"><i class="fa-solid fa-feather"></i>大咖观点</span>
+      <span class="dp-cat">Simon Willison</span>
+      <time class="dp-date" datetime="2026-07-31">2026-07-31</time>
+      <span class="dp-read"><i class="fa-regular fa-clock"></i>约 16 分钟</span>
+    </div>
+    <h1 class="dp-title">Stateless MCP has recaptured my interest (and inspired mcp-explorer and datasett</h1>
+    <p class="dp-orig">原题：Stateless MCP has recaptured my interest (and inspired mcp-explorer and datasette-mcp)</p>
+    <p class="dp-by">来源：Simon Willison · 大咖观点</p>
+    <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（Simon Willison · 大咖观点）所有 · <a href="https://simonwillison.net/2026/Jul/31/stateless-mcp/#atom-everything" target="_blank" rel="noopener">阅读原文</a></span></div>
+    
+    <div class="dp-brief"><b>简报<em>AI 加工层生成</em></b>MCP 2.0（无状态模型上下文协议）是协议自发布以来最重大的更新，重新激发了作者对MCP的兴趣并促成了新工具的开发。</div>
+    <div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang"><i class="fa-solid fa-language"></i><span>翻译为中文</span></button><span class="dp-lang-note">中文由 AI 翻译，仅供参考</span></div><article class="dp-body" id="dpBodyOrig" lang="en"><p>Tuesday was <a href="https://x.com/ade_oshineye/status/2082129440943866149">Stateless MCP day</a> - the rollout of MCP 2.0, or <a href="https://blog.modelcontextprotocol.io/posts/2026-07-28/">the 2026-07-28 Model Context Protocol specification</a> to use the more formal but less memorable name. This is the most significant change to the MCP spec since it first launched, and has also served to reignite my personal interest in the protocol.</p>
+<p>For background: MCP is the Model Context Protocol, which describes a standard way to expose new tools to LLM-powered agent frameworks. It was introduced by Anthropic back <a href="https://www.anthropic.com/news/model-context-protocol">in November 2024</a>, had a <em>huge</em> spike of interest through much of 2025, and then became somewhat eclipsed by <a href="https://simonwillison.net/2025/Oct/16/claude-skills/">Skills</a> (another Anthropic invention) when it became apparent that an agent harness with access to a terminal and <code>curl</code> could do most of what MCP did in a more flexible way. I wrote about that <a href="https://simonwillison.net/2025/Dec/31/the-year-in-llms/#the-only-year-of-mcp">in my review of 2025</a>.</p>
+<p>I'm coming back around to MCP now. Giving an agent a shell environment with the ability to access the internet is <a href="https://simonwillison.net/2026/Jul/22/openai-cyberattack/">fraught with risk</a>, and requires a strong model that is capable of effectively driving such an environment. MCP tools are easier to audit and control, and simple enough that smaller models that run on a laptop can still drive them reasonably well.</p>
+<p>The new stateless MCP specification also greatly decreases the complexity of implementing both clients and servers for the protocol. I built three of those this week!</p>
+<h4 id="what-s-easier-with-stateless-mcp">What's easier with stateless MCP</h4>
+<p>The best demonstration of the difference between stateful and stateless MCP is in this <a href="https://blog.modelcontextprotocol.io/posts/2026-07-28-release-candidate/">May 21st blog post</a> that introduced the RC for the new specification. It included a clear before-and-after example.</p>
+<p>The older stateful MCP (I'm going to call it "legacy MCP") required two HTTP requests - the first to initialize a session and obtain a <code>Mcp-Session-Id</code>, and the second to actually call the tool:</p>
+<pre><code>POST /mcp HTTP/1.1
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "initialize",
+  "params": {
+    "protocolVersion": "2025-11-25",
+    "capabilities": {
+    },
+    "clientInfo": {
+      "name": "my-app",
+      "version": "1.0"
+    }
+  }
+}
+
+POST /mcp HTTP/1.1
+Mcp-Session-Id: 1868a90c-3a3f-4f5b
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "method": "tools/call",
+  "params": {
+    "name": "search",
+    "arguments": {
+      "q": "otters"
+    }
+  }
+}
+</code></pre>
+<p>The new stateless way uses a single HTTP request which looks like this:</p>
+<pre><code>POST /mcp HTTP/1.1
+MCP-Protocol-Version: 2026-07-28
+Mcp-Method: tools/call
+Mcp-Name: search
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "tools/call",
+  "params": {
+    "name": "search",
+    "arguments": {
+      "q": "otters"
+    },
+    "_meta": {
+      "io.modelcontextprotocol/clientInfo": {
+        "name": "my-app",
+        "version": "1.0"
+      }
+    }
+  }
+}
+</code></pre>
+<p>This is so much cleaner from both a client- and server-side implementation perspective. It's also a better fit for building scalable web applications, since now you don't need to maintain server-side state to keep track of those session IDs, or worry about routing the same session to the same backend machine.</p>
+<h4 id="mcp-explorer">mcp-explorer</h4>
+<p>I couldn't find a great CLI tool for interactively probing an <a class="cpt" href="../c/mcp-server.html" data-def="模型上下文协议服务器是一种让AI Agent安全连接本地数据和工具的标准化接口">MCP server</a>, so I had Codex help build my own.</p>
+<p><strong><a href="https://github.com/simonw/mcp-explorer">mcp-explorer</a></strong> is the result. It's a stateless Python CLI tool, so you don't even need to install it to try it out - it works with <a href="https://docs.astral.sh/uv/guides/tools/#running-tools">uvx</a> like this:</p>
+<div class="highlight highlight-source-shell"><pre>uvx mcp-explorer list https://agentic-mermaid.dev/mcp</pre></div>
+<p>This queries Ade Oshineye's <a href="https://agentic-mermaid.dev/">agentic-mermaid.dev</a> demo MCP. The above command returns the following list of tools:</p>
+<pre><code>execute(code: string, timeoutMs?: integer) - Execute Mermaid SDK code
+  Run JavaScript in an isolated sandbox; return a value.
+
+describe_sdk(family: string, detail?: string) - Describe Mermaid SDK operations
+  Return version-matched mutation operations for one diagram family.
+
+render_svg(source: string, options?: object) - Render Mermaid as SVG
+  Render a Mermaid source string to themeable SVG. Returns { ok, svg }.
+
+render_ascii(source: string, useAscii?: boolean, targetWidth?: integer, options?: object) - Render Mermaid as text
+  Render a Mermaid source string to text. Returns { ok, text }.
+
+render_png(source: string, scale?: number, background?: string, fitTo?: object, options?: object) - Render Mermaid as PNG
+  Rasterize a Mermaid source string to PNG. Returns { ok, png_base64 }.
+...
+</code></pre>
+<p>Then to inspect a tool:</p>
+<div class="highlight highlight-source-shell"><pre>uvx mcp-explorer inspect render_svg</pre></div>
+<p>This outputs a whole bunch of information, including the JSON schema of the inputs and outputs.</p>
+<p>To call that tool and pass arguments to it:</p>
+<div class="highlight highlight-source-shell"><pre>uvx mcp-explorer call \
+  https://agentic-mermaid.dev/mcp \
+  render_svg \
+  -a <span class="pl-c1">source</span> <span class="pl-s"><span class="pl-pds">'</span>graph TD; A--&gt;B<span class="pl-pds">'</span></span> \
+  -a options <span class="pl-s"><span class="pl-pds">'</span>{"padding":24}<span class="pl-pds">'</span></span></pre></div>
+<p>Which returns:</p>
+<pre><code>{"ok":true,"svg":"&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=...
+</code></pre>
+<p>To get just the raw SVG try adding <code>| jq .svg -r</code> to that command. I got back <a href="https://gist.github.com/simonw/b07c62f0ce103be6932477659d5dd1ac">this image</a>:</p>
+<p><img loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'" src="https://static.simonwillison.net/static/2026/mermaid-example.svg" alt="SVG of as A box on top of a B box with an arrow from A to B"  /></p>
+<p>There are a <a href="https://github.com/simonw/mcp-explorer/blob/main/README.md">few more commands</a> in the README, but you get the general idea. I find building CLI tools like this to be a really productive way to get familiar with a specification, even if an agent writes most of the actual code.</p>
+<h4 id="datasette-mcp">datasette-mcp</h4>
+<p>The second project is <strong><a href="https://github.com/datasette/datasette-mcp">datasette-mcp</a></strong>, a Datasette plugin which adds a <code>/-/mcp</code> endpoint to any Datasette instance.</p>
+<p>This is probably the fourth time I've tried building this plugin, but thanks to the new stateless MCP specification I finally have a version that feels good to release.</p>
+<p>It provides just three tools: <code>list_databases()</code>, <code>get_database_schema(database_name)</code>, and <code>execute_sql(database_name, sql)</code>. They do exactly what you would expect them to do - though <code>execute_sql()</code> is read-only for the moment.</p>
+<p>Wire these into an agent, or a chat tool like ChatGPT or Claude, and they'll gain the ability to run SQL queries against your hosted Datasette instance.</p>
+<p>So far I'm running it on the Datasette mirror of my blog, at <a href="https://simonwillison.net/2026/Jul/31/stateless-mcp/datasette.simonwillison.net/-/mcp">datasette.simonwillison.net/-/mcp</a>. It took a bit of fiddling to figure out how to attach that to ChatGPT and Claude, but I got there in the end. Here's <a href="https://til.simonwillison.net/llms/mcp-in-claude-and-chatgpt">a new TIL</a> showing exactly how to do that.</p>
+<p>Here's <a href="https://claude.ai/share/de1ad9bf-f7c2-4fb9-a9a0-2a1ae39995db">a shared Claude session</a> where I asked it:</p>
+<blockquote>
+<p><code>list tables in simonwillison.net</code></p>
+</blockquote>
+<p>And then:</p>
+<blockquote>
+<p><code>what has Simon said recently about MCP?</code></p>
+</blockquote>
+<p>It ran 7 separate SQL queries to figure out the answer.</p>
+<h4 id="llm-mcp-client">llm-mcp-client</h4>
+<p>My <a href="https://llm.datasette.io/">LLM tool</a> is long overdue for an official MCP integration. The new alpha <a href="https://github.com/simonw/llm-mcp-client">llm-mcp-client</a> plugin is my attempt at exactly that:</p>
+<div class="highlight highlight-source-shell"><pre>llm install llm-mcp-client
+llm -T <span class="pl-s"><span class="pl-pds">'</span>MCP("https://datasette.simonwillison.net/-/mcp")<span class="pl-pds">'</span></span> <span class="pl-s"><span class="pl-pds">'</span>count the notes<span class="pl-pds">'</span></span></pre></div>
+<p>Here's the output (including reasoning trace, I'm using <a href="https://simonwillison.net/2026/Jul/30/llm-rc2/">LLM 0.32rc2</a>):</p>
+<blockquote>
+<p><em><strong>Considering note count</strong></em></p>
+<p><em>I see the question "count the notes" is probably asking me to tally up blog notes. It could also mean published notes or drafts, so there's some ambiguity there. I'll need to figure out the total number of notes, likely by querying the count for both published notes and drafts to get a clear answer. Let's execute that count!</em></p>
+<p>There are <strong>151 notes</strong>.</p>
+</blockquote>
+<p>And <a href="https://gist.github.com/simonw/4e8f558766150658ce35eab4f0fc3e04">the output of llm logs</a> for that prompt.</p>
+<p>Once this is fully baked, I'm considering bringing it directly into LLM core. I'm excited to experiment with MCP in <a href="https://agent.datasette.io/">Datasette Agent</a> and <a href="https://github.com/simonw/llm-coding-agent">llm-coding-agent</a> as well.</p>
+<h4 id="mcp-is-a-safer-way-to-build-with-agents">MCP is a safer way to build with agents</h4>
+<p>A few months after MCP was first released, I wrote <a href="https://simonwillison.net/2025/Apr/9/mcp-prompt-injection/">Model Context Protocol has prompt injection security problems</a>, where I noted that the pattern of having end users mix and match tools pushed responsibility for avoiding data exfiltration attacks out to the users themselves. I hadn't coined <a href="https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/">the Lethal Trifecta</a> yet, but that was absolutely what I had in mind.</p>
+<p>Then general agents with arbitrary shell and <code>curl</code> access came along, and that's so much harder to keep secure!</p>
+<p>Something I've come to appreciate about MCP is that it's much easier to reason about agent capabilities and what might go wrong than with arbitrary command execution in an open network environment - the default for most of today's general and coding agent tools.</p>
+<p>I plan to lean into MCP a whole lot more when I'm building sensitive applications on top of LLMs.</p>
+    
+        <p>Tags: <a href="https://simonwillison.net/tags/projects">projects</a>, <a href="https://simonwillison.net/tags/ai">ai</a>, <a href="https://simonwillison.net/tags/datasette">datasette</a>, <a href="https://simonwillison.net/tags/mermaid">mermaid</a>, <a href="https://simonwillison.net/tags/generative-ai">generative-ai</a>, <a href="https://simonwillison.net/tags/llms">llms</a>, <a href="https://simonwillison.net/tags/llm">llm</a>, <a href="https://simonwillison.net/tags/anthropic">anthropic</a>, <a href="https://simonwillison.net/tags/model-context-protocol">model-context-protocol</a></p></article><article class="dp-body" id="dpBodyZh" lang="zh-CN" hidden><p>周二是 <a href="https://x.com/ade_oshineye/status/2082129440943866149">无状态 MCP 日</a> - MCP 2.0 的发布，或者用更正式但不太好记的名字来说，就是 <a href="https://blog.modelcontextprotocol.io/posts/2026-07-28/">2026-07-28 模型上下文协议规范</a>。这是 MCP 规范自首次发布以来最重大的变化，也重新点燃了我对这个协议的个人兴趣。</p>
+<p>背景介绍：MCP 是模型上下文协议（Model Context Protocol），它描述了一种向基于大语言模型的智能体框架暴露新工具的标准方式。该协议由 Anthropic 在 <a href="https://www.anthropic.com/news/model-context-protocol">2024 年 11 月</a>首次推出，在 2025 年的大部分时间里引起了 <em>巨大</em>的关注热潮，但随着人们发现一个拥有终端和 <code>curl</code> 访问能力的智能体框架能以更灵活的方式完成 MCP 大部分功能后，MCP 的热度便被 <a href="https://simonwillison.net/2025/Oct/16/claude-skills/">Skills</a>（另一项 Anthropic 的发明）所超越。我在 <a href="https://simonwillison.net/2025/Dec/31/the-year-in-llms/#the-only-year-of-mcp">2025 年回顾文章</a>中写过相关内容。</p>
+<p>我现在重新关注 MCP。给智能体一个能访问互联网的 shell 环境 <a href="https://simonwillison.net/2026/Jul/22/openai-cyberattack/">风险重重</a>，并且需要一个强大的模型来有效驱动这样的环境。MCP 工具更容易审计和控制，而且足够简单，以至于在笔记本电脑上运行的小型模型也能很好地驱动它们。</p>
+<p>新的无状态 MCP 规范也大大降低了实现该协议客户端和服务器的复杂度。我这周就搭建了三个！</p>
+<h4 id="what-s-easier-with-stateless-mcp">无状态 MCP 带来了哪些便利</h4>
+<p>有状态和无状态 MCP 之间最好的区别演示，出现在这篇介绍新规范候选版本的 <a href="https://blog.modelcontextprotocol.io/posts/2026-07-28-release-candidate/">5 月 21 日博客文章</a>中。文章包含了一个清晰的“之前与之后”的对比示例。</p>
+<p>旧的有状态 MCP（我称之为“传统 MCP”）需要两次 HTTP 请求——第一次用于初始化会话并获取一个 <code>Mcp-Session-Id</code>，第二次才是实际调用工具：</p>
+<pre><code>POST /mcp HTTP/1.1
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "initialize",
+  "params": {
+    "protocolVersion": "2025-11-25",
+    "capabilities": {
+    },
+    "clientInfo": {
+      "name": "my-app",
+      "version": "1.0"
+    }
+  }
+}
+
+POST /mcp HTTP/1.1
+Mcp-Session-Id: 1868a90c-3a3f-4f5b
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "method": "tools/call",
+  "params": {
+    "name": "search",
+    "arguments": {
+      "q": "otters"
+    }
+  }
+}
+</code></pre>
+<p>这种新的无状态方式使用单个 HTTP 请求，看起来是这样的：</p>
+<pre><code>POST /mcp HTTP/1.1
+MCP-Protocol-Version: 2026-07-28
+Mcp-Method: tools/call
+Mcp-Name: search
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "tools/call",
+  "params": {
+    "name": "search",
+    "arguments": {
+      "q": "otters"
+    },
+    "_meta": {
+      "io.modelcontextprotocol/clientInfo": {
+        "name": "my-app",
+        "version": "1.0"
+      }
+    }
+  }
+}
+</code></pre>
+<p>从客户端和服务器端的实现角度来看，这要简洁得多。它也更适合构建可扩展的 Web 应用程序，因为现在你无需维护服务器端状态来跟踪那些会话 ID，也无需担心将同一个会话路由到同一个后端机器上。</p>
+<h4 id="mcp-explorer">mcp-explorer</h4>
+<p>我找不到一个很好的 CLI 工具来交互式地探测 MCP 服务器，所以我让 Codex 帮我构建了一个自己的工具。</p>
+<p><strong><a href="https://github.com/simonw/mcp-explorer">mcp-explorer</a></strong> 就是成果。它是一个无状态的 Python CLI 工具，所以你甚至不需要安装就可以试用——它可以像这样与 <a href="https://docs.astral.sh/uv/guides/tools/#running-tools">uvx</a> 一起使用：</p>
+<div class="highlight highlight-source-shell"><pre>uvx mcp-explorer list https://agentic-mermaid.dev/mcp</pre></div>
+<p>这个命令会查询 Ade Oshineye 的 <a href="https://agentic-mermaid.dev/">agentic-mermaid.dev</a> 演示 MCP。上面的命令会返回以下工具列表：</p>
+<pre><code>execute(code: string, timeoutMs?: integer) - 执行 Mermaid SDK 代码
+  在隔离的沙箱中运行 JavaScript；返回一个值。
+
+describe_sdk(family: string, detail?: string) - 描述 Mermaid SDK 操作
+  返回与版本匹配的图表家族的变更操作。
+
+render_svg(source: string, options?: object) - 将 Mermaid 渲染为 SVG
+  将 Mermaid 源字符串渲染为可主题化的 SVG。返回 { ok, svg }。
+
+render_ascii(source: string, useAscii?: boolean, targetWidth?: integer, options?: object) - 将 Mermaid 渲染为文本
+  将 Mermaid 源字符串渲染为文本。返回 { ok, text }。
+
+render_png(source: string, scale?: number, background?: string, fitTo?: object, options?: object) - 将 Mermaid 渲染为 PNG
+  将 Mermaid 源栅格化为 PNG。返回 { ok, png_base64 }。
+...
+</code></pre>
+<p>然后检查一个工具：</p>
+<div class="highlight highlight-source-shell"><pre>uvx mcp-explorer inspect render_svg</pre></div>
+<p>这会输出大量信息，包括输入和输出的 JSON schema。</p>
+<p>调用该工具并向其传递参数：</p>
+<div class="highlight highlight-source-shell"><pre>uvx mcp-explorer call \
+  https://agentic-mermaid.dev/mcp \
+  render_svg \
+  -a <span class="pl-c1">source</span> <span class="pl-s"><span class="pl-pds">'</span>graph TD; A--&gt;B<span class="pl-pds">'</span></span> \
+  -a options <span class="pl-s"><span class="pl-pds">'</span>{"padding":24}<span class="pl-pds">'</span></span></pre></div>
+<p>返回结果如下：</p>
+<pre><code>{"ok":true,"svg":"&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=...
+</code></pre>
+<p>要获取原始 SVG，可以尝试在该命令后添加 <code>| jq .svg -r</code>。我得到了 <a href="https://gist.github.com/simonw/b07c62f0ce103be6932477659d5dd1ac">这张图片</a>：</p>
+<p><img loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'" src="https://static.simonwillison.net/static/2026/mermaid-example.svg" alt="SVG of as A box on top of a B box with an arrow from A to B"  /></p>
+<p>README 中还有 <a href="https://github.com/simonw/mcp-explorer/blob/main/README.md">更多命令</a>，但你应该已经明白大概意思了。我发现构建这样的 CLI 工具是熟悉规范的一种非常高效的方式，即使大部分实际代码是由代理生成的。</p>
+<h4 id="datasette-mcp">datasette-mcp</h4>
+<p>第二个项目是 <strong><a href="https://github.com/datasette/datasette-mcp">datasette-mcp</a></strong>，一个 Datasette 插件，为任何 Datasette 实例添加一个 <code>/-/mcp</code> 端点。</p>
+<p>这大概是我第四次尝试构建这个插件了，但得益于新的无状态 MCP 规范，我终于有了一个可以放心发布的版本。</p>
+<p>它只提供了三个工具：<code>list_databases()</code>、<code>get_database_schema(database_name)</code> 和 <code>execute_sql(database_name, sql)</code>。这些工具的功能完全如其名所示——不过 <code>execute_sql()</code> 目前是只读的。</p>
+<p>将它们集成到代理程序或 ChatGPT、Claude 这样的聊天工具中，这些工具就能获得针对你的托管 Datasette 实例运行 SQL 查询的能力。</p>
+<p>目前我正在我的博客 Datasette 镜像上运行它，地址是 <a href="https://simonwillison.net/2026/Jul/31/stateless-mcp/datasette.simonwillison.net/-/mcp">datasette.simonwillison.net/-/mcp</a>。花了不少功夫才搞清楚如何将它连接到 ChatGPT 和 Claude，但最终还是成功了。这篇 <a href="https://til.simonwillison.net/llms/mcp-in-claude-and-chatgpt">新的 TIL 文章</a> 详细展示了具体操作方法。</p>
+<p>这是我创建的一个 <a href="https://claude.ai/share/de1ad9bf-f7c2-4fb9-a9a0-2a1ae39995db">共享 Claude 会话</a>，我在其中询问：</p>
+<blockquote>
+<p><code>列出 simonwillison.net 中的表</code></p>
+</blockquote>
+<p>然后：</p>
+<blockquote>
+<p><code>Simon 最近对 MCP 有什么说法？</code></p>
+</blockquote>
+<p>为了找出答案，它运行了 7 个独立的 SQL 查询。</p>
+<h4 id="llm-mcp-client">llm-mcp-client</h4>
+<p>我的 <a href="https://llm.datasette.io/">LLM 工具</a>早就该正式集成 MCP 了。新的 alpha 版 <a href="https://github.com/simonw/llm-mcp-client">llm-mcp-client</a> 插件正是我为此所做的尝试：</p>
+<div class="highlight highlight-source-shell"><pre>llm install llm-mcp-client
+llm -T <span class="pl-s"><span class="pl-pds">'</span>MCP("https://datasette.simonwillison.net/-/mcp")<span class="pl-pds">'</span></span> <span class="pl-s"><span class="pl-pds">'</span>统计笔记数量<span class="pl-pds">'</span></span></pre></div>
+<p>这是输出结果（包含推理追踪，我使用的是 <a href="https://simonwillison.net/2026/Jul/30/llm-rc2/">LLM 0.32rc2</a>）：</p>
+<blockquote>
+<p><em><strong>正在考虑笔记数量</strong></em></p>
+<p><em>我看到问题"统计笔记数量"可能是要我统计博客笔记的总数。也可能是指已发布的笔记或草稿，这里存在一些歧义。我需要计算出笔记的总数，很可能是通过分别查询已发布笔记和草稿的数量来得到明确的答案。让我执行这个计数！</em></p>
+<p>共有 <strong>151 条笔记</strong>。</p>
+</blockquote>
+<p>以及该提示词的 <a href="https://gist.github.com/simonw/4e8f558766150658ce35eab4f0fc3e04">llm logs 输出</a>。</p>
+<p>等这个方案完全成熟后，我考虑将其直接集成到 LLM 核心中。我也很兴奋地想在 <a href="https://agent.datasette.io/">Datasette Agent</a> 和 <a href="https://github.com/simonw/llm-coding-agent">llm-coding-agent</a> 中尝试使用 MCP。</p>
+<h4 id="mcp-is-a-safer-way-to-build-with-agents">MCP 是一种更安全的智能体构建方式</h4>
+<p>MCP 刚发布几个月后，我写了篇 <a href="https://simonwillison.net/2025/Apr/9/mcp-prompt-injection/">《模型上下文协议存在提示注入安全问题》</a>，文中指出，让终端用户自由组合工具的模式，将防范数据泄露攻击的责任推给了用户自己。那时我还没提出 <a href="https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/">“致命三重奏”</a> 这个概念，但那正是我当时的核心担忧。</p>
+<p>后来出现了可以随意访问 shell 和 <code>curl</code> 的通用智能体，这让安全问题变得更加棘手！</p>
+<p>我逐渐认识到 MCP 的一个优点：与在开放网络环境中执行任意命令（目前大多数通用和编程智能体工具的默认模式）相比，更容易推理智能体的能力边界以及可能出现的风险。</p>
+<p>未来在基于 LLM 构建敏感应用时，我计划更多地采用 MCP。</p>
+    
+        <p>标签：<a href="https://simonwillison.net/tags/projects">projects</a>, <a href="https://simonwillison.net/tags/ai">ai</a>, <a href="https://simonwillison.net/tags/datasette">datasette</a>, <a href="https://simonwillison.net/tags/mermaid">mermaid</a>, <a href="https://simonwillison.net/tags/generative-ai">generative-ai</a>, <a href="https://simonwillison.net/tags/llms">llms</a>, <a href="https://simonwillison.net/tags/llm">llm</a>, <a href="https://simonwillison.net/tags/anthropic">anthropic</a>, <a href="https://simonwillison.net/tags/model-context-protocol">model-context-protocol</a></p></article>
+    <div class="dp-actions">
+      <a class="dp-btn pri" href="https://simonwillison.net/2026/Jul/31/stateless-mcp/#atom-everything" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      
+      <button type="button" class="dp-btn sec" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
+      <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
+    </div>
+    <nav class="dp-rel" aria-labelledby="dp-rel-h"><h2 id="dp-rel-h" class="dp-rel-h">相关动态</h2><ul><li><a href="a772002981a8.html"><span class="dp-rel-t">AI不再用完即忘：华为诺亚开源MindMemOS，记忆和Skill一起进化</span><span class="dp-rel-m">都提到「模型上下文协议服务器」 · <time datetime="2026-08-03">2026-08-03</time></span></a></li><li><a href="222584554cab.html"><span class="dp-rel-t">腾讯云发布智能数据湖计算 AI DLC，打通数据处理到 Agent 应用全流程</span><span class="dp-rel-m">都提到「模型上下文协议服务器」 · <time datetime="2026-07-30">2026-07-30</time></span></a></li><li><a href="de6541bcf762.html"><span class="dp-rel-t">来自 Codex 官方团队的分享：如何把 Codex 用到极致</span><span class="dp-rel-m">都提到「模型上下文协议服务器」 · <time datetime="2026-05-20">2026-05-20</time></span></a></li></ul></nav>
+    <p class="dp-note">本页由句子互动动态管线自动生成，聚合内容版权归各来源所有；如来源方希望调整或移除收录，请通过官网联系我们。</p>
+  </div>
+</main>
+<div id="site-footer"></div>
+<script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "Stateless MCP has recaptured my interest (and inspired mcp-explorer and datasett"};</script>
+<script src="../../assets/site.js?v=f57b1388"></script>
+<script>
+(function(){var b=document.getElementById('dpLang');if(!b)return;
+var en=document.getElementById('dpBodyOrig'),zh=document.getElementById('dpBodyZh');
+b.addEventListener('click',function(){var on=zh.hidden;zh.hidden=!on;en.hidden=on;
+b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';});})();
+</script>
+</body>
+</html>

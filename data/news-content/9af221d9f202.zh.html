@@ -1,0 +1,32 @@
+<p><strong>发布：</strong> <a href="https://github.com/simonw/condense-json/releases/tag/1.0">condense-json 1.0</a></p>
+        <p>我正努力鼓起勇气发布 1.0 版本。这个小库已经一年半了——我应用了一些合理且无破坏性的修复，并为其发布了重要的 1.0 版本。</p>
+<p>下面是一个它能做什么的例子，摘自 README：</p>
+<div class="highlight highlight-source-json"><pre>{
+  <span class="pl-ent">"foo"</span>: {
+    <span class="pl-ent">"bar"</span>: {
+      <span class="pl-ent">"string"</span>: <span class="pl-s"><span class="pl-pds">"</span>This is a string with foxes in it<span class="pl-pds">"</span></span>,
+      <span class="pl-ent">"nested"</span>: {
+        <span class="pl-ent">"more"</span>: [<span class="pl-s"><span class="pl-pds">"</span>Here is a string<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>another with foxes in it too<span class="pl-pds">"</span></span>]
+      }
+    }
+  }
+}</pre></div>
+<p>将其与一个替换对象结合使用：</p>
+<div class="highlight highlight-source-json"><pre>{<span class="pl-ent">"1"</span>: <span class="pl-s"><span class="pl-pds">"</span>with foxes in it<span class="pl-pds">"</span></span>}</pre></div>
+<p>然后 <code>condense_json(input_json, replacements)</code> 会生成以下内容：</p>
+<div class="highlight highlight-source-json"><pre>{
+  <span class="pl-ent">"foo"</span>: {
+    <span class="pl-ent">"bar"</span>: {
+      <span class="pl-ent">"string"</span>: {<span class="pl-ent">"$r"</span>: [<span class="pl-s"><span class="pl-pds">"</span>This is a string <span class="pl-pds">"</span></span>, {<span class="pl-ent">"$"</span>: <span class="pl-s"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span>}]},
+      <span class="pl-ent">"nested"</span>: {
+        <span class="pl-ent">"more"</span>: [<span class="pl-s"><span class="pl-pds">"</span>Here is a string<span class="pl-pds">"</span></span>, {<span class="pl-ent">"$r"</span>: [<span class="pl-s"><span class="pl-pds">"</span>another <span class="pl-pds">"</span></span>, {<span class="pl-ent">"$"</span>: <span class="pl-s"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span> too<span class="pl-pds">"</span></span>}]]
+      }
+    }
+  }
+}</pre></div>
+<p>它会扫描替换对象中存在的字符串或子字符串，并在输出中用特殊的 <code>{"$r": ...}</code> 语法替换它们。</p>
+<p>你可以使用 <code>uncondense_json(condensed, replacements)</code> 来反转这个效果。</p>
+<p>这个想法是为了让存储包含其他相关结构中重复数据的 JSON 变得更简单。我用它来节省 <a href="https://llm.datasette.io/">LLM</a> 生成的 SQLite 日志的空间 - 相关的最新迭代请参见 <a href="https://github.com/simonw/llm/pull/1586">#1586 号 PR</a>。</p>
+    
+    
+        <p>标签：<a href="https://simonwillison.net/tags/json">json</a>, <a href="https://simonwillison.net/tags/projects">projects</a>, <a href="https://simonwillison.net/tags/python">python</a>, <a href="https://simonwillison.net/tags/llm">llm</a></p>

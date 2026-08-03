@@ -131,6 +131,25 @@ SOURCES = [
     # Wechaty 源已撤(2026-07-07 用户裁决: 版本发布等开发者向内容对官网受众是噪音)。
     # 如需恢复: 加回 {"id":"wechaty-oss","type":"rss","feeds":[{"url":"https://wechaty.js.org/blog/rss.xml","name":"社区博客"}],...}
     {
+        # 一方内容 · 公司动态(佳芮 2026-08-02, PR#103 评审第 7 条补充): 基于全员月会等内部素材
+        # **重写的对外文章**, 每月至少一条保底, 把 2024/2025 的空档补实。与镜像那套不同:
+        # 没有可公开的原文链接, 正文本身就是完整内容 —— 登记条目直接带 body(HTML 片段),
+        # 管线落成正文镜像, 详情页不出「读原文」。
+        # **口径红线**: 内部文档不能直接对外 —— 客户名脱敏、数字用可公开口径、内部代号与人事
+        # 信息不出现。AI 可以起草, 但每篇入库前要人确认口径; 拿不准的列出来找佳芮定。
+        # 登记格式(与蒋老师对接飞书文档自动化前, 先手工投递验证通路):
+        #   {"title": "...", "date": "2026-07-31", "summary": "...", "body": "<p>…</p>",
+        #    "category": "月度动态"}   ← 不需要 url, 管线自动生成稳定锚点
+        "id": "company",
+        "name": "公司动态",
+        "author": "句子互动",
+        "type": "manual",
+        "file": ROOT / "data" / "company-news.json",
+        "home": "",
+        "own": True,        # 自家原创 → index,follow + canonical 指自身
+        "bodied": True,     # 允许无 url 的带正文条目(见 sync_manual)
+    },
+    {
         # 一方内容 · 产品动态(2026-07-22, 对标齐思后的裁决: 官网动态页拼的是一方内容, 不拼覆盖)。
         # 发版/上新往 data/product-news.json 登记一条即合流——结构化产品事实是 AI 引擎最爱引用的 GEO 素材
         "id": "product",
@@ -517,7 +536,7 @@ MIRROR_MODE = {s["id"]: s.get("mirror", "full") for s in SOURCES}
 # 根因不是排序而是内容速率不匹配: 公司内容 ~4 条/月, 行业 RSS ~50 条/天, 任何混排的时间流
 # 都会让自家信号被淹没。解法是分区不是排序: 「句子动态」(自家)与「行业雷达」(外部观察)
 # 分成两个区, 默认只看句子动态; 行业资讯降级为可切换的次区, 定位从"转载"改成"我们在看什么"。
-COMPANY_SOURCES = {"rui-blog", "wechat-mp", "product", "press"}
+COMPANY_SOURCES = {"rui-blog", "wechat-mp", "product", "press", "company"}
 GROUPS = {"company": "句子动态", "radar": "行业雷达"}
 
 
@@ -824,12 +843,29 @@ def localize_own_images(items):
         print(f"[图片] own 源本地化 {tot_got} 张, 改写镜像 {files} 篇" + (f", 退级 {tot_miss} 张(下轮重试)" if tot_miss else ""))
 
 
+# 非内容图(佳芮 2026-08-02 第 4 条): 量子位镜像正文里出现巨大的灰色占位头像 —— 实测是
+# `www.qbitai.com/wp-content/themes/…/head.jpg`, 主题目录里的作者头像被当内容图抓进来,
+# 18 篇量子位镜像里 14 篇都有(真内容图在 i.qbitai.com)。抓不到真图就不放图, 不放假图占版面。
+# 过滤放**渲染层**而不是抓取层: 镜像是"写一次不覆盖"的缓存, 只挡抓取层救不了存量 400 多页;
+# img_render 在指纹闭包里, 改这条全部页面自动重算。
+_JUNK_IMG_RX = re.compile(
+    r"wp-content/themes/"          # 主题静态资源(头像/装饰), 永远不是文章内容
+    r"|avatar|headimg|gravatar"    # 各家头像命名
+    r"|placehold|spacer|blank\.|/pixel\."
+    r"|/head\.(?:jpe?g|png|gif)"
+    r"|^data:image/gif",           # 懒加载 1px 占位 data URI
+    re.I)
+
+
 def img_render(h):
     """渲染层图片兜底(只注入生成的详情页, 存储镜像保持无活动内容——sanitize_fragment 会剥
-    存储层的 on* 属性): 懒加载 + no-referrer 破图床防盗链 + 挂了 onerror 隐藏不留破图标。"""
+    存储层的 on* 属性): 剔除非内容图 + 懒加载 + no-referrer 破图床防盗链 + onerror 隐藏破图。"""
     def fix(m):
         tag = m.group(0)
         low = tag.lower()  # 大小写不敏感判重: 存量若残留 onError= 之类不再重复注入(Bugbot PR#100)
+        src = re.search(r'src="([^"]*)"', tag, re.I)
+        if src and _JUNK_IMG_RX.search(src.group(1)):
+            return ""      # 整个 <img> 拿掉, 不留空壳
         add = ""
         if "loading=" not in low:
             add += ' loading="lazy"'
@@ -1068,7 +1104,14 @@ def sync_manual(src, old, limit):
     for e in entries:
         u = (e.get("url") or "").strip()
         if not u:
-            continue
+            # bodied 源(公司动态): 月会文章没有可公开的原文链接, 正文就是内容本身。
+            # 合成稳定锚点当唯一键: 指向本站(锚点无害), _bare_host 判 selfref → 详情页
+            # 不出「读原文」; sha1(url) 派生的 id 因此跨轮稳定, 详情页链接不断。
+            if src.get("bodied") and e.get("body") and e.get("title") and e.get("date"):
+                u = f"{SITE_BASE}/news.html#c-" + hashlib.sha1(
+                    f"{e['title']}|{norm_date(e['date'])}".encode()).hexdigest()[:10]
+            else:
+                continue
         if u in seen:
             # 登记表同一条 URL 写了两行(运营先贴初稿标题、后补正式标题却忘了删旧行)。
             # 不去重的话 make_item 会按 sha1(url) 造出两个同 id 条目, 一路带到
@@ -1097,6 +1140,13 @@ def sync_manual(src, old, limit):
             except Exception as ex:  # noqa: BLE001
                 print(f"  [失败] 投递条目抓取 {u}: {ex}")
         it = make_item(src, u, title, summary, date, e.get("category", ""), author=e.get("author"))
+        if it and e.get("body"):
+            # 登记正文 → 正文镜像(飞书文档→对外文章的通路; 产品动态接上蒋老师的发布文档后同样走这)
+            # 与抓取镜像同一套纪律: 消毒后写一次不覆盖; 登记表改正文时删镜像文件即可重落
+            mp = CONTENT_DIR / f"{it['id']}.html"
+            if not mp.exists():
+                CONTENT_DIR.mkdir(parents=True, exist_ok=True)
+                write_atomic(mp, sanitize_fragment(str(e["body"])))
         got.append(it) if it else (failed.append(u), print(f"  [跳过] 投递条目缺 title/date 且抓取失败: {u}"))
     print(f"[{src['id']}] 投递位 {len(entries)} 条, 新收 {len(got)} 条"
           + (f", 回写更新 {fixed} 条" if fixed else ""))
@@ -1636,12 +1686,54 @@ def write_atomic(path, text):
         raise
 
 
+# 标题/摘要红线词(佳芮 2026-08-02, PR#103 评审第 6 条): 命中的**整条不收录**, 不是改词。
+# 第一例是 2020 年那条「个人微信频繁封号…」—— 原文在 rui.juzi.bot 不动, 官网侧下架。
+# 做成机制而不是手删一条: 管线增量抓取, 手删的下一轮还会回来。思路同 copy-guard,
+# 但层次不同 —— copy-guard 守页面文案(CI 闸), 这里守**收录判定**(数据层)。
+# 注意与「决定 A」(署名文章镜像正文里的『企业微信』原样保留)不冲突: A 管正文措辞, 这里管
+# 标题/摘要级红线, 处理方式是整条不上站。
+HIDE_TERMS = ("封号", "炸群")
+
+
+def red_line(it):
+    """标题或摘要含红线词 → 不上站(条目留在登记册里, 增量去重还需要它)。
+
+    注意与 scrub_banned_ai_fields 的分工: 这里只管 HIDE_TERMS(封号类, 整条下架);
+    BANNED_TERMS(企微口径)若出现在**标题/摘要**(原文自带)才整条隐藏 —— 但实测第一例
+    是我们自己的 AI 锐评写出「企微」(quip 字段), 那不该连累原文, 洗掉该字段即可。"""
+    t = (it.get("title") or "") + (it.get("title_zh") or "") + (it.get("summary") or "")
+    return any(w in t for w in HIDE_TERMS)
+
+
+def scrub_banned_ai_fields(items):
+    """洗掉 AI 加工字段里的违禁词(佳芮口径: 企微/企业微信不出现在任何页面)。
+
+    实测第一例: 我们的 AI 锐评给阿里那条写了「办公能力提升直接利好企微场景的AI员工应用」——
+    **违禁词是自己的加工层引入的**, 原文没有。quip/brief/title_zh 都是可再生字段, 洗掉即可
+    (下轮 AI 会重写一条; ai_quip/ai_enrich 的存储侧同时挡新增), 不必连累整条文章。
+    标题/摘要是**原文自带**的场合走 red_line 整条隐藏, 分工见各自 docstring。
+    返回洗掉的字段数, 调用方决定要不要落盘。"""
+    n = 0
+    for it in items:
+        for f in ("quip", "brief", "title_zh"):
+            v = it.get(f)
+            if v and has_banned(v):
+                it.pop(f, None)
+                if f == "brief":
+                    it.pop("brief_full", None)   # 简报被洗 → 允许下轮重做
+                n += 1
+    if n:
+        print(f"[口径] AI 加工字段含违禁词, 已洗 {n} 个(下轮自动重写)")
+    return n
+
+
 def visible_items(items):
     """页面只注入过筛条目: 配了 ai_filter 的源里, 未判(pending)或 keep=false 的都不上站。
-    再过一道同源同标题去重(多源撞车)。"""
+    红线词条目整条隐藏; 再过一道同源同标题去重(多源撞车)。"""
     filtered_srcs = {s["id"] for s in SOURCES if s.get("ai_filter")}
     vis = [i for i in items
            if not i.get("retired")   # 一方登记表删行 → 撤稿(见 retire_unlisted)
+           and not red_line(i)
            and (i["source"] not in filtered_srcs or i.get("ai", {}).get("keep"))]
     return dedupe_same_story(vis)
 
@@ -1691,6 +1783,8 @@ def ai_quip(items):
         for it in batch:
             q = qmap.get(it["id"], "")
             if q:
+                if has_banned(q):
+                    continue   # 自家加工层不许引入违禁词(企微口径); 缺一条锐评无伤
                 it["quip"] = q[:60]
                 done += 1
     print(f"[AI 锐评] 新写 {done} 条")
@@ -2080,7 +2174,7 @@ BRIEF_MIN = 20   # 设计是 50~90 字; 短于 20 字的不是简报, 是残答
 def brief_usable(v):
     """这段文字能不能当简报用 —— 唯一判据, 生成时(要不要入库)与渲染时(要不要显示)共用。"""
     v = (v or "").strip()
-    return bool(v) and len(v) >= BRIEF_MIN and not AI_META_RX.search(v)
+    return bool(v) and len(v) >= BRIEF_MIN and not AI_META_RX.search(v) and not has_banned(v)
 
 
 def disp_brief(it):
@@ -2176,6 +2270,7 @@ SRC_ICON = {  # 与 news.html / news-c.html 页内 JS 的 ICON 同步
     "voices": "fa-solid fa-feather",
     "hn": "fa-brands fa-hacker-news",
     "qisi": "fa-solid fa-lightbulb",
+    "company": "fa-solid fa-building",
 }
 
 
@@ -2588,6 +2683,7 @@ def asset(rel, prefix="../../"):
 
 
 RELATED_MAX = 4       # 详情页「相关动态」条数上限
+RELATED_MAX_THIN = 2  # 导读模式(正文只有简报)的上限: 相关列表不能比正文长(佳芮 3a)
 RELATED_SRC_MAX = 2   # 同一来源最多占几条(见下: 不设限时 77% 的页四条同源)
 
 
@@ -2675,7 +2771,15 @@ def detail_html(it, lib, worthy, rel=()):
     ctx = json.dumps({"entity": "news-article", "type": "article", "title": title}, ensure_ascii=False).replace("</", "<\\/")
     origin = f"{it['author']} · {it['source_name']}" if it["author"] != it["source_name"] else it["source_name"]
     own = it["source"] in OWN_SOURCES
-    if own:
+    # 自家内容干净模板(佳芮 2026-08-02 第 3c/5 条): 导读提示、版权归属、「读原文」按钮、页尾
+    # 免责声明都是**为外部转载设计的防身衣**, 套在自家产品动态上全用不上 —— 那页正文只有一句
+    # 简报, 壳却有七八个模块。selfref = url 指向本站(实测 5 条产品动态的 url 全是自家产品页,
+    # 访客点「读原文」跳回本站, 很怪; company 源的合成锚点同理); homey = 自家内容。
+    selfref = _bare_host(it["url"]) == _bare_host(SITE_BASE)
+    homey = own or it["source"] == "product"
+    if it["source"] == "product":
+        notice = ""   # 产品动态: 无导读框 —— 它不是转载, 没有需要声明的归属
+    elif own:
         home = "李佳芮的博客" if it["source"] == "rui-blog" else f"微信公众号「{it['category'] or '句子互动'}」"
         verb = "本页为官网收录版" if full else "本页为内容导读"
         notice = (f'<i class="fa-solid fa-circle-info"></i><span>句子互动自家内容，首发于{esc(home)}，{verb} · '
@@ -2791,18 +2895,18 @@ b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';})
     <h1 class="dp-title">{esc(title)}</h1>
     {f'<p class="dp-orig">原题：{esc(it["title"])}</p>' if zh_title(it) else ""}
     <p class="dp-by">来源：{esc(origin)}</p>
-    <div class="dp-notice">{notice}</div>
+    {f'<div class="dp-notice">{notice}</div>' if notice else ""}
     {f'<p class="dp-quip"><i class="fa-solid fa-quote-left"></i>{esc(it["quip"])}<em>AI 加工层生成</em></p>' if it.get("quip") else ""}
     {f'<div class="dp-brief"><b>简报<em>AI 加工层生成</em></b>{esc(brief_txt)}</div>' if brief_txt else ""}
     {body}
     <div class="dp-actions">
-      <a class="dp-btn pri" href="{safe_href(it["url"])}" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      {f'<a class="dp-btn pri" href="{safe_href(it["url"])}" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>' if not selfref else ""}
       {hn_btn}
       <button type="button" class="dp-btn sec" onclick="window.openAskbar&&window.openAskbar()"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>
       <a class="dp-btn sec" href="../../news.html"><i class="fa-solid fa-list"></i>更多动态</a>
     </div>
     {related_html(rel, lib)}
-    <p class="dp-note">本页由句子互动动态管线自动生成，聚合内容版权归各来源所有；如来源方希望调整或移除收录，请通过官网联系我们。</p>
+    {'' if homey else '<p class="dp-note">本页由句子互动动态管线自动生成，聚合内容版权归各来源所有；如来源方希望调整或移除收录，请通过官网联系我们。</p>'}
   </div>
 </main>
 <div id="site-footer"></div>
@@ -3014,12 +3118,17 @@ def write_detail_pages(vis, items, lib, worthy):
     cache = _load_render_cache()
     old_sigs = cache.get("detail", {})
     new_sigs = {}
-    # 相关动态只在本轮要落页的条目(vis)里选, 链接指向的页必然存在
-    pool = {it["id"]: it for it in vis}
-    cidx = {}
+    # 相关动态只在本轮要落页的条目(vis)里选, 链接指向的页必然存在。
+    # **分区锁定**(佳芮 2026-08-02 第 3b 条): 池按 company/radar 切开 —— 「句子守护上线质量
+    # 中心」和「吴恩达做桌面 Agent」共享一个概念词, 在读者眼里不构成相关; 公司区(产品/博客/
+    # 媒体/公众号)只在公司池里找同伴, 行业雷达只在行业池里找。
+    pools = {"company": {}, "radar": {}}
+    cidxs = {"company": {}, "radar": {}}
     for it in vis:
+        z = group_of(it["source"])
+        pools[z][it["id"]] = it
         for s in (it.get("concepts") or []):
-            cidx.setdefault(s, []).append(it["id"])
+            cidxs[z].setdefault(s, []).append(it["id"])
     for it in vis:
         name = f"{it['id']}.html"
         want.add(name)
@@ -3047,7 +3156,12 @@ def write_detail_pages(vis, items, lib, worthy):
         # (Bugbot PR#103)。更要紧的是**测试里把同一个公式抄了一遍, 所以测也抓不住**: 验证手段
         # 与被验证的错误同源, 这是交接书 §6.12 那条纪律的第三次复发, 而且就发生在写完它之后。
         # 改成哈希渲染结果, "漏字段"在结构上不可能: 渲染里出现什么, 签名就覆盖什么。
-        rel = related_items(it, pool, cidx)
+        z = group_of(it["source"])
+        # 薄页少配(第 3a 条): 导读模式(无全文镜像)正文只有一句简报, 挂 4 条相关会喧宾夺主 ——
+        # 内容少的页面, 模块要跟着少
+        cap = RELATED_MAX if (CONTENT_DIR / f"{it['id']}.html").exists() and mirror_on(it["source"]) \
+              else RELATED_MAX_THIN
+        rel = related_items(it, pools[z], cidxs[z])[:cap]
         rsig = _sha(related_html(rel, lib))
         sig = _sha(render_ver(),srccfg, csig, wsig, item_repr, rsig,
                    _file_sig(CONTENT_DIR / f"{it['id']}.html"), _file_sig(zh_content_path(it["id"])))
@@ -3992,6 +4106,7 @@ def main():
     if len(lib) != n_lib or not CONCEPTS_FILE.exists():
         save_concepts(lib)
 
+    scrub_banned_ai_fields(items)   # AI 加工字段的违禁词清洗(存量+本轮新写的都过一遍)
     items.sort(key=lambda x: (x["date"], x["id"]), reverse=True)
 
     # 存量修剪: 配了 keep_max 的源(外部 RSS)只按过筛条目数设上限, 自家内容源不设限;

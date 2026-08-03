@@ -1,0 +1,13 @@
+<p><strong>Release:</strong> <a href="https://github.com/datasette/datasette-apps/releases/tag/0.2a0">datasette-apps 0.2a0</a></p>
+        <blockquote>
+<p>Changes that improve Datasette Apps when created and edited using <a href="https://agent.datasette.io/">Datasette Agent</a>:</p>
+<ul>
+<li>New <code>app_debug()</code> tool allowing agent to open an app (invisibly) and test it using JavaScript. <a href="https://github.com/datasette/datasette-apps/pull/33">#33</a></li>
+<li>New <code>app_list()</code> tool for listing apps the user has permission to edit, so the agent can edit them. <a href="https://github.com/datasette/datasette-apps/issues/36">#36</a></li>
+</ul>
+</blockquote>
+<p>The <code>app_debug()</code> tool is pretty neat: it works by displaying the app in a <code>opacity: 0</code> iframe with <code>pointer-events: none</code> (so it can't be seen or interacted with) and then executing agent-provided JavaScript inside that sandboxed iframe. This means the agent can smoke test that the app is working and even do things like measure the dimensions of different elements.</p>
+<p>This uses the new <code>context.browser_task()</code> mechanism added in <a href="https://simonwillison.net/2026/Jul/31/datasette-agent/">datasette-agent 0.4a0</a>.</p>
+    
+    
+        <p>Tags: <a href="https://simonwillison.net/tags/iframes">iframes</a>, <a href="https://simonwillison.net/tags/datasette">datasette</a>, <a href="https://simonwillison.net/tags/datasette-apps">datasette-apps</a></p>

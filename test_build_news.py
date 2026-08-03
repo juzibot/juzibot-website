@@ -1323,6 +1323,127 @@ def test_assets_are_cache_busted():
     check("版本戳由内容哈希算出", "hashlib.sha1" in stamp and "read_bytes()" in stamp)
 
 
+# ---------------------------------------------------------------- 38
+def test_jiarui_0802_review():
+    """佳芮 2026-08-02 评审七条的钉子(1/2 见 hero 静态检查, 3d/7 见供给通路)。
+
+    每条都是她在预览上看到的真问题, 修法与判据:
+    ③b 相关性不成立 —— 「句子守护上线质量中心」和「吴恩达做桌面 Agent」共享概念词, 但读者
+       眼里不构成相关 → 相关动态分区锁定, 公司区绝不跨到行业池
+    ③a 相关比正文长 —— 导读模式(正文一句简报)挂 4 条相关喧宾夺主 → 薄页上限 2
+    ③c 「读原文」跳回本站 —— 5 条产品动态的 url 全是自家产品页 → selfref 不出按钮
+    ⑤  外部转载的模板壳套在自家内容上 → product 无导读框、自家内容无页尾免责声明
+    ⑥  「封号」是口径红线 → 标题/摘要黑名单, 整条不收录(机制, 不是手删 —— 增量抓取手删会回来)
+    ④  量子位镜像里的主题头像被当内容图 → 渲染层剔除(镜像写一次不覆盖, 只挡抓取层救不了存量)
+    """
+    lib, worthy = fake_lib(), set()
+    # ⑥ 红线词
+    bad = fixture_item(title="个人微信频繁封号，品牌要如何稳定搭建私域流量？", source="rui-blog", concepts=[])
+    ok = fixture_item(title="正常标题", concepts=[])
+    check("⑥ 标题含红线词 → 不上站", B.red_line(bad))
+    check("⑥ 摘要含红线词也拦", B.red_line(fixture_item(summary="大规模封号事件的启示", concepts=[])))
+    check("⑥ 正常条目不误伤", not B.red_line(ok))
+    vis = B.visible_items([bad, dict(ok, source="product")])
+    check("⑥ visible_items 真的把红线条目滤掉", all(not B.red_line(i) for i in vis) and len(vis) == 1)
+    check("⑥ 机制而非手删: HIDE_TERMS 常量存在", "封号" in B.HIDE_TERMS)
+    # ③b 分区锁定(write_detail_pages 内部按 zone 切池 —— 静态验证切池代码在, 行为靠管线实测)
+    src = (ROOT / "build_news.py").read_text(encoding="utf-8")
+    # 静态字符串断言抓不住"函数名打错"—— 第一版这里断言的是我自己打错的 zone_of, 测试绿着
+    # 管线却 NameError(验证手段与被验证的错误同源, 第 N 次)。改成真调 group_of。
+    check("③b 相关池按分区切开", 'pools = {"company": {}, "radar": {}}' in src)
+    check("③b 分区函数真实存在且可调", B.group_of("product") == "company" and B.group_of("industry") == "radar")
+    check("③b 切池代码用的是真名", "group_of(it[" in src and "zone_of(" not in src)
+    # ③a 薄页上限
+    check("③a RELATED_MAX_THIN 存在且更小", getattr(B, "RELATED_MAX_THIN", 99) < B.RELATED_MAX)
+    # ③c/⑤ 产品动态干净模板
+    prod = fixture_item(source="product", source_name="产品动态", author="句子互动",
+                        url=f"{B.SITE_BASE}/products/shouhu.html", concepts=[],
+                        summary="句子守护上线新版质量中心，支持 AI 生成测试用例与批量验收。")
+    html = B.detail_html(prod, lib, worthy)
+    check("③c 读原文按钮不出(url 指向本站)", "读原文" not in html)
+    check("⑤ 无导读提示框", 'class="dp-notice"' not in html)
+    check("⑤ 无页尾免责声明", "聚合内容版权归各来源所有" not in html)
+    check("⑤ 问句子/更多动态保留", "问句子" in html and "更多动态" in html)
+    # 外部内容不受影响(防修过头)
+    ext = fixture_item(url="https://third.example/post", concepts=[])
+    ehtml = B.detail_html(ext, lib, worthy)
+    check("外部内容仍有读原文", "读原文" in ehtml)
+    check("外部内容仍有归属声明", 'class="dp-notice"' in ehtml)
+    check("外部内容仍有页尾声明", "聚合内容版权归各来源所有" in ehtml)
+    # ④ 垃圾图渲染层剔除
+    junk = '<p>正文</p><img src="http://www.qbitai.com/wp-content/themes/liangziwei/imagesnew/head.jpg">'
+    out = B.img_render(junk)
+    check("④ 主题目录头像被剔除", "head.jpg" not in out and "<p>正文</p>" in out)
+    check("④ 头像/占位命名剔除", "<img" not in B.img_render('<img src="https://x.example/avatar_88.png">'))
+    check("④ 懒加载 data URI 剔除", "<img" not in B.img_render('<img src="data:image/gif;base64,R0lGOD">'))
+    keep = B.img_render('<img src="https://i.qbitai.com/article/2026/chart.png">')
+    check("④ 真内容图保留", "<img" in keep and "i.qbitai.com" in keep)
+
+
+# ---------------------------------------------------------------- 39
+def test_company_news_supply_channel():
+    """公司动态供给通路(佳芮第 7 条补充): 月会文章 = 无原文链接的自家原创。
+
+    登记格式 {title, date, summary, body} 不需要 url —— 管线合成稳定锚点(指向本站,
+    detail 页因此不出「读原文」), body 消毒后落正文镜像, own 源 → index + canonical 自指。
+    口径红线是人审(AI 起草, 入库前人确认), 通路只管到「登记 → 成页」。
+    """
+    src = next((s for s in B.SOURCES if s["id"] == "company"), None)
+    check("company 源已注册", src is not None)
+    if not src:
+        return
+    check("company 是自家内容(own)", src.get("own") is True)
+    check("company 允许带正文登记(bodied)", src.get("bodied") is True)
+    check("company 在公司区", "company" in B.COMPANY_SOURCES)
+    check("company 有图标(卡片渲染要用)", "company" in B.SRC_ICON)
+    for page in ("news.html", "news-c.html"):
+        h = (ROOT / page).read_text(encoding="utf-8")
+        check(f"{page} 前端 ICON/色值就位", "'company'" in h and ".s-company" in h)
+    # 合成锚点指向本站 → selfref → 不出读原文; sha1 稳定 → id 跨轮不变
+    import hashlib as _h
+    u = f"{B.SITE_BASE}/news.html#c-" + _h.sha1("标题|2026-07-31".encode()).hexdigest()[:10]
+    check("合成锚点判为本站(不出读原文)", B._bare_host(u) == B._bare_host(B.SITE_BASE))
+
+
+# ---------------------------------------------------------------- 40
+def test_hero_one_style_one_job():
+    """news.html 页头(佳芮第 1/2 条): 居中、信息=纯文本、链接=链接样式、条数只一处。"""
+    h = (ROOT / "news.html").read_text(encoding="utf-8")
+    check("① hero 居中", ".news-hero .wrap{text-align:center}" in h)
+    check("② 信息 pill 阵列已拆掉", 'class="news-meta"' not in h)
+    check("② 信息行是纯文本(news-info)", 'class="news-info"' in h)
+    check("② 链接行独立成链接样式", 'class="news-links"' in h and "text-decoration:underline" in h)
+    # 注入标记必须活着: inject_page 对 newsTotal 缺失会 sys.exit, 页内 JS 运行时也读这三个 id
+    for tag in ("newsTotal", "newsRadar", "newsFresh"):
+        check(f"注入标记 {tag} 保留且形态兼容", bool(re.search(rf'<b id="{tag}">[^<]*</b>', h)))
+    # 条数只一处: news-info 里有, 其他地方不再有第二个 newsTotal
+    check("条数只出现一次", h.count('id="newsTotal"') == 1 and h.count('id="newsRadar"') == 1)
+
+
+# ---------------------------------------------------------------- 41
+def test_ai_fields_never_carry_banned_terms():
+    """自家 AI 加工层不许引入违禁词 —— 实测第一例是锐评自己写出「企微」。
+
+    管线一轮真跑后 copy-guard 报红, 查下来是 quip 字段:「办公能力提升直接利好企微场景的
+    AI员工应用」—— **违禁词是我们的加工层引入的, 原文没有**。整条隐藏会连累无辜文章,
+    正确做法: quip/brief/title_zh 是可再生字段, 洗掉即可(下轮重写), 存储侧同时挡新增。
+    """
+    it = fixture_item(quip="办公能力提升直接利好企微场景的AI员工应用",
+                      brief="这是一条提到企业微信的简报内容长度足够二十字。",
+                      title_zh="正常译题", concepts=[])
+    n = B.scrub_banned_ai_fields([it])
+    check("洗掉两个带违禁词的字段", n == 2, n)
+    check("quip 被洗掉", "quip" not in it)
+    check("brief 被洗掉且允许重做", "brief" not in it and "brief_full" not in it)
+    check("干净的 title_zh 保留", it.get("title_zh") == "正常译题")
+    ok = fixture_item(quip="干净锐评", brief="一条完全正常且长度足够的简报内容示例文本。", concepts=[])
+    check("干净条目零洗", B.scrub_banned_ai_fields([ok]) == 0 and ok.get("quip") == "干净锐评")
+    check("brief_usable 挡违禁词", not B.brief_usable("提到企微的简报内容且长度足够二十个字符示例"))
+    src = (ROOT / "build_news.py").read_text(encoding="utf-8")
+    check("quip 存储侧有闸", "if has_banned(q):" in src)
+    check("main 落盘前调用清洗", "scrub_banned_ai_fields(items)" in src)
+
+
 def main():
     tests = [v for k, v in sorted(globals().items()) if k.startswith("test_")]
     for fn in tests:

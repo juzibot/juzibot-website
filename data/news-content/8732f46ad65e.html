@@ -1,0 +1,103 @@
+<h1>Anthropic模型，也失控了。。。</h1>
+    			   
+             <img src="http://www.qbitai.com/wp-content/themes/liangziwei/imagesnew/head.jpg" referrerpolicy="no-referrer" /><em><a href="https://www.qbitai.com/author/mengyao" target="_blank" rel="noopener nofollow">梦瑶</a></em>
+                          2026-08-01
+             11:18:46
+          
+          来源：<a href="https://www.qbitai.com" target="_blank" rel="noopener nofollow">量子位</a>            
+                          
+            <p>14万次测试翻旧账</p>
+                			<h1>梦瑶 发自 凹非寺</h1>
+<h1>量子位 | 公众号 QbitAI</h1>
+<p>好啊好啊，AI大厂的安全测试，这波是快把真实互联网测成筛子了……</p>
+<p>刚围观完OpenAI的AI Agent逃出测试环境、黑进Hugging Face，Anthropic转头一查——</p>
+<p>随橙想呢， 自己心肝大宝贝Claude也勇闯真实互联网了。（天塌啦.jpg)</p>
+<p>甚至捅出的篓子，可以说更加《抓马》《魔幻》《真实》——</p>
+<p><strong>翻别家公司数据库、偷凭证、上传恶意软件包、扫描9000个公网目标全！都！有！</strong></p>
+<img src="https://i.qbitai.com/wp-content/uploads/2026/08/11b5af42ce0b2a740d3b7f37dc0c7671.png" referrerpolicy="no-referrer" />
+
+<p>最后，头大的Anthropic翻查141006次模型测试，才把这三起事故从日志里捞出来。</p>
+<p>OpenAI：大环境不好，就论自家模型闯祸这事儿，谁也别笑幻谁哈～</p>
+<h1>14万次测试翻旧账，Claude真把现实当成了游戏副本？？</h1>
+<p>这一切抓马之事，是A社从141006次网络安全评估记录里翻出来的。</p>
+<p>此前为了检测自家模型，A社给自家Claude搭了不少《<strong>真人版密室逃脱》</strong>。</p>
+<p>准备一张虚构的公司网络地图，把秘密信息藏进某台机器，再让Claude自己找漏洞、闯系统、抢走那面旗。</p>
+<p>为了彻底摸清模型的攻击上限，考场里的Claude还卸掉了部分日常安全护栏，基本等于一款「裸奔版」AI黑客。</p>
+<p>其实吧，按理说也不用慌。</p>
+<p>因为整个考场都被隔离了，Claude再怎么上蹿下跳，也只能在模拟世界里打怪升级。</p>
+<p>但这个世界就是如此之抓马魔幻，谁成想，A社和第三方评测机构配合时出了「岔子」——</p>
+<p><strong>是的，考场后门忘关了。</strong></p>
+<p>测试环境里，意外留着一条直通<strong>公网</strong>的活路。</p>
+<p>于是，毫不知情的Claude顺着这扇门，从模拟世界丝滑「转服」，正式开启《勇闯真实互联网》副本……</p>
+<img src="https://i.qbitai.com/wp-content/uploads/2026/08/39e299092d9d962179e1b45b96fc3142.jpeg" referrerpolicy="no-referrer" />
+
+<p><strong>本场故事的第一位倒霉蛋，甚至纯粹输在了公司名字上。</strong></p>
+<p>评测方随手虚构了一家公司，偏偏现实中真有一家企业与它同名。</p>
+<p>Claude Opus 4.7在测试环境里找不到目标，转头去公网一搜：诶，这不就找到了吗？</p>
+<p>聪明的小Opus 4.7当即开工，顺着弱密码等基础漏洞一路摸进去，拿走应用和基础设施凭证，还闯进一个存着数百行生产数据的数据库。</p>
+<p>而且同一套操作，足足跑了<strong>四遍</strong>。</p>
+<p>在这过程中，Claude其实已经发现事情不太对劲儿：眼前这套系统，怎么看都像一家正在营业的真公司。</p>
+<p>但人家很快给自己圆了回来：既然能搜到，那肯定也是我的小领导A社偷偷安排的隐藏关卡哈～</p>
+<p>于是，这家毫不知情的公司，就这么凭借一个名字，喜提Claude连续四轮「上门测试」？？</p>
+<img src="https://i.qbitai.com/wp-content/uploads/2026/08/f8684120b8d8edf927ff34baf4fb84d9.png" referrerpolicy="no-referrer" />
+
+<p>如果说第一家公司好歹还和虚构目标撞了名，那么<strong>本场故事的第二位「倒霉蛋」就更冤了——</strong></p>
+<p>它压根没出现在Claude的任务里，纯属路过PyPI时被隔空「创」了一下。</p>
+<p>事情是这样的。</p>
+<p>Mythos 5在测试文档中发现，虚构公司的员工需要从PyPI安装一个尚未注册的Python软件包。</p>
+<p>Claude当场计上心头：只要抢先注册同名软件包、塞进恶意代码，等对方自动下载安装，这关不就过了吗？</p>
+<p>说干就干。</p>
+<p>为了上传这个包，<strong>Mythos 5先去注册PyPI账号，注册需要邮箱，申请邮箱又需要手机号；找不到免费号码，它甚至尝试通过多种渠道搞钱购买。</strong></p>
+<p>几番折腾后，Claude终于找到一家无需手机号的免费邮箱，成功注册账号，并把恶意软件包传到了真实PyPI。</p>
+<p>接下来，事情开始彻！底！失！控！了！</p>
+<img src="https://i.qbitai.com/wp-content/uploads/2026/08/9d375c8fdddf0ae69444598253abbfd7.jpeg" referrerpolicy="no-referrer" />
+
+<p>这个恶意包在公网存活了<strong>约一小时</strong>，被<strong>15个</strong>真实系统下载运行。</p>
+<p>其中一台，恰好是一家安全公司的扫描器，它平时会自动安装PyPI软件包，检查其中有没有恶意代码。</p>
+<p>结果这次，扫描器刚把包下载下来，藏在里面的恶意代码便率先启动，将公司凭证传回了Claude搭好的收集端。</p>
+<p>Mythos 5拿到凭证后，又顺着这条线继续摸进了该公司的其他<strong>基础设施。</strong></p>
+<p>谁能想到，安全公司原本在扫描恶意软件，扫着扫着，竟把参加模拟考试的Claude请进了自己家呢……</p>
+<img src="https://i.qbitai.com/wp-content/uploads/2026/08/4a0ac476055b3eeb3f6ad2ecf8fc1a25.png" referrerpolicy="no-referrer" />
+
+<p><strong>在接下来的第三起事故中，Claude走的是「找不到正主，就全网撒网」路线。</strong></p>
+<p>这一次，出场的是Anthropic尚未公开的内部研究模型，按照任务要求，它原本需要攻入一个虚构目标、拿到藏在里面的「旗」，可尝试半天，预设目标始终连不上。</p>
+<p>一般考生遇到这种情况，可能会怀疑题目出了Bug。</p>
+<p>Claude的选择更加直接：既然指定目标找不到，那就去互联网上现找一个呗～</p>
+<p>于是，它<strong>从模拟考场一路搜到公网，扫描了约9000个真实目标，寻找可以下手的替代品。</strong></p>
+<p>最终，一家公司的互联网应用《脱颖而出》，Claude从暴露的调试页面中读取凭证，又用SQL注入攻入系统，全程把对方当成临时刷出的野生副本。</p>
+<p>直到发现服务器位于一个与测试任务毫无关系的云账户中，它才反应过来：</p>
+<blockquote>
+<p>坏了，这回真打到路人了，报一丝哈……</p>
+</blockquote>
+<p>好一场酣畅淋漓的AI模大考啊，最后全靠真实公司痛心&amp;超真实&amp;友情出演捏！</p>
+<h1>OpenAI越狱事件，开始拔出萝卜带出泥</h1>
+<p>真不怪A社突然想给自家模型来场大清查，主要吧，还是被隔壁友商的前车之鉴吓怕了。</p>
+<p>就前几天的事儿，OpenAI也拉上GPT-5.6 Sol和一款尚未发布的更强模型，安排了一场网络安全测试。</p>
+<p>在网络安全测试时，人家模型成功逃出了内部隔离环境，一路闯进了Hugging Face的生产系统。</p>
+<p>最后就是，模型成功摸进Hugging Face的生产数据库，访问其中的机密信息，试图直接拿走ExploitGym的测试答案……</p>
+<p>看到隔壁友商家孩子逃课上了热搜，A社连夜回家数人头——这一数，血压直接上来了。</p>
+<p>于是，Anthropic一口气翻出了141006次网络安全评估记录，然后，就查到了前面这三位倒霉蛋。（doge）</p>
+<img src="https://i.qbitai.com/wp-content/uploads/2026/08/a7d21da39520b6c23eef362f86ce3800.png" referrerpolicy="no-referrer" />
+
+<p>更抓马的是，OpenAI这边的连续剧也还没演完。</p>
+<p>据路透社最新消息，<strong>OpenAI沿着Hugging Face事件继续往回翻日志，结果又发现了更多Agent突破隔离环境的记录。</strong></p>
+<p>换句话说就是：原以为只跑出去一个，翻完旧账才发现这笼子以前可能也没少漏风……</p>
+<p>虽说目前这批新增事件的规模、时间和具体数量还没查清，但好消息是，它们大概率还在OpenAI内部网络里活动，没有继续跑出去祸害其他公司。</p>
+<p>不过话说回来，大家发现没，Anthropic这三起事故和OpenAI那次，逃跑路线还是有点区别的——</p>
+<p>OpenAI的Agent属于自己找到新漏洞、撬锁出门。</p>
+<p>Claude这边则是考场后门压根没关，它顺着门缝丝滑转服，还以为真实互联网也是考试地图。</p>
+<p><strong>一个会撬锁，一个赶上门没锁。</strong></p>
+<p><strong>谁也别说谁吧，反正最后，模型都出门了……</strong></p>
+<p>闯祸之后，Anthropic已经暂停所有网络安全评估，准备补上网络隔离、实时日志监测和第三方测试环境审计，邀请独立评测机构METR一起翻记录。</p>
+<p>为了不影响自家兴旺生意，A社也搞了个补充声明——</p>
+<p>大概意思就是这几位闯祸的Claude，当时卸掉了普通用户版本中的部分安全护栏，但正常上线版本配备的安全分类器，按设计能够拦下相关操作，大家不用担心哈～</p>
+<p>当然了，事故归事故，背后有没有几分人为安排，也得两说。</p>
+<p>毕竟，「尚未公开的内部研究模型」这种字眼一出现。</p>
+<p>懂得都懂。</p>
+<p>谁知道会不会又是A社在故技重施，提前给自家新模型铺预热叙事呢……</p>
+<p>参考链接：<br />[1]<br />
+https://www.anthropic.com/news/investigating-incidents-cybersecurity-evals<br />[2]<br />
+https://www.reuters.com/business/openai-finds-evidence-other-ai-agents-escaped-containment-it-widens-hacking-2026-07-31/</p>
+                
+                
+                <em>版权所有，未经授权不得以任何形式转载及使用，违者必究。</em>

@@ -138,7 +138,7 @@
     <div class="dp-notice"><i class="fa-solid fa-circle-info"></i><span>本页为方便阅读的全文转载，内容与版权归原作者（Hacker News）所有 · <a href="https://chriscoyier.net/2026/07/30/codepen-2-0/" target="_blank" rel="noopener">阅读原文</a></span></div>
     
     <div class="dp-brief"><b>简报<em>AI 加工层生成</em></b>CodePen 2.0 发布，开发称其工作量远超原始版本，上线首周有用户在协作演示中从经典版 Pen 切换到新版本，展示了新功能的吸引力。</div>
-    <article class="dp-body"><p>Noting perhaps my largest personal career accomplishment, which is <a href="https://blog.codepen.io/2026/07/23/two-point-oh/" target="_blank" rel="noopener nofollow">launching CodePen 2.0</a>. Far more work, believe it or not, than the entire creation of the original CodePen. </p>
+    <div class="dp-langbar"><button type="button" class="dp-lang" id="dpLang"><i class="fa-solid fa-language"></i><span>翻译为中文</span></button><span class="dp-lang-note">中文由 AI 翻译，仅供参考</span></div><article class="dp-body" id="dpBodyOrig" lang="en"><p>Noting perhaps my largest personal career accomplishment, which is <a href="https://blog.codepen.io/2026/07/23/two-point-oh/" target="_blank" rel="noopener nofollow">launching CodePen 2.0</a>. Far more work, believe it or not, than the entire creation of the original CodePen. </p>
 
 
 
@@ -164,6 +164,29 @@
 
 
 <li>I friggin love how I can <a href="https://blog.codepen.io/docs/pens/deployment/" target="_blank" rel="noopener nofollow">make little websites</a> and deploy them right through the Pen Editor. Like the one <a href="https://hip-forest-gobbler.codepen.app/" target="_blank" rel="noopener nofollow">for our slideVars library</a> or <a href="https://codepen.school/" target="_blank" rel="noopener nofollow">codepen.school</a>. It just makes me wanna build a ton of little weird websites.</li>
+</ul></article><article class="dp-body" id="dpBodyZh" lang="zh-CN" hidden><p>或许要提一下我个人职业生涯中最大的成就，那就是 <a href="https://blog.codepen.io/2026/07/23/two-point-oh/" target="_blank" rel="noopener nofollow">推出 CodePen 2.0</a>。说起来你可能不信，这比最初整个 CodePen 的开发工作量还要大得多。</p>
+
+
+
+<p>这里就不详细描述我们做了什么以及为什么这么做了。如果你感兴趣，或许可以听听我们的 <a href="https://blog.codepen.io/2026/03/05/419-why-2-0/" target="_blank" rel="noopener nofollow">Why 2.0? 播客</a>，或者看看 <a href="https://codepen.io/2/whats-new" target="_blank" rel="noopener nofollow">What’s New?</a> 页面。</p>
+
+
+
+<p>相反，我想分享几个上线第一周发生的故事。</p>
+<ul>
+<li>我和一个素未谋面的人一起做演示。项目开始于他们的（经典）Pen。他们需要导入其他 JavaScript，于是用了 3 个 Pen，把另外两个的 JavaScript 引入到主演示中。他们还需要一个 npm 包。我 <a href="https://blog.codepen.io/docs/pens/forking/" target="_blank" rel="noopener nofollow">fork 了</a> 这个 Pen 并 <a href="https://blog.codepen.io/docs/pens/privacy-sharing/#inviting-collaborators" target="_blank" rel="noopener nofollow">邀请他们</a> 作为共同编辑，这样我们就能随时一起协作了。我把 JavaScript 移到了主 Pen 的文件里，这样更容易操作。npm <a href="https://blog.codepen.io/docs/pens/packages/" target="_blank" rel="noopener nofollow">包</a> 放在 <code>package.json</code> 文件里，方便版本管理。我们都按自己的喜好整理了一番。</li>
+
+
+
+<li><a href="https://keyframe.rs/" target="_blank" rel="noopener nofollow">The Keyframers</a>（David 和 Shaw）重聚并在发布日进行了 <a href="https://www.youtube.com/watch?v=sgwPEW1gGYM&amp;t=1s" target="_blank" rel="noopener nofollow">直播</a>。他们也用了邀请功能和 <a href="https://arc.net/l/quote/zbptvwfz" target="_blank" rel="noopener nofollow">实时协作</a>。他们一起工作了几个小时，虽然有一两个小 bug，但都不是大问题，整个过程很顺利。我最喜欢的一点是他们分享了 Pen 的 <a href="https://blog.codepen.io/docs/live-view/#live-view" target="_blank" rel="noopener nofollow">实时预览</a>，这样他们在开发时，我们也能自己动手玩演示。</li>
+
+
+
+<li>在准备发布邮件时，我用了专门用来写邮件的语言：<a href="https://mjml.io/" target="_blank" rel="noopener nofollow">MJML</a>。我直接把 MJML 做成 CodePen 的一个区块，这样就能在 CodePen 里直接写邮件了。<a href="https://codepen.io/editor/team/codepen/pen/019f9076-f6cd-7727-ac29-30e936cabbb0" target="_blank" rel="noopener nofollow">效果很好</a>，哪怕是处理 <a href="https://codepen.io/editor/chriscoyier/pen/019fae5c-6bef-7ae7-aebd-8732e00b3613" target="_blank" rel="noopener nofollow">一些奇怪的东西</a> 也完全没问题。未来还会有更多区块。</li>
+
+
+
+<li>我超爱能直接通过 Pen 编辑器 <a href="https://blog.codepen.io/docs/pens/deployment/" target="_blank" rel="noopener nofollow">制作小网站</a> 并部署的功能。比如为我们的 slideVars 库做的那个 <a href="https://hip-forest-gobbler.codepen.app/" target="_blank" rel="noopener nofollow">网站</a>，还有 <a href="https://codepen.school/" target="_blank" rel="noopener nofollow">codepen.school</a>。这让我特别想建一堆奇奇怪怪的小网站。</li>
 </ul></article>
     <div class="dp-actions">
       <a class="dp-btn pri" href="https://chriscoyier.net/2026/07/30/codepen-2-0/" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
@@ -178,5 +201,11 @@
 <div id="site-footer"></div>
 <script>window.SITE_REL='../../';window.PAGE_CTX={"entity": "news-article", "type": "article", "title": "CodePen 2.0"};</script>
 <script src="../../assets/site.js?v=f57b1388"></script>
+<script>
+(function(){var b=document.getElementById('dpLang');if(!b)return;
+var en=document.getElementById('dpBodyOrig'),zh=document.getElementById('dpBodyZh');
+b.addEventListener('click',function(){var on=zh.hidden;zh.hidden=!on;en.hidden=on;
+b.querySelector('span').textContent=on?'显示英文原文':'翻译为中文';});})();
+</script>
 </body>
 </html>

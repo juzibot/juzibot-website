@@ -1,0 +1,428 @@
+<h1>Kakehashi</h1>
+<p>Userspace <strong>macOS ARM64 → Linux aarch64</strong> translation layer (CLI-first, no JIT).</p>
+<p>Load Darwin Mach-O on Linux aarch64, map a freestanding <code>libSystem</code>, translate
+BSD syscalls, and run real guests (clang probes, <strong>7-Zip <code>7zz</code></strong>, <strong>curl</strong>,
+threads).</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Live execution</td>
+<td><strong>Linux aarch64</strong> (bare metal, VM, Colima/Docker)</td>
+</tr>
+<tr>
+<td>Dry-load / inspect</td>
+<td>Any host (including macOS)</td>
+</tr>
+<tr>
+<td>Design reference</td>
+<td><a href="https://github.com/wie-project/kakehashi/blob/main/docs/README.md" target="_blank" rel="noopener nofollow"><code>docs/</code></a></td>
+</tr>
+</tbody>
+</table>
+<h2>What works</h2>
+<p>Verified on <strong>Docker/Colima</strong> and <strong>UTM</strong> (Linux aarch64). Install once:</p>
+<pre>cargo install kakehashi
+# or from a checkout:
+cargo install --path crates/kh-cli --force
+
+kh bottle ensure
+kh install 7zip    # Darwin 7zz → guest /usr/local/bin/7zz
+kh install curl    # Darwin curl → guest /usr/local/bin/curl</pre>
+<p>Relative <code>-o</code> / archive paths resolve against the <strong>host CWD</strong> of the <code>kh</code>
+process (create parent dirs yourself, or rely on auto-mkdir for <code>O_CREAT</code>).
+Through the bottle, <code>/Volumes/linux/…</code> bridges to the host root (<code>/</code> → host <code>/</code>).</p>
+<h3>7-Zip (<code>7zz</code>)</h3>
+<pre># Version / help
+kh run 7zz --
+kh run 7zz -- --help
+
+# Create archive (cwd-relative)
+kh run 7zz -- a demo.7z README.md
+kh run 7zz -- t demo.7z
+kh run 7zz -- l demo.7z
+kh run 7zz -- x -o./out demo.7z
+
+# Multi-thread compress (correctness gate)
+kh run 7zz -- a -t7z -m0=lzma2 -mx=5 -mmt=4 mt.7z README.md
+kh run 7zz -- t mt.7z
+# expect: Everything is Ok, exit 0</pre>
+<p><strong>Docker helpers</strong> (artifacts under host <code>.tmp/kh-out/</code>):</p>
+<pre>./scripts/docker-7zz.sh --help
+./scripts/docker-7zz.sh a /Volumes/linux/out/demo.7z /Volumes/linux/src/README.md
+ls -lh .tmp/kh-out/demo.7z
+
+KAKEHASHI_HYPERCALL=1 ./scripts/docker-7zz.sh a -t7z -m0=lzma2 -mx=5 -mmt=4 \
+  /Volumes/linux/out/mt.7z /Volumes/linux/src/README.md
+./scripts/docker-7zz.sh t /Volumes/linux/out/mt.7z</pre>
+<h3>curl</h3>
+<pre># Banner (G1)
+kh run curl -- --version
+
+# HTTP GET → file (G3 / G5). Parents for -o are created when missing.
+kh run curl -- -sS -o .tmp/kh-out/body http://example.com/
+# expect: exit 0, ~559 bytes, HTML contains &quot;Example Domain&quot;
+wc -c .tmp/kh-out/body
+head -c 80 .tmp/kh-out/body; echo
+
+# HTTP to stdout
+kh run curl -- -sS http://example.com/ | head -c 80; echo
+
+# HTTPS GET (G4) — OpenSSL + bottle CA (from host or curl.se download)
+kh run curl -- -sS -o .tmp/kh-out/https-body https://example.com/
+wc -c .tmp/kh-out/https-body
+
+# Negative: bad / self-signed cert must fail (rc ≠ 0)
+kh run curl -- -sS -o /dev/null https://self-signed.badssl.com/; echo exit:$?</pre>
+<p><strong>Docker helpers:</strong></p>
+<pre>./scripts/docker-curl.sh --version
+./scripts/docker-curl.sh -sS -o /Volumes/linux/out/body http://example.com/
+./scripts/docker-curl.sh -sS -o /Volumes/linux/out/https-body https://example.com/
+ls -lh .tmp/kh-out/body .tmp/kh-out/https-body
+
+# Trace-first probe logs → .tmp/kh-curl-probe/
+./scripts/docker-curl-probe.sh --version
+
+# Option matrix (large tiers) → .tmp/kh-curl-options/
+./scripts/docker-curl-options.sh tier1
+./scripts/docker-curl-options.sh tier9-10
+./scripts/docker-curl-options.sh all          # tier1..10</pre>
+<p>Harmless noise on many runs:</p>
+<ul>
+<li><code>kh: open fail ENOENT(openat) path=/etc/ssl/openssl.cnf</code> — OpenSSL optional config; HTTP/HTTPS still work via the seeded CA bundle.</li>
+<li><code>WARN … skip dylib … Security/CoreFoundation</code> — Apple frameworks not in the bottle; soft stubs cover the load path.</li>
+<li><code>unresolved strong symbol; bound to named missing trampoline</code> — symbols not hit on the happy path.</li>
+</ul>
+<p>Details and gates: <a href="https://github.com/wie-project/kakehashi/blob/main/docs/curl.md" target="_blank" rel="noopener nofollow"><code>docs/curl.md</code></a>.</p>
+<h3>Also green</h3>
+<table>
+<thead>
+<tr>
+<th>Surface</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Clang / fixture probes</td>
+<td><code>tests/clang-probe/</code>, <code>tests/fixtures/</code></td>
+</tr>
+<tr>
+<td>Multi-thread <code>7zz -mmt=4</code></td>
+<td>Docker + UTM</td>
+</tr>
+<tr>
+<td>Bottle + freestanding <code>libSystem</code></td>
+<td><code>kh bottle ensure</code> embeds dylib</td>
+</tr>
+<tr>
+<td>Unit tests + clippy</td>
+<td><code>cargo test</code> / <code>clippy</code> workspace (excl. <code>kh-libsystem</code>)</td>
+</tr>
+</tbody>
+</table>
+<h3>Not a product claim (yet)</h3>
+<p>Full curl feature set (POST bodies, proxies, HTTP/3 end-to-end, every scheme),
+real Apple Security.framework, <code>git</code> / CLT, GUI, codesign. Next product slice:
+<strong>git</strong> via <code>kh install xcode-tools</code> — see <a href="https://github.com/wie-project/kakehashi/blob/main/docs/git.md" target="_blank" rel="noopener nofollow"><code>docs/git.md</code></a>.</p>
+<h2>Crates</h2>
+<table>
+<thead>
+<tr>
+<th>Crate</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>kakehashi</code></strong></td>
+<td>Binary <code>kh</code> (install this)</td>
+</tr>
+<tr>
+<td><code>kh-loader</code></td>
+<td>Mach-O parse, map, execute</td>
+</tr>
+<tr>
+<td><code>kh-runtime</code></td>
+<td>Memory, traps, BSD syscalls, bottle; embeds freestanding <code>libSystem.B.dylib</code></td>
+</tr>
+<tr>
+<td><code>kh-libsystem</code></td>
+<td>Source for that dylib (<code>aarch64-apple-darwin</code> only; not a Linux host crate)</td>
+</tr>
+</tbody>
+</table>
+<p>The guest dylib is vendored at <code>crates/kh-runtime/resources/libSystem.B.dylib</code>
+and compiled into the runtime with <code>include_bytes!</code>. Publishing <code>kh-runtime</code>
+ships the dylib; end users do not need a separate download.</p>
+<h2>Requirements</h2>
+<ul>
+<li>Rust 1.88+</li>
+<li><strong>Linux aarch64</strong> for live <code>kh run</code> / <code>kh trace</code></li>
+<li>Page sizes: <strong>4 KiB</strong> (containers) and <strong>16 KiB</strong> (Asahi-class)</li>
+<li>Optional: <code>curl</code>/<code>wget</code> + <code>tar</code> for <code>kh install 7zip</code> / <code>kh install curl</code></li>
+</ul>
+<h2>Install</h2>
+<pre>cargo install kakehashi
+# or from a checkout: cargo install --path crates/kh-cli
+
+kh bottle ensure
+kh install 7zip
+kh install curl</pre>
+<h3>Bottle layout</h3>
+<p>Default root: <code>~/.local/share/kakehashi/bottle/</code> (override with
+<code>KAKEHASHI_DATA_DIR</code> / <code>KAKEHASHI_ROOT</code>).</p>
+<table>
+<thead>
+<tr>
+<th>Host</th>
+<th>Guest</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>…/bottle/</code></td>
+<td><code>/</code></td>
+</tr>
+<tr>
+<td><code>…/usr/local/bin/7zz</code></td>
+<td><code>/usr/local/bin/7zz</code></td>
+</tr>
+<tr>
+<td><code>…/usr/local/bin/curl</code></td>
+<td><code>/usr/local/bin/curl</code></td>
+</tr>
+<tr>
+<td><code>…/usr/lib/libSystem.B.dylib</code></td>
+<td><code>/usr/lib/libSystem.B.dylib</code></td>
+</tr>
+<tr>
+<td><code>…/private/etc/ssl/cert.pem</code></td>
+<td><code>/etc/ssl/cert.pem</code> (host CA or downloaded Mozilla)</td>
+</tr>
+<tr>
+<td><code>…/Volumes/linux/…</code></td>
+<td><code>/Volumes/linux/…</code> → host FS</td>
+</tr>
+</tbody>
+</table>
+<h2>Performance (honest)</h2>
+<p>Kakehashi runs guest code <strong>natively</strong> on the CPU. The tax is the <strong>syscall
+boundary</strong> (TLS switch, alt stack, NEON save/restore, Rust dispatch) × how
+chatty the guest is — not an instruction emulator.</p>
+<h3>Measured gap</h3>
+<p>On Ubuntu aarch64 bare-metal (UTM), multi-file <code>7zz</code> archive
+(<code>-t7z -m0=lzma2 -mx=5 -mmt=4</code>, ~8k files / ~240 MiB tree):</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>native Linux <code>7zz</code></th>
+<th>Darwin <code>7zz</code> under <code>kh</code></th>
+<th>ratio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>wall</td>
+<td>~22.5 s</td>
+<td>~118 s</td>
+<td><strong>~×5.2</strong></td>
+</tr>
+</tbody>
+</table>
+<p>On compression-heavy, few-file samples the gap is often much smaller
+(~×1.1–1.2). The large multi-file gap is dominated by <strong>path walk + per-syscall
+boundary</strong>, not “wrong LZMA”.</p>
+<p>Hypercall is on by default for all guest threads. Opt out with
+<code>KAKEHASHI_HYPERCALL=0</code> only for debug (residual <code>svc</code>→<code>brk</code> / SIGTRAP).</p>
+<h3>Why ~×5 is still useful in CI</h3>
+<p>The product goal for CI is not “as fast as native macOS,” but <strong>run Darwin
+CLI/tools on cheap Linux aarch64 runners</strong> instead of scarce, expensive
+macOS capacity.</p>
+<p><strong>GitHub Actions hosted runners</strong> (private-repo overage rates, USD per
+minute; see <a href="https://docs.github.com/en/billing/reference/actions-runner-pricing" target="_blank" rel="noopener nofollow">Actions runner pricing</a>):</p>
+<table>
+<thead>
+<tr>
+<th>Runner</th>
+<th>Per-minute rate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Linux 2-core arm64</td>
+<td><strong>$0.005</strong></td>
+</tr>
+<tr>
+<td>Linux 2-core x64</td>
+<td>$0.006</td>
+</tr>
+<tr>
+<td>macOS 3–4 core (M1/Intel)</td>
+<td><strong>$0.062</strong></td>
+</tr>
+<tr>
+<td>macOS larger (e.g. 12-core / M2 Pro)</td>
+<td>$0.077–$0.102</td>
+</tr>
+</tbody>
+</table>
+<p>macOS standard is roughly <strong>×10–×12</strong> the Linux arm64 minute rate before any
+wall-time difference. Even if a job runs <strong>×5 slower</strong> under <code>kh</code> on Linux
+arm64 than the same work on a macOS runner, billable cost can still be lower
+because the macOS minute is an order of magnitude more expensive
+(illustrative: 5 × $0.005 ≈ $0.025 vs 1 × $0.062). Public-repo free minutes
+and self-hosted Linux amplify that further; macOS hosted capacity also tends
+to queue longer and (on GitLab SaaS) is Premium/Ultimate / beta-gated.</p>
+<p><strong>When macOS runners still win:</strong> GUI, codesign/notarization, Xcode UI tests,
+or any workload that is not a pure CLI Darwin binary under freestanding
+<code>libSystem</code>.</p>
+<p><strong>Gates, not benches:</strong> CI correctness is <code>cargo test</code> / smoke / <code>7zz -mmt=4</code>,
+not “match native wall clock.” Perf work is tracked in
+<a href="https://github.com/wie-project/kakehashi/blob/main/docs/roadmap.md" target="_blank" rel="noopener nofollow"><code>docs/roadmap.md</code></a>.</p>
+<h2>Quick start (Docker / Colima on Apple Silicon)</h2>
+<pre>docker build -t kakehashi:dev -f Dockerfile.dev .
+docker run --rm -v &quot;$PWD&quot;:/src -w /src kakehashi:dev \
+  cargo test --workspace --exclude kh-libsystem
+
+# Full smoke (build + clippy + test + micro run)
+./scripts/docker-smoke.sh</pre>
+<h2>Build</h2>
+<pre>cargo build -p kakehashi --release
+cargo test --workspace --exclude kh-libsystem
+cargo clippy --workspace --exclude kh-libsystem --all-targets -- -D warnings
+
+# Maintainers: refresh embed after freestanding ABI changes
+cargo build -p kh-libsystem --release --target aarch64-apple-darwin
+./scripts/stage-libsystem.sh   # → crates/kh-runtime/resources/libSystem.B.dylib</pre>
+<p><code>libSystem</code> discovery: <code>--libsystem</code> → <code>KAKEHASHI_LIBSYSTEM</code> → paths next to
+<code>kh</code> → crate <code>resources/</code> → <strong>embedded</strong> bytes in <code>kh-runtime</code>.</p>
+<h2>Testing map</h2>
+<table>
+<thead>
+<tr>
+<th>Goal</th>
+<th>Command</th>
+<th>Artifacts</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Unit tests</td>
+<td><code>cargo test --workspace --exclude kh-libsystem</code></td>
+<td>terminal</td>
+</tr>
+<tr>
+<td>Docker smoke</td>
+<td><code>./scripts/docker-smoke.sh</code></td>
+<td>ends with <code>smoke ok</code></td>
+</tr>
+<tr>
+<td>Fixtures</td>
+<td><code>kh run --expect-code … tests/fixtures/…</code></td>
+<td>see <code>tests/fixtures/README.md</code></td>
+</tr>
+<tr>
+<td>Clang probes</td>
+<td><code>kh run --root tests/fixtures/bottle tests/clang-probe/puts_hello</code></td>
+<td>stdout <code>hello</code></td>
+</tr>
+<tr>
+<td>Real Darwin <code>7zz</code></td>
+<td><code>./scripts/docker-7zz.sh …</code></td>
+<td>host <code>.tmp/kh-out/</code></td>
+</tr>
+<tr>
+<td>Real Darwin <code>curl</code></td>
+<td><code>./scripts/docker-curl.sh …</code></td>
+<td>host <code>.tmp/kh-out/</code>; probe → <code>.tmp/kh-curl-probe/</code></td>
+</tr>
+<tr>
+<td>Fair CPU bench</td>
+<td><code>./scripts/bench-fair-local.sh</code></td>
+<td>host <code>.tmp/kh-bench-fair/</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>.tmp/</code>, <code>.kh/</code>, and <code>target/</code> are gitignored.</p>
+<h3>Guest path ↔ host path (Docker helpers)</h3>
+<p>Bottle bridges the Linux FS as <code>/Volumes/linux/…</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Guest path</th>
+<th>Host</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/Volumes/linux/src/README.md</code></td>
+<td><code>&lt;repo&gt;/README.md</code></td>
+</tr>
+<tr>
+<td><code>/Volumes/linux/out/demo.7z</code></td>
+<td><code>&lt;repo&gt;/.tmp/kh-out/demo.7z</code> (durable; default for <code>docker-7zz.sh</code>)</td>
+</tr>
+<tr>
+<td><code>/Volumes/linux/tmp/…</code></td>
+<td>container <code>/tmp/…</code> — <strong>gone</strong> after <code>docker run --rm</code></td>
+</tr>
+</tbody>
+</table>
+<h2>Scripts</h2>
+<table>
+<thead>
+<tr>
+<th>Script</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>scripts/stage-libsystem.sh</code></td>
+<td>Build product → <code>crates/kh-runtime/resources/</code></td>
+</tr>
+<tr>
+<td><code>scripts/install-linux.sh</code></td>
+<td>Local build + install <code>kh</code> + <code>bottle ensure</code></td>
+</tr>
+<tr>
+<td><code>scripts/docker-smoke.sh</code></td>
+<td>Smoke suite inside <code>Dockerfile</code> image</td>
+</tr>
+<tr>
+<td><code>scripts/docker-7zz.sh</code></td>
+<td>Darwin <code>7zz</code> under <code>kh</code> (outputs → <code>.tmp/kh-out</code>)</td>
+</tr>
+<tr>
+<td><code>scripts/docker-curl.sh</code></td>
+<td>Darwin <code>curl</code> under <code>kh</code> (same shape as <code>docker-7zz</code>)</td>
+</tr>
+<tr>
+<td><code>scripts/docker-curl-probe.sh</code></td>
+<td><code>KH_CURL_PROBE=1</code> wrapper (logs → <code>.tmp/kh-curl-probe</code>)</td>
+</tr>
+<tr>
+<td><code>scripts/docker-curl-options.sh</code></td>
+<td>Tiered curl flag smoke (<code>tier1</code>…<code>tier10</code>, <code>tier9-10</code>, <code>all</code> → <code>.tmp/kh-curl-options</code>)</td>
+</tr>
+<tr>
+<td><code>scripts/docker-git.sh</code></td>
+<td>Apple <code>git</code> from CLT under <code>kh</code> (swscan + <code>.kh/data</code> cache)</td>
+</tr>
+<tr>
+<td><code>scripts/bench-fair-local.sh</code></td>
+<td>Native vs kh compress (artifacts → <code>.tmp/kh-bench-fair</code>)</td>
+</tr>
+</tbody>
+</table>
+<h2>License</h2>
+<p>Apache License 2.0. See <a href="https://github.com/wie-project/kakehashi/blob/main/LICENSE.txt" target="_blank" rel="noopener nofollow"><code>LICENSE.txt</code></a> and <a href="https://github.com/wie-project/kakehashi/blob/main/NOTICE" target="_blank" rel="noopener nofollow"><code>NOTICE</code></a>.</p>
+<p>This project is <strong>not</strong> derived from Darling. Do not vendor proprietary Apple
+SDKs or blobs.</p>
