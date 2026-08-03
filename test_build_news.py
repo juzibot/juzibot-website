@@ -1109,7 +1109,9 @@ def test_seed_ref_is_a_tag():
         check("(跳过)news-cron.yml 不在本分支", True)
         return
     txt = wf.read_text(encoding="utf-8")
-    m = re.search(r"^\s*SEED_REF:\s*(\S+)", txt, re.M)
+    # 允许 YAML 引号写法: SEED_REF: "tag" / 'tag' —— \S+ 会把引号一起抠进来, 后面的
+    # tag 名校验误红, 把合法配置判成不合格(Bugbot PR#103)
+    m = re.search(r"""^\s*SEED_REF:\s*["']?([\w.\-/]+)["']?""", txt, re.M)
     check("workflow 里有 SEED_REF", bool(m), "找不到")
     if not m:
         return
@@ -1442,6 +1444,50 @@ def test_ai_fields_never_carry_banned_terms():
     src = (ROOT / "build_news.py").read_text(encoding="utf-8")
     check("quip 存储侧有闸", "if has_banned(q):" in src)
     check("main 落盘前调用清洗", "scrub_banned_ai_fields(items)" in src)
+
+
+# ---------------------------------------------------------------- 42
+def test_bugbot_0803_round():
+    """Bugbot 2026-08-03 十一条的钉子(指纹三条/供给三条/workflow 三条/测试正则/概念闸)。"""
+    src = (ROOT / "build_news.py").read_text(encoding="utf-8")
+    # 指纹: 回退哨兵 + 增强赋值 + dict 键规范化
+    check("回退用 None 哨兵(空集=谁都没改写, 语义正反)", '_TPL_CACHE["mut"] = None' in src)
+    import ast as _ast
+    probe = _ast.parse("X |= {1}\nY += [2]")
+    names = [n.target.id for n in _ast.walk(probe) if isinstance(n, _ast.AugAssign)]
+    check("增强赋值检测覆盖(源码含 Name 分支)", "isinstance(n, ast.AugAssign) and isinstance(x, ast.Name)" in src)
+    check("dict 键排序走规范化 repr", "key=lambda kv: _const_repr(kv[0])" in src)
+    # 供给: 锚点单一事实源 + 回写用解析键 + 镜像两分支
+    check("锚点合成只有一个函数", src.count("def _bodied_anchor") == 1
+          and src.count("_bodied_anchor(e)") >= 2)
+    check("_restate 接收解析后的唯一键", "def _restate(it, e, src, u=None):" in src)
+    check("已入库条目也落正文镜像", "_drop_body_mirror(old[u], e)" in src)
+    e = {"title": "七月动态", "date": "2026-07-31", "body": "<p>x</p>"}
+    a1, a2 = B._bodied_anchor(e), B._bodied_anchor(dict(e))
+    check("锚点稳定且指向本站", a1 == a2 and B._bare_host(a1) == B._bare_host(B.SITE_BASE))
+    # 概念闸
+    lib = {"ok": {"term": "正常概念", "aliases": [], "def": "正常定义。", "at": "2026-08-03"}}
+    import json as _j, tempfile as _t, pathlib as _p
+    with _t.TemporaryDirectory() as d:
+        f = _p.Path(d) / "concepts.json"
+        f.write_text(_j.dumps({"concepts": {**lib,
+            "bad1": {"term": "企微集成", "aliases": [], "def": "x。", "at": "2026-08-03"},
+            "bad2": {"term": "正常", "aliases": ["企业微信对接"], "def": "x。", "at": "2026-08-03"}}},
+            ensure_ascii=False), encoding="utf-8")
+        orig = B.CONCEPTS_FILE
+        try:
+            B.CONCEPTS_FILE = f
+            got = B.load_concepts()
+            check("载入时洗掉违禁概念(term/alias 两路)", set(got) == {"ok"}, sorted(got))
+        finally:
+            B.CONCEPTS_FILE = orig
+    check("存储侧新概念有闸", "if has_banned(term) or has_banned(definition)" in src)
+    # workflow
+    wf = (ROOT / ".github" / "workflows" / "news-cron.yml").read_text(encoding="utf-8")
+    check("seed/sync 布尔显式比较", "inputs.seed == true" in wf and "inputs.seed != true" in wf)
+    check("可选根产物按存在推(seed+sync 两处)", wf.count('[ -f "$f" ] && rsync') >= 2)
+    check("sync 不再无条件推 news-radar.json",
+          "news-radar.json news-feed.xml" not in [l for l in wf.splitlines() if "rsync" in l and "--delete" not in l and "for f" not in l])
 
 
 def main():

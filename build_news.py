@@ -1038,13 +1038,15 @@ def sync_rss(src, old, limit):
 
 # ---------------- adapter: manual(手动投递位, 公众号) ----------------
 
-def _restate(it, e, src):
+def _restate(it, e, src, u=None):
     """用登记表条目 e 回写已入库条目 it 的可编辑字段, 返回 1 表示确有改动。
 
     可编辑面限定在人工登记的展示字段; url/id/source/抓取产物一概不动。
     留空字段不覆盖: 登记表常只填 url+title, 空 summary 不该洗掉已抓到的摘要。
     """
-    fresh = make_item(src, (e.get("url") or "").strip(), e.get("title") or it.get("title", ""),
+    # u 是调用方解析好的唯一键(bodied 条目登记行 url 为空, 直接拿它去 make_item 必返 None →
+    # 改摘要/分类/作者全部静默失败, 登记表不再是可编辑的事实源 —— Bugbot PR#103)
+    fresh = make_item(src, u or (e.get("url") or "").strip(), e.get("title") or it.get("title", ""),
                       e.get("summary") if e.get("summary") is not None else it.get("summary", ""),
                       e.get("date") or it.get("date", ""), e.get("category", ""),
                       author=e.get("author"))
@@ -1084,6 +1086,27 @@ def _dedupe_by_id(got, src_id):
     return out
 
 
+def _bodied_anchor(e):
+    """无 url 的带正文条目的合成锚点 —— sync_manual 入库与 retire_unlisted 对账必须用**同一个**
+    函数算, 否则登记完这轮就被当成「表里没有」而撤稿(Bugbot PR#103: 名册只收原始 url,
+    合成键永远对不上, 公司动态通路实际上站不了)。"""
+    return f"{SITE_BASE}/news.html#c-" + hashlib.sha1(
+        f"{e.get('title')}|{norm_date(e.get('date'))}".encode()).hexdigest()[:10]
+
+
+def _drop_body_mirror(it, e):
+    """登记正文 → 正文镜像(写一次不覆盖; 改正文时删镜像文件即可重落)。
+
+    新条目与**已入库条目**两条分支都要走到 —— 第一版只挂在新条目分支, 已入库的命中
+    `u in old` 就 continue, 「删镜像重落」的注释与真实控制流不符(Bugbot PR#103)。"""
+    if not e.get("body"):
+        return
+    mp = CONTENT_DIR / f"{it['id']}.html"
+    if not mp.exists():
+        CONTENT_DIR.mkdir(parents=True, exist_ok=True)
+        write_atomic(mp, sanitize_fragment(str(e["body"])))
+
+
 def sync_manual(src, old, limit):
     path = src["file"]
     if not path.exists():
@@ -1108,8 +1131,7 @@ def sync_manual(src, old, limit):
             # 合成稳定锚点当唯一键: 指向本站(锚点无害), _bare_host 判 selfref → 详情页
             # 不出「读原文」; sha1(url) 派生的 id 因此跨轮稳定, 详情页链接不断。
             if src.get("bodied") and e.get("body") and e.get("title") and e.get("date"):
-                u = f"{SITE_BASE}/news.html#c-" + hashlib.sha1(
-                    f"{e['title']}|{norm_date(e['date'])}".encode()).hexdigest()[:10]
+                u = _bodied_anchor(e)
             else:
                 continue
         if u in seen:
@@ -1120,11 +1142,13 @@ def sync_manual(src, old, limit):
             continue
         seen.add(u)
         if u in old:
+            # 已入库: 回写可编辑字段 + 正文镜像补落(改正文=删镜像文件重跑, 两条纪律都要到位)
+            _drop_body_mirror(old[u], e)
             # 一方内容登记表是唯一事实源, 改了就得生效 —— 老逻辑是"入库即跳过", 导致 product/press
             # 条目登记后被永久冻结, 摘要写错/口径要改都落不了地(2026-07-30 修违禁词时撞出来的)。
             # 只回写登记表里显式写了的字段, 留空不覆盖(防登记表偷懒把已抓好的数据洗掉);
             # id 由 url 派生, 回写不改 id, 详情页链接不断。
-            fixed += _restate(old[u], e, src)
+            fixed += _restate(old[u], e, src, u)
             continue
         if limit and len(got) + len(failed) >= limit:
             break
@@ -1140,13 +1164,8 @@ def sync_manual(src, old, limit):
             except Exception as ex:  # noqa: BLE001
                 print(f"  [失败] 投递条目抓取 {u}: {ex}")
         it = make_item(src, u, title, summary, date, e.get("category", ""), author=e.get("author"))
-        if it and e.get("body"):
-            # 登记正文 → 正文镜像(飞书文档→对外文章的通路; 产品动态接上蒋老师的发布文档后同样走这)
-            # 与抓取镜像同一套纪律: 消毒后写一次不覆盖; 登记表改正文时删镜像文件即可重落
-            mp = CONTENT_DIR / f"{it['id']}.html"
-            if not mp.exists():
-                CONTENT_DIR.mkdir(parents=True, exist_ok=True)
-                write_atomic(mp, sanitize_fragment(str(e["body"])))
+        if it:
+            _drop_body_mirror(it, e)
         got.append(it) if it else (failed.append(u), print(f"  [跳过] 投递条目缺 title/date 且抓取失败: {u}"))
     print(f"[{src['id']}] 投递位 {len(entries)} 条, 新收 {len(got)} 条"
           + (f", 回写更新 {fixed} 条" if fixed else ""))
@@ -1643,8 +1662,13 @@ def retire_unlisted(items):
             continue
         f = src.get("file")
         try:
-            roster = {(e.get("url") or "").strip()
-                      for e in json.loads(f.read_text(encoding="utf-8")).get("items", [])}
+            entries = json.loads(f.read_text(encoding="utf-8")).get("items", [])
+            # bodied 条目(公司动态)登记行没有 url —— 名册必须用与 sync_manual 同一个
+            # _bodied_anchor 合成, 否则登记完当轮就被误判「表里没有」而撤稿
+            roster = {(e.get("url") or "").strip() or
+                      (_bodied_anchor(e) if src.get("bodied") and e.get("body")
+                       and e.get("title") and e.get("date") else "")
+                      for e in entries}
         except (OSError, ValueError) as e:  # noqa: BLE001
             print(f"  [撤稿对账] {src['id']} 登记表读取失败({e}), 跳过——不当作空表处理")
             continue
@@ -1987,9 +2011,24 @@ GENERIC_SLUGS = {"ai", "artificial-intelligence", "tech", "technology", "softwar
 
 
 def load_concepts():
-    if CONCEPTS_FILE.exists():
-        return json.loads(CONCEPTS_FILE.read_text(encoding="utf-8")).get("concepts", {})
-    return {}
+    """概念库载入 + 违禁词清洗。
+
+    概念页与悬停浮层是**放开 index 的自家原创**(与镜像正文的「决定 A」豁免不同层):
+    term/aliases/def 任一含违禁词 → 整条移除。移除是安全的: worthy_concepts/annotate 都以
+    lib 成员资格为准, 条目 concepts 字段里的孤儿 slug 会被各处 `if s in lib` 自然滤掉;
+    下轮 ai_concepts 换个说法重抽(存储侧同时有闸挡新增)。
+    译文镜像(.zh.html)不在此列 —— 它是外部原文的忠实翻译, 走镜像层的「决定 A」口径。"""
+    if not CONCEPTS_FILE.exists():
+        return {}
+    lib = json.loads(CONCEPTS_FILE.read_text(encoding="utf-8")).get("concepts", {})
+    bad = [s for s, c in lib.items()
+           if has_banned(c.get("term")) or has_banned(c.get("def"))
+           or any(has_banned(a) for a in c.get("aliases") or [])]
+    for s in bad:
+        del lib[s]
+    if bad:
+        print(f"[口径] 概念库含违禁词, 移除 {len(bad)} 条(下轮重抽): {bad[:5]}")
+    return lib
 
 
 def save_concepts(lib):
@@ -2102,6 +2141,9 @@ def ai_concepts(items, lib):
                 continue
             if not (40 <= len(definition) <= 240):  # 定义质量闸: 太短没信息量, 太长是跑题
                 continue
+            if has_banned(term) or has_banned(definition) or any(has_banned(a) for a in aliases):
+                continue   # 概念是**放开 index 的自家原创内容**, 不许携带违禁词(Bugbot PR#103);
+                           # 弃掉这条不影响文章上站, 该概念下轮换个说法再抽
             lib[raw_slug] = {"term": term, "aliases": aliases, "def": definition, "at": today}
             for a in [term, *aliases]:
                 amap.setdefault(alias_key(a), raw_slug)
@@ -2964,14 +3006,21 @@ def _mutated_globals():
     try:
         tree = ast.parse(inspect.getsource(sys.modules[__name__]))
     except (OSError, TypeError, SyntaxError):
-        _TPL_CACHE["mut"] = frozenset()          # 源码不可得: 保守起见当全部可变(容器一律不进)
-        return _TPL_CACHE["mut"]
+        # 源码不可得: 返回 None 哨兵 = 「无法判定, 当全部可变」。第一版这里存了**空集合**,
+        # 而空集意思是「谁都没被就地改写」→ 容器反而全部进指纹 —— 与注释宣称的行为正相反
+        # (Bugbot PR#103)。空集与"全部"在这个判据里是两个极端, 回退必须取保守的那端。
+        _TPL_CACHE["mut"] = None
+        return None
     for n in ast.walk(tree):
         if isinstance(n, (ast.Assign, ast.AugAssign, ast.Delete)):
             tg = n.targets if isinstance(n, (ast.Assign, ast.Delete)) else [n.target]
             for x in tg:
                 if isinstance(x, ast.Subscript) and isinstance(x.value, ast.Name):
                     out.add(x.value.id)
+                # X |= {…} / X += […] 对 set/list/dict 是原地修改同一对象 —— 第一版只认下标
+                # 写入与 .update/.add 调用, 这种以名字为左值的增强赋值完全漏掉(Bugbot PR#103)
+                elif isinstance(n, ast.AugAssign) and isinstance(x, ast.Name):
+                    out.add(x.id)
         elif (isinstance(n, ast.Call) and isinstance(n.func, ast.Attribute)
                 and n.func.attr in _MUT_METHODS and isinstance(n.func.value, ast.Name)):
             out.add(n.func.value.id)
@@ -2987,8 +3036,10 @@ def _const_repr(v):
     · Path 的 repr 是绝对路径, 我的机器是 /Users/… 而 CI 是 /home/runner/… → 折成相对 ROOT
     """
     if isinstance(v, dict):
+        # 排序键同样走 _const_repr: 原始 repr 遇到 Path 键是绝对路径, 我机 /Users/… CI /home/…,
+        # 排序顺序跨机器分叉 → 指纹分叉 → 无声全量重算(Bugbot PR#103; 值侧早折了相对路径, 键侧漏了)
         return "{" + ",".join(f"{_const_repr(k)}:{_const_repr(x)}"
-                              for k, x in sorted(v.items(), key=lambda kv: repr(kv[0]))) + "}"
+                              for k, x in sorted(v.items(), key=lambda kv: _const_repr(kv[0]))) + "}"
     if isinstance(v, (set, frozenset)):
         return "{" + ",".join(sorted(_const_repr(x) for x in v)) + "}"
     if isinstance(v, (list, tuple)):
@@ -3037,7 +3088,8 @@ def _tpl_parts():
                 val = g.get(nm)
                 if (nm.isupper() or nm.lstrip("_").isupper()) and not _SIG_SKIP_RX.search(nm) and (
                         isinstance(val, _SIG_SCALARS)
-                        or (isinstance(val, _SIG_CONTAINERS) and nm not in _mutated_globals())):
+                        or (isinstance(val, _SIG_CONTAINERS)
+                            and (mut := _mutated_globals()) is not None and nm not in mut)):
                     consts.add(nm)
     _TPL_CACHE["parts"] = (tuple(sorted(seen)), tuple(sorted(consts)))
     return _TPL_CACHE["parts"]
