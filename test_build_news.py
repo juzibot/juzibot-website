@@ -1348,8 +1348,11 @@ def test_jiarui_0802_review():
     check("⑥ 机制而非手删: HIDE_TERMS 常量存在", "封号" in B.HIDE_TERMS)
     # ③b 分区锁定(write_detail_pages 内部按 zone 切池 —— 静态验证切池代码在, 行为靠管线实测)
     src = (ROOT / "build_news.py").read_text(encoding="utf-8")
-    check("③b 相关池按分区切开", 'pools = {"company": {}, "radar": {}}' in src
-          and "zone_of(it[\"source\"])" in src.replace("'", '"'))
+    # 静态字符串断言抓不住"函数名打错"—— 第一版这里断言的是我自己打错的 zone_of, 测试绿着
+    # 管线却 NameError(验证手段与被验证的错误同源, 第 N 次)。改成真调 group_of。
+    check("③b 相关池按分区切开", 'pools = {"company": {}, "radar": {}}' in src)
+    check("③b 分区函数真实存在且可调", B.group_of("product") == "company" and B.group_of("industry") == "radar")
+    check("③b 切池代码用的是真名", "group_of(it[" in src and "zone_of(" not in src)
     # ③a 薄页上限
     check("③a RELATED_MAX_THIN 存在且更小", getattr(B, "RELATED_MAX_THIN", 99) < B.RELATED_MAX)
     # ③c/⑤ 产品动态干净模板
@@ -1415,6 +1418,30 @@ def test_hero_one_style_one_job():
         check(f"注入标记 {tag} 保留且形态兼容", bool(re.search(rf'<b id="{tag}">[^<]*</b>', h)))
     # 条数只一处: news-info 里有, 其他地方不再有第二个 newsTotal
     check("条数只出现一次", h.count('id="newsTotal"') == 1 and h.count('id="newsRadar"') == 1)
+
+
+# ---------------------------------------------------------------- 41
+def test_ai_fields_never_carry_banned_terms():
+    """自家 AI 加工层不许引入违禁词 —— 实测第一例是锐评自己写出「企微」。
+
+    管线一轮真跑后 copy-guard 报红, 查下来是 quip 字段:「办公能力提升直接利好企微场景的
+    AI员工应用」—— **违禁词是我们的加工层引入的, 原文没有**。整条隐藏会连累无辜文章,
+    正确做法: quip/brief/title_zh 是可再生字段, 洗掉即可(下轮重写), 存储侧同时挡新增。
+    """
+    it = fixture_item(quip="办公能力提升直接利好企微场景的AI员工应用",
+                      brief="这是一条提到企业微信的简报内容长度足够二十字。",
+                      title_zh="正常译题", concepts=[])
+    n = B.scrub_banned_ai_fields([it])
+    check("洗掉两个带违禁词的字段", n == 2, n)
+    check("quip 被洗掉", "quip" not in it)
+    check("brief 被洗掉且允许重做", "brief" not in it and "brief_full" not in it)
+    check("干净的 title_zh 保留", it.get("title_zh") == "正常译题")
+    ok = fixture_item(quip="干净锐评", brief="一条完全正常且长度足够的简报内容示例文本。", concepts=[])
+    check("干净条目零洗", B.scrub_banned_ai_fields([ok]) == 0 and ok.get("quip") == "干净锐评")
+    check("brief_usable 挡违禁词", not B.brief_usable("提到企微的简报内容且长度足够二十个字符示例"))
+    src = (ROOT / "build_news.py").read_text(encoding="utf-8")
+    check("quip 存储侧有闸", "if has_banned(q):" in src)
+    check("main 落盘前调用清洗", "scrub_banned_ai_fields(items)" in src)
 
 
 def main():

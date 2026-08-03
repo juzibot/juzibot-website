@@ -1696,9 +1696,35 @@ HIDE_TERMS = ("封号", "炸群")
 
 
 def red_line(it):
-    """标题或摘要含红线词 → 不上站(条目留在登记册里, 增量去重还需要它)。"""
+    """标题或摘要含红线词 → 不上站(条目留在登记册里, 增量去重还需要它)。
+
+    注意与 scrub_banned_ai_fields 的分工: 这里只管 HIDE_TERMS(封号类, 整条下架);
+    BANNED_TERMS(企微口径)若出现在**标题/摘要**(原文自带)才整条隐藏 —— 但实测第一例
+    是我们自己的 AI 锐评写出「企微」(quip 字段), 那不该连累原文, 洗掉该字段即可。"""
     t = (it.get("title") or "") + (it.get("title_zh") or "") + (it.get("summary") or "")
     return any(w in t for w in HIDE_TERMS)
+
+
+def scrub_banned_ai_fields(items):
+    """洗掉 AI 加工字段里的违禁词(佳芮口径: 企微/企业微信不出现在任何页面)。
+
+    实测第一例: 我们的 AI 锐评给阿里那条写了「办公能力提升直接利好企微场景的AI员工应用」——
+    **违禁词是自己的加工层引入的**, 原文没有。quip/brief/title_zh 都是可再生字段, 洗掉即可
+    (下轮 AI 会重写一条; ai_quip/ai_enrich 的存储侧同时挡新增), 不必连累整条文章。
+    标题/摘要是**原文自带**的场合走 red_line 整条隐藏, 分工见各自 docstring。
+    返回洗掉的字段数, 调用方决定要不要落盘。"""
+    n = 0
+    for it in items:
+        for f in ("quip", "brief", "title_zh"):
+            v = it.get(f)
+            if v and has_banned(v):
+                it.pop(f, None)
+                if f == "brief":
+                    it.pop("brief_full", None)   # 简报被洗 → 允许下轮重做
+                n += 1
+    if n:
+        print(f"[口径] AI 加工字段含违禁词, 已洗 {n} 个(下轮自动重写)")
+    return n
 
 
 def visible_items(items):
@@ -1757,6 +1783,8 @@ def ai_quip(items):
         for it in batch:
             q = qmap.get(it["id"], "")
             if q:
+                if has_banned(q):
+                    continue   # 自家加工层不许引入违禁词(企微口径); 缺一条锐评无伤
                 it["quip"] = q[:60]
                 done += 1
     print(f"[AI 锐评] 新写 {done} 条")
@@ -2146,7 +2174,7 @@ BRIEF_MIN = 20   # 设计是 50~90 字; 短于 20 字的不是简报, 是残答
 def brief_usable(v):
     """这段文字能不能当简报用 —— 唯一判据, 生成时(要不要入库)与渲染时(要不要显示)共用。"""
     v = (v or "").strip()
-    return bool(v) and len(v) >= BRIEF_MIN and not AI_META_RX.search(v)
+    return bool(v) and len(v) >= BRIEF_MIN and not AI_META_RX.search(v) and not has_banned(v)
 
 
 def disp_brief(it):
@@ -3097,7 +3125,7 @@ def write_detail_pages(vis, items, lib, worthy):
     pools = {"company": {}, "radar": {}}
     cidxs = {"company": {}, "radar": {}}
     for it in vis:
-        z = zone_of(it["source"])
+        z = group_of(it["source"])
         pools[z][it["id"]] = it
         for s in (it.get("concepts") or []):
             cidxs[z].setdefault(s, []).append(it["id"])
@@ -3128,7 +3156,7 @@ def write_detail_pages(vis, items, lib, worthy):
         # (Bugbot PR#103)。更要紧的是**测试里把同一个公式抄了一遍, 所以测也抓不住**: 验证手段
         # 与被验证的错误同源, 这是交接书 §6.12 那条纪律的第三次复发, 而且就发生在写完它之后。
         # 改成哈希渲染结果, "漏字段"在结构上不可能: 渲染里出现什么, 签名就覆盖什么。
-        z = zone_of(it["source"])
+        z = group_of(it["source"])
         # 薄页少配(第 3a 条): 导读模式(无全文镜像)正文只有一句简报, 挂 4 条相关会喧宾夺主 ——
         # 内容少的页面, 模块要跟着少
         cap = RELATED_MAX if (CONTENT_DIR / f"{it['id']}.html").exists() and mirror_on(it["source"]) \
@@ -4078,6 +4106,7 @@ def main():
     if len(lib) != n_lib or not CONCEPTS_FILE.exists():
         save_concepts(lib)
 
+    scrub_banned_ai_fields(items)   # AI 加工字段的违禁词清洗(存量+本轮新写的都过一遍)
     items.sort(key=lambda x: (x["date"], x["id"]), reverse=True)
 
     # 存量修剪: 配了 keep_max 的源(外部 RSS)只按过筛条目数设上限, 自家内容源不设限;
