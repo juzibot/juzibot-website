@@ -25,7 +25,7 @@ def nav_html(rel):
           <a href="{rel}products/miaodong.html"><div class="d-title">句子秒懂 · 大脑</div><div class="d-desc">业务人员不写代码也能搭 Agent</div></a>
           <a href="{rel}products/shouhu.html"><div class="d-title">句子守护 · 主管</div><div class="d-desc">Agent 上线前测过、上线后管着</div></a>
           <a href="{rel}products/canmou.html"><div class="d-title">句子参谋 · 参谋</div><div class="d-desc">对话式数据洞察，一句话问数</div></a>
-          <a href="{rel}products/dongxing.html"><div class="d-title">句子懂行 · 记忆</div><div class="d-desc">把资料沉淀成 AI 可用的组织记忆</div></a>
+          <a href="{rel}products/dongxing.html"><div class="d-title">句子懂行 · 记忆</div><div class="d-desc">资料入库、问题检索、缺口回流</div></a>
           <a href="{rel}products/miaohui.html"><div class="d-title">句子秒回 · 工位</div><div class="d-desc">Agent 和人协作的 IM 工作台</div></a>
           <a href="{rel}products/cli.html"><div class="d-title">句子 CLI · 手</div><div class="d-desc">操作一切人用软件的执行层</div></a>
           <a href="{rel}products/zhizao.html"><div class="d-title">句子智造 · 地基</div><div class="d-desc">补齐客户数字化基建，一客一环境</div></a>
@@ -2071,24 +2071,49 @@ def page_fde():
 def page_dongxing():
     body = ''
     body += block(        "记忆",
-        "三个 Agent，分工维护 AI 员工的组织记忆",
-        "很多客户以为把知识库直接接进 AI 就行，结果命中率反而更低、答得更乱。句子懂行把组织记忆拆成三段稳定分工：归档 Agent 接住原始资料，体检 Agent 持续找问题，检索 Agent 按范围带出处回答。",
+        "三个 Agent，各守一段 AI 员工的组织记忆",
+        "很多客户以为把资料接进 AI 就行，结果命中率反而更低、答得更乱。句子懂行把组织记忆拆成三段稳定分工：归档 Agent 负责资料进入，体检 Agent 负责发现问题，检索 Agent 负责按范围找证据。",
         feat_grid([
-            ("📦", "归档 Agent", "解析客户上传的原始素材，拆成知识单元，并建议目录、标签和归属范围。", "bl"),
-            ("🩺", "体检 Agent", "持续扫描冲突、缺口、过期、重复和表达歧义，把问题变成任务清单。", "or"),
-            ("🔎", "检索 Agent", "在指定知识范围内逐级检索，带路径、带片段、带出处回答。", "gr"),
+            ("📦", "归档 Agent", "判断素材形态和归属，把正文段、问答指引、可发资产、取数路径放到正确范围。", "bl"),
+            ("🩺", "体检 Agent", "入库当场查冲突和没把握的地方，长期追踪缺口、过期、重复与表达歧义。", "or"),
+            ("🔎", "检索 Agent", "问题先进入绑定范围，带出处取证，不够再深度检索，答不上就回流成缺口待办。", "gr"),
         ], cols=2),
+    )
+    body += split_section(
+        eyebrow="两条闭环",
+        title="素材怎么进来，问题怎么被找到",
+        paragraphs=[
+            "懂行不是把资料塞进库里就结束。资料进入时，编排 Agent 统筹整批素材，每份资料由子 Agent 处理，最后沉淀成可维护、可调用、可追溯的组织记忆。",
+            "客户提问时，检索 Agent 先进入机器人绑定的范围，拿到带出处的候选；证据不够再看索引、收窄文件夹或标签，必要时读原文或查表结构。",
+        ],
+        bullets=[
+            "文档、表格、PDF、图片、视频、秒回素材进入同一批次账本",
+            "SKU 表先判产品名列、属性列和分类依据，再按行列展开成问答指引",
+            "图片、视频片段、PDF 内嵌图和数据表句柄成为可发、可取数资产",
+            "找不到答案如实回流，生成缺口待办，回到补料入库链路",
+        ],
+        visual_html="""
+<div style="background:#fff;border-radius:12px;padding:20px;border:1px solid var(--gray-line);">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+<div style="padding:14px;border-radius:8px;background:var(--blue-light);"><b style="color:var(--blue);">入库闭环</b><div style="font-size:12px;color:var(--gray-text);margin-top:6px;">素材形态 → 归属范围 → 记忆单元 → 人确认</div></div>
+<div style="padding:14px;border-radius:8px;background:var(--green-lt);"><b style="color:var(--green);">检索闭环</b><div style="font-size:12px;color:var(--gray-text);margin-top:6px;">绑定范围 → 出处候选 → 深度取证 → 缺口回流</div></div>
+</div>
+<div style="margin-top:16px;font-size:11.5px;color:var(--gray-text);background:var(--purple-lt);padding:10px 12px;border-radius:8px;">先把两条闭环跑通，AI 员工才不会把无关材料塞进回答里。</div>
+</div>
+""",
+        color="pu",
+        reverse=True,
     )
     body += split_section(
         eyebrow="协作闭环",
         title="入库、体检、检索各管一段",
         paragraphs=[
-            "组织记忆不止于把文档存进数据库。客户的经验、文档、历史对话先进入统一素材库，再按范围变成可维护、可检索、可追溯的知识单元。",
-            "通常先让归档、体检、检索三类 Agent 跑通，再引入其余产品与 FDE 团队。顺序颠倒，Agent 很容易拿到过期、冲突或无出处的内容。",
+            "组织记忆不止于把文档存进数据库。客户的经验、文档、历史对话先进入统一素材库，再按范围变成可维护、可检索、可追溯的记忆单元。",
+            "通常先让归档、体检、检索三类 Agent 跑通，再引入其余产品与 FDE 团队。顺序颠倒，Agent 很容易拿到过期、冲突或没有出处的内容。",
         ],
         bullets=[
             "文档、表格、历史对话、SOP——多来源一起进",
-            "知识单元带目录、标签、归属范围和来源",
+            "记忆单元带目录、标签、归属范围和来源",
             "冲突、缺口、过期内容进入任务流",
             "回答按指定范围检索，并带路径和片段出处",
         ],
@@ -2114,12 +2139,12 @@ def page_dongxing():
 """.strip()
     return page_layout(
         title="句子懂行 · 记忆 | 句子互动",
-        description="句子懂行是 AI 员工的记忆：原件上传后自动归档成知识单元，持续体检冲突、缺口与过期内容，并让 Agent 在指定范围内精准检索、带出处回答。",
+        description="句子懂行是 AI 员工的记忆：原件上传后自动归档成记忆单元，持续体检冲突、缺口与过期内容，并让 Agent 在指定范围内精准检索、带出处回答。",
         rel="../",
         breadcrumbs=[("首页", "../index.html"), ("产品", None), ("句子懂行", None)],
         hero_kicker="产品 · 懂行 · 记忆",
         hero_h1='句子懂行 · <span class="accent">记忆</span>',
-        hero_lede="句子懂行是 AI 员工的记忆。客户把资料丢进来，<strong>归档 Agent 自动拆成知识单元；体检 Agent 持续找冲突和缺口；检索 Agent 在指定范围内带出处作答</strong>。AI 答得准不准，先看记忆是否干净、可追溯。",
+        hero_lede="句子懂行是 AI 员工的记忆。客户把资料丢进来，<strong>归档 Agent 自动拆成记忆单元；体检 Agent 持续找冲突和缺口；检索 Agent 在指定范围内带出处作答</strong>。AI 答得准不准，先看记忆是否干净、可追溯。",
         pills=["归档 Agent", "体检 Agent", "检索 Agent", "带出处回答"],
         body=body,
     )

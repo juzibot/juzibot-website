@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>句子懂行 · 记忆 | 句子互动</title>
-<meta name="description" content="句子懂行是 AI 员工的记忆：原件上传后自动归档成知识单元，持续体检冲突、缺口与过期内容，并让 Agent 在指定范围内精准检索、带出处回答。" />
+<meta name="description" content="句子懂行是 AI 员工的记忆：原件上传后自动归档成记忆单元，持续体检冲突、缺口与过期内容，并让 Agent 在指定范围内精准检索、带出处回答。" />
 <link rel="icon" href="../logo.png" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="../assets/site.css" />
@@ -30,7 +30,7 @@
   .hub-body{padding:22px}
   .hub-status{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:start;padding-bottom:20px;border-bottom:1px solid #E9EDF5}
   .hub-status h2{font-size:24px;line-height:1.25;letter-spacing:0;margin-bottom:8px}
-  .hub-status p{font-size:13px;line-height:1.62;color:var(--ink-3);max-width:330px}
+  .hub-status p{font-size:13px;line-height:1.62;color:var(--ink-3);max-width:340px}
   .health-score{width:78px;height:78px;border:1px solid #CFE9E4;border-radius:50%;display:grid;place-items:center;font-size:15px;font-weight:850;color:var(--green);background:#F2FFFC}
   .hub-rows{display:grid;margin-top:18px}
   .hub-row{display:grid;grid-template-columns:38px 1fr auto;gap:14px;align-items:center;padding:13px 0;border-bottom:1px solid #F0F3F8}
@@ -45,6 +45,24 @@
   .section-head h2{font-size:42px;line-height:1.14;font-weight:840;letter-spacing:-.035em;word-break:keep-all;text-wrap:balance}
   .section-head h2 span{color:var(--blue);white-space:nowrap}
   .section-head p{font-size:15px;line-height:1.78;color:var(--ink-2)}
+  .flow-duo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+  .flow-panel{border:1px solid #E5EAF4;border-radius:8px;background:#fff;padding:30px;box-shadow:0 1px 2px rgba(14,20,48,.04),0 26px 70px -58px rgba(23,31,56,.34)}
+  .flow-panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;padding-bottom:22px;border-bottom:1px solid #EEF2F8}
+  .flow-panel .flow-label{font-size:13px;font-weight:850;letter-spacing:0;color:var(--blue);margin-bottom:10px}
+  .flow-panel.retrieve .flow-label{color:var(--green)}
+  .flow-panel h3{font-size:27px;line-height:1.22;font-weight:860;letter-spacing:-.025em;margin:0 0 10px}
+  .flow-panel p{font-size:14px;line-height:1.74;color:var(--ink-2);margin:0}
+  .flow-badge{flex:0 0 auto;font-family:var(--mono);font-size:11px;font-weight:850;color:var(--blue);background:#F4F6FF;border:1px solid #DDE2FF;border-radius:999px;padding:7px 10px;white-space:nowrap}
+  .flow-panel.retrieve .flow-badge{color:#0D9488;background:#F0FDFA;border-color:#CCFBF1}
+  .flow-steps{display:grid;margin-top:8px}
+  .flow-step{display:grid;grid-template-columns:34px minmax(0,1fr);gap:14px;align-items:start;padding:18px 0;border-bottom:1px solid #F0F3F8}
+  .flow-step:last-child{border-bottom:0;padding-bottom:4px}
+  .flow-step-no{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-family:var(--mono);font-size:12px;line-height:1;font-weight:880;color:#fff;background:var(--blue);box-shadow:0 12px 24px -18px rgba(67,56,202,.5)}
+  .flow-panel.retrieve .flow-step-no{background:var(--green)}
+  .flow-step b{display:block;font-size:15px;line-height:1.36;color:var(--ink);margin-bottom:5px}
+  .flow-step span{display:block;font-size:13px;line-height:1.68;color:var(--ink-2)}
+  .flow-note{margin-top:16px;padding-top:18px;border-top:1px solid #EEF2F8;font-size:13px;line-height:1.72;color:var(--ink-2)}
+  .flow-note strong{color:var(--ink);font-weight:760}
   .screen-stack{display:grid;border-top:1px solid #E6EBF4}
   .screen-proof{position:relative;display:grid;grid-template-columns:minmax(240px,.36fr) minmax(0,.64fr);gap:64px;align-items:start;padding:54px 0;border-bottom:1px solid #E6EBF4;background:transparent}
   .screen-copy{display:flex;flex-direction:column;justify-content:flex-start;max-width:360px;padding-top:4px}
@@ -67,7 +85,7 @@
   .agent-card:nth-child(2) i{background:#C47A12}.agent-card:nth-child(3) i{background:var(--green)}
   .agent-card h3{font-size:22px;line-height:1.28;letter-spacing:0;margin-bottom:10px}.agent-card p{font-size:14px;line-height:1.74;color:var(--ink-2)}
   @media(max-width:1080px){
-    .hero-grid,.section-head,.screen-proof{grid-template-columns:1fr}
+    .hero-grid,.section-head,.screen-proof,.flow-duo{grid-template-columns:1fr}
     .screen-copy{max-width:none}
     .dh-hero h1{font-size:56px}.hero-sub{font-size:30px}
   }
@@ -94,31 +112,31 @@
           <span class="eyebrow-line">产品 · 懂行 · 记忆</span>
           <h1>句子懂行 · 记忆</h1>
           <div class="hero-sub">把客户资料，沉淀成 AI 员工可用的组织记忆。</div>
-          <p class="hero-lede">句子懂行是 AI 员工的记忆。客户把资料丢进来，<strong>归档 Agent 自动拆成知识单元；体检 Agent 持续找冲突和缺口；检索 Agent 在指定范围内带出处作答</strong>。AI 答得准不准，先看记忆是否干净、可追溯。</p>
+          <p class="hero-lede">句子懂行是 AI 员工的记忆。客户把资料丢进来，<strong>归档 Agent 自动拆成记忆单元；体检 Agent 持续找冲突和缺口；检索 Agent 在指定范围内带出处作答</strong>。AI 答得准不准，先看记忆是否干净、可追溯。</p>
           <div class="hero-actions">
             <button type="button" class="btn btn-blue btn-lg ar-host" onclick="openContact('句子懂行·页头','预约演示')">
               预约演示
               <span class="ar"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h11M10 4l5 5-5 5"/></svg><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h11M10 4l5 5-5 5"/></svg></span>
             </button>
-            <a href="#agents" class="btn btn-ghost btn-lg">看三个 Agent</a>
+            <a href="#flows" class="btn btn-ghost btn-lg">看两条闭环</a>
           </div>
         </div>
 
         <div class="hub-panel" aria-label="句子懂行记忆概览">
-          <div class="hub-top"><span class="hub-dots"><i></i><i></i><i></i></span><span class="hub-title">句子懂行 · Memory</span></div>
+          <div class="hub-top"><span class="hub-dots"><i></i><i></i><i></i></span><span class="hub-title">句子懂行 · 记忆</span></div>
           <div class="hub-body">
             <div class="hub-status">
               <div>
-                <h2>记忆健康度</h2>
-                <p>原件、知识单元、体检任务和检索路径在同一套记忆里持续更新。</p>
+                <h2>组织记忆运行中</h2>
+                <p>素材、问答指引、可发资产、取数路径和检索出处在同一条链路里持续更新。</p>
               </div>
               <div class="health-score">体检中</div>
             </div>
             <div class="hub-rows">
-              <div class="hub-row"><span class="hub-no">01</span><div><b>原件客户上传</b><span>文件、表格、历史对话先统一接住。</span></div><span class="hub-tag">已接收</span></div>
-              <div class="hub-row"><span class="hub-no">02</span><div><b>知识单元归档</b><span>自动拆分、分类、打标签。</span></div><span class="hub-tag">归档中</span></div>
-              <div class="hub-row"><span class="hub-no">03</span><div><b>知识体检任务</b><span>发现冲突、缺口、过期和重复。</span></div><span class="hub-tag">待裁决</span></div>
-              <div class="hub-row"><span class="hub-no">04</span><div><b>范围内精准检索</b><span>先圈范围，再召回片段和出处。</span></div><span class="hub-tag">带出处</span></div>
+              <div class="hub-row"><span class="hub-no">01</span><div><b>多入口接收</b><span>文件、表格、图片、视频和秒回素材先统一进来。</span></div><span class="hub-tag">批次中</span></div>
+              <div class="hub-row"><span class="hub-no">02</span><div><b>拆成记忆单元</b><span>正文段、问答指引、可发资产各归其位。</span></div><span class="hub-tag">归档中</span></div>
+              <div class="hub-row"><span class="hub-no">03</span><div><b>先范围再检索</b><span>先看绑定范围，再拿出处和原文证据。</span></div><span class="hub-tag">带出处</span></div>
+              <div class="hub-row"><span class="hub-no">04</span><div><b>缺口回流待办</b><span>答不上如实回流，生成补料任务回到入库链路。</span></div><span class="hub-tag">可追溯</span></div>
             </div>
           </div>
         </div>
@@ -126,19 +144,67 @@
     </div>
   </header>
 
+  <section class="dh-section" id="flows">
+    <div class="dh-wrap">
+      <div class="section-head">
+        <div>
+          <div class="kicker">两条闭环</div>
+          <h2>素材怎么进来，<span>问题怎么被找到。</span></h2>
+        </div>
+        <p>懂行不是把资料塞进库里就结束。它把入库和检索拆成两条稳定流程：资料进入时先变成可维护的组织记忆，客户提问时再按范围、出处和证据逐层找到答案。</p>
+      </div>
+      <div class="flow-duo">
+        <article class="flow-panel ingest">
+          <div class="flow-panel-head">
+            <div>
+              <div class="flow-label">资料入库</div>
+              <h3>资料进来，先分清形态和归属。</h3>
+              <p>一个编排 Agent 统筹整批素材，每份资料由子 Agent 端到端处理，不让表格、图片、视频和历史对话散落在不同链路里。</p>
+            </div>
+            <span class="flow-badge">入库闭环</span>
+          </div>
+          <div class="flow-steps">
+            <div class="flow-step"><span class="flow-step-no">01</span><div><b>多入口统一接收</b><span>文档、表格、PDF、图片、视频、压缩包、秒回素材都进入同一个批次账本。</span></div></div>
+            <div class="flow-step"><span class="flow-step-no">02</span><div><b>先判断形态，再批量展开</b><span>SKU 表这类资料先识别产品名列、属性列和分类依据，再按行列展开成问答指引，避免人工漏项。</span></div></div>
+            <div class="flow-step"><span class="flow-step-no">03</span><div><b>资产也进入记忆</b><span>图片、视频片段、PDF 内嵌图和数据表句柄都保留下来，后续回答需要发素材或取数时能被流程调用。</span></div></div>
+            <div class="flow-step"><span class="flow-step-no">04</span><div><b>问题当场进入待办</b><span>冲突、没把握的归属、需要人工确认的展开结果，在入库现场生成待办，确认后再写入组织记忆。</span></div></div>
+          </div>
+          <div class="flow-note"><strong>关键变化：</strong>资料不是“存起来”，而是变成带来源、归属、可调用资产和处理状态的记忆单元。</div>
+        </article>
+        <article class="flow-panel retrieve">
+          <div class="flow-panel-head">
+            <div>
+              <div class="flow-label">范围检索</div>
+              <h3>问题进来，先看范围再找证据。</h3>
+              <p>检索 Agent 不直接全库语义搜。它先进入机器人绑定的范围，拿到带出处的候选，再判断证据是否足够。</p>
+            </div>
+            <span class="flow-badge">检索闭环</span>
+          </div>
+          <div class="flow-steps">
+            <div class="flow-step"><span class="flow-step-no">01</span><div><b>先匹配问答指引</b><span>候选连同出处交回模型，作为行动指引，不直接当标准话术甩给客户。</span></div></div>
+            <div class="flow-step"><span class="flow-step-no">02</span><div><b>证据不够再深度检索</b><span>先看索引，确认范围内有什么内容和数据表；再收窄到文件夹或标签。</span></div></div>
+            <div class="flow-step"><span class="flow-step-no">03</span><div><b>按问题类型取证</b><span>一般问题走语义检索，型号和条款走关键词，取数问题先看表结构再定向取数，必要时读整份原文。</span></div></div>
+            <div class="flow-step"><span class="flow-step-no">04</span><div><b>答不上就回流</b><span>找到就给答案、出处和可发素材；找不到就如实说明，并落一张缺口卡回到入库待办。</span></div></div>
+          </div>
+          <div class="flow-note"><strong>关键变化：</strong>回答不是靠模型猜，而是按范围、索引、片段、原文和表结构逐层拿证据。</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
   <section class="dh-section" id="agents">
     <div class="dh-wrap">
       <div class="section-head">
         <div>
           <div class="kicker">三个 Agent</div>
-          <h2>三个 Agent，<span>分工维护组织记忆。</span></h2>
+          <h2>三个 Agent，<span>各守一段组织记忆。</span></h2>
         </div>
-        <p>懂行把组织记忆拆成三类稳定分工：入库、体检、检索各管一段，让知识不是整理一次，而是长期被维护。</p>
+        <p>总分结构保持不变：归档负责资料进入，体检负责发现问题，检索负责按范围找证据。每一步都能被看见，也能被人接管。</p>
       </div>
       <div class="agent-grid">
-        <article class="agent-card"><i class="fa-solid fa-box-archive" aria-hidden="true"></i><h3>归档 Agent</h3><p>解析客户上传的原始素材，拆成知识单元，建议目录、标签和归属范围。</p></article>
-        <article class="agent-card"><i class="fa-solid fa-stethoscope" aria-hidden="true"></i><h3>体检 Agent</h3><p>持续扫描冲突、缺口、过期、重复和表达歧义，把问题变成任务清单。</p></article>
-        <article class="agent-card"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><h3>检索 Agent</h3><p>在指定知识范围内逐级检索，带路径、带片段、带出处回答，减少幻觉。</p></article>
+        <article class="agent-card"><i class="fa-solid fa-box-archive" aria-hidden="true"></i><h3>归档 Agent</h3><p>判断素材形态和归属，把正文段、问答指引、可发资产、取数路径放到正确范围。</p></article>
+        <article class="agent-card"><i class="fa-solid fa-stethoscope" aria-hidden="true"></i><h3>体检 Agent</h3><p>入库当场查冲突和没把握的地方，长期追踪缺口、过期、重复与表达歧义。</p></article>
+        <article class="agent-card"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><h3>检索 Agent</h3><p>问题先进入绑定范围，带出处取证，不够再深度检索，答不上就回流成缺口待办。</p></article>
       </div>
     </div>
   </section>
@@ -150,17 +216,17 @@
           <div class="kicker">真实界面</div>
           <h2>三个 Agent 的关键界面，<span>串起记忆闭环。</span></h2>
         </div>
-        <p>从归档、体检到检索，来源、处理状态和命中证据都能看清。</p>
+        <p>从一批素材进入，到一次问题被回答，来源、处理状态、人工确认和命中证据都能看清。</p>
       </div>
       <div class="screen-stack">
         <article class="screen-proof">
           <div class="screen-copy">
             <span class="screen-no">01</span>
-            <h3>客户资料不用先整理完，归档 Agent 先接住。</h3>
-            <p>上传后不是简单存文件，而是判断资料主题、建议归档目录、拆出可进入知识库的单元。FDE 不需要从零翻文件夹找脉络。</p>
+            <h3>一批素材进来，归档 Agent 先分清形态和归属。</h3>
+            <p>上传后不是简单存文件，而是判断资料类型、建议归档目录、拆出记忆单元。表格、图片、视频和秒回素材都走同一条入库链路。</p>
             <div class="screen-meta">
-              <span><i aria-hidden="true"></i>自动识别素材主题并建议归档</span>
-              <span><i aria-hidden="true"></i>从原件中抽取主题、来源、适用范围等标签</span>
+              <span><i aria-hidden="true"></i>表格先判形态，SKU 类资料按行列展开成问答指引</span>
+              <span><i aria-hidden="true"></i>图片、视频和 PDF 内嵌图保留为后续可发资产</span>
             </div>
           </div>
           <div class="screen-stage">
@@ -171,11 +237,11 @@
         <article class="screen-proof">
           <div class="screen-copy">
             <span class="screen-no">02</span>
-            <h3>冲突知识不会沉进库里，而是变成待裁决任务。</h3>
-            <p>体检 Agent 把同范围内的真冲突、缺口、过期和重复内容找出来，给出处理路径：自动修、升级 FDE，或退回客户确认。</p>
+            <h3>冲突和没把握的地方，当场变成待办。</h3>
+            <p>体检 Agent 把同范围内的真冲突、缺口、过期和重复内容找出来。需要人工判断的，不会静默写进记忆，而是进入任务流。</p>
             <div class="screen-meta">
-              <span><i aria-hidden="true"></i>冲突知识进入裁决任务</span>
-              <span><i aria-hidden="true"></i>定位到单元粒度，并提示影响范围</span>
+              <span><i aria-hidden="true"></i>入库当场只比对刚落的这一批，问题还在用户眼前</span>
+              <span><i aria-hidden="true"></i>定位到单元粒度，确认后再重新投影到可用范围</span>
             </div>
           </div>
           <div class="screen-stage">
@@ -186,11 +252,11 @@
         <article class="screen-proof">
           <div class="screen-copy">
             <span class="screen-no">03</span>
-            <h3>先确定范围，再逐层兜底，不把无关知识塞给模型。</h3>
-            <p>检索 Agent 会先翻目录树，钻进相关文件夹；证据不足时再检索片段、拉全文。每一步都能看到命中路径。</p>
+            <h3>先确定范围，再逐层取证，不把无关材料塞给模型。</h3>
+            <p>检索 Agent 先查范围内的问答指引和出处；不够再看索引、收窄文件夹或标签，最后才读片段、原文或表结构。</p>
             <div class="screen-meta">
-              <span><i aria-hidden="true"></i>按范围、文件、片段逐级召回</span>
-              <span><i aria-hidden="true"></i>答案基于片段生成，并显示相似度</span>
+              <span><i aria-hidden="true"></i>候选答案带出处交回模型，不直接当标准话术发送</span>
+              <span><i aria-hidden="true"></i>找不到就生成缺口待办，而不是臆造答案</span>
             </div>
           </div>
           <div class="screen-stage">
@@ -215,9 +281,9 @@
         </div>
       </div>
       <div class="cta-stats">
-        <div class="cta-stat rv" style="--ac:#4338CA"><div class="csv">第一步</div><div class="csl">组织记忆先跑通，Agent 才答得准</div></div>
-        <div class="cta-stat rv rv-d1" style="--ac:#14B8A6"><div class="csv">可追溯</div><div class="csl">每次回答都能看到来源和命中片段</div></div>
-        <div class="cta-stat rv rv-d2" style="--ac:#6366F1"><div class="csv">最快 1 天</div><div class="csl">简单角色上岗，复杂角色 90 天</div></div>
+        <div class="cta-stat rv" style="--ac:#4338CA"><div class="csv">入库闭环</div><div class="csl">素材进来先变成可维护的记忆</div></div>
+        <div class="cta-stat rv rv-d1" style="--ac:#14B8A6"><div class="csv">检索闭环</div><div class="csl">问题先进范围，再按出处取证</div></div>
+        <div class="cta-stat rv rv-d2" style="--ac:#6366F1"><div class="csv">缺口回流</div><div class="csl">答不上就生成补料待办</div></div>
       </div>
     </div>
   </section>
