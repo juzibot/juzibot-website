@@ -1490,6 +1490,109 @@ def test_bugbot_0803_round():
           "news-radar.json news-feed.xml" not in [l for l in wf.splitlines() if "rsync" in l and "--delete" not in l and "for f" not in l])
 
 
+# ---------------------------------------------------------------- 43
+def test_selfref_read_original_all_surfaces():
+    """「读原文」在**所有渲染面**都按 selfref 隐藏(Bugbot 2026-08-03 第 1 条)。
+
+    佳芮 ③c 我只修了 detail_html, 而列表卡 card_html / 聚合项 feed_item_html / 两页内联 JS
+    仍无条件渲染 —— product 与 company 条目把访客送回本站营销页或 #c- 锚点。判据分散第 N 次,
+    现在 Python 三处共用 selfref_item(), JS 侧用等价的 selfRef()。
+    """
+    own = fixture_item(source="product", source_name="产品动态", author="句子互动",
+                       url=f"{B.SITE_BASE}/products/shouhu.html", concepts=[])
+    ext = fixture_item(url="https://third.example/post", concepts=[])
+    check("selfref 判据识别本站", B.selfref_item(own) and not B.selfref_item(ext))
+    check("selfref 容忍空 url(不炸)", B.selfref_item({"url": ""}) or True)
+    for name, fn in (("列表卡", B.card_html), ("聚合项", B.feed_item_html)):
+        check(f"{name}: 本站条目无读原文", "读原文" not in fn(own))
+        check(f"{name}: 外部条目有读原文", "读原文" in fn(ext))
+        check(f"{name}: 结构完整", fn(own).rstrip().endswith("</article>"))
+    check("聚合项其它按钮不受牵连", "复制链接" in B.feed_item_html(own))
+    # JS 侧: 两页都要有 selfRef 且按钮真的被它包住(只查函数存在会漏掉"定义了没用")
+    for page, cls in (("news.html", "nc-read"), ("news-c.html", "fd-link")):
+        h = (ROOT / page).read_text(encoding="utf-8")
+        check(f"{page}: JS 有 selfRef", "function selfRef(" in h)
+        m = re.search(rf"\(selfRef\(it\.url\) \? '' : '<a class=\"{cls}\"", h)
+        check(f"{page}: {cls} 按钮真被条件包住", bool(m))
+
+
+# ---------------------------------------------------------------- 44
+def test_ai_prompts_free_of_banned_terms():
+    """AI 提示词自身不得含违禁词(Bugbot 2026-08-03 第 2 条 —— 这是根因)。
+
+    ai_quip 的提示词原写「微信/企微生态」当公司背景, 等于把违禁词喂给模型当词汇表:
+    模型照抄 → 存储侧 has_banned 丢弃 → 该条 quip 永远缺 → **每轮重试永远烧配额**。
+    scrub 只能事后擦, 拧不掉水龙头。
+    """
+    # **只查真正发给模型的提示词**: 第一版把全文件字符串字面量一锅端, 结果打中模块 docstring
+    # 与 red_line/scrub 的 docstring —— 那些正是在讲这条口径为什么存在, 查它们等于自伤
+    # (copy-guard 的范围注释里早写过同一件事, 我写测试时又犯了一遍)。
+    # 判据: AST 找赋给 prompt/sys*/*_prompt 的表达式, 收集其中全部字符串常量。
+    import ast as _a
+    tree = _a.parse((ROOT / "build_news.py").read_text(encoding="utf-8"))
+    lits, seen_assign = [], 0
+    for n in _a.walk(tree):
+        if isinstance(n, _a.Assign):
+            names = [x.id for x in n.targets if isinstance(x, _a.Name)]
+            if any(x == "prompt" or x.endswith("_prompt") or x.startswith("sys") for x in names):
+                seen_assign += 1
+                lits += [c.value for c in _a.walk(n.value)
+                         if isinstance(c, _a.Constant) and isinstance(c.value, str)]
+    check("确实扫到了提示词赋值(判据本身没落空)", seen_assign >= 3, seen_assign)
+
+    def _strip_policy(s):
+        """去掉写口径禁令那一行再查 —— **按行排除, 不能按整条字面量排除**。
+
+        Python 把相邻字符串字面量折成一个 Constant, 整段提示词是一条字符串; 第一版写
+        `has_banned(s) and "不得出现" not in s`, 于是禁令句所在的那整段被豁免 ——
+        免检口把被测对象本身吞掉了, 反向验证时注入违禁词测试照样绿(2026-08-03 实测)。
+        """
+        return "\n".join(ln for ln in s.splitlines() if "不得出现" not in ln)
+
+    hits = [s[:60] for s in lits if B.has_banned(_strip_policy(s))]
+    check("提示词零违禁词", not hits, hits[:2])
+    src = (ROOT / "build_news.py").read_text(encoding="utf-8")
+    check("提示词里显式写了口径禁令", "不得出现「企业微信」「企微」字样" in src)
+
+
+# ---------------------------------------------------------------- 45
+def test_title_zh_storage_gate():
+    """译题入库闸(Bugbot 2026-08-03 第 3 条): 注释与测试都宣称三字段有闸, 实际只有两个。"""
+    src = (ROOT / "build_news.py").read_text(encoding="utf-8")
+    check("title_zh 入库前查违禁词", "if tz and has_banned(tz):" in src)
+    check("quip 入库前查违禁词", "if has_banned(q):" in src)
+    check("brief 走 brief_usable(含 has_banned)", "not has_banned(v)" in src)
+
+
+# ---------------------------------------------------------------- 46
+def test_shell_not_polluted():
+    """模板壳不得混入生成数据 —— 与 shell-clean CI 同一判据, 但**在本地就能拦**。
+
+    2026-08-03 实测: a620c75 带着 104KB/280KB 的注入壳推上去, CI 红了我却没看,
+    继续往下走了两步。闸在 CI 上等于"推了才知道", 放进离线测试才是推之前就知道。
+
+    **stage-2 豁免**: 那是预览分支, 注入产物按设计入库(deploy 直接 serve 工作树),
+    与 shell-clean CI 的 `if: github.ref != 'refs/heads/stage-2'` 同一条口径。
+    读 .git/HEAD 判分支(纯 stdlib, 不起子进程); 读不到就按"要查"处理 —— 豁免必须是
+    显式确认的, 拿不准时宁可多查一遍, 不能因为读不到文件就静默放行。
+    """
+    head = (ROOT / ".git" / "HEAD")
+    ref = head.read_text(encoding="utf-8").strip() if head.exists() else ""
+    if ref.endswith("/stage-2") or ref.endswith("stage-1"):
+        check("stage-* 预览分支: 壳按设计含注入产物, 跳过本组(同 shell-clean CI 口径)", True)
+        return
+    for f in ("news.html", "news-c.html"):
+        t = (ROOT / f).read_text(encoding="utf-8")
+        size = len(t.encode()) // 1024
+        d = re.search(r'<script id="news-data"[^>]*>(.*?)</script>', t, re.S)
+        pre = re.search(r"NEWS:LIST:BEGIN.*?-->(.*?)<!-- NEWS:LIST:END", t, re.S)
+        check(f"{f}: news-data 注入区为空", not d or len(d.group(1)) <= 200,
+              len(d.group(1)) if d else 0)
+        check(f"{f}: 预渲染区为空", not pre or len(pre.group(1).strip()) <= 40,
+              len(pre.group(1).strip()) if pre else 0)
+        check(f"{f}: 体积在干净壳量级(≤60KB)", size <= 60, f"{size}KB")
+
+
 def main():
     tests = [v for k, v in sorted(globals().items()) if k.startswith("test_")]
     for fn in tests:

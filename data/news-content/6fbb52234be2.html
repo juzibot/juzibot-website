@@ -1,0 +1,13 @@
+<p><strong>Release:</strong> <a href="https://github.com/simonw/llm-anthropic/releases/tag/0.26">llm-anthropic 0.26</a></p>
+        <p>Includes new features enabled by <a href="https://simonwillison.net/2026/Aug/4/new-release-of-llm/">LLM 0.32</a>:</p>
+<blockquote>
+<ul>
+<li>New models: <code>claude-fable-5</code>, <code>claude-sonnet-5</code>, and <code>claude-opus-5</code>. <a href="https://github.com/simonw/llm-anthropic/issues/75">#75</a>, <a href="https://github.com/simonw/llm-anthropic/issues/76">#76</a></li>
+<li>Added server-side tools for <code>WebSearch</code>, <code>WebFetch</code>, <code>CodeExecution</code>, and <code>AnthropicMCP</code>, available through LLM's <code>-T</code> interface or Python <code>tools=</code>. The previous <code>-o web_search*</code> options have been removed in favor of <code>-T WebSearch</code>. <a href="https://github.com/simonw/llm-anthropic/issues/79">#79</a></li>
+<li>Upgraded to <a href="https://llm.datasette.io/en/stable/changelog.html#v0-32">llm&gt;=0.32</a>. Reasoning, tool calls, tool results, and server-side tool results now stream as typed events. Reasoning for <code>llm</code> CLI prompts now displays to standard error unless you pass <code>--hide-reasoning/-R</code>.</li>
+<li>Simplified extended thinking to <code>thinking</code> and <code>thinking_effort</code> (<code>low</code>, <code>medium</code>, <code>high</code>, <code>xhigh</code>, or <code>max</code>). Claude 5 models think by default; <code>-o thinking 0</code> disables thinking for Sonnet 5 and Opus 5, while Fable 5 always thinks. <code>-R/--hide-reasoning</code> now omits reasoning from responses and logs. The <code>thinking_budget</code>, <code>thinking_display</code>, and <code>thinking_adaptive</code> options have been removed. <a href="https://github.com/simonw/llm-anthropic/issues/80">#80</a></li>
+</ul>
+</blockquote>
+    
+    
+        <p>Tags: <a href="https://simonwillison.net/tags/llm">llm</a>, <a href="https://simonwillison.net/tags/anthropic">anthropic</a>, <a href="https://simonwillison.net/tags/claude">claude</a>, <a href="https://simonwillison.net/tags/model-context-protocol">model-context-protocol</a></p>
