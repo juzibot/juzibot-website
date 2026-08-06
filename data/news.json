@@ -1,8 +1,8 @@
 {
  "generated_by": "build_news.py",
- "generated_at": "2026-08-03T15:02:42+08:00",
- "count": 876,
- "visible": 320,
+ "generated_at": "2026-08-03T17:59:33+08:00",
+ "count": 899,
+ "visible": 322,
  "sources": [
   {
    "id": "rui-blog",
@@ -10,7 +10,7 @@
    "type": "sitemap",
    "home": "https://rui.juzi.bot/",
    "status": "ok",
-   "last_sync": "2026-08-03T15:02:42+08:00",
+   "last_sync": "2026-08-03T17:59:33+08:00",
    "group": "company",
    "ai": true,
    "count": 36
@@ -21,7 +21,7 @@
    "type": "feishu-base",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-08-03T15:02:42+08:00",
+   "last_sync": "2026-08-03T17:59:33+08:00",
    "group": "company",
    "ai": false,
    "count": 0
@@ -32,7 +32,7 @@
    "type": "manual",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-08-03T15:02:42+08:00",
+   "last_sync": "2026-08-03T17:59:33+08:00",
    "group": "company",
    "ai": false,
    "count": 0
@@ -43,7 +43,7 @@
    "type": "manual",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-08-03T15:02:42+08:00",
+   "last_sync": "2026-08-03T17:59:33+08:00",
    "group": "company",
    "ai": false,
    "count": 5
@@ -54,7 +54,7 @@
    "type": "manual",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-08-03T15:02:42+08:00",
+   "last_sync": "2026-08-03T17:59:33+08:00",
    "group": "company",
    "ai": false,
    "count": 0
@@ -65,10 +65,10 @@
    "type": "rss",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-08-03T15:02:42+08:00",
+   "last_sync": "2026-08-03T17:59:33+08:00",
    "group": "radar",
    "ai": true,
-   "count": 96
+   "count": 94
   },
   {
    "id": "voices",
@@ -76,7 +76,7 @@
    "type": "rss",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-08-03T15:02:42+08:00",
+   "last_sync": "2026-08-03T17:59:33+08:00",
    "group": "radar",
    "ai": true,
    "count": 99
@@ -87,10 +87,10 @@
    "type": "hn-algolia",
    "home": "https://news.ycombinator.com/",
    "status": "ok",
-   "last_sync": "2026-08-03T15:02:42+08:00",
+   "last_sync": "2026-08-03T17:59:33+08:00",
    "group": "radar",
    "ai": true,
-   "count": 47
+   "count": 49
   },
   {
    "id": "qisi",
@@ -98,10 +98,10 @@
    "type": "qisi-list",
    "home": "https://news.miracleplus.com/",
    "status": "ok",
-   "last_sync": "2026-08-03T15:02:42+08:00",
+   "last_sync": "2026-08-03T17:59:33+08:00",
    "group": "radar",
    "ai": true,
-   "count": 37
+   "count": 39
   }
  ],
  "items": [
@@ -139,7 +139,18 @@
    "date": "2026-08-03",
    "source": "qisi",
    "source_name": "齐思",
-   "author": "奇绩创坛"
+   "author": "奇绩创坛",
+   "ai": {
+    "keep": true,
+    "at": "2026-08-03",
+    "rule": "biz"
+   },
+   "concepts": [
+    "h3-model",
+    "image-generation-model",
+    "diffusion-model-video-generation"
+   ],
+   "concepts_full": true
   },
   {
    "id": "f1afe25775a0",
@@ -158,9 +169,11 @@
     "at": "2026-08-03",
     "rule": "hn"
    },
-   "title_zh": "Qwen3.8-Max：编程与办公的新标杆",
+   "title_zh": "Qwen3.8-Max: A New Bar for Coding and Cowork",
    "concepts": [],
-   "concepts_full": false
+   "concepts_full": false,
+   "brief": "Qwen3.8-Max模型在编程和协作领域树立了新标杆，为开发者提供了更强大的工具支持。",
+   "brief_full": false
   },
   {
    "id": "efe11a26f327",
@@ -204,6 +217,41 @@
    }
   },
   {
+   "id": "eb7e9b9cd9e7",
+   "title": "恒指收涨0.48%，恒生科技指数涨0.96%",
+   "url": "https://36kr.com/newsflashes/3923519368670849?f=rss",
+   "summary": "36氪获悉，恒指收涨0.48%，恒生科技指数涨0.96%；光伏、核电领涨，信义光能、协鑫科技涨超10%，东方电气涨超9%；科技股走强，MINIMAX-W、阿里巴巴涨超7%，百度集团、快手涨超3%；半导体、煤炭跌幅居前，澜起科技、兆易创新跌超7%；南向资金净买入110.31亿港元。",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-08-03",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪",
+   "ai": {
+    "keep": false,
+    "at": "2026-08-03",
+    "kw": true,
+    "rule": "biz"
+   }
+  },
+  {
+   "id": "eb6a6bb177cd",
+   "title": "鑫科材料：拟收购控股子公司鑫科铜业20%少数股权",
+   "url": "https://36kr.com/newsflashes/3923529982668160?f=rss",
+   "summary": "36氪获悉，鑫科材料公告，公司拟以自有及自筹资金收购崇左工投与广西同正各自持有的控股子公司鑫科铜业10%少数股权，合计20%股权。交易完成后，鑫科材料将持有鑫科铜业100%股权，后者成为公司全资子公司。",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-08-03",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪",
+   "ai": {
+    "keep": false,
+    "at": "2026-08-03",
+    "rule": "biz"
+   }
+  },
+  {
    "id": "ea0546125ca8",
    "title": "36氪专访 | 对话大疆系Ebike��司：卖4万一辆的高端车，营收突破10亿，今年要翻四倍",
    "url": "https://36kr.com/p/3923367465266824?f=rss",
@@ -216,10 +264,68 @@
    "author": "36氪"
   },
   {
+   "id": "e9719df6f5af",
+   "title": "「最强苹果游戏机」iPad mini 8：OLED 来了，价格也悬了",
+   "url": "https://www.ifanr.com/1673674?utm_source=rss&utm_medium=rss&utm_campaign=",
+   "summary": "游戏党再次王朝 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。",
+   "category": "爱范儿",
+   "tags": [],
+   "date": "2026-08-03",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "爱范儿",
+   "ai": {
+    "keep": false,
+    "at": "2026-08-03",
+    "rule": "biz"
+   }
+  },
+  {
+   "id": "e0859e174514",
+   "title": "Chinese Game Developers Pivot Beyond Ad Buying as Overseas Markets Cool",
+   "url": "https://www.tmtpost.com/8089361.html",
+   "summary": "As rising advertising costs and market saturation squeeze global mobile gaming revenues, Chinese studios gathering at ChinaJoy in Shanghai are abandoning their decade-lo…",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-08-03",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体"
+  },
+  {
+   "id": "df24891118ce",
+   "title": "智元冲刺港股IPO，备战具身智能淘汰赛",
+   "url": "https://www.tmtpost.com/8088777.html",
+   "summary": "智元急着上市，买的不是钱，是时间。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-08-03",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体",
+   "ai": {
+    "keep": false,
+    "at": "2026-08-03",
+    "rule": "biz"
+   }
+  },
+  {
    "id": "de11728efb03",
    "title": "中国证监会主席吴清：支持香港推出更多人民币计价结算的期货品种",
    "url": "https://36kr.com/newsflashes/3923194246311554?f=rss",
    "summary": "8月3日，在香港交易所举行的五年期中国国债期货上市仪式上，中国证监会主席吴清表示，将支持两地指数公司加强合作，推出更多基于中国资产的指数，推动两地行业机构推出更多基于两地市场布局中国现代化产业体系的ETF产品，优化ETF产品注册机制，共同提升中国指数和中国资产的国际影响力，同时深化两地期货市场合作，支持香港推出更多人民币计价结算的期货品…",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-08-03",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪"
+  },
+  {
+   "id": "dcb9614005d3",
+   "title": "德明利今日跌超9%，36氪企业全情报提前捕捉到这一市场信号",
+   "url": "https://36kr.com/p/3923603053686151?f=rss",
+   "summary": "图片1 今日A股收盘数据 上证指数：3809.66 点，-0.59% 深证成指：13448.29 点，-0.96% 创业板指：3302.55 点，-1.24% 德明利8月3日下跌9.56% 349.00 -36.90 -9.56% 当日开盘价373.94；交易量27.21万手； 换手率16.49%；缩量幅度0.36% 3日涨幅-1.57…",
    "category": "36氪",
    "tags": [],
    "date": "2026-08-03",
@@ -252,6 +358,24 @@
    "concepts_full": true
   },
   {
+   "id": "d2eab56fecac",
+   "title": "Don't be a meat proxy",
+   "url": "https://gruhn.me/blog/2026-08-03/",
+   "summary": "",
+   "category": "",
+   "tags": [],
+   "date": "2026-08-03",
+   "source": "hn",
+   "source_name": "Hacker News",
+   "author": "Hacker News",
+   "hn": "https://news.ycombinator.com/item?id=49151933",
+   "ai": {
+    "keep": false,
+    "at": "2026-08-03",
+    "rule": "hn"
+   }
+  },
+  {
    "id": "d2a4266e8c14",
    "title": "对话汪天凡：解析15年投资生涯及对快乐投资的追求",
    "url": "https://news.miracleplus.com/share_link/146385",
@@ -274,6 +398,23 @@
     "context-compression"
    ],
    "concepts_full": true
+  },
+  {
+   "id": "ce537b8630c2",
+   "title": "25岁Open AI神童：基金开4倍杠杆，一夜爆仓450亿美元",
+   "url": "https://www.tmtpost.com/8087041.html",
+   "summary": "基金开4倍杠杆，一夜爆仓450亿美元",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-08-03",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体",
+   "ai": {
+    "keep": false,
+    "at": "2026-08-03",
+    "rule": "biz"
+   }
   },
   {
    "id": "cd857cc5097f",
@@ -310,6 +451,24 @@
    "source": "industry",
    "source_name": "行业动态",
    "author": "钛媒体"
+  },
+  {
+   "id": "c72d7eda875d",
+   "title": "More German than many Germans",
+   "url": "https://mertbulan.com/more-german-than-many-germans/",
+   "summary": "",
+   "category": "",
+   "tags": [],
+   "date": "2026-08-03",
+   "source": "hn",
+   "source_name": "Hacker News",
+   "author": "Hacker News",
+   "hn": "https://news.ycombinator.com/item?id=49151734",
+   "ai": {
+    "keep": false,
+    "at": "2026-08-03",
+    "rule": "hn"
+   }
   },
   {
    "id": "c6d9f7ff2fbc",
@@ -352,6 +511,30 @@
    "author": "36氪"
   },
   {
+   "id": "bec5e8dd8f0a",
+   "title": "瑞士信息与通信科技公司Hoshii研发与ERP系统连接的AI助手，提升订单处理效率",
+   "url": "https://www.tmtpost.com/8081754.html",
+   "summary": "将订单处理速度提升至原来的2倍。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-08-03",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体",
+   "ai": {
+    "keep": true,
+    "at": "2026-08-03",
+    "rule": "biz"
+   },
+   "quip": "AI助手与ERP连接，证明垂直场景提效是明确落地路径",
+   "brief": "瑞士信息通信科技公司Hoshii研发与ERP系统连接的AI助手，通过自然语言理解和自动化处理提升订单处理效率。",
+   "brief_full": true,
+   "concepts": [
+    "erp-ai-assistant"
+   ],
+   "concepts_full": true
+  },
+  {
    "id": "bbd6dd6190a4",
    "title": "低价流量卡退场：整治行业乱象，莫回避运营商自身病灶",
    "url": "https://www.tmtpost.com/8088626.html",
@@ -362,6 +545,35 @@
    "source": "industry",
    "source_name": "行业动态",
    "author": "钛媒体"
+  },
+  {
+   "id": "bad539229ed6",
+   "title": "阿斯利康拟与百时美施贵宝探讨4000亿美元重组方案",
+   "url": "https://36kr.com/newsflashes/3923505102417286?f=rss",
+   "summary": "英国制药企业阿斯利康（AstraZeneca）正与美国百时美施贵宝公司（Bristol Myers Squibb）就合并事宜进行初步磋商。若交易达成，双方将组建一家估值约4000亿美元的跨国药企，创下全球医药行业并购规模的历史新高。（新浪财经）",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-08-03",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪",
+   "ai": {
+    "keep": false,
+    "at": "2026-08-03",
+    "rule": "biz"
+   }
+  },
+  {
+   "id": "ba91ad3e19ca",
+   "title": "中核建投资公司增资至10亿，增幅100%",
+   "url": "https://36kr.com/newsflashes/3923600611257989?f=rss",
+   "summary": "36氪获悉，天眼查App显示，近日，中核建投资有限公司发生工商变更，注册资本由5亿人民币增至10亿人民币，增幅100%。该公司成立于2022年11月，法定代表人为彭献武，经营范围包含投资管理、以自有资金从事投资活动等。股东信息显示，该公司由中国核工业建设股份有限公司全资持股。",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-08-03",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪"
   },
   {
    "id": "b88b8e3574c8",
@@ -440,6 +652,28 @@
    "author": "36氪"
   },
   {
+   "id": "b0b9e4550aaa",
+   "title": "Qwen3.8-27B AI模型即将推出，支持本地运行",
+   "url": "https://news.miracleplus.com/share_link/146475",
+   "summary": "Qwen3.8-27B, a new release from UnslothAI, will be available soon and can operate on systems with 17GB RAM or VRAM.",
+   "category": "热帖",
+   "tags": [],
+   "date": "2026-08-03",
+   "source": "qisi",
+   "source_name": "齐思",
+   "author": "奇绩创坛",
+   "ai": {
+    "keep": true,
+    "at": "2026-08-03",
+    "rule": "biz"
+   },
+   "concepts": [
+    "inference-deployment",
+    "model-benchmark"
+   ],
+   "concepts_full": true
+  },
+  {
    "id": "af29f73f1595",
    "title": "中国AI营销与Qwen3.8-Max：编码协作新标准",
    "url": "https://news.miracleplus.com/share_link/146476",
@@ -462,6 +696,24 @@
    "concepts_full": true
   },
   {
+   "id": "ae39bba78151",
+   "title": "盈富基金获南向资金净买入47.50亿港元",
+   "url": "https://36kr.com/newsflashes/3923619002674569?f=rss",
+   "summary": "南向资金净买入110.31亿港元，盈富基金、阿里巴巴-W、腾讯控股净买入额位列前三，分别获净买入47.50亿港元、41.69亿港元、24.32亿港元。净卖出方面，中芯国际、华虹宏力、建滔积层板分别遭净卖出10.64亿港元、4.02亿港元、3.11亿港元。（第一财经）",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-08-03",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪",
+   "ai": {
+    "keep": false,
+    "at": "2026-08-03",
+    "kw": true,
+    "rule": "biz"
+   }
+  },
+  {
    "id": "ae0c58d3f328",
    "title": "2026年ACCA-XNAI年度研讨会召开 | AI时代商业重构与人机共进成焦点",
    "url": "https://www.tmtpost.com/8088763.html",
@@ -471,7 +723,72 @@
    "date": "2026-08-03",
    "source": "industry",
    "source_name": "行业动态",
-   "author": "钛媒体"
+   "author": "钛媒体",
+   "ai": {
+    "keep": true,
+    "at": "2026-08-03",
+    "rule": "biz"
+   },
+   "quip": "人机共进更适配微信生态的轻量化交互场景",
+   "brief": "ACCA与厦门国家会计学院联合举办研讨会，聚焦AI时代商业重构、财务价值创造等议题，宣布2027年实施新学习评估体系。",
+   "brief_full": true,
+   "concepts": [
+    "ai-delivery",
+    "ai-decision-making",
+    "ai-native-enterprise-transformation"
+   ],
+   "concepts_full": true
+  },
+  {
+   "id": "ac8a324c9d8a",
+   "title": "2026中国科创投资夏季峰会暨陕西科创产业生态大会圆满落幕",
+   "url": "https://www.qbitai.com/2026/08/465361.html",
+   "summary": "由融中财经和秦创原科技创新投资集团主办的2026（第十二届）中国科创投资夏季峰会暨陕西科创产业生态大会圆满落下帷幕。",
+   "category": "量子位",
+   "tags": [],
+   "date": "2026-08-03",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "量子位",
+   "ai": {
+    "keep": false,
+    "at": "2026-08-03",
+    "rule": "biz"
+   }
+  },
+  {
+   "id": "aba4a1247b4d",
+   "title": "海外Biotech，来港交所“抢钱”了",
+   "url": "https://www.tmtpost.com/8088619.html",
+   "summary": "会不会挤掉一批人的位置？",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-08-03",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体",
+   "ai": {
+    "keep": false,
+    "at": "2026-08-03",
+    "rule": "biz"
+   }
+  },
+  {
+   "id": "aaba99d40297",
+   "title": "横扫五大手游电竞赛事，骁龙的下一个游戏技术「突破口」在AI？",
+   "url": "https://www.leiphone.com/category/chips/3VeAr0iNJfCrIF40.html",
+   "summary": "“旗舰级性能”“极致流畅”“媲美主机”——这些词汇几乎出现在每一份游戏手机的宣传物料里。但对芯片厂商而言，一个绕不开的难题始终存在：参数表上的数字，如何真正转化成玩家指尖能够感知的确定感？ 玩家真正在意的，是团战中的帧率会不会突然波动，触控反馈有没有欺骗自己，网络能否在关键时刻不掉链子。职业电竞也因此成为移动芯片最真实、也最严苛的压力测…",
+   "category": "雷锋网",
+   "tags": [],
+   "date": "2026-08-03",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "雷锋网",
+   "ai": {
+    "keep": false,
+    "at": "2026-08-03",
+    "rule": "biz"
+   }
   },
   {
    "id": "a772002981a8",
@@ -497,7 +814,8 @@
     "mcp-server",
     "agent-plugin-ecosystem"
    ],
-   "concepts_full": true
+   "concepts_full": true,
+   "quip": "自演进记忆层对销售场景的长期客户关系价值显著"
   },
   {
    "id": "a4fe85d6a2ff",
@@ -560,7 +878,38 @@
    "date": "2026-08-03",
    "source": "industry",
    "source_name": "行业动态",
-   "author": "钛媒体"
+   "author": "钛媒体",
+   "ai": {
+    "keep": true,
+    "at": "2026-08-03",
+    "rule": "biz"
+   },
+   "quip": "非顶级模型策略更利于企业级Agent的性价比落地",
+   "brief": "OpenAI调整模型价格，建议用户根据任务复杂度选择不同模型，最贵模型负责思考，便宜模型负责执行。",
+   "brief_full": true,
+   "concepts": [
+    "model-routing",
+    "model-capability",
+    "cost-performance-ratio"
+   ],
+   "concepts_full": true
+  },
+  {
+   "id": "9b9760c0bc06",
+   "title": "蚂蚁灵波确认融资传闻：将持续聚焦通用机器人大脑，加速产业落地",
+   "url": "https://www.tmtpost.com/8089257.html",
+   "summary": "灵波累计投入的资金已超一线创业公司的融资额。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-08-03",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体",
+   "ai": {
+    "keep": true,
+    "at": "2026-08-03",
+    "rule": "biz"
+   }
   },
   {
    "id": "987b5ebf7d33",
@@ -572,7 +921,21 @@
    "date": "2026-08-03",
    "source": "industry",
    "source_name": "行业动态",
-   "author": "36氪"
+   "author": "36氪",
+   "ai": {
+    "keep": true,
+    "at": "2026-08-03",
+    "rule": "biz"
+   },
+   "quip": "B端工具产品需强场景适配而非单纯技术迭代",
+   "brief": "3D打印品牌「轻量智造」完成超2500万元融资，专注为中小型企业研发轻量化制造工具，提升生产效率。",
+   "brief_full": true,
+   "concepts": [
+    "ai-3d-manufacturing",
+    "specialized-model",
+    "computing-utilization"
+   ],
+   "concepts_full": true
   },
   {
    "id": "911ebe569ad2",
@@ -585,6 +948,23 @@
    "source": "industry",
    "source_name": "行业动态",
    "author": "36氪"
+  },
+  {
+   "id": "8c17c57750e0",
+   "title": "可灵观察②｜用可灵重现《霸王别姬》：电影感足了，复杂叙事如何更稳？",
+   "url": "https://36kr.com/p/3923465542364545?f=rss",
+   "summary": "其中高质量画面、电影感镜头、广告和商业短片是用户提及率最高的应用场景。 这次，我们进一步展开测试：如果可灵最被期待的是电影感，它能否支撑包含人物、动作和情绪的完整短片创作？ 围绕“霸王别姬”主题，我们原创了测试脚本《霸王别姬·前世今生》，使用可灵3.0的首尾帧图生视频与主体绑定功能，完成了一轮压力测试。本次测试围绕人物一致性、构图与空间…",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-08-03",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪",
+   "ai": {
+    "keep": false,
+    "at": "2026-08-03",
+    "rule": "biz"
+   }
   },
   {
    "id": "8903d86b2f7e",
@@ -613,6 +993,23 @@
     "cost-performance-ratio"
    ],
    "concepts_full": true
+  },
+  {
+   "id": "8739c420a3ca",
+   "title": "大五座市场又有新产品：小鹏 G9L 增程纯电两手抓，既要好开还要好坐",
+   "url": "https://www.ifanr.com/1673763?utm_source=rss&utm_medium=rss&utm_campaign=",
+   "summary": "拥挤的大五座市场又迎来了新车。 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。",
+   "category": "爱范儿",
+   "tags": [],
+   "date": "2026-08-03",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "爱范儿",
+   "ai": {
+    "keep": false,
+    "at": "2026-08-03",
+    "rule": "biz"
+   }
   },
   {
    "id": "8643fef6b45b",
@@ -650,7 +1047,37 @@
     "agent-product-supply-side-boom",
     "ai-native-enterprise-transformation"
    ],
-   "concepts_full": true
+   "concepts_full": true,
+   "quip": "字节入局将加剧微信生态的AI销售服务竞争"
+  },
+  {
+   "id": "83af090a50de",
+   "title": "广汽集团：拟申请注册发行不超过150亿元债务融资工具",
+   "url": "https://36kr.com/newsflashes/3923600159174018?f=rss",
+   "summary": "36氪获悉，广汽集团公告，公司董事会审议通过议案，拟向中国银行间市场交易商协会申请统一注册并发行本金总额不超过150亿元的债务融资工具，包括超短期融资券、短期融资券、中期票据、永续票据等品种，募集资金拟用于偿还有息负债、补充流动资金、股权投资等。",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-08-03",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪"
+  },
+  {
+   "id": "83a472d170a0",
+   "title": "机器人刷一段「短视频」，就能学会新技能？自变量 HOST 技术「神器」来了",
+   "url": "https://www.ifanr.com/1673600?utm_source=rss&utm_medium=rss&utm_campaign=",
+   "summary": "机器人学习做家务，进入「刷短视频」时代 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。",
+   "category": "爱范儿",
+   "tags": [],
+   "date": "2026-08-03",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "爱范儿",
+   "ai": {
+    "keep": false,
+    "at": "2026-08-03",
+    "rule": "biz"
+   }
   },
   {
    "id": "820a779c58a9",
@@ -716,7 +1143,46 @@
    "date": "2026-08-03",
    "source": "industry",
    "source_name": "行业动态",
-   "author": "36氪"
+   "author": "36氪",
+   "ai": {
+    "keep": true,
+    "at": "2026-08-03",
+    "rule": "biz"
+   }
+  },
+  {
+   "id": "77753a4cf0d6",
+   "title": "国科军工：公司董事长余永安因工作调动辞职",
+   "url": "https://36kr.com/newsflashes/3923526756937096?f=rss",
+   "summary": "36氪获悉，国科军工公告，余永安因工作调动，申请辞去公司董事长职务，同时一并辞去董事、董事会下设战略委员会主任委员、提名委员会委员职务，同时不再担任法定代表人，辞任后余永安不再担任公司任何职务。公司将按照相关规定尽快完成董事补选及新任董事长选举等相关工作。",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-08-03",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪",
+   "ai": {
+    "keep": false,
+    "at": "2026-08-03",
+    "rule": "biz"
+   }
+  },
+  {
+   "id": "74f86b302696",
+   "title": "抢下170亿大市场！罗氏对决拜耳、再生元，眼科江湖要变天",
+   "url": "https://www.tmtpost.com/8081509.html",
+   "summary": "Vabysmo单品以一己之力撑起了罗氏眼科的基本盘。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-08-03",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体",
+   "ai": {
+    "keep": false,
+    "at": "2026-08-03",
+    "rule": "biz"
+   }
   },
   {
    "id": "74401d0b2fb3",
@@ -793,6 +1259,18 @@
    "concepts_full": true
   },
   {
+   "id": "674feb68f668",
+   "title": "【Fintech 周报】5年期大额存单“重出江湖”；个贷新规正式实施；美元存款竞争升温",
+   "url": "https://www.tmtpost.com/8089221.html",
+   "summary": "金融监管总局：稳步推进中小金融机构改革化险；个贷新规8月1日起实施；央行强化预付卡监管；内幕交易司法解释修改决定正式施行；三地监管通报辖内银行净息差“回升”；河南农商银行吸收合并9家机构；6月末银行理财市场存续规模同比增加9.75%；美元存款竞争升温；三峡人寿上半年净亏4877万元；信美相互人寿上半年净利润8686万元；锦程消费金融成被…",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-08-03",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体"
+  },
+  {
    "id": "66a895ee9a83",
    "title": "因使用月之暗面模型写代码，美国最大外卖平台遭调查；员工临下班对嘴喷奶油！瑞幸回应：涉及物料已废弃；小米多款手机正式涨价300元起",
    "url": "https://www.leiphone.com/category/zaobao/sJsXwQ2i70NZsIDQ.html",
@@ -802,7 +1280,21 @@
    "date": "2026-08-03",
    "source": "industry",
    "source_name": "行业动态",
-   "author": "雷锋网"
+   "author": "雷锋网",
+   "ai": {
+    "keep": true,
+    "at": "2026-08-03",
+    "rule": "biz"
+   },
+   "quip": "AI工具合规性成企业级应用落地关键考量",
+   "brief": "美国外卖平台DoorDash因使用中国AI模型被调查；瑞幸回应员工喷奶油事件；小米多款手机涨价300元起。",
+   "brief_full": true,
+   "concepts": [
+    "model-routing",
+    "open-source-model",
+    "agent-payment"
+   ],
+   "concepts_full": true
   },
   {
    "id": "6559b1d2432c",
@@ -856,6 +1348,23 @@
    "author": "钛媒体"
   },
   {
+   "id": "546f445b7e48",
+   "title": "年薪百万抢电工，Meta急到自己办技校",
+   "url": "https://www.qbitai.com/2026/08/465223.html",
+   "summary": "电工短缺已经成为我们在美国扩建数据中心的头号障碍",
+   "category": "量子位",
+   "tags": [],
+   "date": "2026-08-03",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "量子位",
+   "ai": {
+    "keep": false,
+    "at": "2026-08-03",
+    "rule": "biz"
+   }
+  },
+  {
    "id": "50398c9ad995",
    "title": "起亚7月全球销量同比增长13.4%",
    "url": "https://36kr.com/newsflashes/3923431916744323?f=rss",
@@ -866,6 +1375,18 @@
    "source": "industry",
    "source_name": "行业动态",
    "author": "36氪"
+  },
+  {
+   "id": "4daa098f04be",
+   "title": "电影市场，不再相信档期？",
+   "url": "https://www.tmtpost.com/8088908.html",
+   "summary": "先发定生死，口碑定上限？",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-08-03",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体"
   },
   {
    "id": "457980857897",
@@ -907,7 +1428,21 @@
    "date": "2026-08-03",
    "source": "industry",
    "source_name": "行业动态",
-   "author": "36氪"
+   "author": "36氪",
+   "ai": {
+    "keep": true,
+    "at": "2026-08-03",
+    "rule": "biz"
+   },
+   "brief": "光芯片企业量引科技完成数千万元融资，聚焦硅光子传输芯片及CPO/OIO光互连技术研发。",
+   "brief_full": true,
+   "concepts": [
+    "silicon-photonics",
+    "computing-infrastructure",
+    "model-infra-co-design"
+   ],
+   "concepts_full": true,
+   "quip": "光芯片迭代提速，AI算力基础设施的升级值得期待"
   },
   {
    "id": "4415174f1a78",
@@ -984,7 +1519,20 @@
    "concepts": [
     "foundation-model"
    ],
-   "concepts_full": true
+   "concepts_full": true,
+   "quip": "Qwen3.8办公能力提升，或为企业级AI员工提供更强底座"
+  },
+  {
+   "id": "39e0ce8138fb",
+   "title": "远东股份：7月子公司中标/签约千万元以上合同订单合计28.08亿元",
+   "url": "https://36kr.com/newsflashes/3923605139713412?f=rss",
+   "summary": "36氪获悉，远东股份公告，公司子公司2026年7月中标/签约千万元以上合同订单合计为人民币28.08亿元，其中AIDC用光纤产品合同1969.5万元，锂电铜箔产品合同4815.08万元。",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-08-03",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪"
   },
   {
    "id": "37212835e9a4",
@@ -997,7 +1545,34 @@
    "source": "hn",
    "source_name": "Hacker News",
    "author": "Hacker News",
-   "hn": "https://news.ycombinator.com/item?id=49149966"
+   "hn": "https://news.ycombinator.com/item?id=49149966",
+   "ai": {
+    "keep": true,
+    "at": "2026-08-03",
+    "rule": "hn"
+   },
+   "brief": "Isopolis是一个展示旧金山等距像素地图的项目，以像素艺术形式呈现城市景观。",
+   "brief_full": false,
+   "title_zh_tried": true,
+   "concepts": [],
+   "concepts_full": false
+  },
+  {
+   "id": "2e7a58aad636",
+   "title": "独家解读丨「余粮」只剩 7 亿，Meta 为何成了最失意的 AI 巨头？",
+   "url": "https://www.leiphone.com/category/industrynews/7Diei8PsqC81LWzx.html",
+   "summary": "“Meta 已经输掉了 AI 上半场，现在它不得不换个故事讲，但目前看来还没讲圆。” 今早 Meta 二季度财报发布后，深圳某券商分析师王虹对雷峰网说道。 净利润暴跌 14 %，营业利润下滑 8%，自由现金流仅剩 7.84 亿美元，全年AI资本开支再次上调至 1350 亿~1450 亿美元……这组数据让华尔街心惊肉跳。 财报一出，Met…",
+   "category": "雷锋网",
+   "tags": [],
+   "date": "2026-08-03",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "雷锋网",
+   "ai": {
+    "keep": false,
+    "at": "2026-08-03",
+    "rule": "biz"
+   }
   },
   {
    "id": "29bf80969541",
@@ -1026,7 +1601,31 @@
    "date": "2026-08-03",
    "source": "industry",
    "source_name": "行业动态",
-   "author": "雷锋网"
+   "author": "雷锋网",
+   "ai": {
+    "keep": true,
+    "at": "2026-08-03",
+    "rule": "biz"
+   },
+   "quip": "虚拟器官仿真落地，AI在垂直场景的验证加速推进",
+   "brief": "璨辰科技完成数千万天使系列融资，研发AI虚拟器官仿真平台，用AI数字孪生替代传统动物实验，服务新药临床前评价和疾病早期筛查。",
+   "brief_full": true,
+   "concepts": [
+    "virtual-organ-simulation"
+   ],
+   "concepts_full": true
+  },
+  {
+   "id": "25e5f07a71a4",
+   "title": "万益蓝WONDERLAB首获“蓝帽子”资质，解密10亿瓶销量背后的科学循证力量",
+   "url": "https://www.tmtpost.com/8089052.html",
+   "summary": "当流量红利消退，科研实力将成为穿越周期的真正底气。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-08-03",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体"
   },
   {
    "id": "25e3b4b5c95e",
@@ -1038,7 +1637,21 @@
    "date": "2026-08-03",
    "source": "industry",
    "source_name": "行业动态",
-   "author": "36氪"
+   "author": "36氪",
+   "ai": {
+    "keep": true,
+    "at": "2026-08-03",
+    "rule": "biz"
+   },
+   "quip": "低成本算力突破可能重塑企业级Agent应用模式",
+   "brief": "OpenAI下一代模型Astra以2000美元算力成本破解十项数学难题，涵盖高维几何与理论计算机科学等领域。",
+   "brief_full": true,
+   "concepts": [
+    "reasoning-model",
+    "mathematical-reasoning",
+    "scaling-laws"
+   ],
+   "concepts_full": true
   },
   {
    "id": "21d80801095f",
@@ -1090,6 +1703,18 @@
    "concepts_full": true
   },
   {
+   "id": "199096d3ed83",
+   "title": "上周无新增IPO受理企业",
+   "url": "https://36kr.com/newsflashes/3923610824208000?f=rss",
+   "summary": "36氪获悉，据上交所企业上市服务消息，本期（7月27日—8月2日）无新增受理企业。截至8月2日，今年新增243家受理企业。截至8月2日，各板块在审企业共435家。其中上交所95家（主板23家，科创板72家），深交所109家（主板22家，创业板87家），北交所231家。截至8月2日，2026年已公布终止审查（撤材料+否决/终止注册）企业4…",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-08-03",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪"
+  },
+  {
    "id": "170454420d1f",
    "title": "蚂蚁灵波确认融资传闻：将持续聚焦通用机器人大脑，加速产业落地",
    "url": "https://36kr.com/newsflashes/3923443888729736?f=rss",
@@ -1099,7 +1724,38 @@
    "date": "2026-08-03",
    "source": "industry",
    "source_name": "行业动态",
-   "author": "36氪"
+   "author": "36氪",
+   "ai": {
+    "keep": true,
+    "at": "2026-08-03",
+    "rule": "biz"
+   },
+   "quip": "通用机器人大脑需适配微信生态的轻量化交互需求",
+   "brief": "蚂蚁灵波确认融资，将聚焦通用机器人大脑研发，加速具身技术产业落地。",
+   "brief_full": true,
+   "concepts": [
+    "embodied-ai",
+    "agent-brain",
+    "physical-ai-loop"
+   ],
+   "concepts_full": true
+  },
+  {
+   "id": "13021a2099f0",
+   "title": "DeepSeek 给大模型划出的「斩杀线」，斩的到底是什么",
+   "url": "https://www.ifanr.com/1673651?utm_source=rss&utm_medium=rss&utm_campaign=",
+   "summary": "斩掉了大量缺乏明确不可替代性的中间模型 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。",
+   "category": "爱范儿",
+   "tags": [],
+   "date": "2026-08-03",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "爱范儿",
+   "ai": {
+    "keep": false,
+    "at": "2026-08-03",
+    "rule": "biz"
+   }
   },
   {
    "id": "111e912e4b76",
@@ -1112,6 +1768,23 @@
    "source": "industry",
    "source_name": "行业动态",
    "author": "钛媒体"
+  },
+  {
+   "id": "10fe03279327",
+   "title": "特朗普媒体集团推出高价付费数据服务引发市场质疑与合规争议",
+   "url": "https://36kr.com/newsflashes/3923523338956168?f=rss",
+   "summary": "特朗普媒体科技集团近日正式推出名为“Truth API”的企业级数据接口服务，向金融机构及专业投资者出售社交平台“真实社交”（Truth Social）特定账号的实时数据订阅权限。由于该服务允许付费用户提前获取包含美国总统特朗普在内的关键账号言论，且预估月订阅费高达数万美元，随即在华尔街、学术界及法律界引发关于内幕交易、市场不公及政商利…",
+   "category": "36氪",
+   "tags": [],
+   "date": "2026-08-03",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "36氪",
+   "ai": {
+    "keep": false,
+    "at": "2026-08-03",
+    "rule": "biz"
+   }
   },
   {
    "id": "0e51bf62d606",
@@ -1150,6 +1823,23 @@
     "agent-plugin-ecosystem"
    ],
    "concepts_full": true
+  },
+  {
+   "id": "0694fc4d2f48",
+   "title": "当品牌开始争夺AI的答案：翰智GEO入场",
+   "url": "https://www.qbitai.com/2026/08/465662.html",
+   "summary": "",
+   "category": "量子位",
+   "tags": [],
+   "date": "2026-08-03",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "量子位",
+   "ai": {
+    "keep": false,
+    "at": "2026-08-03",
+    "rule": "biz"
+   }
   },
   {
    "id": "04235e071072",
@@ -1267,7 +1957,21 @@
    "source": "hn",
    "source_name": "Hacker News",
    "author": "Hacker News",
-   "hn": "https://news.ycombinator.com/item?id=49147622"
+   "hn": "https://news.ycombinator.com/item?id=49147622",
+   "ai": {
+    "keep": true,
+    "at": "2026-08-03",
+    "rule": "hn"
+   },
+   "brief": "作者测试AI模型生成带有哈布斯堡下巴特征的青蛙SVG图像，分析模型对解剖细节的描述能力。",
+   "brief_full": true,
+   "title_zh_tried": true,
+   "concepts": [
+    "image-generation-model",
+    "few-shot-learning",
+    "model-personality"
+   ],
+   "concepts_full": true
   },
   {
    "id": "9af221d9f202",
@@ -1383,7 +2087,12 @@
    "date": "2026-08-02",
    "source": "industry",
    "source_name": "行业动态",
-   "author": "钛媒体"
+   "author": "钛媒体",
+   "ai": {
+    "keep": false,
+    "at": "2026-08-03",
+    "rule": "biz"
+   }
   },
   {
    "id": "77ab07eb3107",
@@ -1395,7 +2104,12 @@
    "date": "2026-08-02",
    "source": "industry",
    "source_name": "行业动态",
-   "author": "钛媒体"
+   "author": "钛媒体",
+   "ai": {
+    "keep": false,
+    "at": "2026-08-03",
+    "rule": "biz"
+   }
   },
   {
    "id": "5f94126009a8",
@@ -1508,7 +2222,12 @@
    "date": "2026-08-01",
    "source": "industry",
    "source_name": "行业动态",
-   "author": "量子位"
+   "author": "量子位",
+   "ai": {
+    "keep": false,
+    "at": "2026-08-03",
+    "rule": "biz"
+   }
   },
   {
    "id": "ea51a590f580",
@@ -1593,7 +2312,12 @@
    "date": "2026-08-01",
    "source": "industry",
    "source_name": "行业动态",
-   "author": "量子位"
+   "author": "量子位",
+   "ai": {
+    "keep": false,
+    "at": "2026-08-03",
+    "rule": "biz"
+   }
   },
   {
    "id": "8732f46ad65e",
@@ -1605,7 +2329,12 @@
    "date": "2026-08-01",
    "source": "industry",
    "source_name": "行业动态",
-   "author": "量子位"
+   "author": "量子位",
+   "ai": {
+    "keep": false,
+    "at": "2026-08-03",
+    "rule": "biz"
+   }
   },
   {
    "id": "8551642460e3",
@@ -1617,7 +2346,12 @@
    "date": "2026-08-01",
    "source": "industry",
    "source_name": "行业动态",
-   "author": "36氪"
+   "author": "36氪",
+   "ai": {
+    "keep": false,
+    "at": "2026-08-03",
+    "rule": "biz"
+   }
   },
   {
    "id": "4782694beb5f",
@@ -1629,7 +2363,12 @@
    "date": "2026-08-01",
    "source": "industry",
    "source_name": "行业动态",
-   "author": "量子位"
+   "author": "量子位",
+   "ai": {
+    "keep": false,
+    "at": "2026-08-03",
+    "rule": "biz"
+   }
   },
   {
    "id": "46a29a59289f",
@@ -1641,7 +2380,12 @@
    "date": "2026-08-01",
    "source": "industry",
    "source_name": "行业动态",
-   "author": "36氪"
+   "author": "36氪",
+   "ai": {
+    "keep": false,
+    "at": "2026-08-03",
+    "rule": "biz"
+   }
   },
   {
    "id": "3195c53ffa0b",
@@ -1653,7 +2397,12 @@
    "date": "2026-08-01",
    "source": "industry",
    "source_name": "行业动态",
-   "author": "量子位"
+   "author": "量子位",
+   "ai": {
+    "keep": false,
+    "at": "2026-08-03",
+    "rule": "biz"
+   }
   },
   {
    "id": "2290c5b63eda",
@@ -1714,7 +2463,12 @@
    "date": "2026-08-01",
    "source": "industry",
    "source_name": "行业动态",
-   "author": "量子位"
+   "author": "量子位",
+   "ai": {
+    "keep": false,
+    "at": "2026-08-03",
+    "rule": "biz"
+   }
   },
   {
    "id": "fdee791b49c8",
@@ -2786,7 +3540,12 @@
    "source": "hn",
    "source_name": "Hacker News",
    "author": "Hacker News",
-   "hn": "https://news.ycombinator.com/item?id=49123003"
+   "hn": "https://news.ycombinator.com/item?id=49123003",
+   "ai": {
+    "keep": false,
+    "at": "2026-08-03",
+    "rule": "hn"
+   }
   },
   {
    "id": "665b576d1c1d",
@@ -2883,7 +3642,12 @@
    "date": "2026-07-31",
    "source": "industry",
    "source_name": "行业动态",
-   "author": "雷锋网"
+   "author": "雷锋网",
+   "ai": {
+    "keep": false,
+    "at": "2026-08-03",
+    "rule": "biz"
+   }
   },
   {
    "id": "4e1a6ca8d912",
@@ -7696,31 +8460,6 @@
    "concepts_full": true
   },
   {
-   "id": "49fd0b5ee1e4",
-   "title": "上交所投保专委会三大调研齐发，全面覆盖防非打非、AI应用与纠纷化解",
-   "url": "https://36kr.com/newsflashes/3916706867867009?f=rss",
-   "summary": "7月29日从业内获悉，上海证券交易所理事会投资者教育和保护专门委员会今年确定三项重点研究课题——非法证券活动的防控机制建设、人工智能在证券服务中的应用边界与合规治理、证券公司投诉典型情形识别与纠纷化解机制。目前，对应三份专项调研问卷已陆续发至各会员单位，一场覆盖证券行业的投保体系“深度体检”正在展开。券商人士表示，从问卷设计来看，监管思…",
-   "category": "36氪",
-   "tags": [],
-   "date": "2026-07-29",
-   "source": "industry",
-   "source_name": "行业动态",
-   "author": "36氪",
-   "ai": {
-    "keep": true,
-    "at": "2026-07-30",
-    "rule": "biz"
-   },
-   "quip": "AI证券服务合规边界明确，企业级应用需谨慎",
-   "brief": "上交所投保专委会调研防非打非、AI应用及纠纷化解，关注机制实际效能和跨部门协同。",
-   "brief_full": true,
-   "concepts": [
-    "ai-code-security",
-    "model-jailbreak"
-   ],
-   "concepts_full": true
-  },
-  {
    "id": "4914d3a78247",
    "title": "全面解读阿斯利康半年报：肿瘤、罕见病成超强增长极，2030年冲击5400亿",
    "url": "https://www.tmtpost.com/8082738.html",
@@ -7894,30 +8633,6 @@
    "brief": "Kimi K3模型因内存需求需使用更高配置的B300节点，硬件成本比B200节点高约20%，任务解决能力提升20%。",
    "brief_full": true,
    "title_zh": "Self-hosting Kimi K3: 20% more hardware cost, 20% better task resolution"
-  },
-  {
-   "id": "271064e0501c",
-   "title": "能干能信能打的瓴羊AI员工全面上岗，帮企业问AI要增长",
-   "url": "https://www.leiphone.com/category/industrynews/P0iMC7Qonsem1Q0u.html",
-   "summary": "7月29日，瓴羊AgentOne上的四名AI员工正式上岗，分别覆盖AI销售、AI客服、AI运营和AI营销四个场景，企业也可以根据自身业务需求，基于AgentOne的能力，和瓴羊FDE（前沿部署工程师）团队一起打造专属场景的X员工。 “瓴羊AgentOne以业务效果为导向，以企业数据为基座，以岗位标杆为预设，真正帮助企业在AI时代获得增长…",
-   "category": "雷锋网",
-   "tags": [],
-   "date": "2026-07-29",
-   "source": "industry",
-   "source_name": "行业动态",
-   "author": "雷锋网",
-   "ai": {
-    "keep": true,
-    "at": "2026-07-30",
-    "rule": "biz"
-   },
-   "quip": "AI员工在销售客服场景已实现标准化上岗",
-   "brief": "瓴羊推出企业级AI员工，覆盖销售、客服等场景，基于企业数据、岗位标杆和FDE团队打造，旨在帮助企业实现业务增长。",
-   "brief_full": true,
-   "concepts": [
-    "enterprise-ai-agent"
-   ],
-   "concepts_full": true
   },
   {
    "id": "2614a2c3c18b",
@@ -8114,32 +8829,6 @@
    "concepts_full": true
   },
   {
-   "id": "081ddb5dc330",
-   "title": "成立1年融资3轮，前字节女高管创业，跑赢GPT-5登顶编程榜",
-   "url": "https://www.tmtpost.com/8083966.html",
-   "summary": "词元无限拿下数亿元融资。",
-   "category": "钛媒体",
-   "tags": [],
-   "date": "2026-07-29",
-   "source": "industry",
-   "source_name": "行业动态",
-   "author": "钛媒体",
-   "ai": {
-    "keep": true,
-    "at": "2026-07-30",
-    "rule": "biz"
-   },
-   "quip": "编程榜登顶验证了AI员工在专业领域的突破",
-   "brief": "词元无限成立一年完成三轮融资，其自研编程智能体InfCode在多项编程评测中超越GPT-5等主流大模型，展现企业级AI Agent潜力。",
-   "brief_full": true,
-   "concepts": [
-    "infcode-programming-agent",
-    "coding-agent",
-    "ai-code-security"
-   ],
-   "concepts_full": true
-  },
-  {
    "id": "07d7306a670b",
    "title": "3万亿长鑫，吞吃OVM",
    "url": "https://www.tmtpost.com/8083510.html",
@@ -8196,32 +8885,6 @@
     "at": "2026-07-30",
     "rule": "biz"
    }
-  },
-  {
-   "id": "02510969a1ac",
-   "title": "周鸿祎发布纳米Work：新一代企业智能体工作平台，为企业而生",
-   "url": "https://www.qbitai.com/2026/07/462062.html",
-   "summary": "",
-   "category": "量子位",
-   "tags": [],
-   "date": "2026-07-29",
-   "source": "industry",
-   "source_name": "行业动态",
-   "author": "量子位",
-   "ai": {
-    "keep": true,
-    "at": "2026-07-30",
-    "rule": "biz"
-   },
-   "quip": "企业智能体工作平台需与现有业务流程深度整合",
-   "brief": "周鸿祎发布企业智能体平台“纳米Work”，为企业AI化提供工具，首批用户可获1亿Token试用。",
-   "brief_full": true,
-   "concepts": [
-    "nano-work-platform",
-    "agentic-operating-system",
-    "agent-capability"
-   ],
-   "concepts_full": true
   },
   {
    "id": "ee3eb8156fb5",
@@ -8336,31 +8999,6 @@
    "concepts_full": true
   },
   {
-   "id": "bcf7f47dbb95",
-   "title": "Kimi K3 一开源，Anthropic 终于不装了",
-   "url": "https://www.ifanr.com/1673258?utm_source=rss&utm_medium=rss&utm_campaign=",
-   "summary": "科技的浪潮或许还是要从开源中涌现 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。",
-   "category": "爱范儿",
-   "tags": [],
-   "date": "2026-07-28",
-   "source": "industry",
-   "source_name": "行业动态",
-   "author": "爱范儿",
-   "ai": {
-    "keep": true,
-    "at": "2026-07-30",
-    "rule": "biz"
-   },
-   "quip": "Kimi K3开源加速了企业级员工的技术迭代",
-   "brief": "Kimi K3开源后引发硅谷震动，其低成本高性能特性让英伟达和Anthropic对立，推动Open Secure AI Alliance成立。",
-   "brief_full": true,
-   "concepts": [
-    "open-source-model",
-    "model-jailbreak"
-   ],
-   "concepts_full": true
-  },
-  {
    "id": "b7bc95a23f8f",
    "title": "Norway became a global salmon behemoth. Now it's facing the consequences",
    "url": "https://www.abc.net.au/news/2026-07-28/how-norway-s-salmon-industry-became-a-global-behemoth/106949872",
@@ -8371,7 +9009,12 @@
    "source": "hn",
    "source_name": "Hacker News",
    "author": "Hacker News",
-   "hn": "https://news.ycombinator.com/item?id=49078283"
+   "hn": "https://news.ycombinator.com/item?id=49078283",
+   "ai": {
+    "keep": false,
+    "at": "2026-08-03",
+    "rule": "hn"
+   }
   },
   {
    "id": "861a2622ab64",
@@ -8412,31 +9055,6 @@
     "latent-moe",
     "moe-model",
     "long-context-window"
-   ],
-   "concepts_full": true
-  },
-  {
-   "id": "7d6d436f2520",
-   "title": "发挥20年安全原生优势，360发布新一代企业智能体工作平台纳米Work",
-   "url": "https://www.leiphone.com/category/industrynews/aLDnauV6UKKuXmCg.html",
-   "summary": "7月28日，360集团创始人周鸿祎正式发布新一代企业智能体工作平台“纳米Work”。纳米Work为企业AI化而生，面向企业老板、创业者及一人公司（OPC）和企业员工，打造超级组织。发布会现场，周鸿祎提出一个鲜明的观点：企业搞AI，老板要先用。他同时宣布为首批用户每人提供1亿Token试用额度，通过专业实训和陪跑服务，率先帮助1000家小…",
-   "category": "雷锋网",
-   "tags": [],
-   "date": "2026-07-28",
-   "source": "industry",
-   "source_name": "行业动态",
-   "author": "雷锋网",
-   "ai": {
-    "keep": true,
-    "at": "2026-07-30",
-    "rule": "biz"
-   },
-   "quip": "安全原生优势是企业级AI员工的关键竞争力",
-   "brief": "360发布企业智能体平台纳米Work，整合OpenClaw等智能体，降低企业AI落地门槛，内置原生安全能力。",
-   "brief_full": true,
-   "concepts": [
-    "nano-work-platform",
-    "agentic-security-harness"
    ],
    "concepts_full": true
   },
@@ -8615,57 +9233,6 @@
    }
   },
   {
-   "id": "199bd74cf2bb",
-   "title": "豆包搜索，走出了豆包",
-   "url": "https://www.qbitai.com/2026/07/461961.html",
-   "summary": "把搜索能力开放给Agent了",
-   "category": "量子位",
-   "tags": [],
-   "date": "2026-07-28",
-   "source": "industry",
-   "source_name": "行业动态",
-   "author": "量子位",
-   "ai": {
-    "keep": true,
-    "at": "2026-07-30",
-    "rule": "biz"
-   },
-   "quip": "搜索能力开放给Agent是生态建设的积极信号",
-   "brief": "豆包搜索开放给企业Agent使用，提供权威信息来源、发布时间、摘要和原文节选，帮助Agent获取更可靠的信息。",
-   "brief_full": true,
-   "concepts": [
-    "doubao-search-api",
-    "intent-based-agent",
-    "fact-verification"
-   ],
-   "concepts_full": true
-  },
-  {
-   "id": "1371b31fe1cc",
-   "title": "GAIR Paper 111 | 谁动了我的大模型？IJCAI 2026最新综述揭秘大模型“隐式身份”防伪战",
-   "url": "https://www.leiphone.com/category/private/zMLBm0T9HRKVLIaF.html",
-   "summary": "能力越大，责任越大。大模型想要落地千行百业，需要一个“安全体检”。 编辑丨岑峰 花费上亿美元、集结顶尖算力训练出的大模型，正面临被恶意蒸馏、套壳甚至窃取核心数据的巨大风险。 就在2026年近期，Anthropic 公开披露了针对 Claude 的大规模疑似恶意蒸馏事件——攻击者利用欺诈账户和代理服务疯狂收集模型输出，试图低成本复制大模型…",
-   "category": "雷锋网",
-   "tags": [],
-   "date": "2026-07-28",
-   "source": "industry",
-   "source_name": "行业动态",
-   "author": "雷锋网",
-   "ai": {
-    "keep": true,
-    "at": "2026-07-30",
-    "rule": "biz"
-   },
-   "quip": "大模型防伪战关乎企业级员工的数据安全",
-   "brief": "大模型面临恶意蒸馏和数据窃取风险，西安交大等团队在IJCAI 2026提出LLM隐式身份认证技术，通过指纹和水印实现模型防伪。",
-   "brief_full": true,
-   "concepts": [
-    "implicit-identity",
-    "fingerprinting-vs-watermarking"
-   ],
-   "concepts_full": true
-  },
-  {
    "id": "0046227ea539",
    "title": "苹果 AI 眼镜明年 WWDC 见，但这次「隐私」不好做",
    "url": "https://www.ifanr.com/1673147?utm_source=rss&utm_medium=rss&utm_campaign=",
@@ -8784,30 +9351,6 @@
    }
   },
   {
-   "id": "69fd6b9a1910",
-   "title": "Opus 5 砍掉超 80% 系统提示词，我们用 AI 的方式也该变了 ｜附指南",
-   "url": "https://www.ifanr.com/1673165?utm_source=rss&utm_medium=rss&utm_campaign=",
-   "summary": "不想被 AI 淘汰就要学着当 AI 的老板 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。",
-   "category": "爱范儿",
-   "tags": [],
-   "date": "2026-07-27",
-   "source": "industry",
-   "source_name": "行业动态",
-   "author": "爱范儿",
-   "ai": {
-    "keep": true,
-    "at": "2026-07-30",
-    "rule": "biz"
-   },
-   "quip": "简化系统提示词提升AI员工的使用效率",
-   "brief": "Claude Opus 5砍掉80%系统提示词，工程师认为冗余指令会占用上下文，AI能力提升后需简化交互方式。",
-   "brief_full": true,
-   "concepts": [
-    "system-prompt-optimization"
-   ],
-   "concepts_full": true
-  },
-  {
    "id": "64db355e6a0c",
    "title": "moonshotai/Kimi-K3",
    "url": "https://simonwillison.net/2026/Jul/27/kimi-k3/#atom-everything",
@@ -8828,30 +9371,6 @@
    "concepts": [
     "open-weight-license",
     "open-source-model"
-   ],
-   "concepts_full": true
-  },
-  {
-   "id": "367702de8c46",
-   "title": "最直白、最不绕弯子告诉你：为什么到处都是「AI手机」？｜AG&I",
-   "url": "https://www.ifanr.com/1673151?utm_source=rss&utm_medium=rss&utm_campaign=",
-   "summary": "是产品进化，也是厂商、平台、用户共同参与的利益重组。 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。",
-   "category": "爱范儿",
-   "tags": [],
-   "date": "2026-07-27",
-   "source": "industry",
-   "source_name": "行业动态",
-   "author": "爱范儿",
-   "ai": {
-    "keep": true,
-    "at": "2026-07-30",
-    "rule": "biz"
-   },
-   "quip": "AI手机普及将扩大企业级员工的触达范围",
-   "brief": "智能手机市场遇冷，厂商押注AI手机，预计2026年中国AI手机渗透率达53%，推动手机从App容器转向智能代理载体。",
-   "brief_full": true,
-   "concepts": [
-    "agent-smartphone"
    ],
    "concepts_full": true
   },
@@ -8929,32 +9448,6 @@
     "keep": false,
     "at": "2026-07-29"
    }
-  },
-  {
-   "id": "e79ab37266a4",
-   "title": "全世界AI能力下降一万倍，只有我还是普通人",
-   "url": "https://www.tmtpost.com/8079609.html",
-   "summary": "寡头垄断API初创企业如何生存？",
-   "category": "钛媒体",
-   "tags": [],
-   "date": "2026-07-26",
-   "source": "industry",
-   "source_name": "行业动态",
-   "author": "钛媒体",
-   "ai": {
-    "keep": true,
-    "at": "2026-07-30",
-    "rule": "biz"
-   },
-   "quip": "API垄断加剧凸显企业自建Agent的必要性",
-   "brief": "文章探讨AI能力可能退化至少数人可用的风险，指出开源模型让各行业低成本部署成为现实，呼吁防止先进模型权重集中化。",
-   "brief_full": true,
-   "concepts": [
-    "open-source-model",
-    "model-routing",
-    "agentic-scaling"
-   ],
-   "concepts_full": true
   },
   {
    "id": "e65345ce5eba",

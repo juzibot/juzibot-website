@@ -49,7 +49,7 @@ env:
 
 jobs:
   seed:
-    if: github.event_name == 'workflow_dispatch' && inputs.seed
+    if: github.event_name == 'workflow_dispatch' && inputs.seed == true
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -78,10 +78,15 @@ jobs:
           rsync -az -e "$SSH" data/  "$USER@$HOST:$NEWS_DIR/data/"
           rsync -az -e "$SSH" news/  "$USER@$HOST:$NEWS_DIR/news/"
           rsync -az -e "$SSH" news.html news-c.html "$USER@$HOST:$NEWS_DIR/"
+          # 根产物(sitemap/雷达分片/RSS)在 SEED_REF 历史点尚未诞生 —— 有则推, 无则留给
+          # seed 后的第一次手动 sync 补齐(见 DEPLOY.md; Bugbot PR#103: 无条件推会因缺文件失败)
+          for f in sitemap-news.xml news-radar.json news-feed.xml; do
+            [ -f "$f" ] && rsync -az -e "$SSH" "$f" "$USER@$HOST:$NEWS_DIR/" || true
+          done
           echo "seed 完成: $NEWS_DIR 已就位, 之后常规轮增量续跑"
 
   sync:
-    if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && !inputs.seed)
+    if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.seed != true)
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -146,5 +151,11 @@ jobs:
           rsync -az --delete -e "$SSH" news/c/ "$USER@$HOST:$NEWS_DIR/news/c/"
           rsync -az           -e "$SSH" news/img/ "$USER@$HOST:$NEWS_DIR/news/img/"
           rsync -az --delete -e "$SSH" data/ "$USER@$HOST:$NEWS_DIR/data/"
-          rsync -az -e "$SSH" news.html news-c.html sitemap-news.xml news-radar.json news-feed.xml "$USER@$HOST:$NEWS_DIR/"
+          # news-radar.json 只在行业雷达条数超过 RADAR_INLINE 时才写(条数少时全部内联) ——
+          # 无条件 rsync 会在雷达量少的轮次因缺文件炸掉整步, 而 p/c/data 已带 --delete 推完,
+          # 线上停在「页新状态旧」的中间态(Bugbot PR#103)。必出的三件硬推, 可选的按存在推。
+          rsync -az -e "$SSH" news.html news-c.html sitemap-news.xml "$USER@$HOST:$NEWS_DIR/"
+          for f in news-radar.json news-feed.xml; do
+            [ -f "$f" ] && rsync -az -e "$SSH" "$f" "$USER@$HOST:$NEWS_DIR/" || true
+          done
           echo "同步完成 → $NEWS_DIR (nginx 对外路由见 deploy/nginx-news.conf)"
