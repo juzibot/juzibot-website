@@ -1570,7 +1570,17 @@ def test_shell_not_polluted():
 
     2026-08-03 实测: a620c75 带着 104KB/280KB 的注入壳推上去, CI 红了我却没看,
     继续往下走了两步。闸在 CI 上等于"推了才知道", 放进离线测试才是推之前就知道。
+
+    **stage-2 豁免**: 那是预览分支, 注入产物按设计入库(deploy 直接 serve 工作树),
+    与 shell-clean CI 的 `if: github.ref != 'refs/heads/stage-2'` 同一条口径。
+    读 .git/HEAD 判分支(纯 stdlib, 不起子进程); 读不到就按"要查"处理 —— 豁免必须是
+    显式确认的, 拿不准时宁可多查一遍, 不能因为读不到文件就静默放行。
     """
+    head = (ROOT / ".git" / "HEAD")
+    ref = head.read_text(encoding="utf-8").strip() if head.exists() else ""
+    if ref.endswith("/stage-2") or ref.endswith("stage-1"):
+        check("stage-* 预览分支: 壳按设计含注入产物, 跳过本组(同 shell-clean CI 口径)", True)
+        return
     for f in ("news.html", "news-c.html"):
         t = (ROOT / f).read_text(encoding="utf-8")
         size = len(t.encode()) // 1024
