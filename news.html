@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Cache-Control" content="no-cache" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>动态 - 句子互动 | 公司动态与AI行业信息流</title>
+<meta name="description" content="句子互动动态页：聚合博客精选、官方公众号、产品动态、媒体报道、AI 行业资讯、技术大咖观点、Hacker News、齐思更新，AI 筛选去噪并配一句短评，多源持续更新，每条可跳转原文。" />
+<meta name="keywords" content="句子互动,FDE,AI员工,AI原生组织,公众号,AI行业动态" />
+<meta name="robots" content="index,follow" />
+<meta name="format-detection" content="telephone=no,email=no,address=no" />
+<link rel="canonical" href="https://juzibot.com/news.html" />
+<link rel="alternate" type="application/rss+xml" title="句子互动 · 动态" href="https://juzibot.com/news-feed.xml" />
+<link rel="icon" href="logo.png" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="动态 - 句子互动 | 公司动态与AI行业信息流" />
+<meta property="og:description" content="聚合博客精选、官方公众号更新与 AI 行业动态，多源持续更新。" />
+<meta property="og:image" content="https://juzibot.com/assets/product-shots/both-products.png" />
+<meta property="og:url" content="https://juzibot.com/news.html" />
+<meta property="og:locale" content="zh_CN" />
+<meta property="og:site_name" content="句子互动" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="动态 - 句子互动 | 公司动态与AI行业信息流" />
+<meta name="twitter:description" content="聚合博客精选、官方公众号更新与 AI 行业动态，持续更新。" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="assets/site.css?v=72b48ba4" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"CollectionPage","name":"动态 - 句子互动 | 公司动态与AI行业信息流","description":"聚合博客精选、官方公众号更新与 AI 行业动态，多源持续更新。","url":"https://juzibot.com/news.html","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"句子互动","url":"https://juzibot.com/"}}
+</script>
+<style>
+  /* —— 仅本页：多源信息流（卡片版）。全部沿用 site.css 设计令牌 —— */
+  .news-hero{position:relative;overflow:hidden;padding:clamp(112px,14vh,156px) var(--gut) clamp(34px,4.5vw,54px);
+    background:radial-gradient(1000px 520px at 86% -4%,var(--blue-100),transparent 60%),
+               radial-gradient(660px 480px at 0% 12%,var(--orange-lt),transparent 58%),
+               linear-gradient(180deg,var(--blue-50),#fff 82%)}
+  .news-hero .wrap{position:relative}
+  .news-hero h1{font-size:clamp(32px,4.6vw,56px);font-weight:850;letter-spacing:-.035em;line-height:1.14;
+    word-break:keep-all;text-wrap:balance;margin-bottom:clamp(12px,2vw,20px)}
+  .news-hero h1 .accent{color:var(--blue)}
+  .news-lede{font-size:clamp(15.5px,1.35vw,18.5px);color:var(--ink-2);max-width:52ch;line-height:1.7}
+  .news-lede strong{color:var(--ink);font-weight:700}
+/* 页头整块居中(佳芮第 1 条: 原先贴左, 宽屏右侧一大片空白) */
+  .news-hero .wrap{text-align:center}
+  .news-lede{margin-left:auto;margin-right:auto}
+  /* 信息=纯文本, 不做 pill(佳芮第 2 条: 一种样式只做一件事) */
+  .news-info{margin-top:clamp(16px,2.2vw,24px);font-size:13px;color:var(--ink-3);line-height:1.8}
+  .news-info b{color:var(--ink-2);font-weight:750}
+  /* 链接长得像链接: 蓝色 + 悬停下划线 */
+  .news-links{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 26px;margin-top:12px}
+  .news-links a{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:700;color:var(--blue)}
+  .news-links a i{font-size:12px}
+  .news-links a:hover{text-decoration:underline;text-underline-offset:4px}
+
+  /* 工具条：来源筛选（一级）+ 分类筛选（二级，选中单一来源时浮现）+ 搜索，吸顶 */
+  .news-bar{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.86);
+    backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line-2)}
+  .news-bar .wrap{display:flex;align-items:flex-start;gap:12px;padding:12px 0;flex-wrap:nowrap}
+  .bar-rows{flex:1;min-width:0;display:flex;flex-direction:column;gap:7px}
+  .cat-row{display:flex;flex-wrap:wrap;gap:7px;min-width:0}
+  .cat-row::-webkit-scrollbar{display:none}
+  .cat-row[hidden]{display:none}
+  .cat-btn{flex:0 0 auto;display:inline-flex;align-items:center;gap:5px;font-size:12.5px;font-weight:650;color:var(--ink-2);
+    background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 13px;white-space:nowrap;
+    transition:color .2s var(--ease),border-color .2s var(--ease),background .2s var(--ease)}
+  .cat-btn i{font-size:11px;opacity:.8}
+  .cat-btn small{color:var(--ink-3);font-weight:600;margin-left:2px}
+  .cat-btn:hover{border-color:var(--blue);color:var(--blue)}
+  .cat-btn.on{background:var(--blue);border-color:var(--blue);color:#fff}
+  .cat-btn.on small{color:rgba(255,255,255,.72)}
+  .cat-row.sub .cat-btn{font-size:11.5px;padding:5px 11px;color:var(--ink-3);background:#FBFCFF;border-color:var(--line-2)}
+  .cat-row.sub .cat-btn:hover{color:var(--blue);border-color:var(--blue)}
+  .cat-row.sub .cat-btn.on{background:var(--ink);border-color:var(--ink);color:#fff}
+  /* 双区分区切换(2026-07-29): 句子动态 = 自家内容(主), 行业雷达 = 外部观察(次) */
+  .cat-row.grp .cat-btn{font-size:13.5px;font-weight:750;padding:8px 16px}
+  .cat-row.grp .cat-btn.on{background:var(--ink);border-color:var(--ink);color:#fff}
+  .cat-row.grp .cat-btn.on small{color:rgba(255,255,255,.7)}
+  .cat-row.grp .cat-btn i{opacity:.9}
+  .news-search{flex:0 0 auto;display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);
+    border-radius:999px;padding:7px 13px;width:clamp(150px,22vw,250px);transition:border-color .2s var(--ease),box-shadow .2s var(--ease)}
+  .news-search:focus-within{border-color:var(--blue);box-shadow:0 6px 18px rgba(67,56,202,.12)}
+  .news-search i{color:var(--ink-3);font-size:12.5px;flex:0 0 auto}
+  .news-search input{border:none;outline:none;background:transparent;font:inherit;font-size:13px;color:var(--ink);width:100%;min-width:0}
+  .news-search input::placeholder{color:var(--ink-3)}
+  .news-count{flex:0 0 auto;font-family:var(--mono);font-size:11.5px;color:var(--ink-3);white-space:nowrap;padding-top:9px}
+  @media(max-width:760px){
+    .news-bar .wrap{flex-wrap:wrap;gap:9px}
+    .bar-rows{order:2;flex-basis:100%}
+    .news-search{order:1;flex:1}
+    .news-count{order:1;padding-top:9px}
+  }
+
+  /* 卡片流 */
+  .news-sec{padding:clamp(26px,3.6vw,44px) var(--gut) clamp(56px,7vw,96px);background:#fff}
+  .news-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(14px,1.8vw,20px)}
+  @media(max-width:900px){.news-grid{grid-template-columns:1fr}}
+  /* 年份分隔标(仅「句子动态」区): 公司内容跨 2018-2026 八年, 纯时间倒序会让 2022 年的空档
+     看起来像「沉寂了四年」, 而实情是那几年的产出在公众号/媒体渠道、没接进来。按年分组后
+     空年份直接跳过不显示, 老内容也拿回了上下文——不再是「突然冒出的旧东西」, 而是八年履历。 */
+  .yr-mark{grid-column:1/-1;display:flex;align-items:baseline;gap:10px;margin:14px 0 -4px;min-width:0}
+  .yr-mark:first-child{margin-top:0}
+  .yr-mark b{font-family:var(--mono);font-size:15px;font-weight:800;color:var(--ink);letter-spacing:.02em}
+  .yr-mark small{font-size:11.5px;color:var(--ink-3);flex:0 0 auto}
+  .yr-mark i{flex:1;height:1px;background:var(--line-2);min-width:12px}
+  .news-card{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:var(--radius-sm);
+    padding:clamp(18px,2.2vw,24px);box-shadow:var(--shadow-soft);
+    transition:transform .3s var(--ease),border-color .3s var(--ease),box-shadow .3s var(--ease)}
+  .news-card:hover{transform:translateY(-3px);border-color:var(--blue-200);box-shadow:var(--shadow)}
+  .nc-top{display:flex;align-items:center;gap:9px;margin-bottom:12px}
+  .nc-srcb{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:750;color:var(--sc,var(--blue));white-space:nowrap}
+  .nc-srcb i{font-size:11px}
+  .s-company{--sc:#2563EB}.s-rui-blog{--sc:#4338CA}.s-wechat-mp{--sc:#0D9488}.s-industry{--sc:#14B8A6}
+  .s-product{--sc:#6366F1}.s-press{--sc:#D97706}.s-voices{--sc:#9333EA}
+  .s-hn{--sc:#EA580C}.s-qisi{--sc:#DB2777}
+  .nc-cat{display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ink-3);
+    background:#F6F7FB;border:1px solid var(--line-2);border-radius:6px;padding:2px 8px;white-space:nowrap}
+  .nc-date{font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--ink-3);margin-left:auto}
+  .nc-title{font-size:clamp(16.5px,1.5vw,19px);font-weight:800;letter-spacing:-.015em;line-height:1.42;
+    word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance;margin-bottom:10px}
+  .nc-title a{transition:color .2s var(--ease)}
+  .nc-title a:hover{color:var(--blue)}
+  /* 英文条目：中文译题当主标题，原题降为小字（管线 title_zh 字段） */
+  .nc-orig{font-size:11.5px;color:var(--ink-3);overflow-wrap:anywhere;margin:-4px 0 8px}
+  .nc-sum{font-size:13.5px;line-height:1.72;color:var(--ink-2);
+    display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:16px}
+  /* AI 锐评（管线生成，三方内容才有）：句子视角的一句话短评 */
+  .nc-quip{display:flex;gap:8px;align-items:flex-start;font-size:12.5px;line-height:1.66;font-weight:600;
+    color:var(--blue-deep);background:var(--blue-50);border-left:3px solid var(--blue);
+    border-radius:0 8px 8px 0;padding:8px 11px;margin:-6px 0 14px}
+  .nc-quip i{font-size:10px;opacity:.55;margin-top:4px;flex:0 0 auto}
+  .nc-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:auto;
+    padding-top:13px;border-top:1px solid var(--line-2)}
+  .nc-src{font-size:12px;font-weight:600;color:var(--ink-3);white-space:nowrap}
+  .nc-actions{display:inline-flex;align-items:center;gap:7px}
+  .nc-ask{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--blue);
+    background:var(--blue-50);border:1px solid var(--blue-100);border-radius:999px;padding:6px 12px;white-space:nowrap;
+    transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+  .nc-ask:hover{background:var(--blue);border-color:var(--blue);color:#fff}
+  .nc-ask i{font-size:11px}
+  .nc-read{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--ink-2);
+    border:1px solid var(--line);border-radius:999px;padding:6px 12px;white-space:nowrap;
+    transition:border-color .2s var(--ease),color .2s var(--ease)}
+  .nc-read:hover{border-color:var(--blue);color:var(--blue)}
+  .nc-read i{font-size:10.5px}
+
+  /* 加载更多 / 空态 / 兜底 */
+  .news-more{display:flex;justify-content:center;margin-top:clamp(26px,3.5vw,40px)}
+  .news-more button{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:var(--ink);
+    background:#fff;border:1px solid var(--line);border-radius:999px;padding:12px 26px;box-shadow:var(--shadow-soft);
+    transition:border-color .2s var(--ease),color .2s var(--ease),transform .2s var(--ease)}
+  .news-more button:hover{border-color:var(--blue);color:var(--blue);transform:translateY(-1px)}
+  .news-more button[hidden]{display:none}
+  .news-empty{display:none;text-align:center;padding:clamp(40px,6vw,70px) 0;color:var(--ink-2)}
+  .news-empty.show{display:block}
+  .news-empty .ic{width:52px;height:52px;margin:0 auto 14px;border-radius:16px;display:grid;place-items:center;
+    color:var(--blue);background:var(--blue-50);font-size:20px}
+  .news-empty b{display:block;font-size:16px;color:var(--ink);margin-bottom:6px}
+  .news-empty button{font-size:13px;font-weight:700;color:var(--blue);background:none;border:none;margin-top:10px;text-decoration:underline}
+  .news-note{text-align:center;font-size:12px;color:var(--ink-3);margin-top:clamp(30px,4vw,46px)}
+  .news-note a{color:var(--ink-2);font-weight:600;border-bottom:1px solid var(--line-2)}
+  .news-note a:hover{color:var(--blue)}
+</style>
+</head>
+<body>
+<div id="site-nav"></div>
+
+<main>
+  <section class="news-hero">
+    <div class="wrap">
+      <h1>句子·<span class="accent">动态</span></h1>
+      <p class="news-lede">句子在做什么、写什么、被谁报道——都在这一页。<strong>行业雷达</strong>另起一区，放我们在看的 AI 动态和一句自己的看法。每条都能点开原文，也能按住 <strong>⌘K</strong> 直接问 AI。</p>
+      <!-- 一种样式只做一件事(佳芮 2026-08-02 第 2 条): 原先 4 个信息 span 和 3 个链接做成
+           同一款 pill, 和下方筛选器长得也一样, 看不出谁能点。现在信息=纯文本一行、链接=链接样式;
+           条数只在这一行出现(分区 tab 只留名字)。
+           #newsTotal/#newsRadar/#newsFresh 是管线注入标记 + 页内 JS 运行时更新目标, id 不能动 -->
+      <p class="news-info">博客 · 公众号 · 产品 · 媒体 · 行业 · 大咖&ensp;——&ensp;句子动态 <b id="newsTotal">0</b> 条 · 行业雷达 <b id="newsRadar">0</b> 条 · 更新于 <b id="newsFresh">—</b></p>
+      <div class="news-links">
+        <a href="news/c/index.html"><i class="fa-solid fa-book-open"></i>概念索引</a>
+        <a href="news-c.html"><i class="fa-solid fa-layer-group"></i>聚合版</a>
+        <a href="news-feed.xml" title="RSS 2.0：只含句子动态（博客/公众号/产品/媒体），行业资讯请订阅各自源头"><i class="fa-solid fa-rss"></i>订阅 RSS</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="news-bar" id="newsBar">
+    <div class="wrap pad">
+      <div class="bar-rows">
+        <div class="cat-row grp" id="newsGroups" role="tablist" aria-label="分区"></div>
+        <div class="cat-row" id="newsSrcs" role="tablist" aria-label="按来源筛选"></div>
+        <div class="cat-row sub" id="newsCats" hidden role="tablist" aria-label="按分类筛选"></div>
+        <div class="cat-row sub" id="newsTimes" role="tablist" aria-label="按时间筛选"></div>
+      </div>
+      <label class="news-search"><i class="fa-solid fa-magnifying-glass"></i>
+        <input type="search" id="newsSearch" placeholder="搜标题或内容…" aria-label="搜索" autocomplete="off" />
+      </label>
+      <span class="news-count" id="newsCount" aria-live="polite"></span>
+    </div>
+  </div>
+
+  <section class="news-sec">
+    <div class="wrap">
+      <div class="news-grid" id="newsList">
+<!-- NEWS:LIST:BEGIN 此区块由 build_news.py 生成，勿手改 -->
+<!-- NEWS:LIST:END -->
+      </div>
+      <div class="news-empty" id="newsEmpty">
+        <div class="ic"><i class="fa-solid fa-magnifying-glass"></i></div>
+        <b>没有匹配的内容</b>换个关键词，或清掉筛选再看看。
+        <br/><button type="button" id="newsReset">清除筛选</button>
+      </div>
+      <div class="news-more"><button type="button" id="newsMore"><i class="fa-solid fa-angles-down"></i>加载更多</button></div>
+      <div id="newsSentinel" aria-hidden="true"></div>
+      <p class="news-note">聚合内容版权归各来源所有，均可跳转原文阅读 · 有问题按 ⌘K 问句子</p>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+
+<script id="news-data" type="application/json">{"sources":[],"items":[]}</script>
+<script>window.SITE_REL='';window.PAGE_CTX={entity:'news',type:'page',title:'句子·动态'};</script>
+<script src="assets/site.js?v=f57b1388"></script>
+<script>
+/* —— 仅本页：多源信息流（来源一级筛选 + 分类二级筛选 + 时间区间筛选 + 搜索 + 分批加载 + 每卡「问句子」）——
+   卡片模板与 build_news.py 的 card_html() 同构：改一处必须同步另一处 */
+(function () {
+  var BATCH = 20;
+  var payload = {};
+  try { payload = JSON.parse(document.getElementById('news-data').textContent.trim() || '{}') || {}; } catch (e) {}
+  var data = payload.items || [], sources = payload.sources || [];
+  var ICON = { 'company': 'fa-solid fa-building', 'rui-blog': 'fa-solid fa-pen-nib', 'wechat-mp': 'fa-brands fa-weixin', 'product': 'fa-solid fa-rocket', 'press': 'fa-solid fa-bullhorn', 'industry': 'fa-solid fa-rss', 'voices': 'fa-solid fa-feather', 'hn': 'fa-brands fa-hacker-news', 'qisi': 'fa-solid fa-lightbulb' };
+
+  var list = document.getElementById('newsList'),
+      srcs = document.getElementById('newsSrcs'),
+      cats = document.getElementById('newsCats'),
+      times = document.getElementById('newsTimes'),
+      q = document.getElementById('newsSearch'),
+      count = document.getElementById('newsCount'),
+      empty = document.getElementById('newsEmpty'),
+      more = document.getElementById('newsMore'),
+      reset = document.getElementById('newsReset'),
+      total = document.getElementById('newsTotal'),
+      sentinel = document.getElementById('newsSentinel');
+
+  var radarLoaded = !((payload.radar_rest || 0) > 0), radarLoading = false;
+  var radarFail = 0, radarGaveUp = false;  // 分片拉取失败计数; 连续三次才认定不可用(见 ensureRadar)
+  var navGen = 0;  // 每次分区切换/搜索 +1, 供异步回调判断自己是否已过期
+  var state = { group: 'company', src: 'all', cat: 'all', time: 'all', cut: '', q: '', shown: list.querySelectorAll('.news-card').length };
+  // 「全部」已去掉(2026-07-30, 佳芮): 混排是纯时间倒序, 而行业源一天约 50 条、公司内容约 4 条/月
+  // —— 一切到混排, 自家内容必然被淹, 而"两边都看一点"这个视图说不出对读者的价值。
+  // 只留两个区: 默认句子动态(自家内容), 想看外部观察再切行业雷达。
+  var GROUPS = [{ k: 'company', n: '句子动态', i: 'fa-solid fa-house-chimney' },
+                { k: 'radar', n: '行业雷达', i: 'fa-solid fa-satellite-dish' }];
+  function grpOf(id) { var s = sources.filter(function (x) { return x.id === id; })[0]; return (s && s.group) || 'radar'; }
+  function inGroup(it) { return state.group === 'all' || grpOf(it.source) === state.group; }
+
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function safeHref(u) { u = String(u == null ? '' : u).trim(); return /^https?:\/\//i.test(u) ? esc(u) : '#'; }  // 与 Python safe_href 同构: 非 http(s) 外链回 #(Bugbot PR#100)
+
+  // 时间区间筛选：cut 是往回推算的 YYYY-MM-DD 下限（本地时区），条目日期是同构字符串可直接比较
+  function dstr(d) { return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
+  var TIMES = [
+    { k: 'all', label: '全部时间', cut: '' },
+    { k: '7d', label: '近一周', cut: dstr(new Date(Date.now() - 6 * 864e5)) },
+    { k: '30d', label: '近一月', cut: dstr(new Date(Date.now() - 29 * 864e5)) },
+    { k: '90d', label: '近三月', cut: dstr(new Date(Date.now() - 89 * 864e5)) },
+    { k: 'year', label: '今年', cut: new Date().getFullYear() + '-01-01' }
+  ];
+
+    // selfref: url 指向本站 → 不出「读原文」(与 Python 侧 selfref_item 同一判据)。
+    // 产品动态的 url 是自家营销页、company 条目是 #c- 锚点, 点「读原文」跳回本站很怪。
+    function selfRef(u) {
+      if (!u) return true;
+      if (!/^https?:\/\//i.test(u)) return true;          // 相对路径/锚点 = 本站
+      try { return new URL(u).host.replace(/^www\./, '') === location.host.replace(/^www\./, ''); }
+      catch (e) { return false; }
+    }
+  function cardHTML(it) {
+    var icon = ICON[it.source] || 'fa-solid fa-newspaper';
+    // 译题要与原题**真的不同**才算译题: 有些条目的 title_zh 与 title 一字不差(翻译层原样
+    // 落回), 此时既拿它当标题、又渲染一行「原题：」, 同一个英文标题会显示两遍。
+    var zhTitle = (it.title_zh && it.title_zh.trim() !== (it.title || '').trim()) ? it.title_zh : '';
+    var title = zhTitle || it.title;                                  // 英文条目用中文译题, 原题降为小字
+    var sum = it.title_zh ? (it.brief || it.summary) : it.summary;    // 摘要判据不变: 有 title_zh 即视为英文条目
+    return '<article class="news-card rv in" data-src="' + esc(it.source) + '">' +
+      '<div class="nc-top"><span class="nc-srcb s-' + esc(it.source) + '"><i class="' + icon + '"></i>' + esc(it.source_name) + '</span>' +
+      (it.category ? '<span class="nc-cat">' + esc(it.category) + '</span>' : '') +
+      '<time class="nc-date" datetime="' + esc(it.date) + '">' + esc(it.date) + '</time></div>' +
+      '<h3 class="nc-title"><a href="news/p/' + esc(it.id) + '.html">' + esc(title) + '</a></h3>' +
+      (zhTitle ? '<p class="nc-orig">原题：' + esc(it.title) + '</p>' : '') +
+      '<p class="nc-sum">' + esc(sum) + '</p>' +
+      (it.quip ? '<p class="nc-quip"><i class="fa-solid fa-quote-left"></i>' + esc(it.quip) + '</p>' : '') +
+      '<div class="nc-foot">' +
+      '<span class="nc-src">' + esc(it.author) + '</span>' +
+      '<span class="nc-actions">' +
+      '<button type="button" class="nc-ask" data-t="' + esc(title) + '"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>' +
+      (selfRef(it.url) ? '' : '<a class="nc-read" href="' + safeHref(it.url) + '" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>') +
+      '</span></div></article>';
+  }
+
+  function filtered() {
+    var kw = state.q.toLowerCase();
+    return data.filter(function (it) {
+      if (!inGroup(it)) return false;
+      if (state.src !== 'all' && it.source !== state.src) return false;
+      if (state.cat !== 'all' && it.category !== state.cat) return false;
+      if (state.cut && it.date < state.cut) return false;
+      if (kw && (it.title + ' ' + (it.title_zh || '') + ' ' + it.summary + ' ' + (it.brief || '') + ' ' + it.category + ' ' + it.source_name).toLowerCase().indexOf(kw) < 0) return false;
+      return true;
+    });
+  }
+
+  function render(resetList) {
+    var f = filtered();
+    if (resetList) { list.innerHTML = ''; state.shown = 0; state.lastYear = ''; }
+    var next = f.slice(state.shown, state.shown + BATCH);
+    if (next.length) {
+      // 公司区按年分组: 每年首张卡前插年份标(横跨两列)。雷达区不分——它 87% 是近 30 天,
+      // 按年分毫无信息量。年份标不计入 state.shown(那是卡片游标, 决定「加载更多」的边界)。
+      var yearMode = state.group === 'company', cnt = {};
+      if (yearMode) f.forEach(function (it) { var y = it.date.slice(0, 4); cnt[y] = (cnt[y] || 0) + 1; });
+      var html = '';
+      next.forEach(function (it) {
+        if (yearMode) {
+          var y = it.date.slice(0, 4);
+          if (y !== state.lastYear) {
+            html += '<div class="yr-mark"><b>' + y + '</b><i></i><small>' + cnt[y] + ' 篇</small></div>';
+            state.lastYear = y;
+          }
+        }
+        html += cardHTML(it);
+      });
+      list.insertAdjacentHTML('beforeend', html);
+    }
+    state.shown += next.length;
+    var isFiltered = state.src !== 'all' || state.cat !== 'all' || state.time !== 'all' || state.q;
+    count.textContent = isFiltered ? (f.length + ' / ' + groupCount(state.group) + ' 条') : ('共 ' + groupCount(state.group) + ' 条');
+    empty.classList.toggle('show', f.length === 0);
+    more.hidden = state.shown >= f.length;
+  }
+
+  function groupCount(g) {
+    // 分片后 data 里只有内联部分, 未加载的雷达余量(radar_rest)要计入, 否则计数自我矮化
+    var n = data.filter(function (it) { return g === 'all' || grpOf(it.source) === g; }).length;
+    // radarGaveUp: 分片确认拉不到了, 余量不能再算进计数——否则页签写 234 而列表只有 24 条
+    var rest = ((radarLoaded || radarGaveUp) ? 0 : (payload.radar_rest || 0));
+    return (g === 'company') ? n : n + rest;
+  }
+  function buildGroups() {
+    var el = document.getElementById('newsGroups');
+    el.innerHTML = GROUPS.map(function (g) {
+      return '<button type="button" class="cat-btn' + (g.k === state.group ? ' on' : '') + '" data-group="' + g.k +
+             '" role="tab" aria-selected="' + (g.k === state.group) + '"><i class="' + g.i + '"></i>' + g.n +
+             '<small>' + groupCount(g.k) + '</small></button>';
+    }).join('');
+  }
+  function buildSrcs() {
+    // 只列当前分区内的源(分区=主筛选, 源=组内次筛选)
+    // 空源不出 tab(公众号/媒体报道暂无内容时不该摆个 0 在脸上); 数据源面板仍照实显示
+    var inb = sources.filter(function (s) { return (state.group === 'all' || (s.group || 'radar') === state.group) && s.count > 0; });
+    var tot = groupCount(state.group);
+    // 选中态必须读 state.src: 搜索路径调 ensureRadar 时并不重置 state.src/state.cat,
+    // 无条件把「全部」写成选中会让筛选条与实际结果脱钩——UI 说「全部」, 列表却只有某一源。
+    var allOn = state.src === 'all';
+    var html = '<button type="button" class="cat-btn' + (allOn ? ' on' : '') + '" data-src="all" role="tab" aria-selected="' + allOn + '">全部<small>' + tot + '</small></button>';
+    inb.forEach(function (s) {
+      var on = state.src === s.id;
+      html += '<button type="button" class="cat-btn' + (on ? ' on' : '') + '" data-src="' + esc(s.id) + '" role="tab" aria-selected="' + on + '"><i class="' + (ICON[s.id] || 'fa-solid fa-newspaper') + '"></i>' + esc(s.name) + '<small>' + s.count + '</small></button>';
+    });
+    srcs.innerHTML = html;
+  }
+
+  function buildCats() {
+    cats.innerHTML = ''; cats.hidden = true;
+    if (state.src === 'all') return;
+    var seen = {}, order = [];
+    data.forEach(function (it) {
+      if (!inGroup(it) || it.source !== state.src || !it.category) return;
+      if (!seen[it.category]) { seen[it.category] = 0; order.push(it.category); }
+      seen[it.category]++;
+    });
+    if (order.length < 2) return; // 该来源只有一种分类时二级筛选没有意义
+    order.sort(function (a, b) { return seen[b] - seen[a]; });
+    // 选中态读 state.cat, 不硬编码——与 buildSrcs 同款理由: 调用方并不总是先重置 state,
+    // 写死「全部分类」选中会让筛选条与实际结果脱钩。
+    var allOn = state.cat === 'all';
+    var html = '<button type="button" class="cat-btn' + (allOn ? ' on' : '') + '" data-cat="all" role="tab" aria-selected="' + allOn + '">全部分类</button>';
+    order.forEach(function (c) {
+      var on = state.cat === c;
+      html += '<button type="button" class="cat-btn' + (on ? ' on' : '') + '" data-cat="' + esc(c) + '" role="tab" aria-selected="' + on + '">' + esc(c) + '<small>' + seen[c] + '</small></button>';
+    });
+    cats.innerHTML = html; cats.hidden = false;
+  }
+
+  function buildTimes() {
+    times.innerHTML = TIMES.map(function (t) {
+      var on = t.k === state.time;
+      return '<button type="button" class="cat-btn' + (on ? ' on' : '') + '" data-time="' + t.k + '" role="tab" aria-selected="' + on + '">' +
+        (t.k === 'all' ? '<i class="fa-solid fa-clock"></i>' : '') + t.label + '</button>';
+    }).join('');
+  }
+
+  function mark(box, attr, val) {
+    box.querySelectorAll('[' + attr + ']').forEach(function (x) {
+      var on = x.getAttribute(attr) === val;
+      x.classList.toggle('on', on);
+      if (x.getAttribute('role') === 'tab') x.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+  }
+
+  function init() {
+    if (!data.length) { document.getElementById('newsBar').style.display = 'none'; return; } // 数据缺失：保留预渲染卡片兜底
+    total.textContent = groupCount('company');
+    var rEl = document.getElementById('newsRadar'); if (rEl) rEl.textContent = groupCount('radar');
+    buildGroups(); buildSrcs(); buildTimes();
+    count.textContent = '共 ' + groupCount(state.group) + ' 条';
+    more.hidden = state.shown >= data.length;
+    // 默认视图=句子动态, 预渲染=全量: 首帧按分区重渲(否则首屏仍是混排)
+    render(true);
+
+    // 雷达数据按需加载(2026-07-30 分片): 内联只带句子动态全量 + 雷达前 N 条, 首次切到
+    // 雷达/全部时补齐余量; 失败就用已内联的, 不白屏也不报错(渐进增强)。
+    function ensureRadar(after) {
+      if (radarLoaded || radarGaveUp || radarLoading) { after(); return; }
+      radarLoading = true;
+      // 状态代数: 记下发起时的 navGen。分片是一次冷网络请求(146KB), 弱网下几秒量级,
+      // 这期间用户完全可能切走。迟到的回调若无条件跑 after(=render(true)), 会 innerHTML=''
+      // 把用户此间「加载更多」展开的列表整个推倒、滚动位置一并作废。
+      var gen = navGen;
+      setBusy(true);
+      fetch('news-radar.json').then(function (r) { return r.json(); }).then(function (j) {
+        if (j && j.items && j.items.length) {
+          // 追加后必须重排: 内联段与分片段各自有序, 直接 concat 会让「全部」分区的时间流
+          // 在接缝处倒回。排序键与 build_news.py 的全局排序一致(date 倒序, id 兜底稳定)。
+          data = data.concat(j.items).sort(function (a, b) {
+            if (a.date !== b.date) { return a.date < b.date ? 1 : -1; }
+            return a.id < b.id ? 1 : (a.id > b.id ? -1 : 0);
+          });
+        }
+        radarLoaded = true; radarLoading = false; setBusy(false);
+        buildGroups();                       // 计数刷新与当前视图无关, 总要做
+        if (gen !== navGen) { return; }      // 用户已切走: 数据留下, 但别动他现在的列表
+        buildSrcs(); after();
+      }).catch(function () {
+        // 失败**不**标记 radarLoaded: 那等于"这次没拉到就永久放弃", 用户再点也不会重试,
+        // 而一次网络抖动不该让 210 条内容在整个会话里消失。留给下次点击重试。
+        // 但也不能无限重试: 连续三次失败(离线/文件真的 404)才认定不可用, 转为 gaveUp,
+        // 此时计数回落到实际可用条数——否则页签写 234、列表只有 24 条, 数字对不上。
+        radarLoading = false;
+        // gaveUp 必须先置位再 setBusy: setBusy(false) 会用 groupCount() 把计数写回 count
+        // 元素, 而 groupCount 要看 radarGaveUp 才知道该不该把未加载余量算进去。顺序颠倒
+        // 的话第三次失败时 count 仍是含余量的虚高数字, 只有页签被 buildGroups() 修正。
+        if (++radarFail >= 3) { radarGaveUp = true; buildGroups(); }  // 只置 gaveUp: radarLoaded 表示「数据已就绪」, 失败时它并没就绪
+        setBusy(false);
+        if (gen !== navGen) { return; }
+        buildSrcs(); after();
+      });
+    }
+    function setBusy(on) {
+      // 点了没反应正是诱发用户额外操作、把竞态窗口填满的原因, 给个明确的进行中反馈。
+      // 关掉时必须把计数写回去: 成功路径靠随后的 render() 覆盖, 但「用户已切走」那条
+      // return 分支不会走到 render, 计数会永久停在"正在加载…"。
+      list.setAttribute('aria-busy', on ? 'true' : 'false');
+      count.textContent = on ? '正在加载行业雷达…' : ('共 ' + groupCount(state.group) + ' 条');
+    }
+    document.getElementById('newsGroups').addEventListener('click', function (e) {
+      var b = e.target.closest('[data-group]'); if (!b) return;
+      navGen++;  // 本次切换作废此前所有在飞的分片回调
+      state.group = b.getAttribute('data-group'); state.src = 'all'; state.cat = 'all';
+      mark(document.getElementById('newsGroups'), 'data-group', state.group);
+      // 先用已内联的数据立刻渲染(雷达前 24 条就在内联里), 再异步补齐余量。
+      // 原先切到雷达时在 fetch 落地前完全不渲染: 界面停在公司区的列表, 而 state.group
+      // 已经是 radar —— 此时点「加载更多」, filtered() 按 radar 过滤但 state.shown 还是
+      // 公司区留下的游标, 直接错位; 而且"点了没反应"本身就在诱导用户多点。
+      buildSrcs(); buildCats(); render(true);
+      if (state.group !== 'company') {
+        ensureRadar(function () {
+          // 分片到达后重排了 data, 必须整段重渲; 但要把用户此间手动加载出来的量补回去,
+          // 否则他刚展开到 60 条又被打回 20 条(navGen 只挡「切走」, 挡不住同分区展开)。
+          var target = state.shown;
+          render(true);
+          while (state.shown < target && !more.hidden) { render(); }
+        });
+      }
+    });
+    srcs.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-src]'); if (!b) return;
+      state.src = b.getAttribute('data-src'); state.cat = 'all';
+      mark(srcs, 'data-src', state.src); buildCats(); render(true);
+    });
+    cats.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-cat]'); if (!b) return;
+      state.cat = b.getAttribute('data-cat');
+      mark(cats, 'data-cat', state.cat); render(true);
+    });
+    times.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-time]'); if (!b) return;
+      state.time = b.getAttribute('data-time'); state.cut = '';
+      for (var i = 0; i < TIMES.length; i++) if (TIMES[i].k === state.time) state.cut = TIMES[i].cut;
+      mark(times, 'data-time', state.time); render(true);
+    });
+
+    var deb;
+    q.addEventListener('input', function () { clearTimeout(deb); deb = setTimeout(function () { state.q = q.value.trim(); if (state.q) { ensureRadar(function () { render(true); }); } else { render(true); } }, 180); });
+
+    reset.addEventListener('click', function () {
+      state.src = 'all'; state.cat = 'all'; state.time = 'all'; state.cut = ''; state.q = ''; q.value = '';
+      mark(srcs, 'data-src', 'all'); mark(times, 'data-time', 'all'); buildCats(); render(true);
+    });
+
+    more.addEventListener('click', function () { render(false); });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) {
+        es.forEach(function (en) { if (en.isIntersecting && !more.hidden) render(false); });
+      }, { rootMargin: '400px 0px' }).observe(sentinel);
+    }
+
+    // 每卡「问句子」：把该卡标题作为**一次性**上下文传给 askbar。
+    // 原先是改写 window.PAGE_CTX 且从不还原——点过任意一张卡之后, 本页后续所有提问
+    // (包括从右下角常驻入口发起的)都被永久打上那篇文章的上下文, 越点越错。
+    list.addEventListener('click', function (e) {
+      var b = e.target.closest('.nc-ask'); if (!b) return;
+      var cardCtx = { entity: 'news-article', type: 'article', title: b.getAttribute('data-t') };
+      if (window.openAskbar) window.openAskbar(cardCtx);
+      else setTimeout(function () { if (window.openAskbar) window.openAskbar(cardCtx); }, 450); // askbar 异步注入的兜底
+    });
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+</script>
+</body>
+</html>

@@ -31,21 +31,23 @@
     hr:       { nm: 'AI HR', ds: '简历初筛 + AI 语音面试', ic: 'fa-user-tie', href: W('hr.html') },
     geo:      { nm: 'GEO 优化师', ds: 'GEO 让品牌被 AI 推荐·公域到私域', ic: 'fa-bullhorn', href: W('geo.html') },
     enterprise:{ nm: '企业级能力', ds: '和 Anthropic 同判断', ic: 'fa-building-shield', href: REL + 'enterprise.html' },
+    news:     { nm: '句子·动态', ds: '博客、公众号与 AI 行业动态，持续更新', ic: 'fa-newspaper', href: REL + 'news.html' },
     industries:{ nm: '客户与行业', ds: '5 大高合规行业落地', ic: 'fa-globe', href: REL + 'industries.html' },
     fde:      { nm: 'FDE 交付', ds: '陪跑落地、交付结果', ic: 'fa-people-carry-box', href: REL + 'fde.html' },
   };
   // ---- 意图路由：命中 → 秒回 + 实体卡（对话即导航，0 延迟、可控口径） ----
   var ROUTES = [
     { re: /(区别|不一样|不同|普通|传统|chatbot|和别的)/i, a: '普通机器人按关键词命中、答不上就转人工；句子是「AI 员工」——理解上下文、查知识库、调 CRM/工单，把活直接干完，真搞不定才转人工。去年真实转人工率 2.73%（行业基线约 27%）。', cards: ['service', 'enterprise'] },
-    { re: /(接入|上线|多久|部署|开通|落地|实施)/i, a: '标准 IM 渠道（微信客服/小程序/公众号/抖音/飞书等）最快 1 天就能让第一个 AI 员工上岗；复杂业务由 FDE 团队陪跑约 90 天达成结果指标。', cards: ['fde', 'miaohui'] },
-    { re: /(安全|隐私|私有|合规|数据|审计|等保)/i, a: '支持私有化/专属部署，数据不出域、全程加密可审计，已服务金融、政务等高合规行业。能说什么可提前写死，每句决策可追溯。', cards: ['enterprise', 'government'] },
+    { re: /(安全|隐私|私有|合规|审计|等保|不出域)/i, a: '支持私有化/专属部署，数据不出域、全程加密可审计，已服务金融、政务等高合规行业。能说什么可提前写死，每句决策可追溯。', cards: ['enterprise', 'government'] },
+    { re: /(接入|上线|多久|部署|开通|落地|实施)/i, a: '标准 IM 渠道（微信客服/小程序/公众号/抖音/飞书等）最快 1 天就能让第一个 AI 员工上岗；复杂业务由 FDE 团队陪跑约 90 天达成结果指标。', cards: ['fde', 'miaohui'] },  // ← 必须排在安全/合规路由之后: 「私有化部署」两边都命中, 而 enterprise 的答复才covers 私有化(实测探针)
     { re: /(价格|报价|多少钱|收费|计价|预算|成本)/i, a: '按结果/按效果交付——价格随席位与 AI 员工数量、是否私有化而定。把你的场景告诉我，或直接预约演示，我们给一版贴合你行业的方案。', cards: ['fde'], lead: true },
     { re: /(渠道|微信|抖音|飞书|小红书|whatsapp|平台|通道)/i, a: '微信客服、小程序、公众号、抖音、小红书、飞书、WhatsApp 等 10+ 主流 IM，全部收进一个工作台统一接待。', cards: ['miaohui'] },
-    { re: /(geo|全域营销|被\s*ai\s*推荐|豆包|deepseek|ai\s*答案|种草)/i, a: 'GEO 优化师专管品牌在豆包/DeepSeek 等 AI 答案里的位置：GEO 监测诊断、内容生产、渠道发布，公域意向自动沉到企微接着复购。', cards: ['geo'] },
+    { re: /(geo|全域营销|被\s*ai\s*推荐|豆包|deepseek|ai\s*答案|种草)/i, a: 'GEO 优化师专管品牌在豆包/DeepSeek 等 AI 答案里的位置：GEO 监测诊断、内容生产、渠道发布，公域意向自动沉到私域接着复购。', cards: ['geo'] },
     { re: /(销售|获客|线索|成交|转化|直播)/i, a: 'AI 销售从直播搬家、私域承接到漏斗跟进，建联到首单成交全程接管，按置信度三档执行。', cards: ['sales'] },
     { re: /(客服|售后|投诉|工单|接待)/i, a: 'AI 客服售前到售后全链路接得住，5 年 BadCase 沉淀，意图+情绪识别，必要时无缝转人工。', cards: ['service'] },
     { re: /(数据|报表|图表|问数|分析|看板|bi)/i, a: '句子问数：一句话查公司所有数据，秒级出图表，可逐层追问钻取，异常主动预警——不写 SQL、不约 BI。', cards: ['canmou'] },
     { re: /(知识|文档|资料|检索|出处|知识库)/i, a: '句子懂行把散乱资料清洗、切分、对齐问法，炼成能查、带出处的知识资产——这是 Agent 答得准的前提。', cards: ['dongxing'] },
+    { re: /(动态|博客|文章|佳芮|创始人|新闻|访谈|最近在做)/i, a: '「动态」页聚合了我们的博客精选、公众号更新和 AI 行业动态——FDE、AI 员工落地、产品与组织思考，持续更新，每条都能跳原文。', cards: ['news'] },  // ← 必须排在知识库路由之后: 「知识库文章」含「文章」, 先命中先返回会抢错(Bugbot PR#103)
     { re: /(演示|预约|联系|试用|demo|怎么买|顾问)/i, a: '好的，我帮你接一下——留个联系方式，工作日当天会有顾问带着你所在行业的真实场景做演示。', cards: [], lead: true },
     { re: /(产品|有哪些|功能|能力|矩阵)/i, a: '句子有 7 个产品组成 AI 员工的基建：秒回(工作台)、秒懂(大脑)、守护(主管)、问数(参谋)、懂行(记忆)、CLI(手)、制造(地基)。点开看：', cards: ['miaohui', 'miaodong', 'shouhu', 'canmou'] },
     { re: /(员工|岗位|招聘|团队|岗)/i, a: '句子的 AI 员工已在销售、客服、导购、理财顾问、社工/调解、HR 等岗位真实当班。看看他们：', cards: ['sales', 'service', 'finance', 'government'] },
@@ -130,12 +132,21 @@
   var inp = ov.querySelector('.jzab-in'), body = ov.querySelector('.jzab-body'), ctx = ov.querySelector('.jzab-ctx');
   var busy = false, lastFocus = null, started = false;
 
-  function pageCtx() { var c = window.PAGE_CTX; return (c && c.entity) ? c : null; }
+  // 「当前上下文」只能有一条获取路径。上一版把一次性上下文只用在 open() 的局部变量里,
+  // 而 greet/suggest/askReal 各自去读 window.PAGE_CTX ——卡片传进来的文章上下文只改了顶部
+  // 横幅文案, 根本没进 AI 请求(Bugbot PR#103 抓到)。修的是症状、废掉了功能本身: 旧写法
+  // 改写全局虽然会永久污染, 上下文倒是真送到了模型。改成存一份 oneShot 供 pageCtx() 统一读、
+  // 关闭时清空: 既不污染后续提问, 上下文也真的送进请求。判据分散是这个库栽过五次的坑。
+  var oneShot = null;
+  function pageCtx() { var c = oneShot || window.PAGE_CTX; return (c && c.entity) ? c : null; }
   function scroll() { body.scrollTop = body.scrollHeight; }
 
-  function open() {
+  function open(ctxOverride) {
+    // ctxOverride: 一次性上下文(如动态页每张卡的「问句子」)。不传时行为与原先完全一致(向后兼容);
+    // 带 .entity 校验, 防止被当事件监听器时把 MouseEvent 当上下文。
     if (ov.classList.contains('open')) return;
     lastFocus = document.activeElement;
+    oneShot = (ctxOverride && ctxOverride.entity) ? ctxOverride : null;
     var c = pageCtx();
     if (c) { ctx.hidden = false; ctx.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i> 正在看：<b>' + esc(c.title || c.entity) + '</b> · 可直接就它追问'; }
     else { ctx.hidden = true; }
@@ -143,7 +154,7 @@
     ov.classList.add('open'); document.body.style.overflow = 'hidden';
     setTimeout(function () { inp.focus(); }, 30);
   }
-  function close() { ov.classList.remove('open'); document.body.style.overflow = ''; if (lastFocus && lastFocus.focus) lastFocus.focus(); }
+  function close() { oneShot = null; ov.classList.remove('open'); document.body.style.overflow = ''; if (lastFocus && lastFocus.focus) lastFocus.focus(); }
 
   function greet() {
     var c = pageCtx();

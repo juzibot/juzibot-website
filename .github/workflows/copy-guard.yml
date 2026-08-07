@@ -1,0 +1,62 @@
+name: copy-guard
+# 口径闸(2026-07-30 建): 「企微 / 企业微信」不得出现在任何出货页面。
+#
+# 为什么需要 CI 而不是靠人记得: 2026-07-27 定的这条口径, 当时只清了动态页, 首页与全站联系弹窗
+# 一直漏着 —— 佳芮 7-24 提过、7-30 复查时首页仍有 7 处、site.js 2 处、askbar.js 1 处, 其中
+# 「扫码加企业微信」是联系弹窗标题(site.js 那份**所有子页都注入**)。管线里的 has_banned()
+# 只管概念页的原文证据一处, 页面文案完全没被覆盖。
+#
+# 范围只查**出货物**(页面 + 前端资源), 不查源码与文档:
+# · build_news.py / test_build_news.py 里 BANNED_TERMS 就是这两个词, 查它们等于自伤
+# · CLAUDE.md / docs / 本文件本身要能写清这条口径为什么存在
+# · news/p/ 下的镜像正文是生成物(不入库), 其中 10 篇是佳芮 2019–2023 的署名文章(镜像正文里
+#   共 54 处命中, 且集中在两篇: 2021-12-25 的 SCRM 专访 23 处、2019-03-01 的句客宝 12 处 ——
+#   那两篇正文本来就在讲那个生态, 改动会伤原意)。
+#   **2026-07-30 骐畅拍板: 原样保留** —— 原文在 rui.juzi.bot 上不受影响, 历史存档 ≠ 官网文案;
+#   现行文案已全部净化并由这道闸守着。所以这里的排除是**执行决定**, 不是留白待议。
+on:
+  push:
+    branches: ['**']
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: 出货页面不得出现「企微 / 企业微信」
+        run: |
+          python3 - <<'PY'
+          import pathlib, sys
+          BANNED = ("企业微信", "企微")
+          # 出货物: 根目录与子目录的页面 + assets 下的前端资源
+          SKIP_DIRS = {".git", ".github", "docs", "node_modules", "__pycache__", "news", "data"}
+          files = []
+          for p in pathlib.Path(".").rglob("*"):
+              if not p.is_file() or p.suffix not in (".html", ".js", ".css", ".json", ".xml", ".txt"):
+                  continue
+              if set(p.parts) & SKIP_DIRS:
+                  continue
+              files.append(p)
+          bad = []
+          for p in files:
+              try:
+                  t = p.read_text(encoding="utf-8")
+              except (UnicodeDecodeError, OSError):
+                  continue
+              for i, line in enumerate(t.splitlines(), 1):
+                  for b in BANNED:
+                      if b in line:
+                          bad.append(f"{p}:{i}: …{line.strip()[:90]}…")
+                          break
+          print(f"扫了 {len(files)} 个出货文件")
+          if bad:
+              print("::error::出货页面出现了「企微 / 企业微信」(2026-07-27 定的口径):")
+              for b in bad:
+                  print(f"::error::  {b}")
+              print("修法: 联系入口写「扫码联系我们」、图片 alt 写「联系二维码」、")
+              print("      业务表述用「私域」(站上已有 28 处这个说法), 不要用产品名。")
+              sys.exit(1)
+          print("口径干净 ✓")
+          PY

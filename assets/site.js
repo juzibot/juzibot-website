@@ -46,6 +46,9 @@
     '    <div class="nav-item"><a href="' + REL + 'enterprise.html">企业级能力</a></div>' +
     '    <div class="nav-item"><a href="' + REL + 'fde.html">FDE 交付结果</a></div>' +
     '    <div class="nav-item"><a href="' + REL + 'about.html">AI 原生组织</a></div>' +
+    // 动态: 内容型入口(博客/公众号/产品动态 + 行业雷达)。此前它只能靠直接输 URL 到达 ——
+    // 整个动态页体系(293 详情页 / 131 概念页 / sitemap / RSS / 四种 schema)建好了却无人可达。
+    '    <div class="nav-item"><a href="' + REL + 'news.html">动态</a></div>' +
     '    <div class="nav-item"><a href="' + REL + 'careers/index.html">加入我们</a></div>' +
     '  </div>' +
     '  <div class="nav-right">' +
@@ -110,8 +113,8 @@
     '  <div class="modal modal-qr" role="dialog" aria-modal="true">' +
     '    <button class="qr-close" onclick="closeModal(\'contactModal\')" aria-label="关闭">×</button>' +
     '    <div class="qr-eyebrow">联系我们</div>' +
-    '    <h3 class="qr-title">扫码加企业微信</h3>' +
-    '    <img class="qr-img" src="' + REL + 'assets/brand/qr-qiwei.png" alt="企业微信二维码" width="200" height="200" />' +
+    '    <h3 class="qr-title">扫码联系我们</h3>' +
+    '    <img class="qr-img" src="' + REL + 'assets/brand/qr-qiwei.png" alt="联系二维码" width="200" height="200" />' +
     '    <p class="qr-note">直接和我们聊，工作日当天回复</p>' +
     '  </div>' +
     '</div>';
