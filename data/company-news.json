@@ -1,0 +1,4 @@
+{
+ "_readme": "手动投递位: 往 items 里加 {url,title,date,summary?,category?,author?}。只有 url 时管线尝试抓页面 og 元数据(mp.weixin 文章页还能拿到发布时间)。category 会显示为条目小标签(如媒体/节目名), author 是署名。",
+ "items": []
+}
