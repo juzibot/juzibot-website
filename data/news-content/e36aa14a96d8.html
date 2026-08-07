@@ -1,0 +1,10 @@
+<p><strong>Release:</strong> <a href="https://github.com/simonw/datasette/releases/tag/1.0a38">datasette 1.0a38</a></p>
+        <blockquote>
+<p>This release fixes a <strong>SQL injection</strong> security issue that affects Datasette instances that serve a <strong>mixture of public and private tables</strong> in the same database, with access configured using the <a href="https://docs.datasette.io/en/latest/authentication.html">Datasette permissions system</a>.</p>
+<p>Site administrators who serve private tables in this way are advised to disable the <a href="https://docs.datasette.io/en/latest/authentication.html#execute-sql">execute-sql permission</a> <actions_execute_sql>` on that database to prevent users from accessing private tables using raw SQL queries. The bug that has been fixed would have allowed users with access to any public table to execute SQL injection attacks despite that restriction, giving them read-only access to data in private tables in the same database.</p>
+<p>This fix is also available in <a href="https://simonwillison.net/2026/Aug/6/datasette-2/">Datasette 0.65.3</a>.</p>
+</blockquote>
+<p>Thankfully this particular configuration - private tables and public tables exposed for the same database within the same instance - is likely to be rare. I've not encountered an instance like that myself.</p>
+    
+    
+        <p>Tags: <a href="https://simonwillison.net/tags/security">security</a>, <a href="https://simonwillison.net/tags/sql-injection">sql-injection</a>, <a href="https://simonwillison.net/tags/datasette">datasette</a></p>

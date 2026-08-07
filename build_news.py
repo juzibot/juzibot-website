@@ -1725,8 +1725,12 @@ def red_line(it):
     注意与 scrub_banned_ai_fields 的分工: 这里只管 HIDE_TERMS(封号类, 整条下架);
     BANNED_TERMS(企微口径)若出现在**标题/摘要**(原文自带)才整条隐藏 —— 但实测第一例
     是我们自己的 AI 锐评写出「企微」(quip 字段), 那不该连累原文, 洗掉该字段即可。"""
+    # 标题/摘要(原文自带)含 BANNED_TERMS(企微口径)也整条隐藏 —— docstring 写了、代码没落地:
+    # 三方源带「企业微信」进标题 → 现在拦不住, 列表卡、详情页、RSS 都可能命中
+    # (Bugbot PR#103 最后一条)。AI 加工字段走 scrub_banned_ai_fields(洗字段不连累文章),
+    # 原文自带走这里(整条下架) —— 分工没变, 只是 BANNED 这条路径原先断着。
     t = (it.get("title") or "") + (it.get("title_zh") or "") + (it.get("summary") or "")
-    return any(w in t for w in HIDE_TERMS)
+    return any(w in t for w in HIDE_TERMS + BANNED_TERMS)
 
 
 def scrub_banned_ai_fields(items):
