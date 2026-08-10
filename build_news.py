@@ -2860,8 +2860,8 @@ def detail_html(it, lib, worthy, rel=()):
     # 访客点「读原文」跳回本站, 很怪; company 源的合成锚点同理); homey = 自家内容。
     selfref = selfref_item(it)
     homey = own or it["source"] == "product"
-    if it["source"] == "product":
-        notice = ""   # 产品动态: 无导读框 —— 它不是转载, 没有需要声明的归属
+    if it["source"] in ("product", "company"):
+        notice = ""   # 产品动态/月会内容: 无导读框 —— 不是转载, 正文即完整内容, 没有需要声明的归属
     elif own:
         home = "李佳芮的博客" if it["source"] == "rui-blog" else f"微信公众号「{it['category'] or '句子互动'}」"
         verb = "本页为官网收录版" if full else "本页为内容导读"
