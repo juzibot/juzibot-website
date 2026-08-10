@@ -1897,6 +1897,12 @@ def ai_enrich(items):
                 it["brief"] = b[:140]
                 it["brief_full"] = has_full  # 记录本次简报是否基于全文, 供 _brief_stale 判重做
                 briefs += 1
+            elif b and has_banned(b):
+                # 违禁词导致的不可用**不落封顶标记**: 那是可再生字段的措辞问题, 换个说法就能过,
+                # 下轮照常重试(与 ai_quip 同一条纪律)。落了 brief_tried 会把它永久挡在队列外 ——
+                # 而字段从未入库, scrub 也无物可洗, 简报就此永久缺失(Bugbot PR#103, 我上一版
+                # 加存储闸时引入的连锁反应)。
+                pass
             elif b:
                 # 模型答了, 但答的是元话术("条目正文为空，无法提供内容简报。")或短到没信息量。
                 # 这种不入库 —— 它会原样进页面正文的简报区与 meta description, 实测线上真有一条。
@@ -1906,14 +1912,15 @@ def ai_enrich(items):
                 it["brief_full"] = True
             if title_is_en(it["title"]):
                 tz = json_str(v, "title_zh") if isinstance(v, dict) else ""
-                if tz and has_banned(tz):
-                    # 译题也要挡: 注释与测试都写「quip/brief/title_zh 存储侧挡新增」, 而它原先直接
-                    # 写入, 只靠事后 scrub, 防护比另两个薄一档(Bugbot PR#103)
-                    tz = ""
-                if tz:
+                # 译题也要挡(注释与测试都写「quip/brief/title_zh 存储侧挡新增」, 它原先直接写入)。
+                # **但不能落封顶标记**: 置空后掉进下面「模型没给译题」的分支 → title_zh_tried=True
+                # → 永久放弃重试, 而字段从未入库 scrub 也无物可洗, 译题就此永久缺失
+                # (Bugbot PR#103 连查两轮才揪出来的连锁反应)。违禁词是措辞问题, 下轮换个说法就能过。
+                banned_tz = bool(tz) and has_banned(tz)
+                if tz and not banned_tz:
                     it["title_zh"] = tz[:80]
                     titles += 1
-                elif isinstance(v, dict):
+                elif isinstance(v, dict) and not banned_tz:
                     it["title_zh_tried"] = True  # 模型答了但没给译题, 落标记不再无限重试
     print(f"[AI 简报] 新写简报 {briefs} 条, 译题 {titles} 条")
 
