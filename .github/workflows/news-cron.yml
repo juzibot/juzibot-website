@@ -107,9 +107,12 @@ jobs:
           USER: ${{ secrets.USER }}
         run: |
           SSH="ssh -i ~/.ssh/id"
-          # 种子文件(product-news/press-news)以仓库 checkout 为准, 不被服务器旧副本覆盖
+          # 种子文件(所有 manual 源登记表)以仓库 checkout 为准, 不被服务器旧副本覆盖 ——
+          # company-news 曾漏在清单外: 服务器旧副本盖住刚合并的登记, --delete 再推回去,
+          # PR 里新增的公司动态在定时轮里永远上不了站(Bugbot PR#103)。
+          # 清单与 build_news.py 的 SOURCES 由 test_seed_tables_excluded_from_pull 对账。
           rsync -az -e "$SSH" \
-            --exclude 'product-news.json' --exclude 'press-news.json' \
+            --exclude 'product-news.json' --exclude 'press-news.json' --exclude 'company-news.json' \
             "$USER@$HOST:$NEWS_DIR/data/" data/ \
             || { echo "::error::拉取服务器状态失败——若从未初始化, 先手动跑一次 seed(Run workflow 勾 seed)"; exit 1; }
           rsync -az -e "$SSH" "$USER@$HOST:$NEWS_DIR/news/" news/ || true  # 产物缺失只影响增量跳过, 可重建

@@ -1730,6 +1730,21 @@ def test_both_ai_prompts_carry_policy():
     check("过闸的提示词都写了口径禁令", not naked, naked)
 
 
+# ---------------------------------------------------------------- 51
+def test_seed_tables_excluded_from_pull():
+    """cron 拉服务器 data/ 时, **所有** manual 源的登记表都必须在 --exclude 清单里。
+
+    登记表以仓库 checkout 为准; 漏一张 → 服务器旧副本盖住刚合并的登记, --delete 再推回去,
+    新登记在定时轮里**永远上不了站**(Bugbot PR#103: company-news 就是这么漏的)。
+    判据从 SOURCES 算: 新加 manual 源忘了进清单会先被这里拦下。
+    """
+    wf = (ROOT / ".github" / "workflows" / "news-cron.yml").read_text(encoding="utf-8")
+    seeds = [s["file"].name for s in B.SOURCES if s.get("type") == "manual"]
+    check("确实有 manual 种子表(判据没落空)", len(seeds) >= 3, seeds)
+    missing = [f for f in seeds if f"--exclude '{f}'" not in wf]
+    check("全部种子表都在拉取排除清单", not missing, missing)
+
+
 def main():
     tests = [v for k, v in sorted(globals().items()) if k.startswith("test_")]
     for fn in tests:
