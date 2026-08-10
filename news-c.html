@@ -312,7 +312,7 @@
       '<div class="fd-act">' +
       '<button type="button" class="fd-ask" data-t="' + esc(title) + '"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>' +
       (selfRef(it.url) ? '' : '<a class="fd-link" href="' + safeHref(it.url) + '" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i>读原文</a>') +
-      '<button type="button" class="fd-copy" data-u="' + esc(it.source === 'company' ? 'news/p/' + it.id + '.html' : it.url) + '"><i class="fa-solid fa-link"></i>复制链接</button>' +
+      '<button type="button" class="fd-copy" data-u="' + esc(it.source === 'company' ? 'https://juzibot.com/news/p/' + it.id + '.html' : it.url) + '"><i class="fa-solid fa-link"></i>复制链接</button>' +
       '<span class="sp"></span>' +
       '<button type="button" class="fd-exp" aria-expanded="false">展开<i class="fa-solid fa-chevron-down"></i></button>' +
       '</div></article>';

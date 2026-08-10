@@ -2368,7 +2368,7 @@ def feed_item_html(it):
            if not selfref_item(it) else "")
         # company 源没有外部原文, url 是合成 #c-… 锚点, 复制出来谁也打不开;
         # 应复制详情页 URL(Bugbot PR#103 e5b58b0 第 2 条)
-        + (f'<button type="button" class="fd-copy" data-u="{esc(detail_href(it))}"><i class="fa-solid fa-link"></i>复制链接</button>'
+        + (f'<button type="button" class="fd-copy" data-u="{esc(f"{SITE_BASE}/{detail_href(it)}")}"><i class="fa-solid fa-link"></i>复制链接</button>'
            if it["source"] == "company" else
            f'<button type="button" class="fd-copy" data-u="{esc(it["url"])}"><i class="fa-solid fa-link"></i>复制链接</button>')
         + '<span class="sp"></span>'
