@@ -1593,6 +1593,33 @@ def test_shell_not_polluted():
         check(f"{f}: 体积在干净壳量级(≤60KB)", size <= 60, f"{size}KB")
 
 
+# ---------------------------------------------------------------- 47
+def test_red_line_surfaces_differ_by_term_class():
+    """两类词的**检查面不一样**, 因为处置方式不一样(Bugbot 2026-08-07, 我引入的回归)。
+
+    · HIDE_TERMS(封号类) = 内容本身触红线 → 查 title/title_zh/summary 全部, 整条下架
+    · BANNED_TERMS(企微口径) = 措辞问题 → 只查**原文自带**的 title/summary;
+      译题是 AI 可再生字段, 违禁词只在它里面时走 scrub 洗掉重生成。
+
+    为什么误伤代价特别大: ai_quip/ai_enrich/ai_translate 调 visible_items 都在 scrub
+    之前 —— 一旦整条下架, 存量脏译题被提前踢出加工队列, 再也修不回来。
+    """
+    def it(**kw):
+        return {"title": "x", "title_zh": "", "summary": "x", **kw}
+    check("违禁词只在译题 → 不下架(留给 scrub 洗)",
+          not B.red_line(it(title="Enterprise WeChat news", title_zh="企业微信相关新闻")))
+    check("违禁词在原文标题 → 整条下架", B.red_line(it(title="企业微信生态更新")))
+    check("违禁词在原文摘要 → 整条下架", B.red_line(it(summary="讲企微生态的摘要")))
+    check("红线词在译题 → 整条下架(内容触红线, 不是措辞)",
+          B.red_line(it(title="Account ban wave", title_zh="大规模封号潮")))
+    check("红线词在原文 → 整条下架", B.red_line(it(title="个人微信频繁封号")))
+    check("干净条目不误伤", not B.red_line(it(title_zh="正常译题")))
+    # scrub 仍要能洗掉那个"不下架但脏"的译题, 否则它会一路上站
+    dirty = it(title="Enterprise WeChat news", title_zh="企业微信相关新闻")
+    B.scrub_banned_ai_fields([dirty])
+    check("不下架的脏译题由 scrub 洗掉", "title_zh" not in dirty)
+
+
 def main():
     tests = [v for k, v in sorted(globals().items()) if k.startswith("test_")]
     for fn in tests:
