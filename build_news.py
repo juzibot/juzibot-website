@@ -1729,8 +1729,17 @@ def red_line(it):
     # 三方源带「企业微信」进标题 → 现在拦不住, 列表卡、详情页、RSS 都可能命中
     # (Bugbot PR#103 最后一条)。AI 加工字段走 scrub_banned_ai_fields(洗字段不连累文章),
     # 原文自带走这里(整条下架) —— 分工没变, 只是 BANNED 这条路径原先断着。
-    t = (it.get("title") or "") + (it.get("title_zh") or "") + (it.get("summary") or "")
-    return any(w in t for w in HIDE_TERMS + BANNED_TERMS)
+    # 两类词的检查面**不一样**, 因为处置方式不一样:
+    # · HIDE_TERMS(封号类): 内容本身触红线 → 查全部三个字段(含译题: 译题说封号, 原文多半
+    #   就是讲封号), 整条下架。
+    # · BANNED_TERMS(企微口径): 只是**措辞**问题 → 只查**原文自带**的 title/summary。
+    #   译题 title_zh 是 AI 可再生字段, 违禁词只出现在它里面时该走 scrub_banned_ai_fields
+    #   洗掉重生成, 整条下架是误伤 —— 而且 ai_quip/ai_enrich/ai_translate 调 visible_items
+    #   都在 scrub 之前, 存量脏译题会被提前踢出加工队列, 再也修不回来(Bugbot PR#103,
+    #   我上一版把三个字段一锅端时引入的回归)。
+    orig = (it.get("title") or "") + (it.get("summary") or "")
+    allf = orig + (it.get("title_zh") or "")
+    return any(w in allf for w in HIDE_TERMS) or any(w in orig for w in BANNED_TERMS)
 
 
 def scrub_banned_ai_fields(items):
