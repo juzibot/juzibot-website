@@ -1684,6 +1684,52 @@ def test_banned_ai_fields_never_capped():
     check("简报**没被封顶**(下轮还能重试)", "brief_tried" not in it, list(it))
 
 
+# ---------------------------------------------------------------- 49
+def test_full_refetch_carries_all_cap_marks():
+    """--full 继承清单必须带**全部**封顶标记, 否则重抓后旧失败重新进队烧配额。
+
+    原先只带 title_zh_tried 漏了 brief_tried —— 两者是同一类标记(「试过且不该再试」),
+    纪律必须一致(Bugbot PR#103)。判据**从源码算**而不是写死名字: 凡是形如 *_tried / *_fail
+    的持久化标记, 都该出现在继承清单里 —— 将来再加一种也自动被查。
+    """
+    Q = chr(34)   # 双引号常量: 正则里要匹配源码中的引号, 直接写会和本文件的引号打架
+    src = (ROOT / "build_news.py").read_text(encoding="utf-8")
+    m = re.search(r"for k in \((\s*QQaiQQ.*?)\):".replace("QQ", Q), src, re.S)
+    check("找到 --full 继承清单(判据没落空)", bool(m))
+    if not m:
+        return
+    carried = set(re.findall(Q + r"([a-z_]+)" + Q, m.group(1)))
+    written = set(re.findall(r"it\[" + Q + r"([a-z_]*(?:_tried|_fail))" + Q + r"\]\s*=", src))
+    check("确实扫到了封顶标记(判据没落空)", len(written) >= 2, sorted(written))
+    missing = sorted(written - carried)
+    check("所有封顶标记都在 --full 继承清单里", not missing, missing)
+
+
+# ---------------------------------------------------------------- 50
+def test_both_ai_prompts_carry_policy():
+    """**每个**产出要过存储闸的提示词都得写明口径禁令 —— 否则闸 + 重试 = 无限烧配额。
+
+    652fb98 把违禁词拦截改成「不落封顶、下轮重试」, 但只有 ai_quip 的提示词写了禁令;
+    ai_enrich 没写 → 主题本身涉 WeCom 的英文条目, 忠实译题几乎必然命中闸, 字段永远写不进,
+    却每 6 小时整批重烧(Bugbot PR#103)。**拧阀门还得关水龙头。**
+    """
+    Q = chr(34)   # 双引号常量: 正则里要匹配源码中的引号, 直接写会和本文件的引号打架
+    import ast as _a
+    tree = _a.parse((ROOT / "build_news.py").read_text(encoding="utf-8"))
+    prompts = []
+    for n in _a.walk(tree):
+        if isinstance(n, _a.Assign) and any(getattr(x, "id", "") == "prompt" for x in n.targets):
+            lits = [c.value for c in _a.walk(n.value)
+                    if isinstance(c, _a.Constant) and isinstance(c.value, str)]
+            if lits:
+                prompts.append("\n".join(lits))
+    check("扫到多个提示词(判据没落空)", len(prompts) >= 4, len(prompts))
+    gated = [s for s in prompts if ("quip" in s or "title_zh" in s or "brief" in s)]
+    check("识别出产出过闸的提示词", len(gated) >= 2, len(gated))
+    naked = [s[:44] for s in gated if "不得出现" not in s]
+    check("过闸的提示词都写了口径禁令", not naked, naked)
+
+
 def main():
     tests = [v for k, v in sorted(globals().items()) if k.startswith("test_")]
     for fn in tests:
