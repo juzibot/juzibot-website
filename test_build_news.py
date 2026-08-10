@@ -1559,7 +1559,10 @@ def test_ai_prompts_free_of_banned_terms():
 def test_title_zh_storage_gate():
     """译题入库闸(Bugbot 2026-08-03 第 3 条): 注释与测试都宣称三字段有闸, 实际只有两个。"""
     src = (ROOT / "build_news.py").read_text(encoding="utf-8")
-    check("title_zh 入库前查违禁词", "if tz and has_banned(tz):" in src)
+    # 这条原先断言的是实现里的**字面量** `if tz and has_banned(tz):` —— 我一改写法它就红,
+    # 而行为完全正确。字面量断言既漏真错也报假错; 真行为由
+    # test_banned_ai_fields_never_capped 驱动 ai_enrich 验证(含"不落封顶标记")。
+    check("title_zh 入库前查违禁词(有闸)", "banned_tz" in src and "has_banned(tz)" in src)
     check("quip 入库前查违禁词", "if has_banned(q):" in src)
     check("brief 走 brief_usable(含 has_banned)", "not has_banned(v)" in src)
 
@@ -1618,6 +1621,113 @@ def test_red_line_surfaces_differ_by_term_class():
     dirty = it(title="Enterprise WeChat news", title_zh="企业微信相关新闻")
     B.scrub_banned_ai_fields([dirty])
     check("不下架的脏译题由 scrub 洗掉", "title_zh" not in dirty)
+
+
+# ---------------------------------------------------------------- 48
+def test_banned_ai_fields_never_capped():
+    """违禁词导致的不可用**不得落封顶标记** —— 否则字段永久缺失(Bugbot 2026-08-10)。
+
+    连锁反应链: 我给 title_zh/brief 加存储闸(挡住含违禁词的值) → 值从未入库 →
+    scrub_banned_ai_fields 无物可洗 → 而代码顺手落了 title_zh_tried / brief_tried →
+    后续轮次被 *_todo 挡在队列外 → **译题/简报永久缺失**。
+    违禁词是措辞问题, 换个说法就能过, 纪律应与 ai_quip 一致: 不落标记、下轮重试。
+
+    判据必须**真跑 ai_enrich 的控制流**: 这条 bug 是分支走向问题, 查源码字符串
+    (「有没有 has_banned」)完全看不出来 —— 存储闸确实在, 坏的是它之后掉进了哪个分支。
+    """
+    calls = {"n": 0}
+
+    def fake_ai(prompt, **kw):
+        calls["n"] += 1
+        # ai_call 返回的是**已解析的对象**, 不是 JSON 字符串 —— 第一版 fake 返回字符串,
+        # 遍历它拿到的是单个字符, emap 恒为空, 于是"跑完没落标记"这个结论毫无意义。
+        # 模型给出含违禁词的译题与简报(措辞问题, 非内容问题)
+        return [{"id": "e1", "brief": "这条讲的是企业微信生态的最新进展和影响分析。",
+                 "title_zh": "企业微信生态更新"}]
+
+    # 入队条件三条缺一不可(第一版漏了 ai.keep, 条目被 visible_items 滤掉 → 模型压根没被调用,
+    # 而后四项断言照样全绿 —— **空验证比错验证更危险**, 所以下面第一条先钉住"确实调到了"):
+    #   ① source 在 ENRICH_SOURCES  ② 过筛(ai.keep=True)  ③ 还没有 brief/title_zh
+    it = fixture_item(id="e1", title="WeCom ecosystem update", source="industry",
+                      summary="An English summary long enough to pass.", concepts=[])
+    it["ai"] = {"keep": True, "rule": "biz"}
+    it.pop("brief", None); it.pop("title_zh", None)
+    orig_call, orig_key = B.ai_call, B.AI_KEY
+    try:
+        B.ai_call = fake_ai
+        B.AI_KEY = "test-key"
+        B.ai_enrich([it])
+    except Exception as e:  # noqa: BLE001
+        check(f"ai_enrich 可被驱动(异常: {type(e).__name__})", False, str(e)[:80])
+        return
+    finally:
+        B.ai_call = orig_call
+        B.AI_KEY = orig_key
+
+    check("确实调到了模型(判据没落空)", calls["n"] >= 1, calls["n"])
+    # 光"调到了"还不够: 返回值形状不对时 emap 为空, 后面几条会全绿而什么都没验(实测踩过)。
+    # 用一次干净返回反证消费链通畅 —— 干净值必须真的入库。
+    probe = fixture_item(id="e1", title="Clean english title here", source="industry",
+                         summary="Another english summary long enough.", concepts=[])
+    probe["ai"] = {"keep": True, "rule": "biz"}
+    B.ai_call, B.AI_KEY = (lambda p, **k: [{"id": "e1", "brief": "这是一条完全正常的中文简报内容示例文本。",
+                                            "title_zh": "干净译题"}]), "test-key"
+    try:
+        B.ai_enrich([probe])
+    finally:
+        B.ai_call, B.AI_KEY = orig_call, orig_key
+    check("消费链通畅(干净值能入库)", probe.get("title_zh") == "干净译题" and probe.get("brief"),
+          {k: probe.get(k) for k in ("title_zh", "brief")})
+    check("含违禁词的译题没入库", not B.has_banned(it.get("title_zh") or ""))
+    check("含违禁词的简报没入库", not B.has_banned(it.get("brief") or ""))
+    check("译题**没被封顶**(下轮还能重试)", "title_zh_tried" not in it, list(it))
+    check("简报**没被封顶**(下轮还能重试)", "brief_tried" not in it, list(it))
+
+
+# ---------------------------------------------------------------- 49
+def test_full_refetch_carries_all_cap_marks():
+    """--full 继承清单必须带**全部**封顶标记, 否则重抓后旧失败重新进队烧配额。
+
+    原先只带 title_zh_tried 漏了 brief_tried —— 两者是同一类标记(「试过且不该再试」),
+    纪律必须一致(Bugbot PR#103)。判据**从源码算**而不是写死名字: 凡是形如 *_tried / *_fail
+    的持久化标记, 都该出现在继承清单里 —— 将来再加一种也自动被查。
+    """
+    Q = chr(34)   # 双引号常量: 正则里要匹配源码中的引号, 直接写会和本文件的引号打架
+    src = (ROOT / "build_news.py").read_text(encoding="utf-8")
+    m = re.search(r"for k in \((\s*QQaiQQ.*?)\):".replace("QQ", Q), src, re.S)
+    check("找到 --full 继承清单(判据没落空)", bool(m))
+    if not m:
+        return
+    carried = set(re.findall(Q + r"([a-z_]+)" + Q, m.group(1)))
+    written = set(re.findall(r"it\[" + Q + r"([a-z_]*(?:_tried|_fail))" + Q + r"\]\s*=", src))
+    check("确实扫到了封顶标记(判据没落空)", len(written) >= 2, sorted(written))
+    missing = sorted(written - carried)
+    check("所有封顶标记都在 --full 继承清单里", not missing, missing)
+
+
+# ---------------------------------------------------------------- 50
+def test_both_ai_prompts_carry_policy():
+    """**每个**产出要过存储闸的提示词都得写明口径禁令 —— 否则闸 + 重试 = 无限烧配额。
+
+    652fb98 把违禁词拦截改成「不落封顶、下轮重试」, 但只有 ai_quip 的提示词写了禁令;
+    ai_enrich 没写 → 主题本身涉 WeCom 的英文条目, 忠实译题几乎必然命中闸, 字段永远写不进,
+    却每 6 小时整批重烧(Bugbot PR#103)。**拧阀门还得关水龙头。**
+    """
+    Q = chr(34)   # 双引号常量: 正则里要匹配源码中的引号, 直接写会和本文件的引号打架
+    import ast as _a
+    tree = _a.parse((ROOT / "build_news.py").read_text(encoding="utf-8"))
+    prompts = []
+    for n in _a.walk(tree):
+        if isinstance(n, _a.Assign) and any(getattr(x, "id", "") == "prompt" for x in n.targets):
+            lits = [c.value for c in _a.walk(n.value)
+                    if isinstance(c, _a.Constant) and isinstance(c.value, str)]
+            if lits:
+                prompts.append("\n".join(lits))
+    check("扫到多个提示词(判据没落空)", len(prompts) >= 4, len(prompts))
+    gated = [s for s in prompts if ("quip" in s or "title_zh" in s or "brief" in s)]
+    check("识别出产出过闸的提示词", len(gated) >= 2, len(gated))
+    naked = [s[:44] for s in gated if "不得出现" not in s]
+    check("过闸的提示词都写了口径禁令", not naked, naked)
 
 
 def main():

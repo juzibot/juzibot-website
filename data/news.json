@@ -1,7 +1,7 @@
 {
  "generated_by": "build_news.py",
- "generated_at": "2026-08-10T10:02:29+08:00",
- "count": 1133,
+ "generated_at": "2026-08-10T10:20:32+08:00",
+ "count": 1139,
  "visible": 322,
  "sources": [
   {
@@ -10,7 +10,7 @@
    "type": "sitemap",
    "home": "https://rui.juzi.bot/",
    "status": "ok",
-   "last_sync": "2026-08-10T10:02:29+08:00",
+   "last_sync": "2026-08-10T10:20:32+08:00",
    "group": "company",
    "ai": true,
    "count": 36
@@ -21,7 +21,7 @@
    "type": "feishu-base",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-08-10T10:02:29+08:00",
+   "last_sync": "2026-08-10T10:20:32+08:00",
    "group": "company",
    "ai": false,
    "count": 0
@@ -32,7 +32,7 @@
    "type": "manual",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-08-10T10:02:29+08:00",
+   "last_sync": "2026-08-10T10:20:32+08:00",
    "group": "company",
    "ai": false,
    "count": 0
@@ -43,7 +43,7 @@
    "type": "manual",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-08-10T10:02:29+08:00",
+   "last_sync": "2026-08-10T10:20:32+08:00",
    "group": "company",
    "ai": false,
    "count": 5
@@ -54,7 +54,7 @@
    "type": "manual",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-08-10T10:02:29+08:00",
+   "last_sync": "2026-08-10T10:20:32+08:00",
    "group": "company",
    "ai": false,
    "count": 0
@@ -65,7 +65,7 @@
    "type": "rss",
    "home": "",
    "status": "warn",
-   "last_sync": "2026-08-10T10:02:29+08:00",
+   "last_sync": "2026-08-10T10:20:32+08:00",
    "group": "radar",
    "ai": true,
    "count": 94
@@ -76,7 +76,7 @@
    "type": "rss",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-08-10T10:02:29+08:00",
+   "last_sync": "2026-08-10T10:20:32+08:00",
    "group": "radar",
    "ai": true,
    "count": 99
@@ -87,7 +87,7 @@
    "type": "hn-algolia",
    "home": "https://news.ycombinator.com/",
    "status": "ok",
-   "last_sync": "2026-08-10T10:02:29+08:00",
+   "last_sync": "2026-08-10T10:20:32+08:00",
    "group": "radar",
    "ai": true,
    "count": 49
@@ -98,7 +98,7 @@
    "type": "qisi-list",
    "home": "https://news.miracleplus.com/",
    "status": "ok",
-   "last_sync": "2026-08-10T10:02:29+08:00",
+   "last_sync": "2026-08-10T10:20:32+08:00",
    "group": "radar",
    "ai": true,
    "count": 39
@@ -140,6 +140,30 @@
    "source": "industry",
    "source_name": "行业动态",
    "author": "钛媒体"
+  },
+  {
+   "id": "ce387d6ff21f",
+   "title": "OpenAI都撤了，AI浏览器只剩一条窄路",
+   "url": "https://www.tmtpost.com/8096969.html",
+   "summary": "Atlas退场，Tabbit们仍在继续跑这道题。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-08-10",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体"
+  },
+  {
+   "id": "c1b15acb0193",
+   "title": "Quoting OpenClaw",
+   "url": "https://simonwillison.net/2026/Aug/10/openclaw/#atom-everything",
+   "summary": "The API has zero authorisations checks on cancelling other people's reservations … I tested this with the person in waitlist position #1 — and it actually went through. …",
+   "category": "Simon Willison",
+   "tags": [],
+   "date": "2026-08-10",
+   "source": "voices",
+   "source_name": "大咖观点",
+   "author": "Simon Willison"
   },
   {
    "id": "bf924b46d0b4",
@@ -232,10 +256,34 @@
    }
   },
   {
+   "id": "75bc97b07e7e",
+   "title": "当特朗普用多晶硅关税逼马斯克上轨道：AI+机器人全栈税的到期日",
+   "url": "https://www.tmtpost.com/8096937.html",
+   "summary": "8月4-6日，太空算力、多晶硅关税、Terafab破土、宇树IPO四线齐发。本文用产业生命周期与斯密-杨格定理，论证AI+机器人产业正从垂直整合走向模块化分工，全栈是早期税，专件商将收模块税。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-08-10",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体"
+  },
+  {
    "id": "6b7935b94999",
    "title": "芯片设计：制度租金的「现金流重构」与「能力跃迁窗口」",
    "url": "https://www.tmtpost.com/8096903.html",
    "summary": "743倍与-800%的撕裂背后：制度租金正在制造一场\"强制进化\"。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-08-10",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体"
+  },
+  {
+   "id": "5fa39994f4b4",
+   "title": "大瓶啤酒，卖疯了",
+   "url": "https://www.tmtpost.com/8096927.html",
+   "summary": "1L装马口铁啤酒瓶走红。",
    "category": "钛媒体",
    "tags": [],
    "date": "2026-08-10",
@@ -292,6 +340,18 @@
    "author": "钛媒体"
   },
   {
+   "id": "4738c1621e6a",
+   "title": "又一批减重药的倒下",
+   "url": "https://www.tmtpost.com/8097109.html",
+   "summary": "无优势就是劣势。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-08-10",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体"
+  },
+  {
    "id": "436c82acdb12",
    "title": "AI浪潮将导致巨大淘汰：谁是真正的赢家与输家？",
    "url": "https://news.miracleplus.com/share_link/147616",
@@ -326,6 +386,18 @@
    "source": "industry",
    "source_name": "行业动态",
    "author": "量子位"
+  },
+  {
+   "id": "291f080db421",
+   "title": "广州首店背后，茶颜悦色的供应链账本",
+   "url": "https://www.tmtpost.com/8096967.html",
+   "summary": "自有供应链的重资产投入，必须要靠更大规模来摊薄消化。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-08-10",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体"
   },
   {
    "id": "216299c23e77",
