@@ -1745,6 +1745,42 @@ def test_seed_tables_excluded_from_pull():
     check("全部种子表都在拉取排除清单", not missing, missing)
 
 
+# ---------------------------------------------------------------- 52
+def test_company_source_clean_detail_template():
+    """company 源的详情页不得套公众号导读壳(Bugbot PR#103 bb47e96 最后一条)。
+
+    product 已单独清空导读框(notice="")与读原文按钮, 但 company 虽标 own 却走了
+    elif own 兜底: 「首发于微信公众号…看原发布」+ 链接到合成 #c- 锚点 —— 公司月会
+    内容没有外部原文, 正文即完整内容, 这条导读声明完全是错的。
+    """
+    lib, worthy = fake_lib(), set()
+    # company 源: bodied, url 是合成锚点
+    comp = fixture_item(source="company", source_name="公司动态", author="句子互动",
+                        url=f"{B.SITE_BASE}/news.html#c-abcd1234", concepts=[],
+                        summary="七月全员月会：产品发版、客户进展、团队变化。")
+    html = B.detail_html(comp, lib, worthy)
+    # 不该有导读框
+    check("company 无导读框(dp-notice)", 'class="dp-notice"' not in html)
+    check("company 不出「首发于」字眼(不是转载)", "首发于" not in html)
+    check("company 不出「看原发布」链(没有外部原文)", "看原发布" not in html)
+    # 读原文按钮: url 是合成锚点, selfref, 不应出现
+    check("company 无读原文按钮(无外部 url)", "读原文" not in html)
+    # 无页尾免责(自家内容)
+    check("company 无页尾免责声明", "聚合内容版权归各来源所有" not in html)
+    # 面包屑/问句子/更多动态仍在(防修过头, 和第 ③c/⑤ 条 product 的要求一致)
+    check("company 有面包屑", 'class="dp-crumb"' in html)
+    check("company 有问句子按钮", "问句子" in html)
+    check("company 有更多动态出口", "更多动态" in html)
+    # rui-blog 不改动(保持原有导读框, 防修过头)
+    blog = fixture_item(source="rui-blog", source_name="李佳芮的博客", author="李佳芮",
+                        url="https://rui.juzi.bot/ai/2026-07-30-foo.html", concepts=[],
+                        category="AI", summary="一篇关于AI的博客文章摘要。")
+    bhtml = B.detail_html(blog, lib, worthy)
+    check("rui-blog 仍保留导读框", 'class="dp-notice"' in bhtml)
+    check("rui-blog 仍写着「首发于」", "首发于" in bhtml)
+    check("rui-blog 写着「看原发布」", "看原发布" in bhtml)
+
+
 def main():
     tests = [v for k, v in sorted(globals().items()) if k.startswith("test_")]
     for fn in tests:
