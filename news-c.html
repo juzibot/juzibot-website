@@ -233,7 +233,7 @@
 <script id="news-data" type="application/json">{"sources":[],"items":[]}</script>
 
 <script>window.SITE_REL='';window.PAGE_CTX={entity:'news',type:'page',title:'句子·动态（聚合版）'};</script>
-<script src="assets/site.js?v=f57b1388"></script>
+<script src="assets/site.js?v=0228020f"></script>
 <script>
 /* —— 仅本页：多源聚合流（并入原 B 版的二级分类 / 最近更新 / 展开收起 / 标签，含时间区间筛选）。
       条目模板与月份分组逻辑与 build_news.py 的 feed_item_html()/feed_list() 同构：改一处必须同步另一处 —— */
@@ -312,7 +312,7 @@
       '<div class="fd-act">' +
       '<button type="button" class="fd-ask" data-t="' + esc(title) + '"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>' +
       (selfRef(it.url) ? '' : '<a class="fd-link" href="' + safeHref(it.url) + '" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i>读原文</a>') +
-      '<button type="button" class="fd-copy" data-u="' + esc(it.url) + '"><i class="fa-solid fa-link"></i>复制链接</button>' +
+      '<button type="button" class="fd-copy" data-u="' + esc(it.source === 'company' ? 'news/p/' + it.id + '.html' : it.url) + '"><i class="fa-solid fa-link"></i>复制链接</button>' +
       '<span class="sp"></span>' +
       '<button type="button" class="fd-exp" aria-expanded="false">展开<i class="fa-solid fa-chevron-down"></i></button>' +
       '</div></article>';

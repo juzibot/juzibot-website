@@ -127,7 +127,7 @@
     wire();
     // 全站对话层：加载 askbar.js（AI-native 大改核心）
     if (!window.__jzab && !document.querySelector('script[data-jzab]')) {
-      var s = document.createElement('script'); s.src = REL + 'assets/askbar.js'; s.defer = true; s.setAttribute('data-jzab', '1'); document.body.appendChild(s);
+      var s = document.createElement('script'); s.src = REL + 'assets/askbar.js?v=28b73c7d'; s.defer = true; s.setAttribute('data-jzab', '1'); document.body.appendChild(s);
     }
   }
 
