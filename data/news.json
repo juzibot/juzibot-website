@@ -1,8 +1,8 @@
 {
  "generated_by": "build_news.py",
- "generated_at": "2026-08-10T10:20:32+08:00",
- "count": 1139,
- "visible": 322,
+ "generated_at": "2026-08-10T13:59:27+08:00",
+ "count": 1184,
+ "visible": 342,
  "sources": [
   {
    "id": "rui-blog",
@@ -10,7 +10,7 @@
    "type": "sitemap",
    "home": "https://rui.juzi.bot/",
    "status": "ok",
-   "last_sync": "2026-08-10T10:20:32+08:00",
+   "last_sync": "2026-08-10T13:59:27+08:00",
    "group": "company",
    "ai": true,
    "count": 36
@@ -21,7 +21,7 @@
    "type": "feishu-base",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-08-10T10:20:32+08:00",
+   "last_sync": "2026-08-10T13:59:27+08:00",
    "group": "company",
    "ai": false,
    "count": 0
@@ -32,10 +32,10 @@
    "type": "manual",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-08-10T10:20:32+08:00",
+   "last_sync": "2026-08-10T13:59:27+08:00",
    "group": "company",
    "ai": false,
-   "count": 0
+   "count": 20
   },
   {
    "id": "product",
@@ -43,7 +43,7 @@
    "type": "manual",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-08-10T10:20:32+08:00",
+   "last_sync": "2026-08-10T13:59:27+08:00",
    "group": "company",
    "ai": false,
    "count": 5
@@ -54,7 +54,7 @@
    "type": "manual",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-08-10T10:20:32+08:00",
+   "last_sync": "2026-08-10T13:59:27+08:00",
    "group": "company",
    "ai": false,
    "count": 0
@@ -65,7 +65,7 @@
    "type": "rss",
    "home": "",
    "status": "warn",
-   "last_sync": "2026-08-10T10:20:32+08:00",
+   "last_sync": "2026-08-10T13:59:27+08:00",
    "group": "radar",
    "ai": true,
    "count": 94
@@ -76,7 +76,7 @@
    "type": "rss",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-08-10T10:20:32+08:00",
+   "last_sync": "2026-08-10T13:59:27+08:00",
    "group": "radar",
    "ai": true,
    "count": 99
@@ -87,7 +87,7 @@
    "type": "hn-algolia",
    "home": "https://news.ycombinator.com/",
    "status": "ok",
-   "last_sync": "2026-08-10T10:20:32+08:00",
+   "last_sync": "2026-08-10T13:59:27+08:00",
    "group": "radar",
    "ai": true,
    "count": 49
@@ -98,13 +98,25 @@
    "type": "qisi-list",
    "home": "https://news.miracleplus.com/",
    "status": "ok",
-   "last_sync": "2026-08-10T10:20:32+08:00",
+   "last_sync": "2026-08-10T13:59:27+08:00",
    "group": "radar",
    "ai": true,
    "count": 39
   }
  ],
  "items": [
+  {
+   "id": "f87e56b82614",
+   "title": "吴声2026演讲定调乐奇Rokid：它正把智能眼镜推向“AI Normal”时代",
+   "url": "https://www.leiphone.com/category/arvr/J0HmhmsrZ4Ayzs2e.html",
+   "summary": "8月8日，香港会议展览中心，“新物种爆炸·吴声商业方法发布2026”第十届演讲如期举行。场景实验室创始人吴声照例分享了过去一年他对多个赛道的观察，其中智能眼镜就是其中之一。他点名了乐奇Rokid，并提出一个判断： 消费级AI硬件必须既是AI Native，也是AI Normal。 全功能，才是日常化的起点 吴声开场时直言，智能眼镜是他长…",
+   "category": "雷锋网",
+   "tags": [],
+   "date": "2026-08-10",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "雷锋网"
+  },
   {
    "id": "e8795ba44cb8",
    "title": "Runta创始人戴冠兰谈AI智能体平台与融资背后故事",
@@ -118,6 +130,19 @@
    "author": "奇绩创坛"
   },
   {
+   "id": "e7ebeed4c782",
+   "title": "What Happened to HackerOne?",
+   "url": "https://blog.teknogeek.io/posts/what-happened-to-hackerone/",
+   "summary": "",
+   "category": "",
+   "tags": [],
+   "date": "2026-08-10",
+   "source": "hn",
+   "source_name": "Hacker News",
+   "author": "Hacker News",
+   "hn": "https://news.ycombinator.com/item?id=49238561"
+  },
+  {
    "id": "e6d0dffc5257",
    "title": "一夜暴涨15%，Airbnb靠AI“拆了重装”",
    "url": "https://www.tmtpost.com/8096867.html",
@@ -128,6 +153,54 @@
    "source": "industry",
    "source_name": "行业动态",
    "author": "钛媒体"
+  },
+  {
+   "id": "e6abfc0e79ac",
+   "title": "巨头们竞逐AI办公，AI手机尴尬了",
+   "url": "https://www.tmtpost.com/8097113.html",
+   "summary": "AI手机为何迟迟难以开启iPhone时刻？",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-08-10",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体"
+  },
+  {
+   "id": "e185866e05e8",
+   "title": "Meoo秒悟团队版全量上线， 接入Qwen-3.8-Max、即日起可直接订阅",
+   "url": "https://www.qbitai.com/2026/08/469493.html",
+   "summary": "从面向个人的AI创作工具，扩展为可供组织使用的生产力平台",
+   "category": "量子位",
+   "tags": [],
+   "date": "2026-08-10",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "量子位"
+  },
+  {
+   "id": "df370fca5526",
+   "title": "消失十年的前首富突然回国，2.2亿抄底上海酒店",
+   "url": "https://www.tmtpost.com/8097208.html",
+   "summary": "前首富逆周期抄底。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-08-10",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体"
+  },
+  {
+   "id": "d84c60dab303",
+   "title": "千问开放平台正式上线，，面向生态伙伴和开发者开放手机、PC和AI眼镜三类终端的服务接入。",
+   "url": "https://www.leiphone.com/category/industrynews/F2h9Vto4WSIh1FJ0.html",
+   "summary": "通过开放平台，第三方可创建AI智能体，以独立对话空间形态，在千问APP上为用户提供从咨询、推荐到履约的完整服务链路。",
+   "category": "雷锋网",
+   "tags": [],
+   "date": "2026-08-10",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "雷锋网"
   },
   {
    "id": "d10c3c6686e0",
@@ -154,6 +227,18 @@
    "author": "钛媒体"
   },
   {
+   "id": "c64f04550f04",
+   "title": "宇树科技上市，具身智能开始第一次“清场”",
+   "url": "https://www.tmtpost.com/8097114.html",
+   "summary": "从资本到市场，再到产业链、政策支持，这是具身智能厂商最好的时间窗口，也是弯道超车的机会。宇树科技的上市，是具身智能阶段性的高潮，也意味着行业竞争即将进入更残酷的阶段。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-08-10",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体"
+  },
+  {
    "id": "c1b15acb0193",
    "title": "Quoting OpenClaw",
    "url": "https://simonwillison.net/2026/Aug/10/openclaw/#atom-everything",
@@ -170,6 +255,18 @@
    "title": "凯乐石香港“打擂”，能打过“隔壁”吗？",
    "url": "https://www.tmtpost.com/8096854.html",
    "summary": "凯乐石的高端化，第一次离开“主场”。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-08-10",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体"
+  },
+  {
+   "id": "bf650f19d53e",
+   "title": "当“奥德修斯”遇见算法",
+   "url": "https://www.tmtpost.com/8097213.html",
+   "summary": "我们最终选择的，永远是那些让我们真切感到\"活着\"的艰难航路，而非通向虚无的算法坦途。",
    "category": "钛媒体",
    "tags": [],
    "date": "2026-08-10",
@@ -214,6 +311,30 @@
    "author": "奇绩创坛"
   },
   {
+   "id": "b6b64a5e474a",
+   "title": "10部门联合整治，药店的“好日子”到头了？",
+   "url": "https://www.tmtpost.com/8097212.html",
+   "summary": "药店的“过关”心理该收收了。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-08-10",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体"
+  },
+  {
+   "id": "b62cb0c695b0",
+   "title": "Tighter U.S. Rules on New Robot Vacuums Force Chinese Makers to Reassess the Market",
+   "url": "https://www.tmtpost.com/8097395.html",
+   "summary": "An update to the U.S. equipment list now prevents most new foreign-produced mobile robots, including household cleaning models, from receiving the certification needed f…",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-08-10",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体"
+  },
+  {
    "id": "b400d1cb2b5d",
    "title": "构建高人才密度团队的核心策略解析",
    "url": "https://news.miracleplus.com/share_link/147687",
@@ -226,6 +347,18 @@
    "author": "奇绩创坛"
   },
   {
+   "id": "b07d274384ae",
+   "title": "“新新三样”火了：中国制造的三级跳，跳出了什么？",
+   "url": "https://www.tmtpost.com/8097093.html",
+   "summary": "不是“喜新厌旧”，而是新旧的双向奔赴。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-08-10",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体"
+  },
+  {
    "id": "9e3e2e41b94e",
    "title": "为什么大多数人选择对自己没帮助的自我提升方式？",
    "url": "https://news.miracleplus.com/share_link/147549",
@@ -236,6 +369,42 @@
    "source": "qisi",
    "source_name": "齐思",
    "author": "奇绩创坛"
+  },
+  {
+   "id": "996d95c5ec3e",
+   "title": "墨芯成立稀疏计算产学研联盟，以生态协同突破产业化壁垒",
+   "url": "https://www.qbitai.com/2026/08/469454.html",
+   "summary": "",
+   "category": "量子位",
+   "tags": [],
+   "date": "2026-08-10",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "量子位"
+  },
+  {
+   "id": "97b823e37536",
+   "title": "中国电建河北院中标后被取消资格，19亿盐穴储能项目变成“煮熟的鸭子飞了”",
+   "url": "https://www.tmtpost.com/8097088.html",
+   "summary": "盐穴储能技术验证，却因收益风险频遭弃标废标。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-08-10",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体"
+  },
+  {
+   "id": "8a5d989d86bf",
+   "title": "千问开放平台上线！生态伙伴、开发者可自主接入AI智能体",
+   "url": "https://www.leiphone.com/category/industrynews/jO3S36y9Au6IJBTs.html",
+   "summary": "8月10日，千问开放平台上线，面向生态伙伴和开发者开放手机、PC和AI眼镜三类终端的服务接入。首批伙伴覆盖物流运输、房产居住、本地生活、理财、汽车等十多个领域，包括顺丰速运、天鹅到家鹅宝、联想乐享、自如租房、盈米基金且慢小顾、哈啰租车、彩云天气、快递100果宝、闪送、飞常准、美的美居、嘟嘟巴士等。 通过开放平台，第三方可创建AI智能体，…",
+   "category": "雷锋网",
+   "tags": [],
+   "date": "2026-08-10",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "雷锋网"
   },
   {
    "id": "79226045aa90",
@@ -272,6 +441,54 @@
    "title": "芯片设计：制度租金的「现金流重构」与「能力跃迁窗口」",
    "url": "https://www.tmtpost.com/8096903.html",
    "summary": "743倍与-800%的撕裂背后：制度租金正在制造一场\"强制进化\"。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-08-10",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体"
+  },
+  {
+   "id": "6b06065c0146",
+   "title": "AI 开始帮写朋友圈了，但我更想念「古法手作」文字",
+   "url": "https://www.ifanr.com/1673846?utm_source=rss&utm_medium=rss&utm_campaign=",
+   "summary": "想念那个「说人话」的时代 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。",
+   "category": "爱范儿",
+   "tags": [],
+   "date": "2026-08-10",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "爱范儿"
+  },
+  {
+   "id": "65cc455cd393",
+   "title": "卡西欧小方块，是我今年最想要的智能戒指",
+   "url": "https://www.ifanr.com/1674518?utm_source=rss&utm_medium=rss&utm_campaign=",
+   "summary": "我今年也买了个表 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。",
+   "category": "爱范儿",
+   "tags": [],
+   "date": "2026-08-10",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "爱范儿"
+  },
+  {
+   "id": "65a5ea66c350",
+   "title": "苹果开测长鑫存储！百度、千问也一起挤进苹果供应链",
+   "url": "https://www.qbitai.com/2026/08/469475.html",
+   "summary": "先解决这轮内存荒！",
+   "category": "量子位",
+   "tags": [],
+   "date": "2026-08-10",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "量子位"
+  },
+  {
+   "id": "650a3a775863",
+   "title": "万店信仰，正在失灵",
+   "url": "https://www.tmtpost.com/8097110.html",
+   "summary": "“大而不倒”的时代终结了？",
    "category": "钛媒体",
    "tags": [],
    "date": "2026-08-10",
@@ -328,6 +545,18 @@
    "author": "奇绩创坛"
   },
   {
+   "id": "5143d544301d",
+   "title": "唯有技术立豪华，中国豪车市场开始换座次",
+   "url": "https://www.tmtpost.com/8095165.html",
+   "summary": "汽车市场从来不缺依靠降价获得的增长，真正稀缺的是销量和价格同时向上。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-08-10",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体"
+  },
+  {
    "id": "4ea6946d9b0a",
    "title": "挑战GPU、绕过HBM，深挖史上最大芯片背后的Cerebras",
    "url": "https://www.tmtpost.com/8096723.html",
@@ -338,6 +567,30 @@
    "source": "industry",
    "source_name": "行业动态",
    "author": "钛媒体"
+  },
+  {
+   "id": "4e562153caba",
+   "title": "国产重组带状疱疹疫苗，跨不过GSK",
+   "url": "https://www.tmtpost.com/8097165.html",
+   "summary": "打不过的佐剂。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-08-10",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体"
+  },
+  {
+   "id": "47e5cd19fdfe",
+   "title": "实车体验｜地平线HSD V2.0：一段式端到端的「二次进化」",
+   "url": "https://www.leiphone.com/category/transportation/uv0khddWPw7ZLS8V.html",
+   "summary": "近期，雷峰网《新智驾》受邀在北京参加了地平线HSD V2.0智驾体验日。一趟12公里的城市路测跑下来，最直观的感受是，这次升级像是给系统换了一个大脑。 先说底层的改变。 HSD V2.0的核心升级逻辑，是在一段式端到端架构的基础上，引入了世界模型+端到端强化学习的双引擎。 什么意思？就是让系统在虚拟物理世界里，通过强化学习自主试错与成长…",
+   "category": "雷锋网",
+   "tags": [],
+   "date": "2026-08-10",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "雷锋网"
   },
   {
    "id": "4738c1621e6a",
@@ -400,6 +653,18 @@
    "author": "钛媒体"
   },
   {
+   "id": "26cd5d4b5251",
+   "title": "AI算力资本开支估算：3-4万亿美元算得出来，但兑现条件极其苛刻",
+   "url": "https://www.tmtpost.com/8097205.html",
+   "summary": "全球AI资本开支未来空间沙盘推演。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-08-10",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体"
+  },
+  {
    "id": "216299c23e77",
    "title": "齐思洞见2026/08/10「Meta：量化引入噪声致推理“过度思考”，小幅解码惩罚可缩短推理并保持/提准准确率；微软Copilot 1350万会话分析显示87% LLM调用由代理自发发起，建议以轮次/会话级调度以提升KV缓存命中与容器利用；斯坦福Shepherd通过写时复制快照实现代理运行状态可分支回退，KV缓存复用率≈95%、协作通过率从28.8%升至54.7%；OpenAI训练期间模型自发协调并利用漏洞攻击外部暴露训练管道与沙盒配置严重安全/对齐风险」",
    "url": "https://news.miracleplus.com/share_link/147686",
@@ -410,6 +675,30 @@
    "source": "qisi",
    "source_name": "齐思",
    "author": "奇绩创坛"
+  },
+  {
+   "id": "11a5a9fabcce",
+   "title": "长沙徐州联手拿下“国字号”，能否实现1+1＞2？",
+   "url": "https://www.tmtpost.com/8097082.html",
+   "summary": "从“暗自较劲”到“双向奔赴”。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-08-10",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体"
+  },
+  {
+   "id": "08845a6a08d8",
+   "title": "苹果测试长鑫存储，存储器市场在释放什么信号",
+   "url": "https://www.tmtpost.com/8097379.html",
+   "summary": "当一场“百年一遇”的存储器涨价，撞上全球最挑剔的采购方。一次测试本身，就成了一支行业的压力表。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-08-10",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体"
   },
   {
    "id": "0068eab195d8",
@@ -718,6 +1007,19 @@
    "source_name": "Hacker News",
    "author": "Hacker News",
    "hn": "https://news.ycombinator.com/item?id=49231154"
+  },
+  {
+   "id": "268943c0a1a5",
+   "title": "OpenChamber: An Agentic Development Environment",
+   "url": "https://openchamber.dev/",
+   "summary": "",
+   "category": "",
+   "tags": [],
+   "date": "2026-08-09",
+   "source": "hn",
+   "source_name": "Hacker News",
+   "author": "Hacker News",
+   "hn": "https://news.ycombinator.com/item?id=49233448"
   },
   {
    "id": "1aa79843a752",
@@ -17065,6 +17367,18 @@
    }
   },
   {
+   "id": "cf14e5578bf2",
+   "title": "公司月报·2026 年 7 月：句子守护、句子问数正式上线",
+   "url": "https://juzibot.com/news.html#c-655f003228",
+   "summary": "句子守护、句子问数两条产品线正式上线：智能体健康度可量化、数据分析对话即得；Agent 与人协作的范式落地律所批量诉讼场景；第二届 AI 黑客松「提前上岗」启动。",
+   "category": "月报",
+   "tags": [],
+   "date": "2026-07-06",
+   "source": "company",
+   "source_name": "公司动态",
+   "author": "句子互动"
+  },
+  {
    "id": "c3d8f0530c2d",
    "title": "跨境电商风向转变：新生代不再只拼价格，开始争“定价权”丨最前线",
    "url": "https://36kr.com/p/3883561480876297?f=rss",
@@ -17817,6 +18131,18 @@
    "tags": []
   },
   {
+   "id": "a698df79668c",
+   "title": "公司月报·2026 年 5 月：AI 测试闭环与 AI 员工上岗机制",
+   "url": "https://juzibot.com/news.html#c-09c524d614",
+   "summary": "AI 交付质量做成完整闭环：用例生成、灰度测试、回归、质检全链路上线；发布「AI 员工上岗机制」，内部 AI 产品像员工一样答辩晋级，第一位走完上岗流程的 AI 员工已经诞生。",
+   "category": "月报",
+   "tags": [],
+   "date": "2026-05-18",
+   "source": "company",
+   "source_name": "公司动态",
+   "author": "句子互动"
+  },
+  {
    "id": "25f60418af43",
    "title": "句子互动新版官网上线：五套产品同场亮相",
    "url": "https://juzibot.com/",
@@ -18141,6 +18467,18 @@
    }
   },
   {
+   "id": "f67ae12ab628",
+   "title": "公司月报·2026 年 4 月：把 AI 先用在自己身上",
+   "url": "https://juzibot.com/news.html#c-091b9020a0",
+   "summary": "这个月我们把 AI 先用在自己身上：AI SDR 通过两轮 A/B 实验激活沉寂的存量线索，沉淀出可复用的方法；首届 AI 黑客松同步启动，全员跨部门组队，把日常痛点做成跑得通的 AI 应用。",
+   "category": "月报",
+   "tags": [],
+   "date": "2026-04-03",
+   "source": "company",
+   "source_name": "公司动态",
+   "author": "句子互动"
+  },
+  {
    "id": "329a99c34f6f",
    "url": "https://blog.codingnow.com/2026/03/soluna_external_lib.html",
    "source": "voices",
@@ -18163,6 +18501,18 @@
    "summary": "soluna 集成了 lua 虚拟机，但默认构建方式是将 lua 库静态链接到唯一的执行文件中。这将导致无法以动态库的形式外挂 Lua 的 C 扩展。 这是因为，如果独立编译 Lua 的 C 扩展库，通常需要链接 Lua 的 C API 。标准的方法是动态链接 lua 实现，如果静态链接 liblua.a ，会导致进程中有多份 lua …",
    "category": "云风",
    "tags": []
+  },
+  {
+   "id": "e8cd48db5106",
+   "title": "公司月报·2026 年 3 月：小红书渠道上线，AI 工作台亮相",
+   "url": "https://juzibot.com/news.html#c-fe267fd0e2",
+   "summary": "过去两个双月我们完成 7 次迭代、上线 259 个需求：小红书渠道全面接入，微信小店 IM 上线，AI 工作台新增 8 项功能，AI 测试与反馈闭环成型，多行业新客户持续落地。",
+   "category": "月报",
+   "tags": [],
+   "date": "2026-03-02",
+   "source": "company",
+   "source_name": "公司动态",
+   "author": "句子互动"
   },
   {
    "id": "918f52cb3741",
@@ -18391,6 +18741,18 @@
    "tags": []
   },
   {
+   "id": "e7883f2a65ed",
+   "title": "公司月报·2025 年 11 月：AI 员工进入规模化阶段",
+   "url": "https://juzibot.com/news.html#c-9767d953b0",
+   "summary": "新展厅亮出新定位：IM Native Agentic AI，让 AI 员工为企业真正拿到结果。企业级 AI 分出三个版本并新增 AI 工作台，按线索计费看板上线，抖音商业化落地首单，小红书接入开发中。",
+   "category": "月报",
+   "tags": [],
+   "date": "2025-11-10",
+   "source": "company",
+   "source_name": "公司动态",
+   "author": "句子互动"
+  },
+  {
    "id": "b782186650d2",
    "url": "https://blog.samaltman.com/sora-update-number-1",
    "source": "voices",
@@ -18516,6 +18878,30 @@
    "tags": []
   },
   {
+   "id": "8b885309389b",
+   "title": "公司月报·2025 年 9 月：抖音私信产品正式上线",
+   "url": "https://juzibot.com/news.html#c-22c26ef29e",
+   "summary": "抖音私信产品正式上线，公域种草到私域转化的链路打通；在线教育签下首单按线索计费合作，AI 提升转化率获数据验证；交付方法论加速沉淀，小红书接入已在路上。",
+   "category": "月报",
+   "tags": [],
+   "date": "2025-09-08",
+   "source": "company",
+   "source_name": "公司动态",
+   "author": "句子互动"
+  },
+  {
+   "id": "bc346f5ea0fe",
+   "title": "公司月报·2025 年 7 月：从工具到效果，向多平台进军",
+   "url": "https://juzibot.com/news.html#c-427e4c2591",
+   "summary": "月会定调两大转型：从单一 IM 生态走向多平台，从卖工具走向对效果负责。WhatsApp、抖音成为冲刺重点，按效果计价完成初步验证，产研立下 bug 不过夜、24 小时交付的硬规矩。",
+   "category": "月报",
+   "tags": [],
+   "date": "2025-07-07",
+   "source": "company",
+   "source_name": "公司动态",
+   "author": "句子互动"
+  },
+  {
    "id": "d3cd7669dd32",
    "url": "https://blog.samaltman.com/the-gentle-singularity",
    "source": "voices",
@@ -18537,6 +18923,18 @@
    "summary": "We are past the event horizon; the takeoff has started. Humanity is close to building digital superintelligence, and at least so far it’s much less weird than it seems l…",
    "category": "Sam Altman",
    "tags": []
+  },
+  {
+   "id": "e037d850da93",
+   "title": "公司月报·2025 年 5 月：全面转向 Agentic AI",
+   "url": "https://juzibot.com/news.html#c-ebcaf02402",
+   "summary": "我们判断 AI 竞争已从「会聊天」进入「会干活」：收敛 Agent 形态，从在线教育切入并启动两个战略级 AI 项目；AI agent 平台密集上新，多平台账号托管落地三类新渠道。",
+   "category": "月报",
+   "tags": [],
+   "date": "2025-05-09",
+   "source": "company",
+   "source_name": "公司动态",
+   "author": "句子互动"
   },
   {
    "id": "87ed01723e4f",
@@ -18648,6 +19046,18 @@
    "tags": []
   },
   {
+   "id": "96201a62b164",
+   "title": "公司月报·2025 年 2 月：多平台接入排出路线图",
+   "url": "https://juzibot.com/news.html#c-caa7096cb6",
+   "summary": "跨年两个月产品密集交付：私域运营系统在管理、营销、服务三线更新；多平台 IM 接入排出三批路线图；AI 产品持续上新，公司内部 AI 培训会每周固定开讲。",
+   "category": "月报",
+   "tags": [],
+   "date": "2025-02-05",
+   "source": "company",
+   "source_name": "公司动态",
+   "author": "句子互动"
+  },
+  {
    "id": "5b5ee5ab83ad",
    "title": "写在句子互动的 2025 年",
    "url": "https://rui.juzi.bot/thought/2025-01-31-juzibot-2025.html",
@@ -18733,6 +19143,18 @@
    }
   },
   {
+   "id": "08073cd35160",
+   "title": "公司月报·2024 年 12 月：驻场交付，打磨教育行业 AI",
+   "url": "https://juzibot.com/news.html#c-0260545843",
+   "summary": "2025 主攻方向敲定：聚焦垂直行业大客户，从在线教育开始驻场交付；确立「两个凡是」研发原则，用成熟技术做小改进大效果的创新。",
+   "category": "月报",
+   "tags": [],
+   "date": "2024-12-02",
+   "source": "company",
+   "source_name": "公司动态",
+   "author": "句子互动"
+  },
+  {
    "id": "af1a476c6de0",
    "url": "https://lilianweng.github.io/posts/2024-11-28-reward-hacking/",
    "source": "voices",
@@ -18756,6 +19178,66 @@
    "tags": []
   },
   {
+   "id": "48f0f7c7a2ff",
+   "title": "公司月报·2024 年 11 月：从 0 到 1 之后，开始从 1 到 n",
+   "url": "https://juzibot.com/news.html#c-692b9bcd35",
+   "summary": "从 0 到 1 完成后，画出从 1 到 n 的三条路：AI 数据治理、多 IM 扩展、可嵌入聊天框；金融标杆案例与餐饮门店测试同步推进。",
+   "category": "月报",
+   "tags": [],
+   "date": "2024-11-08",
+   "source": "company",
+   "source_name": "公司动态",
+   "author": "句子互动"
+  },
+  {
+   "id": "55e0f544928f",
+   "title": "公司月报·2024 年 10 月：AI 客服走进头部连锁餐饮",
+   "url": "https://juzibot.com/news.html#c-9ed948c84f",
+   "summary": "AI 客服走进头部连锁餐饮，项目通过两轮测试进入最终汇报；FDE 式独立交付在大客户二期落地；九月成为全年系统最平稳的月份。",
+   "category": "月报",
+   "tags": [],
+   "date": "2024-10-14",
+   "source": "company",
+   "source_name": "公司动态",
+   "author": "句子互动"
+  },
+  {
+   "id": "4e7808386a39",
+   "title": "公司月报·2024 年 9 月：AI 数字员工正式商业化",
+   "url": "https://juzibot.com/news.html#c-833cd532c5",
+   "summary": "AI 数字员工正式商业化，按数字员工坐席收费的模式跑通；官宣成为飞书首批 AI 合作伙伴；知识库支持 PPT、PDF、Excel 上传。",
+   "category": "月报",
+   "tags": [],
+   "date": "2024-09-09",
+   "source": "company",
+   "source_name": "公司动态",
+   "author": "句子互动"
+  },
+  {
+   "id": "2d42551c0cdb",
+   "title": "公司月报·2024 年 8 月：成为飞书首批表格 AI 生态伙伴",
+   "url": "https://juzibot.com/news.html#c-1206c4c3b3",
+   "summary": "打通头部协作平台多维表格与私域触达，群发助手、涨粉助手进入内测，将以首批表格 AI 生态伙伴身份亮相发布会；稳定性给一切让步。",
+   "category": "月报",
+   "tags": [],
+   "date": "2024-08-05",
+   "source": "company",
+   "source_name": "公司动态",
+   "author": "句子互动"
+  },
+  {
+   "id": "ebdf47da774f",
+   "title": "公司月报·2024 年 7 月：世界人工智能大会路演第一名",
+   "url": "https://juzibot.com/news.html#c-95c4d965d1",
+   "summary": "世界人工智能大会路演第一名；AI 产品接入多家主流大模型，数字人、AR、数字导游等解决方案矩阵成型，句子秒回接入小程序消息。",
+   "category": "月报",
+   "tags": [],
+   "date": "2024-07-09",
+   "source": "company",
+   "source_name": "公司动态",
+   "author": "句子互动"
+  },
+  {
    "id": "f341118d2274",
    "url": "https://lilianweng.github.io/posts/2024-07-07-hallucination/",
    "source": "voices",
@@ -18777,6 +19259,30 @@
    "summary": "Hallucination in large language models usually refers to the model generating unfaithful, fabricated, inconsistent, or nonsensical content. As a term, hallucination has …",
    "category": "Lilian Weng",
    "tags": []
+  },
+  {
+   "id": "8a266db804e8",
+   "title": "公司月报·2024 年 6 月：AI 交付名单再添头部品牌",
+   "url": "https://juzibot.com/news.html#c-11795dd1f0",
+   "summary": "AI 交付名单再添一家国际健康营养品牌；语音转文字、接待分流等大客户能力上线；618 业务量激增，承载与稳定性建设排到最高优先级。",
+   "category": "月报",
+   "tags": [],
+   "date": "2024-06-11",
+   "source": "company",
+   "source_name": "公司动态",
+   "author": "句子互动"
+  },
+  {
+   "id": "d44e6c6a7247",
+   "title": "公司月报·2024 年 5 月：AI Agent 在头部客户完成交付",
+   "url": "https://juzibot.com/news.html#c-54af26afb1",
+   "summary": "RPA+AI 数字员工路线成型：AI Agent 在多家头部客户业务中真实运行，与头部电商 SaaS 平台合作进入新阶段；稳定性列为最高工程主题。",
+   "category": "月报",
+   "tags": [],
+   "date": "2024-05-13",
+   "source": "company",
+   "source_name": "公司动态",
+   "author": "句子互动"
   },
   {
    "id": "822ecd9272d7",
@@ -18825,6 +19331,30 @@
    "tags": []
   },
   {
+   "id": "424c294e66ca",
+   "title": "公司月报·2024 年 4 月：新版产品 1.0 如期上线",
+   "url": "https://juzibot.com/news.html#c-5d21cd8351",
+   "summary": "打磨一个季度的产品大版本 1.0 如期上线，智能提醒、质检中心获客户积极反馈；客户价值被真实验证，团队把「离客户业务更近」写进方法论。",
+   "category": "月报",
+   "tags": [],
+   "date": "2024-04-09",
+   "source": "company",
+   "source_name": "公司动态",
+   "author": "句子互动"
+  },
+  {
+   "id": "184b764ee8be",
+   "title": "公司月报·2024 年 2 月：产研立下年度军令状",
+   "url": "https://juzibot.com/news.html#c-914145e6d3",
+   "summary": "产研团队立下年度军令状：对标行业头部同类产品，从功能对齐到口碑全面超越按月倒排；教育行业运营能力成套上线，渠道合作多点开花。",
+   "category": "月报",
+   "tags": [],
+   "date": "2024-02-21",
+   "source": "company",
+   "source_name": "公司动态",
+   "author": "句子互动"
+  },
+  {
    "id": "e01d339bfba6",
    "url": "https://lilianweng.github.io/posts/2024-02-05-human-data-quality/",
    "source": "voices",
@@ -18869,6 +19399,18 @@
     "at": "2026-07-21"
    },
    "concepts": []
+  },
+  {
+   "id": "4315e5fee4a9",
+   "title": "公司月报·2024 年 1 月：三天一更新，带着复盘出发",
+   "url": "https://juzibot.com/news.html#c-cc320d04c7",
+   "summary": "回顾 2023：公有云全年上线更新 119 次、平均三天一更，大模型产品完成从 0 到 0.1；新的一年，我们要在不确定性中运转良好，向规模化出发。",
+   "category": "月报",
+   "tags": [],
+   "date": "2024-01-10",
+   "source": "company",
+   "source_name": "公司动态",
+   "author": "句子互动"
   },
   {
    "id": "e8b10681d62f",

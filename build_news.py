@@ -2366,8 +2366,12 @@ def feed_item_html(it):
         f'<button type="button" class="fd-ask" data-t="{esc(disp_title(it))}"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>'
         + (f'<a class="fd-link" href="{safe_href(it["url"])}" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i>读原文</a>'
            if not selfref_item(it) else "")
-        + f'<button type="button" class="fd-copy" data-u="{esc(it["url"])}"><i class="fa-solid fa-link"></i>复制链接</button>'
-        '<span class="sp"></span>'
+        # company 源没有外部原文, url 是合成 #c-… 锚点, 复制出来谁也打不开;
+        # 应复制详情页 URL(Bugbot PR#103 e5b58b0 第 2 条)
+        + (f'<button type="button" class="fd-copy" data-u="{esc(f"{SITE_BASE}/{detail_href(it)}")}"><i class="fa-solid fa-link"></i>复制链接</button>'
+           if it["source"] == "company" else
+           f'<button type="button" class="fd-copy" data-u="{esc(it["url"])}"><i class="fa-solid fa-link"></i>复制链接</button>')
+        + '<span class="sp"></span>'
         '<button type="button" class="fd-exp" aria-expanded="false">展开<i class="fa-solid fa-chevron-down"></i></button>'
         "</div></article>"
     )
