@@ -68,6 +68,31 @@ def run(check_only: bool) -> int:
         print(f"::error::资源不存在: {missing}")
         return 1
     stale, fixed = [], 0
+
+    # site.js 动态注入 askbar.js: site.js 自身被 HTML 引用链打戳, 但它里面的
+    # s.src = REL + 'assets/askbar.js' 是运行时拼接, 不在这条链上。改成带 v= 的字符串,
+    # site.js 内容哈希变化 → HTML 侧的引用戳跟着变 → 老访客拿到新 site.js,
+    # 它加载的 askbar.js 也就自动带上版本戳(Bugbot PR#103)。
+    # ***必须在 HTML 页面之前处理***: site.js 内容变了之后, HTML 页才能拿到新的 site.js 哈希;
+    # 顺序反了的话, HTML 页打的 site.js 戳是过期值(Bugbot PR#103 2a2ee4e)。
+    site_js = ROOT / "assets" / "site.js"
+    sj = site_js.read_text(encoding="utf-8")
+    askbar_h = hashes.get("assets/askbar.js", "")
+    if askbar_h:
+        # 匹配 'assets/askbar.js' 或已带旧戳的 'assets/askbar.js?v=xxxxxxxx', 后跟引号
+        sj2 = re.sub(
+            r"(\bassets/askbar\.js)(\?v=[0-9a-f]+)?('|\")",
+            rf"\1?v={askbar_h}\3",
+            sj,
+        )
+        if sj2 != sj:
+            if not check_only:
+                site_js.write_text(sj2, encoding="utf-8")
+                fixed += 1
+                # site.js 内容变了 → 重算它的哈希供 HTML 页使用
+                hashes["assets/site.js"] = hashlib.sha1(sj2.encode()).hexdigest()[:8]
+            stale.append("assets/site.js")
+
     for p, rel in _pages():
         t = p.read_text(encoding="utf-8")
         orig = t
@@ -81,24 +106,6 @@ def run(check_only: bool) -> int:
             if not check_only:
                 p.write_text(t, encoding="utf-8")
                 fixed += 1
-    # site.js 动态注入 askbar.js: site.js 自身被 HTML 引用链打戳, 但它里面的
-    # s.src = REL + 'assets/askbar.js' 是运行时拼接, 不在这条链上。改成带 v= 的字符串,
-    # site.js 内容哈希变化 → HTML 侧的引用戳跟着变 → 老访客拿到新 site.js,
-    # 它加载的 askbar.js 也就自动带上版本戳(Bugbot PR#103 e5b58b0 第 1 条)。
-    site_js = ROOT / "assets" / "site.js"
-    sj = site_js.read_text(encoding="utf-8")
-    askbar_h = hashes.get("assets/askbar.js", "")
-    if askbar_h:
-        sj2 = re.sub(
-            r"(\bassets/askbar\.js)('|\")",
-            rf"\1?v={askbar_h}\2",
-            sj,
-        )
-        if sj2 != sj:
-            if not check_only:
-                site_js.write_text(sj2, encoding="utf-8")
-                fixed += 1
-            stale.append("assets/site.js")
     if check_only:
         if stale:
             print(f"::error::{len(stale)} 个文件/页面的资源版本戳与文件内容不符(改了 assets 但没打戳):")
