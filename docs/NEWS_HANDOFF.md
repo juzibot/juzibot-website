@@ -63,7 +63,7 @@ CI 每 6h:  rsync 拉服务器 /opt/www/jz-news/{data,news}/ → 跑 build_news.
 
 - **智谱 key**:仓库 Secret `ZHIPU_API_KEY`(模型 `glm-4-air`;flash 会把非 AI 资讯放进来,已弃)。缺 key 时管线**优雅降级**——新条目 pending 暂缓上站,下轮补判,已上站内容不受影响。本地开发退回读 `~/projects/API-KEYS.md`;**密钥严禁进仓库**。
 - **公众号源在 CI 里必然失败**(依赖本机 lark-cli):这是设计内的,管线沿用旧数据。公众号新文要本机跑一次 `python3 build_news.py` 再手动 rsync。
-- **公众号登记表有自动 feeder**(2026-08-13 加):`python3 mp_publish_sync.py --via-ssh root@38.76.164.215 --apply` 把微信「发布记录」接口里的文章(标题+永久链接+日期)自动登记成表里新行,**不勾「上官网」**,闸门仍归人。凭据走 env `MP_APPID/MP_APPSECRET` 或 `~/projects/API-KEYS.md`;微信 IP 白名单仅 215,本机直连必 40164;它只覆盖「发布」通道,群发文章仍要人工贴链接(见 §6.5)。首跑已登记 29 行存量(2026-08-13,幂等可重跑)。离线测试 `python3 test_mp_publish_sync.py`。
+- **公众号登记表有自动 feeder**(2026-08-13 加):`python3 mp_publish_sync.py --via-ssh root@38.76.164.215 --apply` 把微信「发布记录」接口里的文章(标题+永久链接+日期)自动登记成表里新行,**不勾「上官网」**,闸门仍归人。凭据走 env `MP_APPID/MP_APPSECRET` 或 `~/projects/API-KEYS.md`;微信 IP 白名单仅 215,本机直连必 40164;它只覆盖「发布」通道,群发文章仍要人工贴链接(见 §6.5)。首跑已登记 29 行存量(2026-08-13,幂等可重跑)。离线测试 `python3 test_mp_publish_sync.py`。**存量已按口径预筛完(2026-08-13,逐篇抓正文实测)**:勾了 3 行(高原开源贡献奖/ChatGPT×私域实测/见实科技推荐——两条第三方背书+一条 AI 干货),其余 26 行备注了不推荐理由(「句子干货」系列实测是300-500 字的资料领取钩子页、7 条引流钩子、1 条标题含企微撞红线、Wechaty 开发者向、内部版误发等)。佳芮在表里复核勾/撤即可,零决策成本。三行发布日期列都有值——og 抓取被 mp 反爬拦下时日期兜底链仍成立。
 - **图片不 --delete**:`news/img/` 一次性下载不可重下,推送步骤故意不带 `--delete`,并且推送前 `mkdir -p news/img` 兜底(否则目录缺失会 set -e 中断,造成「p/c 已删完而 data/ 没推回」的页与状态不一致)。
 - **拉回状态有校验门**:`data/news.json` 缺失/解析失败/零条目一律中止——防止随后的 `--delete` 清空服务器。
 - **别跑 `build_pages.py`**(仓库另一个脚本,已 STALE,会把手工页面打回旧版)。`build_news.py` 则可安全反复跑。
