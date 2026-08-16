@@ -1,0 +1,19 @@
+<p><strong><a href="https://softwaredoug.com/blog/2026/08/10/hypothetical-classifications">Don&#x27;t classify. Hallucinate!</a></strong></p>
+I still have quite a bit of older content on my blog that I never got round to tagging. My blog has <a href="https://simonwillison.net/">1,856 tags</a> - likely too many to feed to an LLM in one go and say "which of these tags match the following content".</p>
+<p>Doug Turnbull has a neat solution. Tell the model to output tags without any details of the existing vocabulary, then use vector embeddings against the existing corpus to find the concrete tags that are closest to the ones the model imagined might fit!</p>
+<p>His example prompt suggests including an example of the shape of your tags to help the model make a more useful guess:</p>
+<blockquote>
+<p><code>Your task is to create novel, never seen before, furniture, home goods, or hardware classification that best fit a search query.</code></p>
+<p><code>Product classifications might look like:</code></p>
+<p><code>Furniture / Living Room Furniture / Coffee Tables &amp; End Tables / Coffee Tables</code><br>
+<code>Décor &amp; Pillows / Decorative Pillows &amp; Blankets / Throw Pillows</code><br>
+<code>Furniture / Bedroom Furniture / Dressers &amp; Chests</code><br>
+<code>Kitchen &amp; Tabletop / Kitchen Organization / Food Storage &amp; Canisters</code><br>
+<code>School Furniture and Supplies / School Furniture / School Chairs &amp; Seating / Stackable Chairs</code><br>
+<code>Baby &amp; Kids / Toddler &amp; Kids Bedroom Furniture / Kids Beds</code></p>
+<p><code>Here's the query to generate classifications for:</code></p>
+<p><code>brown coffee table</code></p>
+</blockquote>
+
+
+    <p>Tags: <a href="https://simonwillison.net/tags/search">search</a>, <a href="https://simonwillison.net/tags/ai">ai</a>, <a href="https://simonwillison.net/tags/generative-ai">generative-ai</a>, <a href="https://simonwillison.net/tags/llms">llms</a>, <a href="https://simonwillison.net/tags/embeddings">embeddings</a>, <a href="https://simonwillison.net/tags/doug-turnbull">doug-turnbull</a></p>

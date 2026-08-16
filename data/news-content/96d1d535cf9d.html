@@ -1,0 +1,34 @@
+<p><strong>Release:</strong> <a href="https://github.com/simonw/alchemy-utils/releases/tag/0.1a0">alchemy-utils 0.1a0</a></p>
+        <p>I've long pondered what a database agnostic version of my <a href="https://sqlite-utils.datasette.io/">sqlite-utils</a> Python library and CLI utility might look like. This morning (literally a shower project) I tasked Codex and GPT-5.6 Sol Ultra with building a prototype:</p>
+<blockquote>
+<p><code>Do a research spike to see what it would take to build a library with the same core API as SQLite-utils - in particular the insert and upsert and insert_all and upsert_all and create and update methods, and the table introspection stuff - but backed by SQLalchemy so it works for multiple database engines</code></p>
+<p><code>Test against PostgreSQL and SQLite and duckdb</code></p>
+<p><code>Use ~/dev/sqlite-utils for reference</code></p>
+<p><code>Create a git repo for this and commit and early and often - use uv init to start the project - use red/green TDD and pytest, see ~/dev/django-sql-dashboard for one idea as to how the PostgreSQL tests could work</code></p>
+</blockquote>
+<p>It took <a href="https://gist.github.com/simonw/bd10e4886688e0fd1b833e4afaabf19e">very few follow-up prompts</a> to produce this project in a state good enough to release as an alpha.</p>
+<p>Here's a one-liner I can use to list the rows in a table in my local PostgreSQL copy of my blog's database:</p>
+<p><code>uvx --with 'alchemy-utils[postgresql]' alchemy-utils rows 'postgresql+psycopg://simon@localhost:5432/simonwillisonblog'  redirects_redirect</code></p>
+<p>The output from that starts like this:</p>
+<pre><code>[
+  {
+    "id": 2328,
+    "domain": "simonwillison.net",
+    "path": "2020/May/21/apple-photos-sqlite/",
+    "target": "/2020/May/21/dogsheep-photos/",
+    "created": "2020-05-21T13:03:46.591692-07:00"
+  },
+  {
+    "id": 3,
+    "domain": "feeds.simonwillison.net",
+    "path": "swn-links",
+    "target": "https://simonwillison.net/atom/links/",
+    "created": "2017-10-01T14:12:54.820729-07:00"
+  }
+</code></pre>
+<p>Or if you'd like a DuckDB database with <a href="https://github.com/simonw/sf-tree-history/blob/main/Street_Tree_List.csv">every tree in San Francisco</a>, schema created automatically to match the file:</p>
+<p><code>curl 'https://raw.githubusercontent.com/simonw/sf-tree-history/refs/heads/main/Street_Tree_List.csv' | uvx --with 'alchemy-utils[duckdb]' alchemy-utils insert 'duckdb:////tmp/trees.db' trees - --csv</code></p>
+<p>(That one took nearly an hour the first time I ran it, so I <a href="https://github.com/simonw/alchemy-utils/commit/e3b8d03e040867b256aeff7db322a0b0eb1f8b06">had Codex optimize it</a> and got it down to around 35 seconds.)</p>
+    
+    
+        <p>Tags: <a href="https://simonwillison.net/tags/databases">databases</a>, <a href="https://simonwillison.net/tags/postgresql">postgresql</a>, <a href="https://simonwillison.net/tags/projects">projects</a>, <a href="https://simonwillison.net/tags/python">python</a>, <a href="https://simonwillison.net/tags/sql">sql</a>, <a href="https://simonwillison.net/tags/sqlalchemy">sqlalchemy</a>, <a href="https://simonwillison.net/tags/sqlite">sqlite</a>, <a href="https://simonwillison.net/tags/sqlite-utils">sqlite-utils</a>, <a href="https://simonwillison.net/tags/duckdb">duckdb</a>, <a href="https://simonwillison.net/tags/coding-agents">coding-agents</a>, <a href="https://simonwillison.net/tags/codex">codex</a></p>

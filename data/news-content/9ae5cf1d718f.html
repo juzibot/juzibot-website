@@ -1,0 +1,9 @@
+<p><strong>Release:</strong> <a href="https://github.com/simonw/sqlite-utils/releases/tag/4.2">sqlite-utils 4.2</a></p>
+        <p>Lots of improvements in this one relating to the <a href="https://sqlite-utils.datasette.io/en/stable/python-api.html#transforming-a-table">table.transform() feature</a>, which adds support for complex alter table operations by creating a fresh table, copying across the data and then dropping and replacing the old one.</p>
+<p><code>transform()</code> now preserves a much larger array of edge-case schema definitions, including check constraints, unique constraints and even comments describing the columns.</p>
+<p>There are also <a href="https://sqlite-utils.datasette.io/en/stable/python-api.html#checks">new introspection properties</a> for check constraints, and a whole lot of other smaller changes.</p>
+<p>Includes contributions from <a href="https://github.com/bunlongheng">Bunlong Heng</a>, <a href="https://github.com/ethanhawkes-gif">ethanhawkes-gif</a>, <a href="https://github.com/RamiNoodle733">Rami Abdelrazzaq</a>, <a href="https://github.com/nyxst4ck">nyxst4ck</a>, and <a href="https://github.com/ikatyal2110">ikatyal2110</a>.</p>
+<p>(It later turned out 4.2 had <a href="https://github.com/simonw/sqlite-utils/issues/842">a crashing bug</a>, fixed in <a href="https://sqlite-utils.datasette.io/en/stable/changelog.html#v4-2-1">4.2.1</a>.)</p>
+    
+    
+        <p>Tags: <a href="https://simonwillison.net/tags/releases">releases</a>, <a href="https://simonwillison.net/tags/sqlite">sqlite</a>, <a href="https://simonwillison.net/tags/sqlite-utils">sqlite-utils</a></p>
