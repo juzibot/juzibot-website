@@ -2831,8 +2831,15 @@ def selfref_item(it):
 
     佳芮 ③c 只修了详情页, 而列表卡(card_html)与聚合项(feed_item_html)、两页内联 JS 仍
     无条件渲染, product 与 company 条目会把访客送回本站营销页或 #c- 锚点(Bugbot PR#103)。
-    判据分散第 N 次 —— 三处 Python 渲染共用这一个函数, 页内 JS 侧用等价的 selfref 标志位。"""
-    return _bare_host(it.get("url") or "") == _bare_host(SITE_BASE)
+    判据分散第 N 次 —— 三处 Python 渲染共用这一个函数, 页内 JS 读 _slim() 下发的 selfref。
+
+    非绝对 url(相对路径/裸锚点)一律判本站: 这条兜底原先只长在 JS 里, JS 改成读标志位后
+    必须移进来, 否则「唯一事实源」在这类 url 上反而比它取代的那份判据更弱——真实数据的
+    company 锚点是绝对地址(见 _bodied_anchor)所以线上没坏, 但差一步就是死链按钮。"""
+    u = (it.get("url") or "").strip()
+    if not u or not re.match(r"^https?://", u, re.I):
+        return True
+    return _bare_host(u) == _bare_host(SITE_BASE)
 
 
 def detail_html(it, lib, worthy, rel=()):
@@ -3929,6 +3936,12 @@ def inject_page(spec, items, sources_meta, now):
         s = o.get("summary") or ""
         if len(s) > SUMMARY_INLINE_MAX:  # 卡片只显示 3 行(~90 字), 内联留 180 字够用且够搜
             o["summary"] = s[:SUMMARY_INLINE_MAX] + "…"
+        # 「读原文」该不该出: 由 selfref_item() 算好随数据下发, **前端不再自己判**。
+        # 原先两页 JS 各自拿 location.host 比对, 注释还写着「与 Python 侧同一判据」——
+        # 在 stage 预览(IP:端口)上根本不同: 预渲染按 SITE_BASE 正确隐藏了按钮, 一旦切区/
+        # 筛选/加载更多触发 JS 重渲, product 与 company 条目又把按钮放出来, company 点出去
+        # 落到生产站上的合成 #c- 锚点(Bugbot PR#103)。判据分散第 N+1 次, 这次收进数据里。
+        o["selfref"] = selfref_item(i)
         return o
 
     # 数据分片(2026-07-30): 默认视图是「句子动态」(42 条), 却要先下载全部 278 条 = 218KB。

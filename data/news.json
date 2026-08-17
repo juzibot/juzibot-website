@@ -1,7 +1,7 @@
 {
  "generated_by": "build_news.py",
- "generated_at": "2026-08-16T22:30:15+08:00",
- "count": 1296,
+ "generated_at": "2026-08-17T09:12:02+08:00",
+ "count": 1320,
  "visible": 363,
  "sources": [
   {
@@ -10,7 +10,7 @@
    "type": "sitemap",
    "home": "https://rui.juzi.bot/",
    "status": "ok",
-   "last_sync": "2026-08-16T22:30:15+08:00",
+   "last_sync": "2026-08-17T09:12:02+08:00",
    "group": "company",
    "ai": true,
    "count": 36
@@ -21,7 +21,7 @@
    "type": "feishu-base",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-08-16T22:30:15+08:00",
+   "last_sync": "2026-08-17T09:12:02+08:00",
    "group": "company",
    "ai": false,
    "count": 21
@@ -32,7 +32,7 @@
    "type": "manual",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-08-16T22:30:15+08:00",
+   "last_sync": "2026-08-17T09:12:02+08:00",
    "group": "company",
    "ai": false,
    "count": 20
@@ -43,7 +43,7 @@
    "type": "manual",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-08-16T22:30:15+08:00",
+   "last_sync": "2026-08-17T09:12:02+08:00",
    "group": "company",
    "ai": false,
    "count": 5
@@ -54,7 +54,7 @@
    "type": "manual",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-08-16T22:30:15+08:00",
+   "last_sync": "2026-08-17T09:12:02+08:00",
    "group": "company",
    "ai": false,
    "count": 0
@@ -65,7 +65,7 @@
    "type": "rss",
    "home": "",
    "status": "warn",
-   "last_sync": "2026-08-16T22:30:15+08:00",
+   "last_sync": "2026-08-17T09:12:02+08:00",
    "group": "radar",
    "ai": true,
    "count": 94
@@ -76,7 +76,7 @@
    "type": "rss",
    "home": "",
    "status": "ok",
-   "last_sync": "2026-08-16T22:30:15+08:00",
+   "last_sync": "2026-08-17T09:12:02+08:00",
    "group": "radar",
    "ai": true,
    "count": 99
@@ -87,7 +87,7 @@
    "type": "hn-algolia",
    "home": "https://news.ycombinator.com/",
    "status": "ok",
-   "last_sync": "2026-08-16T22:30:15+08:00",
+   "last_sync": "2026-08-17T09:12:02+08:00",
    "group": "radar",
    "ai": true,
    "count": 49
@@ -98,13 +98,103 @@
    "type": "qisi-list",
    "home": "https://news.miracleplus.com/",
    "status": "ok",
-   "last_sync": "2026-08-16T22:30:15+08:00",
+   "last_sync": "2026-08-17T09:12:02+08:00",
    "group": "radar",
    "ai": true,
    "count": 39
   }
  ],
  "items": [
+  {
+   "id": "f59e1f34ec2d",
+   "title": "齐思头条2026/08/17「GPT‑5.6 Luna Max 在 DeepSWE 得分领先 Sonnet 13.3 分、每题成本约 $0.61、成本低约 44×；GPT‑5.6 Sol 在 Codex 实现 1,050,000‑token 上下文落地；阿里 Qwen3.8 开源权重，默认上下文 262K 可扩展至 1M 且支持设备端量化部署」",
+   "url": "https://news.miracleplus.com/share_link/148930",
+   "summary": "Twitter GPT‑5.6 Luna Max（DeepSWE 基准：工程编程任务上显著的性能/成本优势） ：在 DeepSWE v1.1 的 113 道长程工程编码题上，GPT‑5.6 Luna Max 得分比 Sonnet 5 Max 高 13.3 分，整体通过率为 67.2%。Luna 每题成本约为 $0.61，报告称比 Son…",
+   "category": "头条",
+   "tags": [],
+   "date": "2026-08-17",
+   "source": "qisi",
+   "source_name": "齐思",
+   "author": "奇绩创坛"
+  },
+  {
+   "id": "ba743f9d1084",
+   "title": "齐思洞见2026/08/17「GLM‑5.3 通过 slime RL 框架与 SGLang 内核级复用实现训练—推理数值对齐（4K tokens 下 logprob MAE 1.89×10⁻⁷），靠将 RMSNorm 残差用 FP32、在 CUDA/FP8 指令与内核层面精细对齐并“锁死”数值自由度，解决 MoE 与硬件引起的舍入差异」",
+   "url": "https://news.miracleplus.com/share_link/148982",
+   "summary": "目录 - ⚙️ 技术与工程 (19条) - GLM-5.3 的 RL 框架 slime 实现了训练与推理的一致性对齐 - GLM-5.3 通过 RMSNorm 边界对齐解决数值误差问题 - GLM-5.3 在 CUDA 指令级别实现一致性对齐 - GLM-5.3 通过内核对齐实现训练与推理一致性 - 硬件差异导致 GLM-5.3 数值误…",
+   "category": "洞见",
+   "tags": [],
+   "date": "2026-08-17",
+   "source": "qisi",
+   "source_name": "齐思",
+   "author": "奇绩创坛"
+  },
+  {
+   "id": "7d192a09fe65",
+   "title": "数学编程代理MathCode：用AI将数学问题形式化并证明",
+   "url": "https://news.miracleplus.com/share_link/148986",
+   "summary": "An AI coding agent converts math problems into Lean 4 theorems and proves them.",
+   "category": "热帖",
+   "tags": [],
+   "date": "2026-08-17",
+   "source": "qisi",
+   "source_name": "齐思",
+   "author": "奇绩创坛"
+  },
+  {
+   "id": "68dad3eb7b67",
+   "title": "【钛晨报】跨国公司本外币跨境资金集中运营业务将推广至全国；1600亿翻倍牛股，签下超亿元芯片合同；今年以来最贵新股，定于8月18日上市",
+   "url": "https://www.tmtpost.com/8105146.html",
+   "summary": "国泰海通：中国股市将逐步迎来“金秋行情”；贵州茅台上半年净利润同比下降1.95%，商汤预计上半年转盈约5亿元至7亿元；智谱发布GLM-5.3、阿里开源Qwen3.8；中国2026暑期档票房超100亿；英伟达二季度新增持有SpaceX；Anthropic第二财季营收同比飙升至少13倍；广东首个词元经济“Token贷”发布。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-08-17",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体",
+   "ai": {
+    "keep": false,
+    "at": "2026-08-17",
+    "kw": true,
+    "rule": "biz"
+   }
+  },
+  {
+   "id": "5aa49d2acf70",
+   "title": "OpenAI 设计负责人：当下是设计师最好的时代，机会无限",
+   "url": "https://news.miracleplus.com/share_link/148910",
+   "summary": "本期访谈邀请了 OpenAI 设计负责人 Ian Silber，讨论生成式 AI 对产品设计的影响。核心观点包括：生成式 AI显著提升设计师的试验速度和影响力，但人类仍在创新交互范式上具有关键价值；组织内角色虽更流动但不会完全合并；设计实践应系统化，优先复用组合组件以适应技术变化。同时，产品需在简单易用性与功能性之间寻求平衡，以支持从基…",
+   "category": "热帖",
+   "tags": [],
+   "date": "2026-08-17",
+   "source": "qisi",
+   "source_name": "齐思",
+   "author": "奇绩创坛"
+  },
+  {
+   "id": "408824c489ad",
+   "title": "早报｜《牛来》主创回应排片暴增1900倍/卢伟冰:小米手机未来全面拥抱AI/问界儿童车即将上市",
+   "url": "https://www.ifanr.com/1675332?utm_source=rss&utm_medium=rss&utm_campaign=",
+   "summary": "· 于东来：胖东来首批刑释员工无人离职，将再招 20 人 · Dario Amodei：公众反对 AI，本质上是信任危机 · 2056 台机器人将同场比跳远、举重和拧螺丝 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。",
+   "category": "爱范儿",
+   "tags": [],
+   "date": "2026-08-17",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "爱范儿"
+  },
+  {
+   "id": "0f645e5b4536",
+   "title": "Pony.ai and Uber Set Their Sights on More Than 2,000 Robotaxis in Europe",
+   "url": "https://www.tmtpost.com/8105342.html",
+   "summary": "A Chinese autonomous-driving company and a global ride-hailing platform have agreed to expand a quiet pilot in Zagreb into a multi-city fleet. The plan is ambitious on p…",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-08-17",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体"
+  },
   {
    "id": "fe73b8373de7",
    "title": "齐思洞见2026/08/16「数据质量胜算力：四阶段数据优化大幅降错率并节省算力；阿里开源Qwen3.8（27B/2.4T、超长上下文）推动多模态工程化部署；Grok 4.6凭提示缓存与更少调用在编程代理上以$13.11成本优于GPT‑5.6；27B研究代理Faraday用论文复现任务击败Claude/GPT‑5.5」",
@@ -296,6 +386,19 @@
    "author": "钛媒体"
   },
   {
+   "id": "be8a8f32c64e",
+   "title": "St Lucie Nuclear Reactor Unit 1 manually shutdown, 3 control rods drop into core",
+   "url": "https://www.wptv.com/news/treasure-coast/region-st-lucie-county/saint-lucie-nuclear-power-plant-unit-1-manually-shut-down-after-3-control-rods-drop-into-reactor-core",
+   "summary": "",
+   "category": "",
+   "tags": [],
+   "date": "2026-08-16",
+   "source": "hn",
+   "source_name": "Hacker News",
+   "author": "Hacker News",
+   "hn": "https://news.ycombinator.com/item?id=49320856"
+  },
+  {
    "id": "b95b83045cd9",
    "title": "阿里股价回升，阿里云AI对公司长期估值影响究竟有多大？",
    "url": "https://www.tmtpost.com/8104764.html",
@@ -321,6 +424,19 @@
    "hn": "https://news.ycombinator.com/item?id=49316271"
   },
   {
+   "id": "9ffac573dcb5",
+   "title": "Claude: System Prompts",
+   "url": "https://platform.claude.com/docs/en/release-notes/system-prompts",
+   "summary": "",
+   "category": "",
+   "tags": [],
+   "date": "2026-08-16",
+   "source": "hn",
+   "source_name": "Hacker News",
+   "author": "Hacker News",
+   "hn": "https://news.ycombinator.com/item?id=49319556"
+  },
+  {
    "id": "9a451c9f35aa",
    "title": "杭州95后小伙，5亿买走硅谷城堡",
    "url": "https://www.qbitai.com/2026/08/474245.html",
@@ -331,6 +447,18 @@
    "source": "industry",
    "source_name": "行业动态",
    "author": "量子位"
+  },
+  {
+   "id": "90de59a84f4c",
+   "title": "纽蒙特矿业股在大涨66%后光芒不减，我们继续看多",
+   "url": "https://www.tmtpost.com/8104950.html",
+   "summary": "该股在约10倍市盈率水平下仍然值得买入。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-08-16",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体"
   },
   {
    "id": "8f0cf517564f",
@@ -382,6 +510,42 @@
    "hn": "https://news.ycombinator.com/item?id=49317760"
   },
   {
+   "id": "80bf9a51dd42",
+   "title": "今年最激动人心的 AI 宣言，来自科技圈最不受待见的人",
+   "url": "https://www.ifanr.com/1674733?utm_source=rss&utm_medium=rss&utm_campaign=",
+   "summary": "是未来，还是黑暗森林？ #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。",
+   "category": "爱范儿",
+   "tags": [],
+   "date": "2026-08-16",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "爱范儿"
+  },
+  {
+   "id": "8020d8bf201c",
+   "title": "ST中路控制权暗战：控股股东持股仅剩6.79%，举牌资本隐现“银河系”身影",
+   "url": "https://www.tmtpost.com/8105230.html",
+   "summary": "与退市“银河系”高度关联的北海资本团正通过闪电举牌悄然围猎控制权。",
+   "category": "钛媒体",
+   "tags": [],
+   "date": "2026-08-16",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "钛媒体"
+  },
+  {
+   "id": "7b67d0050f11",
+   "title": "Quoting Dario Amodei",
+   "url": "https://simonwillison.net/2026/Aug/16/dario-amodei/",
+   "summary": "I do agree that the public has a negative view of AI (and that this is a big problem), but I don’t think it is primarily caused by me or any other AI leader warning abou…",
+   "category": "Simon Willison",
+   "tags": [],
+   "date": "2026-08-16",
+   "source": "voices",
+   "source_name": "大咖观点",
+   "author": "Simon Willison"
+  },
+  {
    "id": "79f052dab0f6",
    "title": "“破戒”评论被指“开黄腔”，比格比萨老板遭流量反噬？",
    "url": "https://www.tmtpost.com/8104754.html",
@@ -406,6 +570,18 @@
    "author": "奇绩创坛"
   },
   {
+   "id": "5d80ce7e11f5",
+   "title": "Markdown SVG upgrades",
+   "url": "https://simonwillison.net/2026/Aug/16/markdown-svg-upgrades/",
+   "summary": "I started building my markdown-svg-renderer tool in May , but I've since added enough features to it that it's worth talking about here again. It's evolved into my ideal…",
+   "category": "Simon Willison",
+   "tags": [],
+   "date": "2026-08-16",
+   "source": "voices",
+   "source_name": "大咖观点",
+   "author": "Simon Willison"
+  },
+  {
    "id": "5302e5fa71c2",
    "title": "“B站教AI”爆火后，北航90后副教授何静回应一切",
    "url": "https://www.qbitai.com/2026/08/474064.html",
@@ -418,6 +594,44 @@
    "author": "量子位"
   },
   {
+   "id": "5166515a8f1a",
+   "title": "我用 161 个新闻源「养」了个 AI 主编，它比我更懂什么叫「大新闻」｜附教程",
+   "url": "https://www.ifanr.com/1675326?utm_source=rss&utm_medium=rss&utm_campaign=",
+   "summary": "信息爆炸时代，质量比数量重要得多。 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。",
+   "category": "爱范儿",
+   "tags": [],
+   "date": "2026-08-16",
+   "source": "industry",
+   "source_name": "行业动态",
+   "author": "爱范儿"
+  },
+  {
+   "id": "46d4c1f7a618",
+   "title": "Stripe Clinches over $7B Deal to Buy AI Firm OpenRouter",
+   "url": "https://www.bloomberg.com/news/articles/2026-08-16/stripe-nears-deal-to-buy-ai-firm-openrouter-for-over-7-billion",
+   "summary": "",
+   "category": "",
+   "tags": [],
+   "date": "2026-08-16",
+   "source": "hn",
+   "source_name": "Hacker News",
+   "author": "Hacker News",
+   "hn": "https://news.ycombinator.com/item?id=49323381"
+  },
+  {
+   "id": "3e9e04424fc8",
+   "title": "A 3rd World Embedded Engineer Responds to \"RISC-V They Should Have Known Better\"",
+   "url": "https://rvembedded.com/blog_post/12/",
+   "summary": "",
+   "category": "",
+   "tags": [],
+   "date": "2026-08-16",
+   "source": "hn",
+   "source_name": "Hacker News",
+   "author": "Hacker News",
+   "hn": "https://news.ycombinator.com/item?id=49321717"
+  },
+  {
    "id": "3c02a4a9b29f",
    "title": "如何打造高效增长引擎：从Superhuman与Wispr Flow看付费广告与裂变秘诀",
    "url": "https://news.miracleplus.com/share_link/148721",
@@ -428,6 +642,32 @@
    "source": "qisi",
    "source_name": "齐思",
    "author": "奇绩创坛"
+  },
+  {
+   "id": "394dfc3977b6",
+   "title": "The AI Credit Resale Economy",
+   "url": "https://vectoral.com/blog/who-are-the-token-brokers",
+   "summary": "",
+   "category": "",
+   "tags": [],
+   "date": "2026-08-16",
+   "source": "hn",
+   "source_name": "Hacker News",
+   "author": "Hacker News",
+   "hn": "https://news.ycombinator.com/item?id=49320611"
+  },
+  {
+   "id": "35ab455a6134",
+   "title": "Tell HN: Cloudflare silently injects its analytics when you switch nameservers",
+   "url": "https://news.ycombinator.com/item?id=49322107",
+   "summary": "A few hours ago I switched my nameservers to Cloudflare in order to enable R2 bucket serving through my own subdomain, and I found out that it silently had injected a JS…",
+   "category": "",
+   "tags": [],
+   "date": "2026-08-16",
+   "source": "hn",
+   "source_name": "Hacker News",
+   "author": "Hacker News",
+   "hn": "https://news.ycombinator.com/item?id=49322107"
   },
   {
    "id": "307c0136d689",
@@ -454,6 +694,19 @@
    "author": "钛媒体"
   },
   {
+   "id": "283298017039",
+   "title": "Firefox for iOS now has a native adblocker",
+   "url": "https://support.mozilla.org/en-US/kb/block-ads-firefox-ios",
+   "summary": "",
+   "category": "",
+   "tags": [],
+   "date": "2026-08-16",
+   "source": "hn",
+   "source_name": "Hacker News",
+   "author": "Hacker News",
+   "hn": "https://news.ycombinator.com/item?id=49319633"
+  },
+  {
    "id": "2422942433cd",
    "title": "史上最大 IPO 倒计时：五岁 Anthropic， 2 万亿美元凭什么？",
    "url": "https://www.tmtpost.com/8104736.html",
@@ -464,6 +717,44 @@
    "source": "industry",
    "source_name": "行业动态",
    "author": "钛媒体"
+  },
+  {
+   "id": "0f2dda7c9a41",
+   "title": "Anthropic's 'Watermark' Text Adulteration in Claude Is a Perversion of Writing",
+   "url": "https://daringfireball.net/2026/08/anthropics_watermark_text_adulteration_in_claude_is_a_perversion_of_writing",
+   "summary": "",
+   "category": "",
+   "tags": [],
+   "date": "2026-08-16",
+   "source": "hn",
+   "source_name": "Hacker News",
+   "author": "Hacker News",
+   "hn": "https://news.ycombinator.com/item?id=49324087"
+  },
+  {
+   "id": "097582375e87",
+   "title": "Qwen 3.8 27B is excellent, but it defaults to wildly overthinking things",
+   "url": "https://simonwillison.net/2026/Aug/16/qwen-38-27b/",
+   "summary": "Friday's big release was Qwen 3.8 27B , an Apache 2 licensed 27B parameter vision-capable LLM from Alibaba's Qwen research lab. I've been looking forward to this one: 27…",
+   "category": "Simon Willison",
+   "tags": [],
+   "date": "2026-08-16",
+   "source": "voices",
+   "source_name": "大咖观点",
+   "author": "Simon Willison"
+  },
+  {
+   "id": "08e6169d681d",
+   "title": "Models Are Getting Dumber on Purpose",
+   "url": "https://w4g1.dev/blog/models-are-getting-dumber-on-purpose",
+   "summary": "",
+   "category": "",
+   "tags": [],
+   "date": "2026-08-16",
+   "source": "hn",
+   "source_name": "Hacker News",
+   "author": "Hacker News",
+   "hn": "https://news.ycombinator.com/item?id=49322695"
   },
   {
    "id": "c1c1890bebb9",
@@ -952,6 +1243,19 @@
    "source": "industry",
    "source_name": "行业动态",
    "author": "雷锋网"
+  },
+  {
+   "id": "ebce1c5cb059",
+   "title": "Chestnut – eGPU dock with open-source firmware",
+   "url": "https://hwbusters.com/news/comma-ai-egpu-dock-runs-open-source-firmware-249-bare-799-with-an-rx-9060/",
+   "summary": "",
+   "category": "",
+   "tags": [],
+   "date": "2026-08-13",
+   "source": "hn",
+   "source_name": "Hacker News",
+   "author": "Hacker News",
+   "hn": "https://news.ycombinator.com/item?id=49292385"
   },
   {
    "id": "eacdb66cac04",
@@ -20137,6 +20441,18 @@
    }
   },
   {
+   "id": "89d613aa8a6a",
+   "title": "联合全网数十家企业、KOL、资深操盘手，共同打造的线上直播活动，每周定期组织线上直播分享、交流沙龙",
+   "url": "http://mp.weixin.qq.com/s?__biz=MzU3OTk2MzA1Nw==&mid=2247513670&idx=1&sn=ed4c08b85a35a9273f3631797eb7bb81&chksm=fd5ce798ca2b6e8e56502237a9fde77ab6211ba8c0d7ebafb12be1c4329d27f3898a21cc1deb#rd",
+   "summary": "敖德萨多",
+   "category": "句子互动官方",
+   "tags": [],
+   "date": "2025-02-21",
+   "source": "wechat-mp",
+   "source_name": "公众号",
+   "author": "句子互动"
+  },
+  {
    "id": "31e7723102c3",
    "url": "https://blog.samaltman.com/three-observations",
    "source": "voices",
@@ -20292,6 +20608,114 @@
    "tags": []
   },
   {
+   "id": "f6be7be80d5c",
+   "title": "句子干货｜《22张活动执行表格》",
+   "url": "http://mp.weixin.qq.com/s?__biz=MzU3OTk2MzA1Nw==&mid=2247544136&idx=1&sn=dc6f71161c9bcb50eca60e2f39c128c4&chksm=fd5c7c96ca2bf580d0b7ca390414bb5b52a12f889e45609bc40c02cbf43085370fd043aeb7d5#rd",
+   "summary": "共22子表，内容全面。",
+   "category": "句子互动官方",
+   "tags": [],
+   "date": "2024-11-21",
+   "source": "wechat-mp",
+   "source_name": "公众号",
+   "author": "句子互动"
+  },
+  {
+   "id": "e8565331c90d",
+   "title": "句子干货｜《在线教育项目全案运营》",
+   "url": "http://mp.weixin.qq.com/s?__biz=MzU3OTk2MzA1Nw==&mid=2247543645&idx=1&sn=47a551c3264c2fe17935c9581db2d149&chksm=fd5c7a83ca2bf395161a3788987d95adce2d21c3b3fffaf8cea66d2dacf262209e17d51c55ab#rd",
+   "summary": "共11子表，内容全面。",
+   "category": "句子互动官方",
+   "tags": [],
+   "date": "2024-11-21",
+   "source": "wechat-mp",
+   "source_name": "公众号",
+   "author": "句子互动"
+  },
+  {
+   "id": "c5b5af3a07b5",
+   "title": "句子干货｜《电商私域项目运营Sop》",
+   "url": "http://mp.weixin.qq.com/s?__biz=MzU3OTk2MzA1Nw==&mid=2247543086&idx=1&sn=b40faee5bd57feaea85058c98b64b862&chksm=fd5c78f0ca2bf1e6d176376fccc295a9cc8cef0ae28b5d9f3319a27c4dab8a01a7f1c1ad5dfc#rd",
+   "summary": "今日分享干货：《电商私域项目运营Sop》共27子表。",
+   "category": "句子互动官方",
+   "tags": [],
+   "date": "2024-11-21",
+   "source": "wechat-mp",
+   "source_name": "公众号",
+   "author": "句子互动"
+  },
+  {
+   "id": "acd4f28ffed8",
+   "title": "句子干货｜《母婴行业社群活动运营 SOP》",
+   "url": "http://mp.weixin.qq.com/s?__biz=MzU3OTk2MzA1Nw==&mid=2247544150&idx=1&sn=3dfeb64801984c1361079498d81a46ca&chksm=fd5c7c88ca2bf59eca4976381feb696a05d9da47889da5f74539c6e99f70e7bc167c375a8208#rd",
+   "summary": "共3子表，内容全面。",
+   "category": "句子互动官方",
+   "tags": [],
+   "date": "2024-11-21",
+   "source": "wechat-mp",
+   "source_name": "公众号",
+   "author": "句子互动"
+  },
+  {
+   "id": "a6588187d9b2",
+   "title": "句子干货｜《长期社群规划全流程》",
+   "url": "http://mp.weixin.qq.com/s?__biz=MzU3OTk2MzA1Nw==&mid=2247543796&idx=1&sn=ea673509096d1e8064334b1c263b9d55&chksm=fd5c7a2aca2bf33ce06bf8e3f49da2fcc25ce87a28d838281205230f4e95b969bb219d9f12af#rd",
+   "summary": "共5子表，内容全面。",
+   "category": "句子互动官方",
+   "tags": [],
+   "date": "2024-11-21",
+   "source": "wechat-mp",
+   "source_name": "公众号",
+   "author": "句子互动"
+  },
+  {
+   "id": "7f8db8c5e821",
+   "title": "句子干货｜《电商私域运营一表全》",
+   "url": "http://mp.weixin.qq.com/s?__biz=MzU3OTk2MzA1Nw==&mid=2247543381&idx=1&sn=498186317548ba5c1e968fd37a9e9262&chksm=fd5c7b8bca2bf29d99993e2c3c6bbb27acc98bb81bb7f2f74d62367abb0839c52c90aec3b8cb#rd",
+   "summary": "11子表。",
+   "category": "句子互动官方",
+   "tags": [],
+   "date": "2024-11-21",
+   "source": "wechat-mp",
+   "source_name": "公众号",
+   "author": "句子互动"
+  },
+  {
+   "id": "5b714bd25f33",
+   "title": "句子干货｜《私域运营GMV拆解SOP》",
+   "url": "http://mp.weixin.qq.com/s?__biz=MzU3OTk2MzA1Nw==&mid=2247543250&idx=1&sn=b6cb722f1b041c480fe588a8a2a0a779&chksm=fd5c780cca2bf11a7800ee7f1cee954b70d1c0f085b0ad821ea6c5b01f401cb6a474f845a101#rd",
+   "summary": "",
+   "category": "句子互动官方",
+   "tags": [],
+   "date": "2024-11-21",
+   "source": "wechat-mp",
+   "source_name": "公众号",
+   "author": "句子互动"
+  },
+  {
+   "id": "53554dd0dd5f",
+   "title": "句子干货｜《电商30天工作流程表》",
+   "url": "http://mp.weixin.qq.com/s?__biz=MzU3OTk2MzA1Nw==&mid=2247543559&idx=1&sn=adcb9b000092904bfa88a6b48070f20e&chksm=fd5c7ad9ca2bf3cf6337302a1c55f7e740354bab194f3aa148c82710a19ef6a6481a6fa8d49c#rd",
+   "summary": "3子表。",
+   "category": "句子互动官方",
+   "tags": [],
+   "date": "2024-11-21",
+   "source": "wechat-mp",
+   "source_name": "公众号",
+   "author": "句子互动"
+  },
+  {
+   "id": "1b6e61ab6f12",
+   "title": "句子干货｜《连锁药店私域运营全流程》",
+   "url": "http://mp.weixin.qq.com/s?__biz=MzU3OTk2MzA1Nw==&mid=2247543405&idx=1&sn=795a0a52037b1f08c477bbe10d91b3de&chksm=fd5c7bb3ca2bf2a5410ec7ecc615cbe6946a544052acd5ad57999c03b8c5f9cda3f9d84ae84a#rd",
+   "summary": "",
+   "category": "句子互动官方",
+   "tags": [],
+   "date": "2024-11-21",
+   "source": "wechat-mp",
+   "source_name": "公众号",
+   "author": "句子互动"
+  },
+  {
    "id": "48f0f7c7a2ff",
    "title": "公司月报·2024 年 11 月：从 0 到 1 之后，开始从 1 到 n",
    "url": "https://juzibot.com/news.html#c-692b9bcd35",
@@ -20311,6 +20735,42 @@
    "category": "句子互动官方",
    "tags": [],
    "date": "2024-10-29",
+   "source": "wechat-mp",
+   "source_name": "公众号",
+   "author": "句子互动"
+  },
+  {
+   "id": "d324b0664b0b",
+   "title": "盘点「电商直播带货」的私域引流策略",
+   "url": "http://mp.weixin.qq.com/s?__biz=MzU3OTk2MzA1Nw==&mid=2247489659&idx=1&sn=bce6b6d6ec04a4a6cf6d74777bd90623&chksm=fd5f49a5ca28c0b3a77e491c18a4fa74adf32a1216c912dce50b9cbbaa5853084d2c25def343#rd",
+   "summary": "句子导语：直播带货已经成为几乎每一个品牌必备的玩法，玩家的增多导致竞争越来越激烈，不少企业开始考虑将直播带货",
+   "category": "句子互动官方",
+   "tags": [],
+   "date": "2024-10-27",
+   "source": "wechat-mp",
+   "source_name": "公众号",
+   "author": "句子互动"
+  },
+  {
+   "id": "916ea8644c86",
+   "title": "Wechaty受邀参加GAIDC开源集市，邀请你一起来！",
+   "url": "http://mp.weixin.qq.com/s?__biz=MzU3OTk2MzA1Nw==&mid=2247528792&idx=1&sn=a45f4209db5b4ce63188746de98cccd1&chksm=fd5c2086ca2ba990aaeab5724db2995159fcf1987283cd9f90eb8ab1137142bfab5473fd6bc7#rd",
+   "summary": "为对话而生的 ChatGPT 。",
+   "category": "句子互动官方",
+   "tags": [],
+   "date": "2024-10-26",
+   "source": "wechat-mp",
+   "source_name": "公众号",
+   "author": "句子互动"
+  },
+  {
+   "id": "46c1fb38c39d",
+   "title": "门店企业如何做私域？这可能是目前最全的操作手册[5]",
+   "url": "http://mp.weixin.qq.com/s?__biz=MzU3OTk2MzA1Nw==&mid=2247490463&idx=1&sn=a8723e5f7b9510735fa8a958b78e2542&chksm=fd5f4a41ca28c35785885d6b68af5138f930cef2690df2ee27bb1e08ef3a87d856259f00bf5b#rd",
+   "summary": "过去4篇，我们解读了门店私域运营的主线路、3个基础建设、客户沉淀、客户运营，今天我们开始解读用户转化部分。",
+   "category": "句子互动官方",
+   "tags": [],
+   "date": "2024-10-25",
    "source": "wechat-mp",
    "source_name": "公众号",
    "author": "句子互动"
@@ -20444,6 +20904,30 @@
    "summary": "There are two things from our announcement today I wanted to highlight. First, a key part of our mission is to put very capable AI tools in the hands of people for free …",
    "category": "Sam Altman",
    "tags": []
+  },
+  {
+   "id": "477e78e8bc4f",
+   "title": "微信封杀营销外挂：我对微信生态的思考",
+   "url": "http://mp.weixin.qq.com/s?__biz=MzU3OTk2MzA1Nw==&mid=2247531241&idx=1&sn=5ec7775bcfebe3954e2e3779c03f041d&chksm=fd5c2b37ca2ba22145e0ece107c8ef59fd05dd5d025a7d24eb7d7b2eaa4b209cfe3ffb4bdd9c#rd",
+   "summary": "AI比你更聪明，但是你可以比他更善良",
+   "category": "句子互动官方",
+   "tags": [],
+   "date": "2024-05-04",
+   "source": "wechat-mp",
+   "source_name": "公众号",
+   "author": "句子互动"
+  },
+  {
+   "id": "44230c562bd1",
+   "title": "句子互动需要什么样的人",
+   "url": "http://mp.weixin.qq.com/s?__biz=MzU3OTk2MzA1Nw==&mid=2247527076&idx=1&sn=76bc5bdb61e3f0a87e1499d06c7deedc&chksm=fd5c3b7aca2bb26c84dab48f54878b8e0b84ba502a8c3dc2942017e6b043e9e6dc5237723607#rd",
+   "summary": "",
+   "category": "句子互动官方",
+   "tags": [],
+   "date": "2024-04-12",
+   "source": "wechat-mp",
+   "source_name": "公众号",
+   "author": "句子互动"
   },
   {
    "id": "38eb95b0e9e6",
@@ -20681,138 +21165,6 @@
    "author": "句子互动"
   },
   {
-   "id": "acd4f28ffed8",
-   "title": "句子干货｜《母婴行业社群活动运营 SOP》",
-   "url": "http://mp.weixin.qq.com/s?__biz=MzU3OTk2MzA1Nw==&mid=2247544150&idx=1&sn=3dfeb64801984c1361079498d81a46ca&chksm=fd5c7c88ca2bf59eca4976381feb696a05d9da47889da5f74539c6e99f70e7bc167c375a8208#rd",
-   "summary": "共3子表，内容全面。",
-   "category": "句子互动官方",
-   "tags": [],
-   "date": "2023-09-07",
-   "source": "wechat-mp",
-   "source_name": "公众号",
-   "author": "句子互动"
-  },
-  {
-   "id": "f6be7be80d5c",
-   "title": "句子干货｜《22张活动执行表格》",
-   "url": "http://mp.weixin.qq.com/s?__biz=MzU3OTk2MzA1Nw==&mid=2247544136&idx=1&sn=dc6f71161c9bcb50eca60e2f39c128c4&chksm=fd5c7c96ca2bf580d0b7ca390414bb5b52a12f889e45609bc40c02cbf43085370fd043aeb7d5#rd",
-   "summary": "共22子表，内容全面。",
-   "category": "句子互动官方",
-   "tags": [],
-   "date": "2023-09-05",
-   "source": "wechat-mp",
-   "source_name": "公众号",
-   "author": "句子互动"
-  },
-  {
-   "id": "a6588187d9b2",
-   "title": "句子干货｜《长期社群规划全流程》",
-   "url": "http://mp.weixin.qq.com/s?__biz=MzU3OTk2MzA1Nw==&mid=2247543796&idx=1&sn=ea673509096d1e8064334b1c263b9d55&chksm=fd5c7a2aca2bf33ce06bf8e3f49da2fcc25ce87a28d838281205230f4e95b969bb219d9f12af#rd",
-   "summary": "共5子表，内容全面。",
-   "category": "句子互动官方",
-   "tags": [],
-   "date": "2023-08-29",
-   "source": "wechat-mp",
-   "source_name": "公众号",
-   "author": "句子互动"
-  },
-  {
-   "id": "e8565331c90d",
-   "title": "句子干货｜《在线教育项目全案运营》",
-   "url": "http://mp.weixin.qq.com/s?__biz=MzU3OTk2MzA1Nw==&mid=2247543645&idx=1&sn=47a551c3264c2fe17935c9581db2d149&chksm=fd5c7a83ca2bf395161a3788987d95adce2d21c3b3fffaf8cea66d2dacf262209e17d51c55ab#rd",
-   "summary": "共11子表，内容全面。",
-   "category": "句子互动官方",
-   "tags": [],
-   "date": "2023-08-24",
-   "source": "wechat-mp",
-   "source_name": "公众号",
-   "author": "句子互动"
-  },
-  {
-   "id": "53554dd0dd5f",
-   "title": "句子干货｜《电商30天工作流程表》",
-   "url": "http://mp.weixin.qq.com/s?__biz=MzU3OTk2MzA1Nw==&mid=2247543559&idx=1&sn=adcb9b000092904bfa88a6b48070f20e&chksm=fd5c7ad9ca2bf3cf6337302a1c55f7e740354bab194f3aa148c82710a19ef6a6481a6fa8d49c#rd",
-   "summary": "3子表。",
-   "category": "句子互动官方",
-   "tags": [],
-   "date": "2023-08-22",
-   "source": "wechat-mp",
-   "source_name": "公众号",
-   "author": "句子互动"
-  },
-  {
-   "id": "1b6e61ab6f12",
-   "title": "句子干货｜《连锁药店私域运营全流程》",
-   "url": "http://mp.weixin.qq.com/s?__biz=MzU3OTk2MzA1Nw==&mid=2247543405&idx=1&sn=795a0a52037b1f08c477bbe10d91b3de&chksm=fd5c7bb3ca2bf2a5410ec7ecc615cbe6946a544052acd5ad57999c03b8c5f9cda3f9d84ae84a#rd",
-   "summary": "",
-   "category": "句子互动官方",
-   "tags": [],
-   "date": "2023-08-17",
-   "source": "wechat-mp",
-   "source_name": "公众号",
-   "author": "句子互动"
-  },
-  {
-   "id": "7f8db8c5e821",
-   "title": "句子干货｜《电商私域运营一表全》",
-   "url": "http://mp.weixin.qq.com/s?__biz=MzU3OTk2MzA1Nw==&mid=2247543381&idx=1&sn=498186317548ba5c1e968fd37a9e9262&chksm=fd5c7b8bca2bf29d99993e2c3c6bbb27acc98bb81bb7f2f74d62367abb0839c52c90aec3b8cb#rd",
-   "summary": "11子表。",
-   "category": "句子互动官方",
-   "tags": [],
-   "date": "2023-08-15",
-   "source": "wechat-mp",
-   "source_name": "公众号",
-   "author": "句子互动"
-  },
-  {
-   "id": "5b714bd25f33",
-   "title": "句子干货｜《私域运营GMV拆解SOP》",
-   "url": "http://mp.weixin.qq.com/s?__biz=MzU3OTk2MzA1Nw==&mid=2247543250&idx=1&sn=b6cb722f1b041c480fe588a8a2a0a779&chksm=fd5c780cca2bf11a7800ee7f1cee954b70d1c0f085b0ad821ea6c5b01f401cb6a474f845a101#rd",
-   "summary": "",
-   "category": "句子互动官方",
-   "tags": [],
-   "date": "2023-08-10",
-   "source": "wechat-mp",
-   "source_name": "公众号",
-   "author": "句子互动"
-  },
-  {
-   "id": "c5b5af3a07b5",
-   "title": "句子干货｜《电商私域项目运营Sop》",
-   "url": "http://mp.weixin.qq.com/s?__biz=MzU3OTk2MzA1Nw==&mid=2247543086&idx=1&sn=b40faee5bd57feaea85058c98b64b862&chksm=fd5c78f0ca2bf1e6d176376fccc295a9cc8cef0ae28b5d9f3319a27c4dab8a01a7f1c1ad5dfc#rd",
-   "summary": "今日分享干货：《电商私域项目运营Sop》共27子表。",
-   "category": "句子互动官方",
-   "tags": [],
-   "date": "2023-08-08",
-   "source": "wechat-mp",
-   "source_name": "公众号",
-   "author": "句子互动"
-  },
-  {
-   "id": "477e78e8bc4f",
-   "title": "微信封杀营销外挂：我对微信生态的思考",
-   "url": "http://mp.weixin.qq.com/s?__biz=MzU3OTk2MzA1Nw==&mid=2247531241&idx=1&sn=5ec7775bcfebe3954e2e3779c03f041d&chksm=fd5c2b37ca2ba22145e0ece107c8ef59fd05dd5d025a7d24eb7d7b2eaa4b209cfe3ffb4bdd9c#rd",
-   "summary": "AI比你更聪明，但是你可以比他更善良",
-   "category": "句子互动官方",
-   "tags": [],
-   "date": "2023-03-14",
-   "source": "wechat-mp",
-   "source_name": "公众号",
-   "author": "句子互动"
-  },
-  {
-   "id": "916ea8644c86",
-   "title": "Wechaty受邀参加GAIDC开源集市，邀请你一起来！",
-   "url": "http://mp.weixin.qq.com/s?__biz=MzU3OTk2MzA1Nw==&mid=2247528792&idx=1&sn=a45f4209db5b4ce63188746de98cccd1&chksm=fd5c2086ca2ba990aaeab5724db2995159fcf1987283cd9f90eb8ab1137142bfab5473fd6bc7#rd",
-   "summary": "为对话而生的 ChatGPT 。",
-   "category": "句子互动官方",
-   "tags": [],
-   "date": "2023-02-22",
-   "source": "wechat-mp",
-   "source_name": "公众号",
-   "author": "句子互动"
-  },
-  {
    "id": "aad31dab86c9",
    "title": "写在句子互动的 2023 年",
    "url": "https://rui.juzi.bot/thought/2023-01-31-juzibot-2023.html",
@@ -20837,18 +21189,6 @@
     "private-domain-operations",
     "chatbot"
    ]
-  },
-  {
-   "id": "44230c562bd1",
-   "title": "句子互动需要什么样的人",
-   "url": "http://mp.weixin.qq.com/s?__biz=MzU3OTk2MzA1Nw==&mid=2247527076&idx=1&sn=76bc5bdb61e3f0a87e1499d06c7deedc&chksm=fd5c3b7aca2bb26c84dab48f54878b8e0b84ba502a8c3dc2942017e6b043e9e6dc5237723607#rd",
-   "summary": "",
-   "category": "句子互动官方",
-   "tags": [],
-   "date": "2023-01-31",
-   "source": "wechat-mp",
-   "source_name": "公众号",
-   "author": "句子互动"
   },
   {
    "id": "ae414deef656",
@@ -20937,18 +21277,6 @@
    }
   },
   {
-   "id": "89d613aa8a6a",
-   "title": "联合全网数十家企业、KOL、资深操盘手，共同打造的线上直播活动，每周定期组织线上直播分享、交流沙龙",
-   "url": "http://mp.weixin.qq.com/s?__biz=MzU3OTk2MzA1Nw==&mid=2247513670&idx=1&sn=ed4c08b85a35a9273f3631797eb7bb81&chksm=fd5ce798ca2b6e8e56502237a9fde77ab6211ba8c0d7ebafb12be1c4329d27f3898a21cc1deb#rd",
-   "summary": "敖德萨多",
-   "category": "句子互动官方",
-   "tags": [],
-   "date": "2022-10-14",
-   "source": "wechat-mp",
-   "source_name": "公众号",
-   "author": "句子互动"
-  },
-  {
    "id": "56e2b20eecfd",
    "title": "Helion Needs You",
    "url": "https://blog.samaltman.com/helion-needs-you",
@@ -20985,18 +21313,6 @@
     "keep": false,
     "at": "2026-07-21"
    }
-  },
-  {
-   "id": "46c1fb38c39d",
-   "title": "门店企业如何做私域？这可能是目前最全的操作手册[5]",
-   "url": "http://mp.weixin.qq.com/s?__biz=MzU3OTk2MzA1Nw==&mid=2247490463&idx=1&sn=a8723e5f7b9510735fa8a958b78e2542&chksm=fd5f4a41ca28c35785885d6b68af5138f930cef2690df2ee27bb1e08ef3a87d856259f00bf5b#rd",
-   "summary": "过去4篇，我们解读了门店私域运营的主线路、3个基础建设、客户沉淀、客户运营，今天我们开始解读用户转化部分。",
-   "category": "句子互动官方",
-   "tags": [],
-   "date": "2022-03-23",
-   "source": "wechat-mp",
-   "source_name": "公众号",
-   "author": "句子互动"
   },
   {
    "id": "cef4c3eb3949",
@@ -21085,18 +21401,6 @@
     "scrm",
     "private-domain-operations"
    ]
-  },
-  {
-   "id": "d324b0664b0b",
-   "title": "盘点「电商直播带货」的私域引流策略",
-   "url": "http://mp.weixin.qq.com/s?__biz=MzU3OTk2MzA1Nw==&mid=2247489659&idx=1&sn=bce6b6d6ec04a4a6cf6d74777bd90623&chksm=fd5f49a5ca28c0b3a77e491c18a4fa74adf32a1216c912dce50b9cbbaa5853084d2c25def343#rd",
-   "summary": "句子导语：直播带货已经成为几乎每一个品牌必备的玩法，玩家的增多导致竞争越来越激烈，不少企业开始考虑将直播带货",
-   "category": "句子互动官方",
-   "tags": [],
-   "date": "2021-12-22",
-   "source": "wechat-mp",
-   "source_name": "公众号",
-   "author": "句子互动"
   },
   {
    "id": "9fc1477a5efd",
