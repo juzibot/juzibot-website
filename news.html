@@ -267,13 +267,17 @@
     { k: 'year', label: '今年', cut: new Date().getFullYear() + '-01-01' }
   ];
 
-    // selfref: url 指向本站 → 不出「读原文」(与 Python 侧 selfref_item 同一判据)。
-    // 产品动态的 url 是自家营销页、company 条目是 #c- 锚点, 点「读原文」跳回本站很怪。
-    function selfRef(u) {
+    // selfref: url 指向本站 → 不出「读原文」。产品动态的 url 是自家营销页、company 条目
+    // 是 #c- 锚点, 点「读原文」跳回本站很怪。
+    // **判据不在这里算** —— 管线用 selfref_item() 算好, 随 news-data 下发 it.selfref。
+    // 曾经这里拿 location.host 自己比, 注释还写着「与 Python 侧同一判据」: 生产站上恰好
+    // 一致, stage 预览(IP:端口)上就分叉——预渲染正确隐藏, JS 一重渲按钮又冒出来。
+    // 兜底只认「有没有协议头」, 绝不再比 host: 比 host 正是分叉的根源。
+    function selfRef(it) {
+      if (it && typeof it.selfref === 'boolean') return it.selfref;
+      var u = it && it.url;
       if (!u) return true;
-      if (!/^https?:\/\//i.test(u)) return true;          // 相对路径/锚点 = 本站
-      try { return new URL(u).host.replace(/^www\./, '') === location.host.replace(/^www\./, ''); }
-      catch (e) { return false; }
+      return !/^https?:\/\//i.test(u);                    // 相对路径/锚点 = 本站
     }
   function cardHTML(it) {
     var icon = ICON[it.source] || 'fa-solid fa-newspaper';
@@ -294,7 +298,7 @@
       '<span class="nc-src">' + esc(it.author) + '</span>' +
       '<span class="nc-actions">' +
       '<button type="button" class="nc-ask" data-t="' + esc(title) + '"><i class="fa-solid fa-wand-magic-sparkles"></i>问句子</button>' +
-      (selfRef(it.url) ? '' : '<a class="nc-read" href="' + safeHref(it.url) + '" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>') +
+      (selfRef(it) ? '' : '<a class="nc-read" href="' + safeHref(it.url) + '" target="_blank" rel="noopener">读原文<i class="fa-solid fa-arrow-up-right-from-square"></i></a>') +
       '</span></div></article>';
   }
 

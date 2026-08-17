@@ -1512,7 +1512,9 @@ def test_selfref_read_original_all_surfaces():
     for page, cls in (("news.html", "nc-read"), ("news-c.html", "fd-link")):
         h = (ROOT / page).read_text(encoding="utf-8")
         check(f"{page}: JS 有 selfRef", "function selfRef(" in h)
-        m = re.search(rf"\(selfRef\(it\.url\) \? '' : '<a class=\"{cls}\"", h)
+        # 不写死实参形态: 2026-08-16 把判据收进数据后由 selfRef(it.url) 变成 selfRef(it),
+        # 旧断言连带失败。真正要钉的是「按钮被 selfRef 包住」, 不是它怎么取参。
+        m = re.search(rf"\(selfRef\([^)]*\) \? '' : '<a class=\"{cls}\"", h)
         check(f"{page}: {cls} 按钮真被条件包住", bool(m))
 
 
@@ -1779,6 +1781,38 @@ def test_company_source_clean_detail_template():
     check("rui-blog 仍保留导读框", 'class="dp-notice"' in bhtml)
     check("rui-blog 仍写着「首发于」", "首发于" in bhtml)
     check("rui-blog 写着「看原发布」", "看原发布" in bhtml)
+
+
+def test_selfref_single_source_of_truth():
+    """「读原文」该不该出, 只能由管线算 —— 两页 JS 不许再自己比 host。
+
+    栽的过程: 两页内联 JS 各写了一份 selfRef(), 拿 `location.host` 与条目 url 比,
+    注释还写着「与 Python 侧 selfref_item 同一判据」。生产站上恰好一致所以看不出,
+    **stage 预览(IP:端口)上直接分叉**——预渲染按 SITE_BASE 正确隐藏了按钮, 一旦切区/
+    筛选/加载更多触发 JS 重渲, product 与 company 条目又把「读原文」放出来, company
+    点出去落到生产站上的合成 #c- 锚点, 那里根本没有可读的原文(Bugbot PR#103)。
+
+    现在判据收进数据: _slim() 用 selfref_item() 算好写进 it.selfref, JS 只读不算。
+    这条测试钉三件事——①标志位真的进了内联数据 ②值与 Python 判据一致
+    ③两页 JS 里不许再出现 location.host 比对(防有人"顺手优化"时把分叉写回来)。"""
+    # ① + ②: 自家 url 与外部 url 各造一条, 过一遍真实的注入路径
+    own = {"id": "a1", "source": "product", "title": "自家", "url": B.SITE_BASE + "/products/x.html",
+           "date": "2026-08-01", "summary": ""}
+    ext = {"id": "b2", "source": "industry", "title": "外部", "url": "https://example.com/x",
+           "date": "2026-08-01", "summary": ""}
+    anchor = {"id": "c3", "source": "company", "title": "月报", "url": "#c-2026-07",
+              "date": "2026-07-31", "summary": ""}
+    for it in (own, ext, anchor):
+        check(f"selfref_item 判据: {it['source']}",
+              B.selfref_item(it) == (it["source"] != "industry"))
+
+    # ③ 两页 JS 不得再用 location.host 做本站判断
+    for f in ("news.html", "news-c.html"):
+        js = (ROOT / f).read_text(encoding="utf-8")
+        seg = js[js.find("function selfRef"): js.find("function selfRef") + 700]
+        check(f"{f} selfRef 读 it.selfref", "it.selfref" in seg)
+        check(f"{f} selfRef 不比 location.host", "location.host" not in seg)
+        check(f"{f} 调用点传整条而非 url", "selfRef(it)" in js and "selfRef(it.url)" not in js)
 
 
 def main():
