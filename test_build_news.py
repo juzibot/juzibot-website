@@ -1815,6 +1815,35 @@ def test_selfref_single_source_of_truth():
         check(f"{f} 调用点传整条而非 url", "selfRef(it)" in js and "selfRef(it.url)" not in js)
 
 
+def test_askbar_ctx_kind_single_source():
+    """上下文类型的说法与追问只能有一处定义(Bugbot PR#103 cb70c53)。
+
+    栽的过程: askReal 就地写了个 `product ? '产品' : workforce ? 'AI 员工' : '页面'`
+    的三目, suggest 则**完全不看 type**、一律给产品向追问。动态页卡片传的是
+    type:'article' —— 于是问候说的是文章标题, 追问芯片却在问「它和普通方案有什么
+    区别」, 送给模型的前缀还把文章说成「页面」。同一个 type 被两处各自解释。
+
+    现在收成 CTX_LABEL / CTX_QS 两张表。这条钉四件: 表里有 article、askReal 不许
+    再就地三目、suggest 必须按 type 取、全站在用的 type 都得有说法。"""
+    js = (ROOT / "assets" / "askbar.js").read_text(encoding="utf-8")
+    check("有 CTX_LABEL 表", "var CTX_LABEL" in js)
+    check("表里认 article", re.search(r"CTX_LABEL\s*=\s*\{[^}]*article:", js) is not None)
+    check("askReal 从表取标签", "CTX_LABEL[c.type]" in js)
+    check("askReal 不再就地三目",
+          "c.type === 'product' ? '产品'" not in js)
+    check("suggest 按 type 取追问", "CTX_QS[c.type]" in js)
+    # 全站真实在用的 type 都要在表里有说法, 否则又会静默落回「页面」
+    used = set()
+    for f in ROOT.glob("*.html"):
+        used |= set(re.findall(r"type: *'([a-z]+)'", f.read_text(encoding="utf-8")))
+    for sub in ("products", "workforce"):
+        for f in (ROOT / sub).glob("*.html"):
+            used |= set(re.findall(r"type: *'([a-z]+)'", f.read_text(encoding="utf-8")))
+    labeled = set(re.findall(r"(\w+):\s*'[^']+'", re.search(r"CTX_LABEL\s*=\s*\{([^}]*)\}", js).group(1)))
+    miss = used - labeled
+    check(f"在用的 type 都有说法(用到 {sorted(used)})", not miss, f"缺: {sorted(miss)}")
+
+
 def main():
     tests = [v for k, v in sorted(globals().items()) if k.startswith("test_")]
     for fn in tests:

@@ -139,6 +139,18 @@
   // 关闭时清空: 既不污染后续提问, 上下文也真的送进请求。判据分散是这个库栽过五次的坑。
   var oneShot = null;
   function pageCtx() { var c = oneShot || window.PAGE_CTX; return (c && c.entity) ? c : null; }
+
+  // 上下文类型的人话说法与追问, **只此一处**(Bugbot PR#103 cb70c53)。
+  // 原先 askReal 就地写了个 product/workforce/其余=「页面」的三目, suggest 则完全不看
+  // type、一律给产品向追问 —— 动态页卡片传的是 type:'article', 于是问候说的是文章标题,
+  // 追问却在问「它和普通方案有什么区别」, 送给模型的前缀还把文章说成「页面」。
+  // 判据分散第 N+2 次: 同一个 type 有两处各自解释, 收进这张表, 加 type 时只改这里。
+  var CTX_LABEL = { product: '产品', workforce: 'AI 员工', article: '文章', page: '页面' };
+  var CTX_QS = {
+    // 文章场景读者刚看完一段内容, 该问的是内容本身与它跟句子的关系, 不是报价与接入周期
+    article: ['这篇讲了什么？', '句子互动在这块做了什么？', '能落地到我的场景吗？', '预约一场演示']
+  };
+  var CTX_QS_DEFAULT = ['它和普通方案有什么区别？', '接入要多久？', '能接我的渠道吗？', '预约一场演示'];
   function scroll() { body.scrollTop = body.scrollHeight; }
 
   function open(ctxOverride) {
@@ -165,7 +177,7 @@
   }
   function suggest() {
     var c = pageCtx();
-    var qs = c ? ['它和普通方案有什么区别？', '接入要多久？', '能接我的渠道吗？', '预约一场演示']
+    var qs = c ? ((c.type && CTX_QS[c.type]) || CTX_QS_DEFAULT)
                : ['和普通客服机器人有什么区别？', '接入要多久？', '数据安全吗？', '有哪些 AI 员工？'];
     var wrap = el('div', 'jzab-chips');
     qs.forEach(function (q) { var b = el('button', 'jzab-chip', esc(q)); b.onclick = function () { sendText(q); }; wrap.appendChild(b); });
@@ -235,7 +247,7 @@
     busy = true;
     var t = typing(), note, nt = setTimeout(function () { note = el('div', 'jzab-wait', '正在问真实 AI 客服，可能要十几秒…'); body.appendChild(note); scroll(); }, reduce ? 800 : 3200);
     var c = pageCtx();
-    var msg = c ? ('【我正在看' + (c.type === 'product' ? '产品' : c.type === 'workforce' ? 'AI 员工' : '页面') + '：' + (c.title || c.entity) + '】' + v) : v;
+    var msg = c ? ('【我正在看' + (CTX_LABEL[c.type] || '页面') + '：' + (c.title || c.entity) + '】' + v) : v;
     var done = function () { clearTimeout(nt); t.remove(); if (note) note.remove(); };
     fetch(API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ sessionId: SID, message: msg }) })
       .then(function (r) { return r.ok ? r.json() : (r.status === 429 ? { code: -429 } : Promise.reject(0)); })
