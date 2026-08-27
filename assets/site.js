@@ -24,7 +24,7 @@
     '        <a href="' + REL + 'products/miaodong.html"><div class="d-title">句子秒懂 · 大脑</div><div class="d-desc">业务人员不写代码也能搭 Agent</div></a>' +
     '        <a href="' + REL + 'products/shouhu.html"><div class="d-title">句子守护 · 主管</div><div class="d-desc">Agent 上线前测过、上线后管着</div></a>' +
     '        <a href="' + REL + 'products/canmou.html"><div class="d-title">句子问数 · 参谋</div><div class="d-desc">一句话查所有业务数据</div></a>' +
-    '        <a href="' + REL + 'products/dongxing.html"><div class="d-title">句子懂行 · 记忆</div><div class="d-desc">知识工程，散乱知识炼成可检索资产</div></a>' +
+    '        <a href="' + REL + 'products/dongxing.html"><div class="d-title">句子懂行 · 记忆</div><div class="d-desc">把资料沉淀成 AI 可用的组织记忆</div></a>' +
     '        <a href="' + REL + 'products/miaohui.html"><div class="d-title">句子秒回 · 工作台</div><div class="d-desc">11 个 IM 通道汇成一个工作台</div></a>' +
     '        <a href="' + REL + 'products/cli.html"><div class="d-title">句子 CLI · 手</div><div class="d-desc">操作一切人用软件的执行层</div></a>' +
     '        <a href="' + REL + 'products/zhizao.html"><div class="d-title">句子制造 · 地基</div><div class="d-desc">补齐客户数字化基建，一客一环境</div></a>' +
@@ -53,7 +53,7 @@
     '  </div>' +
     '  <div class="nav-right">' +
     '    <a class="nav-cta" style="cursor:pointer" onclick="openContact(\'导航·联系我们\')">联系我们 →</a>' +
-    '    <a href="https://az-bg.juzibot.com/auth/register" class="nav-login">登录 / 注册</a>' +
+    '    <a href="https://az-bg.juzibot.com/auth/register" class="nav-login" data-track-name="登录 / 注册" data-track-source="导航·登录注册" data-track-area="顶部导航栏">登录 / 注册</a>' +
     '  </div>' +
     '  <button class="nav-burger" aria-label="菜单" onclick="this.closest(\'.nav\').classList.toggle(\'menu-open\')">' +
     '    <svg class="bg-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>' +
@@ -125,9 +125,13 @@
     var f = document.getElementById('site-footer'); if (f) f.outerHTML = FOOTER;
     document.body.insertAdjacentHTML('beforeend', CONTACT);
     wire();
+    // DataFinder 埋点层：先于 askbar 加载，保证对话问题和 CTA 都能被记录。
+    if (!window.JZAnalytics && !document.querySelector('script[data-jz-analytics]')) {
+      var a = document.createElement('script'); a.src = REL + 'assets/analytics.js'; a.defer = true; a.setAttribute('data-jz-analytics', '1'); document.body.appendChild(a);
+    }
     // 全站对话层：加载 askbar.js（AI-native 大改核心）
     if (!window.__jzab && !document.querySelector('script[data-jzab]')) {
-      var s = document.createElement('script'); s.src = REL + 'assets/askbar.js?v=5cfb8fa0'; s.defer = true; s.setAttribute('data-jzab', '1'); document.body.appendChild(s);
+      var s = document.createElement('script'); s.src = REL + 'assets/askbar.js?v=bfef63b6'; s.defer = true; s.setAttribute('data-jzab', '1'); document.body.appendChild(s);
     }
   }
 
