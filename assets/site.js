@@ -127,7 +127,7 @@
     wire();
     // DataFinder 埋点层：先于 askbar 加载，保证对话问题和 CTA 都能被记录。
     if (!window.JZAnalytics && !document.querySelector('script[data-jz-analytics]')) {
-      var a = document.createElement('script'); a.src = REL + 'assets/analytics.js'; a.defer = true; a.setAttribute('data-jz-analytics', '1'); document.body.appendChild(a);
+      var a = document.createElement('script'); a.src = REL + 'assets/analytics.js?v=d3e06b22'; a.defer = true; a.setAttribute('data-jz-analytics', '1'); document.body.appendChild(a);
     }
     // 全站对话层：加载 askbar.js（AI-native 大改核心）
     if (!window.__jzab && !document.querySelector('script[data-jzab]')) {

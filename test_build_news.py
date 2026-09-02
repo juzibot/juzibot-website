@@ -1323,6 +1323,11 @@ def test_assets_are_cache_busted():
     # 版本戳必须来自内容, 不能是写死的常量 —— 写死就等于回到"靠人记得改"
     stamp = (ROOT / "stamp_assets.py").read_text(encoding="utf-8")
     check("版本戳由内容哈希算出", "hashlib.sha1" in stamp and "read_bytes()" in stamp)
+    check("analytics.js 纳入打戳资源", '"assets/analytics.js"' in stamp)
+    site_js = (ROOT / "assets" / "site.js").read_text(encoding="utf-8")
+    analytics_h = __import__("hashlib").sha1((ROOT / "assets" / "analytics.js").read_bytes()).hexdigest()[:8]
+    check("site.js 动态加载 analytics.js 带内容戳",
+          f"assets/analytics.js?v={analytics_h}" in site_js)
 
 
 # ---------------------------------------------------------------- 38

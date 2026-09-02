@@ -34,7 +34,7 @@ import re
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent
-ASSETS = ("assets/site.js", "assets/site.css", "assets/askbar.js")
+ASSETS = ("assets/site.js", "assets/site.css", "assets/askbar.js", "assets/analytics.js")
 # 只处理**手工维护的页面**: zh/en 是 301 跳转桩(没有资源引用), news/ 与 data/ 是生成物
 SKIP_PREFIX = ("zh/", "en/", "news/", "data/", "node_modules/")
 
@@ -69,20 +69,23 @@ def run(check_only: bool) -> int:
         return 1
     stale, fixed = [], 0
 
-    # site.js 动态注入 askbar.js: site.js 自身被 HTML 引用链打戳, 但它里面的
-    # s.src = REL + 'assets/askbar.js' 是运行时拼接, 不在这条链上。改成带 v= 的字符串,
+    # site.js 动态注入 askbar.js / analytics.js: site.js 自身被 HTML 引用链打戳,
+    # 但运行时拼接的二级脚本不在这条链上。改成带 v= 的字符串,
     # site.js 内容哈希变化 → HTML 侧的引用戳跟着变 → 老访客拿到新 site.js,
-    # 它加载的 askbar.js 也就自动带上版本戳(Bugbot PR#103)。
+    # 它加载的二级脚本也就自动带上版本戳(Bugbot PR#103)。
     # ***必须在 HTML 页面之前处理***: site.js 内容变了之后, HTML 页才能拿到新的 site.js 哈希;
     # 顺序反了的话, HTML 页打的 site.js 戳是过期值(Bugbot PR#103 2a2ee4e)。
     site_js = ROOT / "assets" / "site.js"
     sj = site_js.read_text(encoding="utf-8")
-    askbar_h = hashes.get("assets/askbar.js", "")
-    if askbar_h:
-        # 匹配 'assets/askbar.js' 或已带旧戳的 'assets/askbar.js?v=xxxxxxxx', 后跟引号
+    for nested in ("assets/askbar.js", "assets/analytics.js"):
+        nested_h = hashes.get(nested, "")
+        if not nested_h:
+            continue
+        nested_name = re.escape(nested)
+        # 匹配 'assets/<name>.js' 或已带旧戳的 'assets/<name>.js?v=xxxxxxxx', 后跟引号
         sj2 = re.sub(
-            r"(\bassets/askbar\.js)(\?v=[0-9a-f]+)?('|\")",
-            rf"\1?v={askbar_h}\3",
+            rf"(\b{nested_name})(\?v=[0-9a-f]+)?('|\")",
+            rf"\1?v={nested_h}\3",
             sj,
         )
         if sj2 != sj:
@@ -92,6 +95,7 @@ def run(check_only: bool) -> int:
                 # site.js 内容变了 → 重算它的哈希供 HTML 页使用
                 hashes["assets/site.js"] = hashlib.sha1(sj2.encode()).hexdigest()[:8]
             stale.append("assets/site.js")
+            sj = sj2
 
     for p, rel in _pages():
         t = p.read_text(encoding="utf-8")
