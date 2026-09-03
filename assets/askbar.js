@@ -19,7 +19,7 @@
     miaohui:  { nm: '句子秒回 · 工作台', ds: '11 个 IM 通道汇成一个工作台', ic: 'fa-comments', href: P('miaohui.html') },
     miaodong: { nm: '句子秒懂 · 大脑', ds: '不写代码也能搭 Agent', ic: 'fa-diagram-project', href: P('miaodong.html') },
     shouhu:   { nm: '句子守护 · 主管', ds: '上线前测过、上线后管着', ic: 'fa-shield-halved', href: P('shouhu.html') },
-    canmou:   { nm: '句子问数 · 参谋', ds: '一句话查所有业务数据', ic: 'fa-chart-line', href: P('canmou.html') },
+    mio:      { nm: 'Mio · AI 办公坐席', ds: '每人一个 AI，一句话搞定七类活', ic: 'fa-wand-magic-sparkles', href: P('mio.html') },
     dongxing: { nm: '句子懂行 · 记忆', ds: '资料入库、问题检索、缺口回流', ic: 'fa-book-bookmark', href: P('dongxing.html') },
     cli:      { nm: '句子 CLI · 手', ds: '操作一切人用软件的执行层', ic: 'fa-terminal', href: P('cli.html') },
     zhizao:   { nm: '句子制造 · 地基', ds: '补齐数字化基建，一客一环境', ic: 'fa-cubes', href: P('zhizao.html') },
@@ -44,10 +44,11 @@
     { re: /(geo|全域营销|被\s*ai\s*推荐|豆包|deepseek|ai\s*答案|种草)/i, a: 'GEO 优化师专管品牌在豆包/DeepSeek 等 AI 答案里的位置：GEO 监测诊断、内容生产、渠道发布，公域意向自动沉到企微接着复购。', cards: ['geo'] },
     { re: /(销售|获客|线索|成交|转化|直播)/i, a: 'AI 销售从直播搬家、私域承接到漏斗跟进，建联到首单成交全程接管，按置信度三档执行。', cards: ['sales'] },
     { re: /(客服|售后|投诉|工单|接待)/i, a: 'AI 客服售前到售后全链路接得住，5 年 BadCase 沉淀，意图+情绪识别，必要时无缝转人工。', cards: ['service'] },
-    { re: /(数据|报表|图表|问数|分析|看板|bi)/i, a: '句子问数：一句话查公司所有数据，秒级出图表，可逐层追问钻取，异常主动预警——不写 SQL、不约 BI。', cards: ['canmou'] },
+    { re: /(mio|办公|写方案|写报告|周报|ppt|海报|查资料|调研|坐席)/i, a: 'Mio 是给每个员工配的 AI 办公坐席：写方案、做 PPT、理数据、查资料，一句话布置，交回能直接验收的成果。企业统一开通，按坐席计费。', cards: ['mio'] },
+    { re: /(数据|报表|图表|问数|分析|看板|bi)/i, a: 'Mio 接着企业自己的数据：一句话问经营数据，秒级出图表，一层层追问到底，答案带出处；想盯的指标一句话搭成看板，异动主动提醒。不写 SQL、不约 BI。', cards: ['mio'] },
     { re: /(知识|文档|资料|检索|出处|知识库)/i, a: '句子懂行是 AI 员工的记忆：素材进来先变成可维护、可追溯的组织记忆；问题进来先看绑定范围，再按出处、片段、原文和表结构逐层取证，答不上就回流成缺口待办。', cards: ['dongxing'] },
     { re: /(演示|预约|联系|试用|demo|怎么买|顾问)/i, a: '好的，我帮你接一下——留个联系方式，工作日当天会有顾问带着你所在行业的真实场景做演示。', cards: [], lead: true },
-    { re: /(产品|有哪些|功能|能力|矩阵)/i, a: '句子有 7 个产品组成 AI 员工的基建：秒回(工作台)、秒懂(大脑)、守护(主管)、问数(参谋)、懂行(记忆)、CLI(手)、制造(地基)。点开看：', cards: ['miaohui', 'miaodong', 'shouhu', 'canmou'] },
+    { re: /(产品|有哪些|功能|能力|矩阵)/i, a: '句子有 7 个产品组成 AI 员工的基建：秒回(工作台)、Mio(办公坐席)、秒懂(大脑)、守护(主管)、懂行(记忆)、CLI(手)、制造(地基)。点开看：', cards: ['miaohui', 'mio', 'miaodong', 'shouhu'] },
     { re: /(员工|岗位|招聘|团队|岗)/i, a: '句子的 AI 员工已在销售、客服、导购、理财顾问、社工/调解、HR 等岗位真实当班。看看他们：', cards: ['sales', 'service', 'finance', 'government'] },
   ];
 

@@ -23,7 +23,7 @@
     '      <div class="dropdown wide">' +
     '        <a href="' + REL + 'products/miaodong.html"><div class="d-title">句子秒懂 · 大脑</div><div class="d-desc">业务人员不写代码也能搭 Agent</div></a>' +
     '        <a href="' + REL + 'products/shouhu.html"><div class="d-title">句子守护 · 主管</div><div class="d-desc">Agent 上线前测过、上线后管着</div></a>' +
-    '        <a href="' + REL + 'products/canmou.html"><div class="d-title">句子问数 · 参谋</div><div class="d-desc">一句话查所有业务数据</div></a>' +
+    '        <a href="' + REL + 'products/mio.html"><div class="d-title">Mio · AI 办公坐席</div><div class="d-desc">每人一个 AI，一句话搞定七类活</div></a>' +
     '        <a href="' + REL + 'products/dongxing.html"><div class="d-title">句子懂行 · 记忆</div><div class="d-desc">把资料沉淀成 AI 可用的组织记忆</div></a>' +
     '        <a href="' + REL + 'products/miaohui.html"><div class="d-title">句子秒回 · 工作台</div><div class="d-desc">11 个 IM 通道汇成一个工作台</div></a>' +
     '        <a href="' + REL + 'products/cli.html"><div class="d-title">句子 CLI · 手</div><div class="d-desc">操作一切人用软件的执行层</div></a>' +
@@ -70,7 +70,7 @@
     '        <li><a href="' + REL + 'products/miaohui.html">句子秒回 · 工作台</a></li>' +
     '        <li><a href="' + REL + 'products/miaodong.html">句子秒懂 · 大脑</a></li>' +
     '        <li><a href="' + REL + 'products/shouhu.html">句子守护 · 主管</a></li>' +
-    '        <li><a href="' + REL + 'products/canmou.html">句子问数 · 参谋</a></li>' +
+    '        <li><a href="' + REL + 'products/mio.html">Mio · AI 办公坐席</a></li>' +
     '        <li><a href="' + REL + 'products/dongxing.html">句子懂行 · 记忆</a></li>' +
     '        <li><a href="' + REL + 'products/cli.html">句子 CLI · 手</a></li>' +
     '        <li><a href="' + REL + 'products/zhizao.html">句子制造 · 地基</a></li>' +

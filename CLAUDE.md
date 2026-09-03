@@ -47,7 +47,7 @@ When adding a workforce page, the fastest correct path is to **copy an existing 
 ## Product & role vocabulary
 
 Seven products, each with a body-part metaphor — use these exact names in copy:
-秒回·工位、秒懂·大脑、守护·主管、参谋·参谋（句子问数）、智库·记忆、CLI·手、智造·地基。
+秒回·工作台、Mio·AI 办公坐席（原「句子问数」，2026-09 改名，页面 `products/mio.html`，旧 `canmou.html` 只留跳转桩）、秒懂·大脑、守护·主管、懂行·记忆、CLI·手、制造·地基。
 Seven AI workforce roles: 销售（sales）、导购（marketing）、客服（service）、社工/调解员（government）、理财顾问（finance）、HR（hr）、GEO 优化师（geo）. GEO 优化师 is the only one without an "AI" prefix — it's framed as "AI 时代的 SEO"（生成式引擎优化）, deliberately standing out in the menu.
 
 ## Copy & naming rules
