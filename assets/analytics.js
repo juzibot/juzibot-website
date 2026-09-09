@@ -322,12 +322,14 @@
     if (now - lastQrAt < 500) return;
     lastQrAt = now;
     extra = extra || {};
-    var surface = extra.qr_surface || '企业微信二维码弹窗';
-    trackButton('企业微信二维码曝光', source || extra.trigger_source || surface, merge({
+    var surface = extra.qr_surface || '联系二维码弹窗';
+    trackButton('QRShow', source || extra.trigger_source || surface, merge({
       button_area: surface,
-      qr_surface: extra.qr_surface || '企业微信二维码弹窗',
+      qr_surface: extra.qr_surface || '联系二维码弹窗',
       trigger_source: source || extra.trigger_source || '',
-      exposure_target: '企业微信二维码'
+      exposure_target: '联系二维码',
+      qr_action: 'QRShow',
+      contact_surface: 'contact_qr_modal'
     }, extra));
   }
 
@@ -392,7 +394,7 @@
     var wasOpen = modal.classList.contains('open');
     var mo = new MutationObserver(function () {
       var open = modal.classList.contains('open');
-      if (open && !wasOpen) trackQrExposure(modal.__jzQrSource || '企业微信二维码弹窗');
+      if (open && !wasOpen) trackQrExposure(modal.__jzQrSource || '联系二维码弹窗');
       wasOpen = open;
     });
     mo.observe(modal, { attributes: true, attributeFilter: ['class'] });
