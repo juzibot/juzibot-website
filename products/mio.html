@@ -19,7 +19,7 @@
   .crumbs a:hover{color:var(--blue)}
   .crumbs .sep{color:var(--line)}
   .crumbs .here{color:var(--ink-2);font-weight:650}
-  .ph-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.06fr);gap:clamp(34px,3.6vw,52px);align-items:center}
+  .ph-grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.22fr);gap:clamp(28px,2.8vw,44px);align-items:center}
   .ph h1{font-size:clamp(34px,5vw,64px);font-weight:850;letter-spacing:-.04em;line-height:1.12;
     max-width:20ch;word-break:keep-all;text-wrap:balance;margin-bottom:clamp(14px,2vw,24px)}
   .ph h1 .accent{color:var(--blue)}
@@ -30,10 +30,15 @@
   .mio-brand img{width:40px;height:40px;border-radius:50%;box-shadow:0 6px 16px -8px rgba(67,56,202,.55)}
   .mio-brand .nm{font-size:15px;font-weight:800;letter-spacing:-.01em}
   .mio-brand .nm small{display:block;font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.08em;color:var(--ink-3);margin-top:2px}
-  .mio-hero-img{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:var(--radius);background:#F6F8FE;
+  .ph-art{position:relative;display:flex;align-items:center;min-width:0;overflow:hidden;border-radius:var(--radius)}
+  .ph-art::after{content:"";position:absolute;top:0;right:0;width:30%;height:9%;background:linear-gradient(90deg,#fbfdff,#f8fbff);pointer-events:none;z-index:2}
+  .mio-hero-img{display:block;width:100%;height:auto;aspect-ratio:8/5;object-fit:contain;border:1px solid var(--line);border-radius:var(--radius);background:#F6F8FE;
     box-shadow:0 1px 2px rgba(14,20,48,.05),0 40px 80px -30px rgba(67,56,202,.35),0 12px 24px -12px rgba(14,20,48,.12)}
-  /* 桌面端录屏往右伸进页边距，最多 72px，离屏幕边至少留 28px */
-  @media(min-width:981px){.mio-hero-img{width:calc(100% + min(72px, max(var(--gut), (100vw - var(--max)) / 2) - 28px));max-width:none}}
+  /* 桌面端动效向右伸进页边距，放大产品界面，平衡左侧文字量 */
+  @media(min-width:981px){
+    .ph-grid{margin-right:calc(-1 * min(124px, max(0px, (100vw - var(--max)) / 2 - 24px)))}
+    .mio-hero-img{max-width:none}
+  }
   @media(max-width:980px){
     .ph-grid{grid-template-columns:1fr;gap:clamp(32px,6vw,48px)}
     .ph-art{order:2}
@@ -51,7 +56,18 @@
   .pcard .ico{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;color:#fff;font-size:16px;margin-bottom:14px;
     background:linear-gradient(135deg,var(--blue),var(--purple))}
   .pcard.c-purple .ico{background:linear-gradient(135deg,var(--purple),var(--blue))}
-  .pcard h3.sm{font-size:19px}
+  #jobs .pcard{display:grid;grid-template-columns:72px minmax(0,1fr);grid-template-rows:auto auto auto;column-gap:12px;
+    align-content:start;align-items:start;padding:clamp(20px,1.8vw,24px)}
+  .pcard .ico.mio-ip{grid-column:1;grid-row:2;width:72px;height:72px;margin:0;padding:0;border:0;border-radius:50%;overflow:hidden;background:transparent;
+    box-shadow:0 12px 26px -17px rgba(67,56,202,.5)}
+  .pcard .ico.mio-ip img{display:block;width:100%;height:100%;border-radius:50%;object-fit:cover}
+  #jobs .pcard h3.sm{grid-column:2;grid-row:2;align-self:center;min-width:0;margin:0;font-size:17px;line-height:1.38}
+  #jobs .pcard p{grid-column:1/-1;grid-row:3;margin-top:14px}
+  .pcard-media{position:relative;overflow:hidden;aspect-ratio:16/10;margin:-8px -8px 18px;border:1px solid var(--line);
+    border-radius:14px;background:linear-gradient(145deg,var(--blue-50),#fff);box-shadow:0 12px 28px -22px rgba(31,67,155,.42)}
+  #jobs .pcard-media{grid-column:1/-1;grid-row:1;margin:-8px -8px 18px}
+  .pcard-media img{display:block;width:100%;height:100%;object-fit:contain;object-position:center;transition:transform .35s ease}
+  .pcard:hover .pcard-media img,.mio-bcard:hover .pcard-media img{transform:scale(1.025)}
 
   /* —— 交回的活 · 左文右示意图，交替 —— */
   .mio-rows{display:grid;gap:clamp(22px,3vw,40px);margin-top:clamp(28px,3.4vw,44px)}
@@ -273,7 +289,9 @@
           </div>
         </div>
         <div class="ph-art">
-          <img class="mio-hero-img" src="../assets/product-shots/mio-hero-home.webp" alt="Mio 首页录屏：选「查数据」，一句话问各小组的平均响应时长" width="1600" height="756" decoding="async" fetchpriority="high" />
+          <video class="mio-hero-img" autoplay muted loop playsinline preload="auto" poster="../assets/product-shots/mio-feature-tour-poster.png" width="1600" height="1000" aria-label="Mio 真实产品使用录屏：完成一次数据对话后，依次进入定时任务、数据看板和技能">
+            <source src="../assets/product-shots/mio-feature-tour.webm?v=4" type="video/webm" />
+          </video>
         </div>
       </div>
     </div>
@@ -293,22 +311,26 @@
         <div class="mio-group"><span class="tag">基本功</span>说清要什么，交回排好版的成品</div>
         <div class="tier-cards mio-four">
           <div class="pcard c-blue rv">
-            <span class="ico"><i class="fa-solid fa-file-lines"></i></span>
+            <div class="pcard-media"><img src="../assets/product-shots/mio-feature-document.webp" alt="Mio 生成并交付排版完成的业务周报" width="960" height="600" loading="lazy" decoding="async" /></div>
+            <span class="ico mio-ip"><img src="../assets/product-shots/mio-ip-report-v2.webp" alt="" width="384" height="384" loading="lazy" decoding="async" /></span>
             <h3 class="sm">写方案、出文档</h3>
             <p>周报、总结、方案、通知，说清要什么就动笔，排好格式交回。</p>
           </div>
           <div class="pcard c-blue rv rv-d1">
-            <span class="ico"><i class="fa-solid fa-file-powerpoint"></i></span>
+            <div class="pcard-media"><img src="../assets/product-shots/mio-feature-ppt.webp" alt="Mio 生成的多页 PPT 产品界面" width="960" height="600" loading="lazy" decoding="async" /></div>
+            <span class="ico mio-ip"><img src="../assets/product-shots/mio-ip-ppt-v2.webp" alt="" width="384" height="384" loading="lazy" decoding="async" /></span>
             <h3 class="sm">做 PPT、做海报</h3>
             <p>汇报 PPT、分析报告、活动海报，图表排版配好，直接能用。</p>
           </div>
           <div class="pcard c-blue rv rv-d1">
-            <span class="ico"><i class="fa-solid fa-table"></i></span>
+            <div class="pcard-media"><img src="../assets/product-shots/mio-feature-analysis.webp" alt="Mio 对业务数据生成表格、结论和后续建议" width="960" height="600" loading="lazy" decoding="async" /></div>
+            <span class="ico mio-ip"><img src="../assets/product-shots/mio-ip-data-v2.webp" alt="" width="384" height="384" loading="lazy" decoding="async" /></span>
             <h3 class="sm">处理数据、出分析</h3>
             <p>表格清洗、汇总、对比分析，表和图一起交。</p>
           </div>
           <div class="pcard c-blue rv rv-d2">
-            <span class="ico"><i class="fa-solid fa-magnifying-glass"></i></span>
+            <div class="pcard-media"><img src="../assets/product-shots/mio-feature-research.webp" alt="Mio 完成资料调研并整理来源与关键结论" width="960" height="600" loading="lazy" decoding="async" /></div>
+            <span class="ico mio-ip"><img src="../assets/product-shots/mio-ip-research-v2.webp" alt="" width="384" height="384" loading="lazy" decoding="async" /></span>
             <h3 class="sm">查资料、做调研</h3>
             <p>要查的它自己去搜、去核，整理成能用的材料。</p>
           </div>
@@ -316,17 +338,20 @@
         <div class="mio-group solo"><span class="tag">独门</span>接着企业的数据，才干得了这三件</div>
         <div class="tier-cards three">
           <div class="pcard c-purple rv">
-            <span class="ico"><i class="fa-solid fa-chart-line"></i></span>
+            <div class="pcard-media"><img src="../assets/product-shots/mio-feature-query.webp" alt="Mio 回答企业数据问题并生成可下载的分析文档" width="960" height="600" loading="lazy" decoding="async" /></div>
+            <span class="ico mio-ip"><img src="../assets/product-shots/mio-ip-create-v2.webp" alt="" width="384" height="384" loading="lazy" decoding="async" /></span>
             <h3 class="sm">问企业自己的数</h3>
             <p>一句话问经营数据，秒级出图表。一层层追着问到底，答案带出处，查得到数据库里的原始数。</p>
           </div>
           <div class="pcard c-purple rv rv-d1">
-            <span class="ico"><i class="fa-solid fa-table-columns"></i></span>
+            <div class="pcard-media"><img src="../assets/product-shots/mio-feature-dashboard.webp" alt="Mio 数据看板产品界面，展示指标卡、趋势和渠道明细" width="960" height="600" loading="lazy" decoding="async" /></div>
+            <span class="ico mio-ip"><img src="../assets/product-shots/mio-ip-dashboard-v2.webp" alt="" width="384" height="384" loading="lazy" decoding="async" /></span>
             <h3 class="sm">搭数据看板</h3>
             <p>想盯的指标，一句话搭成看板。指标卡加分天趋势，随时刷新，明细点得进去。</p>
           </div>
           <div class="pcard c-purple rv rv-d2">
-            <span class="ico"><i class="fa-solid fa-bell"></i></span>
+            <div class="pcard-media"><img src="../assets/product-shots/mio-feature-schedule.webp" alt="Mio 定时任务产品界面，展示任务频率、状态和运行记录" width="960" height="600" loading="lazy" decoding="async" /></div>
+            <span class="ico mio-ip"><img src="../assets/product-shots/mio-ip-notify-v2.webp" alt="" width="384" height="384" loading="lazy" decoding="async" /></span>
             <h3 class="sm">主动盯、定时干</h3>
             <p>指标异动它先发现先提醒。日报周报到点自己来，盯出来的问题追进去就能查。</p>
           </div>
@@ -526,6 +551,7 @@
       </div>
       <div class="mio-brain">
         <div class="mio-bcard rv">
+          <div class="pcard-media"><img src="../assets/product-shots/mio-feature-query.webp" alt="Mio 在连续对话中保留数据口径并交付分析文档" width="960" height="600" loading="lazy" decoding="async" /></div>
           <span class="k">记忆</span>
           <h3>说过的话，不用再交代</h3>
           <p class="lead">用得越久，它越像你们公司的人。</p>
@@ -536,6 +562,7 @@
           </ul>
         </div>
         <div class="mio-bcard alt rv rv-d1">
+          <div class="pcard-media"><img src="../assets/product-shots/mio-feature-skills.webp" alt="Mio Skill 页面，展示官方技能和企业技能" width="960" height="600" loading="lazy" decoding="async" /></div>
           <span class="k">Skill</span>
           <h3>把一次干对的活写下来</h3>
           <p class="lead">Skill 不是一段代码，是这件活该怎么干。谁把活干顺了，他的做法就能存成 Skill，别人一句话调用，天天照着跑。</p>
