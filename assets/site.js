@@ -45,6 +45,7 @@
     '    <div class="nav-item"><a href="' + REL + 'industries.html">客户与行业</a></div>' +
     '    <div class="nav-item"><a href="' + REL + 'enterprise.html">企业级能力</a></div>' +
     '    <div class="nav-item"><a href="' + REL + 'fde.html">FDE 交付结果</a></div>' +
+    '    <div class="nav-item"><a href="' + REL + 'agentcamp.html">AgentCamp</a></div>' +
     '    <div class="nav-item"><a href="' + REL + 'about.html">AI 原生组织</a></div>' +
     '    <div class="nav-item"><a href="' + REL + 'careers/index.html">加入我们</a></div>' +
     '  </div>' +
@@ -93,6 +94,7 @@
     '      </ul></div>' +
     '      <div><h6>公司</h6><ul>' +
     '        <li><a href="' + REL + 'fde.html">FDE 交付结果</a></li>' +
+    '        <li><a href="' + REL + 'agentcamp.html">AgentCamp</a></li>' +
     '        <li><a href="' + REL + 'industries.html">客户与行业</a></li>' +
     '        <li><a href="' + REL + 'about.html">AI 原生组织</a></li>' +
     '        <li><a href="' + REL + 'careers/index.html">加入我们</a></li>' +
@@ -128,7 +130,7 @@
     }
     // 全站对话层：加载 askbar.js（AI-native 大改核心）
     if (!window.__jzab && !document.querySelector('script[data-jzab]')) {
-      var s = document.createElement('script'); s.src = REL + 'assets/askbar.js?v=20260921b'; s.defer = true; s.setAttribute('data-jzab', '1'); document.body.appendChild(s);
+      var s = document.createElement('script'); s.src = REL + 'assets/askbar.js?v=20261018'; s.defer = true; s.setAttribute('data-jzab', '1'); document.body.appendChild(s);
     }
   }
 

@@ -33,9 +33,11 @@
     enterprise:{ nm: '企业级能力', ds: '和 Anthropic 同判断', ic: 'fa-building-shield', href: REL + 'enterprise.html' },
     industries:{ nm: '客户与行业', ds: '5 大高合规行业落地', ic: 'fa-globe', href: REL + 'industries.html' },
     fde:      { nm: 'FDE 交付', ds: '陪跑落地、交付结果', ic: 'fa-people-carry-box', href: REL + 'fde.html' },
+    agentcamp:{ nm: 'AgentCamp', ds: '带数据来，两天做出一个能上岗的 AI 员工', ic: 'fa-bolt', href: REL + 'agentcamp.html' },
   };
   // ---- 意图路由：命中 → 秒回 + 实体卡（对话即导航，0 延迟、可控口径） ----
   var ROUTES = [
+    { re: /(agent\s*camp|boot\s*camp|训练营|共创营|带数据来|两天做出|先做一件事)/i, a: 'AgentCamp 不是培训课：你带真实数据和一件说得清的活，我们的工程师和你的人坐在一起，两天做出一个在你环境里干活的 AI 员工，展示日当场看结果。', cards: ['agentcamp'] },
     { re: /(区别|不一样|不同|普通|传统|chatbot|和别的)/i, a: '普通机器人按关键词命中、答不上就转人工；句子是「AI 员工」：理解上下文、查知识库、调 CRM/工单，把活直接干完，真搞不定才转人工。去年真实转人工率 2.73%（行业基线约 27%）。', cards: ['service', 'enterprise'] },
     { re: /(接入|上线|多久|部署|开通|落地|实施)/i, a: '标准 IM 渠道（微信客服/小程序/公众号/抖音/飞书等）最快 1 天就能让第一个 AI 员工上岗；复杂业务由 FDE 团队陪跑约 90 天达成结果指标。', cards: ['fde', 'miaohui'] },
     { re: /(安全|隐私|私有|合规|数据|审计|等保)/i, a: '支持私有化/专属部署，数据不出域、全程加密可审计，已服务金融、政务等高合规行业。能说什么可提前写死，每句决策可追溯。', cards: ['enterprise', 'government'] },
