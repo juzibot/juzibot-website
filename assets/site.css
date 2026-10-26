@@ -132,7 +132,7 @@
   .nav-burger{display:none;background:none;border:0;padding:6px;margin-right:-6px;color:var(--ink);line-height:0}
   .nav-burger svg{width:26px;height:26px;display:block}
   .nav-burger .bg-close{display:none}
-  @media(max-width:1240px){
+  @media(max-width:1400px){
     .nav-links,.nav-right .nav-login{display:none}
     .nav-burger{display:inline-flex;align-items:center}
     .nav.menu-open{background:rgba(255,255,255,.98);backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--line)}
