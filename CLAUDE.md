@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-The marketing site for 句子互动（JuziBot），served at https://juzibot.com. Pure static HTML/CSS/JS — **no Node, no package.json, no bundler**. Two Python scripts generate a subset of the pages; everything else is hand-edited HTML. All copy is Simplified Chinese.
+The marketing site for 句子互动（JuziBot），served at https://juzibot.com. The website is static HTML/CSS/JS with no frontend build. AgentCamp has a separate Node 24 / NestJS API under `backend/agentcamp/`; see its README for tests and deployment. Two Python scripts generate a subset of the pages; everything else is hand-edited HTML. All copy is Simplified Chinese.
 
 ## Build commands
 
@@ -38,7 +38,7 @@ When adding a workforce page, the fastest correct path is to **copy an existing 
 
 - Generated subpages link `assets/site.css`; `index.html` carries its own large inline `<style>`. Changing a generated page's look is usually `assets/site.css`, not the Python.
 - `assets/site.js`, `assets/askbar.js` — shared scripts. `assets/demos/*.html` are standalone interactive product mockups embedded via iframe. `assets/product-shots/`, `assets/brand/` hold images (incl. `qr-qiwei.png`, the contact QR).
-- Contact CTAs across the site call `openContact(...)` which opens a WeChat-work QR modal — there is no form backend.
+- Contact CTAs across the site call `openContact(...)` which opens a WeChat-work QR modal. AgentCamp's form separately posts to `/api/agentcamp/applications`; the API requires its own deployment and Feishu configuration.
 
 ## Deploy
 

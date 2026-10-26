@@ -1,0 +1,19 @@
+[
+  {"name":"提交编号","type":"text"},
+  {"name":"姓名","type":"text"},
+  {"name":"公司","type":"text"},
+  {"name":"职位","type":"text"},
+  {"name":"手机或邮箱","type":"text"},
+  {"name":"城市","type":"text"},
+  {"name":"期望时间","type":"text"},
+  {"name":"想做的业务","type":"text"},
+  {"name":"数据准备情况","type":"text"},
+  {"name":"来源","type":"text"},
+  {"name":"来源页面","type":"text"},
+  {"name":"同意联系","type":"checkbox"},
+  {"name":"提交时间","type":"datetime","style":{"format":"yyyy-MM-dd HH:mm"}},
+  {"name":"状态","type":"select","options":[{"name":"待跟进"},{"name":"跟进中"},{"name":"已预约"},{"name":"已结束"}]},
+  {"name":"跟进人","type":"user","multiple":false},
+  {"name":"跟进备注","type":"text"},
+  {"name":"环境","type":"select","options":[{"name":"production"},{"name":"preview"}]}
+]

@@ -1,0 +1,29 @@
+[Unit]
+Description=JuziBot AgentCamp applications API
+After=network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=300
+StartLimitBurst=10
+
+[Service]
+Type=simple
+User=juzibot-agentcamp
+Group=juzibot-agentcamp
+WorkingDirectory=/opt/juzibot-agentcamp/current/backend/agentcamp
+Environment=NODE_ENV=production
+EnvironmentFile=/etc/juzibot/agentcamp.env
+ExecStart=/usr/bin/node dist/main.js
+Restart=on-failure
+RestartSec=30
+TimeoutStopSec=100
+StateDirectory=juzibot-agentcamp
+StateDirectoryMode=0700
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict
+ReadWritePaths=/var/lib/juzibot-agentcamp
+
+[Install]
+WantedBy=multi-user.target

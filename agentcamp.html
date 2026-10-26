@@ -149,7 +149,7 @@
   .ac-bring div i{width:28px;height:28px;border-radius:9px;flex:0 0 28px;display:grid;place-items:center;font-size:12px;
     background:#fff;border:1px solid var(--line);color:var(--blue)}
   .ac-bring b{color:var(--ink);font-weight:750}
-  .ac-form{background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);padding:clamp(24px,3vw,40px);
+  .ac-form{scroll-margin-top:90px;background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);padding:clamp(24px,3vw,40px);
     box-shadow:0 1px 2px rgba(14,20,48,.05),0 34px 70px -34px rgba(67,56,202,.30)}
   .ac-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px 18px}
   .ac-field{display:flex;flex-direction:column;gap:7px;min-width:0}
@@ -484,30 +484,30 @@
         </div>
       </div>
 
-      <form class="ac-form rv rv-d1" id="acForm" novalidate>
+      <form class="ac-form rv rv-d1" id="acForm" method="post" action="/api/agentcamp/applications" novalidate>
         <div class="ac-grid">
           <div class="ac-field">
             <label for="f-name">姓名<em>*</em></label>
-            <input id="f-name" name="name" type="text" autocomplete="name" required />
+            <input id="f-name" name="name" type="text" autocomplete="name" maxlength="80" required />
             <span class="hint err">请填姓名</span>
           </div>
           <div class="ac-field">
             <label for="f-company">公司<em>*</em></label>
-            <input id="f-company" name="company" type="text" autocomplete="organization" required />
+            <input id="f-company" name="company" type="text" autocomplete="organization" maxlength="200" required />
             <span class="hint err">请填公司</span>
           </div>
           <div class="ac-field">
             <label for="f-title">职位</label>
-            <input id="f-title" name="title" type="text" autocomplete="organization-title" />
+            <input id="f-title" name="title" type="text" autocomplete="organization-title" maxlength="100" />
           </div>
           <div class="ac-field">
             <label for="f-contact">手机或邮箱<em>*</em></label>
-            <input id="f-contact" name="contact" type="text" inputmode="email" required />
+            <input id="f-contact" name="contact" type="text" maxlength="254" required />
             <span class="hint err">请填一个能联系到你的手机或邮箱</span>
           </div>
           <div class="ac-field">
             <label for="f-city">城市</label>
-            <input id="f-city" name="city" type="text" autocomplete="address-level2" />
+            <input id="f-city" name="city" type="text" autocomplete="address-level2" maxlength="100" />
           </div>
           <div class="ac-field">
             <label for="f-when">期望时间</label>
@@ -521,7 +521,7 @@
           </div>
           <div class="ac-field full">
             <label for="f-task">想做的那件活<em>*</em></label>
-            <textarea id="f-task" name="task" placeholder="一段话说得清就行。比如：每天 300 条进线按意向分级并回复；月底把十几个系统的账对平。" required></textarea>
+            <textarea id="f-task" name="task" maxlength="3000" placeholder="一段话说得清就行。比如：每天 300 条进线按意向分级并回复；月底把十几个系统的账对平。" required></textarea>
             <span class="hint err">写一段话就行，说清这件活是什么</span>
           </div>
           <div class="ac-field full">
@@ -546,13 +546,12 @@
           </button>
           <span class="alt">不想填表？<a onclick="openContact('AgentCamp·报名·扫码')">直接扫码加我们</a></span>
         </div>
+        <p id="acError" role="alert" hidden style="color:#BE123C;margin-top:16px;line-height:1.6"></p>
         <div class="ac-done" id="acDone">
           <div class="ok"><i class="fa-solid fa-check"></i></div>
           <h3 id="acDoneH">已收到</h3>
           <p id="acDoneP">工作日当天联系你，先确认那件活和数据，再定日期。</p>
           <img class="qr" id="acQr" src="assets/brand/qr-qiwei.png" alt="微信客服二维码" width="168" height="168" />
-          <pre class="sum" id="acSum" hidden></pre>
-          <button type="button" class="copy" id="acCopy" hidden>复制这段，发给我们</button>
         </div>
       </form>
     </div>
@@ -573,40 +572,8 @@
   if('IntersectionObserver' in window){ var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){count();io.disconnect();} }); },{threshold:.3}); io.observe(board); }
   else count();
 
-  // 报名表：校验 → 有后端就 POST，没有就把内容交给访客扫码发过来
-  // 后端接好后把这里填成接收地址（POST JSON：name/company/title/contact/city/when/task/data/page）
-  var ENDPOINT='';
-  var form=document.getElementById('acForm');
-  function val(id){ return (document.getElementById(id).value||'').trim(); }
-  function mark(id,bad){ document.getElementById(id).closest('.ac-field').classList.toggle('err',!!bad); }
-  form.addEventListener('submit',function(ev){
-    ev.preventDefault();
-    var bad=false;
-    ['f-name','f-company','f-task'].forEach(function(id){ var b=!val(id); mark(id,b); bad=bad||b; });
-    var c=val('f-contact'), okc=/@/.test(c)||/^1\d{10}$/.test(c.replace(/[\s-]/g,'')); mark('f-contact',!okc); bad=bad||!okc;
-    var agree=document.getElementById('f-agree').checked; document.getElementById('acConsent').classList.toggle('err',!agree); bad=bad||!agree;
-    if(bad){ var first=form.querySelector('.err input,.err textarea,.ac-consent.err input'); if(first)first.focus(); return; }
-    var payload={name:val('f-name'),company:val('f-company'),title:val('f-title'),contact:c,city:val('f-city'),when:val('f-when'),task:val('f-task'),data:val('f-data'),page:'agentcamp'};
-    if(window.JZAnalytics)JZAnalytics.trackButton('提交预约','AgentCamp·报名表');
-    var btn=document.getElementById('acBtn'); btn.disabled=true;
-    function done(withSummary){
-      form.classList.add('sent');
-      if(withSummary){
-        var lines=['AgentCamp 预约','姓名：'+payload.name,'公司：'+payload.company,payload.title?'职位：'+payload.title:'','联系：'+payload.contact,payload.city?'城市：'+payload.city:'',payload.when?'期望时间：'+payload.when:'','想做的活：'+payload.task,payload.data?'数据：'+payload.data:''].filter(Boolean).join('\n');
-        document.getElementById('acDoneH').textContent='已记下';
-        document.getElementById('acDoneP').textContent='扫码加我们，把下面这段发过来，工作日当天回复。';
-        var sum=document.getElementById('acSum'),cp=document.getElementById('acCopy'); sum.textContent=lines; sum.hidden=false; cp.hidden=false;
-        cp.onclick=function(){ try{ navigator.clipboard.writeText(lines).then(function(){ cp.textContent='已复制'; }); }catch(e){ cp.textContent='请手动复制上面这段'; } };
-      }
-      if(window.JZAnalytics&&JZAnalytics.trackQrExposure)JZAnalytics.trackQrExposure('AgentCamp·报名成功');
-      form.scrollIntoView({behavior:'smooth',block:'start'});
-    }
-    if(!ENDPOINT){ done(true); return; }
-    fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
-      .then(function(r){ if(!r.ok)throw new Error(r.status); done(false); })
-      .catch(function(){ done(true); });
-  });
 })();
 </script>
+<script src="assets/agentcamp.js?v=20261026"></script>
 </body>
 </html>
