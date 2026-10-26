@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>句子 AgentCamp · 带数据来，两天做出一个能上岗的 AI 员工 | 句子互动</title>
+<meta name="description" content="句子 AgentCamp 不是培训课，也不是看演示。你带真实数据和一件说得清的活，我们的工程师和你的人坐在一起，两天做出一个在你环境里干活的 AI 员工，展示日当场看结果。" />
+<link rel="icon" href="logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="assets/site.css" />
+<style>
+  /* scoped：只补 site.css 没有的结构（面包屑 / 页头双栏 + 日程卡 / 编号清单 / 原则行 / 时间线 / 条件卡 / 报名表）
+     全部沿用 site.css 的 CSS 变量，不引新配色、不引新字号体系 */
+  .crumbs{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--ink-3);margin-bottom:18px}
+  .crumbs a{color:var(--ink-2)}
+  .crumbs a:hover{color:var(--blue)}
+  .crumbs .sep{color:var(--line)}
+  .crumbs .here{color:var(--ink);font-weight:700}
+  .nw{white-space:nowrap}
+  @media(max-width:420px){.nw{white-space:normal}}
+  .sec-head h2{font-size:clamp(28px,3.8vw,50px);font-weight:840;letter-spacing:-.035em;line-height:1.2;text-wrap:balance}
+  .sec-head .sub{margin-top:16px}
+
+  /* ———— 页头：左文右日程卡 ———— */
+  .ac-hero .wrap{display:grid;grid-template-columns:1.06fr .94fr;gap:clamp(32px,5vw,72px);align-items:center}
+  .ac-hero h1{font-size:clamp(34px,5vw,62px);font-weight:850;letter-spacing:-.035em;line-height:1.12;text-wrap:balance;margin:6px 0 clamp(16px,2vw,22px)}
+  .ac-hero .lede{font-size:clamp(16px,1.4vw,19px);color:var(--ink-2);line-height:1.7;max-width:52ch}
+  .ac-hero .lede strong{color:var(--ink);font-weight:700}
+  .ac-pills{display:flex;flex-wrap:wrap;gap:10px;margin-top:clamp(20px,2.6vw,28px)}
+  .ac-pill{display:inline-flex;align-items:center;gap:9px;font-size:13px;font-weight:600;color:var(--ink-2);
+    background:#fff;border:1px solid var(--line);padding:8px 15px;border-radius:999px;box-shadow:var(--shadow-soft)}
+  .ac-pill .dot{width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0}
+  .ac-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:clamp(24px,3vw,32px)}
+
+  /* 日程卡：开营前两周 → Day 1 → Day 2 → 带走 */
+  .ac-board{position:relative;background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);
+    box-shadow:0 1px 2px rgba(14,20,48,.05),0 34px 70px -34px rgba(67,56,202,.30);overflow:hidden}
+  .ac-board::before{content:"";position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(circle at 100% 0%,rgba(67,56,202,.07),transparent 46%)}
+  .ac-bhead{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 22px;border-bottom:1px solid var(--line)}
+  .ac-bhead .cap{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+  .ac-bhead .chip{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:700;color:var(--blue);
+    background:var(--blue-50);border:1px solid var(--blue-100);border-radius:999px;padding:5px 11px}
+  .ac-bhead .chip i{font-size:11px}
+  .ac-rows{padding:8px 10px}
+  .ac-row{display:grid;grid-template-columns:96px 1fr;gap:14px;align-items:start;padding:12px 12px;border-radius:12px;
+    transition:background .25s var(--ease)}
+  .ac-row+.ac-row{margin-top:2px}
+  .ac-row .t{font-family:var(--mono);font-size:11.5px;font-weight:800;letter-spacing:.04em;color:var(--ink-3);padding-top:3px}
+  .ac-row .t b{display:block;color:var(--ink);font-size:12.5px;letter-spacing:0}
+  .ac-row .d{font-size:14px;line-height:1.6;color:var(--ink-2)}
+  .ac-row .d b{color:var(--ink);font-weight:750}
+  .ac-row.pre{background:var(--line-2);border:1px dashed color-mix(in srgb,var(--blue) 26%,var(--line))}
+  .ac-row.pre .d{font-size:13.5px}
+  .ac-row.key{background:var(--blue-50)}
+  .ac-row.key .t,.ac-row.key .t b,.ac-row.key .d b{color:var(--blue)}
+  .ac-prog{margin-top:9px;display:flex;align-items:center;gap:10px;font-size:12px;color:var(--ink-3);font-family:var(--mono);font-weight:700}
+  .ac-prog .bar{flex:1;height:6px;border-radius:999px;background:var(--blue-100);overflow:hidden}
+  .ac-prog .bar i{display:block;height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--blue),var(--teal));
+    transition:width 2.4s var(--ease)}
+  .ac-board.in .ac-prog .bar i{width:100%}
+  .ac-bfoot{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;padding:14px 22px 18px;border-top:1px solid var(--line);
+    font-size:12.5px;color:var(--ink-2);background:#FBFCFF}
+  .ac-bfoot .k{font-family:var(--mono);font-size:10.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--orange-deep)}
+  .ac-bfoot span i{color:var(--green);margin-right:6px;font-size:11px}
+
+  /* ———— 两天结束时的三样东西：编号 + 横线 ———— */
+  .ac-three{display:grid;grid-template-columns:1.25fr .75fr;gap:clamp(28px,4vw,64px);align-items:start}
+  .ac-list{border-top:1px solid var(--line)}
+  .ac-item{display:grid;grid-template-columns:76px 1fr;gap:18px;padding:clamp(22px,2.6vw,30px) 0;border-bottom:1px solid var(--line)}
+  .ac-item .n{font-family:var(--mono);font-size:clamp(20px,2vw,26px);font-weight:800;letter-spacing:-.02em;color:var(--blue);line-height:1.2;padding-top:3px}
+  .ac-item h3{font-size:clamp(20px,2vw,27px);font-weight:830;letter-spacing:-.025em;line-height:1.28;margin:0 0 8px}
+  .ac-item p{font-size:15px;line-height:1.72;color:var(--ink-2);margin:0;max-width:52ch}
+  .ac-aside{position:sticky;top:110px;background:linear-gradient(165deg,var(--blue-50),#fff 70%);border:1px solid var(--line);
+    border-radius:var(--radius);padding:clamp(24px,2.6vw,30px);box-shadow:var(--shadow-soft)}
+  .ac-aside .cap{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:12px}
+  .ac-aside h4{font-size:19px;font-weight:820;letter-spacing:-.02em;line-height:1.35;margin:0 0 10px}
+  .ac-aside p{font-size:14px;line-height:1.7;color:var(--ink-2);margin:0 0 16px}
+  .ac-aside a{font-weight:750;color:var(--blue)}
+  .ac-aside a:hover{color:var(--blue-deep)}
+
+  /* ———— 三条原则：图标 + 标题 + 说明，按行排 ———— */
+  .ac-rules{border-top:1px solid var(--line)}
+  .ac-rule{display:grid;grid-template-columns:52px 1fr 1.25fr;gap:18px clamp(18px,2.4vw,36px);align-items:start;padding:clamp(22px,2.6vw,30px) 0;border-bottom:1px solid var(--line)}
+  .ac-rule .ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;color:#fff;font-size:15px;
+    background:var(--ac,var(--blue));box-shadow:0 8px 16px -8px color-mix(in srgb,var(--ac,var(--blue)) 60%,transparent)}
+  .ac-rule.r1{--ac:var(--blue)}.ac-rule.r2{--ac:var(--teal)}.ac-rule.r3{--ac:var(--purple)}
+  .ac-rule h3{font-size:clamp(18px,1.7vw,22px);font-weight:830;letter-spacing:-.02em;line-height:1.35;margin:4px 0 0}
+  .ac-rule p{font-size:15px;line-height:1.72;color:var(--ink-2);margin:4px 0 0}
+
+  /* ———— 怎么跑：四段时间线，第一段是重点 ———— */
+  .ac-tl{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(12px,1.4vw,18px)}
+  .ac-step{position:relative;background:#fff;border:1px solid var(--line);border-radius:16px;padding:clamp(20px,2.2vw,26px);
+    box-shadow:0 1px 2px rgba(14,20,48,.05),0 16px 30px -18px rgba(14,20,48,.18);
+    transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
+  .ac-step:hover{transform:translateY(-5px);box-shadow:0 1px 2px rgba(14,20,48,.05),0 26px 46px -20px rgba(67,56,202,.28)}
+  .ac-step .when{font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:10px}
+  .ac-step h3{font-size:clamp(18px,1.6vw,21px);font-weight:830;letter-spacing:-.02em;line-height:1.3;margin:0 0 14px}
+  .ac-step ul{list-style:none;margin:0;padding:0}
+  .ac-step li{position:relative;padding-left:18px;font-size:14px;line-height:1.62;color:var(--ink-2)}
+  .ac-step li+li{margin-top:8px}
+  .ac-step li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:7px;border-radius:50%;background:var(--blue-200)}
+  .ac-step.key{background:linear-gradient(165deg,var(--blue-50),#fff 65%);border-color:rgba(67,56,202,.28);
+    box-shadow:0 0 0 1.5px rgba(67,56,202,.22),0 24px 54px -22px rgba(67,56,202,.40)}
+  .ac-step.key .when{color:var(--blue)}
+  .ac-step.key li::before{background:var(--blue)}
+  .ac-step .tag{position:absolute;top:18px;right:18px;font-size:10.5px;font-weight:800;color:#fff;background:var(--blue);
+    border-radius:999px;padding:4px 10px;letter-spacing:.02em}
+  .ac-tl-note{max-width:76ch;margin:clamp(22px,2.8vw,32px) auto 0;padding-top:18px;border-top:1px dashed var(--line);
+    text-align:center;font-size:14px;color:var(--ink-2);line-height:1.76}
+
+  /* ———— 什么样的活适合带来：三卡 ———— */
+  .ac-fit{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,1.6vw,22px)}
+  .ac-fcard{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:clamp(24px,2.6vw,32px);
+    box-shadow:var(--shadow-soft);transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
+  .ac-fcard:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
+  .ac-fcard .n{font-family:var(--mono);font-size:12px;font-weight:800;letter-spacing:.1em;color:var(--orange-deep);margin-bottom:14px}
+  .ac-fcard h3{font-size:clamp(18px,1.7vw,22px);font-weight:830;letter-spacing:-.02em;line-height:1.3;margin:0 0 10px}
+  .ac-fcard p{font-size:14.5px;line-height:1.72;color:var(--ink-2);margin:0}
+  .ac-fcard p b{color:var(--ink);font-weight:720}
+  .ac-fit-note{margin-top:clamp(18px,2.4vw,26px);font-size:14px;color:var(--ink-3);line-height:1.7}
+  .ac-fit-note a{color:var(--blue);font-weight:700}
+
+  /* ———— 两天不是从零写代码：产品四卡 + 交付团队一行 ———— */
+  .ac-stack{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(12px,1.4vw,18px)}
+  .ac-scard{display:flex;gap:14px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 20px;
+    box-shadow:0 1px 2px rgba(14,20,48,.05),0 14px 26px -18px rgba(14,20,48,.20);transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
+  .ac-scard:hover{transform:translateY(-4px);box-shadow:0 1px 2px rgba(14,20,48,.05),0 22px 40px -20px rgba(67,56,202,.28)}
+  .ac-scard .ic{width:38px;height:38px;border-radius:11px;flex:0 0 38px;display:grid;place-items:center;color:#fff;font-size:14px;
+    background:var(--ac,var(--blue));box-shadow:0 8px 16px -8px color-mix(in srgb,var(--ac,var(--blue)) 60%,transparent)}
+  .ac-scard.s1{--ac:var(--blue)}.ac-scard.s2{--ac:var(--purple)}.ac-scard.s3{--ac:var(--teal)}.ac-scard.s4{--ac:var(--orange-deep)}
+  .ac-scard h4{font-size:15px;font-weight:820;letter-spacing:-.01em;margin:0 0 5px}
+  .ac-scard p{font-size:13.5px;line-height:1.6;color:var(--ink-2);margin:0}
+  .ac-scard a{color:inherit}
+  .ac-team{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;margin-top:clamp(18px,2.2vw,24px);
+    padding:18px 22px;border-radius:14px;background:var(--line-2);font-size:14.5px;color:var(--ink-2);line-height:1.6}
+  .ac-team b{color:var(--ink);font-weight:750}
+  .ac-team a{font-weight:750;color:var(--blue);white-space:nowrap}
+
+  /* ———— 报名：左说明右表单 ———— */
+  .ac-signup{margin-top:clamp(80px,11vw,150px);padding:clamp(70px,9vw,120px) var(--gut);scroll-margin-top:70px;
+    background:radial-gradient(1000px circle at 50% 0%,var(--blue-100),transparent 60%),linear-gradient(180deg,#fff,var(--blue-50))}
+  .ac-signup .wrap{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(36px,6vw,80px);align-items:start}
+  .ac-sintro{position:sticky;top:110px}
+  .ac-sintro h2{font-size:clamp(30px,4.2vw,54px);font-weight:850;letter-spacing:-.035em;line-height:1.08;text-wrap:balance}
+  .ac-sintro .sub{margin-top:18px;font-size:clamp(15px,1.4vw,18px);color:var(--ink-2);line-height:1.7;max-width:40ch}
+  .ac-bring{margin-top:26px;display:grid;gap:10px}
+  .ac-bring div{display:flex;align-items:flex-start;gap:12px;font-size:14.5px;color:var(--ink-2);line-height:1.6}
+  .ac-bring div i{width:28px;height:28px;border-radius:9px;flex:0 0 28px;display:grid;place-items:center;font-size:12px;
+    background:#fff;border:1px solid var(--line);color:var(--blue)}
+  .ac-bring b{color:var(--ink);font-weight:750}
+  .ac-form{scroll-margin-top:90px;background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);padding:clamp(24px,3vw,40px);
+    box-shadow:0 1px 2px rgba(14,20,48,.05),0 34px 70px -34px rgba(67,56,202,.30)}
+  .ac-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px 18px}
+  .ac-field{display:flex;flex-direction:column;gap:7px;min-width:0}
+  .ac-field.full{grid-column:1 / -1}
+  .ac-field label{font-size:13px;font-weight:750;color:var(--ink-2);letter-spacing:.01em}
+  .ac-field label em{font-style:normal;color:var(--orange-deep);margin-left:3px}
+  .ac-field input,.ac-field select,.ac-field textarea{width:100%;font:inherit;font-size:15px;color:var(--ink);background:#fff;
+    border:1px solid var(--line);border-radius:12px;padding:12px 14px;outline:none;
+    transition:border-color .2s,box-shadow .2s;-webkit-appearance:none;appearance:none}
+  .ac-field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235A6478' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 14px center;padding-right:40px}
+  .ac-field textarea{min-height:112px;resize:vertical;line-height:1.6}
+  .ac-field input::placeholder,.ac-field textarea::placeholder{color:var(--ink-3)}
+  .ac-field input:focus,.ac-field select:focus,.ac-field textarea:focus{border-color:var(--blue-200);box-shadow:0 0 0 3px rgba(67,56,202,.12)}
+  .ac-field.err input,.ac-field.err select,.ac-field.err textarea{border-color:#E11D48;box-shadow:0 0 0 3px rgba(225,29,72,.10)}
+  .ac-field .hint{font-size:12.5px;color:var(--ink-3);line-height:1.5}
+  .ac-field .hint.err{color:#E11D48;display:none}
+  .ac-field.err .hint.err{display:block}
+  @media(pointer:coarse){.ac-field input,.ac-field select,.ac-field textarea{font-size:16px}}
+  .ac-consent{display:flex;align-items:flex-start;gap:11px;margin-top:18px;font-size:13.5px;color:var(--ink-2);line-height:1.6;cursor:pointer}
+  .ac-consent input{width:18px;height:18px;margin-top:2px;flex:0 0 18px;accent-color:var(--blue);cursor:pointer}
+  .ac-consent.err{color:#E11D48}
+  .ac-submit{display:flex;flex-wrap:wrap;align-items:center;gap:16px;margin-top:22px}
+  .ac-submit .alt{font-size:13.5px;color:var(--ink-3)}
+  .ac-submit .alt a{color:var(--blue);font-weight:700;cursor:pointer}
+  .ac-done{display:none;text-align:center;padding:clamp(20px,3vw,36px) 0 8px}
+  .ac-form.sent .ac-grid,.ac-form.sent .ac-consent,.ac-form.sent .ac-submit{display:none}
+  .ac-form.sent .ac-done{display:block}
+  .ac-done .ok{width:56px;height:56px;border-radius:50%;margin:0 auto 18px;display:grid;place-items:center;color:#fff;font-size:22px;
+    background:linear-gradient(135deg,var(--blue),var(--teal));box-shadow:0 14px 30px -12px rgba(67,56,202,.6)}
+  .ac-done h3{font-size:clamp(22px,2.4vw,30px);font-weight:840;letter-spacing:-.025em;margin:0 0 10px}
+  .ac-done p{font-size:15px;color:var(--ink-2);line-height:1.7;margin:0 auto;max-width:46ch}
+  .ac-done .qr{margin:22px auto 0;width:168px;height:168px;border-radius:16px;border:1px solid var(--line);padding:8px;background:#fff;display:block}
+  .ac-done .sum{margin:18px auto 0;max-width:520px;text-align:left;font:inherit;font-size:13px;line-height:1.7;color:var(--ink-2);
+    background:var(--line-2);border:1px dashed var(--line);border-radius:12px;padding:14px 16px;white-space:pre-wrap;word-break:break-all}
+  .ac-done .copy{margin-top:12px;font:inherit;font-size:13px;font-weight:750;color:var(--blue);cursor:pointer;background:none;border:0}
+
+  @media(max-width:980px){
+    .ac-tl,.ac-stack{grid-template-columns:1fr 1fr}
+  }
+  @media(max-width:900px){
+    .ac-hero .wrap{grid-template-columns:1fr;gap:clamp(28px,5vw,40px);align-items:start}
+    .ac-three{grid-template-columns:1fr}
+    .ac-aside{position:static}
+    .ac-rule{grid-template-columns:52px 1fr;gap:12px 16px}
+    .ac-rule p{grid-column:2}
+    .ac-fit{grid-template-columns:1fr}
+    .ac-signup .wrap{grid-template-columns:1fr;gap:34px}
+    .ac-sintro{position:static}
+  }
+  @media(max-width:640px){
+    .crumbs{font-size:12.5px;gap:7px;flex-wrap:wrap}
+    .ac-hero .lede{max-width:none}
+    .ac-pills{gap:8px;margin-top:18px}
+    .ac-pill{font-size:12.5px;padding:9px 14px}
+    .ac-row{grid-template-columns:82px 1fr;gap:10px;padding:11px 10px}
+    .ac-row .d{font-size:13.5px}
+    .ac-bhead,.ac-bfoot{padding-left:16px;padding-right:16px}
+    .ac-item{grid-template-columns:52px 1fr;gap:12px}
+    .ac-item p{max-width:none}
+    .ac-tl,.ac-stack{grid-template-columns:1fr}
+    .ac-step .tag{position:static;display:inline-block;margin-bottom:10px}
+    .ac-grid{grid-template-columns:1fr}
+    .ac-form{padding:22px 18px}
+    .ac-tl-note,.ac-fit-note{font-size:13.5px}
+    .ac-team{padding:16px 18px;font-size:14px}
+  }
+</style>
+</head>
+<body>
+<div id="site-nav"></div>
+<main>
+
+  <!-- ════════ 页头 · 两天做出一个能上岗的 AI 员工 ════════ -->
+  <section class="sec pad ac-hero" style="padding-top:clamp(112px,15vh,168px)">
+    <div class="wrap">
+      <div class="rv">
+        <nav class="crumbs" aria-label="面包屑">
+          <a href="index.html">首页</a><span class="sep">/</span><span class="here">AgentCamp</span>
+        </nav>
+        <span class="sec-eyebrow">AgentCamp · 带数据来</span>
+        <h1><span class="nw">两天，</span><span class="nw">做出一个<span class="hl"><span>能上岗</span></span>的</span> <span class="nw">AI 员工</span></h1>
+        <p class="lede">不是培训课，也不是看演示。你带真实数据和一件说得清的活，我们的工程师和你的人坐在一起，两天做出一个在你环境里干活的 AI 员工。<strong>展示日当场看它干活。</strong></p>
+        <div class="ac-pills">
+          <span class="ac-pill"><span class="dot"></span>用你的数据</span>
+          <span class="ac-pill"><span class="dot"></span>最多两天</span>
+          <span class="ac-pill"><span class="dot"></span>在你的环境里</span>
+          <span class="ac-pill"><span class="dot"></span>决策人当场看</span>
+        </div>
+        <div class="ac-actions">
+          <a class="btn btn-blue btn-lg ar-host" href="#signup" onclick="window.JZAnalytics&&JZAnalytics.trackButton('预约一场 AgentCamp','AgentCamp·页头')">
+            预约一场 AgentCamp
+            <span class="ar"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h11M10 4l5 5-5 5"/></svg><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h11M10 4l5 5-5 5"/></svg></span>
+          </a>
+          <a class="btn btn-ghost btn-lg" href="#how">先看怎么跑</a>
+        </div>
+      </div>
+
+      <div class="ac-board rv rv-d1" id="acBoard" aria-label="AgentCamp 两天日程">
+        <div class="ac-bhead">
+          <span class="cap">AgentCamp · 日程</span>
+          <span class="chip"><i class="fa-solid fa-bolt"></i>两天 · 现场</span>
+        </div>
+        <div class="ac-rows">
+          <div class="ac-row pre">
+            <div class="t">开营前<b>两周</b></div>
+            <div class="d">定一件活、定三个人、给数据切片、开环境。<b>难的部分在这里做完。</b></div>
+          </div>
+          <div class="ac-row">
+            <div class="t">Day 1<b>上午</b></div>
+            <div class="d">一起过数据和流程，把活拆成 AI 能接的步骤</div>
+          </div>
+          <div class="ac-row">
+            <div class="t">Day 1<b>下午</b></div>
+            <div class="d">搭第一版，用真实样本跑第一遍
+              <div class="ac-prog"><span>真实样本</span><div class="bar"><i></i></div><span><b id="acN">0</b> / 300 条</span></div>
+            </div>
+          </div>
+          <div class="ac-row">
+            <div class="t">Day 2<b>上午</b></div>
+            <div class="d">改错、补规则、接你的系统</div>
+          </div>
+          <div class="ac-row key">
+            <div class="t">Day 2<b>下午</b></div>
+            <div class="d"><b>展示日</b>：决策人到场，看它干活，当场定下一步</div>
+          </div>
+        </div>
+        <div class="ac-bfoot">
+          <span class="k">带走</span>
+          <span><i class="fa-solid fa-check"></i>一个在岗的 AI 员工</span>
+          <span><i class="fa-solid fa-check"></i>一份跑过的结果</span>
+          <span><i class="fa-solid fa-check"></i>一个会改它的团队</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ 两天结束时的三样东西 ════════ -->
+  <section class="sec pad">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <span class="sec-eyebrow">两天做到什么</span>
+        <h2><span class="nw">两天结束时，</span><span class="nw">你手里有三样东西</span></h2>
+      </div>
+      <div class="ac-three" style="margin-top:clamp(28px,3.6vw,48px)">
+        <div class="ac-list rv rv-d1">
+          <div class="ac-item">
+            <div class="n">1 /</div>
+            <div>
+              <h3>一个在你环境里跑起来的 AI 员工</h3>
+              <p>用你的数据，接你的系统，不是 PPT 里的架构图。</p>
+            </div>
+          </div>
+          <div class="ac-item">
+            <div class="n">2 /</div>
+            <div>
+              <h3>一份跑过真实样本的结果</h3>
+              <p>哪些做对了、哪些做错了、错在哪，当场看，不用等报告。</p>
+            </div>
+          </div>
+          <div class="ac-item">
+            <div class="n">3 /</div>
+            <div>
+              <h3>一个会改它的团队</h3>
+              <p>你的人全程上手：怎么给它加规则、换一件活、看它每一步的工作记录。</p>
+            </div>
+          </div>
+        </div>
+        <aside class="ac-aside rv rv-d2">
+          <div class="cap">我们怎么交付</div>
+          <h4>工程师到客户业务现场，按结果交付</h4>
+          <p>AgentCamp 是这套交付方式压缩到两天的版本：同一批工程师，同一套产品，先做一件事给你看。</p>
+          <a href="fde.html">看我们的交付方式 →</a>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ 三条原则 ════════ -->
+  <section class="sec pad">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <span class="sec-eyebrow">三条原则</span>
+        <h2><span class="nw">现场只做一件事：</span><span class="nw">在你的数据上<span class="hl"><span>搭、跑、改</span></span></span></h2>
+      </div>
+      <div class="ac-rules rv rv-d1" style="margin-top:clamp(28px,3.6vw,48px)">
+        <div class="ac-rule r1">
+          <span class="ic"><i class="fa-solid fa-ban"></i></span>
+          <h3>不讲 PPT，不做纸上试点</h3>
+          <p>走的时候 AI 员工已经在干活，而不是留下一份「可以做什么」的方案。能不能用，两天里看得见。</p>
+        </div>
+        <div class="ac-rule r2">
+          <span class="ic"><i class="fa-solid fa-shield-halved"></i></span>
+          <h3>第一天就按上岗标准搭</h3>
+          <p>权限、质检、工作记录从第一版就带上，和正式上岗的 AI 员工是同一套。两天后要上岗，不用从头重做。</p>
+        </div>
+        <div class="ac-rule r3">
+          <span class="ic"><i class="fa-solid fa-lock"></i></span>
+          <h3>数据留在你这</h3>
+          <p>在你的账号或你的私有环境里搭，数据不离开你的环境。营结束后，样本数据按你的要求清退。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ 怎么跑 · 四段时间线 ════════ -->
+  <section class="sec pad" id="how">
+    <div class="wrap">
+      <div class="sec-top rv">
+        <div>
+          <span class="sec-eyebrow">怎么跑</span>
+          <h2><span class="nw">难的部分在开营前两周做完，</span><span class="nw"><span class="hl warm"><span>现场才能两天</span></span></span></h2>
+        </div>
+        <p class="sub">两天做得出来，不是因为现场快，是因为数据、用例和环境提前到位了。</p>
+      </div>
+      <div class="ac-tl">
+        <div class="ac-step key rv">
+          <span class="tag">重点</span>
+          <div class="when">开营前两周</div>
+          <h3>准备</h3>
+          <ul>
+            <li>定一件活：一段话说得清</li>
+            <li>定三个人：业务负责人、每天干这活的人、IT</li>
+            <li>给数据切片：静态样本就够，不用开接口</li>
+            <li>开环境：你的账号，或你的私有部署</li>
+          </ul>
+        </div>
+        <div class="ac-step rv rv-d1">
+          <div class="when">Day 1</div>
+          <h3>搭</h3>
+          <ul>
+            <li>上午一起过数据和流程，把活拆成 AI 能接的步骤</li>
+            <li>下午搭第一版，用真实样本跑第一遍</li>
+          </ul>
+        </div>
+        <div class="ac-step rv rv-d2">
+          <div class="when">Day 2</div>
+          <h3>调，然后展示</h3>
+          <ul>
+            <li>上午改错、补规则、接你的系统</li>
+            <li>下午展示日：决策人到场，看它干活，当场定下一步</li>
+          </ul>
+        </div>
+        <div class="ac-step rv rv-d3">
+          <div class="when">展示日之后</div>
+          <h3>上岗，或者扩</h3>
+          <ul>
+            <li>要上岗：同一套直接上岗，不用重做</li>
+            <li>要扩：从这一个 AI 员工起步，逐步加活</li>
+          </ul>
+        </div>
+      </div>
+      <p class="ac-tl-note rv">两天是上限。老客户的新部门往往一天够；新行业的第一场，我们会多留一天。</p>
+    </div>
+  </section>
+
+  <!-- ════════ 什么样的活适合带来 ════════ -->
+  <section class="sec pad" id="fit">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <span class="sec-eyebrow">适合带来的活</span>
+        <h2>什么样的活适合带来</h2>
+        <p class="sub">三个条件都满足，两天就做得出来。差一个，先约 15 分钟聊，再定走哪条路。</p>
+      </div>
+      <div class="ac-fit" style="margin-top:clamp(28px,3.6vw,48px)">
+        <div class="ac-fcard rv">
+          <div class="n">01</div>
+          <h3>一段话说得清</h3>
+          <p>比如<b>「每天 300 条进线按意向分级并回复」</b>、<b>「月底把十几个系统的账对平」</b>。说不清的活，两天会花在定义上，而不是做上。</p>
+        </div>
+        <div class="ac-fcard rv rv-d1">
+          <div class="n">02</div>
+          <h3>两周内能给数据切片</h3>
+          <p>静态样本就够，不用开接口、不用全量。数据要走长审批的，先约我们聊另一种做法。</p>
+        </div>
+        <div class="ac-fcard rv rv-d2">
+          <div class="n">03</div>
+          <h3>决策人展示日到场</h3>
+          <p>两天做出来的东西，要有人当场能定下一步。没人拍板的展示日，就只是一次演示。</p>
+        </div>
+      </div>
+      <p class="ac-fit-note rv">还没想好做哪件活？先看看<a href="index.html">已经在岗的 AI 员工</a>，挑一个和你最像的。</p>
+    </div>
+  </section>
+
+  <!-- ════════ 两天不是从零写代码 ════════ -->
+  <section class="sec pad" id="stack">
+    <div class="wrap">
+      <div class="sec-top rv">
+        <div>
+          <span class="sec-eyebrow">为什么两天够</span>
+          <h2><span class="nw">两天不是从零写代码，</span><span class="nw">是在现成的产品上接你的数据</span></h2>
+        </div>
+        <p class="sub">七个产品都在，营里用到哪个接哪个。</p>
+      </div>
+      <div class="ac-stack">
+        <div class="ac-scard s1 rv">
+          <span class="ic"><i class="fa-solid fa-wand-magic-sparkles"></i></span>
+          <div><h4><a href="products/mio.html">Mio · AI 办公搭子</a></h4><p>每人一个 AI。文档、报表、PPT 这类活，营里第一天就能跑</p></div>
+        </div>
+        <div class="ac-scard s2 rv rv-d1">
+          <span class="ic"><i class="fa-solid fa-book-open"></i></span>
+          <div><h4><a href="products/dongxing.html">句子懂行 · 记忆</a></h4><p>把你的资料和业务规则变成 AI 员工的记忆，答案带出处</p></div>
+        </div>
+        <div class="ac-scard s3 rv rv-d2">
+          <span class="ic"><i class="fa-solid fa-diagram-project"></i></span>
+          <div><h4><a href="products/miaodong.html">句子秒懂 · 大脑</a></h4><p>业务人员不写代码也能改流程，营结束后你的人自己能改</p></div>
+        </div>
+        <div class="ac-scard s4 rv rv-d3">
+          <span class="ic"><i class="fa-solid fa-user-shield"></i></span>
+          <div><h4><a href="products/shouhu.html">句子守护 · 主管</a></h4><p>质检、权限、工作记录，第一版就带上</p></div>
+        </div>
+      </div>
+      <div class="ac-team rv">
+        <span><b>来现场的是交付团队，不是销售。</b>同一批工程师，2023 年起就到客户业务现场按结果交付。</span>
+        <a href="fde.html">了解我们的交付方式 →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ 报名 ════════ -->
+  <section class="ac-signup" id="signup">
+    <div class="wrap">
+      <div class="ac-sintro rv">
+        <span class="sec-eyebrow">报名</span>
+        <h2>预约一场<br/>AgentCamp</h2>
+        <p class="sub">填完我们工作日当天联系你。先用 15 分钟确认那件活和数据能不能给，再定日期。</p>
+        <div class="ac-bring">
+          <div><i class="fa-solid fa-bullseye"></i><span><b>一件活</b>：一段话说得清</span></div>
+          <div><i class="fa-solid fa-user-group"></i><span><b>三个人</b>：业务负责人、干这活的人、IT</span></div>
+          <div><i class="fa-solid fa-database"></i><span><b>一份数据切片</b>：静态样本，两周内给</span></div>
+        </div>
+      </div>
+
+      <form class="ac-form rv rv-d1" id="acForm" method="post" action="https://agentcamp-api.public.agents.juzibot.com/api/agentcamp/applications" novalidate>
+        <div class="ac-grid">
+          <div class="ac-field">
+            <label for="f-name">姓名<em>*</em></label>
+            <input id="f-name" name="name" type="text" autocomplete="name" maxlength="80" required />
+            <span class="hint err">请填姓名</span>
+          </div>
+          <div class="ac-field">
+            <label for="f-company">公司<em>*</em></label>
+            <input id="f-company" name="company" type="text" autocomplete="organization" maxlength="200" required />
+            <span class="hint err">请填公司</span>
+          </div>
+          <div class="ac-field">
+            <label for="f-title">职位</label>
+            <input id="f-title" name="title" type="text" autocomplete="organization-title" maxlength="100" />
+          </div>
+          <div class="ac-field">
+            <label for="f-contact">手机或邮箱<em>*</em></label>
+            <input id="f-contact" name="contact" type="text" maxlength="254" required />
+            <span class="hint err">请填一个能联系到你的手机或邮箱</span>
+          </div>
+          <div class="ac-field">
+            <label for="f-city">城市</label>
+            <input id="f-city" name="city" type="text" autocomplete="address-level2" maxlength="100" />
+          </div>
+          <div class="ac-field">
+            <label for="f-when">期望时间</label>
+            <select id="f-when" name="when">
+              <option value="">请选择</option>
+              <option>尽快</option>
+              <option>一个月内</option>
+              <option>一到三个月</option>
+              <option>还没定</option>
+            </select>
+          </div>
+          <div class="ac-field full">
+            <label for="f-task">想做的那件活<em>*</em></label>
+            <textarea id="f-task" name="task" maxlength="3000" placeholder="一段话说得清就行。比如：每天 300 条进线按意向分级并回复；月底把十几个系统的账对平。" required></textarea>
+            <span class="hint err">写一段话就行，说清这件活是什么</span>
+          </div>
+          <div class="ac-field full">
+            <label for="f-data">数据两周内能给吗</label>
+            <select id="f-data" name="data">
+              <option value="">请选择</option>
+              <option>能给静态样本</option>
+              <option>要走审批</option>
+              <option>还不确定</option>
+            </select>
+            <span class="hint">静态样本就够，不用开接口。</span>
+          </div>
+        </div>
+        <label class="ac-consent" id="acConsent">
+          <input type="checkbox" id="f-agree" name="agree" />
+          <span>同意我们通过上面的联系方式联系你。这些信息只用于安排这一场 AgentCamp。</span>
+        </label>
+        <div class="ac-submit">
+          <button type="submit" class="btn btn-blue btn-lg ar-host" id="acBtn">
+            提交预约
+            <span class="ar"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h11M10 4l5 5-5 5"/></svg><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h11M10 4l5 5-5 5"/></svg></span>
+          </button>
+          <span class="alt">不想填表？<a onclick="openContact('AgentCamp·报名·扫码')">直接扫码加我们</a></span>
+        </div>
+        <p id="acError" role="alert" hidden style="color:#BE123C;margin-top:16px;line-height:1.6"></p>
+        <div class="ac-done" id="acDone">
+          <div class="ok"><i class="fa-solid fa-check"></i></div>
+          <h3 id="acDoneH">已收到</h3>
+          <p id="acDoneP">工作日当天联系你，先确认那件活和数据，再定日期。</p>
+          <img class="qr" id="acQr" src="assets/brand/qr-qiwei.png" alt="微信客服二维码" width="168" height="168" />
+        </div>
+      </form>
+    </div>
+  </section>
+
+</main>
+<div id="site-footer"></div>
+<script>window.SITE_REL='';window.PAGE_CTX={entity:'agentcamp',type:'page',title:'AgentCamp'};</script>
+<script src="assets/site.js?v=20261018"></script>
+<script>
+(function(){
+  // 日程卡里的「真实样本 0 / 300」：进视口后数到 300，和进度条同步
+  var board=document.getElementById('acBoard'),num=document.getElementById('acN'),ran=false;
+  function count(){ if(ran)return; ran=true; board.classList.add('in');
+    var t0=performance.now(),D=2400;
+    (function tick(){ var p=Math.min(1,(performance.now()-t0)/D); p=1-Math.pow(1-p,3);
+      num.textContent=Math.round(300*p); if(p<1)requestAnimationFrame(tick); })(); }
+  if('IntersectionObserver' in window){ var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){count();io.disconnect();} }); },{threshold:.3}); io.observe(board); }
+  else count();
+
+})();
+</script>
+<script src="assets/agentcamp.js?v=20261026b"></script>
+</body>
+</html>
